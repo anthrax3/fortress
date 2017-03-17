@@ -13,6 +13,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
+	<Reference Include="NUnit">
+      <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
