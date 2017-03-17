@@ -1,4 +1,4 @@
-FRAMEWORK: NET45
+FRAMEWORK: NET461
 NUGET
   remote: https://api.nuget.org/v3/index.json
     Castle.Core (4.0)
