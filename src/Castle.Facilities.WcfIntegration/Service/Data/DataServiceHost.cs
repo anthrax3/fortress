@@ -16,7 +16,6 @@ namespace Castle.Facilities.WcfIntegration.Data
 {
 	using System;
 
-	[CLSCompliant(false)]
 	public class DataServiceHost : System.Data.Services.DataServiceHost
 	{
 		public DataServiceHost(Type serviceType, params Uri[] baseAddresses) : base(serviceType, baseAddresses)

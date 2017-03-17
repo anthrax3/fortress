@@ -29,6 +29,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E70FAB7D-FD6B-4777-A32F-F219C51248CD}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		build.bat = build.bat
+		build.fsx = build.fsx
 	EndProjectSection
 EndProject
 Global
