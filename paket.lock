@@ -1,10 +1,10 @@
 FRAMEWORK: NET461
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    Castle.Core (3.3.3)
     FAKE (4.56)
     log4net (2.0.8)
     MSBuild.Microsoft.VisualStudio.Web_WebApplication.Targets (12.0.2)
     NLog (4.4.4)
     NUnit (3.6.1)
     NUnit.ConsoleRunner (3.6.1)
+    Serilog (2.4)

@@ -5,9 +5,9 @@ source https://dotnet.myget.org/F/cli-deps/api/v3/index.json
 source https://api.nuget.org/v3/index.json
 
 nuget FAKE
-nuget Castle.Core
 nuget log4net 
+nuget NLog 
+nuget Serilog 
 nuget MSBuild.Microsoft.VisualStudio.Web_WebApplication.Targets 12.0.2
-nuget NLog
 nuget NUnit
 nuget NUnit.ConsoleRunner

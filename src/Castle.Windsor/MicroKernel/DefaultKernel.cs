@@ -107,7 +107,7 @@ namespace Castle.MicroKernel
 			Resolver.Initialize(this, RaiseDependencyResolving);
 
 #if !SILVERLIGHT
-			if (new SecurityPermission(SecurityPermissionFlag.ControlEvidence | SecurityPermissionFlag.ControlPolicy).IsGranted())
+			if (new SecurityPermission(SecurityPermissionFlag.ControlEvidence | SecurityPermissionFlag.ControlPolicy).IsUnrestricted())
 			{
 				Logger = new TraceLogger("Castle.Windsor", LoggerLevel.Warn);
 			}

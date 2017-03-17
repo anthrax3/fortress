@@ -53,7 +53,7 @@ namespace Castle.MicroKernel.ComponentActivator
 			: base(model, kernel, onCreation, onDestruction)
 		{
 #if (!SILVERLIGHT)
-			useFastCreateInstance = !model.Implementation.IsContextful && new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).IsGranted();
+			useFastCreateInstance = !model.Implementation.IsContextful && new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).IsUnrestricted();
 #endif
 		}
 
