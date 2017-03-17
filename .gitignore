@@ -2,6 +2,9 @@
 /build
 AssemblyInfo.cs
 
+# FAKE
+.fake/*
+
 # NUnit
 *.xml
 
