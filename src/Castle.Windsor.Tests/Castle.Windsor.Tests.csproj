@@ -1,20 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Debug|net45|AnyCPU'" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Release|net45|AnyCPU'" />
-
-  <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.0.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="NLog" Version="4.4.4" />
-    <PackageReference Include="NUnit" Version="3.6.1" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Castle.Facilities.EventWiring\Castle.Facilities.EventWiring.csproj" />
     <ProjectReference Include="..\Castle.Facilities.FactorySupport\Castle.Facilities.FactorySupport.csproj" />
@@ -22,7 +9,6 @@
     <ProjectReference Include="..\Castle.Facilities.Synchronize\Castle.Facilities.Synchronize.csproj" />
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -31,11 +17,10 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Facilities\Synchronize\Components\DummyForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
-
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

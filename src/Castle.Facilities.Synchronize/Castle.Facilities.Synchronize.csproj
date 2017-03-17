@@ -1,21 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Debug|net45|AnyCPU'" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Release|net45|AnyCPU'" />
-
-  <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.0.0" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -26,5 +15,5 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

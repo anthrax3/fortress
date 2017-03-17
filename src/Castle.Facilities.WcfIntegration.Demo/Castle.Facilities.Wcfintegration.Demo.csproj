@@ -1,24 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Debug|net45|AnyCPU'" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NET45-Release|net45|AnyCPU'" />
-
-  <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.0.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="NUnit" Version="3.6.1" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Castle.Facilities.WcfIntegration\Castle.Facilities.Wcfintegration.csproj" />
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data.Services" />
@@ -28,7 +15,6 @@
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Default.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -37,5 +23,5 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
-
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

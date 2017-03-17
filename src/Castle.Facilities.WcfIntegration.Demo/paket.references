@@ -1,0 +1,4 @@
+MSBuild.Microsoft.VisualStudio.Web_WebApplication.Targets
+Castle.Core
+log4net
+NUnit
