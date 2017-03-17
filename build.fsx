@@ -4,7 +4,7 @@ open Fake
 open Fake.Testing.NUnit3
 
 Target "Build" <| fun _ ->
-    tracef "Castle.Windsor: C# Release Build\r\n"
+    tracef "Castle.Windsor: C# Build\r\n"
     let setParams defaults =
             { defaults with
                 Verbosity = Some(Quiet)
@@ -28,5 +28,7 @@ Target "Test" <| fun _ ->
             ToolPath = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe" })
     trace "##teamcity[importData type='nunit' path='.\TestResults.xml']"
 
+"Test"
+	==> "Build"
 
 RunTargetOrDefault "Build"
