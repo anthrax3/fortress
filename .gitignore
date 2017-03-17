@@ -2,6 +2,9 @@
 /build
 AssemblyInfo.cs
 
+# NUnit
+*.xml
+
 # Paket
 *.exe
 
