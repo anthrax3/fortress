@@ -1,10 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net45</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;FEATURE_EVENTLOG;FEATURE_SYSTEM_CONFIGURATION;FEATURE_DICTIONARYADAPTER_XML;NET461</DefineConstants>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;DEBUG;FEATURE_EVENTLOG;FEATURE_SYSTEM_CONFIGURATION;FEATURE_DICTIONARYADAPTER_XML;FEATURE_APPDOMAIN;NET45</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;FEATURE_EVENTLOG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_SYSTEM_CONFIGURATION;NET45</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />
