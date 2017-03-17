@@ -3,7 +3,7 @@
     <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NET461;FEATURE_DICTIONARYADAPTER_XML</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FEATURE_DICTIONARYADAPTER_XML;NET461</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
