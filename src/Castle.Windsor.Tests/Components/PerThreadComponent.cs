@@ -16,9 +16,6 @@ namespace CastleTests.Components
 {
 	using Castle.Core;
 
-	/// <summary>
-	///   Summary description for PerThreadComponent.
-	/// </summary>
 	[PerThread]
 	public class PerThreadComponent : IComponent
 	{

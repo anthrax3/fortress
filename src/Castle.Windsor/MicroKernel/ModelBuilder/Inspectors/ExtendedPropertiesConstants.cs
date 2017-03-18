@@ -16,10 +16,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	using System;
 
-	/// <summary>
-	///   Only to hold internal constants and get rid of 
-	///   magic numbers and hardcode names.
-	/// </summary>
 	internal abstract class ExtendedPropertiesConstants
 	{
 		public static readonly int Pool_Default_InitialPoolSize = 5;

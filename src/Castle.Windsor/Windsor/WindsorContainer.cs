@@ -32,10 +32,6 @@ namespace Castle.Windsor
 	using Castle.Windsor.Installer;
 	using Castle.Windsor.Proxy;
 
-	/// <summary>
-	///   Implementation of <see cref = "IWindsorContainer" />
-	///   which delegates to <see cref = "IKernel" /> implementation.
-	/// </summary>
 	[Serializable]
 	[DebuggerDisplay("{name,nq}")]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
@@ -53,19 +49,10 @@ namespace Castle.Windsor
 
 		private IWindsorContainer parent;
 
-		/// <summary>
-		///   Constructs a container without any external 
-		///   configuration reference
-		/// </summary>
 		public WindsorContainer() : this(new DefaultKernel(), new DefaultComponentInstaller())
 		{
 		}
 
-		/// <summary>
-		///   Constructs a container using the specified 
-		///   <see cref = "IConfigurationStore" /> implementation.
-		/// </summary>
-		/// <param name = "store">The instance of an <see cref = "IConfigurationStore" /> implementation.</param>
 		public WindsorContainer(IConfigurationStore store) : this()
 		{
 			kernel.ConfigurationStore = store;
@@ -73,11 +60,6 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-		/// <summary>
-		///   Constructs a container using the specified 
-		///   <see cref = "IConfigurationInterpreter" /> implementation.
-		/// </summary>
-		/// <param name = "interpreter">The instance of an <see cref = "IConfigurationInterpreter" /> implementation.</param>
 		public WindsorContainer(IConfigurationInterpreter interpreter) : this()
 		{
 			if (interpreter == null)
@@ -89,11 +71,6 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "WindsorContainer" /> class.
-		/// </summary>
-		/// <param name = "interpreter">The interpreter.</param>
-		/// <param name = "environmentInfo">The environment info.</param>
 		public WindsorContainer(IConfigurationInterpreter interpreter, IEnvironmentInfo environmentInfo) : this()
 		{
 			if (interpreter == null)
@@ -111,14 +88,6 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "WindsorContainer" /> class using a
-		///   resource pointed to by the parameter. That may be a file, an assembly embedded resource, a UNC path or a config file section.
-		///   <para>
-		///     Equivalent to the use of <c>new WindsorContainer(new XmlInterpreter(configurationUri))</c>
-		///   </para>
-		/// </summary>
-		/// <param name = "configurationUri">The XML file.</param>
 		public WindsorContainer(String configurationUri) : this()
 		{
 			if (configurationUri == null)
@@ -132,32 +101,11 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-		/// <summary>
-		///   Constructs a container using the specified <see cref = "IKernel" />
-		///   implementation. Rarely used.
-		/// </summary>
-		/// <remarks>
-		///   This constructs sets the Kernel.ProxyFactory property to
-		///   <c>Proxy.DefaultProxyFactory</c>
-		/// </remarks>
-		/// <param name = "kernel">Kernel instance</param>
-		/// <param name = "installer">Installer instance</param>
 		public WindsorContainer(IKernel kernel, IComponentsInstaller installer)
 			: this(AppDomain.CurrentDomain.FriendlyName + CastleUnicode + ++instanceCount, kernel, installer)
 		{
 		}
 
-		/// <summary>
-		///   Constructs a container using the specified <see cref = "IKernel" />
-		///   implementation. Rarely used.
-		/// </summary>
-		/// <remarks>
-		///   This constructs sets the Kernel.ProxyFactory property to
-		///   <c>Proxy.DefaultProxyFactory</c>
-		/// </remarks>
-		/// <param name = "name">Container's name</param>
-		/// <param name = "kernel">Kernel instance</param>
-		/// <param name = "installer">Installer instance</param>
 		public WindsorContainer(String name, IKernel kernel, IComponentsInstaller installer)
 		{
 			if (name == null)
@@ -179,10 +127,6 @@ namespace Castle.Windsor
 			this.installer = installer;
 		}
 
-		/// <summary>
-		///   Constructs with a given <see cref = "IProxyFactory" />.
-		/// </summary>
-		/// <param name = "proxyFactory">A instance of an <see cref = "IProxyFactory" />.</param>
 		public WindsorContainer(IProxyFactory proxyFactory)
 		{
 			if (proxyFactory == null)
@@ -195,12 +139,6 @@ namespace Castle.Windsor
 			installer = new DefaultComponentInstaller();
 		}
 
-		/// <summary>
-		///   Constructs a container assigning a parent container 
-		///   before starting the dependency resolution.
-		/// </summary>
-		/// <param name = "parent">The instance of an <see cref = "IWindsorContainer" /></param>
-		/// <param name = "interpreter">The instance of an <see cref = "IConfigurationInterpreter" /> implementation</param>
 		public WindsorContainer(IWindsorContainer parent, IConfigurationInterpreter interpreter) : this()
 		{
 			if (parent == null)
@@ -219,12 +157,6 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "WindsorContainer" /> class.
-		/// </summary>
-		/// <param name = "name">The container's name.</param>
-		/// <param name = "parent">The parent.</param>
-		/// <param name = "interpreter">The interpreter.</param>
 		public WindsorContainer(string name, IWindsorContainer parent, IConfigurationInterpreter interpreter) : this()
 		{
 			if (name == null)
@@ -254,30 +186,16 @@ namespace Castle.Windsor
 			get { return installer; }
 		}
 
-		/// <summary>
-		///   Returns the inner instance of the MicroKernel
-		/// </summary>
 		public virtual IKernel Kernel
 		{
 			get { return kernel; }
 		}
 
-		/// <summary>
-		///   Gets the container's name
-		/// </summary>
-		/// <remarks>
-		///   Only useful when child containers are being used
-		/// </remarks>
-		/// <value>The container's name.</value>
 		public string Name
 		{
 			get { return name; }
 		}
 
-		/// <summary>
-		///   Gets or sets the parent container if this instance
-		///   is a sub container.
-		/// </summary>
 		public virtual IWindsorContainer Parent
 		{
 			get { return parent; }
@@ -323,9 +241,6 @@ namespace Castle.Windsor
 			}
 		}
 
-		/// <summary>
-		///   Executes Dispose on underlying <see cref = "IKernel" />
-		/// </summary>
 		public virtual void Dispose()
 		{
 			Parent = null;
@@ -333,11 +248,6 @@ namespace Castle.Windsor
 			kernel.Dispose();
 		}
 
-		/// <summary>
-		///   Registers a subcontainer. The components exposed
-		///   by this container will be accessible from subcontainers.
-		/// </summary>
-		/// <param name = "childContainer"></param>
 		public virtual void AddChildContainer(IWindsorContainer childContainer)
 		{
 			if (childContainer == null)
@@ -359,33 +269,18 @@ namespace Castle.Windsor
 			}
 		}
 
-		/// <summary>
-		///   Registers a facility within the container.
-		/// </summary>
-		/// <param name = "facility"></param>
 		public IWindsorContainer AddFacility(IFacility facility)
 		{
 			kernel.AddFacility(facility);
 			return this;
 		}
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <returns></returns>
 		public IWindsorContainer AddFacility<T>() where T : IFacility, new()
 		{
 			kernel.AddFacility<T>();
 			return this;
 		}
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <param name = "onCreate">The callback for creation.</param>
-		/// <returns></returns>
 		public IWindsorContainer AddFacility<T>(Action<T> onCreate)
 			where T : IFacility, new()
 		{
@@ -393,11 +288,6 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Gets a child container instance by name.
-		/// </summary>
-		/// <param name = "name">The container's name.</param>
-		/// <returns>The child container instance or null</returns>
 		public IWindsorContainer GetChildContainer(string name)
 		{
 			lock (childContainersLocker)
@@ -408,25 +298,6 @@ namespace Castle.Windsor
 			}
 		}
 
-		/// <summary>
-		///   Runs the <paramref name = "installers" /> so that they can register components in the container. For details see the documentation at http://j.mp/WindsorInstall
-		/// </summary>
-		/// <remarks>
-		///   In addition to instantiating and passing every installer inline you can use helper methods on <see
-		///    cref = "FromAssembly" /> class to automatically instantiate and run your installers.
-		///   You can also use <see cref = "Configuration" /> class to install components and/or run aditional installers specofied in a configuration file.
-		/// </remarks>
-		/// <returns>The container.</returns>
-		/// <example>
-		///   <code>
-		///     container.Install(new YourInstaller1(), new YourInstaller2(), new YourInstaller3());
-		///   </code>
-		/// </example>
-		/// <example>
-		///   <code>
-		///     container.Install(FromAssembly.This(), Configuration.FromAppConfig(), new SomeOtherInstaller());
-		///   </code>
-		/// </example>
 		public IWindsorContainer Install(params IWindsorInstaller[] installers)
 		{
 			if (installers == null)
@@ -459,45 +330,17 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Registers the components with the <see cref = "IWindsorContainer" />. The instances of <see cref = "IRegistration" /> are produced by fluent registration API.
-		///   Most common entry points are <see cref = "Component.For{TService}" /> method to register a single type or (recommended in most cases) 
-		///   <see cref = "Classes.FromThisAssembly" />.
-		///   Let the Intellisense drive you through the fluent API past those entry points. For details see the documentation at http://j.mp/WindsorApi
-		/// </summary>
-		/// <example>
-		///   <code>
-		///     container.Register(Component.For&lt;IService&gt;().ImplementedBy&lt;DefaultService&gt;().LifestyleTransient());
-		///   </code>
-		/// </example>
-		/// <example>
-		///   <code>
-		///     container.Register(Classes.FromThisAssembly().BasedOn&lt;IService&gt;().WithServiceDefaultInterfaces().Configure(c => c.LifestyleTransient()));
-		///   </code>
-		/// </example>
-		/// <param name = "registrations">The component registrations created by <see cref = "Component.For{TService}" />, <see
-		///    cref = "Classes.FromThisAssembly" /> or different entry method to the fluent API.</param>
-		/// <returns>The container.</returns>
 		public IWindsorContainer Register(params IRegistration[] registrations)
 		{
 			Kernel.Register(registrations);
 			return this;
 		}
 
-		/// <summary>
-		///   Releases a component instance
-		/// </summary>
-		/// <param name = "instance"></param>
 		public virtual void Release(object instance)
 		{
 			kernel.ReleaseComponent(instance);
 		}
 
-		/// <summary>
-		///   Removes (unregisters) a subcontainer.  The components exposed by this container
-		///   will no longer be accessible to the child container.
-		/// </summary>
-		/// <param name = "childContainer"></param>
 		public virtual void RemoveChildContainer(IWindsorContainer childContainer)
 		{
 			if (childContainer == null)
@@ -519,141 +362,66 @@ namespace Castle.Windsor
 			}
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <param name = "service"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public virtual object Resolve(Type service, IDictionary arguments)
 		{
 			return kernel.Resolve(service, arguments);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <param name = "service"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public virtual object Resolve(Type service, object argumentsAsAnonymousType)
 		{
 			return Resolve(service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <param name = "service"></param>
-		/// <returns></returns>
 		public virtual object Resolve(Type service)
 		{
 			return kernel.Resolve(service, arguments: null);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <returns></returns>
 		public virtual object Resolve(String key, Type service)
 		{
 			return kernel.Resolve(key, service, arguments: null);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public virtual object Resolve(String key, Type service, IDictionary arguments)
 		{
 			return kernel.Resolve(key, service, arguments);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public virtual object Resolve(String key, Type service, object argumentsAsAnonymousType)
 		{
 			return kernel.Resolve(key, service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public T Resolve<T>(IDictionary arguments)
 		{
 			return (T)kernel.Resolve(typeof(T), arguments);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public T Resolve<T>(object argumentsAsAnonymousType)
 		{
 			return (T)kernel.Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public virtual T Resolve<T>(String key, IDictionary arguments)
 		{
 			return (T)kernel.Resolve(key, typeof(T), arguments);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public virtual T Resolve<T>(String key, object argumentsAsAnonymousType)
 		{
 			return (T)kernel.Resolve(key, typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns a component instance by the service
-		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <returns></returns>
 		public T Resolve<T>()
 		{
 			return (T)kernel.Resolve(typeof(T), arguments: null);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <returns></returns>
 		public virtual T Resolve<T>(String key)
 		{
 			return (T)kernel.Resolve(key, typeof(T), arguments: null);
 		}
 
-		/// <summary>
-		///   Resolve all valid components that match this type.
-		/// </summary>
-		/// <typeparam name = "T">The service type</typeparam>
 		public T[] ResolveAll<T>()
 		{
 			return (T[])ResolveAll(typeof(T));
@@ -674,21 +442,11 @@ namespace Castle.Windsor
 			return ResolveAll(service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Resolve all valid components that match this type.
-		///   <typeparam name = "T">The service type</typeparam>
-		///   <param name = "arguments">Arguments to resolve the service</param>
-		/// </summary>
 		public T[] ResolveAll<T>(IDictionary arguments)
 		{
 			return (T[])ResolveAll(typeof(T), arguments);
 		}
 
-		/// <summary>
-		///   Resolve all valid components that match this type.
-		///   <typeparam name = "T">The service type</typeparam>
-		///   <param name = "argumentsAsAnonymousType">Arguments to resolve the service</param>
-		/// </summary>
 		public T[] ResolveAll<T>(object argumentsAsAnonymousType)
 		{
 			return ResolveAll<T>(new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));

@@ -173,12 +173,6 @@ namespace Castle.Core.Internal
 			return (TAttribute[])Attribute.GetCustomAttributes(item, typeof(TAttribute), true);
 		}
 
-		/// <summary>
-		///   If the extended type is a Foo[] or IEnumerable{Foo} which is assignable from Foo[] this method will return typeof(Foo)
-		///   otherwise <c>null</c>.
-		/// </summary>
-		/// <param name = "type"></param>
-		/// <returns></returns>
 		public static Type GetCompatibleArrayItemType(this Type type)
 		{
 			if (type == null)

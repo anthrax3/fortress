@@ -24,9 +24,6 @@ namespace Castle.Core
 	using Castle.MicroKernel.Proxy;
 	using Castle.MicroKernel.Resolvers;
 
-	/// <summary>
-	///   Represents an reference to a Interceptor component.
-	/// </summary>
 	[Serializable]
 	public class InterceptorReference : IReference<IInterceptor>, IEquatable<InterceptorReference>
 	{
@@ -36,10 +33,6 @@ namespace Castle.Core
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private readonly Type referencedComponentType;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "InterceptorReference" /> class.
-		/// </summary>
-		/// <param name = "referencedComponentName">The component key.</param>
 		public InterceptorReference(String referencedComponentName)
 		{
 			if (referencedComponentName == null)
@@ -49,10 +42,6 @@ namespace Castle.Core
 			this.referencedComponentName = referencedComponentName;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "InterceptorReference" /> class.
-		/// </summary>
-		/// <param name = "componentType">Type of the interceptor to use. This will reference the default component (ie. one with no explicitly assigned name) implemented by given type.</param>
 		public InterceptorReference(Type componentType)
 		{
 			if (componentType == null)
@@ -173,31 +162,16 @@ namespace Castle.Core
 			return (IInterceptor)handler.Resolve(contextForInterceptor);
 		}
 
-		/// <summary>
-		///   Gets an <see cref = "InterceptorReference" /> for the component key.
-		/// </summary>
-		/// <param name = "key">The component key.</param>
-		/// <returns>The <see cref = "InterceptorReference" /></returns>
 		public static InterceptorReference ForKey(String key)
 		{
 			return new InterceptorReference(key);
 		}
 
-		/// <summary>
-		///   Gets an <see cref = "InterceptorReference" /> for the service.
-		/// </summary>
-		/// <param name = "service">The service.</param>
-		/// <returns>The <see cref = "InterceptorReference" /></returns>
 		public static InterceptorReference ForType(Type service)
 		{
 			return new InterceptorReference(service);
 		}
 
-		/// <summary>
-		///   Gets an <see cref = "InterceptorReference" /> for the service.
-		/// </summary>
-		/// <typeparam name = "T">The service type.</typeparam>
-		/// <returns>The <see cref = "InterceptorReference" /></returns>
 		public static InterceptorReference ForType<T>()
 		{
 			return new InterceptorReference(typeof(T));

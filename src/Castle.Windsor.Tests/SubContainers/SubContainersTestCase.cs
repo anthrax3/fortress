@@ -30,16 +30,9 @@ namespace CastleTests.SubContainers
 
 	using NUnit.Framework;
 
-	/// <summary>
-	///   Summary description for SubContainersTestCase.
-	/// </summary>
 	[TestFixture]
 	public class SubContainersTestCase : AbstractContainerTestCase
 	{
-		/// <summary>
-		///   collects events in an array list, used for ensuring we are cleaning up the parent kernel
-		///   event subscriptions correctly.
-		/// </summary>
 		private class EventsCollector
 		{
 			public const string Added = "added";

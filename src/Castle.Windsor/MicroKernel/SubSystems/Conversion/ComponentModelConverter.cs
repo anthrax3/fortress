@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	using System;
 	using System.ComponentModel;
 
-	/// <summary>
-	/// Attempts to utilize an existing <see cref="TypeConverter"/> for conversion
-	/// </summary>
 	[Serializable]
 	public class ComponentModelConverter : AbstractTypeConverter
 	{

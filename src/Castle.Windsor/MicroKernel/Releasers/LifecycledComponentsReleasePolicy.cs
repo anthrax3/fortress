@@ -28,9 +28,6 @@ namespace Castle.MicroKernel.Releasers
 	using Castle.Core.Internal;
 	using Castle.Windsor.Diagnostics;
 
-	/// <summary>
-	///     Tracks all components requiring decomission (<see cref = "Burden.RequiresPolicyRelease" />)
-	/// </summary>
 	[Serializable]
 	public class LifecycledComponentsReleasePolicy : IReleasePolicy
 	{
@@ -43,25 +40,11 @@ namespace Castle.MicroKernel.Releasers
 		private readonly ITrackedComponentsPerformanceCounter perfCounter;
 		private ITrackedComponentsDiagnostic trackedComponentsDiagnostic;
 
-		/// <param name = "kernel">
-		///     Used to obtain <see cref = "ITrackedComponentsDiagnostic" /> if present.
-		/// </param>
 		public LifecycledComponentsReleasePolicy(IKernel kernel)
 			: this(GetTrackedComponentsDiagnostic(kernel), null)
 		{
 		}
 
-		/// <summary>
-		///     Creates new policy which publishes its tracking components count to
-		///     <paramref
-		///         name = "trackedComponentsPerformanceCounter" />
-		///     and exposes diagnostics into
-		///     <paramref
-		///         name = "trackedComponentsDiagnostic" />
-		///     .
-		/// </summary>
-		/// <param name = "trackedComponentsDiagnostic"></param>
-		/// <param name = "trackedComponentsPerformanceCounter"></param>
 		public LifecycledComponentsReleasePolicy(ITrackedComponentsDiagnostic trackedComponentsDiagnostic,
 		                                         ITrackedComponentsPerformanceCounter trackedComponentsPerformanceCounter)
 		{
@@ -206,11 +189,6 @@ namespace Castle.MicroKernel.Releasers
 			e.AddRange(TrackedObjects);
 		}
 
-		/// <summary>
-		///     Obtains <see cref = "ITrackedComponentsDiagnostic" /> from given <see cref = "IKernel" /> if present.
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <returns></returns>
 		public static ITrackedComponentsDiagnostic GetTrackedComponentsDiagnostic(IKernel kernel)
 		{
 			var diagnosticsHost = (IDiagnosticsHost)kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
@@ -221,11 +199,6 @@ namespace Castle.MicroKernel.Releasers
 			return diagnosticsHost.GetDiagnostic<ITrackedComponentsDiagnostic>();
 		}
 
-		/// <summary>
-		///     Creates new <see cref = "ITrackedComponentsPerformanceCounter" /> from given <see cref = "IPerformanceMetricsFactory" />.
-		/// </summary>
-		/// <param name = "perfMetricsFactory"></param>
-		/// <returns></returns>
 		public static ITrackedComponentsPerformanceCounter GetTrackedComponentsPerformanceCounter(
 			IPerformanceMetricsFactory perfMetricsFactory)
 		{

@@ -14,9 +14,6 @@
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	/// <summary>
-	///   Summary description for DefaultSpamServiceWithConstructor.
-	/// </summary>
 	public class DefaultSpamServiceWithConstructor
 	{
 		private readonly DefaultMailSenderService mailSender;

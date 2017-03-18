@@ -16,9 +16,6 @@ namespace Castle.MicroKernel.Tests.Configuration.Components
 {
 	using System;
 
-	/// <summary>
-	///   Summary description for ClassWithConstructors.
-	/// </summary>
 	public class ClassWithConstructors
 	{
 		private readonly String host;

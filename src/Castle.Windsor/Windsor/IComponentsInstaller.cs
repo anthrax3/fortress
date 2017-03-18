@@ -16,17 +16,8 @@ namespace Castle.Windsor
 {
 	using Castle.MicroKernel.SubSystems.Configuration;
 
-	/// <summary>
-	///   Installs the components and facilities based on the
-	///   information on the configuration store.
-	/// </summary>
 	public interface IComponentsInstaller
 	{
-		/// <summary>
-		///   Perform installation.
-		/// </summary>
-		/// <param name = "container">Target container</param>
-		/// <param name = "store">Configuration store</param>
 		void SetUp(IWindsorContainer container, IConfigurationStore store);
 	}
 }

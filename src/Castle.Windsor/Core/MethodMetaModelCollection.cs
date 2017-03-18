@@ -19,18 +19,11 @@ namespace Castle.Core
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 
-	/// <summary>
-	///   Collection of <see cref = "MethodMetaModel" />
-	/// </summary>
 	[Serializable]
 	public class MethodMetaModelCollection : Collection<MethodMetaModel>
 	{
 		private IDictionary methodInfo2Model;
 
-		/// <summary>
-		///   Gets the method info2 model.
-		/// </summary>
-		/// <value>The method info2 model.</value>
 		public IDictionary MethodInfo2Model
 		{
 			get

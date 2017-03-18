@@ -21,9 +21,6 @@ using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	/// <summary>
-	/// See http://support.castleproject.org/projects/DYNPROXY/issues/view/DYNPROXY-ISSUE-96 for details
-	/// </summary>
 	[TestFixture]
 	public class OrderOfInterfacePrecedenceTestCase:BasePEVerifyTestCase
 	{

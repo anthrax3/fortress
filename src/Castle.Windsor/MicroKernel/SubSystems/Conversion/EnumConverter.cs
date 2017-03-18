@@ -18,9 +18,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	using System;
 
-	/// <summary>
-	///   Converts a string representation to an enum value
-	/// </summary>
 	[Serializable]
 	public class EnumConverter : AbstractTypeConverter
 	{

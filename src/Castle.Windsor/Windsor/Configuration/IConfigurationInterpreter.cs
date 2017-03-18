@@ -19,32 +19,12 @@ namespace Castle.Windsor.Configuration
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.SubSystems.Configuration;
 
-	/// <summary>
-	///   Interpreter of a specific language to describe 
-	///   configuration nodes in a hierarchical manner.
-	/// </summary>
 	public interface IConfigurationInterpreter
 	{
-		/// <summary>
-		///   Gets or sets the name of the environment.
-		/// </summary>
-		/// <value>The name of the environment.</value>
 		string EnvironmentName { get; set; }
 
-		/// <summary>
-		///   Exposes the reference to <see cref = "IResource" />
-		///   which the interpreter is likely to hold
-		/// </summary>
 		IResource Source { get; }
 
-		/// <summary>
-		///   Should obtain the contents from the resource,
-		///   interpret it and populate the <see cref = "IConfigurationStore" />
-		///   accordingly.
-		/// </summary>
-		/// <param name = "resource"></param>
-		/// <param name = "store"></param>
-		/// <param name = "kernel"></param>
 		void ProcessResource(IResource resource, IConfigurationStore store, IKernel kernel);
 	}
 }

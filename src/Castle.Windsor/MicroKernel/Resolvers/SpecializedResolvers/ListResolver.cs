@@ -21,37 +21,6 @@ namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Handle dependencies of services in the format of generic IList.
-	/// </summary>
-	/// <remarks>
-	///   This is a complimentary <see cref = "ISubDependencyResolver" /> implementation 
-	///   that is capable of satisfying dependencies of services generic IList.
-	///   <para>
-	///     Note that it will take precedence over service override for lists defined 
-	///     on the configuration.
-	///   </para>
-	/// </remarks>
-	/// <example>
-	///   In order to install the resolver:
-	///   <code>
-	///     var kernel = new DefaultKernel();
-	///     kernel.Resolver.AddSubResolver(new ListResolver(kernel));
-	///   </code>
-	/// 
-	///   <para>
-	///     To use it, assuming that IService is on the container:
-	///   </para>
-	/// 
-	///   <code>
-	///     public class Component
-	///     {
-	///     public Component(IList&lt;IService&gt; services)
-	///     {
-	///     }
-	///     }
-	///   </code>
-	/// </example>
 	public class ListResolver : CollectionResolver
 	{
 		public ListResolver(IKernel kernel)

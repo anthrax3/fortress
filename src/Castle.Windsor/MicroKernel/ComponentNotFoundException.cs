@@ -17,11 +17,6 @@ namespace Castle.MicroKernel
 	using System;
 	using System.Runtime.Serialization;
 
-	/// <summary>
-	///   Exception threw when a request for a component
-	///   cannot be satisfied because the component does not
-	///   exist in the container
-	/// </summary>
 	[Serializable]
 	public class ComponentNotFoundException : ComponentResolutionException
 	{
@@ -32,50 +27,23 @@ namespace Castle.MicroKernel
 			Service = service;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the
-		///   <see cref = "ComponentNotFoundException" />
-		///   class.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "message">Exception message.</param>
 		public ComponentNotFoundException(string name, string message)
 			: base(message)
 		{
 			Name = name;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the
-		///   <see cref = "ComponentNotFoundException" />
-		///   class.
-		/// </summary>
-		/// <param name = "service">The service.</param>
-		/// <param name = "message">Exception message.</param>
 		public ComponentNotFoundException(Type service, string message)
 			: base(message)
 		{
 			Service = service;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the
-		///   <see cref = "ComponentNotFoundException" />
-		///   class.
-		/// </summary>
-		/// <param name = "service">The service.</param>
 		public ComponentNotFoundException(Type service) :
 			this(service, String.Format("No component for supporting the service {0} was found", service.FullName))
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the
-		///   <see cref = "ComponentNotFoundException" />
-		///   class.
-		/// </summary>
-		/// <param name = "info">The object that holds the serialized object data.</param>
-		/// <param name = "context">The contextual information about the source or destination.</param>
 		public ComponentNotFoundException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{

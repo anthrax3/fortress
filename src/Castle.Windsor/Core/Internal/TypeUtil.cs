@@ -20,11 +20,6 @@ namespace Castle.Core.Internal
 
 	public static class TypeUtil
 	{
-		/// <summary>
-		///   Checkis if given <paramref name="type" /> is a primitive type or collection of primitive types. Value types, <see cref="string" /> are considered primitive and can not be registered as components in Windsor
-		/// </summary>
-		/// <param name="type"> </param>
-		/// <returns> </returns>
 		public static bool IsPrimitiveTypeOrCollection(this Type type)
 		{
 			if (type.IsPrimitiveType())
@@ -36,11 +31,6 @@ namespace Castle.Core.Internal
 			return itemType != null && itemType.IsPrimitiveTypeOrCollection();
 		}
 
-		/// <summary>
-		///   Checkis if given <paramref name="type" /> is a primitive type. Value types and <see cref="string" /> are considered primitive and can not be registered as components in Windsor
-		/// </summary>
-		/// <param name="type"> </param>
-		/// <returns> </returns>
 		public static bool IsPrimitiveType(this Type type)
 		{
 			return type == null || type.IsValueType || type == typeof(string);
@@ -61,13 +51,6 @@ namespace Castle.Core.Internal
 			}
 		}
 
-		/// <summary>
-		///   Calls <see cref="Type.MakeGenericType" /> and if a generic constraint is violated returns <c>null</c> instead of throwing <see
-		///    cref="ArgumentException" />.
-		/// </summary>
-		/// <param name="openGeneric"> </param>
-		/// <param name="arguments"> </param>
-		/// <returns> </returns>
 		[DebuggerHidden]
 		public static Type TryMakeGenericType(this Type openGeneric, Type[] arguments)
 		{

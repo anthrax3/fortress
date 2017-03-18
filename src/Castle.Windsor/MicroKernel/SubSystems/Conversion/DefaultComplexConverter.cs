@@ -48,12 +48,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 
 		#endregion
 
-		/// <summary>
-		///   Creates the target type instance.
-		/// </summary>
-		/// <param name = "type">The type.</param>
-		/// <param name = "configuration">The configuration.</param>
-		/// <returns></returns>
 		private object CreateInstance(Type type, IConfiguration configuration)
 		{
 			type = ObtainImplementation(type, configuration);
@@ -96,12 +90,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			return implType;
 		}
 
-		/// <summary>
-		///   Chooses the first non default constructor. Throws an exception if more than 
-		///   one non default constructor is found
-		/// </summary>
-		/// <param name = "type"></param>
-		/// <returns>The chosen constructor, or <c>null</c> if none was found</returns>
 		private ConstructorInfo ChooseConstructor(Type type)
 		{
 			ConstructorInfo chosen = null;
@@ -122,12 +110,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			return chosen;
 		}
 
-		/// <summary>
-		///   Converts the constructor parameters.
-		/// </summary>
-		/// <param name = "constructor">The constructor.</param>
-		/// <param name = "configuration">The configuration.</param>
-		/// <returns></returns>
 		private object[] ConvertConstructorParameters(ConstructorInfo constructor, IConfiguration configuration)
 		{
 			var conversionManager = ConversionManager;
@@ -159,12 +141,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			return parameterValues;
 		}
 
-		/// <summary>
-		///   Converts the property values.
-		/// </summary>
-		/// <param name = "instance">The instance.</param>
-		/// <param name = "type">The type.</param>
-		/// <param name = "configuration">The configuration.</param>
 		private void ConvertPropertyValues(object instance, Type type, IConfiguration configuration)
 		{
 			var conversionManager = ConversionManager;
@@ -202,10 +178,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			}
 		}
 
-		/// <summary>
-		///   Gets the conversion manager.
-		/// </summary>
-		/// <value>The conversion manager.</value>
 		private IConversionManager ConversionManager
 		{
 			get
@@ -218,12 +190,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			}
 		}
 
-		/// <summary>
-		///   Finds the child (case insensitive).
-		/// </summary>
-		/// <param name = "config">The config.</param>
-		/// <param name = "name">The name.</param>
-		/// <returns></returns>
 		private IConfiguration FindChildIgnoreCase(IConfiguration config, string name)
 		{
 			foreach (var child in config.Children)

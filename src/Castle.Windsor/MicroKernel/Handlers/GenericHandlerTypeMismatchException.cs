@@ -21,27 +21,13 @@ namespace Castle.MicroKernel.Handlers
 
 	using Castle.Core;
 
-	/// <summary>
-	///   Thrown when <see cref = "DefaultGenericHandler" /> can't create proper closed version of itself due to violation of generic constraints.
-	/// </summary>
 	[Serializable]
 	public class GenericHandlerTypeMismatchException : HandlerException
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
-		/// <param name = "name"></param>
 		public GenericHandlerTypeMismatchException(string message, ComponentName name) : base(message, name)
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
-		/// <param name = "name"></param>
-		/// <param name = "innerException"></param>
 		public GenericHandlerTypeMismatchException(string message, ComponentName name, Exception innerException)
 			: base(message, name, innerException)
 		{
@@ -52,11 +38,6 @@ namespace Castle.MicroKernel.Handlers
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "info">The object that holds the serialized object data.</param>
-		/// <param name = "context">The contextual information about the source or destination.</param>
 		public GenericHandlerTypeMismatchException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{

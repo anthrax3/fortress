@@ -151,9 +151,6 @@ namespace Castle.Core.Tests
 			Assert.AreEqual(20, service.Sum(10, 10));
 		}
 
-		/// <summary>
-		/// See http://support.castleproject.org/browse/DYNPROXY-43
-		/// </summary>
 		[Test]
 		public void MethodParamNamesAreReplicated()
 		{

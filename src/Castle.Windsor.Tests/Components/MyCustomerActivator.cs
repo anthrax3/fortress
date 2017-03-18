@@ -20,9 +20,6 @@ namespace CastleTests.Components
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
-	/// <summary>
-	/// Summary description for MyCustomerActivator.
-	/// </summary>
 	public class MyCustomerActivator : AbstractComponentActivator
 	{
 		public MyCustomerActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)

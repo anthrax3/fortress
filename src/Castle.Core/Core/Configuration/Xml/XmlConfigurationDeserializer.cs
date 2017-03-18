@@ -19,20 +19,11 @@ namespace Castle.Core.Core.Configuration.Xml
 {
 	public class XmlConfigurationDeserializer
 	{
-		/// <summary>
-		///   Deserializes the specified node into an abstract representation of configuration.
-		/// </summary>
-		/// <param name = "node">The node.</param>
-		/// <returns></returns>
 		public IConfiguration Deserialize(XmlNode node)
 		{
 			return GetDeserializedNode(node);
 		}
 
-		/// <summary>
-		///   If a config value is an empty string we return null, this is to keep
-		///   backward compatibility with old code
-		/// </summary>
 		public static string GetConfigValue(string value)
 		{
 			if (value == string.Empty)

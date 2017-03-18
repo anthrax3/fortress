@@ -17,10 +17,6 @@ namespace Castle.MicroKernel.ModelBuilder.Descriptors
 	using Castle.Core;
 	using Castle.MicroKernel.LifecycleConcerns;
 
-	/// <summary>
-	///   Adds the actions to ExtendedProperties.
-	/// </summary>
-	/// <typeparam name = "S"></typeparam>
 	public class OnCreateComponentDescriptor<S> : IComponentModelDescriptor, IMetaComponentModelDescriptor
 		where S : class
 	{

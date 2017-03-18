@@ -16,9 +16,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Components
 {
 	using System;
 
-	/// <summary>
-	/// Summary description for MessengerProtocolHandler.
-	/// </summary>
 	public class MessengerProtocolHandler : IProtocolHandler
 	{
 		#region IProtocolHandler Members

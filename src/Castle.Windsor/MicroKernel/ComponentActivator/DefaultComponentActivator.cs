@@ -27,25 +27,11 @@ namespace Castle.MicroKernel.ComponentActivator
 
 	using System.Linq;
 
-	/// <summary>
-	/// 	Standard implementation of <see cref = "IComponentActivator" />. Handles the selection of the best constructor, fills the writable properties the component exposes, run the commission and
-	/// 	decommission lifecycles, etc.
-	/// </summary>
-	/// <remarks>
-	/// 	Custom implementors can just override the <c>CreateInstance</c> method. Please note however that the activator is responsible for the proxy creation when needed.
-	/// </remarks>
 	[Serializable]
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{
 		private readonly bool useFastCreateInstance;
 
-		/// <summary>
-		/// 	Initializes a new instance of the <see cref = "DefaultComponentActivator" /> class.
-		/// </summary>
-		/// <param name = "model"> </param>
-		/// <param name = "kernel"> </param>
-		/// <param name = "onCreation"> </param>
-		/// <param name = "onDestruction"> </param>
 		public DefaultComponentActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)
 			: base(model, kernel, onCreation, onDestruction)
 		{

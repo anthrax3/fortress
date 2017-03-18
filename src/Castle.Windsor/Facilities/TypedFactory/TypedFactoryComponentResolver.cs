@@ -19,9 +19,6 @@ namespace Castle.Facilities.TypedFactory
 
 	using Castle.MicroKernel;
 
-	/// <summary>
-	///   Represents a single component to be resolved via Typed Factory
-	/// </summary>
 	public class TypedFactoryComponentResolver
 	{
 		protected readonly IDictionary additionalArguments;
@@ -46,12 +43,6 @@ namespace Castle.Facilities.TypedFactory
 			this.actualSelectorType = actualSelectorType;
 		}
 
-		/// <summary>
-		///   Resolves the component(s) from given kernel.
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "scope"></param>
-		/// <returns>Resolved component(s).</returns>
 		public virtual object Resolve(IKernelInternal kernel, IReleasePolicy scope)
 		{
 			if (LoadByName(kernel))

@@ -24,10 +24,6 @@ namespace Castle.Core.Core.Internal
 		public abstract ILockHolder ForReading(bool waitForLock);
 		public abstract ILockHolder ForWriting(bool waitForLock);
 
-		/// <summary>
-		/// Creates a new lock.
-		/// </summary>
-		/// <returns></returns>
 		public static Lock Create()
 		{
 			return new SlimReadWriteLock();

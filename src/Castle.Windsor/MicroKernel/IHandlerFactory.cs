@@ -16,9 +16,6 @@ namespace Castle.MicroKernel
 {
 	using Castle.Core;
 
-	/// <summary>
-	///     Extension point to allow the developer to use his implementation of <see cref = "IHandler" />
-	/// </summary>
 	public interface IHandlerFactory
 	{
 		IHandler Create(ComponentModel model);

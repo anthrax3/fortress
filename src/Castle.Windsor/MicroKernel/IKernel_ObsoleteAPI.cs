@@ -22,16 +22,10 @@ namespace Castle.MicroKernel
 
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{
-		/// <summary>
-		///   Returns the component instance by the key
-		/// </summary>
 		[Obsolete("Use Resolve<object>(key) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object this[String key] { get; }
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		/// </summary>
 		[Obsolete("Use Resolve(service) or generic strongly typed version instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object this[Type service] { get; }
@@ -126,54 +120,23 @@ namespace Castle.MicroKernel
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		void AddComponentWithExtendedProperties(String key, Type serviceType, Type classType, IDictionary extendedProperties);
 
-		/// <summary>
-		///   Adds a <see cref = "IFacility" /> to the kernel.
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "facility"></param>
-		/// <returns></returns>
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IKernel AddFacility(String key, IFacility facility);
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the kernel.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <param name = "key"></param>
 		[Obsolete("Use AddFacility<TFacility>() instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IKernel AddFacility<T>(String key) where T : IFacility, new();
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the kernel.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <param name = "key"></param>
-		/// <param name = "onCreate">The callback for creation.</param>
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IKernel AddFacility<T>(String key, Action<T> onCreate)
 			where T : IFacility, new();
 
-		/// <summary>
-		///   Returns the component instance by the component key
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "key">Key to resolve</param>
-		/// <param name = "argumentsAsAnonymousType">Arguments to resolve the services</param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object Resolve(String key, object argumentsAsAnonymousType);
 
-		/// <summary>
-		///   Returns the component instance by the component key
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, arguments) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object Resolve(String key, IDictionary arguments);

@@ -20,9 +20,6 @@ namespace Castle.Facilities.EventWiring
 
 	using Castle.Core;
 
-	/// <summary>
-	///   Collects information about subscribers for given event
-	/// </summary>
 	public class EventSubscribers
 	{
 		private readonly List<EventSubscriber> subscribers = new List<EventSubscriber>(3);

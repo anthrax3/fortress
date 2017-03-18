@@ -25,10 +25,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.MicroKernel.Proxy;
 	using Castle.MicroKernel.Util;
 
-	/// <summary>
-	///   Inspect the component for <c>InterceptorAttribute</c> and
-	///   the configuration for the interceptors node
-	/// </summary>
 	[Serializable]
 	public class InterceptorInspector : IContributeComponentModelConstruction
 	{

@@ -19,9 +19,6 @@ namespace CastleTests.Components
 	using Castle.Core;
 	using Castle.Windsor.Tests.Interceptors;
 
-	/// <summary>
-	///   Summary description for CalculatorServiceWithAttributes.
-	/// </summary>
 	[Interceptor(typeof(ResultModifierInterceptor))]
 	public class CalculatorServiceWithAttributes
 	{

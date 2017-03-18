@@ -19,10 +19,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	using System;
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Looks for a <see cref = "ConvertibleAttribute" /> on the type to be converted. 
-	///   If found, the TypeConverter defined by the attribute is used to perform the conversion.
-	/// </summary>
 	public class AttributeAwareConverter : AbstractTypeConverter
 	{
 		public override bool CanHandleType(Type type)

@@ -21,9 +21,6 @@ namespace Castle.Core.Tests.Mixins
 		int DoSomething();
 	}
 
-	/// <summary>
-	/// Summary description for SimpleMixin.
-	/// </summary>
 	[Serializable]
 	public class SimpleMixin : ISimpleMixin
 	{

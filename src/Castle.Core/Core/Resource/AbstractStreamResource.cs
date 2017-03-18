@@ -19,15 +19,8 @@ namespace Castle.Core.Core.Resource
 {
 	public delegate Stream StreamFactory();
 
-	/// <summary>
-	/// 
-	/// </summary>
 	public abstract class AbstractStreamResource : AbstractResource
 	{
-		/// <summary>
-		/// This returns a new stream instance each time it is called.
-		/// It is the responsibility of the caller to dispose of this stream
-		/// </summary>
 		private StreamFactory createStream;
 
 		~AbstractStreamResource()

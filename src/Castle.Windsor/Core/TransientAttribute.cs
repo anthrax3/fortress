@@ -16,16 +16,9 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Indicates that the target components wants a
-	///   transient lifestyle.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class TransientAttribute : LifestyleAttribute
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "TransientAttribute" /> class.
-		/// </summary>
 		public TransientAttribute() : base(LifestyleType.Transient)
 		{
 		}

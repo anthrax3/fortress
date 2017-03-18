@@ -14,16 +14,8 @@
 
 namespace Castle.Windsor
 {
-	/// <summary>
-	///   Gets the environment information (name). Implementors should 
-	///   use to define their environments and how those affect the configuration.
-	/// </summary>
 	public interface IEnvironmentInfo
 	{
-		/// <summary>
-		///   Gets the name of the environment.
-		/// </summary>
-		/// <returns></returns>
 		string GetEnvironmentName();
 	}
 }

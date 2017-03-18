@@ -26,20 +26,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 			get { return "properties"; }
 		}
 
-		///<summary>
-		///</summary>
-		///<param name = "nodeList"></param>
-		///<param name = "engine"></param>
-		///<example>
-		///  <code>
-		///    <properties>
-		///      <attributes>
-		///        <myAttribute>attributeValue</myAttribute>
-		///      </attributes>
-		///      <myProperty>propertyValue</myProperty>
-		///    </properties>
-		///  </code>
-		///</example>
 		public override void Process(IXmlProcessorNodeList nodeList, IXmlProcessorEngine engine)
 		{
 			var element = nodeList.Current as XmlElement;

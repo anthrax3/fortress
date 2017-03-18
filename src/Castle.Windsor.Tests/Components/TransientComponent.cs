@@ -16,9 +16,6 @@ namespace CastleTests.Components
 {
 	using Castle.Core;
 
-	/// <summary>
-	///   Summary description for TransientComponent.
-	/// </summary>
 	[Transient]
 	public class TransientComponent : IComponent
 	{

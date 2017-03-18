@@ -23,9 +23,6 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class InheritedInterfacesTestCase : BasePEVerifyTestCase
 	{
-		/// <summary>
-		/// See DYNPROXY-ISSUE-58 and DYNPROXY-ISSUE-77.
-		/// </summary>
 		[Test]
 		public void InheritedInterfaceWithTarget()
 		{

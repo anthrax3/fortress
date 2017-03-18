@@ -38,10 +38,6 @@ namespace Castle.Windsor.Diagnostics.DebuggerViews
 			this.details = details;
 		}
 
-		/// <summary>
-		///   Stupid name, but debugger views in Visual Studio display items in alphabetical order so if we want
-		///   to have that item on top its name must be alphabetically before <see cref = "Details" />
-		/// </summary>
 		[DebuggerDisplay("{masterDescription,nq}", Name = "{masterName,nq}")]
 		public object AMaster
 		{

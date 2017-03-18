@@ -24,9 +24,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	using System.Text;
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Convert a type name to a Type instance.
-	/// </summary>
 	[Serializable]
 	public class TypeNameConverter : AbstractTypeConverter
 	{

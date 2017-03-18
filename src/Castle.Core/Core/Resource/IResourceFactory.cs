@@ -16,40 +16,12 @@ using System;
 
 namespace Castle.Core.Core.Resource
 {
-	/// <summary>
-	/// Depicts the contract for resource factories.
-	/// </summary>
 	public interface IResourceFactory
 	{
-		/// <summary>
-		/// Used to check whether the resource factory
-		/// is able to deal with the given resource
-		/// identifier.
-		/// </summary>
-		/// <remarks>
-		/// Implementors should return <c>true</c>
-		/// only if the given identifier is supported
-		/// by the resource factory
-		/// </remarks>
-		/// <param name="uri"></param>
-		/// <returns></returns>
 		bool Accept(CustomUri uri);
 
-		/// <summary>
-		/// Creates an <see cref="IResource"/> instance
-		/// for the given resource identifier
-		/// </summary>
-		/// <param name="uri"></param>
-		/// <returns></returns>
 		IResource Create(CustomUri uri);
 
-		/// <summary>
-		/// Creates an <see cref="IResource"/> instance
-		/// for the given resource identifier
-		/// </summary>
-		/// <param name="uri"></param>
-		/// <param name="basePath"></param>
-		/// <returns></returns>
 		IResource Create(CustomUri uri, String basePath);
 	}
 }

@@ -17,22 +17,13 @@ using System.Collections.Generic;
 
 namespace Castle.Core.Core.Configuration
 {
-	/// <summary>
-	/// A collection of <see cref="IConfiguration"/> objects.
-	/// </summary>
 	[Serializable]
 	public class ConfigurationCollection : List<IConfiguration>
 	{
-		/// <summary>
-		/// Creates a new instance of <c>ConfigurationCollection</c>.
-		/// </summary>
 		public ConfigurationCollection()
 		{
 		}
 
-		/// <summary>
-		/// Creates a new instance of <c>ConfigurationCollection</c>.
-		/// </summary>
 		public ConfigurationCollection(IEnumerable<IConfiguration> value) : base(value)
 		{
 		}

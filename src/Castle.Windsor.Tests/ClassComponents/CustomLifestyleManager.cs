@@ -16,9 +16,6 @@ namespace Castle.MicroKernel.Tests.ClassComponents
 {
 	using Castle.MicroKernel.Lifestyle;
 
-	/// <summary>
-	///   Summary description for MyLifestyleHandler.
-	/// </summary>
 	public class CustomLifestyleManager : AbstractLifestyleManager
 	{
 		public override void Dispose()

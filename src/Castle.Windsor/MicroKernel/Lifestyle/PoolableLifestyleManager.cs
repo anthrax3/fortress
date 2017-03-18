@@ -21,9 +21,6 @@ namespace Castle.MicroKernel.Lifestyle
 	using Castle.MicroKernel.Lifestyle.Pool;
 	using Castle.MicroKernel.Registration;
 
-	/// <summary>
-	///   Manages a pool of objects.
-	/// </summary>
 	[Serializable]
 	public class PoolableLifestyleManager : AbstractLifestyleManager
 	{

@@ -17,9 +17,6 @@ namespace Castle.Core.Tests.Mixins
 		int Sum(int x, int y);
 	}
 
-	/// <summary>
-	/// Summary description for OtherMixin.
-	/// </summary>
 	[Serializable]
 	public class OtherMixin : IOtherMixin
 	{

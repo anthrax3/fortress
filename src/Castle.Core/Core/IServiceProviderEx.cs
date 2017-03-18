@@ -16,9 +16,6 @@ using System;
 
 namespace Castle.Core.Core
 {
-	/// <summary>
-	/// Increments <c>IServiceProvider</c> with a generic service resolution operation.
-	/// </summary>
 	public interface IServiceProviderEx : IServiceProvider
 	{
 		T GetService<T>() where T : class;

@@ -22,30 +22,16 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	[Serializable]
 	public class ConverterException : Exception
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ConverterException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
 		public ConverterException(string message) : base(message)
 		{
 			ExceptionHelper.SetUp(this);
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ConverterException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
-		/// <param name = "innerException">The inner exception.</param>
 		public ConverterException(string message, Exception innerException) : base(message, innerException)
 		{
 			ExceptionHelper.SetUp(this);
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ConverterException" /> class.
-		/// </summary>
-		/// <param name = "info">The object that holds the serialized object data.</param>
-		/// <param name = "context">The contextual information about the source or destination.</param>
 		public ConverterException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			ExceptionHelper.SetUp(this);

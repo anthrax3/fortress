@@ -16,10 +16,6 @@ namespace Castle.Windsor.Diagnostics
 {
 	using Castle.MicroKernel;
 
-	/// <summary>
-	///   Detects components that are not extending Windsor's infrastructure yet depend on the container which usually means they use the container as service locator
-	///   which is a bad practice and should be avoided. Consult the documentation for more details: http://j.mp/WindsorSL
-	/// </summary>
 	public interface IUsingContainerAsServiceLocatorDiagnostic : IDiagnostic<IHandler[]>
 	{
 	}

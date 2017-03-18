@@ -22,15 +22,6 @@ namespace Castle.Core.DynamicProxy
 		private readonly Dictionary<Type, int> mixinPositions = new Dictionary<Type, int>();
 		private readonly List<object> mixinsImpl = new List<object>();
 
-		/// <summary>
-		///   Because we need to cache the types based on the mixed in mixins, we do the following here:
-		///   - Get all the mixin interfaces
-		///   - Sort them by full name
-		///   - Return them by position
-		/// 
-		/// The idea is to have reproducible behavior for the case that mixins are registered in different orders.
-		/// This method is here because it is required 
-		/// </summary>
 		public MixinData(IEnumerable<object> mixinInstances)
 		{
 			if (mixinInstances != null)

@@ -14,9 +14,6 @@
 
 namespace CastleTests.Components
 {
-	/// <summary>
-	///   Summary description for CustomComponent.
-	/// </summary>
 	[CustomTestLifestyle]
 	public class CustomComponentWithCustomLifestyleAttribute : IComponent
 	{

@@ -16,29 +16,17 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Used to declare that a component wants interceptors acting on it.
-	///   Out of the box recognized only if applied on component's implementation class.
-	/// </summary>
 	[Serializable]
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
 	public class InterceptorAttribute : Attribute
 	{
 		private readonly InterceptorReference interceptorRef;
 
-		/// <summary>
-		///   Constructs the InterceptorAttribute pointing to a key to a interceptor
-		/// </summary>
-		/// <param name="componentKey"> </param>
 		public InterceptorAttribute(string componentKey)
 		{
 			interceptorRef = new InterceptorReference(componentKey);
 		}
 
-		/// <summary>
-		///   Constructs the InterceptorAttribute pointing to a service
-		/// </summary>
-		/// <param name="interceptorType"> </param>
 		public InterceptorAttribute(Type interceptorType)
 		{
 			interceptorRef = new InterceptorReference(interceptorType);

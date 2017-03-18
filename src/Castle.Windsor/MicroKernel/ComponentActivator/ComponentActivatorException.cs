@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.ComponentActivator
 
 	using Castle.Core;
 
-	/// <summary>
-	///   Exception thrown whe a component could not be activated. THis should come from the component activator.
-	/// </summary>
 	[Serializable]
 	public class ComponentActivatorException : ComponentResolutionException
 	{

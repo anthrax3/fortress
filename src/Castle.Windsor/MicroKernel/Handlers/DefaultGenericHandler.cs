@@ -229,26 +229,6 @@ namespace Castle.MicroKernel.Handlers
 			return true;
 		}
 
-		///<summary>
-		///  Clone some of the parent componentmodel properties to the generic subhandler.
-		///</summary>
-		///<remarks>
-		///  The following properties are copied: <list type = "bullet">
-		///                                         <item>
-		///                                           <description>
-		///                                             The
-		///                                             <see cref = "LifestyleType" />
-		///                                           </description>
-		///                                         </item>
-		///                                         <item>
-		///                                           <description>
-		///                                             The
-		///                                             <see cref = "ComponentModel.Interceptors" />
-		///                                           </description>
-		///                                         </item>
-		///                                       </list>
-		///</remarks>
-		///<param name = "newModel"> the subhandler </param>
 		private void CloneParentProperties(ComponentModel newModel)
 		{
 			// Inherits from LifeStyle's context.

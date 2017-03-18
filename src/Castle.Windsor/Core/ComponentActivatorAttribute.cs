@@ -16,27 +16,16 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Associates a custom activator with a component
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class ComponentActivatorAttribute : Attribute
 	{
 		private readonly Type componentActivatorType;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ComponentActivatorAttribute" /> class.
-		/// </summary>
-		/// <param name = "componentActivatorType">Type of the component activator.</param>
 		public ComponentActivatorAttribute(Type componentActivatorType)
 		{
 			this.componentActivatorType = componentActivatorType;
 		}
 
-		/// <summary>
-		///   Gets the type of the component activator.
-		/// </summary>
-		/// <value>The type of the component activator.</value>
 		public Type ComponentActivatorType
 		{
 			get { return componentActivatorType; }

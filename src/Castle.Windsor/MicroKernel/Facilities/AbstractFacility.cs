@@ -18,48 +18,23 @@ namespace Castle.MicroKernel.Facilities
 {
 	using System;
 
-	/// <summary>
-	///   Base class for facilities.
-	/// </summary>
 	public abstract class AbstractFacility : IFacility, IDisposable
 	{
 		private IConfiguration facilityConfig;
 		private IKernel kernel;
 
-		/// <summary>
-		///   Gets the facility configuration.
-		/// </summary>
-		/// <value>The <see cref = "IConfiguration" /> representing 
-		///   the facility configuration.</value>
 		protected IConfiguration FacilityConfig
 		{
 			get { return facilityConfig; }
 		}
 
-		/// <summary>
-		///   Gets the <see cref = "IKernel" /> where the facility is registered.
-		/// </summary>
-		/// <value>The <see cref = "IKernel" />.</value>
 		protected IKernel Kernel
 		{
 			get { return kernel; }
 		}
 
-		/// <summary>
-		///   The custom initialization for the Facility.
-		/// </summary>
-		/// <remarks>
-		///   It must be overridden.
-		/// </remarks>
 		protected abstract void Init();
 
-		/// <summary>
-		///   Performs the tasks associated with freeing, releasing, or resetting 
-		///   the facility resources.
-		/// </summary>
-		/// <remarks>
-		///   It can be overriden.
-		/// </remarks>
 		protected virtual void Dispose()
 		{
 		}
@@ -69,14 +44,6 @@ namespace Castle.MicroKernel.Facilities
 			Dispose();
 		}
 
-		/// <summary>
-		///   Initializes the facility. First it performs the initialization common for all 
-		///   facilities, setting the <see cref = "Kernel" /> and the 
-		///   <see cref = "FacilityConfig" />. After it, the <c>Init</c> method is invoked
-		///   and the custom initilization is perfomed.
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "facilityConfig"></param>
 		void IFacility.Init(IKernel kernel, IConfiguration facilityConfig)
 		{
 			this.kernel = kernel;
@@ -85,10 +52,6 @@ namespace Castle.MicroKernel.Facilities
 			Init();
 		}
 
-		/// <summary>
-		///   Terminates the Facility, invokes the <see cref = "Dispose" /> method and sets 
-		///   the Kernel to a null reference.
-		/// </summary>
 		void IFacility.Terminate()
 		{
 			Dispose();

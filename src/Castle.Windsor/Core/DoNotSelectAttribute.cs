@@ -16,10 +16,6 @@ namespace Castle.Core
 {
     using System;
 
-    /// <summary>
-    ///   Marks as constructor to be skipped and not be selected
-    ///   by the IoC container during new component activation
-    /// </summary>
     [AttributeUsage(AttributeTargets.Constructor)]
     public sealed class DoNotSelectAttribute : Attribute
     {

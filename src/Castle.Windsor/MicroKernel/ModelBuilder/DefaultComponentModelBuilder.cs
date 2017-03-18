@@ -22,56 +22,28 @@ namespace Castle.MicroKernel.ModelBuilder
 	using Castle.MicroKernel.ModelBuilder.Inspectors;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   Summary description for DefaultComponentModelBuilder.
-	/// </summary>
 	[Serializable]
 	public class DefaultComponentModelBuilder : IComponentModelBuilder
 	{
 		private readonly List<IContributeComponentModelConstruction> contributors = new List<IContributeComponentModelConstruction>();
 		private readonly IKernel kernel;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "DefaultComponentModelBuilder" /> class.
-		/// </summary>
-		/// <param name = "kernel">The kernel.</param>
 		public DefaultComponentModelBuilder(IKernel kernel)
 		{
 			this.kernel = kernel;
 			InitializeContributors();
 		}
 
-		/// <summary>
-		///   Gets the contributors.
-		/// </summary>
-		/// <value>The contributors.</value>
 		public IContributeComponentModelConstruction[] Contributors
 		{
 			get { return contributors.ToArray(); }
 		}
 
-		/// <summary>
-		///   "To give or supply in common with others; give to a
-		///   common fund or for a common purpose". The contributor
-		///   should inspect the component, or even the configuration
-		///   associated with the component, to add or change information
-		///   in the model that can be used later.
-		/// </summary>
-		/// <param name = "contributor"></param>
 		public void AddContributor(IContributeComponentModelConstruction contributor)
 		{
 			contributors.Add(contributor);
 		}
 
-		/// <summary>
-		///   Constructs a new ComponentModel by invoking
-		///   the registered contributors.
-		/// </summary>
-		/// <param name = "name"></param>
-		/// <param name = "services"></param>
-		/// <param name = "classType"></param>
-		/// <param name = "extendedProperties"></param>
-		/// <returns></returns>
 		public ComponentModel BuildModel(ComponentName name, Type[] services, Type classType, IDictionary extendedProperties)
 		{
 			var model = new ComponentModel(name, services, classType, extendedProperties);
@@ -104,18 +76,11 @@ namespace Castle.MicroKernel.ModelBuilder
 			return model;
 		}
 
-		/// <summary>
-		///   Removes the specified contributor
-		/// </summary>
-		/// <param name = "contributor"></param>
 		public void RemoveContributor(IContributeComponentModelConstruction contributor)
 		{
 			contributors.Remove(contributor);
 		}
 
-		/// <summary>
-		///   Initializes the default contributors.
-		/// </summary>
 		protected virtual void InitializeContributors()
 		{
 			var conversionManager = kernel.GetConversionManager();

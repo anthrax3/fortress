@@ -25,9 +25,6 @@ namespace Castle.Core
 	using Castle.Core.Internal;
 	using Castle.MicroKernel;
 
-	/// <summary>
-	///   Represents the collection of information and meta information collected about a component.
-	/// </summary>
 	[Serializable]
 	public sealed class ComponentModel : GraphNode
 	{
@@ -47,9 +44,6 @@ namespace Castle.Core
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private IDictionary customDependencies;
 
-		/// <summary>
-		///   Dependencies the kernel must resolve
-		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private DependencyModelCollection dependencies;
 
@@ -57,27 +51,15 @@ namespace Castle.Core
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private IDictionary extendedProperties;
 
-		/// <summary>
-		///   Interceptors associated
-		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private InterceptorReferenceCollection interceptors;
 
-		/// <summary>
-		///   External parameters
-		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private ParameterModelCollection parameters;
 
-		/// <summary>
-		///   All potential properties that can be setted by the kernel
-		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private PropertySetCollection properties;
 
-		/// <summary>
-		///   Constructs a ComponentModel
-		/// </summary>
 		public ComponentModel(ComponentName name, ICollection<Type> services, Type implementation, IDictionary extendedProperties)
 		{
 			componentName = Must.NotBeNull(name, "name");
@@ -100,32 +82,16 @@ namespace Castle.Core
 			internal set { componentName = Must.NotBeNull(value, "value"); }
 		}
 
-		/// <summary>
-		///   Gets or sets the configuration.
-		/// </summary>
-		/// <value> The configuration. </value>
 		public IConfiguration Configuration { get; set; }
 
-		/// <summary>
-		///   Gets the constructors candidates.
-		/// </summary>
-		/// <value> The constructors. </value>
 		[DebuggerDisplay("Count = {constructors.Count}")]
 		public ConstructorCandidateCollection Constructors
 		{
 			get { return constructors; }
 		}
 
-		/// <summary>
-		///   Gets or sets the custom component activator.
-		/// </summary>
-		/// <value> The custom component activator. </value>
 		public Type CustomComponentActivator { get; set; }
 
-		/// <summary>
-		///   Gets the custom dependencies.
-		/// </summary>
-		/// <value> The custom dependencies. </value>
 		[DebuggerDisplay("Count = {customDependencies.Count}")]
 		public IDictionary CustomDependencies
 		{
@@ -142,15 +108,8 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets or sets the custom lifestyle.
-		/// </summary>
-		/// <value> The custom lifestyle. </value>
 		public Type CustomLifestyle { get; set; }
 
-		/// <summary>
-		///   Dependencies are kept within constructors and properties. Others dependencies must be registered here, so the kernel (as a matter of fact the handler) can check them
-		/// </summary>
 		[DebuggerDisplay("Count = {dependencies.dependencies.Count}")]
 		public DependencyModelCollection Dependencies
 		{
@@ -167,10 +126,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets or sets the extended properties.
-		/// </summary>
-		/// <value> The extended properties. </value>
 		[DebuggerDisplay("Count = {extendedProperties.Count}")]
 		public IDictionary ExtendedProperties
 		{
@@ -222,21 +177,10 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets or sets the component implementation.
-		/// </summary>
-		/// <value> The implementation. </value>
 		public Type Implementation { get; set; }
 
-		/// <summary>
-		///   Gets or sets the strategy for inspecting public properties on the components
-		/// </summary>
 		public PropertiesInspectionBehavior InspectionBehavior { get; set; }
 
-		/// <summary>
-		///   Gets the interceptors.
-		/// </summary>
-		/// <value> The interceptors. </value>
 		[DebuggerDisplay("Count = {interceptors.list.Count}")]
 		public InterceptorReferenceCollection Interceptors
 		{
@@ -253,10 +197,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets the lifecycle steps.
-		/// </summary>
-		/// <value> The lifecycle steps. </value>
 		[DebuggerDisplay(
 			"Count = {(lifecycle.commission != null ? lifecycle.commission.Count : 0) + (lifecycle.decommission != null ? lifecycle.decommission.Count : 0)}"
 			)]
@@ -265,25 +205,14 @@ namespace Castle.Core
 			get { return lifecycle; }
 		}
 
-		/// <summary>
-		///   Gets or sets the lifestyle type.
-		/// </summary>
-		/// <value> The type of the lifestyle. </value>
 		public LifestyleType LifestyleType { get; set; }
 
-		/// <summary>
-		///   Sets or returns the component key
-		/// </summary>
 		public string Name
 		{
 			get { return componentName.Name; }
 			set { componentName.SetName(value); }
 		}
 
-		/// <summary>
-		///   Gets the parameter collection.
-		/// </summary>
-		/// <value> The parameters. </value>
 		public ParameterModelCollection Parameters
 		{
 			get
@@ -299,10 +228,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets the properties set.
-		/// </summary>
-		/// <value> The properties. </value>
 		[DebuggerDisplay("Count = {properties.Count}")]
 		public PropertySetCollection Properties
 		{
@@ -319,10 +244,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Gets or sets a value indicating whether the component requires generic arguments.
-		/// </summary>
-		/// <value> <c>true</c> if generic arguments are required; otherwise, <c>false</c> . </value>
 		public bool RequiresGenericArguments { get; set; }
 
 		[DebuggerDisplay("Count = {services.Count}")]
@@ -337,10 +258,6 @@ namespace Castle.Core
 			get { return parameters; }
 		}
 
-		/// <summary>
-		///   Adds constructor dependency to this <see cref="ComponentModel" />
-		/// </summary>
-		/// <param name="constructor"> </param>
 		public void AddConstructor(ConstructorCandidate constructor)
 		{
 			(Constructors as IMutableCollection<ConstructorCandidate>).Add(constructor);
@@ -350,20 +267,12 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Adds property dependency to this <see cref="ComponentModel" />
-		/// </summary>
-		/// <param name="property"> </param>
 		public void AddProperty(PropertySet property)
 		{
 			(Properties as IMutableCollection<PropertySet>).Add(property);
 			Dependencies.Add(property.Dependency);
 		}
 
-		/// <summary>
-		///   Add service to be exposed by this <see cref="ComponentModel" />
-		/// </summary>
-		/// <param name="type"> </param>
 		public void AddService(Type type)
 		{
 			if (type == null)
@@ -380,10 +289,6 @@ namespace Castle.Core
 			ComponentServicesUtil.AddService(services, type);
 		}
 
-		/// <summary>
-		///   Requires the selected property dependencies.
-		/// </summary>
-		/// <param name="selectors"> The property selector. </param>
 		public void Requires(params Predicate<PropertySet>[] selectors)
 		{
 			foreach (var property in Properties)
@@ -395,10 +300,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Requires the property dependencies of type <typeparamref name="D" /> .
-		/// </summary>
-		/// <typeparam name="D"> The dependency type. </typeparam>
 		public void Requires<D>() where D : class
 		{
 			Requires(p => p.Dependency.TargetItemType == typeof (D));

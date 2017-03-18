@@ -30,7 +30,6 @@ namespace Castle.Core.Internal
 			collection.Add(node);
 		}
 
-		/// <summary>The nodes that this node depends on</summary>
 		public GraphNode[] Dependents
 		{
 			get

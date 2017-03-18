@@ -16,9 +16,6 @@ namespace CastleTests.Components
 {
 	using System;
 
-	/// <summary>
-	///   Summary description for CalculatorService.
-	/// </summary>
 	public class CalculatorService : ICalcService
 	{
 		public bool Disposed

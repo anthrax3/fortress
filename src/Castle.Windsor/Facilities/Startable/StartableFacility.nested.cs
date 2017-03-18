@@ -53,7 +53,6 @@ namespace Castle.Facilities.Startable
 
 		private class LegacyStartFlag : StartFlag
 		{
-			/// <remarks>Don't check the waiting list while this flag is set as this could result in duplicate singletons.</remarks>
 			private bool inStart;
 
 			public override void Signal()
@@ -81,8 +80,6 @@ namespace Castle.Facilities.Startable
 				}
 			}
 
-			/// <summary>Request the component instance</summary>
-			/// <param name = "handler"></param>
 			private bool TryStart(IHandler handler)
 			{
 				try

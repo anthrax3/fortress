@@ -33,22 +33,11 @@ namespace Castle.Core.Core.Internal
 			return Array.FindAll(items, predicate);
 		}
 
-		/// <summary>
-		///   Checks whether or not collection is null or empty. Assumes colleciton can be safely enumerated multiple times.
-		/// </summary>
-		/// <param name = "this"></param>
-		/// <returns></returns>
 		public static bool IsNullOrEmpty(this IEnumerable @this)
 		{
 			return @this == null || @this.GetEnumerator().MoveNext() == false;
 		}
 
-		/// <summary>
-		///   Generates a HashCode for the contents for the list. Order of items does not matter.
-		/// </summary>
-		/// <typeparam name="T">The type of object contained within the list.</typeparam>
-		/// <param name="list">The list.</param>
-		/// <returns>The generated HashCode.</returns>
 		public static int GetContentsHashCode<T>(IList<T> list)
 		{
 			if (list == null)
@@ -69,13 +58,6 @@ namespace Castle.Core.Core.Internal
 			return result;
 		}
 
-		/// <summary>
-		///   Determines if two lists are equivalent. Equivalent lists have the same number of items and each item is found within the other regardless of respective position within each.
-		/// </summary>
-		/// <typeparam name="T">The type of object contained within the list.</typeparam>
-		/// <param name="listA">The first list.</param>
-		/// <param name="listB">The second list.</param>
-		/// <returns><c>True</c> if the two lists are equivalent.</returns>
 		public static bool AreEquivalent<T>(IList<T> listA, IList<T> listB)
 		{
 			if (listA == null && listB == null)

@@ -25,27 +25,18 @@ namespace Castle.MicroKernel.Registration
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class ComponentDependencyRegistrationExtensions
 	{
-		/// <summary>
-		///   Inserts a new named argument with given key. If an argument for this name already exists, it will be overwritten.
-		/// </summary>
 		public static IDictionary Insert(this IDictionary arguments, string key, object value)
 		{
 			arguments[key] = value;
 			return arguments;
 		}
 
-		/// <summary>
-		///   Inserts a new typed argument with given type. If an argument for this type already exists, it will be overwritten.
-		/// </summary>
 		public static IDictionary Insert(this IDictionary arguments, Type dependencyType, object value)
 		{
 			arguments[dependencyType] = value;
 			return arguments;
 		}
 
-		/// <summary>
-		///   Inserts a set of typed arguments. Property names of the anonymous type will be used as key.
-		/// </summary>
 		public static IDictionary InsertAnonymous(this IDictionary arguments, object namedArgumentsAsAnonymousType)
 		{
 			foreach (DictionaryEntry item in new ReflectionBasedDictionaryAdapter(namedArgumentsAsAnonymousType))
@@ -56,18 +47,12 @@ namespace Castle.MicroKernel.Registration
 			return arguments;
 		}
 
-		/// <summary>
-		///   Inserts a new typed argument with given type. If an argument for this type already exists, it will be overwritten.
-		/// </summary>
 		public static IDictionary InsertTyped<TDependencyType>(this IDictionary arguments, TDependencyType value)
 		{
 			arguments[typeof(TDependencyType)] = value;
 			return arguments;
 		}
 
-		/// <summary>
-		///   Inserts a set of typed arguments. Actual type of the arguments will be used as key.
-		/// </summary>
 		public static IDictionary InsertTypedCollection(this IDictionary arguments, object[] typedArgumentsArray)
 		{
 			foreach (var item in typedArgumentsArray)

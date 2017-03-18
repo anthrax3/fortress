@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.Lifestyle
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Only one instance is created first time an instance of the component is requested, and it is then reused for all subseque.
-	/// </summary>
 	[Serializable]
 	public class SingletonLifestyleManager : AbstractLifestyleManager, IContextLifestyleManager
 	{

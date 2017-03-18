@@ -23,9 +23,6 @@ namespace Castle.MicroKernel
 	using Castle.Core;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Represents collection of arguments used when resolving a component.
-	/// </summary>
 	public class Arguments : IDictionary
 	                         , ICloneable
 	{

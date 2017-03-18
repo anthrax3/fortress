@@ -16,16 +16,9 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Indicates that the target components wants a
-	///   per thread lifestyle.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class PerThreadAttribute : LifestyleAttribute
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "PerThreadAttribute" /> class.
-		/// </summary>
 		public PerThreadAttribute() : base(LifestyleType.Thread)
 		{
 		}

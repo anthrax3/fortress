@@ -14,33 +14,20 @@
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	/// <summary>
-	/// Summary description for IMapper.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
 	public interface IMapper<T>
 	{
 	}
 
-	/// <summary>
-	/// Summary description for CommonImpl1Mapper.
-	/// </summary>
 	public class CommonImpl1Mapper : IMapper<CommonImpl1>
 	{
 	}
 
-	/// <summary>
-	/// Summary description for CommonImpl2Mapper.
-	/// </summary>
 	public class CommonImpl2Mapper : IMapper<CommonImpl2>
 	{
 	}
 
 	public interface IGenericMapper<T>{}
 
-	/// <summary>
-	/// Summary description for CommonImpl1Mapper.
-	/// </summary>
 	public class GenericMapper<T> : IGenericMapper<IGenericClassWithParameter<T>>
 	{
 	}

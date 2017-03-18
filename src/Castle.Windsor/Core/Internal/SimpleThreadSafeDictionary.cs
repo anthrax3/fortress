@@ -20,11 +20,6 @@ namespace Castle.Core.Internal
 	using System.Collections.Generic;
 	using System.Linq;
 
-	/// <summary>
-	///   Simple type for thread safe adding/reading to/from keyed store. The difference between this and built in concurrent dictionary is that in this case adding is happening under a lock so never more than one thread will be adding at a time.
-	/// </summary>
-	/// <typeparam name="TKey"> </typeparam>
-	/// <typeparam name="TValue"> </typeparam>
 	public class SimpleThreadSafeDictionary<TKey, TValue>
 	{
 		private readonly Dictionary<TKey, TValue> inner = new Dictionary<TKey, TValue>();
@@ -38,10 +33,6 @@ namespace Castle.Core.Internal
 			}
 		}
 
-		/// <summary>
-		///   Returns all values and clears the dictionary
-		/// </summary>
-		/// <returns> </returns>
 		public TValue[] EjectAllValues()
 		{
 			using (@lock.ForWriting())

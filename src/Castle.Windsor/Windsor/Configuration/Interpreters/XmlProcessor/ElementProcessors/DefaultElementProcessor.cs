@@ -30,11 +30,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 			get { return ""; }
 		}
 
-		/// <summary>
-		///   Processes the specified node list.
-		/// </summary>
-		/// <param name = "nodeList">The node list.</param>
-		/// <param name = "engine">The engine.</param>
 		public override void Process(IXmlProcessorNodeList nodeList, IXmlProcessorEngine engine)
 		{
 			var element = (XmlElement)nodeList.Current;
@@ -44,15 +39,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 			engine.DispatchProcessAll(new DefaultXmlProcessorNodeList(element.ChildNodes));
 		}
 
-		/// <summary>
-		///   Processes element attributes.
-		///   if the attribute is include will append to the element
-		///   all contents from the file.
-		///   if the attribute has a property reference the reference will be
-		///   expanded
-		/// </summary>
-		/// <param name = "element">The element.</param>
-		/// <param name = "engine"></param>
 		private static void ProcessAttributes(XmlElement element, IXmlProcessorEngine engine)
 		{
 			ProcessIncludeAttribute(element, engine);

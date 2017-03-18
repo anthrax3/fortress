@@ -16,11 +16,6 @@ using Castle.Core.Core.Configuration;
 
 namespace Castle.MicroKernel.SubSystems.Conversion
 {
-	/// <summary>
-	///   This interface is needed because we want to isolate ourself from
-	///   the generic parameters, so we can work type safe inside the implementations,
-	///   and still call from non generic types outside.
-	/// </summary>
 	public interface IGenericCollectionConverterHelper
 	{
 		object ConvertConfigurationToCollection(IConfiguration configuration);

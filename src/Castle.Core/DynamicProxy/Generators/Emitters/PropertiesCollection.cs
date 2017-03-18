@@ -16,9 +16,6 @@ using System.Collections.ObjectModel;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	/// <summary>
-	///   Summary description for PropertiesCollection.
-	/// </summary>
 	public class PropertiesCollection : Collection<PropertyEmitter>
 	{
 	}

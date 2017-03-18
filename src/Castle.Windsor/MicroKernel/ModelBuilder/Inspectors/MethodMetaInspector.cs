@@ -22,22 +22,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.Core;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   Base for inspectors that want configuration associated with methods.
-	///   For each child a <see cref = "MethodMetaModel" /> is created
-	///   and added to ComponentModel's methods collection
-	/// </summary>
-	/// <remarks>
-	///   Implementors should override the <see cref = "ObtainNodeName" /> return
-	///   the name of the node to be inspected. For example:
-	///   <code>
-	///     <![CDATA[
-	///   <transactions>
-	///     <method name="Save" transaction="requires" />
-	///   </transactions>
-	/// ]]>
-	///   </code>
-	/// </remarks>
 	public abstract class MethodMetaInspector : IContributeComponentModelConstruction
 	{
 		private static readonly BindingFlags AllMethods =

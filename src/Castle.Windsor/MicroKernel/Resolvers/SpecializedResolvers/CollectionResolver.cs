@@ -21,13 +21,6 @@ namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   More generic alternative to <see cref = "ArrayResolver" /> and <see cref = "ListResolver" />.
-	///   It supports arrays as well as any generic interface type assignable from arrays.
-	/// </summary>
-	/// <remarks>
-	///   The collection instance that is provided is read only, even for interfaces like <see cref = "IList{T}" />
-	/// </remarks>
 	public class CollectionResolver : ISubDependencyResolver
 	{
 		protected readonly bool allowEmptyCollections;

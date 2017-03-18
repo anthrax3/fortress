@@ -22,19 +22,9 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.LifecycleConcerns;
 
-	/// <summary>
-	///   Inspects the type looking for interfaces that constitutes
-	///   lifecycle interfaces, defined in the Castle.Model namespace.
-	/// </summary>
 	[Serializable]
 	public class LifecycleModelInspector : IContributeComponentModelConstruction
 	{
-		/// <summary>
-		///   Checks if the type implements <see cref = "IInitializable" /> and or
-		///   <see cref = "IDisposable" /> interfaces.
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "model"></param>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model == null)

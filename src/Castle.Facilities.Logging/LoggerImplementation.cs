@@ -16,9 +16,6 @@ using Castle.Core.Core.Logging;
 
 namespace Castle.Facilities.Logging
 {
-	/// <summary>
-	///   The supported <see cref = "ILogger" /> implementations
-	/// </summary>
 	public enum LoggerImplementation
 	{
 		Custom,

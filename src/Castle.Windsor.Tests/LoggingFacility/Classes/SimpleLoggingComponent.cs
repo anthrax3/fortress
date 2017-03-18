@@ -16,9 +16,6 @@ using Castle.Core.Core.Logging;
 
 namespace Castle.Facilities.Logging.Tests.Classes
 {
-	/// <summary>
-	/// Summary description for SimpleLoggingComponent.
-	/// </summary>
 	public class SimpleLoggingComponent
 	{
 		private ILogger logger;

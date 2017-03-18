@@ -66,11 +66,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 			return ++index < nodes.Count;
 		}
 
-		/// <summary>
-		///   Make a shallow copy of the nodeList.
-		/// </summary>
-		/// <param name = "nodeList">The nodeList to be copied.</param>
-		/// <returns></returns>
 		protected IList<XmlNode> CloneNodeList(XmlNodeList nodeList)
 		{
 			IList<XmlNode> nodes = new List<XmlNode>(nodeList.Count);

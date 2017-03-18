@@ -16,21 +16,10 @@ using Castle.Core.Core.Configuration;
 
 namespace Castle.MicroKernel
 {
-	/// <summary>
-	///   Unit of extension. A facility should use 
-	///   the extension points offered by the kernel
-	///   to augment its functionality.
-	/// </summary>
 	public interface IFacility
 	{
-		/// <summary>
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "facilityConfig"></param>
 		void Init(IKernel kernel, IConfiguration facilityConfig);
 
-		/// <summary>
-		/// </summary>
 		void Terminate();
 	}
 }

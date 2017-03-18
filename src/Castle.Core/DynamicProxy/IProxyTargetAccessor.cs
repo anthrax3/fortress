@@ -14,22 +14,10 @@
 
 namespace Castle.Core.DynamicProxy
 {
-	/// <summary>
-	///   Exposes access to the target object and interceptors of proxy objects.
-	///   This is a DynamicProxy infrastructure interface and should not be implemented yourself.
-	/// </summary>
 	public interface IProxyTargetAccessor
 	{
-		/// <summary>
-		///   Get the proxy target (note that null is a valid target!)
-		/// </summary>
-		/// <returns></returns>
 		object DynProxyGetTarget();
 
-		/// <summary>
-		///   Gets the interceptors for the proxy
-		/// </summary>
-		/// <returns></returns>
 		IInterceptor[] GetInterceptors();
 	}
 }

@@ -18,19 +18,11 @@ namespace CastleTests.Components
 	{
 		private readonly string name;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ComponentWithStringProperty" /> class.
-		/// </summary>
-		/// <param name = "name">The name.</param>
 		public ComponentWithStringProperty(string name)
 		{
 			this.name = name;
 		}
 
-		/// <summary>
-		///   Gets the name.
-		/// </summary>
-		/// <value>The name.</value>
 		public string Name
 		{
 			get { return name; }

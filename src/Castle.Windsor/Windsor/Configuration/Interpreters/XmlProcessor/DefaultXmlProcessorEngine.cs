@@ -40,19 +40,10 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 
 		private readonly IResourceSubSystem resourceSubSystem;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "DefaultXmlProcessorEngine" /> class.
-		/// </summary>
-		/// <param name = "environmentName">Name of the environment.</param>
 		public DefaultXmlProcessorEngine(string environmentName) : this(environmentName, new DefaultResourceSubSystem())
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "DefaultXmlProcessorEngine" /> class.
-		/// </summary>
-		/// <param name = "environmentName">Name of the environment.</param>
-		/// <param name = "resourceSubSystem">The resource sub system.</param>
 		public DefaultXmlProcessorEngine(string environmentName, IResourceSubSystem resourceSubSystem)
 		{
 			AddEnvNameAsFlag(environmentName);
@@ -86,11 +77,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 			properties[content.Name] = content;
 		}
 
-		/// <summary>
-		///   Processes the element.
-		/// </summary>
-		/// <param name = "nodeList">The element.</param>
-		/// <returns></returns>
 		public void DispatchProcessAll(IXmlProcessorNodeList nodeList)
 		{
 			while (nodeList.MoveNext())
@@ -99,11 +85,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 			}
 		}
 
-		/// <summary>
-		///   Processes the element.
-		/// </summary>
-		/// <param name = "nodeList">The element.</param>
-		/// <returns></returns>
 		public void DispatchProcessCurrent(IXmlProcessorNodeList nodeList)
 		{
 			var processor = GetProcessor(nodeList.Current);

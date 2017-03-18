@@ -22,10 +22,6 @@ namespace Castle.Windsor.Configuration.Interpreters
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.SubSystems.Configuration;
 
-	/// <summary>
-	///   Provides common methods for those who wants 
-	///   to implement <see cref = "IConfigurationInterpreter" />
-	/// </summary>
 	public abstract class AbstractInterpreter : IConfigurationInterpreter
 	{
 		protected static readonly string ContainersNodeName = "containers";
@@ -60,14 +56,6 @@ namespace Castle.Windsor.Configuration.Interpreters
 		{
 		}
 
-		/// <summary>
-		///   Should obtain the contents from the resource,
-		///   interpret it and populate the <see cref = "IConfigurationStore" />
-		///   accordingly.
-		/// </summary>
-		/// <param name = "resource"></param>
-		/// <param name = "store"></param>
-		/// <param name = "kernel"></param>
 		public abstract void ProcessResource(IResource resource, IConfigurationStore store, IKernel kernel);
 
 		protected void PushResource(IResource resource)
@@ -93,20 +81,11 @@ namespace Castle.Windsor.Configuration.Interpreters
 			}
 		}
 
-		/// <summary>
-		///   Exposes the reference to <see cref = "IResource" />
-		///   which the interpreter is likely to hold
-		/// </summary>
-		/// <value></value>
 		public IResource Source
 		{
 			get { return source; }
 		}
 
-		/// <summary>
-		///   Gets or sets the name of the environment.
-		/// </summary>
-		/// <value>The name of the environment.</value>
 		public string EnvironmentName { get; set; }
 
 		protected static void AddChildContainerConfig(string name, IConfiguration childContainer, IConfigurationStore store)

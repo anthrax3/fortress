@@ -16,9 +16,6 @@ namespace Castle.MicroKernel.Tests.ClassComponents
 {
 	using System;
 
-	/// <summary>
-	/// Summary description for ICustomer.
-	/// </summary>
 	public interface ICustomer
 	{
 		String Name { get; set; }

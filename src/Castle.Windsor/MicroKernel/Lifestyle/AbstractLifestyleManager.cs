@@ -20,9 +20,6 @@ namespace Castle.MicroKernel.Lifestyle
 	using Castle.Core;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Base implementation of <see cref="ILifestyleManager"/>
-	/// </summary>
 	[Serializable]
 	public abstract class AbstractLifestyleManager : ILifestyleManager
 	{
@@ -45,11 +42,6 @@ namespace Castle.MicroKernel.Lifestyle
 			get { return model; }
 		}
 
-		/// <summary>
-		///   Invoked when the container gets disposed. The container will not call it multiple times in multithreaded environments.
-		///   However it may be called at the same time when some out of band release mechanism is in progress. Resolving those potential
-		///   issues is the task of implementors
-		/// </summary>
 		public abstract void Dispose();
 
 		public virtual void Init(IComponentActivator componentActivator, IKernel kernel, ComponentModel model)

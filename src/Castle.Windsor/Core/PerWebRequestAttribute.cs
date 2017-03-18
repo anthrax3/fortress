@@ -16,10 +16,6 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Indicates that the target components wants a
-	///   per web request lifestyle.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class PerWebRequestAttribute : LifestyleAttribute
 	{

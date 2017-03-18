@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.SubSystems.Resource
 	using System;
 	using System.Collections.Generic;
 
-	/// <summary>
-	///   Pendent
-	/// </summary>
 	public class DefaultResourceSubSystem : AbstractSubSystem, IResourceSubSystem
 	{
 		private readonly List<IResourceFactory> resourceFactories = new List<IResourceFactory>();

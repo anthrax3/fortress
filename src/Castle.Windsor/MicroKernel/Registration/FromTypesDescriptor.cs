@@ -17,9 +17,6 @@ namespace Castle.MicroKernel.Registration
 	using System;
 	using System.Collections.Generic;
 
-	/// <summary>
-	///   Selects an existing set of types to register.
-	/// </summary>
 	public class FromTypesDescriptor : FromDescriptor
 	{
 		private readonly IEnumerable<Type> types;

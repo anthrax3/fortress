@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.LifecycleConcerns
 
 	using Castle.Core;
 
-	/// <summary>
-	///   Summary description for SupportInitializeConcern.
-	/// </summary>
 	[Serializable]
 	public class SupportInitializeConcern : ICommissionConcern
 	{

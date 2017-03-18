@@ -14,9 +14,6 @@
 
 namespace Castle.Core.Internal
 {
-	/// <summary>
-	///   Abstract representation of a vertex.
-	/// </summary>
 	public interface IVertex
 	{
 		IVertex[] Adjacencies { get; }

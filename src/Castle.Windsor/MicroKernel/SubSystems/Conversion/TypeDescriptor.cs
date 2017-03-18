@@ -22,11 +22,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 
 	using Castle.Core.Internal;
 	
-	/// <summary>
-	/// Our own minimalistic implementation of TypeDescriptor class, which does not exist in Silverlight.
-	/// It exists solely to support functionality of <see cref="ComponentModelConverter"/> and does not provide
-	/// full functionality of the actually thing from the full .NET framework.
-	/// </summary>
 	public class TypeDescriptor
 	{
 		private static readonly Lock @lock = Lock.Create();

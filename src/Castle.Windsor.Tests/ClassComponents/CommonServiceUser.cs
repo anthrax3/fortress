@@ -14,9 +14,6 @@
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	/// <summary>
-	/// Summary description for CommonServiceUser.
-	/// </summary>
 	public class CommonServiceUser
 	{
 		private readonly ICommon common;

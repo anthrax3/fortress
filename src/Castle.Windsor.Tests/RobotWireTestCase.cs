@@ -21,10 +21,6 @@ namespace Castle.Windsor.Tests
 
 	using NUnit.Framework;
 
-	/// <summary>
-	/// Check for existence of any problem, as 
-	/// reported http://forum.castleproject.org/posts/list/214.page
-	/// </summary>
 	[TestFixture]
 	public class RobotWireTestCase
 	{

@@ -21,9 +21,6 @@ namespace Castle.Core
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///     Collection of <see cref = "ConstructorCandidate" />
-	/// </summary>
 	[Serializable]
 	public class ConstructorCandidateCollection : IMutableCollection<ConstructorCandidate>
 	{

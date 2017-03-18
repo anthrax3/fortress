@@ -20,9 +20,6 @@ namespace Castle.MicroKernel
 	using Castle.Core;
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Exception thrown when resolution process for a component was unsuccessful at some point for whatever reason.
-	/// </summary>
 	[Serializable]
 	public class ComponentResolutionException : Exception
 	{

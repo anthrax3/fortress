@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.Facilities
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Base exception to be used by facilities.
-	/// </summary>
 	[Serializable]
 	public class FacilityException : Exception
 	{

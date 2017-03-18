@@ -23,11 +23,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 
 	public class DefaultTextNodeProcessor : AbstractXmlNodeProcessor
 	{
-		/// <summary>
-		///   Properties names can contain a-zA-Z0-9_. 
-		///   i.e. #!{ my_node_name } || #{ my.node.name }
-		///   spaces are trimmed
-		/// </summary>
 		private static readonly Regex PropertyValidationRegExp = new Regex(@"(\#!?\{\s*((?:\w|\.)+)\s*\})", RegexOptions.Compiled);
 
 		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.CDATA, XmlNodeType.Text };
@@ -49,12 +44,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 			ProcessString(node, node.Value, engine);
 		}
 
-		/// <summary>
-		///   Processes the string.
-		/// </summary>
-		/// <param name = "node">The node.</param>
-		/// <param name = "value">The value.</param>
-		/// <param name = "engine">The context.</param>
 		public void ProcessString(XmlNode node, string value, IXmlProcessorEngine engine)
 		{
 			var fragment = CreateFragment(node);

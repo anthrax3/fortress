@@ -18,10 +18,6 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Represents a parameter. Usually the parameter
-	///   comes from the external world, ie, an external configuration.
-	/// </summary>
 	[Serializable]
 	public class ParameterModel
 	{
@@ -29,50 +25,28 @@ namespace Castle.Core
 		private readonly String name;
 		private readonly String value;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ParameterModel" /> class.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "value">The value.</param>
 		public ParameterModel(String name, String value)
 		{
 			this.name = name;
 			this.value = value;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ParameterModel" /> class.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "value">The value.</param>
 		public ParameterModel(String name, IConfiguration value)
 		{
 			this.name = name;
 			configValue = value;
 		}
 
-		/// <summary>
-		///   Gets the config value.
-		/// </summary>
-		/// <value>The config value.</value>
 		public IConfiguration ConfigValue
 		{
 			get { return configValue; }
 		}
 
-		/// <summary>
-		///   Gets the name.
-		/// </summary>
-		/// <value>The name.</value>
 		public String Name
 		{
 			get { return name; }
 		}
 
-		/// <summary>
-		///   Gets the value.
-		/// </summary>
-		/// <value>The value.</value>
 		public String Value
 		{
 			get { return value; }

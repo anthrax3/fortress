@@ -17,9 +17,6 @@ using System.Runtime.Serialization;
 
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
-	/// <summary>
-	/// Summary description for MySerializableClass.
-	/// </summary>
 	[Serializable]
 	public class MySerializableClass
 	{

@@ -26,9 +26,6 @@ namespace Castle.Facilities.Logging
 	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   A facility for logging support.
-	/// </summary>
 	public class LoggingFacility : AbstractFacility
 	{
 		private static readonly String ExtendedLog4NetLoggerFactoryTypeName =
@@ -62,46 +59,23 @@ namespace Castle.Facilities.Logging
 		private string logName;
 		private bool configuredExternally;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref="LoggingFacility" /> class.
-		/// </summary>
 		public LoggingFacility()
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref="LoggingFacility" /> class.
-		/// </summary>
-		/// <param name="loggingApi"> The LoggerImplementation that should be used </param>
 		public LoggingFacility(LoggerImplementation loggingApi) : this(loggingApi, null)
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref="LoggingFacility" /> class.
-		/// </summary>
-		/// <param name="loggingApi"> The LoggerImplementation that should be used </param>
-		/// <param name="configFile"> The configuration file that should be used by the chosen LoggerImplementation </param>
 		public LoggingFacility(LoggerImplementation loggingApi, string configFile) : this(loggingApi, null, configFile)
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref="LoggingFacility" /> class using a custom LoggerImplementation
-		/// </summary>
-		/// <param name="configFile"> The configuration file that should be used by the chosen LoggerImplementation </param>
-		/// <param name="customLoggerFactory"> The type name of the type of the custom logger factory. </param>
 		public LoggingFacility(string customLoggerFactory, string configFile)
 			: this(LoggerImplementation.Custom, customLoggerFactory, configFile)
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref="LoggingFacility" /> class.
-		/// </summary>
-		/// <param name="loggingApi"> The LoggerImplementation that should be used </param>
-		/// <param name="configFile"> The configuration file that should be used by the chosen LoggerImplementation </param>
-		/// <param name="customLoggerFactory"> The type name of the type of the custom logger factory. (only used when loggingApi is set to LoggerImplementation.Custom) </param>
 		public LoggingFacility(LoggerImplementation loggingApi, string customLoggerFactory, string configFile)
 		{
 			loggerImplementation = loggingApi;
@@ -183,10 +157,6 @@ namespace Castle.Facilities.Logging
 			return LogUsing(LoggerImplementation.NLog).WithConfig(configFile);
 		}
 
-		/// <summary>
-		///   loads configuration from current AppDomain's config file (aka web.config/app.config)
-		/// </summary>
-		/// <returns> </returns>
 		public LoggingFacility WithAppConfig()
 		{
 			configFileName = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;

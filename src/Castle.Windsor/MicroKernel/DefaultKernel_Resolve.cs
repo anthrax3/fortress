@@ -25,196 +25,87 @@ namespace Castle.MicroKernel
 
 	public partial class DefaultKernel
 	{
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <returns></returns>
 		public virtual object Resolve(String key, Type service)
 		{
 			return (this as IKernelInternal).Resolve(key, service, null, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public virtual object Resolve(String key, Type service, IDictionary arguments)
 		{
 			return (this as IKernelInternal).Resolve(key, service, arguments, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public T Resolve<T>(IDictionary arguments)
 		{
 			return (T)Resolve(typeof(T), arguments);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public T Resolve<T>(object argumentsAsAnonymousType)
 		{
 			return (T)Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns the component instance by the component key
-		/// </summary>
-		/// <returns></returns>
 		public T Resolve<T>()
 		{
 			return (T)Resolve(typeof(T), null);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key">Component's key</param>
-		/// <typeparam name = "T">Service type</typeparam>
-		/// <returns>
-		///   The Component instance
-		/// </returns>
 		public T Resolve<T>(String key)
 		{
 			return (T)(this as IKernelInternal).Resolve(key, typeof(T), arguments: null, policy: ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <typeparam name = "T">Service type</typeparam>
-		/// <param name = "key">Component's key</param>
-		/// <param name = "arguments"></param>
-		/// <returns>
-		///   The Component instance
-		/// </returns>
 		public T Resolve<T>(String key, IDictionary arguments)
 		{
 			return (T)(this as IKernelInternal).Resolve(key, typeof(T), arguments, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		/// </summary>
 		public object Resolve(Type service)
 		{
 			return (this as IKernelInternal).Resolve(service, null, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "service"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public object Resolve(Type service, IDictionary arguments)
 		{
 			return (this as IKernelInternal).Resolve(service, arguments, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the service type
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "service"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public object Resolve(Type service, object argumentsAsAnonymousType)
 		{
 			return Resolve(service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		/// <summary>
-		///   Returns all the valid component instances by
-		///   the service type
-		/// </summary>
-		/// <param name = "service">The service type</param>
 		public Array ResolveAll(Type service)
 		{
 			return (this as IKernelInternal).ResolveAll(service, null, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns all the valid component instances by
-		///   the service type
-		/// </summary>
-		/// <param name = "service">The service type</param>
-		/// <param name = "arguments">
-		///   Arguments to resolve the services
-		/// </param>
 		public Array ResolveAll(Type service, IDictionary arguments)
 		{
 			return (this as IKernelInternal).ResolveAll(service, arguments, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns all the valid component instances by
-		///   the service type
-		/// </summary>
-		/// <param name = "service">The service type</param>
-		/// <param name = "argumentsAsAnonymousType">
-		///   Arguments to resolve the services
-		/// </param>
 		public Array ResolveAll(Type service, object argumentsAsAnonymousType)
 		{
 			return (this as IKernelInternal).ResolveAll(service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType), ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns component instances that implement TService
-		/// </summary>
-		/// <typeparam name = "TService"></typeparam>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		public TService[] ResolveAll<TService>(object argumentsAsAnonymousType)
 		{
 			return
 				(TService[])(this as IKernelInternal).ResolveAll(typeof(TService), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType), ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns component instances that implement TService
-		/// </summary>
-		/// <typeparam name = "TService"></typeparam>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		public TService[] ResolveAll<TService>(IDictionary arguments)
 		{
 			return (TService[])(this as IKernelInternal).ResolveAll(typeof(TService), arguments, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns component instances that implement TService
-		/// </summary>
-		/// <typeparam name = "TService"></typeparam>
-		/// <returns></returns>
 		public TService[] ResolveAll<TService>()
 		{
 			return (TService[])(this as IKernelInternal).ResolveAll(typeof(TService), null, ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "service"></param>
-		/// <param name = "arguments"></param>
-		/// <param name = "policy"></param>
-		/// <returns></returns>
 		object IKernelInternal.Resolve(String key, Type service, IDictionary arguments, IReleasePolicy policy)
 		{
 			var handler = (this as IKernelInternal).LoadHandlerByName(key, service, arguments);

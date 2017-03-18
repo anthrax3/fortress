@@ -19,11 +19,6 @@ namespace Castle.MicroKernel
 
 	using Castle.Core;
 
-	/// <summary>
-	///   Default implementation of <see cref = "IKernel" />. 
-	///   This implementation is complete and also support a kernel 
-	///   hierarchy (sub containers).
-	/// </summary>
 	public partial class DefaultKernel
 	{
 		private readonly object handlersChangedLock = new object();

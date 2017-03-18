@@ -20,9 +20,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region Node
 
-	/// <summary>
-	///   Represents a configuration child.
-	/// </summary>
 	public abstract class Node
 	{
 		private readonly String name;
@@ -37,10 +34,6 @@ namespace Castle.MicroKernel.Registration
 			get { return name; }
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public abstract void ApplyTo(IConfiguration configuration);
 	}
 
@@ -48,9 +41,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region Attribute
 
-	/// <summary>
-	///   Represents a configuration attribute.
-	/// </summary>
 	public class Attrib : Node
 	{
 		private readonly String value;
@@ -61,20 +51,11 @@ namespace Castle.MicroKernel.Registration
 			this.value = value;
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public override void ApplyTo(IConfiguration configuration)
 		{
 			configuration.Attributes.Add(Name, value);
 		}
 
-		/// <summary>
-		///   Create a <see cref = "NamedAttribute" /> with name.
-		/// </summary>
-		/// <param name = "name">The attribute name.</param>
-		/// <returns>The new <see cref = "NamedAttribute" /></returns>
 		public static NamedAttribute ForName(String name)
 		{
 			return new NamedAttribute(name);
@@ -85,9 +66,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region NamedChild
 
-	/// <summary>
-	///   Represents a named attribute.
-	/// </summary>
 	public class NamedAttribute
 	{
 		private readonly String name;
@@ -97,21 +75,11 @@ namespace Castle.MicroKernel.Registration
 			this.name = name;
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "Attribute" /> with name/value.
-		/// </summary>
-		/// <param name = "value">The attribute value.</param>
-		/// <returns>The new <see cref = "SimpleChild" /></returns>
 		public Attrib Eq(String value)
 		{
 			return new Attrib(name, value);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "Attribute" /> with name/value.
-		/// </summary>
-		/// <param name = "value">The attribute value.</param>
-		/// <returns>The new <see cref = "SimpleChild" /></returns>
 		public Attrib Eq(object value)
 		{
 			var valueStr = (value != null) ? value.ToString() : String.Empty;
@@ -123,16 +91,8 @@ namespace Castle.MicroKernel.Registration
 
 	#region Child 
 
-	/// <summary>
-	///   Represents a configuration child.
-	/// </summary>
 	public abstract class Child
 	{
-		/// <summary>
-		///   Create a <see cref = "NamedChild" /> with name.
-		/// </summary>
-		/// <param name = "name">The child name.</param>
-		/// <returns>The new <see cref = "NamedChild" /></returns>
 		public static NamedChild ForName(String name)
 		{
 			return new NamedChild(name);
@@ -143,9 +103,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region NamedChild
 
-	/// <summary>
-	///   Represents a named child.
-	/// </summary>
 	public class NamedChild : Node
 	{
 		internal NamedChild(String name)
@@ -153,52 +110,28 @@ namespace Castle.MicroKernel.Registration
 		{
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public override void ApplyTo(IConfiguration configuration)
 		{
 			var node = new MutableConfiguration(Name);
 			configuration.Children.Add(node);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "SimpleChild" /> with name/value.
-		/// </summary>
-		/// <param name = "value">The child value.</param>
-		/// <returns>The new <see cref = "SimpleChild" /></returns>
 		public SimpleChild Eq(String value)
 		{
 			return new SimpleChild(Name, value);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "SimpleChild" /> with name/value.
-		/// </summary>
-		/// <param name = "value">The child value.</param>
-		/// <returns>The new <see cref = "SimpleChild" /></returns>
 		public SimpleChild Eq(object value)
 		{
 			var valueStr = (value != null) ? value.ToString() : String.Empty;
 			return new SimpleChild(Name, valueStr);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "ComplexChild" /> with name/config.
-		/// </summary>
-		/// <param name = "configNode">The child configuration.</param>
-		/// <returns>The new <see cref = "ComplexChild" /></returns>
 		public ComplexChild Eq(IConfiguration configNode)
 		{
 			return new ComplexChild(Name, configNode);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "Child" /> with name/config.
-		/// </summary>
-		/// <param name = "childNodes">The child nodes.</param>
-		/// <returns>The new <see cref = "CompoundChild" /></returns>
 		public CompoundChild Eq(params Node[] childNodes)
 		{
 			return new CompoundChild(Name, childNodes);
@@ -209,9 +142,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region SimpleChild
 
-	/// <summary>
-	///   Represents a simple child node.
-	/// </summary>
 	public class SimpleChild : Node
 	{
 		private readonly String value;
@@ -222,10 +152,6 @@ namespace Castle.MicroKernel.Registration
 			this.value = value;
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public override void ApplyTo(IConfiguration configuration)
 		{
 			var node = new MutableConfiguration(Name, value);
@@ -237,9 +163,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region ComplexChild
 
-	/// <summary>
-	///   Represents a complex child node.
-	/// </summary>
 	public class ComplexChild : Node
 	{
 		private readonly IConfiguration configNode;
@@ -250,10 +173,6 @@ namespace Castle.MicroKernel.Registration
 			this.configNode = configNode;
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public override void ApplyTo(IConfiguration configuration)
 		{
 			var node = new MutableConfiguration(Name);
@@ -266,9 +185,6 @@ namespace Castle.MicroKernel.Registration
 
 	#region CompoundChild
 
-	/// <summary>
-	///   Represents a compound child node.
-	/// </summary>
 	public class CompoundChild : Node
 	{
 		private readonly Node[] childNodes;
@@ -279,10 +195,6 @@ namespace Castle.MicroKernel.Registration
 			this.childNodes = childNodes;
 		}
 
-		/// <summary>
-		///   Applies the configuration node.
-		/// </summary>
-		/// <param name = "configuration">The configuration.</param>
 		public override void ApplyTo(IConfiguration configuration)
 		{
 			var node = new MutableConfiguration(Name);

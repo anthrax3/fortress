@@ -26,9 +26,6 @@ namespace Castle.Windsor.Tests.Config
 
 	using NUnit.Framework;
 
-	/// <summary>
-	///   Summary description for AppDomainConfigSourceTestCase.
-	/// </summary>
 	[TestFixture]
 	public class AppDomainConfigSourceTestCase
 	{

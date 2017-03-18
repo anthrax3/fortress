@@ -59,11 +59,6 @@ namespace Castle.MicroKernel.Lifestyle
 			return GetScope(context, createIfNotPresent: true);
 		}
 
-		/// <summary>
-		///   Returns current request's scope and detaches it from the request context.
-		///   Does not throw if scope or context not present. To be used for disposing of the context.
-		/// </summary>
-		/// <returns></returns>
 		internal static ILifetimeScope YieldScope()
 		{
 			var context = HttpContext.Current;

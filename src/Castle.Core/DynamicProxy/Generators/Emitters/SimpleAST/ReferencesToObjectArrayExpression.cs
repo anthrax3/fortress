@@ -18,8 +18,6 @@ using System.Reflection.Emit;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 {
-	/// <summary>
-	/// </summary>
 	public class ReferencesToObjectArrayExpression : Expression
 	{
 		private readonly TypeReference[] args;

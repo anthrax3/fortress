@@ -17,10 +17,6 @@ namespace Castle.MicroKernel
 	using Castle.Core;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Represents a reference to an existing object.
-	/// </summary>
-	/// <typeparam name = "T"></typeparam>
 	public class InstanceReference<T> : IReference<T>
 	{
 		private readonly T instance;

@@ -23,9 +23,6 @@ namespace Castle.MicroKernel.LifecycleConcerns
 	using System.Collections.Concurrent;
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Lifetime concern that works for components that don't have their actual type determined upfront
-	/// </summary>
 	[Serializable]
 	public abstract class LateBoundConcerns<TConcern>
 	{

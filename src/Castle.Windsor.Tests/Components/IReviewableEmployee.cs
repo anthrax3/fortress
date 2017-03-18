@@ -14,9 +14,6 @@
 
 namespace CastleTests.Components
 {
-	/// <summary>
-	///   Summary description for IReviewableEmployee.
-	/// </summary>
 	public interface IReviewableEmployee : IEmployee
 	{
 		IReviewer Reviewer { get; set; }

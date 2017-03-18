@@ -25,15 +25,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.MicroKernel.Proxy;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   Inspects the component configuration and type looking for information
-	///   that can influence the generation of a proxy for that component.
-	///   <para>
-	///     We specifically look for <c>additionalInterfaces</c>  
-	///     on the component configuration or the <see cref = "ComponentProxyBehaviorAttribute" /> 
-	///     attribute.
-	///   </para>
-	/// </summary>
 	[Serializable]
 	public class ComponentProxyInspector : IContributeComponentModelConstruction
 	{
@@ -44,35 +35,16 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			this.converter = converter;
 		}
 
-		/// <summary>
-		///   Searches for proxy behavior in the configuration and, if unsuccessful
-		///   look for the <see cref = "ComponentProxyBehaviorAttribute" /> attribute in 
-		///   the implementation type.
-		/// </summary>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			ReadProxyBehavior(kernel, model);
 		}
 
-		/// <summary>
-		///   Returns a <see cref = "ComponentProxyBehaviorAttribute" /> instance if the type
-		///   uses the attribute. Otherwise returns null.
-		/// </summary>
-		/// <param name = "implementation"></param>
 		protected virtual ComponentProxyBehaviorAttribute ReadProxyBehaviorFromType(Type implementation)
 		{
 			return AttributesUtil.GetAttributes<ComponentProxyBehaviorAttribute>(implementation).FirstOrDefault();
 		}
 
-		/// <summary>
-		///   Reads the proxy behavior associated with the 
-		///   component configuration/type and applies it to the model.
-		/// </summary>
-		/// <exception cref = "System.Exception">
-		///   If the conversion fails
-		/// </exception>
-		/// <param name = "kernel"></param>
-		/// <param name = "model"></param>
 		protected virtual void ReadProxyBehavior(IKernel kernel, ComponentModel model)
 		{
 			var proxyBehaviorAttribute = ReadProxyBehaviorFromType(model.Implementation);

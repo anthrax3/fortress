@@ -188,14 +188,6 @@ namespace Castle.Core.DynamicProxy.Contributors
 
 		protected abstract MetaMethod GetMethodToGenerate(MethodInfo method, IProxyGenerationHook hook, bool isStandalone);
 
-		/// <summary>
-		///   Performs some basic screening and invokes the <see cref = "IProxyGenerationHook" />
-		///   to select methods.
-		/// </summary>
-		/// <param name = "method"></param>
-		/// <param name = "onlyVirtuals"></param>
-		/// <param name = "hook"></param>
-		/// <returns></returns>
 		protected bool AcceptMethod(MethodInfo method, bool onlyVirtuals, IProxyGenerationHook hook)
 		{
 			if (IsInternalAndNotVisibleToDynamicProxy(method))

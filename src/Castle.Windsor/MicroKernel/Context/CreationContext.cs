@@ -28,12 +28,6 @@ namespace Castle.MicroKernel.Context
 	using Castle.MicroKernel.Releasers;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   Used during a component request, passed along to the whole process.
-	///   This allow some data to be passed along the process, which is used 
-	///   to detected cycled dependency graphs and now it's also being used
-	///   to provide arguments to components.
-	/// </summary>
 	[Serializable]
 	public class CreationContext : ISubDependencyResolver
 	{
@@ -41,12 +35,6 @@ namespace Castle.MicroKernel.Context
 
 		private readonly IHandler handler;
 
-		/// <summary>
-		///   The list of handlers that are used to resolve
-		///   the component.
-		///   We track that in order to try to avoid attempts to resolve a service
-		///   with itself.
-		/// </summary>
 		private readonly Stack<IHandler> handlerStack;
 
 		private readonly Type requestedType;
@@ -57,12 +45,6 @@ namespace Castle.MicroKernel.Context
 		private Type[] genericArguments;
 		private bool isResolving = true;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "CreationContext" /> class.
-		/// </summary>
-		/// <param name = "requestedType"> The type to extract generic arguments. </param>
-		/// <param name = "parentContext"> The parent context. </param>
-		/// <param name = "propagateInlineDependencies"> When set to <c>true</c> will clone <paramref name = "parentContext" /> <see cref = "AdditionalArguments" /> . </param>
 		public CreationContext(Type requestedType, CreationContext parentContext, bool propagateInlineDependencies)
 			: this(parentContext.Handler, parentContext.ReleasePolicy, requestedType, null, null, parentContext)
 		{
@@ -82,15 +64,6 @@ namespace Castle.MicroKernel.Context
 			}
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "CreationContext" /> class.
-		/// </summary>
-		/// <param name = "handler"> The handler. </param>
-		/// <param name = "releasePolicy"> The release policy. </param>
-		/// <param name = "requestedType"> The type to extract generic arguments. </param>
-		/// <param name = "additionalArguments"> The additional arguments. </param>
-		/// <param name = "converter"> The conversion manager. </param>
-		/// <param name = "parent"> Parent context </param>
 		public CreationContext(IHandler handler, IReleasePolicy releasePolicy, Type requestedType,
 		                       IDictionary additionalArguments, ITypeConverter converter,
 		                       CreationContext parent)
@@ -111,9 +84,6 @@ namespace Castle.MicroKernel.Context
 			resolutionStack = new Stack<ResolutionContext>(4);
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "CreationContext" /> class.
-		/// </summary>
 		private CreationContext()
 		{
 #pragma warning disable 612,618
@@ -249,15 +219,6 @@ namespace Castle.MicroKernel.Context
 			return value;
 		}
 
-		/// <summary>
-		///   Method used by handlers to test whether they are being resolved in the context.
-		/// </summary>
-		/// <param name = "handler"> </param>
-		/// <returns> </returns>
-		/// <remarks>
-		///   This method is provided as part of double dispatch mechanism for use by handlers.
-		///   Outside of handlers, call <see cref = "IHandler.IsBeingResolvedInContext" /> instead.
-		/// </remarks>
 		public bool IsInResolutionContext(IHandler handler)
 		{
 			return handlerStack.Contains(handler);
@@ -415,12 +376,6 @@ namespace Castle.MicroKernel.Context
 			return null;
 		}
 
-		/// <summary>
-		///   Creates a new, empty <see cref = "CreationContext" /> instance.
-		/// </summary>
-		/// <remarks>
-		///   A new CreationContext should be created every time, as the contexts keeps some state related to dependency resolution.
-		/// </remarks>
 		public static CreationContext CreateEmpty()
 		{
 			return new CreationContext();

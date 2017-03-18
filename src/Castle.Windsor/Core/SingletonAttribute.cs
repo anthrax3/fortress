@@ -16,16 +16,9 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Indicates that the target components wants a
-	///   singleton lifestyle.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class SingletonAttribute : LifestyleAttribute
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "SingletonAttribute" /> class.
-		/// </summary>
 		public SingletonAttribute() : base(LifestyleType.Singleton)
 		{
 		}

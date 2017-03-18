@@ -31,18 +31,10 @@ namespace Castle.Windsor.Installer
 	using Castle.MicroKernel.SubSystems.Conversion;
 	using Castle.Windsor.Configuration.Interpreters;
 
-	/// <summary>
-	///   Default <see cref = "IComponentsInstaller" /> implementation.
-	/// </summary>
 	public class DefaultComponentInstaller : IComponentsInstaller
 	{
 		private string assemblyName;
 
-		/// <summary>
-		///   Perform installation.
-		/// </summary>
-		/// <param name = "container">Target container</param>
-		/// <param name = "store">Configuration store</param>
 		public void SetUp(IWindsorContainer container, IConfigurationStore store)
 		{
 			var converter = container.Kernel.GetSubSystem(SubSystemConstants.ConversionManagerKey) as IConversionManager;

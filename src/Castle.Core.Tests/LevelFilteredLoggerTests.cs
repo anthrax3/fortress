@@ -18,9 +18,6 @@ using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	/// <summary>
-	/// Contains all tests relating to the properties.
-	/// </summary>
 	[TestFixture]
 	public class PropertyTests
 	{
@@ -147,9 +144,6 @@ namespace Castle.Core.Tests
 		}
 	}
 
-	/// <summary>
-	/// Contains all tests relating to the logging methods.
-	/// </summary>
 	[TestFixture]
 	public class LoggingTests
 	{

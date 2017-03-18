@@ -20,10 +20,6 @@ namespace Castle.Windsor.Installer
 	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.Windsor.Configuration;
 
-	/// <summary>
-	///   Delegate to provide environment name.
-	/// </summary>
-	/// <returns>The environment name.</returns>
 	public delegate String EnvironmentDelegate();
 
 	public class ConfigurationInstaller : IWindsorInstaller
@@ -31,9 +27,6 @@ namespace Castle.Windsor.Installer
 		private readonly IConfigurationInterpreter interpreter;
 		private EnvironmentDelegate environment;
 
-		/// <summary>
-		///   Initializes a new instance of the ConfigurationInstaller class.
-		/// </summary>
 		public ConfigurationInstaller(IConfigurationInterpreter interpreter)
 		{
 			if (interpreter == null)
@@ -43,21 +36,11 @@ namespace Castle.Windsor.Installer
 			this.interpreter = interpreter;
 		}
 
-		/// <summary>
-		///   Sets the configuration environment name.
-		/// </summary>
-		/// <param name = "environmentName">The environment name.</param>
-		/// <returns></returns>
 		public ConfigurationInstaller Environment(String environmentName)
 		{
 			return Environment(() => environmentName);
 		}
 
-		/// <summary>
-		///   Set the configuration environment strategy.
-		/// </summary>
-		/// <param name = "environment">The environment strategy.</param>
-		/// <returns></returns>
 		public ConfigurationInstaller Environment(EnvironmentDelegate environment)
 		{
 			this.environment = environment;

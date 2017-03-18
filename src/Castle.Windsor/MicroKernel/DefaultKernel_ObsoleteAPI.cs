@@ -316,13 +316,6 @@ namespace Castle.MicroKernel
 			return AddFacility(onCreate);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the component key
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, arguments) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public object Resolve(string key, IDictionary arguments)
@@ -330,13 +323,6 @@ namespace Castle.MicroKernel
 			return (this as IKernelInternal).Resolve(key, service: null, arguments: arguments, policy: ReleasePolicy);
 		}
 
-		/// <summary>
-		///   Returns the component instance by the component key
-		///   using dynamic arguments
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public object Resolve(string key, object argumentsAsAnonymousType)

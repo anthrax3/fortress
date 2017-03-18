@@ -17,9 +17,6 @@ namespace CastleTests.Components
 {
 	using Castle.Core;
 
-	/// <summary>
-	///   Summary description for TransientComponent.
-	/// </summary>
 	[PerWebRequest]
 	public class PerWebRequestComponent : IComponent
 	{

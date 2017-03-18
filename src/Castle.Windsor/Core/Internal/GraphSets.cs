@@ -20,27 +20,13 @@ namespace Castle.Core.Internal
 	{
 		NotInThisSet,
 
-		/// <summary>
-		///   The node has not been visited yet
-		/// </summary>
 		White,
 
-		/// <summary>
-		///   This node is in the process of being visited
-		/// </summary>
 		Gray,
 
-		/// <summary>
-		///   This now was visited
-		/// </summary>
 		Black
 	}
 
-	/// <summary>
-	///   Represents a collection of objects
-	///   which are guaranteed to be unique 
-	///   and holds a color for them
-	/// </summary>
 	internal class ColorsSet
 	{
 		private readonly IDictionary<IVertex, VertexColor> items = new Dictionary<IVertex, VertexColor>();
@@ -68,10 +54,6 @@ namespace Castle.Core.Internal
 		}
 	}
 
-	/// <summary>
-	///   Holds a timestamp (integer) 
-	///   for a given item
-	/// </summary>
 	internal class TimestampSet
 	{
 		private readonly IDictionary<IVertex, int> items = new Dictionary<IVertex, int>();

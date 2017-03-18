@@ -14,9 +14,6 @@
 
 namespace CastleTests.Components
 {
-	/// <summary>
-	///   Summary description for IReviewer.
-	/// </summary>
 	public interface IReviewer : IEmployee
 	{
 		// This interface is a registered component

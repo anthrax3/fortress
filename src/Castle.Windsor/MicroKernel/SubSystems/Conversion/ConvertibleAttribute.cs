@@ -18,25 +18,15 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Declares a type as being convertible by a <see cref = "ITypeConverter" /> and optionally defines the converter to be used
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
 	public class ConvertibleAttribute : Attribute
 	{
 		private readonly Type converterType;
 
-		/// <summary>
-		///   Defines the <see cref = "DefaultComplexConverter " /> to be used to convert the type
-		/// </summary>
 		public ConvertibleAttribute() : this(typeof(DefaultComplexConverter))
 		{
 		}
 
-		/// <summary>
-		///   Defines the <see cref = "ITypeConverter" /> to be used to convert the type
-		/// </summary>
-		/// <param name = "converterType"></param>
 		public ConvertibleAttribute(Type converterType)
 		{
 			if (converterType.Is<ITypeConverter>() == false)

@@ -17,9 +17,6 @@ namespace CastleTests.Components
 	using Castle.Core;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
-	/// <summary>
-	///   Summary description for CustomComponent.
-	/// </summary>
 	[CustomLifestyle(typeof(CustomLifestyleManager))]
 	public class CustomComponent : IComponent
 	{

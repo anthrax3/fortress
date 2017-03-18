@@ -21,9 +21,6 @@ namespace Castle.MicroKernel.Registration
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Selects a set of types from an assembly.
-	/// </summary>
 	public class FromAssemblyDescriptor : FromDescriptor
 	{
 		protected readonly IEnumerable<Assembly> assemblies;
@@ -40,12 +37,6 @@ namespace Castle.MicroKernel.Registration
 			this.assemblies = assemblies;
 		}
 
-		/// <summary>
-		///   When called also non-public types will be scanned.
-		/// </summary>
-		/// <remarks>
-		///   Usually it is not recommended to register non-public types in the container so think twice before using this option.
-		/// </remarks>
 		public FromAssemblyDescriptor IncludeNonPublicTypes()
 		{
 			nonPublicTypes = true;

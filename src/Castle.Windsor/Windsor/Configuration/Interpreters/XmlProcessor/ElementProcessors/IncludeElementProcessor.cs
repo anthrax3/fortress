@@ -26,16 +26,6 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 			get { return "include"; }
 		}
 
-		/// <summary>
-		///   Accepts the specified node.
-		///   Check if node has the same name as the processor and the node.NodeType
-		///   is in the AcceptNodeTypes List
-		///   NOTE: since the BatchRegistrationFacility already uses an include
-		///   element we will distinguish between both by looking for the presence of an uri attribute
-		///   we should revisit this later by using xml-namespaces
-		/// </summary>
-		/// <param name = "node">The node.</param>
-		/// <returns></returns>
 		public override bool Accept(XmlNode node)
 		{
 			return node.Attributes.GetNamedItem("uri") != null && base.Accept(node);

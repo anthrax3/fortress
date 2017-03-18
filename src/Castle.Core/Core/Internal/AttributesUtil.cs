@@ -20,26 +20,13 @@ using System.Reflection;
 
 namespace Castle.Core.Core.Internal
 {
-	/// <summary>
-	///   Helper class for retrieving attributes.
-	/// </summary>
 	public static class AttributesUtil
 	{
-		/// <summary>
-		/// Gets the attribute.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns>The type attribute.</returns>
 		public static T GetAttribute<T>(this Type type) where T : Attribute
 		{
 			return GetAttributes<T>(type).FirstOrDefault();
 		}
 
-		/// <summary>
-		/// Gets the attributes. Does not consider inherited attributes!
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns>The type attributes.</returns>
 		public static IEnumerable<T> GetAttributes<T>(this Type type) where T : Attribute
 		{
 			foreach (T a in type.GetTypeInfo().GetCustomAttributes(typeof(T), false))
@@ -48,21 +35,11 @@ namespace Castle.Core.Core.Internal
 			}
 		}
 
-		/// <summary>
-		/// Gets the attribute.
-		/// </summary>
-		/// <param name="member">The member.</param>
-		/// <returns>The member attribute.</returns>
 		public static T GetAttribute<T>(this MemberInfo member) where T : Attribute
 		{
 			return GetAttributes<T>(member).FirstOrDefault();
 		}
 
-		/// <summary>
-		/// Gets the attributes. Does not consider inherited attributes!
-		/// </summary>
-		/// <param name="member">The member.</param>
-		/// <returns>The member attributes.</returns>
 		public static IEnumerable<T> GetAttributes<T>(this MemberInfo member) where T : Attribute
 		{
 			foreach (T a in member.GetCustomAttributes(typeof(T), false))
@@ -71,11 +48,6 @@ namespace Castle.Core.Core.Internal
 			}
 		}
 
-		/// <summary>
-		///   Gets the type attribute.
-		/// </summary>
-		/// <param name = "type">The type.</param>
-		/// <returns>The type attribute.</returns>
 		public static T GetTypeAttribute<T>(this Type type) where T : Attribute
 		{
 			var attribute = GetAttribute<T>(type);
@@ -95,11 +67,6 @@ namespace Castle.Core.Core.Internal
 			return attribute;
 		}
 
-		/// <summary>
-		///   Gets the type attributes.
-		/// </summary>
-		/// <param name = "type">The type.</param>
-		/// <returns>The type attributes.</returns>
 		public static T[] GetTypeAttributes<T>(Type type) where T : Attribute
 		{
 			var attributes = GetAttributes<T>(type).ToArray();
@@ -127,11 +94,6 @@ namespace Castle.Core.Core.Internal
 
 		private static readonly AttributeUsageAttribute DefaultAttributeUsage = new AttributeUsageAttribute(AttributeTargets.All);
 
-		/// <summary>
-		/// Gets the type converter.
-		/// </summary>
-		/// <param name="member">The member.</param>
-		/// <returns></returns>
 		public static Type GetTypeConverter(MemberInfo member)
 		{
 			var attrib = GetAttribute<TypeConverterAttribute>(member);

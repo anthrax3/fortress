@@ -194,11 +194,6 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Registers a facility within the container.
-		/// </summary>
-		/// <param name = "idInConfiguration"></param>
-		/// <param name = "facility"></param>
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual IWindsorContainer AddFacility(String idInConfiguration, IFacility facility)
@@ -207,12 +202,6 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <param name = "idInConfiguration"></param>
-		/// <returns></returns>
 		[Obsolete("Use AddFacility<TFacility>() instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public IWindsorContainer AddFacility<T>(String idInConfiguration) where T : IFacility, new()
@@ -221,13 +210,6 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "T">The facility type.</typeparam>
-		/// <param name = "idInConfiguration"></param>
-		/// <param name = "configureFacility">The callback for creation.</param>
-		/// <returns></returns>
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public IWindsorContainer AddFacility<T>(String idInConfiguration, Action<T> configureFacility)
@@ -237,12 +219,6 @@ namespace Castle.Windsor
 			return this;
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, arguments) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual object Resolve(String key, IDictionary arguments)
@@ -250,12 +226,6 @@ namespace Castle.Windsor
 			return kernel.Resolve<object>(key, arguments);
 		}
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual object Resolve(String key, object argumentsAsAnonymousType)

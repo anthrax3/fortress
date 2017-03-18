@@ -18,9 +18,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	using System;
 
-	/// <summary>
-	///   Base implementation of <see cref = "ITypeConverter" />
-	/// </summary>
 	[Serializable]
 	public abstract class AbstractTypeConverter : ITypeConverter
 	{
@@ -32,18 +29,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 
 		public abstract object PerformConversion(IConfiguration configuration, Type targetType);
 
-		/// <summary>
-		///   Returns true if this instance of <c>ITypeConverter</c>
-		///   is able to handle the specified type with the specified
-		///   configuration
-		/// </summary>
-		/// <param name = "type"></param>
-		/// <param name = "configuration"></param>
-		/// <returns></returns>
-		/// <remarks>
-		///   The default behavior is to just pass it to the normal CanHadnleType
-		///   peeking into the configuration is used for some advanced functionality
-		/// </remarks>
 		public virtual bool CanHandleType(Type type, IConfiguration configuration)
 		{
 			return CanHandleType(type);

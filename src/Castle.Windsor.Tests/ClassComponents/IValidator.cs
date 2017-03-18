@@ -14,9 +14,6 @@
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	/// <summary>
-	/// Summary description for IValidator.
-	/// </summary>
 	public interface IValidator<in T>
 	{
 		bool IsValid(T target);

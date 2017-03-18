@@ -30,11 +30,6 @@ namespace Castle.Facilities.TypedFactory
 
 	using Component = Castle.MicroKernel.Registration.Component;
 
-	/// <summary>
-	///   Provides automatically generated factories on top of interfaces or delegates that
-	///   you can use to pull components out of the container without ever referencing it 
-	///   explicitly.
-	/// </summary>
 	public class TypedFactoryFacility : AbstractFacility
 	{
 		public static readonly string DelegateFactoryKey = "Castle.TypedFactory.DelegateFactory";

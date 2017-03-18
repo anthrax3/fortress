@@ -16,16 +16,11 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>Indicates that the target components wants a custom lifestyle.</summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public class CustomLifestyleAttribute : LifestyleAttribute
 	{
 		private readonly Type customLifestyleType;
 
-		/// <summary>
-		///     Initializes a new instance of the <see cref = "CustomLifestyleAttribute" /> class.
-		/// </summary>
-		/// <param name = "customLifestyleType">The custom lifestyle type.</param>
 		public CustomLifestyleAttribute(Type customLifestyleType)
 			: base(LifestyleType.Custom)
 		{

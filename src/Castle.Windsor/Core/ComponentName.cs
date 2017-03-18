@@ -40,21 +40,11 @@ namespace Castle.Core
 			SetByUser = true;
 		}
 
-		/// <summary>
-		///   Gets the default name for component implemented by <paramref name = "componentType" /> which will be used in case when user does not provide one explicitly.
-		/// </summary>
-		/// <param name = "componentType"></param>
-		/// <returns></returns>
 		public static ComponentName DefaultFor(Type componentType)
 		{
 			return new ComponentName(DefaultNameFor(componentType), false);
 		}
 
-		/// <summary>
-		///   Gets the default name for component implemented by <paramref name = "componentType" /> which will be used in case when user does not provide one explicitly.
-		/// </summary>
-		/// <param name = "componentType"></param>
-		/// <returns></returns>
 		public static string DefaultNameFor(Type componentType)
 		{
 			return componentType.FullName;

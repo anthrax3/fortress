@@ -16,9 +16,6 @@ namespace Castle.MicroKernel.Tests.ClassComponents
 {
 	using System;
 
-	/// <summary>
-	/// Summary description for DefaultCustomer.
-	/// </summary>
 	public class DefaultCustomer
 	{
 		private String name;

@@ -21,9 +21,6 @@ namespace Castle.Facilities.Logging.Tests
     using Castle.Windsor;
 	using NUnit.Framework;
 
-	/// <summary>
-	/// Summary description for ConsoleFacitlyTest.
-	/// </summary>
 	[TestFixture]
 	public class NullFacilityTest : BaseTest
 	{

@@ -16,16 +16,9 @@ using System;
 
 namespace Castle.Core.Core.Configuration
 {
-	/// <summary>
-	/// Summary description for MutableConfiguration.
-	/// </summary>
 	[Serializable]
 	public class MutableConfiguration : AbstractConfiguration
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MutableConfiguration"/> class.
-		/// </summary>
-		/// <param name="name">The name.</param>
 		public MutableConfiguration(String name) : this(name, null)
 		{
 		}
@@ -36,12 +29,6 @@ namespace Castle.Core.Core.Configuration
 			Value = value;
 		}
 
-		/// <summary>
-		/// Gets the value of <see cref="IConfiguration"/>.
-		/// </summary>
-		/// <value>
-		/// The Value of the <see cref="IConfiguration"/>.
-		/// </value>
 		public new string Value
 		{
 			get { return base.Value; }

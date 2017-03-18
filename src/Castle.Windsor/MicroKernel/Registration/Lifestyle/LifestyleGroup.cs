@@ -29,13 +29,6 @@ namespace Castle.MicroKernel.Registration.Lifestyle
 		{
 		}
 
-		/// <summary>
-		///   Sets the lifestyle to the specified
-		///   <paramref name = "type" />
-		///   .
-		/// </summary>
-		/// <param name = "type"> The type. </param>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Is(LifestyleType type)
 		{
 			if (Enum.IsDefined(typeof(LifestyleType), type) == false)
@@ -94,24 +87,11 @@ namespace Castle.MicroKernel.Registration.Lifestyle
 			return pooledWithSize;
 		}
 
-		/// <summary>
-		///   Assigns scoped lifestyle with scope accessed via
-		///   <typeparamref name = "TScopeAccessor" />
-		///   instances.
-		/// </summary>
-		/// <typeparam name = "TScopeAccessor"> </typeparam>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Scoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
 		{
 			return Scoped(typeof(TScopeAccessor));
 		}
 
-		/// <summary>
-		///   Assigns scoped lifestyle with scope accessed via
-		///   <paramref name = "scopeAccessorType" />
-		///   instances if provided, or default accessor otherwise.
-		/// </summary>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Scoped(Type scopeAccessorType)
 		{
 			var registration = AddDescriptor(new LifestyleDescriptor<TService>(LifestyleType.Scoped));
@@ -123,10 +103,6 @@ namespace Castle.MicroKernel.Registration.Lifestyle
 			return registration.AddDescriptor(scopeAccessor);
 		}
 
-		/// <summary>
-		///   Assigns scoped lifestyle with scope accessed via default accessor.
-		/// </summary>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Scoped()
 		{
 			return Scoped(null);
@@ -148,13 +124,6 @@ namespace Castle.MicroKernel.Registration.Lifestyle
 				.ExtendedProperties(new Property(Constants.ScopeRootSelector, scopeRootBinder));
 		}
 
-		/// <summary>
-		///   Assign a custom lifestyle type, that implements
-		///   <see cref = "ILifestyleManager" />
-		///   .
-		/// </summary>
-		/// <param name = "customLifestyleType"> Type of the custom lifestyle. </param>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Custom(Type customLifestyleType)
 		{
 			if (customLifestyleType.Is<ILifestyleManager>() == false)
@@ -168,13 +137,6 @@ namespace Castle.MicroKernel.Registration.Lifestyle
 				.Attribute("customLifestyleType").Eq(customLifestyleType.AssemblyQualifiedName);
 		}
 
-		/// <summary>
-		///   Assign a custom lifestyle type, that implements
-		///   <see cref = "ILifestyleManager" />
-		///   .
-		/// </summary>
-		/// <typeparam name = "TLifestyleManager"> The type of the custom lifestyle </typeparam>
-		/// <returns> </returns>
 		public ComponentRegistration<TService> Custom<TLifestyleManager>()
 			where TLifestyleManager : ILifestyleManager, new()
 		{

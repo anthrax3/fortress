@@ -14,9 +14,6 @@
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	public class CommonSub1Impl : ICommonSub1
 	{
 	}

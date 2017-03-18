@@ -31,9 +31,6 @@ namespace Castle.Core.Tests.Mixins
 		void DoThird();
 	}
 
-	/// <summary>
-	/// Summary description for ComplexMixin.
-	/// </summary>
 	[Serializable]
 	public class ComplexMixin : IThird
 	{

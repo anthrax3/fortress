@@ -25,13 +25,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   This implementation of <see cref = "IContributeComponentModelConstruction" />
-	///   collects all potential writable public properties exposed by the component 
-	///   implementation and populates the model with them.
-	///   The Kernel might be able to set some of these properties when the component 
-	///   is requested.
-	/// </summary>
 	[Serializable]
 	public class PropertiesDependenciesModelInspector : IContributeComponentModelConstruction
 	{
@@ -43,11 +36,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			this.converter = converter;
 		}
 
-		/// <summary>
-		///   Adds the properties as optional dependencies of this component.
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "model"></param>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			InspectProperties(model);

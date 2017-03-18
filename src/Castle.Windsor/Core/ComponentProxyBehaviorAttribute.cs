@@ -16,17 +16,11 @@ namespace Castle.Core
 {
 	using System;
 
-	/// <summary>
-	///   Specifies the proxying behavior for a component.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class ComponentProxyBehaviorAttribute : Attribute
 	{
 		private Type[] additionalInterfaces;
 
-		/// <summary>
-		///   Gets or sets the additional interfaces used during proxy generation.
-		/// </summary>
 		public Type[] AdditionalInterfaces
 		{
 			get

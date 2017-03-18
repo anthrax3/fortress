@@ -25,13 +25,6 @@ namespace Castle.Core.DynamicProxy.Generators
 		private readonly ProxyGenerationOptions options;
 		private readonly Type type;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "CacheKey" /> class.
-		/// </summary>
-		/// <param name = "target">Target element. This is either target type or target method for invocation types.</param>
-		/// <param name = "type">The type of the proxy. This is base type for invocation types.</param>
-		/// <param name = "interfaces">The interfaces.</param>
-		/// <param name = "options">The options.</param>
 		public CacheKey(MemberInfo target, Type type, Type[] interfaces, ProxyGenerationOptions options)
 		{
 			this.target = target;
@@ -40,12 +33,6 @@ namespace Castle.Core.DynamicProxy.Generators
 			this.options = options;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "CacheKey" /> class.
-		/// </summary>
-		/// <param name = "target">Type of the target.</param>
-		/// <param name = "interfaces">The interfaces.</param>
-		/// <param name = "options">The options.</param>
 		public CacheKey(Type target, Type[] interfaces, ProxyGenerationOptions options)
 			: this(target.GetTypeInfo(), null, interfaces, options)
 		{

@@ -21,9 +21,6 @@ namespace Castle.MicroKernel.Resolvers
 	using Castle.MicroKernel.Internal;
 	using Castle.MicroKernel.Registration;
 
-	/// <summary>
-	///   Lazily adds component for <see cref = "Lazy{T}" />.
-	/// </summary>
 	[Singleton]
 	public class LazyOfTComponentLoader : ILazyComponentLoader
 	{

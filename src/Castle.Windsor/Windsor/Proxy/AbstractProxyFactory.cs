@@ -90,13 +90,6 @@ namespace Castle.Windsor.Proxy
 			return interceptors;
 		}
 
-		/// <summary>
-		///   Obtains the interceptors associated with the component.
-		/// </summary>
-		/// <param name = "kernel">The kernel instance</param>
-		/// <param name = "model">The component model</param>
-		/// <param name = "context">The creation context</param>
-		/// <returns>interceptors array</returns>
 		protected IInterceptor[] ObtainInterceptors(IKernel kernel, ComponentModel model, CreationContext context)
 		{
 			var interceptors = new List<IInterceptor>();

@@ -21,12 +21,6 @@ namespace Castle.Core.Core.Internal
 {
 	internal static class ExceptionMessageBuilder
 	{
-		/// <summary>
-		/// Creates a message to inform clients that a proxy couldn't be created due to reliance on an
-		/// inaccessible type (perhaps itself).
-		/// </summary>
-		/// <param name="inaccessibleType">the inaccessible type that prevents proxy creation</param>
-		/// <param name="typeToProxy">the type that couldn't be proxied</param>
 		public static string CreateMessageForInaccessibleType(Type inaccessibleType, Type typeToProxy)
 		{
 			var targetAssembly = typeToProxy.GetTypeInfo().Assembly;

@@ -22,20 +22,9 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.Util;
 
-	/// <summary>
-	///   Check for a node 'parameters' within the component 
-	///   configuration. For each child it, a ParameterModel is created
-	///   and added to ComponentModel's Parameters collection
-	/// </summary>
 	[Serializable]
 	public class ConfigurationParametersInspector : IContributeComponentModelConstruction
 	{
-		/// <summary>
-		///   Inspect the configuration associated with the component
-		///   and populates the parameter model collection accordingly
-		/// </summary>
-		/// <param name = "kernel"></param>
-		/// <param name = "model"></param>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model.Configuration == null)

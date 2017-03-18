@@ -24,9 +24,6 @@ namespace Castle.Windsor.Tests.XmlProcessor
 
 	using NUnit.Framework;
 
-	/// <summary>
-	/// Summary description for Class1.
-	/// </summary>
 	[TestFixture]
 	public class XmlProcessorTestCase
 	{
@@ -47,9 +44,6 @@ namespace Castle.Windsor.Tests.XmlProcessor
 			}
 		}
 
-		/// <summary>
-		/// Runs the tests.
-		/// </summary>
 		[Test]
 		public void RunTests()
 		{

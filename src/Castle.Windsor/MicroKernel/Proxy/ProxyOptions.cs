@@ -22,9 +22,6 @@ namespace Castle.MicroKernel.Proxy
 
 	using Castle.Core;
 
-	/// <summary>
-	/// 	Represents options to configure proxies.
-	/// </summary>
 	public class ProxyOptions
 	{
 		private IReference<IProxyGenerationHook> hook;
@@ -34,18 +31,11 @@ namespace Castle.MicroKernel.Proxy
 		private IReference<IInterceptorSelector> selector;
 		private readonly ComponentModel component;
 
-		/// <summary>
-		/// 	Initializes a new instance of the <see cref="ProxyOptions" /> class.
-		/// </summary>
 		public ProxyOptions(ComponentModel component)
 		{
 			this.component = component;
 		}
 
-		/// <summary>
-		/// 	Gets the additional interfaces to proxy.
-		/// </summary>
-		/// <value> The interfaces. </value>
 		public Type[] AdditionalInterfaces
 		{
 			get
@@ -59,24 +49,14 @@ namespace Castle.MicroKernel.Proxy
 			}
 		}
 
-		/// <summary>
-		/// 	Determines if the proxied component can change targets.
-		/// </summary>
 		public bool AllowChangeTarget { get; set; }
 
-		/// <summary>
-		/// 	Gets or sets the proxy hook.
-		/// </summary>
 		public IReference<IProxyGenerationHook> Hook
 		{
 			get { return hook; }
 			set { SetReferenceValue(ref hook, value); }
 		}
 
-		/// <summary>
-		/// 	Gets the mix ins to integrate.
-		/// </summary>
-		/// <value> The interfaces. </value>
 		public IEnumerable<IReference<object>> MixIns
 		{
 			get
@@ -89,24 +69,14 @@ namespace Castle.MicroKernel.Proxy
 			}
 		}
 
-		/// <summary>
-		/// 	Determines if the proxied component uses a target.
-		/// </summary>
 		public bool OmitTarget { get; set; }
 
-		/// <summary>
-		/// 	Gets or sets the interceptor selector.
-		/// </summary>
 		public IReference<IInterceptorSelector> Selector
 		{
 			get { return selector; }
 			set { SetReferenceValue(ref selector, value); }
 		}
 
-		/// <summary>
-		/// 	Adds the additional interfaces to proxy.
-		/// </summary>
-		/// <param name="interfaces"> The interfaces. </param>
 		public void AddAdditionalInterfaces(params Type[] interfaces)
 		{
 			if (interfaces == null || interfaces.Length == 0)
@@ -122,10 +92,6 @@ namespace Castle.MicroKernel.Proxy
 			interfaceList.AddRange(interfaces);
 		}
 
-		/// <summary>
-		/// 	Adds the additional mix ins to integrate.
-		/// </summary>
-		/// <param name="mixIns"> The mix ins. </param>
 		public void AddMixIns(params object[] mixIns)
 		{
 			if (mixIns == null || mixIns.Length == 0)
@@ -146,10 +112,6 @@ namespace Castle.MicroKernel.Proxy
 			}
 		}
 
-		/// <summary>
-		/// 	Adds the additional mix in to integrate.
-		/// </summary>
-		/// <param name="mixIn"> The mix in. </param>
 		public void AddMixinReference(IReference<object> mixIn)
 		{
 			if (mixIn == null)
@@ -165,11 +127,6 @@ namespace Castle.MicroKernel.Proxy
 			mixIn.Attach(component);
 		}
 
-		/// <summary>
-		/// 	Equals the specified obj.
-		/// </summary>
-		/// <param name="obj"> The obj. </param>
-		/// <returns> true if equal. </returns>
 		public override bool Equals(object obj)
 		{
 			if (this == obj)
@@ -200,10 +157,6 @@ namespace Castle.MicroKernel.Proxy
 			return MixInsAreEquals(proxyOptions);
 		}
 
-		/// <summary>
-		/// 	Gets the hash code.
-		/// </summary>
-		/// <returns> </returns>
 		public override int GetHashCode()
 		{
 			return 29*base.GetHashCode()

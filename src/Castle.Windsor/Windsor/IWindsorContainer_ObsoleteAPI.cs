@@ -108,53 +108,23 @@ namespace Castle.Windsor
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IWindsorContainer AddComponentWithProperties<T>(String key, IDictionary extendedProperties);
 
-		/// <summary>
-		///   Registers a facility within the container.
-		/// </summary>
-		/// <param name = "idInConfiguration">The key by which the <see cref = "IFacility" /> gets indexed.</param>
-		/// <param name = "facility">The <see cref = "IFacility" /> to add to the container.</param>
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IWindsorContainer AddFacility(String idInConfiguration, IFacility facility);
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "TFacility">The facility type.</typeparam>
-		/// <param name = "idInConfiguration"></param>
-		/// <returns></returns>
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility> onCreate) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IWindsorContainer AddFacility<TFacility>(String idInConfiguration) where TFacility : IFacility, new();
 
-		/// <summary>
-		///   Creates and adds an <see cref = "IFacility" /> facility to the container.
-		/// </summary>
-		/// <typeparam name = "TFacility">The facility type.</typeparam>
-		/// <param name = "idInConfiguration"></param>
-		/// <param name = "configureFacility">The callback for creation.</param>
-		/// <returns></returns>
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IWindsorContainer AddFacility<TFacility>(String idInConfiguration, Action<TFacility> configureFacility)
 			where TFacility : IFacility, new();
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "arguments"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, arguments) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object Resolve(String key, IDictionary arguments);
 
-		/// <summary>
-		///   Returns a component instance by the key
-		/// </summary>
-		/// <param name = "key"></param>
-		/// <param name = "argumentsAsAnonymousType"></param>
-		/// <returns></returns>
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		object Resolve(String key, object argumentsAsAnonymousType);

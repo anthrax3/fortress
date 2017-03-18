@@ -25,12 +25,6 @@ namespace Castle.MicroKernel.Handlers
 		private readonly IReleasePolicy parentReleasePolicy;
 		private readonly IHandler parentHandler;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ParentHandlerWrapper" /> class.
-		/// </summary>
-		/// <param name = "parentHandler">The parent handler.</param>
-		/// <param name = "childResolver">The child resolver.</param>
-		/// <param name="parentReleasePolicy">Release policy of the parent container.</param>
 		public ParentHandlerWrapper(IHandler parentHandler, ISubDependencyResolver childResolver, IReleasePolicy parentReleasePolicy)
 		{
 			if (parentHandler == null)

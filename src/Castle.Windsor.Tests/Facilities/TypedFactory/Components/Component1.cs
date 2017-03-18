@@ -16,9 +16,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Components
 {
 	using System;
 
-	/// <summary>
-	/// Summary description for Component1.
-	/// </summary>
 	public class Component1 : IDummyComponent
 	{
 		#region IDummyComponent Members

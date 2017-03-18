@@ -18,10 +18,6 @@ using System.Reflection.Emit;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	/// <summary>
-	///   s
-	///   Provides appropriate Ldc.X opcode for the type of primitive value to be loaded.
-	/// </summary>
 	public sealed class LdcOpCodesDictionary : Dictionary<Type, OpCode>
 	{
 		private static readonly LdcOpCodesDictionary dict = new LdcOpCodesDictionary();

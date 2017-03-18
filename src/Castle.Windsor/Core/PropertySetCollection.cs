@@ -22,9 +22,6 @@ namespace Castle.Core
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///     Collection of <see cref = "PropertySet" />
-	/// </summary>
 	[Serializable]
 	public class PropertySetCollection : IMutableCollection<PropertySet>
 	{
@@ -35,9 +32,6 @@ namespace Castle.Core
 			get { return properties.Count; }
 		}
 
-		/// <summary>Finds a PropertySet the by PropertyInfo.</summary>
-		/// <param name = "info">The info.</param>
-		/// <returns></returns>
 		public PropertySet FindByPropertyInfo(PropertyInfo info)
 		{
 			return this.FirstOrDefault(prop => info == prop.Property);

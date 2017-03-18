@@ -18,10 +18,6 @@ using System.Reflection.Emit;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	/// <summary>
-	///   Provides appropriate Stind.X opcode 
-	///   for the type of primitive value to be stored indirectly.
-	/// </summary>
 	public sealed class StindOpCodesDictionary : Dictionary<Type, OpCode>
 	{
 		private static readonly StindOpCodesDictionary dict = new StindOpCodesDictionary();

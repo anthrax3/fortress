@@ -20,9 +20,6 @@ namespace Castle.MicroKernel.Registration
 	using System.Collections.Generic;
 	using System.Linq;
 
-	/// <summary>
-	///   Describes how to select a types service.
-	/// </summary>
 	public class ServiceDescriptor
 	{
 		private readonly BasedOnDescriptor basedOnDescriptor;
@@ -33,29 +30,16 @@ namespace Castle.MicroKernel.Registration
 			this.basedOnDescriptor = basedOnDescriptor;
 		}
 
-		/// <summary>
-		///   Uses all interfaces implemented by the type (or its base types) as well as their base interfaces.
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor AllInterfaces()
 		{
 			return Select((t, b) => t.GetAllInterfaces());
 		}
 
-		/// <summary>
-		///   Uses the base type matched on.
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor Base()
 		{
 			return Select((t, b) => b);
 		}
 
-		/// <summary>
-		///   Uses all interfaces that have names matched by implementation type name.
-		///   Matches Foo to IFoo, SuperFooExtended to IFoo and IFooExtended etc
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor DefaultInterfaces()
 		{
 			return Select((type, @base) =>
@@ -63,10 +47,6 @@ namespace Castle.MicroKernel.Registration
 			              	.Where(i => type.Name.Contains(GetInterfaceName(i))));
 		}
 
-		/// <summary>
-		///   Uses the first interface of a type. This method has non-deterministic behavior when type implements more than one interface!
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor FirstInterface()
 		{
 			return Select((type, @base) =>
@@ -81,16 +61,6 @@ namespace Castle.MicroKernel.Registration
 			});
 		}
 
-		/// <summary>
-		///   Uses <paramref name = "implements" /> to lookup the sub interface.
-		///   For example: if you have IService and 
-		///   IProductService : ISomeInterface, IService, ISomeOtherInterface.
-		///   When you call FromInterface(typeof(IService)) then IProductService
-		///   will be used. Useful when you want to register _all_ your services
-		///   and but not want to specify all of them.
-		/// </summary>
-		/// <param name = "implements"></param>
-		/// <returns></returns>
 		public BasedOnDescriptor FromInterface(Type implements)
 		{
 			return Select(delegate(Type type, Type[] baseTypes)
@@ -124,40 +94,22 @@ namespace Castle.MicroKernel.Registration
 			});
 		}
 
-		/// <summary>
-		///   Uses base type to lookup the sub interface.
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor FromInterface()
 		{
 			return FromInterface(null);
 		}
 
-		/// <summary>
-		///   Assigns a custom service selection strategy.
-		/// </summary>
-		/// <param name = "selector"></param>
-		/// <returns></returns>
 		public BasedOnDescriptor Select(ServiceSelector selector)
 		{
 			serviceSelector += selector;
 			return basedOnDescriptor;
 		}
 
-		/// <summary>
-		///   Assigns the supplied service types.
-		/// </summary>
-		/// <param name = "types"></param>
-		/// <returns></returns>
 		public BasedOnDescriptor Select(IEnumerable<Type> types)
 		{
 			return Select(delegate { return types; });
 		}
 
-		/// <summary>
-		///   Uses the type itself.
-		/// </summary>
-		/// <returns></returns>
 		public BasedOnDescriptor Self()
 		{
 			return Select((t, b) => new[] { t });
@@ -220,13 +172,6 @@ namespace Castle.MicroKernel.Registration
 			return topLevel;
 		}
 
-		/// <summary>
-		///   This is a workaround for a CLR bug in
-		///   which GetInterfaces() returns interfaces
-		///   with no implementations.
-		/// </summary>
-		/// <param name = "serviceType">Type of the service.</param>
-		/// <returns></returns>
 		private static Type WorkaroundCLRBug(Type serviceType)
 		{
 			if (!serviceType.IsInterface)

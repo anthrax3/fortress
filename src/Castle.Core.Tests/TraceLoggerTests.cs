@@ -22,9 +22,6 @@ using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	/// <summary>
-	/// Tests the TraceLogger and TraceLoggerFactory classes
-	/// </summary>
 	[TestFixture]
 	public class TraceLoggerTests
 	{
@@ -96,10 +93,6 @@ namespace Castle.Core.Tests
 
 		#region in-memory listener class
 
-		/// <summary>
-		/// This class captures trace text and records it to StringBuilders in a static dictionary.
-		/// Used for the sake of unit testing.
-		/// </summary>
 		public class Listener : TraceListener
 		{
 			public Listener()

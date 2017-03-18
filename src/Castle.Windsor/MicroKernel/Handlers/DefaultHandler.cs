@@ -21,30 +21,15 @@ namespace Castle.MicroKernel.Handlers
 	using Castle.MicroKernel.ComponentActivator;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Summary description for DefaultHandler.
-	/// </summary>
 	[Serializable]
 	public class DefaultHandler : AbstractHandler
 	{
-		/// <summary>
-		///   Lifestyle manager instance
-		/// </summary>
 		private ILifestyleManager lifestyleManager;
 
-		/// <summary>
-		///   Initializes a new instance of the
-		///   <see cref = "DefaultHandler" />
-		///   class.
-		/// </summary>
-		/// <param name = "model"> </param>
 		public DefaultHandler(ComponentModel model) : base(model)
 		{
 		}
 
-		/// <summary>
-		///   Lifestyle manager instance
-		/// </summary>
 		protected ILifestyleManager LifestyleManager
 		{
 			get { return lifestyleManager; }
@@ -55,11 +40,6 @@ namespace Castle.MicroKernel.Handlers
 			lifestyleManager.Dispose();
 		}
 
-		/// <summary>
-		///   disposes the component instance (or recycle it)
-		/// </summary>
-		/// <param name = "burden"> </param>
-		/// <returns> true if destroyed </returns>
 		public override bool ReleaseCore(Burden burden)
 		{
 			return lifestyleManager.Release(burden.Instance);
@@ -97,15 +77,6 @@ namespace Castle.MicroKernel.Handlers
 			return ResolveCore(context, false, instanceRequired, out burden);
 		}
 
-		/// <summary>
-		///   Returns an instance of the component this handler
-		///   is responsible for
-		/// </summary>
-		/// <param name = "context"> </param>
-		/// <param name = "requiresDecommission"> </param>
-		/// <param name = "instanceRequired"> </param>
-		/// <param name = "burden"> </param>
-		/// <returns> </returns>
 		protected object ResolveCore(CreationContext context, bool requiresDecommission, bool instanceRequired, out Burden burden)
 		{
 			if (IsBeingResolvedInContext(context))

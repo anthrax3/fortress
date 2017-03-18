@@ -16,28 +16,14 @@ using System;
 
 namespace Castle.Core.Core.Logging
 {
-	/// <summary>
-	/// NullLogFactory used when logging is turned off.
-	/// </summary>
 	[Serializable]
 	public class NullLogFactory : AbstractLoggerFactory
 	{
-		/// <summary>
-		///   Creates an instance of ILogger with the specified name.
-		/// </summary>
-		/// <param name = "name">Name.</param>
-		/// <returns></returns>
 		public override ILogger Create(String name)
 		{
 			return NullLogger.Instance;
 		}
 
-		/// <summary>
-		///   Creates an instance of ILogger with the specified name and LoggerLevel.
-		/// </summary>
-		/// <param name = "name">Name.</param>
-		/// <param name = "level">Level.</param>
-		/// <returns></returns>
 		public override ILogger Create(String name, LoggerLevel level)
 		{
 			return NullLogger.Instance;

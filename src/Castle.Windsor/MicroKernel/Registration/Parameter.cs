@@ -18,9 +18,6 @@ namespace Castle.MicroKernel.Registration
 {
 	using System;
 
-	/// <summary>
-	///   Represents a configuration parameter.
-	/// </summary>
 	public class Parameter
 	{
 		private readonly String key;
@@ -38,35 +35,21 @@ namespace Castle.MicroKernel.Registration
 			value = configNode;
 		}
 
-		/// <summary>
-		///   Gets the parameter configuration.
-		/// </summary>
 		public IConfiguration ConfigNode
 		{
 			get { return value as IConfiguration; }
 		}
 
-		/// <summary>
-		///   Gets the parameter key.
-		/// </summary>
 		public string Key
 		{
 			get { return key; }
 		}
 
-		/// <summary>
-		///   Gets the parameter value.
-		/// </summary>
 		public String Value
 		{
 			get { return value as string; }
 		}
 
-		/// <summary>
-		///   Create a <see cref = "ParameterKey" /> with key.
-		/// </summary>
-		/// <param name = "key">The parameter key.</param>
-		/// <returns>The new <see cref = "ParameterKey" /></returns>
 		public static ParameterKey ForKey(String key)
 		{
 			return new ParameterKey(key);
@@ -78,9 +61,6 @@ namespace Castle.MicroKernel.Registration
 		}
 	}
 
-	/// <summary>
-	///   Represents a parameter key.
-	/// </summary>
 	public class ParameterKey
 	{
 		private readonly String name;
@@ -90,29 +70,16 @@ namespace Castle.MicroKernel.Registration
 			this.name = name;
 		}
 
-		/// <summary>
-		///   The parameter key name.
-		/// </summary>
 		public string Name
 		{
 			get { return name; }
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "Parameter" /> with key/value.
-		/// </summary>
-		/// <param name = "value">The parameter value.</param>
-		/// <returns>The new <see cref = "Parameter" /></returns>
 		public Parameter Eq(String value)
 		{
 			return new Parameter(name, value);
 		}
 
-		/// <summary>
-		///   Builds the <see cref = "Parameter" /> with key/config.
-		/// </summary>
-		/// <param name = "configNode">The parameter configuration.</param>
-		/// <returns>The new <see cref = "Parameter" /></returns>
 		public Parameter Eq(IConfiguration configNode)
 		{
 			return new Parameter(name, configNode);

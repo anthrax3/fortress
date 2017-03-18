@@ -17,11 +17,6 @@ using System.IO;
 
 namespace Castle.Core.Core.Logging
 {
-	/// <summary>
-	///   Creates <see cref = "StreamLogger" /> outputing 
-	///   to files. The name of the file is derived from the log name
-	///   plus the 'log' extension.
-	/// </summary>
 	[Serializable]
 	public class StreamLoggerFactory : AbstractLoggerFactory
 	{

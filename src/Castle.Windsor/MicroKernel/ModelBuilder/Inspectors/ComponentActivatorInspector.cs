@@ -23,16 +23,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>
-	///   Inspects the component configuration and the type looking for a
-	///   definition of component activator type. The configuration preceeds whatever
-	///   is defined in the component.
-	/// </summary>
-	/// <remarks>
-	///   This inspector is not guarantee to always set up an component activator type. 
-	///   If nothing could be found it wont touch the model. In this case is up to
-	///   the kernel to establish a default component activator for components.
-	/// </remarks>
 	[Serializable]
 	public class ComponentActivatorInspector : IContributeComponentModelConstruction
 	{
@@ -43,12 +33,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			this.converter = converter;
 		}
 
-		/// <summary>
-		///   Searches for the component activator in the configuration and, if unsuccessful
-		///   look for the component activator attribute in the implementation type.
-		/// </summary>
-		/// <param name = "kernel">The kernel instance</param>
-		/// <param name = "model">The model instance</param>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (!ReadComponentActivatorFromConfiguration(model))
@@ -57,16 +41,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			}
 		}
 
-		/// <summary>
-		///   Reads the attribute "componentActivatorType" associated with the 
-		///   component configuration and verifies it implements the <see cref = "IComponentActivator" /> 
-		///   interface.
-		/// </summary>
-		/// <exception cref = "System.Exception">
-		///   If the type does not implement the proper interface
-		/// </exception>
-		/// <param name = "model"></param>
-		/// <returns></returns>
 		protected virtual bool ReadComponentActivatorFromConfiguration(ComponentModel model)
 		{
 			if (model.Configuration != null)
@@ -87,11 +61,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			return false;
 		}
 
-		/// <summary>
-		///   Check if the type expose one of the component activator attributes
-		///   defined in Castle.Core namespace.
-		/// </summary>
-		/// <param name = "model"></param>
 		protected virtual void ReadComponentActivatorFromType(ComponentModel model)
 		{
 			var attributes = AttributesUtil.GetAttributes<ComponentActivatorAttribute>(model.Implementation).ToArray();
@@ -104,10 +73,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			}
 		}
 
-		/// <summary>
-		///   Validates that the provide type implements IComponentActivator
-		/// </summary>
-		/// <param name = "customComponentActivator">The custom component activator.</param>
 		protected virtual void ValidateComponentActivator(Type customComponentActivator)
 		{
 			if (customComponentActivator.Is<IComponentActivator>() == false)

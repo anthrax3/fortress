@@ -16,21 +16,11 @@ using System;
 
 namespace Castle.Core.Core
 {
-	/// <summary>
-	/// General purpose class to represent a standard pair of values. 
-	/// </summary>
-	/// <typeparam name="TFirst">Type of the first value</typeparam>
-	/// <typeparam name="TSecond">Type of the second value</typeparam>
 	public class Pair<TFirst, TSecond> : IEquatable<Pair<TFirst, TSecond>>
 	{
 		private readonly TFirst first;
 		private readonly TSecond second;
 
-		/// <summary>
-		/// Constructs a pair with its values
-		/// </summary>
-		/// <param name="first"></param>
-		/// <param name="second"></param>
 		public Pair(TFirst first, TSecond second)
 		{
 			this.first = first;

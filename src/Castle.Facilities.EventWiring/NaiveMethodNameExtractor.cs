@@ -19,9 +19,6 @@ namespace Castle.Facilities.EventWiring
 	using System.IO;
 	using System.Reflection;
 
-	/// <summary>
-	///   Extracts MethodInfo of metho invoked in delegate. Based on ILReader class from http://www.gocosmos.org project
-	/// </summary>
 	internal class NaiveMethodNameExtractor
 	{
 		private readonly MethodBody body;

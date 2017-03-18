@@ -21,10 +21,6 @@ namespace Castle.Windsor
 	using Castle.Core;
 	using Castle.MicroKernel;
 
-	/// <summary>
-	///   Implementation of <see cref = "IServiceProvider" /> and <see cref = "IServiceProviderEx" /> that uses a <see
-	///    cref = "IWindsorContainer" /> or <see cref = "IKernel" /> as its component's source.
-	/// </summary>
 	public class WindsorServiceProvider : IServiceProviderEx
 	{
 		private readonly IKernelInternal kernel;

@@ -25,11 +25,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using Castle.MicroKernel.Lifestyle.Scoped;
 	using Castle.MicroKernel.SubSystems.Conversion;
 
-	/// <summary>Inspects the component configuration and the type looking for a definition of lifestyle type. The configuration preceeds whatever is defined in the component.</summary>
-	/// <remarks>
-	///     This inspector is not guarantee to always set up an lifestyle type. If nothing could be found it wont touch the model. In this case is up to the kernel to establish a default lifestyle for
-	///     components.
-	/// </remarks>
 	[Serializable]
 	public class LifestyleModelInspector : IContributeComponentModelConstruction
 	{
@@ -40,7 +35,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			this.converter = converter;
 		}
 
-		/// <summary>Searches for the lifestyle in the configuration and, if unsuccessful look for the lifestyle attribute in the implementation type.</summary>
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (!ReadLifestyleFromConfiguration(model))
@@ -49,10 +43,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			}
 		}
 
-		/// <summary>
-		///     Reads the attribute "lifestyle" associated with the component configuration and tries to convert to <see cref = "LifestyleType" />
-		///     enum type.
-		/// </summary>
 		protected virtual bool ReadLifestyleFromConfiguration(ComponentModel model)
 		{
 			if (model.Configuration == null)
@@ -132,7 +122,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			return false;
 		}
 
-		/// <summary>Check if the type expose one of the lifestyle attributes defined in Castle.Model namespace.</summary>
 		protected virtual void ReadLifestyleFromType(ComponentModel model)
 		{
 			var attributes = AttributesUtil.GetAttributes<LifestyleAttribute>(model.Implementation).ToArray();

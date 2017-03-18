@@ -18,16 +18,8 @@ namespace Castle.MicroKernel.Lifestyle.Pool
 
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Pool implementation contract.
-	/// </summary>
 	public interface IPool : IDisposable
 	{
-		/// <summary>
-		///   Implementors should release the instance or put it
-		///   on the pool
-		/// </summary>
-		/// <param name = "instance"></param>
 		bool Release(object instance);
 
 		object Request(CreationContext context, Func<CreationContext, Burden> creationCallback);

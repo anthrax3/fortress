@@ -26,14 +26,6 @@ namespace Castle.MicroKernel.Lifestyle.Scoped
 	using Castle.Core.Internal;
 	using Castle.Windsor;
 
-	/// <summary>
-	///   Provides explicit lifetime scoping within logical path of execution. Used for types with <see
-	///    cref="LifestyleType.Scoped" /> .
-	/// </summary>
-	/// <remarks>
-	///   The scope is passed on to child threads, including ThreadPool threads. The capability is limited to single <see
-	///    cref="AppDomain" /> and should be used cautiously as call to <see cref="Dispose" /> may occur while the child thread is still executing, what in turn may lead to subtle threading bugs.
-	/// </remarks>
 	public class CallContextLifetimeScope : ILifetimeScope
 	{
 		private static readonly ConcurrentDictionary<Guid, CallContextLifetimeScope> appDomainLocalInstanceCache =

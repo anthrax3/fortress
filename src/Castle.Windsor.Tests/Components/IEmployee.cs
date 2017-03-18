@@ -14,9 +14,6 @@
 
 namespace CastleTests.Components
 {
-	/// <summary>
-	///   Summary description for IEmployee.
-	/// </summary>
 	public interface IEmployee
 	{
 		string Email { get; set; }

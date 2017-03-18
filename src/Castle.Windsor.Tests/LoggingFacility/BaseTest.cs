@@ -19,9 +19,6 @@ namespace Castle.Facilities.Logging.Tests
 	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.Windsor;
 
-	/// <summary>
-	/// Summary description for BaseTest.
-	/// </summary>
 	public abstract class BaseTest
 	{
 		protected virtual IWindsorContainer CreateConfiguredContainer(LoggerImplementation loggerApi)

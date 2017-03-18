@@ -20,30 +20,13 @@ namespace Castle.Windsor.Installer
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.Registration;
 
-	/// <summary>
-	///   Helper class used by <see cref = "FromAssembly" /> to filter/order and instantiate <see cref = "IWindsorInstaller" /> implementations
-	/// </summary>
 	public class InstallerFactory
 	{
-		/// <summary>
-		///   Performs custom instantiation of given <param name = "installerType" />
-		/// </summary>
-		/// <remarks>
-		///   Default implementation uses public parameterless constructor to create the instance.
-		/// </remarks>
 		public virtual IWindsorInstaller CreateInstance(Type installerType)
 		{
 			return installerType.CreateInstance<IWindsorInstaller>();
 		}
 
-		/// <summary>
-		///   Performs custom filtering/ordering of given set of types.
-		/// </summary>
-		/// <param name = "installerTypes">Set of concrete class types implementing <see cref = "IWindsorInstaller" /> interface.</param>
-		/// <returns>Transformed <paramref name = "installerTypes" />.</returns>
-		/// <remarks>
-		///   Default implementation simply returns types passed into it.
-		/// </remarks>
 		public virtual IEnumerable<Type> Select(IEnumerable<Type> installerTypes)
 		{
 			return installerTypes;

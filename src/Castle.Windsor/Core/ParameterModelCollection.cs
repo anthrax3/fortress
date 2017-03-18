@@ -21,9 +21,6 @@ namespace Castle.Core
 	using System.Collections.Generic;
 	using System.Diagnostics;
 
-	/// <summary>
-	///   Collection of <see cref = "ParameterModel" />
-	/// </summary>
 	[Serializable]
 	[DebuggerDisplay("Count = {dictionary.Count}")]
 	public class ParameterModelCollection : IEnumerable<ParameterModel>
@@ -32,20 +29,12 @@ namespace Castle.Core
 		private readonly IDictionary<string, ParameterModel> dictionary =
 			new Dictionary<string, ParameterModel>(StringComparer.OrdinalIgnoreCase);
 
-		/// <summary>
-		///   Gets the count.
-		/// </summary>
-		/// <value>The count.</value>
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		public int Count
 		{
 			get { return dictionary.Count; }
 		}
 
-		/// <summary>
-		///   Gets the <see cref = "ParameterModel" /> with the specified key.
-		/// </summary>
-		/// <value></value>
 		public ParameterModel this[string key]
 		{
 			get
@@ -56,34 +45,16 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Adds the specified name.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "value">The value.</param>
 		public void Add(string name, string value)
 		{
 			Add(name, new ParameterModel(name, value));
 		}
 
-		/// <summary>
-		///   Adds the specified name.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "configNode">The config node.</param>
 		public void Add(string name, IConfiguration configNode)
 		{
 			Add(name, new ParameterModel(name, configNode));
 		}
 
-		/// <summary>
-		///   Adds the specified key.
-		/// </summary>
-		/// <remarks>
-		///   Not implemented
-		/// </remarks>
-		/// <param name = "key">The key.</param>
-		/// <param name = "value">The value.</param>
 		private void Add(string key, ParameterModel value)
 		{
 			try
@@ -96,13 +67,6 @@ namespace Castle.Core
 			}
 		}
 
-		/// <summary>
-		///   Returns an enumerator that can iterate through a collection.
-		/// </summary>
-		/// <returns>
-		///   An <see cref = "T:System.Collections.IEnumerator" />
-		///   that can be used to iterate through the collection.
-		/// </returns>
 		[DebuggerStepThrough]
 		IEnumerator IEnumerable.GetEnumerator()
 		{

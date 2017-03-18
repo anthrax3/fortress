@@ -19,9 +19,6 @@ namespace Castle.MicroKernel.Registration
 	using System.ComponentModel;
 	using System.Reflection;
 
-	/// <summary>
-	///   Describes a related group of components to register in the kernel.
-	/// </summary>
 	[Obsolete("Use Classes.From()... or Classes.FromAssembly() instead.")]
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class AllTypesOf
@@ -33,11 +30,6 @@ namespace Castle.MicroKernel.Registration
 			this.basedOn = basedOn;
 		}
 
-		/// <summary>
-		///   Prepares to register types from a list of types.
-		/// </summary>
-		/// <param name = "types">The list of types.</param>
-		/// <returns>The corresponding <see cref = "BasedOnDescriptor" /></returns>
 		[Obsolete("Use Classes.From(types).BasedOn(baseType)... instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor From(IEnumerable<Type> types)
@@ -45,11 +37,6 @@ namespace Castle.MicroKernel.Registration
 			return AllTypes.From(types).BasedOn(basedOn);
 		}
 
-		/// <summary>
-		///   Prepares to register types from a list of types.
-		/// </summary>
-		/// <param name = "types">The list of types.</param>
-		/// <returns>The corresponding <see cref = "BasedOnDescriptor" /></returns>
 		[Obsolete("Use Classes.From(types).BasedOn(baseType)... instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor From(params Type[] types)
@@ -57,11 +44,6 @@ namespace Castle.MicroKernel.Registration
 			return AllTypes.From(types).BasedOn(basedOn);
 		}
 
-		/// <summary>
-		///   Prepares to register types from an assembly.
-		/// </summary>
-		/// <param name = "assembly">The assembly.</param>
-		/// <returns>The corresponding <see cref = "BasedOnDescriptor" /></returns>
 		[Obsolete("Use Classes.FromAssembly(assembly).BasedOn(baseType)... instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor FromAssembly(Assembly assembly)
@@ -69,11 +51,6 @@ namespace Castle.MicroKernel.Registration
 			return AllTypes.FromAssembly(assembly).BasedOn(basedOn);
 		}
 
-		/// <summary>
-		///   Prepares to register types from an assembly.
-		/// </summary>
-		/// <param name = "assemblyName">The assembly name.</param>
-		/// <returns>The corresponding <see cref = "BasedOnDescriptor" /></returns>
 		[Obsolete("Use Classes.FromAssemblyNamed(assemblyName).BasedOn(baseType)... instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor FromAssemblyNamed(string assemblyName)
@@ -81,11 +58,6 @@ namespace Castle.MicroKernel.Registration
 			return AllTypes.FromAssemblyNamed(assemblyName).BasedOn(basedOn);
 		}
 
-		/// <summary>
-		///   Prepares to register types from a list of types.
-		/// </summary>
-		/// <param name = "types">The list of types.</param>
-		/// <returns>The corresponding <see cref = "BasedOnDescriptor" /></returns>
 		[Obsolete("Use Classes.FromAssemblyNamed(assemblyName).Pick()... instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor Pick(IEnumerable<Type> types)

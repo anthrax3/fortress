@@ -27,16 +27,6 @@ namespace Castle.Windsor.Proxy
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Proxy;
 
-	/// <summary>
-	///   This implementation of <see cref="IProxyFactory" /> relies 
-	///   on DynamicProxy to expose proxy capabilities.
-	/// </summary>
-	/// <remarks>
-	///   Note that only virtual methods can be intercepted in a 
-	///   concrete class. However, if the component 
-	///   was registered with a service interface, we proxy
-	///   the interface and the methods don't need to be virtual,
-	/// </remarks>
 	[Serializable]
 	public class DefaultProxyFactory : AbstractProxyFactory
 	                                   , IDeserializationCallback
@@ -44,9 +34,6 @@ namespace Castle.Windsor.Proxy
 		[NonSerialized]
 		protected ProxyGenerator generator;
 
-		/// <summary>
-		///   Constructs a DefaultProxyFactory
-		/// </summary>
 		public DefaultProxyFactory() : this(new ProxyGenerator())
 		{
 		}
@@ -86,15 +73,6 @@ namespace Castle.Windsor.Proxy
 			kernel.ReleaseComponent(proxyGenOptions.Hook);
 		}
 
-		/// <summary>
-		///   Creates the proxy for the supplied component.
-		/// </summary>
-		/// <param name="kernel"> The kernel. </param>
-		/// <param name="target"> The target. </param>
-		/// <param name="model"> The model. </param>
-		/// <param name="constructorArguments"> The constructor arguments. </param>
-		/// <param name="context"> The creation context </param>
-		/// <returns> The component proxy. </returns>
 		public override object Create(IKernel kernel, object target, ComponentModel model, CreationContext context, params object[] constructorArguments)
 		{
 			object proxy;
@@ -186,12 +164,6 @@ namespace Castle.Windsor.Proxy
 		{
 		}
 
-		/// <summary>
-		///   Determines if the component requires a target instance for proxying.
-		/// </summary>
-		/// <param name="kernel"> The kernel. </param>
-		/// <param name="model"> The model. </param>
-		/// <returns> true if an instance is required. </returns>
 		public override bool RequiresTargetInstance(IKernel kernel, ComponentModel model)
 		{
 			var proxyOptions = model.ObtainProxyOptions();

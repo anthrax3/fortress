@@ -23,9 +23,6 @@ using Castle.Core.DynamicProxy.Generators;
 
 namespace Castle.Core.DynamicProxy.Serialization
 {
-	/// <summary>
-	///   Applied to the assemblies saved by <see cref="ModuleScope" /> in order to persist the cache data included in the persisted assembly.
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
 	public class CacheMappingsAttribute : Attribute
 	{

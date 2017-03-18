@@ -17,9 +17,6 @@ using Castle.Core.DynamicProxy.Generators.Emitters;
 
 namespace Castle.Core.DynamicProxy.Contributors
 {
-	/// <summary>
-	///   Interface describing elements composing generated type
-	/// </summary>
 	public interface ITypeContributor
 	{
 		void CollectElementsToProxy(IProxyGenerationHook hook, MetaType model);

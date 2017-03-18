@@ -29,45 +29,16 @@ namespace Castle.Windsor.Configuration.Interpreters
 	using Castle.MicroKernel.SubSystems.Resource;
 	using Castle.Windsor.Configuration.Interpreters.XmlProcessor;
 
-	/// <summary>
-	///   Reads the configuration from a XmlFile. Sample structure:
-	///   <code>
-	///     &lt;configuration&gt;
-	///     &lt;facilities&gt;
-	///     &lt;facility id="myfacility"&gt;
-	///     
-	///     &lt;/facility&gt;
-	///     &lt;/facilities&gt;
-	///   
-	///     &lt;components&gt;
-	///     &lt;component id="component1"&gt;
-	///     
-	///     &lt;/component&gt;
-	///     &lt;/components&gt;
-	///     &lt;/configuration&gt;
-	///   </code>
-	/// </summary>
 	public class XmlInterpreter : AbstractInterpreter
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "XmlInterpreter" /> class.
-		/// </summary>
 		public XmlInterpreter()
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "XmlInterpreter" /> class.
-		/// </summary>
-		/// <param name = "filename">The filename.</param>
 		public XmlInterpreter(String filename) : base(filename)
 		{
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "XmlInterpreter" /> class.
-		/// </summary>
-		/// <param name = "source">The source.</param>
 		public XmlInterpreter(IResource source) : base(source)
 		{
 		}

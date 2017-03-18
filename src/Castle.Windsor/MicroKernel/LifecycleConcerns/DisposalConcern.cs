@@ -18,9 +18,6 @@ namespace Castle.MicroKernel.LifecycleConcerns
 
 	using Castle.Core;
 
-	/// <summary>
-	/// Summary description for DisposalConcern.
-	/// </summary>
 	[Serializable]
 	public class DisposalConcern : IDecommissionConcern
 	{

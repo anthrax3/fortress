@@ -18,11 +18,6 @@ namespace Castle.MicroKernel.SubSystems.Resource
 {
 	using System;
 
-	/// <summary>
-	///   An implementation of <c>a</c> should 
-	///   be able to return instances of <see cref = "IResource" />
-	///   for a given resource identifier.
-	/// </summary>
 	public interface IResourceSubSystem : ISubSystem
 	{
 		IResource CreateResource(CustomUri uri);

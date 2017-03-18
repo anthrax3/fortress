@@ -20,29 +20,15 @@ namespace Castle.MicroKernel.Handlers
 	using Castle.Core;
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///   Summary description for HandlerException.
-	/// </summary>
 	[Serializable]
 	public class HandlerException : Exception
 	{
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
-		/// <param name = "name"></param>
 		public HandlerException(string message, ComponentName name) : base(message)
 		{
 			ExceptionHelper.SetUp(this);
 			Name = name;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "message">The message.</param>
-		/// <param name = "name"></param>
-		/// <param name = "innerException"></param>
 		public HandlerException(string message, ComponentName name, Exception innerException)
 			: base(message, innerException)
 		{
@@ -50,11 +36,6 @@ namespace Castle.MicroKernel.Handlers
 			Name = name;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
-		/// </summary>
-		/// <param name = "info">The object that holds the serialized object data.</param>
-		/// <param name = "context">The contextual information about the source or destination.</param>
 		public HandlerException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			ExceptionHelper.SetUp(this);

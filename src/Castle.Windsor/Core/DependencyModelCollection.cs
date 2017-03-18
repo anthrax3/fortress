@@ -21,9 +21,6 @@ namespace Castle.Core
 
 	using Castle.Core.Internal;
 
-	/// <summary>
-	///     Collection of <see cref = "DependencyModel" />.
-	/// </summary>
 	[Serializable]
 	[DebuggerDisplay("Count = {dependencies.Count}")]
 	public class DependencyModelCollection : IMutableCollection<DependencyModel>

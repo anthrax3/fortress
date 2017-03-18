@@ -24,9 +24,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	using Castle.Core;
 	using Castle.MicroKernel.Context;
 
-	/// <summary>
-	///   Composition of all available conversion managers
-	/// </summary>
 	[Serializable]
 	public class DefaultConversionManager : AbstractSubSystem, IConversionManager, ITypeConverterContext
 	{

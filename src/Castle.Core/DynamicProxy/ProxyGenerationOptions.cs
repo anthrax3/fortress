@@ -32,19 +32,12 @@ namespace Castle.Core.DynamicProxy
 		[NonSerialized]
 		private MixinData mixinData; // this is calculated dynamically on proxy type creation
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ProxyGenerationOptions" /> class.
-		/// </summary>
-		/// <param name = "hook">The hook.</param>
 		public ProxyGenerationOptions(IProxyGenerationHook hook)
 		{
 			BaseTypeForInterfaceProxy = typeof(object);
 			Hook = hook;
 		}
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "ProxyGenerationOptions" /> class.
-		/// </summary>
 		public ProxyGenerationOptions()
 			: this(new AllMethodsHook())
 		{

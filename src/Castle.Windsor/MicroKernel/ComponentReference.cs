@@ -22,10 +22,6 @@ namespace Castle.MicroKernel
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Resolvers;
 
-	/// <summary>
-	///   Reference to component obtained from the container.
-	/// </summary>
-	/// <typeparam name = "T"></typeparam>
 	[Serializable]
 	public class ComponentReference<T> : IReference<T>
 	{
@@ -38,22 +34,12 @@ namespace Castle.MicroKernel
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		protected DependencyModel dependencyModel;
 
-		/// <summary>
-		///   Creates a new instance of <see cref = "ComponentReference{T}" /> referencing default component implemented by <paramref
-		///    name = "componentType" />
-		/// </summary>
-		/// <param name = "componentType"></param>
 		public ComponentReference(Type componentType)
 		{
 			referencedComponentName = ComponentName.DefaultNameFor(componentType);
 			referencedComponentType = componentType;
 		}
 
-		/// <summary>
-		///   Creates a new instance of <see cref = "ComponentReference{T}" /> referencing component <paramref
-		///    name = "referencedComponentName" />
-		/// </summary>
-		/// <param name = "referencedComponentName"></param>
 		public ComponentReference(String referencedComponentName)
 		{
 			if (referencedComponentName == null)

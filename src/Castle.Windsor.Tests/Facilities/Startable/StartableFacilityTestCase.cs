@@ -168,11 +168,6 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			Assert.AreEqual(1, StartableWithError.StartedCount);
 		}
 
-		/// <summary>
-		///   This test has one startable component dependent on another, and both are dependent
-		///   on a third generic component - all are singletons. We need to make sure we only get
-		///   one instance of each component created.
-		/// </summary>
 		[Test]
 		public void TestStartableChainWithGenerics()
 		{

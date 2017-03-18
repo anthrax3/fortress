@@ -19,10 +19,6 @@ namespace Castle.Windsor.Configuration.AppDomain
 	using System.Configuration;
 	using System.Xml;
 
-	/// <summary>
-	///   Implementation of <see cref = "IConfigurationSectionHandler" />.
-	///   Do not support configuration inheritance.
-	/// </summary>
 	public class CastleSectionHandler : IConfigurationSectionHandler
 	{
 		public object Create(object parent, object configContext, XmlNode section)

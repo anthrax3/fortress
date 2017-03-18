@@ -176,11 +176,6 @@ namespace Castle.Core.DynamicProxy.Internal
 			}
 		}
 
-		/// <summary>
-		///   Attributes should be replicated if they are non-inheritable,
-		///   but there are some special cases where the attributes means
-		///   something to the CLR, where they should be skipped.
-		/// </summary>
 		private static bool ShouldSkipAttributeReplication(Type attribute)
 		{
 			if (attribute.GetTypeInfo().IsPublic == false)

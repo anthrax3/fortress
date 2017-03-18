@@ -26,15 +26,6 @@ namespace Castle.Core.DynamicProxy.Generators
 		private EventEmitter emitter;
 		private string name;
 
-		/// <summary>
-		///   Initializes a new instance of the <see cref = "MetaEvent" /> class.
-		/// </summary>
-		/// <param name = "name">The name.</param>
-		/// <param name = "declaringType">Type declaring the original event being overriten, or null.</param>
-		/// <param name = "eventDelegateType"></param>
-		/// <param name = "adder">The add method.</param>
-		/// <param name = "remover">The remove method.</param>
-		/// <param name = "attributes">The attributes.</param>
 		public MetaEvent(string name, Type declaringType, Type eventDelegateType, MetaMethod adder, MetaMethod remover,
 		                 EventAttributes attributes)
 			: base(declaringType)

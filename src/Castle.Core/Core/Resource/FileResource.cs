@@ -18,9 +18,6 @@ using System.IO;
 
 namespace Castle.Core.Core.Resource
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	public class FileResource : AbstractStreamResource
 	{
 		private string filePath;
