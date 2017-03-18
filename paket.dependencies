@@ -8,6 +8,5 @@ nuget FAKE
 nuget log4net 
 nuget NLog 
 nuget Serilog 
-nuget MSBuild.Microsoft.VisualStudio.Web_WebApplication.Targets 12.0.2
 nuget NUnit
 nuget NUnit.ConsoleRunner
