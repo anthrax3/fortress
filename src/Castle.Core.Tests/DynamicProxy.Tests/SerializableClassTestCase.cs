@@ -71,21 +71,6 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		}
 
 		[Test]
-		public void CustomMarkerInterface()
-		{
-			var proxy = generator.CreateClassProxy(typeof(ClassWithMarkerInterface),
-			                                       new[] { typeof(IMarkerInterface) },
-			                                       new StandardInterceptor());
-
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(proxy is IMarkerInterface);
-
-			var otherProxy = SerializeAndDeserialize(proxy);
-
-			Assert.IsTrue(otherProxy is IMarkerInterface);
-		}
-
-		[Test]
 		public void DeserializationWithSpecificModuleScope()
 		{
 			ProxyObjectReference.SetScope(generator.ProxyBuilder.ModuleScope);
