@@ -39,7 +39,7 @@ namespace CastleTests.Facilities
 			var exception = Assert.Throws<ArgumentException>(() => kernel.AddFacility<StartableFacility>());
 
 			Assert.AreEqual(
-				"Facility of type 'Castle.Facilities.Startable.StartableFacility' has already been registered with the container. Only one facility of a given type can exist in the container.",
+				"Facility of type 'Castle.Windsor.Facilities.Startable.StartableFacility' has already been registered with the container. Only one facility of a given type can exist in the container.",
 				exception.Message);
 		}
 
