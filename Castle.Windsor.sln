@@ -14,17 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor.Tests", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.FactorySupport", "src\Castle.Facilities.FactorySupport\Castle.Facilities.FactorySupport.csproj", "{9AAF517E-207A-4A81-8C14-D4184ADBB701}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Synchronize", "src\Castle.Facilities.Synchronize\Castle.Facilities.Synchronize.csproj", "{4EFB62B0-D365-4B29-B495-FF7020923EE5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Logging", "src\Castle.Facilities.Logging\Castle.Facilities.Logging.csproj", "{183B3D33-E97B-4F02-B7B5-BC20601938B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.EventWiring", "src\Castle.Facilities.EventWiring\Castle.Facilities.EventWiring.csproj", "{C64AF7DA-A17C-4379-88D9-43B16863DA37}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Wcfintegration", "src\Castle.Facilities.WcfIntegration\Castle.Facilities.Wcfintegration.csproj", "{779E3DAA-5BEC-4FD2-83B8-22913D900646}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Wcfintegration.Tests", "src\Castle.Facilities.WcfIntegration.Tests\Castle.Facilities.Wcfintegration.Tests.csproj", "{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Wcfintegration.Demo", "src\Castle.Facilities.WcfIntegration.Demo\Castle.Facilities.Wcfintegration.Demo.csproj", "{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E70FAB7D-FD6B-4777-A32F-F219C51248CD}"
 	ProjectSection(SolutionItems) = preProject
@@ -69,14 +61,6 @@ Global
 		{9AAF517E-207A-4A81-8C14-D4184ADBB701}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
 		{9AAF517E-207A-4A81-8C14-D4184ADBB701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AAF517E-207A-4A81-8C14-D4184ADBB701}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.NET45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.NET45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EFB62B0-D365-4B29-B495-FF7020923EE5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{183B3D33-E97B-4F02-B7B5-BC20601938B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{183B3D33-E97B-4F02-B7B5-BC20601938B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{183B3D33-E97B-4F02-B7B5-BC20601938B0}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -93,30 +77,6 @@ Global
 		{C64AF7DA-A17C-4379-88D9-43B16863DA37}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
 		{C64AF7DA-A17C-4379-88D9-43B16863DA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C64AF7DA-A17C-4379-88D9-43B16863DA37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.NET45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.NET45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{779E3DAA-5BEC-4FD2-83B8-22913D900646}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.NET45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.NET45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64AA69B4-0923-447D-9CFC-383B5DB9D4C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.NET45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.NET45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.NET45-Release|Any CPU.Build.0 = Release|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67FF38A5-F0C3-4B3C-BE8B-F05F40381456}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBDBCDBD-7B72-400F-BC73-24F7951AAED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBDBCDBD-7B72-400F-BC73-24F7951AAED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBDBCDBD-7B72-400F-BC73-24F7951AAED1}.NET45-Debug|Any CPU.ActiveCfg = Debug|Any CPU

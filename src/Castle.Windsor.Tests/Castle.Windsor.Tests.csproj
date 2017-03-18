@@ -531,7 +531,6 @@
     <ProjectReference Include="..\Castle.Facilities.EventWiring\Castle.Facilities.EventWiring.csproj" />
     <ProjectReference Include="..\Castle.Facilities.FactorySupport\Castle.Facilities.FactorySupport.csproj" />
     <ProjectReference Include="..\Castle.Facilities.Logging\Castle.Facilities.Logging.csproj" />
-    <ProjectReference Include="..\Castle.Facilities.Synchronize\Castle.Facilities.Synchronize.csproj" />
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -550,11 +549,6 @@
 	<Reference Include="NLog">
       <HintPath>..\..\packages\NLog\lib\net45\NLog.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Facilities\Synchronize\Components\DummyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
