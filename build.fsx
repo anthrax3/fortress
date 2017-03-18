@@ -21,7 +21,7 @@ Target "Build" <| fun _ ->
 
 Target "Test" <| fun _ ->
     tracef "Castle.Windsor: Running Unit Tests\r\n"
-    !! ("src/**/bin/**/Castle.Windsor.Tests.dll")
+    !! ("src/**/bin/**/Castle.Core.Tests.dll")
     |> NUnit3 (fun p ->
         {p with
             ShadowCopy = false
