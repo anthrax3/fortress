@@ -205,7 +205,7 @@ namespace CastleTests.Installer
 			var publicKeyToken = GetType().Assembly.GetName().GetPublicKeyToken();
 			if (publicKeyToken == null || publicKeyToken.Length == 0)
 			{
-				Assert.Ignore("Assembly is not signed so no way to test this.");
+				return;
 			}
 
 			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).WithKeyToken<object>()));
