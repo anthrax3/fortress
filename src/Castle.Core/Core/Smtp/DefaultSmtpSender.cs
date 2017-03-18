@@ -112,7 +112,6 @@ namespace Castle.Core.Smtp
 		/// <param name="to">To field</param>
 		/// <param name="subject">e-mail's subject</param>
 		/// <param name="messageText">message's body</param>
-		[SecuritySafeCritical]
 		public void Send(String from, String to, String subject, String messageText)
 		{
 			if (from == null) throw new ArgumentNullException("from");
@@ -128,13 +127,11 @@ namespace Castle.Core.Smtp
 		/// </summary>
 		/// <exception cref="ArgumentNullException">If the message is null</exception>
 		/// <param name="message">Message instance</param>
-		[SecuritySafeCritical]
 		public void Send(MailMessage message)
 		{
 			InternalSend(message);
 		}
 
-		[SecurityCritical]
 		private void InternalSend(MailMessage message)
 		{
 			if (message == null) throw new ArgumentNullException("message");
@@ -171,7 +168,6 @@ namespace Castle.Core.Smtp
 			}
 		}
 
-		[SecuritySafeCritical]
 		public void Send(IEnumerable<MailMessage> messages)
 		{
 			foreach (MailMessage message in messages)
@@ -216,7 +212,6 @@ namespace Castle.Core.Smtp
 		/// informed
 		/// </summary>
 		/// <param name="smtpClient">Message instance</param>
-		[SecurityCritical]
 		protected virtual void Configure(SmtpClient smtpClient)
 		{
 			smtpClient.Credentials = null;
@@ -248,7 +243,6 @@ namespace Castle.Core.Smtp
 			get { return !string.IsNullOrEmpty(credentials.UserName); }
 		}
 
-		[SecuritySafeCritical]
 		private SmtpClient CreateSmtpClient()
 		{
 			if (string.IsNullOrEmpty(hostname))

@@ -83,7 +83,6 @@ namespace Castle.DynamicProxy.Serialization
 			get { return scope; }
 		}
 
-		[SecurityCritical]
 		protected ProxyObjectReference(SerializationInfo info, StreamingContext context)
 		{
 			this.info = info;
@@ -113,7 +112,6 @@ namespace Castle.DynamicProxy.Serialization
 			return Type.GetType(info.GetString(key), true, false);
 		}
 
-		[SecurityCritical]
 		protected virtual object RecreateProxy()
 		{
 			var generatorType = GetValue<string>("__proxyTypeId");
@@ -131,7 +129,6 @@ namespace Castle.DynamicProxy.Serialization
 			return RecreateInterfaceProxy(generatorType);
 		}
 
-		[SecurityCritical]
 		private object RecreateClassProxyWithTarget()
 		{
 			var generator = new ClassProxyWithTargetGenerator(scope, baseType, interfaces, proxyGenerationOptions);
@@ -139,7 +136,6 @@ namespace Castle.DynamicProxy.Serialization
 			return InstantiateClassProxy(proxyType);
 		}
 
-		[SecurityCritical]
 		public object RecreateInterfaceProxy(string generatorType)
 		{
 			var @interface = DeserializeTypeFromString("__theInterface");
@@ -170,7 +166,6 @@ namespace Castle.DynamicProxy.Serialization
 			return FormatterServices.GetSafeUninitializedObject(proxyType);
 		}
 
-		[SecurityCritical]
 		public object RecreateClassProxy()
 		{
 			var generator = new ClassProxyGenerator(scope, baseType);
@@ -178,7 +173,6 @@ namespace Castle.DynamicProxy.Serialization
 			return InstantiateClassProxy(proxyType);
 		}
 
-		[SecurityCritical]
 		private object InstantiateClassProxy(Type proxy_type)
 		{
 			delegateToBase = GetValue<bool>("__delegateToBase");
@@ -200,20 +194,17 @@ namespace Castle.DynamicProxy.Serialization
 			}
 		}
 
-		[SecurityCritical]
 		public object GetRealObject(StreamingContext context)
 		{
 			return proxy;
 		}
 
-		[SecurityCritical]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			// There is no need to implement this method as 
 			// this class would never be serialized.
 		}
 
-		[SecuritySafeCritical]
 		public void OnDeserialization(object sender)
 		{
 			var interceptors = GetValue<IInterceptor[]>("__interceptors");
@@ -226,7 +217,6 @@ namespace Castle.DynamicProxy.Serialization
 			InvokeCallback(proxy);
 		}
 
-		[SecurityCritical]
 		private void DeserializeProxyMembers()
 		{
 			var proxyType = proxy.GetType();
@@ -251,7 +241,6 @@ namespace Castle.DynamicProxy.Serialization
 			FormatterServices.PopulateObjectMembers(proxy, deserializedMembers.ToArray(), deserializedValues.ToArray());
 		}
 
-		[SecurityCritical]
 		private void DeserializeProxyState()
 		{
 			if (isInterfaceProxy)

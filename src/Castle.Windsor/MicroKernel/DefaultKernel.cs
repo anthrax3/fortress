@@ -120,7 +120,6 @@ namespace Castle.MicroKernel
 		{
 		}
 
-		[SecurityCritical]
 		public DefaultKernel(SerializationInfo info, StreamingContext context)
 		{
 			var members = FormatterServices.GetSerializableMembers(GetType(), context);
@@ -202,7 +201,6 @@ namespace Castle.MicroKernel
 
 		protected INamingSubSystem NamingSubSystem { get; private set; }
 
-		[SecurityCritical]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			var members = FormatterServices.GetSerializableMembers(GetType(), context);

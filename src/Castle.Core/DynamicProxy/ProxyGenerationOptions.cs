@@ -76,7 +76,6 @@ namespace Castle.DynamicProxy
 			}
 		}
 
-		[SecurityCritical]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("hook", Hook);

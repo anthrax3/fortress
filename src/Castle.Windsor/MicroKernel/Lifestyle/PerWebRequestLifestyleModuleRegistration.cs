@@ -22,7 +22,6 @@ namespace Castle.MicroKernel.Lifestyle
 	using System.Security;
     	using System.Web;
 
-	[SecurityCritical]
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class PerWebRequestLifestyleModuleRegistration
 	{

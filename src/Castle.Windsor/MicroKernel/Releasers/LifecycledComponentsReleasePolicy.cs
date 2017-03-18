@@ -223,7 +223,6 @@ namespace Castle.MicroKernel.Releasers
 		/// </summary>
 		/// <param name = "perfMetricsFactory"></param>
 		/// <returns></returns>
-		[SecuritySafeCritical]
 		public static ITrackedComponentsPerformanceCounter GetTrackedComponentsPerformanceCounter(
 			IPerformanceMetricsFactory perfMetricsFactory)
 		{

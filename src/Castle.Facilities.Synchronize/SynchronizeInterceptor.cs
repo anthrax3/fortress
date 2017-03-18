@@ -72,7 +72,6 @@ namespace Castle.Facilities.Synchronize
 		/// synchronization.
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>
-		[SecuritySafeCritical]
 		public void Intercept(IInvocation invocation)
 		{
 			if (InvokeInSynchronizationContext(invocation))
@@ -103,7 +102,6 @@ namespace Castle.Facilities.Synchronize
 		/// <returns>
 		/// 	<c>true</c> if continued; otherwise, <c>false</c>.
 		/// </returns>
-		[SecurityCritical]
 		private bool InvokeInSynchronizationContext(IInvocation invocation)
 		{
 			if (metaInfo == null)
@@ -173,7 +171,6 @@ namespace Castle.Facilities.Synchronize
 			return true;
 		}
 
-		[SecurityCritical]
 		private static bool InvokeWithSynchronizedTarget<T>(IInvocation invocation, Func<T, bool> canCallOnThread, Action<T, IInvocation, Result> post) where T : class
 		{
 			var syncTarget = invocation.InvocationTarget as T;
@@ -202,7 +199,6 @@ namespace Castle.Facilities.Synchronize
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>
 		/// <param name="result">The result holder.</param>
-		[SecurityCritical]
 		private static void InvokeSynchronously(IInvocation invocation, Result result)
 		{
 			invocation.Proceed();
@@ -245,7 +241,6 @@ namespace Castle.Facilities.Synchronize
 		/// </summary>
 		/// <param name="invocation">The invocation.</param>
 		/// <returns>Holds the invocation result.</returns>
-		[SecurityCritical]
 		private static Result CreateResult(IInvocation invocation)
 		{
 			Result result = null;
@@ -282,7 +277,6 @@ namespace Castle.Facilities.Synchronize
 		/// </summary>
 		/// <param name="type">The type.</param>
 		/// <returns>The default value for the type.</returns>
-		[SecurityCritical]
 		private static object GetDefault(Type type)
 		{
 			return type.IsValueType ? FormatterServices.GetUninitializedObject(type) : null;

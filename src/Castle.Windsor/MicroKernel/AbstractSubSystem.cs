@@ -22,7 +22,6 @@ namespace Castle.MicroKernel
 	{
 		private IKernelInternal kernel;
 
-		[SecurityCritical]
 		public override object InitializeLifetimeService()
 		{
 			return null;

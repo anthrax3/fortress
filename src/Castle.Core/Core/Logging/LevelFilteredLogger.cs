@@ -57,7 +57,6 @@ namespace Castle.Core.Logging
 		/// Keep the instance alive in a remoting scenario
 		/// </summary>
 		/// <returns></returns>
-		[SecurityCritical]
 		public override object InitializeLifetimeService()
 		{
 			return null;

@@ -57,7 +57,6 @@ namespace Castle.DynamicProxy.Tests
 			Assert.AreEqual(0, AttributeCount<SecurityPermissionAttribute>(proxy));
 		}
 
-		[SecurityPermission(SecurityAction.Demand)]
 		public class AttributedClass_SecurityPermission
 		{
 		}

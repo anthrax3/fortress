@@ -26,7 +26,6 @@ namespace Castle.DynamicProxy.Generators.Emitters
 		private static readonly IDictionary<Assembly, bool> signedAssemblyCache = new Dictionary<Assembly, bool>();
 		private static readonly object lockObject = new object();
 
-		[SecuritySafeCritical]
 		static StrongNameUtil()
 		{
 			//idea after http://blogs.msdn.com/dmitryr/archive/2007/01/23/finding-out-the-current-trust-level-in-asp-net.aspx

@@ -30,7 +30,6 @@ namespace Castle.MicroKernel
 		private bool handlersChanged;
 		private volatile bool handlersChangedDeferred;
 
-		[SecurityCritical]
 		public override object InitializeLifetimeService()
 		{
 			return null;

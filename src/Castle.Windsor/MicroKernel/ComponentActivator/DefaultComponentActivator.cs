@@ -163,7 +163,6 @@ namespace Castle.MicroKernel.ComponentActivator
 			return instance;
 		}
 
-		[SecuritySafeCritical]
 		private object FastCreateInstance(Type implType, object[] arguments, ConstructorCandidate constructor)
 		{
 			if (constructor == null || constructor.Constructor == null)

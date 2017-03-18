@@ -21,7 +21,6 @@ namespace Castle.Core.Internal
 
 	public static class PermissionUtil
 	{
-		[SecuritySafeCritical]
 		public static bool IsGranted(this IPermission permission)
 		{
 			var permissionSet = new PermissionSet(PermissionState.None);
