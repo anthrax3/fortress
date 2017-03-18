@@ -22,7 +22,6 @@ namespace CastleTests.Registration
 	using Castle.MicroKernel.Registration;
 
 	using CastleTests.Components;
-	using CastleTests.Properties;
 
 	using NUnit.Framework;
 
