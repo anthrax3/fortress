@@ -370,7 +370,6 @@
     <Compile Include="Interceptors\WithCallbackInterceptor.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\VirtuallyImplementsInterfaceWithProperty.cs" />
     <Compile Include="ConsoleLoggerTestCase.cs" />
-    <Compile Include="DiagnosticsLoggerTestCase.cs" />
     <Compile Include="LevelFilteredLoggerTests.cs" />
     <Compile Include="SlimReadWriteLockTestCase.cs" />
     <Compile Include="ReflectionBasedDictionaryAdapterTestCase.cs" />
