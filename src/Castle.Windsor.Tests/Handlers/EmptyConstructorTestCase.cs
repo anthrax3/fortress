@@ -16,14 +16,10 @@ using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ModelBuilder;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests.Handlers
 {
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using CastleTests;
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

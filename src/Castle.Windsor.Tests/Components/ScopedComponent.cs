@@ -14,10 +14,8 @@
 
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-
 	[Scoped]
 	public class ScopedComponent : IComponent
 	{

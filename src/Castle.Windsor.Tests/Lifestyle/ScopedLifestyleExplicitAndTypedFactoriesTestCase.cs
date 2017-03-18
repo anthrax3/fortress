@@ -15,15 +15,12 @@
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel.Lifestyle;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
+using NUnit.Framework;
 
-namespace CastleTests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ScopedLifestyleExplicitAndTypedFactoriesTestCase : AbstractContainerTestCase
 	{
@@ -49,7 +46,7 @@ namespace CastleTests.Lifestyle
 		public void Scoped_component_via_factory_and_outsideinstances_reused_properly()
 		{
 			Container.Register(Component.For<UsesFooAndDelegate>().LifeStyle.Transient,
-			                   Component.For<Foo>().LifeStyle.Scoped()
+			                   Component.For<Facilities.TypedFactory.Delegates.Foo>().LifeStyle.Scoped()
 			                   	.DependsOn(Parameter.ForKey("number").Eq("1")));
 			using (Container.BeginScope())
 			{
@@ -81,7 +78,7 @@ namespace CastleTests.Lifestyle
 		public void Scoped_component_via_factory_reused_properly_across_factories()
 		{
 			Container.Register(Component.For<UsesTwoFooDelegates>().LifeStyle.Transient,
-			                   Component.For<Foo>().LifestyleScoped());
+			                   Component.For<Facilities.TypedFactory.Delegates.Foo>().LifestyleScoped());
 
 			var instance = Container.Resolve<UsesTwoFooDelegates>();
 			using (Container.BeginScope())

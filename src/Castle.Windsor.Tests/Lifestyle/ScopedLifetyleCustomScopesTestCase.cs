@@ -14,14 +14,12 @@
 
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.TestInfrastructure;
+using NUnit.Framework;
 
-namespace CastleTests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
-	using CastleTests.Components;
-	using CastleTests.TestInfrastructure;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ScopedLifetyleCustomScopesTestCase : AbstractContainerTestCase
 	{

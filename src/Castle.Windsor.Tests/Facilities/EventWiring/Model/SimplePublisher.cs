@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Facilities.EventWiring.Model
+namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 {
-	using System;
-
-	using Castle.Core;
-
 	public class SimplePublisher : IStartable
 	{
 		public virtual void StaticTrigger()

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Facilities.EventWiring.Model
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
+{
 	public delegate void PublishEventHandler(object sender, EventArgs e);
 
 	public delegate void PublishOneEventHandler(object sender, EventArgs e);

@@ -19,7 +19,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {
 	using System;
 	using System.Reflection;
-	using Castle.MicroKernel;
 
 	public class MultipleSelector : ITypedFactoryComponentSelector
 	{

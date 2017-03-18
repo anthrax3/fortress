@@ -15,19 +15,13 @@
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests;
-	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ContainerAndGenericsInCodeTestCase : AbstractContainerTestCase
 	{

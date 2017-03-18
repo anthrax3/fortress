@@ -12,27 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Config.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.Configuration
+namespace Castle.Windsor.Tests.Config
 {
-	using Castle.Core;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.MicroKernel.Tests.Configuration.Components;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests.Components;
-
-	using CastleTests;
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigurationTestCase : AbstractContainerTestCase
 	{
@@ -41,7 +32,7 @@ namespace Castle.MicroKernel.Tests.Configuration
 		public void Type_not_implementing_service_should_throw()
 		{
 			var exception = Assert.Throws<ComponentRegistrationException>(() =>
-			                                                              Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(
+			                                                              Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(
 			                                                              	new StaticContentResource(
 			                                                              		@"<castle>
 <components>
@@ -63,7 +54,7 @@ namespace Castle.MicroKernel.Tests.Configuration
 		[Bug("IOC-197")]
 		public void DictionaryAsParameterInXml()
 		{
-			Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(
+			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(
 				new StaticContentResource(
 					string.Format(
 						@"<castle>
@@ -126,7 +117,7 @@ namespace Castle.MicroKernel.Tests.Configuration
     </components>
 </configuration>";
 
-			Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(new StaticContentResource(config)));
+			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(new StaticContentResource(config)));
 			var user = Container.Resolve<UsesIEmptyService>();
 			Assert.NotNull(user.EmptyService);
 		}
@@ -135,8 +126,8 @@ namespace Castle.MicroKernel.Tests.Configuration
 		[Test]
 		public void Can_properly_populate_array_dependency_from_xml_config_when_registering_by_convention()
 		{
-			Container.Install(Windsor.Windsor.Installer.Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
-				.Register(Component.For<IConfig>().ImplementedBy<Config>().Named("componentWithArrayDependency"));
+			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
+				.Register(Component.For<IConfig>().ImplementedBy<Components.Config>().Named("componentWithArrayDependency"));
 			Container.Register(
 				Classes.FromThisAssembly().Pick().WithServiceFirstInterface());
 

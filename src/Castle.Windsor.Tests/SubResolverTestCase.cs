@@ -16,16 +16,11 @@ using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests
+namespace Castle.Windsor.Tests
 {
-	using Castle.Core;
-	using Castle.Windsor.Tests;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SubResolverTestCase
 	{

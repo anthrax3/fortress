@@ -14,17 +14,13 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor.Diagnostics;
+using NUnit.Framework;
 
-namespace CastleTests.Diagnostics
+namespace Castle.Windsor.Tests.Diagnostics
 {
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class DuplicatedDependenciesDiagnosticTestCase : AbstractContainerTestCase
 	{
 		private IDuplicatedDependenciesDiagnostic diagnostic;

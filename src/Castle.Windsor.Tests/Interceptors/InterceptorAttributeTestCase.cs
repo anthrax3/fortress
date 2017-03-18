@@ -14,13 +14,11 @@
 
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Interceptors
+namespace Castle.Windsor.Tests.Interceptors
 {
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class InterceptorAttributeTestCase : AbstractContainerTestCase
 	{
 		private bool IsProxy(object instance)

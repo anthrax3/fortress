@@ -15,21 +15,14 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
-namespace CastleTests.Installer
+namespace Castle.Windsor.Tests.Installer
 {
-	using System;
-
-	using Castle.Windsor;
-	using Castle.Windsor.Tests;
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class InstallerTestCase : AbstractContainerTestCase
 	{

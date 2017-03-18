@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class TransientMultiConstructorTestCase
 	{

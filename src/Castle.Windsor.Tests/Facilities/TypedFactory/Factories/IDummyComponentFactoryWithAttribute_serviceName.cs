@@ -14,7 +14,7 @@
 
 using Castle.Windsor.Facilities.TypedFactory;
 
-namespace CastleTests.Facilities.TypedFactory.Factories
+namespace Castle.Windsor.Tests.Facilities.TypedFactory.Factories
 {
 	[Factory(SelectorComponentName = "selector")]
 	public interface IDummyComponentFactoryWithAttribute_serviceName : IDummyComponentFactory

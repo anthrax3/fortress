@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Threading;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections;
-	using System.Threading;
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class LazyLoadingTestCase : AbstractContainerTestCase
 	{

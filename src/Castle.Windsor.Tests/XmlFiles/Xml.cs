@@ -15,13 +15,12 @@
 
 // we do not support xml config on SL
 
+using System;
+using System.IO;
 using Castle.Core.Core.Resource;
 
-namespace Castle.XmlFiles
+namespace Castle.Windsor.Tests.XmlFiles
 {
-	using System;
-	using System.IO;
-
 	public class Xml
 	{
 		private static readonly string embedded = "assembly://" + typeof(Xml).Assembly.FullName + "/Castle.Windsor.Tests/XmlFiles/";

@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Facilities.FactorySupport
+using Castle.Facilities.FactorySupport;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
+
+namespace Castle.Windsor.Tests.Facilities.FactorySupport
 {
-	using System;
-
-	using Castle.Facilities.FactorySupport;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class FactorySupportProgrammaticTestCase : AbstractContainerTestCase
 	{

@@ -12,16 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 
-namespace CastleTests.ClassComponents
+namespace Castle.Windsor.Tests.ClassComponents
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-
 	[Singleton]
 	public class ComponentFactory
 	{

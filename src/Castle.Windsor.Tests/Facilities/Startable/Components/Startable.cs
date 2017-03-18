@@ -13,11 +13,11 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.ClassComponents;
 
 namespace Castle.Windsor.Tests.Facilities.Startable.Components
 {
 	using Castle.Core;
-	using Castle.MicroKernel.Tests.ClassComponents;
 
 	public class Startable : IStartable
 	{

@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
-
-	using Castle.MicroKernel.Tests.ClassComponents;
-
 	using NUnit.Framework;
 
 	[TestFixture]

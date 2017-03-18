@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using System;
-
-	using Castle.Core;
-
 	[Interceptor(typeof(StandardInterceptor))]
 	public class CalculatorServiceWithMultipleInterfaces : CalculatorService, IDisposable
 	{

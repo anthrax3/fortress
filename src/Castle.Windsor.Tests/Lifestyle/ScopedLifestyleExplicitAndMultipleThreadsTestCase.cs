@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Castle.Windsor.MicroKernel.Lifestyle;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
 	// this is not working in SL at all
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
 
 	[TestFixture]
 	public class ScopedLifestyleExplicitAndMultipleThreadsTestCase : AbstractContainerTestCase

@@ -14,6 +14,7 @@
 
 using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests
@@ -21,9 +22,6 @@ namespace Castle.Windsor.Tests
 	using System;
 	using Castle.Windsor.Tests.ClassComponents;
 	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

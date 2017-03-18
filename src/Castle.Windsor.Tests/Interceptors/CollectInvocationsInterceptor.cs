@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Core.DynamicProxy;
 
-namespace CastleTests.Interceptors
+namespace Castle.Windsor.Tests.Interceptors
 {
-	using System.Collections.Generic;
-
 	public class CollectInvocationsInterceptor : IInterceptor
 	{
 		private readonly IList<IInvocation> invocations = new List<IInvocation>();

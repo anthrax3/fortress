@@ -20,9 +20,6 @@ namespace Castle.Windsor.Tests.MicroKernel
 {
 	using System;
 
-	using Castle.Core;
-	using Castle.MicroKernel;
-
 	public class NotImplementedDependencyResolver : IDependencyResolver
 	{
 		public IKernel Kernel { get; set; }

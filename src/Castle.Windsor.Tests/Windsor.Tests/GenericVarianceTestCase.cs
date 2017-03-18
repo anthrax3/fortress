@@ -13,14 +13,11 @@
 // limitations under the License.
 
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Windsor.Tests
+namespace Castle.Windsor.Tests.Windsor.Tests
 {
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class GenericVarianceTestCase : AbstractContainerTestCase
 	{

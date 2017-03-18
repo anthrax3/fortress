@@ -13,15 +13,13 @@
 // limitations under the License.
 
 
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
 
 namespace Castle.Windsor.Tests
 {
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

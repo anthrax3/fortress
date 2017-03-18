@@ -15,10 +15,8 @@
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-
 	public class StandardInterceptorAttribute : InterceptorAttribute
 	{
 		public StandardInterceptorAttribute() : base(typeof(StandardInterceptor))

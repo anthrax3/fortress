@@ -13,12 +13,10 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.ClassComponents;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
 	public class CustomTestLifestyleAttribute : CustomLifestyleAttribute
 	{
 		public CustomTestLifestyleAttribute()

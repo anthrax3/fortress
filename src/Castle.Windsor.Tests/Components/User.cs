@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using CastleTests.Facilities.FactorySupport;
-
 	public class User
 	{
 		public FiscalStability FiscalStability { get; set; }

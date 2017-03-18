@@ -12,18 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Facilities.EventWiring;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Facilities.EventWiring.Model;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.EventWiring
+namespace Castle.Windsor.Tests.Facilities.EventWiring
 {
-	using Castle.Facilities.EventWiring;
-	using Castle.Windsor;
-
-	using CastleTests.Facilities.EventWiring.Model;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class FluentRegistrationTestCase
 	{

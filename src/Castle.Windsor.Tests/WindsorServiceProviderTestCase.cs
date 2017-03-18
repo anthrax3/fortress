@@ -13,14 +13,12 @@
 // limitations under the License.
 
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.Windsor;
-	using CastleTests.Components;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class WindsorServiceProviderTextCase : AbstractContainerTestCase
 	{

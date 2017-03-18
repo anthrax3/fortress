@@ -14,14 +14,10 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel;
-	using Castle.Windsor;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public abstract class AbstractContainerTestCase
 	{

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
 
@@ -19,9 +20,6 @@ namespace Castle.Windsor.Tests
 {
 	using System.Collections.Generic;
 	using System.Linq;
-
-	using Castle.XmlFiles;
-
 	using NUnit.Framework;
 
 	[TestFixture]

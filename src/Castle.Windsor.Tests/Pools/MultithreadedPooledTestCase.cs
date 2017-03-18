@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Threading;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.Pools
+namespace Castle.Windsor.Tests.Pools
 {
-	using System.Threading;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class MultithreadedPooledTestCase
 	{

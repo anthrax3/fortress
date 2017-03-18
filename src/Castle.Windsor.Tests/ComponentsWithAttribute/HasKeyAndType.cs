@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests.ComponentsWithAttribute
 {
 	using Castle.Core;
-
-	using CastleTests.Components;
 
 	[CastleComponent("keyAndType", typeof(ISimpleService))]
 	public class HasKeyAndType : ISimpleService

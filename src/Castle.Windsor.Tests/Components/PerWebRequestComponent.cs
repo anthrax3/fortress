@@ -15,10 +15,8 @@
 
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-
 	[PerWebRequest]
 	public class PerWebRequestComponent : IComponent
 	{

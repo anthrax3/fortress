@@ -13,14 +13,13 @@
 // limitations under the License.
 
 using Castle.Core.Core.Logging;
+using Castle.Facilities.Logging;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.LoggingFacility.Classes;
+using NUnit.Framework;
 
-namespace CastleTests.LoggingFacility
+namespace Castle.Windsor.Tests.LoggingFacility
 {
-	using Castle.Facilities.Logging;
-	using Castle.Facilities.Logging.Tests.Classes;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConsoleLoggerTestCase : AbstractContainerTestCase
 	{
@@ -28,7 +27,7 @@ namespace CastleTests.LoggingFacility
 		[Bug("FACILITIES-153")]
 		public void Can_specify_level_at_registration_time()
 		{
-			Container.AddFacility<LoggingFacility>(f => f.LogUsing(LoggerImplementation.Console).WithLevel(LoggerLevel.Fatal));
+			Container.AddFacility<Castle.Facilities.Logging.LoggingFacility>(f => f.LogUsing(LoggerImplementation.Console).WithLevel(LoggerLevel.Fatal));
 			Container.Register(Component.For<SimpleLoggingComponent>());
 
 			var item = Container.Resolve<SimpleLoggingComponent>();

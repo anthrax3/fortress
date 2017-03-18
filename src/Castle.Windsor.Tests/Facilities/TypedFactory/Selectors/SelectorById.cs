@@ -19,7 +19,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {
 	using System.Collections;
 	using System.Reflection;
-	using Castle.MicroKernel;
 
 	public class SelectorById : DefaultTypedFactoryComponentSelector
 	{

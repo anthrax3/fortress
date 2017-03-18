@@ -15,24 +15,20 @@
 
 // we do not support xml config on SL
 
+using System.Linq;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
-namespace Castle.Windsor.Tests
+namespace Castle.Windsor.Tests.Config
 {
-	using System.Linq;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigXmlInterpreterTestCase
 	{

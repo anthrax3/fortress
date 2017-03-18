@@ -13,13 +13,10 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.Components;
 
-namespace Castle.MicroKernel.Tests.Pools
+namespace Castle.Windsor.Tests.Pools
 {
-	using Castle.Core;
-
-	using CastleTests.Components;
-
 	public class RecyclableComponent : IRecyclable
 	{
 		public ISimpleService Dependency { get; set; }

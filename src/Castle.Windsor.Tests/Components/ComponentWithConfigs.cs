@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using System.Collections;
-
-	using Castle.Core;
-
 	[Transient]
 	public class ComponentWithConfigs
 	{

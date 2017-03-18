@@ -12,27 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests;
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CreatingContainerTestCase
 	{
 		[Test]
 		public void With_config_section()
 		{
-			var sectionName = "config://castle/";//trailing slash is required
+			var sectionName = "config://castle/"; //trailing slash is required
 
 			var uri = new CustomUri(sectionName);
 
@@ -64,18 +59,6 @@ namespace CastleTests
 			var container = new WindsorContainer(filePath);
 
 			Assert.AreEqual(2, container.Kernel.GetFacilities().Length);
-		}
-
-		[Test]
-		public void With_embedded_xml()
-		{
-			var resourcePath = Xml.EmbeddedPath("componentWithoutId.xml");
-
-			Assert.True(new CustomUri(resourcePath).IsAssembly);
-
-			var container = new WindsorContainer(resourcePath);
-
-			container.Resolve<A>();
 		}
 	}
 }

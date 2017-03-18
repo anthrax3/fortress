@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
+using System.Collections.Generic;
+
+namespace Castle.Windsor.Tests.Components
 {
-	using System.Collections.Generic;
-
-	using CastleTests.Components;
-
 	public class ListDepAsProperty
 	{
 		public IList<IEmptyService> Services { get; set; }

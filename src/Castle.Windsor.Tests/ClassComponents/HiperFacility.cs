@@ -14,11 +14,10 @@
 
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.ClassComponents
+namespace Castle.Windsor.Tests.ClassComponents
 {
-	using NUnit.Framework;
-
 	public class HiperFacility : IFacility
 	{
 		public bool Initialized { get; private set; }

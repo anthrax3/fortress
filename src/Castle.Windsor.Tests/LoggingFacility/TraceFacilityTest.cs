@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Diagnostics;
+using System.IO;
+using Castle.Facilities.Logging;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.LoggingFacility.Classes;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace Castle.Facilities.Logging.Tests
+namespace Castle.Windsor.Tests.LoggingFacility
 {
-	
-	using System;
-	using System.Diagnostics;
-	using System.IO;
-	using Castle.Windsor;
-	using Castle.Facilities.Logging.Tests.Classes;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class TraceFacilityTest : BaseTest
 	{

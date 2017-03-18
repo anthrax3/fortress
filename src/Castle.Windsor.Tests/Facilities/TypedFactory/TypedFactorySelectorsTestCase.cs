@@ -15,16 +15,13 @@
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.TypedFactory
+namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	using Castle.MicroKernel;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-
-	using CastleTests.Components;
-	using CastleTests.Facilities.TypedFactory.Selectors;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class TypedFactorySelectorsTestCase : AbstractContainerTestCase
 	{

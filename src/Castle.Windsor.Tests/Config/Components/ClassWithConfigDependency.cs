@@ -1,8 +1,8 @@
-namespace Castle.MicroKernel.Tests.Configuration.Components
-{
-    using System.Linq;
+using System.Linq;
 
-    public interface IClassWithConfigDependency
+namespace Castle.Windsor.Tests.Config.Components
+{
+	public interface IClassWithConfigDependency
     {
         string GetName();
 

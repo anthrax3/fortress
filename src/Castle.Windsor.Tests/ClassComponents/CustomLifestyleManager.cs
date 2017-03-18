@@ -14,7 +14,7 @@
 
 using Castle.Windsor.MicroKernel.Lifestyle;
 
-namespace Castle.MicroKernel.Tests.ClassComponents
+namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class CustomLifestyleManager : AbstractLifestyleManager
 	{

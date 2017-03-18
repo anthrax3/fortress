@@ -12,22 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Linq;
-
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class HandlerFilterTestCase : AbstractContainerTestCase
 	{

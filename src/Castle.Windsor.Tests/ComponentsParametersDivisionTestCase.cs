@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+using System.Linq;
+using Castle.Facilities.FactorySupport;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using Castle.Facilities.FactorySupport;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ComponentsParametersDivisionTestCase : AbstractContainerTestCase
 	{

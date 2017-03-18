@@ -12,24 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
+using NUnit.Framework;
 
-namespace Castle
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Linq;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests;
-	using Castle.Windsor.Tests.ClassComponents;
-	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests;
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ClassInheritanceTestCase : AbstractContainerTestCase
 	{

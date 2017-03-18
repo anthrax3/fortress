@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.Core.Configuration;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
@@ -19,24 +22,15 @@ using Castle.Windsor.Facilities.Startable;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Proxy;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Config.Components;
+using Castle.Windsor.Tests.Facilities.Startable.Components;
+using Castle.Windsor.Tests.Interceptors;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.Registration
+namespace Castle.Windsor.Tests.Registration
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.MicroKernel.Tests.Configuration.Components;
-	using Castle.Windsor.Tests.Facilities.Startable.Components;
-	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class ComponentRegistrationTestCase : AbstractContainerTestCase
 	{
 		[Test]
@@ -492,12 +486,12 @@ namespace Castle.MicroKernel.Tests.Registration
 			Kernel.Register(
 				Component.For<ClassWithComplexParameter>()
 					.Configuration(
-						Child.ForName("parameters").Eq(
+						Castle.Windsor.MicroKernel.Registration.Child.ForName("parameters").Eq(
 							Attrib.ForName("notUsed").Eq(true),
-							Child.ForName("complexparam").Eq(
-								Child.ForName("complexparametertype").Eq(
-									Child.ForName("mandatoryvalue").Eq("value1"),
-									Child.ForName("optionalvalue").Eq("value2")
+							Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparam").Eq(
+								Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
+									Castle.Windsor.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
+									Castle.Windsor.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
 									)
 								)
 							)

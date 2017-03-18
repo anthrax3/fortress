@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Facilities.EventWiring.Model
+using System;
+using Castle.Windsor.Tests.Components;
+
+namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 {
-	using System;
-
-	using CastleTests.Components;
-
 	public class SubscriberWithDependency
 	{
 		private EmptyClassService _genericService;

@@ -1,6 +1,6 @@
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.MicroKernel.Tests.Configuration.Components
+namespace Castle.Windsor.Tests.Config.Components
 {
 	public interface IConfig
     {

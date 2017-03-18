@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Registration
+namespace Castle.Windsor.Tests.Registration
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class DependsOnTestCase : AbstractContainerTestCase
 	{
 		[Test]

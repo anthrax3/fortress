@@ -12,24 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Core.Core.Configuration;
+using Castle.Facilities.FactorySupport;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.FactorySupport
+namespace Castle.Windsor.Tests.Facilities.FactorySupport
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using Castle.Facilities.FactorySupport;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class FactorySupportTestCase : AbstractContainerTestCase
 	{

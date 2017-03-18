@@ -12,23 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
+using System.Threading;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Reflection;
-	using System.Threading;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class LazyComponentsTestCase : AbstractContainerTestCase
 	{
 		[Test]

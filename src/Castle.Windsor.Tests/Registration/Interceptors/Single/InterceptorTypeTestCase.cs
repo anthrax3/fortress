@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Interceptors;
 
-namespace Castle.MicroKernel.Tests.Registration.Interceptors.Single
+namespace Castle.Windsor.Tests.Registration.Interceptors.Single
 {
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using Castle.Windsor.Tests.Interceptors;
-
 	public class SingleInterceptorType : InterceptorsTestCaseHelper
 	{
 		public override IRegistration RegisterInterceptors<S>(ComponentRegistration<S> registration)

@@ -12,26 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics;
+using System;
+using System.Reflection;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System;
-
-	using Castle.Core;
-
-	using Castle.MicroKernel;
-	using Castle.XmlFiles;
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CircularDependencyTestCase : AbstractContainerTestCase
 	{
@@ -124,8 +117,6 @@ namespace Castle.Windsor.Tests
 
 	namespace IOC51
 	{
-		using System.Reflection;
-
 		public interface IPathProvider
 		{
 			string Path { get; }

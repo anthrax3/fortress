@@ -14,17 +14,13 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Registration.Interceptors.Multiple;
+using Castle.Windsor.Tests.Registration.Interceptors.Single;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.Registration.Interceptors
+namespace Castle.Windsor.Tests.Registration.Interceptors
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.MicroKernel.Tests.Registration.Interceptors.Multiple;
-	using Castle.MicroKernel.Tests.Registration.Interceptors.Single;
-
-	using CastleTests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public sealed class InterceptorsTestCase : AbstractContainerTestCase
 	{

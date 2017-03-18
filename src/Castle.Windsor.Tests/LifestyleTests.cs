@@ -1,15 +1,12 @@
+using System;
+using System.Diagnostics;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Diagnostics;
-	using Castle.Windsor;
-
-	using NUnit.Framework;
-
 	public class LifestyleTests
 	{
 		[Test]

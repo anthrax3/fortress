@@ -12,23 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests.SpecializedResolvers
+namespace Castle.Windsor.Tests.SpecializedResolvers
 {
-	using System;
-	using System.Linq;
-	using Castle.Windsor;
-
-	using CastleTests;
-	using CastleTests.Components;
-	using CastleTests.SpecializedResolvers;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CollectionResolverTestCase : AbstractContainerTestCase
 	{

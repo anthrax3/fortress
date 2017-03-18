@@ -20,7 +20,6 @@ namespace Castle.Windsor.Tests
 {
 	using System.Collections.Generic;
 
-	using Castle.MicroKernel;
 	using NUnit.Framework;
 
 	[TestFixture]

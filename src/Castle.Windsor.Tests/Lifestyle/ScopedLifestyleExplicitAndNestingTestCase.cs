@@ -14,13 +14,11 @@
 
 using Castle.Windsor.MicroKernel.Lifestyle;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ScopedLifestyleExplicitAndNestingTestCase : AbstractContainerTestCase
 	{

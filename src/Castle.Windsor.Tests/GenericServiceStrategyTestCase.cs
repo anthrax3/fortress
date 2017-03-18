@@ -12,21 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using CastleTests.ClassComponents;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class GenericServiceStrategyTestCase : AbstractContainerTestCase
 	{

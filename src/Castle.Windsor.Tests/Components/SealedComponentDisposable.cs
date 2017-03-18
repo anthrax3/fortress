@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Tests.Components
+{
 	public sealed class SealedComponentDisposable : IComponent, IDisposable
 	{
 		public bool Disposed { get; private set; }

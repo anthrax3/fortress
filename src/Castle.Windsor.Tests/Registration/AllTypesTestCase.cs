@@ -12,22 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
+using System.Reflection;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace CastleTests.Registration
+namespace Castle.Windsor.Tests.Registration
 {
-	using System;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests.ClassComponents;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class AllTypesTestCase : AbstractContainerTestCase
 	{
@@ -418,19 +412,7 @@ namespace CastleTests.Registration
 			Assert.AreEqual(1, handlers.Length);
 		}
 
-		[Test]
-		public void RegisterAssemblyTypes_WhenTypeInNamespace_RegisteredInContainer()
-		{
-			Kernel.Register(
-				Classes.FromAssembly(Assembly.GetExecutingAssembly())
-					.Where(Component.IsInNamespace("Castle.MicroKernel.Tests.ClassComponents"))
-					.WithService.FirstInterface()
-				);
-
-			var handlers = Kernel.GetHandlers(typeof(ICustomer));
-			Assert.IsTrue(handlers.Length > 0);
-		}
-
+		
 		[Test]
 		public void RegisterAssemblyTypes_WhenTypeInMissingNamespace_NotRegisteredInContainer()
 		{

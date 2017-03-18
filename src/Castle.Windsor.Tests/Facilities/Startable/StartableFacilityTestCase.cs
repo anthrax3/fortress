@@ -25,8 +25,6 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.Windsor.Tests.ClassComponents;
 	using Castle.Windsor.Tests.Facilities.Startable.Components;
 

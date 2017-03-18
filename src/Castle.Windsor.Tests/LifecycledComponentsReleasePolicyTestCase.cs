@@ -15,17 +15,14 @@
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests
 {
 	using System;
 
-	using Castle.MicroKernel;
 	using Castle.Windsor.Tests.ClassComponents;
-
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

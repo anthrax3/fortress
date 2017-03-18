@@ -13,17 +13,12 @@
 // limitations under the License.
 
 using Castle.Windsor.Core.Internal;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.ClassComponents;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests.ClassComponents;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class TypeUtilTestCase
 	{

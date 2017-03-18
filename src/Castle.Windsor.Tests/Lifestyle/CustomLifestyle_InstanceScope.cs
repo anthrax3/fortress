@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 
-namespace Castle.MicroKernel.Tests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-
 	public class CustomLifestyle_InstanceScope : IDisposable
 	{
 		[ThreadStatic]

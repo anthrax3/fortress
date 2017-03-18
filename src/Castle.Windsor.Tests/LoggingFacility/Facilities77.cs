@@ -14,15 +14,12 @@
 
 using Castle.Core.Core.Logging;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.LoggingFacility.Classes;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace Castle.Facilities.Logging.Tests
+namespace Castle.Windsor.Tests.LoggingFacility
 {
-	using Castle.Facilities.Logging.Tests.Classes;
-	using Castle.Windsor;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class Facilities77 : BaseTest
 	{
@@ -54,7 +51,7 @@ namespace Castle.Facilities.Logging.Tests
 		[Test]
 		public void ShouldCallNoArgsContstructorIfConfigFileNotSpecified()
 		{
-			var container = new WindsorContainer().AddFacility<LoggingFacility>(f => f.LogUsing<TestLoggerFactory>());
+			var container = new WindsorContainer().AddFacility<Castle.Facilities.Logging.LoggingFacility>(f => f.LogUsing<TestLoggerFactory>());
 
 			container.Register(Component.For<SimpleLoggingComponent>().Named("component"));
 			container.Resolve<SimpleLoggingComponent>("component");

@@ -23,12 +23,7 @@ namespace Castle.Windsor.Tests.MicroKernel
 	using System.Collections;
 	using System.Collections.Generic;
 
-	using Castle.MicroKernel;
 	using Castle.Windsor.Tests.Components;
-
-	using CastleTests;
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

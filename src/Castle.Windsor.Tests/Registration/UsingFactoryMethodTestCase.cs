@@ -12,23 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Config.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Registration
+namespace Castle.Windsor.Tests.Registration
 {
-	using System;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.Configuration.Components;
-	using Castle.Windsor.Tests;
-	using Castle.Windsor.Tests.ClassComponents;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class UsingFactoryMethodTestCase : AbstractContainerTestCase
 	{
@@ -262,18 +257,6 @@ namespace CastleTests.Registration
 			Assert.IsNull(aProp.Prop);
 		}
 
-		[Test]
-		[Bug("IOC-332")]
-		public void Factories_returning_proxies_with_no_target_are_not_supported()
-		{
-			var generator = new ProxyGenerator();
-			Container.Register(Component.For<ICameraService>().UsingFactoryMethod(() => generator.CreateInterfaceProxyWithoutTarget<ICameraService>()));
-
-			var exception = Assert.Throws<NotSupportedException>(() => Container.Resolve<ICameraService>());
-
-			Assert.AreEqual(@"Can not apply commission concerns to component Late bound CastleTests.Components.ICameraService because it appears to be a target-less proxy. Currently those are not supported.",
-			                exception.Message);
-		}
 
 		[Test]
 		public void Factory_created_abstract_non_disposable_class_services_are_NOT_tracked()
@@ -440,24 +423,6 @@ namespace CastleTests.Registration
 			Assert.IsFalse(weak.IsAlive);
 		}
 
-		[Test]
-		public void Proxying_type_with_no_default_ctor_throws_helpful_message()
-		{
-			Kernel.Register(
-				Component.For<StandardInterceptor>(),
-				Component.For<ClassWithConstructors>()
-					.LifeStyle.Transient
-					.Interceptors<StandardInterceptor>()
-					.UsingFactoryMethod(() => new ClassWithConstructors("something")));
-
-			var exception =
-				Assert.Throws<InvalidProxyConstructorArgumentsException>(() => Kernel.Resolve<ClassWithConstructors>());
-
-			var expected =
-				"Can not instantiate proxy of class: Castle.MicroKernel.Tests.Configuration.Components.ClassWithConstructors." + Environment.NewLine +
-				"Could not find a parameterless constructor.";
-
-			Assert.AreEqual(expected, exception.Message);
-		}
+		
 	}
 }

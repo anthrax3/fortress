@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ProxyInfrastructure
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Tests.ProxyInfrastructure
+{
 	public class DisposableHook : ProxyAllHook, IDisposable
 	{
 		public static int InstancesCreated;

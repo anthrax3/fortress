@@ -14,18 +14,14 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
-namespace CastleTests.Configuration2
+namespace Castle.Windsor.Tests.Configuration2
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests;
-	using Castle.XmlFiles;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class IncludesTestCase
 	{

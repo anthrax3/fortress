@@ -1,11 +1,10 @@
+using System;
+using Castle.Facilities.Logging;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Windsor;
 
-namespace Castle.Facilities.Logging.Tests
+namespace Castle.Windsor.Tests.LoggingFacility
 {
-	using System;
-	using Castle.Windsor;
-
 	public abstract class OverrideLoggerTest : BaseTest
 	{		
 		protected virtual IWindsorContainer CreateConfiguredContainer(LoggerImplementation loggerApi, String custom, string logName)
@@ -13,7 +12,7 @@ namespace Castle.Facilities.Logging.Tests
 			IWindsorContainer container = new WindsorContainer(new DefaultConfigurationStore());
 			var configFile = GetConfigFile(loggerApi);
 
-			container.AddFacility<LoggingFacility>(f => f.LogUsing(loggerApi).WithConfig(configFile).ToLog(logName));
+			container.AddFacility<Castle.Facilities.Logging.LoggingFacility>(f => f.LogUsing(loggerApi).WithConfig(configFile).ToLog(logName));
 
 			return container;
 		}

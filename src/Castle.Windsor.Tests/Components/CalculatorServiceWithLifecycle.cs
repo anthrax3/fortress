@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using System;
-
-	using Castle.Core;
-
 	[Transient]
 	public class CalculatorServiceWithLifecycle : ICalcService, IInitializable, IDisposable
 	{

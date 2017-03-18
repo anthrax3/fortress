@@ -1,16 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading;
-	using Castle.Windsor;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class GenericResolutionDeadlockTestCase
 	{

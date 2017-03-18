@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Logging;
 
-namespace Castle.Facilities.Logging.Tests.Classes
+namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
-	using System;
-
 	public class SmtpServer : ISmtpServer
 	{
 		private IExtendedLogger logger;

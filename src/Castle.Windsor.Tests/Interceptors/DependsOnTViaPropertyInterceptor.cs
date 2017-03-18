@@ -14,7 +14,7 @@
 
 using Castle.Core.DynamicProxy;
 
-namespace CastleTests.Interceptors
+namespace Castle.Windsor.Tests.Interceptors
 {
 	public class DependsOnTViaPropertyInterceptor<T> : StandardInterceptor
 	{

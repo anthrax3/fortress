@@ -14,15 +14,12 @@
 
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.TypedFactory
+namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class TypedFactoryOpenGenericFactoriesTestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()

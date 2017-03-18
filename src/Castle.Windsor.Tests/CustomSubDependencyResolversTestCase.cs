@@ -14,16 +14,12 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.ContainerExtensions;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel;
-	using Castle.Windsor.Tests.Components;
-
-	using CastleTests.ContainerExtensions;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CustomSubDependencyResolversTestCase : AbstractContainerTestCase
 	{

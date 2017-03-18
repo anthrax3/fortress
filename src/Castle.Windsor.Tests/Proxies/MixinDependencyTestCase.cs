@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Linq;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
+using NUnit.Framework;
 
-namespace CastleTests.Proxies
+namespace Castle.Windsor.Tests.Proxies
 {
-	using System.Linq;
-	using CastleTests.Components;
-	using CastleTests.Interceptors;
-
-	using NUnit.Framework;
-
 	public class MixinDependencyTestCase : AbstractContainerTestCase
 	{
 		[Test]

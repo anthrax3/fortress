@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Handlers;
 
-namespace CastleTests.TestImplementationsOfExtensionPoints
+namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 {
-	using System;
-	using System.Linq;
-
-	using Castle.Core;
-
 	public class DuplicateGenerics : IGenericImplementationMatchingStrategy
 	{
 		public Type[] GetGenericArguments(ComponentModel model, CreationContext context)

@@ -14,15 +14,12 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor.Diagnostics;
+using NUnit.Framework;
 
-namespace CastleTests.Diagnostics
+namespace Castle.Windsor.Tests.Diagnostics
 {
-	using Castle.MicroKernel;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class PotentiallyMisconfiguredComponentsDiagnosticTestCase : AbstractContainerTestCase
 	{
 		private IPotentiallyMisconfiguredComponentsDiagnostic diagnostic;

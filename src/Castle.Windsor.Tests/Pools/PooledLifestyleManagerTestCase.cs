@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests.Pools
+namespace Castle.Windsor.Tests.Pools
 {
-	using System;
-	using System.Collections.Generic;
-	using Castle.MicroKernel.Tests.Pools;
-	using Castle.Windsor;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class PooledLifestyleManagerTestCase : AbstractContainerTestCase
 	{

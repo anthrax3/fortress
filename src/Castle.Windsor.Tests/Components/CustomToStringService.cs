@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
-{
-	using System;
-	using System.Text;
+using System.Text;
 
+namespace Castle.Windsor.Tests.Components
+{
 	public class CustomToStringService : IGenericToStringService<StringBuilder>
 	{
 		public string ToString(params StringBuilder[] instances)

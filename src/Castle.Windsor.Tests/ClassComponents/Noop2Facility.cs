@@ -15,7 +15,7 @@
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel;
 
-namespace Castle.MicroKernel.Tests.ClassComponents
+namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class Noop2Facility : IFacility
 	{

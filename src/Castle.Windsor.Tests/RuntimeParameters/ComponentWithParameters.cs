@@ -14,10 +14,8 @@
 
 using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.Tests.RuntimeParameters
+namespace Castle.Windsor.Tests.RuntimeParameters
 {
-	using Castle.Core;
-
 	public class CompA
 	{
 		public CompA()

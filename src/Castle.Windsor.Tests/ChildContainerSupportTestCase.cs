@@ -14,19 +14,13 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ChildContainerSupportTestCase : AbstractContainerTestCase
 	{

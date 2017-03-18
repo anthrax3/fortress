@@ -18,17 +18,12 @@ using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Activators
+namespace Castle.Windsor.Tests.Activators
 {
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class BestConstructorTestCase : AbstractContainerTestCase
 	{

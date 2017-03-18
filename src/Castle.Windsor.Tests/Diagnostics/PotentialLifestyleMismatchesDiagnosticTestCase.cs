@@ -12,23 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics;
+using System.Linq;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Windsor.Diagnostics;
+using NUnit.Framework;
 
-namespace CastleTests.Diagnostics
+namespace Castle.Windsor.Tests.Diagnostics
 {
-	using System.Linq;
-
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class PotentialLifestyleMismatchesDiagnosticTestCase : AbstractContainerTestCase
 	{
 		private IPotentialLifestyleMismatchesDiagnostic diagnostic;

@@ -15,7 +15,7 @@
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Handlers;
 
-namespace Castle.MicroKernel.Tests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
 	public class CustomLifestyle_Scope : IResolveExtension
 	{

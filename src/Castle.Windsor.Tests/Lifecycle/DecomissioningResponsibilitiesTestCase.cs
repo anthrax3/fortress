@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Pools;
+using NUnit.Framework;
 
-namespace CastleTests.Lifecycle
+namespace Castle.Windsor.Tests.Lifecycle
 {
-	using System;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.MicroKernel.Tests.Pools;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DecomissioningResponsibilitiesTestCase : AbstractContainerTestCase
 	{

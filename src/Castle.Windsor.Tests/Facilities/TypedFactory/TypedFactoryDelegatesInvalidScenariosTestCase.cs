@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.TypedFactory
+namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	using System;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class TypedFactoryDelegatesInvalidScenariosTestCase : AbstractContainerTestCase
 	{

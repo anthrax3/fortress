@@ -15,15 +15,11 @@
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests.ClassComponents;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DefaultDependnecyResolverTestCase : AbstractContainerTestCase
 	{

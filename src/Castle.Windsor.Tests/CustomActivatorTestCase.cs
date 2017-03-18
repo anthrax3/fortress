@@ -14,14 +14,11 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests
 {
-	using Castle.MicroKernel;
 	using Castle.Windsor.Tests.Lifecycle;
-
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

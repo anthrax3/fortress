@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Windsor.Windsor.Installer;
 
-namespace CastleTests.Installer
+namespace Castle.Windsor.Tests.Installer
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
 	public class FilterAssembliesInstallerFactory : InstallerFactory
 	{
 		private readonly Predicate<Type> filter;

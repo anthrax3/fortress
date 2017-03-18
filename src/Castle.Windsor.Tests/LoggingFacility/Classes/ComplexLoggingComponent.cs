@@ -14,7 +14,7 @@
 
 using Castle.Core.Core.Logging;
 
-namespace Castle.Facilities.Logging.Tests.Classes
+namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
 	public class ComplexLoggingComponent
 	{

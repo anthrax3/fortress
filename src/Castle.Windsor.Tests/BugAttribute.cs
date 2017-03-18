@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Tests
+{
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class BugAttribute : Attribute
 	{

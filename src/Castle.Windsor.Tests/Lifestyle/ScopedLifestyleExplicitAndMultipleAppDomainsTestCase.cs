@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Lifestyle;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests.Lifestyle
+namespace Castle.Windsor.Tests.Lifestyle
 {
-	using System;
-	using CastleTests.Components;
-	using NUnit.Framework;
-
 	public class ScopedLifestyleExplicitAndMultipleAppDomainsTestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using Castle.Facilities.Logging;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Windsor;
 
-namespace Castle.Facilities.Logging.Tests
+namespace Castle.Windsor.Tests.LoggingFacility
 {
-	using System;
-	using Castle.Windsor;
-
 	public abstract class BaseTest
 	{
 		protected virtual IWindsorContainer CreateConfiguredContainer(LoggerImplementation loggerApi)
@@ -32,7 +31,7 @@ namespace Castle.Facilities.Logging.Tests
 			IWindsorContainer container = new WindsorContainer(new DefaultConfigurationStore());
 			var configFile = GetConfigFile(loggerApi);
 
-			container.AddFacility<LoggingFacility>(f => f.LogUsing(loggerApi).WithConfig(configFile));
+			container.AddFacility<Castle.Facilities.Logging.LoggingFacility>(f => f.LogUsing(loggerApi).WithConfig(configFile));
 
 			return container;
 		}

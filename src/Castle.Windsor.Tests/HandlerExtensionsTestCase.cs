@@ -15,15 +15,12 @@
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests
 {
 	using System.Collections.Generic;
 	using System.Linq;
-
-	using Castle.MicroKernel;
-	using CastleTests;
-	using CastleTests.Components;
 
 	using NUnit.Framework;
 

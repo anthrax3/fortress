@@ -14,16 +14,13 @@
 
 
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.TypedFactory
+namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	using Castle.Windsor.Tests;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ExternalConfigurationTestCase : AbstractContainerTestCase
 	{

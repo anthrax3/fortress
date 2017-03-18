@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
 
-namespace Castle.MicroKernel.Tests.Registration.Interceptors
+namespace Castle.Windsor.Tests.Registration.Interceptors
 {
-	using System.Collections.Generic;
-
-	using Castle.Core;
-
 	public abstract class InterceptorsTestCaseHelper
 	{
 		public abstract IEnumerable<InterceptorReference> GetExpectedInterceptorsInCorrectOrder();

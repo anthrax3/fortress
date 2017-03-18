@@ -13,14 +13,10 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.Interceptors;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.Windsor.Tests.Interceptors;
-
 	[Interceptor(typeof(ResultModifierInterceptor))]
 	public class CalculatorServiceWithAttributes
 	{

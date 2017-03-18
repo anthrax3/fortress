@@ -12,31 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
+using Castle.Windsor.Tests.Interceptors;
+using NUnit.Framework;
+using ServiceFactory = Castle.Windsor.Tests.Facilities.TypedFactory.Components.ServiceFactory;
 
-namespace CastleTests.Facilities.TypedFactory
+namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	using System;
-	using System.Linq;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests.Facilities.TypedFactory;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Delegates;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
-
-	using CastleTests.Components;
-	using CastleTests.Facilities.TypedFactory.Delegates;
-	using CastleTests.Interceptors;
-
-	using NUnit.Framework;
-
-	using HasTwoConstructors = Castle.Windsor.Tests.Facilities.TypedFactory.Delegates.HasTwoConstructors;
-	using ServiceFactory = Castle.Windsor.Tests.Facilities.TypedFactory.ServiceFactory;
+	using HasTwoConstructors = Delegates.HasTwoConstructors;
+	using ServiceFactory = ServiceFactory;
 
 	[TestFixture]
 	public class TypedFactoryDelegatesTestCase : AbstractContainerTestCase
@@ -49,7 +44,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Can_register_generic_delegate_factory_explicitly_as_open_generic_optional_dependency()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<Bar>().LifeStyle.Transient,
 			                   Component.For<UsesFooAndBarDelegateProperties>(),
 			                   Component.For(typeof(Func<>)).AsFactory());
@@ -64,14 +59,14 @@ namespace CastleTests.Facilities.TypedFactory
 
 			var allhandlers = Kernel.GetAssignableHandlers(typeof(object));
 
-			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Foo>)));
+			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Delegates.Foo>)));
 			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Bar>)));
 		}
 
 		[Test]
 		public void Can_register_generic_delegate_factory_explicitly_as_open_generic_required_dependency()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<Bar>().LifeStyle.Transient,
 			                   Component.For<UsesFooAndBarDelegateCtor>(),
 			                   Component.For(typeof(Func<>)).AsFactory());
@@ -86,14 +81,14 @@ namespace CastleTests.Facilities.TypedFactory
 
 			var allhandlers = Kernel.GetAssignableHandlers(typeof(object));
 
-			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Foo>)));
+			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Delegates.Foo>)));
 			Assert.IsFalse(allhandlers.SelectMany(h => h.ComponentModel.Services).Any(s => s == typeof(Func<Bar>)));
 		}
 
 		[Test]
 		public void Can_resolve_component_depending_on_delegate_when_inline_argumens_are_provided()
 		{
-			Container.Register(Component.For<Foo>(),
+			Container.Register(Component.For<Delegates.Foo>(),
 			                   Component.For<UsesFooDelegateAndInt>());
 
 			Container.Resolve<UsesFooDelegateAndInt>(new { additionalArgument = 5 });
@@ -136,7 +131,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Can_resolve_service_via_delegate()
 		{
-			Container.Register(Component.For<Foo>().Named("MyFoo").LifeStyle.Transient);
+			Container.Register(Component.For<Delegates.Foo>().Named("MyFoo").LifeStyle.Transient);
 			Container.Register(Component.For<UsesFooDelegate>());
 			var dependsOnFoo = Container.Resolve<UsesFooDelegate>();
 			var foo = dependsOnFoo.GetFoo();
@@ -148,7 +143,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Can_resolve_two_services_depending_on_identical_delegates()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<UsesFooDelegate>(),
 			                   Component.For<UsesFooDelegateAndInt>().DependsOn(new Arguments().InsertTyped(5)));
 			var one = Container.Resolve<UsesFooDelegate>();
@@ -160,7 +155,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Can_resolve_two_services_depending_on_identical_delegates_via_interface_based_factory()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<UsesFooDelegate>(),
 			                   Component.For<UsesFooDelegateAndInt>().DependsOn(new Arguments().InsertTyped(5)),
 			                   Component.For<IGenericComponentsFactory>().AsFactory());
@@ -212,9 +207,9 @@ namespace CastleTests.Facilities.TypedFactory
 			DisposableSelector.InstancesDisposed = 0;
 			Container.Register(
 				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<DisposableSelector>().LifeStyle.Transient,
-				Component.For<Func<Foo>>().LifeStyle.Transient.AsFactory());
+				Component.For<Func<Delegates.Foo>>().LifeStyle.Transient.AsFactory());
 
-			Container.Resolve<Func<Foo>>();
+			Container.Resolve<Func<Delegates.Foo>>();
 
 			Assert.AreEqual(0, DisposableSelector.InstancesCreated);
 		}
@@ -227,7 +222,7 @@ namespace CastleTests.Facilities.TypedFactory
 			Container.Register(
 				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<DisposableSelector>().LifeStyle.Transient);
 
-			Container.Resolve<Func<Foo>>();
+			Container.Resolve<Func<Delegates.Foo>>();
 
 			Assert.AreEqual(0, DisposableSelector.InstancesCreated);
 		}
@@ -282,9 +277,9 @@ namespace CastleTests.Facilities.TypedFactory
 			Container.Register(
 				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<DisposableSelector>().Named("1").LifeStyle.Transient,
 				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<SimpleSelector>().Named("2").LifeStyle.Transient,
-				Component.For<Func<Foo>>().LifeStyle.Transient.AsFactory(x => x.SelectedWith("2")));
+				Component.For<Func<Delegates.Foo>>().LifeStyle.Transient.AsFactory(x => x.SelectedWith("2")));
 
-			Container.Resolve<Func<Foo>>();
+			Container.Resolve<Func<Delegates.Foo>>();
 
 			Assert.AreEqual(0, DisposableSelector.InstancesCreated);
 			Assert.AreEqual(1, SimpleSelector.InstancesCreated);
@@ -293,7 +288,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Factory_obeys_lifestyle()
 		{
-			Container.Register(Component.For<Foo>().Named("MyFoo").LifeStyle.Singleton);
+			Container.Register(Component.For<Delegates.Foo>().Named("MyFoo").LifeStyle.Singleton);
 			Container.Register(Component.For<UsesFooDelegate>());
 			var dependsOnFoo = Container.Resolve<UsesFooDelegate>();
 			var foo = dependsOnFoo.GetFoo();
@@ -388,7 +383,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Registers_generic_delegate_factories_as_open_generics_optional_dependency()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<Bar>().LifeStyle.Transient,
 			                   Component.For<UsesFooAndBarDelegateProperties>());
 
@@ -404,7 +399,7 @@ namespace CastleTests.Facilities.TypedFactory
 		[Test]
 		public void Registers_generic_delegate_factories_as_open_generics_required_dependency()
 		{
-			Container.Register(Component.For<Foo>().LifeStyle.Transient,
+			Container.Register(Component.For<Delegates.Foo>().LifeStyle.Transient,
 			                   Component.For<Bar>().LifeStyle.Transient,
 			                   Component.For<UsesFooAndBarDelegateCtor>());
 
@@ -439,8 +434,8 @@ namespace CastleTests.Facilities.TypedFactory
 			DisposableSelector.InstancesDisposed = 0;
 			Container.Register(
 				Component.For<DisposableSelector>().LifeStyle.Transient,
-				Component.For<Func<Foo>>().LifeStyle.Transient.AsFactory(x => x.SelectedWith<DisposableSelector>()));
-			var factory = Container.Resolve<Func<Foo>>();
+				Component.For<Func<Delegates.Foo>>().LifeStyle.Transient.AsFactory(x => x.SelectedWith<DisposableSelector>()));
+			var factory = Container.Resolve<Func<Delegates.Foo>>();
 
 			Assert.AreEqual(1, DisposableSelector.InstancesCreated);
 

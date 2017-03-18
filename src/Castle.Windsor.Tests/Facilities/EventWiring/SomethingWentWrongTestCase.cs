@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using Castle.Facilities.EventWiring;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Facilities.EventWiring.Model;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.EventWiring
+namespace Castle.Windsor.Tests.Facilities.EventWiring
 {
-	using System;
-
-	using Castle.Facilities.EventWiring;
-	using CastleTests.Facilities.EventWiring.Model;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SomethingWentWrongTestCase : AbstractContainerTestCase
 	{
@@ -44,7 +41,7 @@ namespace CastleTests.Facilities.EventWiring
 
 			var message =
 				string.Format(
-					"Can't create component 'CastleTests.Facilities.EventWiring.Model.SimplePublisher' as it has dependencies to be satisfied.{0}{0}'CastleTests.Facilities.EventWiring.Model.SimplePublisher' is waiting for the following dependencies:{0}- Component 'CastleTests.Facilities.EventWiring.Model.SimpleListener' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}- Component 'nonExistingListener' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}",
+					"Can't create component 'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimplePublisher' as it has dependencies to be satisfied.{0}{0}'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimplePublisher' is waiting for the following dependencies:{0}- Component 'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimpleListener' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}- Component 'nonExistingListener' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}",
 					Environment.NewLine);
 
 			Assert.AreEqual(message, exception.Message);
@@ -58,7 +55,7 @@ namespace CastleTests.Facilities.EventWiring
 
 			var exception = Assert.Throws<EventWiringException>(() => Container.Resolve<SimplePublisher>());
 			var message =
-				"Could not find event 'NonExistingEvent' on component 'CastleTests.Facilities.EventWiring.Model.SimplePublisher'. Make sure you didn't misspell the name.";
+				"Could not find event 'NonExistingEvent' on component 'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimplePublisher'. Make sure you didn't misspell the name.";
 			Assert.AreEqual(message, exception.Message);
 		}
 
@@ -70,7 +67,7 @@ namespace CastleTests.Facilities.EventWiring
 
 			var exception = Assert.Throws<EventWiringException>(() => Container.Resolve<SimplePublisher>());
 			var message =
-				"Could not find method 'NonExistingHandlerMethod' on component 'CastleTests.Facilities.EventWiring.Model.SimpleListener' to handle event 'Event' published by component 'CastleTests.Facilities.EventWiring.Model.SimplePublisher'. Make sure you didn't misspell the name.";
+				"Could not find method 'NonExistingHandlerMethod' on component 'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimpleListener' to handle event 'Event' published by component 'Castle.Windsor.Tests.Facilities.EventWiring.Model.SimplePublisher'. Make sure you didn't misspell the name.";
 			Assert.AreEqual(message, exception.Message);
 		}
 	}

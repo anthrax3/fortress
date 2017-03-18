@@ -16,13 +16,10 @@ using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.Tests.ClassComponents;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
 	public class MyCustomerActivator : AbstractComponentActivator
 	{
 		public MyCustomerActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)

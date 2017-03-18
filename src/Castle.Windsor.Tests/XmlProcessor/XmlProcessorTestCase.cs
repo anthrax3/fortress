@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests.XmlProcessor
 			foreach (var fileName in files)
 			{
 				var doc = GetXmlDocument(fileName);
-				var processor = new Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
+				var processor = new Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
 
 				Assert.Throws(typeof(ConfigurationProcessingException), () =>
 					processor.Process(doc.DocumentElement));
@@ -62,7 +62,7 @@ namespace Castle.Windsor.Tests.XmlProcessor
 
 				var resultDoc = GetXmlDocument(resultFileName);
 
-				var processor = new Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
+				var processor = new Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
 
 				try
 				{

@@ -13,16 +13,12 @@
 // limitations under the License.
 
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace Castle.Windsor.Tests
+namespace Castle.Windsor.Tests.Windsor.Tests
 {
-	using Castle.Windsor.Tests.ClassComponents;
-
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	public class LifecycledComponentsReleasePolicyComponentTrackingTestCase : AbstractContainerTestCase
 	{
 		[Test]

@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
+using NUnit.Framework;
 
-namespace Castle.ProxyInfrastructure
+namespace Castle.Windsor.Tests.ProxyInfrastructure
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.Core;
-	using NUnit.Framework;
-
 	public class OnBehalfAwareProxyGenerationHook : IProxyGenerationHook, IOnBehalfAware
 	{
 		public static ComponentModel target;

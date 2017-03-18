@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Castle.Windsor.Facilities.TypedFactory;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
 
-namespace CastleTests.Facilities.TypedFactory.Factories
+namespace Castle.Windsor.Tests.Facilities.TypedFactory.Factories
 {
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
-
 	[Factory(SelectorComponentType = typeof(Component2Selector))]
 	public interface IDummyComponentFactoryWithAttribute_serviceType : IDummyComponentFactory
 	{

@@ -14,11 +14,9 @@
 
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-    using Castle.Core;
-
-    public class ClassWithDoNotSelectConstructors
+	public class ClassWithDoNotSelectConstructors
     {
         public ClassWithDoNotSelectConstructors() { }
         

@@ -20,6 +20,9 @@ using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Proxy;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.ProxyInfrastructure;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
 
@@ -29,13 +32,7 @@ namespace Castle.Windsor.Tests
 	using System.Linq;
 	using System.Threading;
 
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.ProxyInfrastructure;
 	using Castle.Windsor.Tests.Interceptors;
-	using Castle.XmlFiles;
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

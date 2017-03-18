@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
-{
-	using System.Collections.Generic;
-	using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Castle.Windsor.Tests.Components
+{
 	public class CompositeEmptyService2 : IEmptyService2
 	{
 		private readonly IEnumerable<IEmptyService2> inner;

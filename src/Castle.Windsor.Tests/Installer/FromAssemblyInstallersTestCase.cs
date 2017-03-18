@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.IO;
+using System.Reflection;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests.Installer
+namespace Castle.Windsor.Tests.Installer
 {
-	using System;
-	using System.IO;
-	using System.Reflection;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class FromAssemblyInstallersTestCase : AbstractContainerTestCase
 	{

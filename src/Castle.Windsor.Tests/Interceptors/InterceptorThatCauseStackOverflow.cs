@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using CastleTests.Components;
-
 	public class InterceptorThatCauseStackOverflow : IInterceptor
 	{
 		public InterceptorThatCauseStackOverflow(ICameraService service)

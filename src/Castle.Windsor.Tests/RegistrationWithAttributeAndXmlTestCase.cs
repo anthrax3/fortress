@@ -13,14 +13,12 @@
 // limitations under the License.
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class RegistrationWithAttributeAndXmlTestCase : AbstractContainerTestCase
 	{

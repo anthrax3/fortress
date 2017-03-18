@@ -14,14 +14,11 @@
 
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 
-namespace CastleTests.SpecializedResolvers
+namespace Castle.Windsor.Tests.SpecializedResolvers
 {
-	using Castle.Windsor;
-
-	using CastleTests.Components;
-
 	internal class CollectionServiceOverridesInstaller : IWindsorInstaller
 	{
 		public void Install(IWindsorContainer container, IConfigurationStore store)

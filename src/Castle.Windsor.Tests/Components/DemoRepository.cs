@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Components
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Tests.Components
+{
 	public class DemoRepository<T> : IRepository<T>
 	{
 		public ICache<T> Cache { get; set; }

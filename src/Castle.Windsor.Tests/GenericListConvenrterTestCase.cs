@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Core.Core.Resource;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class GenericListConvenrterTestCase : AbstractContainerTestCase
 	{

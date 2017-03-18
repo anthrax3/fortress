@@ -14,13 +14,11 @@
 
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Windsor;
 
-namespace CastleTests.Installers
+namespace Castle.Windsor.Tests.Installers
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor;
-
 	public class CustomerInstaller : IWindsorInstaller
 	{
 		public void Install(IWindsorContainer container, IConfigurationStore store)

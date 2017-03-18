@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.ComponentModel;
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using System;
-	using System.ComponentModel;
-
-	using Castle.Core;
-
 	[Transient]
 	public class SupportInitializeComponent : ISupportInitialize
 	{

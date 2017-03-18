@@ -13,12 +13,10 @@
 // limitations under the License.
 
 using Castle.Windsor.Core;
+using Castle.Windsor.Tests.Interceptors;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-	using Castle.Windsor.Tests.Interceptors;
-
 	[Interceptor(typeof(ChangeResultInterceptor))]
 	public class InterceptableCalcServiceRemoting : CalcServiceRemotingImpl
 	{

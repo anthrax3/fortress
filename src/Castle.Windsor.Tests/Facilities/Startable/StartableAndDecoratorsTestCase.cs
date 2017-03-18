@@ -16,12 +16,11 @@ using Castle.Windsor.Facilities.Startable;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
-	using CastleTests.Components;
-
 	using NUnit.Framework;
 
 	[TestFixture]

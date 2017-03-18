@@ -12,25 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Linq;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.ContainerExtensions;
 using Castle.Windsor.Windsor.Diagnostics;
 using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
 using Castle.Windsor.Windsor.Diagnostics.Extensions;
+using NUnit.Framework;
 
-namespace CastleTests.Diagnostics
+namespace Castle.Windsor.Tests.Diagnostics
 {
-	using System;
-	using System.Collections;
-	using System.Linq;
-	using Castle.MicroKernel;
-	using CastleTests.Components;
-	using CastleTests.ContainerExtensions;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ReleasePolicyTrackedObjectsTestCase : AbstractContainerTestCase
 	{

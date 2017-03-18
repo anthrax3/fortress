@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace Castle.MicroKernel.Tests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using CastleTests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class UnsatisfiedDependenciesTestCase : AbstractContainerTestCase
 	{

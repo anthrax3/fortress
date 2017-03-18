@@ -12,24 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.MicroKernel;
 using Castle.Windsor.Windsor.Proxy;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Tests.MicroKernel;
-	using CastleTests.Components;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class MicroKernelTestCase : AbstractContainerTestCase
 	{
@@ -284,89 +281,7 @@ namespace CastleTests
 			Assert.Throws<HandlerException>(() => Kernel.ResolveAll<C>());
 		}
 
-		[Test]
-		public void ShouldNotRegisterAbstractClassAsComponentImplementation_With_LifestyleType_And_Override_Signature()
-		{
-			Kernel.Register(Component.For<ICommon>().ImplementedBy<BaseCommonComponent>().Named("abstract").LifeStyle.Pooled);
-
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws(typeof(ComponentRegistrationException), () =>
-				                                                      Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
-		[Test]
-		public void ShouldNotRegisterAbstractClassAsComponentImplementation_With_LifestyleType_Signature()
-		{
-			Kernel.Register(Component.For<ICommon>().ImplementedBy<BaseCommonComponent>().Named("abstract").LifeStyle.Pooled);
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws(typeof(ComponentRegistrationException), () => Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
-		[Test]
-		public void ShouldNotRegisterAbstractClassAsComponentImplementation_With_Simple_Signature()
-		{
-			Kernel.Register(Component.For<ICommon>().ImplementedBy<BaseCommonComponent>().Named("abstract"));
-
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws(typeof(ComponentRegistrationException), () => Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
-		[Test]
-		public void ShouldNotRegisterAbstractClass_With_LifestyleType_And_Override_Signature()
-		{
-			Kernel.Register(Component.For<BaseCommonComponent>().Named("abstract").LifeStyle.Pooled);
-
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws<ComponentRegistrationException>(() => Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
-		[Test]
-		public void ShouldNotRegisterAbstractClass_With_LifestyleType_Signature()
-		{
-			Kernel.Register(Component.For<BaseCommonComponent>().Named("abstract").LifeStyle.Pooled);
-
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws(typeof(ComponentRegistrationException), () => Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
-		[Test]
-		public void ShouldNotRegisterAbstractClass_With_Simple_Signature()
-		{
-			Kernel.Register(Component.For<BaseCommonComponent>().Named("abstract"));
-			var expectedMessage =
-				string.Format(
-					"Type Castle.MicroKernel.Tests.ClassComponents.BaseCommonComponent is abstract.{0} As such, it is not possible to instansiate it as implementation of service 'abstract'. Did you forget to proxy it?",
-					Environment.NewLine);
-			var exception =
-				Assert.Throws(typeof(ComponentRegistrationException), () => Kernel.Resolve<ICommon>("abstract"));
-			Assert.AreEqual(expectedMessage, exception.Message);
-		}
-
+	
 		[Test]
 		public void Subsystems_are_case_insensitive()
 		{
@@ -375,16 +290,7 @@ namespace CastleTests
 			Assert.IsNotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpper()));
 		}
 
-		[Test]
-		public void UnregisteredComponentByKey()
-		{
-			Assert.Throws<ComponentNotFoundException>(() =>
-			{
-				Kernel.Register(Component.For<CustomerImpl>().Named("key1"));
-				Kernel.Resolve<object>("key2");
-			});
-		}
-
+	
 		[Test]
 		public void UnregisteredComponentByService()
 		{

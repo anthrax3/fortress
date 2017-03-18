@@ -14,10 +14,8 @@
 
 using Castle.Windsor.Core;
 
-namespace CastleTests.Components
+namespace Castle.Windsor.Tests.Components
 {
-	using Castle.Core;
-
 	public class SimpleServiceInitializable : ISimpleService, IInitializable
 	{
 		private bool isInitialized;

@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Threading;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DefaultConversionManagerTestCase
 	{

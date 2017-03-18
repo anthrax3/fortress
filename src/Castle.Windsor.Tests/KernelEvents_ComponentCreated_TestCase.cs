@@ -12,18 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-	using Castle.Core;
-	using CastleTests.Components;
-	using NUnit.Framework;
-	using System.Linq;
-
 	[TestFixture]
 	public class KernelEvents_ComponentCreated_TestCase : AbstractContainerTestCase
 	{

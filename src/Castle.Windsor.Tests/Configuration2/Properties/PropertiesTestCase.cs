@@ -15,12 +15,12 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
 
 namespace Castle.Windsor.Tests.Configuration2.Properties
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
 	using NUnit.Framework;
 
 	[TestFixture]

@@ -13,24 +13,18 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Facilities.EventWiring;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.Facilities.EventWiring.Model;
+using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.EventWiring
+namespace Castle.Windsor.Tests.Facilities.EventWiring
 {
-	using Castle.Core;
-	using Castle.Facilities.EventWiring;
-	using Castle.MicroKernel;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests.Interceptors;
-
-	using CastleTests.Facilities.EventWiring.Model;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ProxiedSubscriberTestCase
 	{

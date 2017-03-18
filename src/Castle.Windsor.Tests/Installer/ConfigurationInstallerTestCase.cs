@@ -15,22 +15,17 @@
 
 // we do not support xml config on SL
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests.Installer
+namespace Castle.Windsor.Tests.Installer
 {
-	using System;
-	using Castle.Windsor;
-	using Castle.Windsor.Tests;
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigurationInstallerTestCase : AbstractContainerTestCase
 	{

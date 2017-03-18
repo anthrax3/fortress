@@ -16,18 +16,14 @@
 // we do not support xml config on SL
 
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
-namespace CastleTests
+namespace Castle.Windsor.Tests
 {
-	using Castle.Windsor;
-	using Castle.XmlFiles;
-
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class PropertiesInspectionBehaviorTestCase
 	{

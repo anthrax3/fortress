@@ -13,16 +13,13 @@
 // limitations under the License.
 
 
+using Castle.Facilities.EventWiring;
+using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
-namespace CastleTests.Facilities.EventWiring
+namespace Castle.Windsor.Tests.Facilities.EventWiring
 {
-	using Castle.Facilities.EventWiring;
-	using Castle.Windsor.Tests;
-	using Castle.XmlFiles;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class InvalidConfigTestCase : AbstractContainerTestCase
 	{

@@ -14,16 +14,11 @@
 
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
-namespace Castle
+namespace Castle.Windsor.Tests
 {
-	using Castle.Windsor.Tests;
-
-	using CastleTests;
-	using CastleTests.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CompositePatternTestCase : AbstractContainerTestCase
 	{

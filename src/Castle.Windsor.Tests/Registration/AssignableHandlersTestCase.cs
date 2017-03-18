@@ -13,13 +13,11 @@
 // limitations under the License.
 
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using NUnit.Framework;
 
-namespace CastleTests.Registration
+namespace Castle.Windsor.Tests.Registration
 {
-	using Castle.MicroKernel.Tests.ClassComponents;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class AssignableHandlersTestCase : AbstractContainerTestCase
 	{

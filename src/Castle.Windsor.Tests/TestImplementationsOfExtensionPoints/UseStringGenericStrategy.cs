@@ -1,13 +1,10 @@
+using System;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Handlers;
 
-namespace CastleTests.TestImplementationsOfExtensionPoints
+namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 {
-	using System;
-
-	using Castle.Core;
-
 	public class UseStringGenericStrategy : IGenericImplementationMatchingStrategy
 	{
 		public Type[] GetGenericArguments(ComponentModel model, CreationContext context)
