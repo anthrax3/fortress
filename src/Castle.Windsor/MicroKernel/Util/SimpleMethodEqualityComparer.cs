@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Util
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
+namespace Castle.Windsor.MicroKernel.Util
+{
 	[Serializable]
 	public class SimpleMethodEqualityComparer : IEqualityComparer<MethodInfo>
 	{

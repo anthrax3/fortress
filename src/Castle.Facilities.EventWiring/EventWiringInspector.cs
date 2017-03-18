@@ -13,15 +13,15 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ModelBuilder;
 
 namespace Castle.Facilities.EventWiring
 {
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ModelBuilder;
-	using Castle.MicroKernel.Util;
 
 	public class EventWiringInspector : IContributeComponentModelConstruction
 	{

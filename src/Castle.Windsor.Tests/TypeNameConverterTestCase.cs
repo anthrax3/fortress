@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+
 namespace CastleTests
 {
 	using System;
-	using Castle.MicroKernel.SubSystems.Conversion;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
 	using CastleTests.ClassComponents;

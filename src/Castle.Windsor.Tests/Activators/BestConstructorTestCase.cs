@@ -13,14 +13,16 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
 namespace CastleTests.Activators
 {
 	using Castle.Core;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
 	using CastleTests.Components;
@@ -28,7 +30,6 @@ namespace CastleTests.Activators
 	using NUnit.Framework;
 
 	[TestFixture]
-	[RelatedTestCase(typeof(HelpfulExceptionsOnResolveTestCase), "Some tests about exceptions thrown when constructor not available.")]
 	public class BestConstructorTestCase : AbstractContainerTestCase
 	{
 		[Test]

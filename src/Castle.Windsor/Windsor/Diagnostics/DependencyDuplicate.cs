@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Diagnostics
-{
-	using Castle.Core;
+using Castle.Windsor.Core;
 
+namespace Castle.Windsor.Windsor.Diagnostics
+{
 	public class DependencyDuplicate
 	{
 		public DependencyDuplicate(DependencyModel dependency1, DependencyModel dependency2, DependencyDuplicationReason reason)

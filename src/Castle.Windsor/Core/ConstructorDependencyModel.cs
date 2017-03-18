@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
+using System;
+using System.Reflection;
+using Castle.Windsor.Core.Internal;
+
+namespace Castle.Windsor.Core
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.Core.Internal;
-
 	[Serializable]
 	public class ConstructorDependencyModel : DependencyModel
 	{

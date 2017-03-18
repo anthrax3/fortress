@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory.Internal
+using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Reflection;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Resolvers;
+
+namespace Castle.Windsor.Facilities.TypedFactory.Internal
 {
-	using System;
-	using System.Collections;
-	using System.Diagnostics;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Resolvers;
-
 	[Singleton]
 	public class DelegateFactory : ILazyComponentLoader
 	{

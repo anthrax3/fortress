@@ -13,11 +13,12 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Facilities.Startable;
+using Castle.Windsor.MicroKernel;
 
 namespace CastleTests.Facilities
 {
 	using System;
-	using Castle.Facilities.Startable;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Tests.ClassComponents;
 

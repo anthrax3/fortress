@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
 
-namespace Castle.Core
+namespace Castle.Windsor.Core
 {
-	using System;
-
 	[Serializable]
 	public class ParameterModel
 	{

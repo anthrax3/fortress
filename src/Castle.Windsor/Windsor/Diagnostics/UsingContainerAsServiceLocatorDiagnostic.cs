@@ -12,18 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Core.Core.Internal;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.Diagnostics
+namespace Castle.Windsor.Windsor.Diagnostics
 {
-	using System;
-	using System.Linq;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Resolvers;
-
 	public class UsingContainerAsServiceLocatorDiagnostic : IUsingContainerAsServiceLocatorDiagnostic
 	{
 		public static Type[] ContainerTypes =

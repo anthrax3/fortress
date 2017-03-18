@@ -15,17 +15,19 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.Startable;
+using Castle.Windsor.MicroKernel.Lifestyle;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+using Castle.Windsor.Windsor.Installer;
+
 namespace Castle.Windsor.Tests
 {
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.Facilities.Startable;
-	using Castle.MicroKernel.Lifestyle;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Configuration.Interpreters;
-	using Castle.Windsor.Installer;
 	using Castle.XmlFiles;
 
 	using CastleTests;

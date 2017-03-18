@@ -13,6 +13,9 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Proxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
@@ -20,8 +23,6 @@ namespace Castle.Windsor.Tests.Interceptors
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Proxy;
 
 	public class ByTypeInterceptorSelector : IModelInterceptorsSelector
 	{

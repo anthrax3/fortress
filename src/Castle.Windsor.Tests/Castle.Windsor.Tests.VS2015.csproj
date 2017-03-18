@@ -74,8 +74,6 @@
   <ItemGroup>
     <Compile Include="AbstractContainerTestCase.cs" />
     <Compile Include="BugAttribute.cs" />
-    <Compile Include="Bugs\IoC-267.cs" />
-    <Compile Include="Bugs\IoC-334.cs" />
     <Compile Include="ByRefDependenciesTestCase.cs" />
     <Compile Include="ClassComponents\Common2Impl.cs" />
     <Compile Include="ClassComponents\CommonServiceUser3.cs" />
@@ -239,7 +237,6 @@
     <Compile Include="Diagnostics\DuplicatedDependenciesDiagnosticTestCase.cs" />
     <Compile Include="Facilities\Startable\ManuallyTriggeredStartTestCase.cs" />
     <Compile Include="GenericResolutionDeadlockTestCase.cs" />
-    <Compile Include="HelpfulExceptionsOnResolveTestCase.cs" />
     <Compile Include="Facilities\Startable\StartableAndExceptionThrowingInstallersTestCase.cs" />
     <Compile Include="Facilities\TypedFactory\Delegates\HasFuncProperty.cs" />
     <Compile Include="Facilities\TypedFactory\TypedFactoryDelegatesInvalidScenariosTestCase.cs" />
@@ -444,7 +441,6 @@
     <Compile Include="Components\WebServiceResultFinder.cs" />
     <Compile Include="Configuration2\ConfigurationInstallersTestCase.cs" />
     <Compile Include="Configuration2\UsingAssemblyTestCase.cs" />
-    <Compile Include="Config\AppDomainConfigurationStoreTestCase.cs" />
     <Compile Include="Config\Components\ClassWithComplexParameter.cs" />
     <Compile Include="Config\Components\ClassWithConstructors.cs" />
     <Compile Include="Config\ConfigurationTestCase.cs" />
@@ -528,14 +524,6 @@
     <Compile Include="Activators\BestConstructorTestCase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bugs\IoC-108.cs" />
-    <Compile Include="Bugs\IoC-114.cs" />
-    <Compile Include="Bugs\IoC-117.cs" />
-    <Compile Include="Bugs\IoC-95.cs" />
-    <Compile Include="Bugs\Ioc113\IoC_113.cs" />
-    <Compile Include="Bugs\Ioc113\SdiComponentMethods.cs" />
-    <Compile Include="Bugs\Ioc113\StartableDisposableAndInitializableComponent.cs" />
-    <Compile Include="Bugs\IoC_141.cs" />
     <Compile Include="ClassComponents\BaseComponent.cs" />
     <Compile Include="Components\ClassWithArguments.cs" />
     <Compile Include="ClassComponents\ClassWithArrayConstructor.cs" />
@@ -739,16 +727,6 @@
     <Compile Include="UnsatisfiedDependenciesTestCase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bugs\FACILITIES-ISSUE-111\Components\A_Facilities_Issue_111.cs" />
-    <Compile Include="Bugs\FACILITIES-ISSUE-111\Components\B_Facilities_Issue_111.cs" />
-    <Compile Include="Bugs\FACILITIES-ISSUE-111\Components\IA_Facilities_Issue_111.cs" />
-    <Compile Include="Bugs\FACILITIES-ISSUE-111\Components\IB_Facilities_Issue_111.cs" />
-    <Compile Include="Bugs\FACILITIES-ISSUE-111\FACILITIES_ISSUE_111.cs" />
-    <Compile Include="Bugs\IoC-102.cs" />
-    <Compile Include="Bugs\IoC-115.cs" />
-    <Compile Include="Bugs\IoC-138.cs" />
-    <Compile Include="Bugs\IoC-78\IoC-78.cs" />
-    <Compile Include="Bugs\IoC_169\IoC_169.cs" />
     <Compile Include="ChildContainerSupportTestCase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -927,7 +905,6 @@
     <Compile Include="PropertiesInspectionBehaviorTestCase.cs" />
     <Compile Include="ProxyInfrastructure\ProxyNothingHook.cs" />
     <Compile Include="Proxies\FactorySupportTestCase.cs" />
-    <Compile Include="Proxies\TypedFactoryFacilityTestCase.cs" />
     <Compile Include="Proxies\ProxyBehaviorTestCase.cs" />
     <Compile Include="ReportedProblemTestCase.cs">
       <SubType>Code</SubType>

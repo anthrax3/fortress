@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
-{
-	using Castle.Core;
-	using Castle.Facilities.TypedFactory.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.TypedFactory.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
 
+namespace Castle.Windsor.Facilities.TypedFactory
+{
 	public class DelegateFactoryActivator : AbstractComponentActivator, IDependencyAwareActivator
 	{
 		private readonly IProxyFactoryExtension proxyFactory = new DelegateProxyFactory();

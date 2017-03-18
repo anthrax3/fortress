@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel
+{
 	public interface IHandlersFilter
 	{
 		bool HasOpinionAbout(Type service);

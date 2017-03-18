@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder.Inspectors
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+{
 	internal abstract class ExtendedPropertiesConstants
 	{
 		public static readonly int Pool_Default_InitialPoolSize = 5;

@@ -13,15 +13,13 @@
 // limitations under the License.
 
 
+using System;
+using System.ComponentModel;
+using System.Reflection;
+using System.Web;
 
-namespace Castle.MicroKernel.Lifestyle
+namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	using System;
-	using System.ComponentModel;
-	using System.Reflection;
-	using System.Security;
-    	using System.Web;
-
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class PerWebRequestLifestyleModuleRegistration
 	{

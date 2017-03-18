@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
-{
-	using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace Castle.Windsor.MicroKernel.Handlers
+{
 	public class ComponentLifecycleExtension : IResolveExtension
 	{
 		private readonly List<ComponentResolvingDelegate> resolvers = new List<ComponentResolvingDelegate>(4);

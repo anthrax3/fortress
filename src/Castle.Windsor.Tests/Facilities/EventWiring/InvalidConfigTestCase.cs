@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
+using Castle.Windsor.Windsor.Installer;
 
 namespace CastleTests.Facilities.EventWiring
 {
 	using Castle.Facilities.EventWiring;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests;
 	using Castle.XmlFiles;
 

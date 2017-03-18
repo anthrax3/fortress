@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.TypedFactory.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Windsor.MicroKernel.Util;
+
+namespace Castle.Windsor.Facilities.TypedFactory
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Facilities.TypedFactory.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ModelBuilder;
-	using Castle.MicroKernel.Util;
-
 	public class TypedFactoryCachingInspector : IContributeComponentModelConstruction
 	{
 		public virtual void BuildCache(ComponentModel model)

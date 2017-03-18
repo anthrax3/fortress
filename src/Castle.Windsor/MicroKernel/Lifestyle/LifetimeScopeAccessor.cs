@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Lifestyle
+using System;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+
+namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	using System;
-
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-
-	using Scope = Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope;
+	using Scope = CallContextLifetimeScope;
 
 	public class LifetimeScopeAccessor : IScopeAccessor
 	{

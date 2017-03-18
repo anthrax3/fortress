@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
 using Castle.Core.Core.Configuration;
 
-namespace Castle.MicroKernel.Registration
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Configuration;
-	using System.Reflection;
-	using System.Resources;
-
 	public sealed class Dependency
 	{
 		private readonly object item;

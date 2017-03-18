@@ -14,7 +14,7 @@
 
 using Castle.Core.Core.Configuration;
 
-namespace Castle.MicroKernel.SubSystems.Conversion
+namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
 	public interface IGenericCollectionConverterHelper
 	{

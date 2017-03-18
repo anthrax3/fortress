@@ -13,11 +13,12 @@
 // limitations under the License.
 
 using Castle.Core.Core.Logging;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
 
 namespace Castle.Facilities.Logging.Tests
 {
 	using Castle.Facilities.Logging.Tests.Classes;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor;
 
 	using NUnit.Framework;

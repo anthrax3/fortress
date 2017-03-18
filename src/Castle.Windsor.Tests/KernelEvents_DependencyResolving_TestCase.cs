@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests
 {
@@ -20,7 +22,6 @@ namespace CastleTests
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
 	using NUnit.Framework;

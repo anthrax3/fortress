@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Lifestyle
+using System;
+using System.ComponentModel;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Windsor.Windsor;
+
+namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	using System;
-	using System.ComponentModel;
-
-	using Castle.Windsor;
-
-	using Scope = Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope;
+	using Scope = CallContextLifetimeScope;
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class LifestyleExtensions

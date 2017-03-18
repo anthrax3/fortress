@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Resolvers;
+
 namespace Castle.MicroKernel.Tests
 {
 	using System;
 	using System.Collections;
 	using System.Threading;
-
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Resolvers;
 	using CastleTests;
 	using CastleTests.Components;
 

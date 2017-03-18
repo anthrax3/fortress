@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Lifestyle.Scoped
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Castle.Windsor.Compatibility;
+
+namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-
-	using Castle.Core.Internal;
-
 	public class ScopeCache : IScopeCache, IDisposable
 	{
 		// NOTE: does that need to be thread safe?

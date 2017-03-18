@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.MicroKernel.SubSystems.Resource;
 
-namespace Castle.MicroKernel.SubSystems.Configuration
+namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.CompilerServices;
-	using Castle.MicroKernel.SubSystems.Resource;
-
 	[Serializable]
 	public class DefaultConfigurationStore : AbstractSubSystem, IConfigurationStore
 	{

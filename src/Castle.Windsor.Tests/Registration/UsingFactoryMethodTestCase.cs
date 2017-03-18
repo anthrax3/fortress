@@ -13,13 +13,14 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Registration
 {
 	using System;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.Configuration.Components;
 	using Castle.Windsor.Tests;
 	using Castle.Windsor.Tests.ClassComponents;

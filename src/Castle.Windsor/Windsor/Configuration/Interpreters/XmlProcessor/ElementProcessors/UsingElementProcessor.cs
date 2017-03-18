@@ -13,13 +13,11 @@
 // limitations under the License.
 
 
+using System.Xml;
+using Castle.Windsor.Core.Internal;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	using System.Xml;
-
-	using Castle.Core.Internal;
-
 	public class UsingElementProcessor : AbstractXmlNodeProcessor
 	{
 		public override string Name

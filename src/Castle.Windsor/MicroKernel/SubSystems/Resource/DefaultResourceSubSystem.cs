@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Core.Core.Resource;
 
-namespace Castle.MicroKernel.SubSystems.Resource
+namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 {
-	using System;
-	using System.Collections.Generic;
-
 	public class DefaultResourceSubSystem : AbstractSubSystem, IResourceSubSystem
 	{
 		private readonly List<IResourceFactory> resourceFactories = new List<IResourceFactory>();

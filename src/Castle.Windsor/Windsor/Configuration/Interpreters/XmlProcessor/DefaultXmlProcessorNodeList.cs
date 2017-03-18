@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using System.Collections.Generic;
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
-	using System.Collections.Generic;
-	using System.Xml;
-
 	public class DefaultXmlProcessorNodeList : IXmlProcessorNodeList
 	{
 		private readonly IList<XmlNode> nodes;

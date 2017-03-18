@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
-{
-	using System.Collections;
+using System.Collections;
 
+namespace Castle.Windsor.MicroKernel.Registration
+{
 	public delegate void DynamicParametersDelegate(IKernel kernel, IDictionary parameters);
 }

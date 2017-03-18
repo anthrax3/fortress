@@ -13,18 +13,17 @@
 // limitations under the License.
 
 using Castle.Core.Core.Logging;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Facilities;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
 namespace Castle.Facilities.Logging
 {
 	using System;
 	using System.Diagnostics;
 	using System.Reflection;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Facilities;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Conversion;
 
 	public class LoggingFacility : AbstractFacility
 	{

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
-{
-	using Castle.Core;
-	using Castle.MicroKernel.Handlers;
-	using Castle.MicroKernel.Registration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Windsor.MicroKernel.Registration;
 
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+{
 	public class DynamicParametersDescriptor : IComponentModelDescriptor
 	{
 		private static readonly string key = "component_resolving_handler";

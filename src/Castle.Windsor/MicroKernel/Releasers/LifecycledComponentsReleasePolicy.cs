@@ -12,22 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using Castle.Core.Core;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.Windsor.Diagnostics;
 
-namespace Castle.MicroKernel.Releasers
+namespace Castle.Windsor.MicroKernel.Releasers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Security;
-	using System.Threading;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.Windsor.Diagnostics;
-
 	[Serializable]
 	public class LifecycledComponentsReleasePolicy : IReleasePolicy
 	{

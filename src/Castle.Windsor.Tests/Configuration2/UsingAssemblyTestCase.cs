@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Windsor.Windsor;
+
 namespace Castle.Windsor.Tests.Configuration2
 {
 	using System;
 
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	using NUnit.Framework;
 
 	[TestFixture]

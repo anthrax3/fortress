@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
 
-namespace Castle.MicroKernel.Lifestyle
+namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-
 	public class WebRequestScopeAccessor : IScopeAccessor
 	{
 		public void Dispose()

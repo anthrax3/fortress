@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core.Internal;
+
 namespace Castle.MicroKernel.Tests
 {
 	using System;
 	using System.Linq;
-
-	using Castle.Core.Internal;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

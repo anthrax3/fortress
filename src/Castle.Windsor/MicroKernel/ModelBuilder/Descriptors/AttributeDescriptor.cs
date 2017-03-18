@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.MicroKernel.Registration;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-	using Castle.MicroKernel.Registration;
-
 	public class AttributeDescriptor<S> : AbstractOverwriteableDescriptor<S>
 		where S : class
 	{

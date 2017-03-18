@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Facilities;
+
 namespace Castle.Facilities.FactorySupport
 {
 	using System;
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Facilities;
 
 	public class AccessorActivator : DefaultComponentActivator, IDependencyAwareActivator
 	{

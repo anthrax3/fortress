@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
+using System.Runtime.Serialization;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Interceptor;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Proxy;
 
-namespace Castle.Windsor.Proxy
+namespace Castle.Windsor.Windsor.Proxy
 {
-	using System;
-	using System.Linq;
-	using System.Runtime.Serialization;
-
-	using Castle.Core;
-	using Castle.Core.Interceptor;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Proxy;
-
 	[Serializable]
 	public class DefaultProxyFactory : AbstractProxyFactory
 	                                   , IDeserializationCallback

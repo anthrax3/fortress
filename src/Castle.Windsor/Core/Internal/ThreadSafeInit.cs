@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System.Threading;
+using System.Threading;
 
+namespace Castle.Windsor.Core.Internal
+{
 	public sealed class ThreadSafeInit
 	{
 		// We are free to use negative values here, as ManagedTreadId is guaranteed to be always > 0

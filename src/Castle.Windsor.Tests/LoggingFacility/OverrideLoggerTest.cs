@@ -1,8 +1,9 @@
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Windsor;
+
 namespace Castle.Facilities.Logging.Tests
 {
 	using System;
-
-	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.Windsor;
 
 	public abstract class OverrideLoggerTest : BaseTest

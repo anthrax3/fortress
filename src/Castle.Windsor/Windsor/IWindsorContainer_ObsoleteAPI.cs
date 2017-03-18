@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor
+using System;
+using System.Collections;
+using System.ComponentModel;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+
+namespace Castle.Windsor.Windsor
 {
-	using System;
-	using System.Collections;
-	using System.ComponentModel;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-
 	public partial interface IWindsorContainer : IDisposable
 	{
 		[Obsolete("Use Resolve<object>(key) instead.")]

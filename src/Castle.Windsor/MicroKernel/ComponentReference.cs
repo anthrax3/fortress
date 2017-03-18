@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using System.Diagnostics;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Resolvers;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Diagnostics;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Resolvers;
-
 	[Serializable]
 	public class ComponentReference<T> : IReference<T>
 	{

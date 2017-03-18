@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using System.Collections;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.ModelBuilder;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-
-	using Castle.Core;
-	using Castle.MicroKernel.ModelBuilder;
-
 	public interface IComponentModelBuilder
 	{
 		IContributeComponentModelConstruction[] Contributors { get; }

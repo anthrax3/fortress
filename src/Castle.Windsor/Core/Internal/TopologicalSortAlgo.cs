@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System.Collections.Generic;
-	using System.Diagnostics;
+using System.Collections.Generic;
+using System.Diagnostics;
 
+namespace Castle.Windsor.Core.Internal
+{
 	public abstract class TopologicalSortAlgo
 	{
 		public static IVertex[] Sort(IVertex[] graphNodes)

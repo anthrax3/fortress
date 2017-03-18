@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-
-	using Castle.Core;
-
 	public abstract class AbstractPropertyDescriptor : IComponentModelDescriptor
 	{
 		public abstract void BuildComponentModel(IKernel kernel, ComponentModel model);

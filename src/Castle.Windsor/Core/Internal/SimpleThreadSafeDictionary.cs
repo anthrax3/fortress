@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.Core.Internal;
 
-namespace Castle.Core.Internal
+namespace Castle.Windsor.Core.Internal
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
 	public class SimpleThreadSafeDictionary<TKey, TValue>
 	{
 		private readonly Dictionary<TKey, TValue> inner = new Dictionary<TKey, TValue>();

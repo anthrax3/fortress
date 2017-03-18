@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Lifestyle.Pool
+using System;
+using Castle.Windsor.MicroKernel.Context;
+
+namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 {
-	using System;
-
-	using Castle.MicroKernel.Context;
-
 	public interface IPool : IDisposable
 	{
 		bool Release(object instance);

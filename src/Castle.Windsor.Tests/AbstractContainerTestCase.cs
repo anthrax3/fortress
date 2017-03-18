@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.Windsor;
+
 namespace CastleTests
 {
 	using Castle.MicroKernel;

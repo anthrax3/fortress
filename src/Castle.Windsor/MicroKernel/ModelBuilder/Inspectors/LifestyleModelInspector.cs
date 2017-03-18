@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
+using System.Reflection;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 {
-	using System;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	[Serializable]
 	public class LifestyleModelInspector : IContributeComponentModelConstruction
 	{

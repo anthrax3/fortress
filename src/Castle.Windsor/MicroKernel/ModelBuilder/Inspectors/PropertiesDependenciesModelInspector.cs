@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Compatibility;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	[Serializable]
 	public class PropertiesDependenciesModelInspector : IContributeComponentModelConstruction
 	{

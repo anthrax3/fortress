@@ -13,19 +13,17 @@
 // limitations under the License.
 
 
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Xml;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Text.RegularExpressions;
-	using System.Xml;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.SubSystems.Resource;
-	using Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
-
 	public class DefaultXmlProcessorEngine : IXmlProcessorEngine
 	{
 		private readonly IXmlNodeProcessor defaultElementProcessor;

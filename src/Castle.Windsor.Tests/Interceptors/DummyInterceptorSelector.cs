@@ -13,13 +13,12 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
 	using System;
 	using System.Reflection;
-
-	using Castle.Core.Internal;
 
 	public class DummyInterceptorSelector : IInterceptorSelector
 	{

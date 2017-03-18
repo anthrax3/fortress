@@ -13,6 +13,9 @@
 // limitations under the License.
 
 
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Installer;
+
 namespace Castle.Windsor.Tests
 {
     using Castle.XmlFiles;
@@ -28,7 +31,7 @@ namespace Castle.Windsor.Tests
         public void TestIngoreAttribute()
         {
             var container = new WindsorContainer();
-            container.Install(Castle.Windsor.Installer.Configuration.FromXml(Xml.Embedded("ignorector.xml")));
+            container.Install(Configuration.FromXml(Xml.Embedded("ignorector.xml")));
 
             var server = container.Resolve<ClassWithDoNotSelectConstructors>();
             Assert.Null(server.Dependency);

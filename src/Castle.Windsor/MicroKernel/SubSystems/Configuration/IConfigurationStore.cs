@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
 
-namespace Castle.MicroKernel.SubSystems.Configuration
+namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 {
-	using System;
-
 	public interface IConfigurationStore : ISubSystem
 	{
 		void AddChildContainerConfiguration(String name, IConfiguration config);

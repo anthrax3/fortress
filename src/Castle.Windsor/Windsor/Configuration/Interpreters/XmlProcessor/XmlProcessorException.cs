@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using System;
+using System.Runtime.Serialization;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
-	using System;
-	using System.Runtime.Serialization;
-
 	[Serializable]
 	public class XmlProcessorException : Exception
 	{

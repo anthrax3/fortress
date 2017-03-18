@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Proxies
 {
 	using System.Linq;
-	using Castle.MicroKernel.Registration;
-
 	using CastleTests.Components;
 	using CastleTests.Interceptors;
 

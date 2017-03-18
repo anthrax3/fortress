@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor
+using System;
+using System.Collections;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+
+namespace Castle.Windsor.Windsor
 {
-	using System;
-	using System.Collections;
-
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.Windsor.Installer;
-
 	public partial interface IWindsorContainer : IDisposable
 	{
 		IKernel Kernel { get; }

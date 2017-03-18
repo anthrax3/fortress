@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Diagnostics;
+using System.Text;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Windsor.MicroKernel.Resolvers;
 
-namespace Castle.Core
+namespace Castle.Windsor.Core
 {
-	using System;
-	using System.Diagnostics;
-	using System.Text;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Proxy;
-	using Castle.MicroKernel.Resolvers;
-
 	[Serializable]
 	public class InterceptorReference : IReference<IInterceptor>, IEquatable<InterceptorReference>
 	{

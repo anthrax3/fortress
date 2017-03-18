@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
-{
-	using Castle.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Context;
 
+namespace Castle.Windsor.MicroKernel.Handlers
+{
 	public delegate ComponentReleasingDelegate ComponentResolvingDelegate(IKernel kernel, CreationContext context);
 }

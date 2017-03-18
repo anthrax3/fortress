@@ -13,14 +13,12 @@
 // limitations under the License.
 
 using System.Diagnostics;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Registration
 {
 	using System.Collections.Generic;
 	using System.Linq;
-
-	using Castle.MicroKernel.Registration;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

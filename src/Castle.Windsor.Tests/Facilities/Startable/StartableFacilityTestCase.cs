@@ -13,6 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.Startable;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
@@ -20,10 +25,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.Facilities.Startable;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.ModelBuilder;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.Windsor.Tests.ClassComponents;
 	using Castle.Windsor.Tests.Facilities.Startable.Components;

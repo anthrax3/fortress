@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Resolvers
+using System;
+using System.Collections;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Internal;
+using Castle.Windsor.MicroKernel.Registration;
+
+namespace Castle.Windsor.MicroKernel.Resolvers
 {
-	using System;
-	using System.Collections;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Internal;
-	using Castle.MicroKernel.Registration;
-
 	[Singleton]
 	public class LazyOfTComponentLoader : ILazyComponentLoader
 	{

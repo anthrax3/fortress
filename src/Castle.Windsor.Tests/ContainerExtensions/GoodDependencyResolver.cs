@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Context;
+
 namespace CastleTests.ContainerExtensions
 {
 	using Castle.Core;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Context;
 	using Castle.Windsor.Tests.Components;
 
 	public class GoodDependencyResolver : ISubDependencyResolver

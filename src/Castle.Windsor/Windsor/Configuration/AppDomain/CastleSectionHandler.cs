@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using System.Configuration;
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.AppDomain
+namespace Castle.Windsor.Windsor.Configuration.AppDomain
 {
-	using System.Configuration;
-	using System.Xml;
-
 	public class CastleSectionHandler : IConfigurationSectionHandler
 	{
 		public object Create(object parent, object configContext, XmlNode section)

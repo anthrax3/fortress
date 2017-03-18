@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
 namespace CastleTests
 {
@@ -20,8 +21,6 @@ namespace CastleTests
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Threading;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	using NUnit.Framework;
 
 	[TestFixture]

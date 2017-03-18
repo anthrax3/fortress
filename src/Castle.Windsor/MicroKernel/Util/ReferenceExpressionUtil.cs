@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Util
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.Util
+{
 	public abstract class ReferenceExpressionUtil
 	{
 		public static string BuildReference(string value)

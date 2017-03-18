@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Resolvers
+using System;
+using System.Collections;
+using Castle.Windsor.MicroKernel.Registration;
+
+namespace Castle.Windsor.MicroKernel.Resolvers
 {
-	using System;
-	using System.Collections;
-
-	using Castle.MicroKernel.Registration;
-
 	public interface ILazyComponentLoader
 	{
 		IRegistration Load(string name, Type service, IDictionary arguments);

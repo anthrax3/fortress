@@ -14,12 +14,12 @@
 
 using Castle.Core.Core.Configuration;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Proxies
 {
 	using System;
 	using Castle.Facilities.FactorySupport;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor.Tests;
 
 	using CastleTests;

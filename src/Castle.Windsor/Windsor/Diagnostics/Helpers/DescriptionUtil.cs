@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.ComponentModel;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Windsor.Diagnostics.Helpers
+namespace Castle.Windsor.Windsor.Diagnostics.Helpers
 {
-	using System.ComponentModel;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-
 	public static class DescriptionUtil
 	{
 		public static string GetComponentName(this IHandler handler)

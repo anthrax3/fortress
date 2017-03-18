@@ -13,6 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Lifestyle
 {
@@ -20,9 +24,6 @@ namespace CastleTests.Lifestyle
 	using System.Threading;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Handlers;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.MicroKernel.Tests.Lifestyle;
 	using Castle.Windsor.Tests.ClassComponents;

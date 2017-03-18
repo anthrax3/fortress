@@ -14,6 +14,14 @@
 
 using Castle.Core.Core.Configuration;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Installer;
 
 namespace Castle.Windsor.Tests
 {
@@ -22,13 +30,8 @@ namespace Castle.Windsor.Tests
 	using System.Threading;
 
 	using Castle.Core;
-	using Castle.Core.Internal;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Handlers;
-	using Castle.MicroKernel.Proxy;
-	using Castle.MicroKernel.Registration;
 	using Castle.ProxyInfrastructure;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests.Interceptors;
 	using Castle.XmlFiles;
 	using CastleTests.Components;

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.Facilities.TypedFactory
+{
 	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
 	public class FactoryAttribute : Attribute
 	{

@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+using System;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
+
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Registration;
-
 	public class ParametersDescriptor : AbstractPropertyDescriptor
 	{
 		private readonly Parameter[] parameters;

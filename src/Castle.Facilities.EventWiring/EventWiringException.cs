@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel.Facilities;
+
 namespace Castle.Facilities.EventWiring
 {
 	using System;
 	using System.Runtime.Serialization;
-
-	using Castle.MicroKernel.Facilities;
 
 	[Serializable]
 	public class EventWiringException : FacilityException

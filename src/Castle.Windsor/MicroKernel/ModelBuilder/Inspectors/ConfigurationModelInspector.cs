@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Configuration;
+using System;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 {
-	using System;
-
-	using Castle.Core;
-
 	[Serializable]
 	public class ConfigurationModelInspector : IContributeComponentModelConstruction
 	{

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.using System;
 
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+
 namespace Castle.MicroKernel.Tests.Configuration.Components
 {
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	public class ClassWithComplexParameter
 	{
 		private ComplexParameterType param1;

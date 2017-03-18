@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.ComponentModel;
 using Castle.Core.Core;
 
-namespace Castle.MicroKernel.Registration
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections;
-	using System.ComponentModel;
-
-	using Castle.Core;
-
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class ComponentDependencyRegistrationExtensions
 	{

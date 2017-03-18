@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Interceptor;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Facilities.TypedFactory.Internal
+namespace Castle.Windsor.Facilities.TypedFactory.Internal
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.Core.Interceptor;
-	using Castle.MicroKernel;
-
 	[Transient]
 	public class FactoryInterceptor : IInterceptor, IOnBehalfAware
 	{

@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-namespace Castle.MicroKernel.Internal
-{
-	using System;
-	using System.Collections;
+using System;
+using System.Collections;
 
+namespace Castle.Windsor.MicroKernel.Internal
+{
 	public class LazyEx<T> : Lazy<T>, IDisposable
 	{
 		private readonly IKernel kernel;

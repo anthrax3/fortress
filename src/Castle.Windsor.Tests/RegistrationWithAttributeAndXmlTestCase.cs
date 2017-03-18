@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Windsor.Installer;
 
 namespace CastleTests
 {
-	using Castle.Windsor.Installer;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

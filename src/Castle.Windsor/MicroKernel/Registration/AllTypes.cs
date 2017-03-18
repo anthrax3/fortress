@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
-{
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
+namespace Castle.Windsor.MicroKernel.Registration
+{
 	[Obsolete("'AllTypes' has been deprecated and will be removed in future releases. Use 'Classes' static class (if you want to just register concrete classes) or 'Types' static class (if you want to register interfaces or abstract classes too) instead. It exposes exactly the same methods.")]
 	public static class AllTypes
 	{

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor
-{
-	using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
+namespace Castle.Windsor.Windsor
+{
 	public interface IComponentsInstaller
 	{
 		void SetUp(IWindsorContainer container, IConfigurationStore store);

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Interceptor;
 
 namespace Castle.ProxyInfrastructure
 {
@@ -20,7 +22,6 @@ namespace Castle.ProxyInfrastructure
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.Core.Interceptor;
 	using NUnit.Framework;
 
 	public class OnBehalfAwareInterceptorSelector : IInterceptorSelector, IOnBehalfAware

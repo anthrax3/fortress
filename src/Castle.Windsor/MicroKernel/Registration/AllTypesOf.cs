@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
-{
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 
+namespace Castle.Windsor.MicroKernel.Registration
+{
 	[Obsolete("Use Classes.From()... or Classes.FromAssembly() instead.")]
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class AllTypesOf

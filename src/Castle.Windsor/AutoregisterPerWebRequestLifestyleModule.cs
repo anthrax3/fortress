@@ -14,7 +14,6 @@
 
 
 using System.Web;
-
-using Castle.MicroKernel.Lifestyle;
+using Castle.Windsor.MicroKernel.Lifestyle;
 
 [assembly: PreApplicationStartMethod(typeof (PerWebRequestLifestyleModuleRegistration), "Run")]

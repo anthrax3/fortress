@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Interceptors
 {
-	using Castle.MicroKernel.Registration;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

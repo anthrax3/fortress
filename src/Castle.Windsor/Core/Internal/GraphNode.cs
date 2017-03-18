@@ -9,11 +9,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System;
-	using System.Threading;
+using System;
+using System.Threading;
 
+namespace Castle.Windsor.Core.Internal
+{
 	[Serializable]
 	public class GraphNode : IVertex
 	{

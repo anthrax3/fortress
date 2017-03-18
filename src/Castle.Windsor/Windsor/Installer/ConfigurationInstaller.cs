@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Installer
+using System;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Windsor.Configuration;
+
+namespace Castle.Windsor.Windsor.Installer
 {
-	using System;
-
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
-	using Castle.Windsor.Configuration;
-
 	public delegate String EnvironmentDelegate();
 
 	public class ConfigurationInstaller : IWindsorInstaller

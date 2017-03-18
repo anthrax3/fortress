@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Windsor.Installer;
+
 namespace CastleTests.Installer
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-
-	using Castle.Windsor.Installer;
 
 	public class FilterAssembliesInstallerFactory : InstallerFactory
 	{

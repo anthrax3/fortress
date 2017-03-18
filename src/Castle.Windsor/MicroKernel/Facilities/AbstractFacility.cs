@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
 
-namespace Castle.MicroKernel.Facilities
+namespace Castle.Windsor.MicroKernel.Facilities
 {
-	using System;
-
 	public abstract class AbstractFacility : IFacility, IDisposable
 	{
 		private IConfiguration facilityConfig;

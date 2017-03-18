@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Castle.Core.Core;
+using Castle.Windsor.MicroKernel.Context;
 
-namespace Castle.MicroKernel
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-
 	public class Arguments : IDictionary
 	                         , ICloneable
 	{

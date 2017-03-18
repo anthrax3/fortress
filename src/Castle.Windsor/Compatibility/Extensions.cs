@@ -17,64 +17,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-public static class EnumerableExtensions
+namespace Castle.Windsor.Compatibility
 {
-	public static Y[] ConvertAll<X, Y>(this X[] items, Func<X,Y> converter)
+	public static class EnumerableExtensions
 	{
-		var results = new List<Y>();
-
-		foreach (var item in items)
+		public static Y[] ConvertAll<X, Y>(this X[] items, Func<X,Y> converter)
 		{
-			var y = converter(item);
+			var results = new List<Y>();
 
-			results.Add(y);
+			foreach (var item in items)
+			{
+				var y = converter(item);
+
+				results.Add(y);
+			}
+
+			return results.ToArray();
 		}
 
-		return results.ToArray();
-	}
-
-	public static void ForEach<X>(this IEnumerable<X> items, Action<X> action)
-	{
-		foreach (var item in items)
-			action(item);
-	}
-}
-
-internal static class CustomAttributeExtensions
-{
-	public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
-	{
-		foreach (T a in Attribute.GetCustomAttributes(element, typeof(T)))
+		public static void ForEach<X>(this IEnumerable<X> items, Action<X> action)
 		{
-			yield return a;
+			foreach (var item in items)
+				action(item);
 		}
 	}
 
-	public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element, bool inherit) where T : Attribute
+	internal static class CustomAttributeExtensions
 	{
-		foreach (T a in Attribute.GetCustomAttributes(element, typeof(T), inherit))
+		public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
 		{
-			yield return a;
+			foreach (T a in Attribute.GetCustomAttributes(element, typeof(T)))
+			{
+				yield return a;
+			}
 		}
-	}
 
-	public static bool HasAttribute(this MethodBase element, Type attributeType)
-	{
-		return Attribute.IsDefined(element, attributeType);
-	}
+		public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element, bool inherit) where T : Attribute
+		{
+			foreach (T a in Attribute.GetCustomAttributes(element, typeof(T), inherit))
+			{
+				yield return a;
+			}
+		}
 
-	public static bool HasAttribute<X>(this MethodBase element)
-	{
-		return Attribute.IsDefined(element, typeof(X));
-	}
+		public static bool HasAttribute(this MethodBase element, Type attributeType)
+		{
+			return Attribute.IsDefined(element, attributeType);
+		}
 
-	public static bool HasAttribute(this PropertyInfo element, Type attributeType)
-	{
-		return Attribute.IsDefined(element, attributeType);
-	}
+		public static bool HasAttribute<X>(this MethodBase element)
+		{
+			return Attribute.IsDefined(element, typeof(X));
+		}
 
-	public static bool HasAttribute<X>(this PropertyInfo element)
-	{
-		return Attribute.IsDefined(element, typeof(X));
+		public static bool HasAttribute(this PropertyInfo element, Type attributeType)
+		{
+			return Attribute.IsDefined(element, attributeType);
+		}
+
+		public static bool HasAttribute<X>(this PropertyInfo element)
+		{
+			return Attribute.IsDefined(element, typeof(X));
+		}
 	}
 }

@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Facilities.TypedFactory;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.Windsor.Diagnostics;
+using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
+using Castle.Windsor.Windsor.Diagnostics.Extensions;
+
 namespace CastleTests.Diagnostics
 {
 	using System;
 	using System.Collections;
 	using System.Linq;
-
-	using Castle.Facilities.TypedFactory;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Releasers;
-	using Castle.Windsor.Diagnostics;
-	using Castle.Windsor.Diagnostics.DebuggerViews;
-	using Castle.Windsor.Diagnostics.Extensions;
-
 	using CastleTests.Components;
 	using CastleTests.ContainerExtensions;
 

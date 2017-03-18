@@ -13,12 +13,10 @@
 // limitations under the License.
 
 
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	using System;
-	using System.Xml;
-
 	public class EvalProcessingInstructionProcessor : AbstractXmlNodeProcessor
 	{
 		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.ProcessingInstruction };
@@ -48,7 +46,7 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 
 			if (string.Compare(expression, "$basedirectory", true) == 0)
 			{
-				evaluated = AppDomain.CurrentDomain.BaseDirectory;
+				evaluated = System.AppDomain.CurrentDomain.BaseDirectory;
 			}
 
 			fragment.AppendChild(node.OwnerDocument.CreateTextNode(evaluated.ToString()));

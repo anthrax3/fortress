@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Facilities.TypedFactory;
+
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {
 	using System.Reflection;
-
-	using Castle.Facilities.TypedFactory;
 
 	public class Component2Selector : DefaultTypedFactoryComponentSelector
 	{

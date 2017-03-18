@@ -13,12 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.Core.Internal;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Windsor.Diagnostics
+namespace Castle.Windsor.Windsor.Diagnostics
 {
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-
 	public class PotentiallyMisconfiguredComponentsDiagnostic : IPotentiallyMisconfiguredComponentsDiagnostic
 	{
 		private readonly IKernel kernel;

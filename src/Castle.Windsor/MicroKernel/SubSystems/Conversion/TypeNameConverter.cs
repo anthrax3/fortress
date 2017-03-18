@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core.Internal;
 
-namespace Castle.MicroKernel.SubSystems.Conversion
+namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-	using System.Text;
-	using Castle.Core.Internal;
-
 	[Serializable]
 	public class TypeNameConverter : AbstractTypeConverter
 	{

@@ -12,18 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Castle.Core.Core;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
 
-namespace Castle.MicroKernel.SubSystems.Conversion
+namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-
 	[Serializable]
 	public class DefaultConversionManager : AbstractSubSystem, IConversionManager, ITypeConverterContext
 	{

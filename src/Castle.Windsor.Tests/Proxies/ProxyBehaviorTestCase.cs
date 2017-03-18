@@ -14,6 +14,8 @@
 
 using Castle.Core.Core;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor.Installer;
 
 namespace Castle.Proxies
 {
@@ -21,10 +23,8 @@ namespace Castle.Proxies
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.ProxyInfrastructure;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests.Interceptors;
 	using Castle.XmlFiles;
 	using CastleTests;

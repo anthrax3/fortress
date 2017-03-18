@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Diagnostics
-{
-	using System;
-	using System.ComponentModel;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Security;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Security;
 
+namespace Castle.Windsor.Windsor.Diagnostics
+{
 	public class PerformanceMetricsFactory : IPerformanceMetricsFactory
 	{
 		private const string CastleWindsorCategoryName = "Castle Windsor";

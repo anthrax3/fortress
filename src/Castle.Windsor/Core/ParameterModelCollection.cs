@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Castle.Core.Core.Configuration;
 
-namespace Castle.Core
+namespace Castle.Windsor.Core
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-
 	[Serializable]
 	[DebuggerDisplay("Count = {dictionary.Count}")]
 	public class ParameterModelCollection : IEnumerable<ParameterModel>

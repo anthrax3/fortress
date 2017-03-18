@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.ComponentModel;
 using Castle.Core.Core;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Windsor
+namespace Castle.Windsor.Windsor
 {
-	using System;
-	using System.Collections;
-	using System.ComponentModel;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-
 	public partial class WindsorContainer
 	{
 		[Obsolete("Use Resolve(key, new Arguments()) or Resolve<TService>(key) instead.")]

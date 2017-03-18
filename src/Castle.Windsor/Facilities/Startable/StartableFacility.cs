@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.Startable
-{
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Facilities;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Conversion;
-	using Castle.Windsor;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Facilities;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
+namespace Castle.Windsor.Facilities.Startable
+{
 	public partial class StartableFacility : AbstractFacility
 	{
 		private ITypeConverter converter;

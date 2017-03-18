@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace CastleTests.Facilities.FactorySupport
 {
@@ -21,9 +23,7 @@ namespace CastleTests.Facilities.FactorySupport
 
 	using Castle.Core;
 	using Castle.Facilities.FactorySupport;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests;
 
 	using CastleTests.Components;

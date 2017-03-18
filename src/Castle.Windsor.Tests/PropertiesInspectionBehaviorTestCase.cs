@@ -15,11 +15,13 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+
 namespace CastleTests
 {
-	using Castle.MicroKernel.SubSystems.Conversion;
 	using Castle.Windsor;
-	using Castle.Windsor.Configuration.Interpreters;
 	using Castle.XmlFiles;
 
 	using CastleTests.Components;

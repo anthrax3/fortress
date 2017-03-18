@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Configuration.Interpreters
+namespace Castle.Windsor.Windsor.Configuration.Interpreters
 {
-	using System;
-	using System.Collections.Generic;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.SubSystems.Configuration;
-
 	public abstract class AbstractInterpreter : IConfigurationInterpreter
 	{
 		protected static readonly string ContainersNodeName = "containers";

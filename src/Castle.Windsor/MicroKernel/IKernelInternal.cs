@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
 using Castle.Core.Core.Logging;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-
-	using Castle.Core;
-
 	public interface IKernelInternal : IKernel
 	{
 		ILogger Logger { get; set; }

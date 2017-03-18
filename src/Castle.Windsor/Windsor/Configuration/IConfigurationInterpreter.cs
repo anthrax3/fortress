@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Configuration
+namespace Castle.Windsor.Windsor.Configuration
 {
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.SubSystems.Configuration;
-
 	public interface IConfigurationInterpreter
 	{
 		string EnvironmentName { get; set; }

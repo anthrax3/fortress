@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
+using System;
+using System.Collections.Generic;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-
 	public static class Component
 	{
 		public static ComponentRegistration For(Type serviceType)

@@ -15,9 +15,10 @@
 using System;
 using System.Collections.Generic;
 using Castle.MicroKernel;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.SubSystems.Conversion;
 using Castle.MicroKernel.Tests.ClassComponents;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 using CastleTests.ClassComponents;
 using CastleTests.Components;
 using NUnit.Framework;

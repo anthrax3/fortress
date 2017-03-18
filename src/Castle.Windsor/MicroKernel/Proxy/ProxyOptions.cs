@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.Proxy
+namespace Castle.Windsor.MicroKernel.Proxy
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-
 	public class ProxyOptions
 	{
 		private IReference<IProxyGenerationHook> hook;

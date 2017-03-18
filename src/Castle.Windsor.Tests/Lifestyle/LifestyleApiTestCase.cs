@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
+
 namespace CastleTests.Lifestyle
 {
 	using System;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 
 	using CastleTests.Components;

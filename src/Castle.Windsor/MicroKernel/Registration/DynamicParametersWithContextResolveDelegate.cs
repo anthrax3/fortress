@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
+using System.Collections;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Handlers;
+
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System.Collections;
-
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Handlers;
-
 	public delegate ComponentReleasingDelegate DynamicParametersWithContextResolveDelegate(
 		IKernel kernel, CreationContext creationContext, IDictionary parameters);
 }

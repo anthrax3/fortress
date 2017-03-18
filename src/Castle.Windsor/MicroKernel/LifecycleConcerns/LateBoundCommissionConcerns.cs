@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.LifecycleConcerns
+using System;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 {
-	using System;
-
-	using Castle.Core;
-
 	[Serializable]
 	public class LateBoundCommissionConcerns : LateBoundConcerns<ICommissionConcern>, ICommissionConcern
 	{

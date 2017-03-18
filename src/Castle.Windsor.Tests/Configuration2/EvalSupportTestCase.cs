@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+
 namespace Castle.Windsor.Tests.Configuration2
 {
 	using System;
-
-	using Castle.Windsor.Configuration.Interpreters;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

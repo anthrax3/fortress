@@ -13,6 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Facilities;
 
 namespace Castle.Facilities.FactorySupport
 {
@@ -21,10 +26,6 @@ namespace Castle.Facilities.FactorySupport
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Facilities;
 
 	public class FactoryActivator : DefaultComponentActivator, IDependencyAwareActivator
 	{

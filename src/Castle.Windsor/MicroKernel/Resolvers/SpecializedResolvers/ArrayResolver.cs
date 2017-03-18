@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
+{
 	public class ArrayResolver : CollectionResolver
 	{
 		public ArrayResolver(IKernel kernel)

@@ -15,15 +15,16 @@
 using System.Diagnostics;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
 
 namespace Castle.MicroKernel.Tests.Configuration
 {
 	using Castle.Core;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.MicroKernel.Tests.Configuration.Components;
 	using Castle.Windsor;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests.Components;
 
 	using CastleTests;
@@ -40,7 +41,7 @@ namespace Castle.MicroKernel.Tests.Configuration
 		public void Type_not_implementing_service_should_throw()
 		{
 			var exception = Assert.Throws<ComponentRegistrationException>(() =>
-			                                                              Container.Install(Configuration.FromXml(
+			                                                              Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(
 			                                                              	new StaticContentResource(
 			                                                              		@"<castle>
 <components>
@@ -62,7 +63,7 @@ namespace Castle.MicroKernel.Tests.Configuration
 		[Bug("IOC-197")]
 		public void DictionaryAsParameterInXml()
 		{
-			Container.Install(Configuration.FromXml(
+			Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(
 				new StaticContentResource(
 					string.Format(
 						@"<castle>
@@ -125,7 +126,7 @@ namespace Castle.MicroKernel.Tests.Configuration
     </components>
 </configuration>";
 
-			Container.Install(Configuration.FromXml(new StaticContentResource(config)));
+			Container.Install(Windsor.Windsor.Installer.Configuration.FromXml(new StaticContentResource(config)));
 			var user = Container.Resolve<UsesIEmptyService>();
 			Assert.NotNull(user.EmptyService);
 		}
@@ -134,7 +135,7 @@ namespace Castle.MicroKernel.Tests.Configuration
 		[Test]
 		public void Can_properly_populate_array_dependency_from_xml_config_when_registering_by_convention()
 		{
-			Container.Install(Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
+			Container.Install(Windsor.Windsor.Installer.Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
 				.Register(Component.For<IConfig>().ImplementedBy<Config>().Named("componentWithArrayDependency"));
 			Container.Register(
 				Classes.FromThisAssembly().Pick().WithServiceFirstInterface());

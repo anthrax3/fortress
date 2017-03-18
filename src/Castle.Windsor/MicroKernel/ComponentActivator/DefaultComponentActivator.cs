@@ -12,21 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Context;
 
-namespace Castle.MicroKernel.ComponentActivator
+namespace Castle.Windsor.MicroKernel.ComponentActivator
 {
-	using System;
-	using System.Runtime.Serialization;
-	using System.Security;
-	using System.Security.Permissions;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Context;
-
-	using System.Linq;
-
 	[Serializable]
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{

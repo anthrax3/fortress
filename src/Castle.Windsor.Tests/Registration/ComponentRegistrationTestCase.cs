@@ -14,6 +14,11 @@
 
 using Castle.Core.Core.Configuration;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.Startable;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.MicroKernel.Tests.Registration
 {
@@ -22,9 +27,6 @@ namespace Castle.MicroKernel.Tests.Registration
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.Facilities.Startable;
-	using Castle.MicroKernel.Proxy;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.MicroKernel.Tests.Configuration.Components;
 	using Castle.Windsor.Tests.Facilities.Startable.Components;

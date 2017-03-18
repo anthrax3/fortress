@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
 
 namespace Castle.Windsor.Tests.Interceptors
 {

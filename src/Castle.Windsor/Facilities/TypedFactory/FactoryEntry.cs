@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
-{
-	using System;
-	using System.ComponentModel;
+using System;
+using System.ComponentModel;
 
+namespace Castle.Windsor.Facilities.TypedFactory
+{
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class FactoryEntry
 	{

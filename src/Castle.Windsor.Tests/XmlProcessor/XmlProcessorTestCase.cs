@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+
 namespace Castle.Windsor.Tests.XmlProcessor
 {
 	using System;
 	using System.IO;
 	using System.Text.RegularExpressions;
 	using System.Xml;
-
-	using Castle.Windsor.Configuration.Interpreters;
-	using Castle.Windsor.Configuration.Interpreters.XmlProcessor;
-
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -36,7 +34,7 @@ namespace Castle.Windsor.Tests.XmlProcessor
 			foreach (var fileName in files)
 			{
 				var doc = GetXmlDocument(fileName);
-				var processor = new XmlProcessor();
+				var processor = new Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
 
 				Assert.Throws(typeof(ConfigurationProcessingException), () =>
 					processor.Process(doc.DocumentElement));
@@ -64,7 +62,7 @@ namespace Castle.Windsor.Tests.XmlProcessor
 
 				var resultDoc = GetXmlDocument(resultFileName);
 
-				var processor = new XmlProcessor();
+				var processor = new Windsor.Configuration.Interpreters.XmlProcessor.XmlProcessor();
 
 				try
 				{

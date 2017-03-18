@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-
-	using Castle.Core;
-
 	public interface IReleasePolicy : IDisposable
 	{
 		IReleasePolicy CreateSubPolicy();

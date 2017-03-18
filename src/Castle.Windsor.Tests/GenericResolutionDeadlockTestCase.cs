@@ -1,11 +1,12 @@
+using Castle.Windsor.Facilities.TypedFactory;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
+
 namespace CastleTests
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Threading;
-
-	using Castle.Facilities.TypedFactory;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor;
 
 	using NUnit.Framework;

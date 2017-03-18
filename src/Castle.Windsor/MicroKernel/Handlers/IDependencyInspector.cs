@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
-{
-	using Castle.Core;
+using Castle.Windsor.Core;
 
+namespace Castle.Windsor.MicroKernel.Handlers
+{
 	public interface IDependencyInspector
 	{
 		void Inspect(IHandler handler, DependencyModel[] missingDependencies, IKernel kernel);

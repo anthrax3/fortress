@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
+using System;
+using System.Text;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+
+namespace Castle.Windsor.Core.Internal
 {
-	using System;
-	using System.Text;
-
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ComponentActivator;
-
 	public static class HelpfulExceptionsUtil
 	{
 		public static Exception TrackInstanceCalledMultipleTimes(object instance, Burden burden)

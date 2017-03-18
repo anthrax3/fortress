@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.DynamicProxy.Internal;
 
-namespace Castle.MicroKernel.Registration
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
 	public class ServiceDescriptor
 	{
 		private readonly BasedOnDescriptor basedOnDescriptor;

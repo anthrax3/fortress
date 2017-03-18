@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System.Collections.Generic;
-	using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Castle.Windsor.Core.Internal
+{
 	public class SegmentedList<T>
 	{
 		private readonly List<T>[] segments;

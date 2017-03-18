@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using System.Collections;
+using System.ComponentModel;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-	using System.ComponentModel;
-
-	using Castle.Core;
-
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{
 		[Obsolete("Use Resolve<object>(key) instead")]

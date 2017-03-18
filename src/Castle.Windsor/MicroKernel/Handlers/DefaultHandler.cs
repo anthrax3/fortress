@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
+using System;
+using System.Text;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
+
+namespace Castle.Windsor.MicroKernel.Handlers
 {
-	using System;
-	using System.Text;
-
-	using Castle.Core;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
-
 	[Serializable]
 	public class DefaultHandler : AbstractHandler
 	{

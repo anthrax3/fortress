@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Windsor;
+
 namespace Castle.Facilities.Logging.Tests
 {
 	using System;
-
-	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.Windsor;
 
 	public abstract class BaseTest

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace Castle.Windsor.MicroKernel.Registration
+{
 	public class ServiceOverride
 	{
 		internal ServiceOverride(object dependencyKey, object value) : this(dependencyKey, value, null)

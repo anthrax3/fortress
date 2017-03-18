@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Lifestyle;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
+
 namespace CastleTests.Lifestyle
 {
 	using System;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Lifestyle;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor;
 	using Castle.Windsor.Tests.ClassComponents;
 

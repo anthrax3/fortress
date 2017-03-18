@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
-{
-	using System;
-	using System.Collections;
+using System;
+using System.Collections;
 
+namespace Castle.Windsor.MicroKernel
+{
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{
 		object Resolve(Type service);

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.MicroKernel;
 
 namespace Castle.MicroKernel.Tests.ClassComponents
 {

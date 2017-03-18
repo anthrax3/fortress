@@ -17,8 +17,6 @@ namespace CastleTests.Facilities.FactorySupport
 	using System;
 
 	using Castle.Facilities.FactorySupport;
-	using Castle.MicroKernel.Registration;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

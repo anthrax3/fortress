@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Util;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Util;
-
 	public class ServiceOverrideDescriptor : AbstractPropertyDescriptor
 	{
 		private readonly object value;

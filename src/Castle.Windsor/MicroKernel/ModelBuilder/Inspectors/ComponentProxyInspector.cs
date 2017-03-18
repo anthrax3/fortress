@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Proxy;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	[Serializable]
 	public class ComponentProxyInspector : IContributeComponentModelConstruction
 	{

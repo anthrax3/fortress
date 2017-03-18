@@ -13,6 +13,9 @@
 // limitations under the License.
 
 using Castle.Core.Core.Logging;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Context;
 
 namespace Castle.Facilities.Logging
 {
@@ -20,8 +23,6 @@ namespace Castle.Facilities.Logging
 	using System.Diagnostics;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Context;
 
 	public class LoggerResolver : ISubDependencyResolver
 	{

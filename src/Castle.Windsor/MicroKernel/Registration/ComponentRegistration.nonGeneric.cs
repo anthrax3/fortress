@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.Registration
+{
 	public class ComponentRegistration : ComponentRegistration<object>
 	{
 		public ComponentRegistration(params Type[] serviceTypes) : base(serviceTypes)

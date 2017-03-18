@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using System;
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
-	using System;
-	using System.Xml;
-
 	public interface IXmlNodeProcessor
 	{
 		XmlNodeType[] AcceptNodeTypes { get; }

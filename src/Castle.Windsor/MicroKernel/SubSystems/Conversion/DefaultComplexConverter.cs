@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Globalization;
+using System.Reflection;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core.Internal;
 
-namespace Castle.MicroKernel.SubSystems.Conversion
+namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
-	using System;
-	using System.Globalization;
-	using System.Reflection;
-	using Castle.Core.Internal;
-
 	[Serializable]
 	public class DefaultComplexConverter : AbstractTypeConverter
 	{

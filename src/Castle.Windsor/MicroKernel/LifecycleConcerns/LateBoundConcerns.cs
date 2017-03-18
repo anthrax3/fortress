@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.LifecycleConcerns
+namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using System.Collections.Concurrent;
-	using Castle.Core.Internal;
-
 	[Serializable]
 	public abstract class LateBoundConcerns<TConcern>
 	{

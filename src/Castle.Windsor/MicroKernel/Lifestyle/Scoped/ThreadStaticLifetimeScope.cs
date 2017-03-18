@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
+using Castle.Windsor.Windsor;
 
-namespace Castle.MicroKernel.Lifestyle.Scoped
+namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.Windsor;
-
 	public class ThreadStaticLifetimeScope : ILifetimeScope
 	{
 		private readonly Lock @lock = Lock.Create();

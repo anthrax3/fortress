@@ -13,16 +13,14 @@
 // limitations under the License.
 
 
+using System;
+using System.Web;
+using System.Web.UI;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
 
-namespace Castle.MicroKernel.ComponentActivator
+namespace Castle.Windsor.MicroKernel.ComponentActivator
 {
-	using System;
-	using System.Web;
-	using System.Web.UI;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-
 	[Serializable]
 	public class WebUserControlComponentActivator : DefaultComponentActivator
 	{

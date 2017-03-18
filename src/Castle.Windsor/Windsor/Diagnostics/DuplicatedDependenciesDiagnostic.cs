@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Castle.Core.Core;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Windsor.Diagnostics
+namespace Castle.Windsor.Windsor.Diagnostics
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-
 	public class DuplicatedDependenciesDiagnostic : IDuplicatedDependenciesDiagnostic
 	{
 		private readonly IKernel kernel;

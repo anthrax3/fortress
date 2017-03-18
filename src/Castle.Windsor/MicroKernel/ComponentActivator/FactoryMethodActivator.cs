@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
 
-namespace Castle.MicroKernel.ComponentActivator
+namespace Castle.Windsor.MicroKernel.ComponentActivator
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-
 	public class FactoryMethodActivator<T> : DefaultComponentActivator, IDependencyAwareActivator
 	{
 		protected readonly Func<IKernel, ComponentModel, CreationContext, T> creator;

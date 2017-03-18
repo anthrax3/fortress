@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using System.Runtime.Serialization;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Runtime.Serialization;
-
-	using Castle.Core;
-
 	[Serializable]
 	public class CircularDependencyException : ComponentResolutionException
 	{

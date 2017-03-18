@@ -15,12 +15,14 @@
 
 // we do not support xml config on SL
 
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+
 namespace CastleTests.Installer
 {
 	using System;
 
 	using Castle.Windsor;
-	using Castle.Windsor.Configuration.Interpreters;
 	using Castle.Windsor.Tests;
 	using Castle.XmlFiles;
 

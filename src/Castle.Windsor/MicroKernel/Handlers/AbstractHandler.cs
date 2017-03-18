@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Resolvers;
+
+namespace Castle.Windsor.MicroKernel.Handlers
 {
-	using System;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Threading;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Resolvers;
-
 	[Serializable]
 	public abstract class AbstractHandler : IHandler, IExposeDependencyInfo, IDisposable
 	{

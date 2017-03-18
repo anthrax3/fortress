@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.DynamicProxy;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.Facilities.TypedFactory.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
+using Castle.Windsor.MicroKernel.Registration;
 
-namespace Castle.Facilities.TypedFactory
+namespace Castle.Windsor.Facilities.TypedFactory
 {
-	using System;
-	using System.ComponentModel;
-	using System.Diagnostics;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.Facilities.TypedFactory.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.ModelBuilder.Descriptors;
-	using Castle.MicroKernel.Registration;
-
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class TypedFactoryRegistrationExtensions
 	{

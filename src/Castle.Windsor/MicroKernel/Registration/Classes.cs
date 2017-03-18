@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Castle.Windsor.Core.Internal;
+
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
-
-	using Castle.Core.Internal;
-
 	public static class Classes
 	{
 		public static FromTypesDescriptor From(IEnumerable<Type> types)

@@ -14,7 +14,7 @@
 
 using Castle.Core.Core.Configuration;
 
-namespace Castle.MicroKernel
+namespace Castle.Windsor.MicroKernel
 {
 	public interface IFacility
 	{

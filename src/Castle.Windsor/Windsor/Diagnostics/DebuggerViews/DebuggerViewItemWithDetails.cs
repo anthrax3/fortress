@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Diagnostics.DebuggerViews
-{
-	using System.Diagnostics;
+using System.Diagnostics;
 
+namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
+{
 	[DebuggerDisplay("{description,nq}", Name = "{name,nq}")]
 	public class DebuggerViewItemWithDetails
 	{

@@ -13,14 +13,13 @@
 // limitations under the License.
 
 
+using System;
+using System.Configuration;
+using System.Text.RegularExpressions;
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	using System;
-	using System.Configuration;
-	using System.Text.RegularExpressions;
-	using System.Xml;
-
 	public class DefaultTextNodeProcessor : AbstractXmlNodeProcessor
 	{
 		private static readonly Regex PropertyValidationRegExp = new Regex(@"(\#!?\{\s*((?:\w|\.)+)\s*\})", RegexOptions.Compiled);

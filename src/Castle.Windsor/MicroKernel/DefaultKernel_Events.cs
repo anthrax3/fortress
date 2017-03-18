@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Security;
-
-	using Castle.Core;
-
 	public partial class DefaultKernel
 	{
 		private readonly object handlersChangedLock = new object();

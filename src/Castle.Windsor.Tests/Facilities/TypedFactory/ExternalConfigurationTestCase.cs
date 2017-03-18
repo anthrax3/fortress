@@ -13,10 +13,11 @@
 // limitations under the License.
 
 
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor.Installer;
+
 namespace CastleTests.Facilities.TypedFactory
 {
-	using Castle.MicroKernel.Registration;
-	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests;
 	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
 	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;

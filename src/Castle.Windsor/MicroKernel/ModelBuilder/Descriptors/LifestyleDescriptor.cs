@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using Castle.Core;
-
 	public class LifestyleDescriptor<S> : AbstractOverwriteableDescriptor<S>
 		where S : class
 	{

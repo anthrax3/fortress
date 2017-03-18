@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Installer;
+
 namespace Castle.Windsor.Tests
 {
 	using System.Collections.Generic;
@@ -28,7 +31,7 @@ namespace Castle.Windsor.Tests
 		public void Should_not_StackOverflow()
 		{
 			var container = new WindsorContainer()
-				.Install(Castle.Windsor.Installer.Configuration.FromXml(Xml.Embedded("channel1.xml")));
+				.Install(Configuration.FromXml(Xml.Embedded("channel1.xml")));
 
 			var channel = container.Resolve<MessageChannel>("MessageChannel1");
 			var array = channel.RootDevice.Children.ToArray();

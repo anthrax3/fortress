@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Configuration;
 
-namespace Castle.MicroKernel.Registration
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-
 	public class Parameter
 	{
 		private readonly String key;

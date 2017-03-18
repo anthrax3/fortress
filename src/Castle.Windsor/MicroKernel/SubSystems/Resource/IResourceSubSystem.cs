@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.Core.Resource;
 
-namespace Castle.MicroKernel.SubSystems.Resource
+namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 {
-	using System;
-
 	public interface IResourceSubSystem : ISubSystem
 	{
 		IResource CreateResource(CustomUri uri);

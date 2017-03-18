@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.LifecycleConcerns
-{
-	using Castle.Core;
+using Castle.Windsor.Core;
 
+namespace Castle.Windsor.MicroKernel.LifecycleConcerns
+{
 	public class OnDestroyConcern<TComponent> : IDecommissionConcern
 	{
 		private readonly LifecycleActionDelegate<TComponent> action;

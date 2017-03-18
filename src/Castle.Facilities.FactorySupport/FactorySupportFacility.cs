@@ -13,6 +13,10 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Facilities;
+using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Facilities.FactorySupport
 {
@@ -20,10 +24,7 @@ namespace Castle.Facilities.FactorySupport
 	using System.ComponentModel;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Facilities;
-
-	using Component = Castle.MicroKernel.Registration.Component;
+	using Component = Component;
 
 	public class FactorySupportFacility : AbstractFacility
 	{

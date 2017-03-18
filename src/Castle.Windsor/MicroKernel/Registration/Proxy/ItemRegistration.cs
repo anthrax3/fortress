@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration.Proxy
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.Registration.Proxy
+{
 	public class ItemRegistration<TItem>
 	{
 		private IReference<TItem> item;

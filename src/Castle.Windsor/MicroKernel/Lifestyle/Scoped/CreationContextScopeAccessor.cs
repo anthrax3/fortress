@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Lifestyle.Scoped
+using System;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Context;
+
+namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 {
-	using System;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Context;
-
 	public class CreationContextScopeAccessor : IScopeAccessor
 	{
 		private const string ScopeStash = "castle.scope-stash";

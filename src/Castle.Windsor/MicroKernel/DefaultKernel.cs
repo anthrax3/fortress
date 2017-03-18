@@ -12,37 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using Castle.Core.Core.Logging;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Windsor.MicroKernel.Lifestyle;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Windsor.MicroKernel.ModelBuilder.Inspectors;
+using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Windsor.MicroKernel.SubSystems.Naming;
+using Castle.Windsor.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Windsor.Diagnostics;
 
-namespace Castle.MicroKernel
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Runtime.Serialization;
-	using System.Security;
-	using System.Security.Permissions;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.Handlers;
-	using Castle.MicroKernel.Lifestyle;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-	using Castle.MicroKernel.ModelBuilder;
-	using Castle.MicroKernel.ModelBuilder.Inspectors;
-	using Castle.MicroKernel.Proxy;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Releasers;
-	using Castle.MicroKernel.Resolvers;
-	using Castle.MicroKernel.SubSystems.Configuration;
-	using Castle.MicroKernel.SubSystems.Conversion;
-	using Castle.MicroKernel.SubSystems.Naming;
-	using Castle.MicroKernel.SubSystems.Resource;
-	using Castle.Windsor.Diagnostics;
-
 	[Serializable]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
 	public partial class DefaultKernel : IKernel, IKernelEvents, IKernelInternal

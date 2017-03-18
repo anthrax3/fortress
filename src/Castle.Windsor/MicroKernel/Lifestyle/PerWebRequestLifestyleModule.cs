@@ -13,15 +13,13 @@
 // limitations under the License.
 
 
+using System;
+using System.Text;
+using System.Web;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
 
-namespace Castle.MicroKernel.Lifestyle
+namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	using System;
-	using System.Text;
-	using System.Web;
-
-	using Castle.MicroKernel.Lifestyle.Scoped;
-
 	public class PerWebRequestLifestyleModule : IHttpModule
 	{
 		private const string key = "castle.per-web-request-lifestyle-cache";

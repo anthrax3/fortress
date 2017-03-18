@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
+using System;
+using System.Collections;
+using System.Reflection;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+
+namespace Castle.Windsor.Facilities.TypedFactory
 {
-	using System;
-	using System.Collections;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-
 	[Singleton]
 	public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
 	{

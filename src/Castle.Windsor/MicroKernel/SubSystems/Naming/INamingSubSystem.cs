@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.SubSystems.Naming
+using System;
+
+namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 {
-	using System;
-
-	using Castle.Core;
-
 	public interface INamingSubSystem : ISubSystem
 	{
 		int ComponentCount { get; }

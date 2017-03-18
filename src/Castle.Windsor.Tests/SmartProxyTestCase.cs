@@ -13,11 +13,12 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests
 {
 	using System.Runtime.Remoting;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor.Tests.Interceptors;
 
 	using CastleTests.Components;

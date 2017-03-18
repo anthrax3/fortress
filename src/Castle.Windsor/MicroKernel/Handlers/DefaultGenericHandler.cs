@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Context;
+using Castle.Windsor.MicroKernel.ModelBuilder;
 
-namespace Castle.MicroKernel.Handlers
+namespace Castle.Windsor.MicroKernel.Handlers
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Context;
-	using Castle.MicroKernel.ModelBuilder;
-
 	[Serializable]
 	public class DefaultGenericHandler : AbstractHandler
 	{

@@ -17,15 +17,16 @@
 
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
 
 namespace Castle.Windsor.Tests
 {
 	using System.Linq;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Configuration.Interpreters;
-	using Castle.Windsor.Configuration.Interpreters.XmlProcessor;
 	using Castle.XmlFiles;
 
 	using CastleTests.Components;

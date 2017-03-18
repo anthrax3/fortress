@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+using System;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-
-	using Castle.Core;
-
 	public class DelegatingModelDescriptor : IComponentModelDescriptor
 	{
 		private readonly Action<IKernel, ComponentModel> builder;

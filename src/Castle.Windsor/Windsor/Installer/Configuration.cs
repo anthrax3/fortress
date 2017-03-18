@@ -14,11 +14,10 @@
 
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
 
-namespace Castle.Windsor.Installer
+namespace Castle.Windsor.Windsor.Installer
 {
-	using Castle.Windsor.Configuration.Interpreters;
-
 	public static class Configuration
 	{
 		public static ConfigurationInstaller FromAppConfig()

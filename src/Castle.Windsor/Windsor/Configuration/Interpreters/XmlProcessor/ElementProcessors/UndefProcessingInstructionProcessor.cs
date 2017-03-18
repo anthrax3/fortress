@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
+using System;
+using System.Xml;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	using System;
-	using System.Xml;
-
 	public class UndefProcessingInstructionProcessor : AbstractStatementElementProcessor
 	{
 		public override XmlNodeType[] AcceptNodeTypes

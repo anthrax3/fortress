@@ -13,13 +13,12 @@
 // limitations under the License.
 
 
+using System;
+using System.Xml;
 using Castle.Core.Core.Resource;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
-	using System;
-	using System.Xml;
-
 	public interface IXmlProcessorEngine
 	{
 		void AddFlag(String flag);

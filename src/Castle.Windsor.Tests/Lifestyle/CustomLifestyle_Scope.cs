@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Handlers;
+
 namespace Castle.MicroKernel.Tests.Lifestyle
 {
-	using Castle.MicroKernel.Handlers;
-
 	public class CustomLifestyle_Scope : IResolveExtension
 	{
 		public void Init(IKernel kernel, IHandler handler)

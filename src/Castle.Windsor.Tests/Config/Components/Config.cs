@@ -1,8 +1,8 @@
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+
 namespace Castle.MicroKernel.Tests.Configuration.Components
 {
-    using Castle.MicroKernel.SubSystems.Conversion;
-
-    public interface IConfig
+	public interface IConfig
     {
         string Name { get; set; }
 

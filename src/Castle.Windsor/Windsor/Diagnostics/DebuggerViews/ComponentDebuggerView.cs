@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Diagnostics.DebuggerViews
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.Windsor.Diagnostics.Helpers;
+
+namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 {
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-
-	using Castle.MicroKernel;
-	using Castle.Windsor.Diagnostics.Helpers;
-
 	[DebuggerDisplay("{description,nq}", Name = "{name,nq}")]
 	public class ComponentDebuggerView
 	{

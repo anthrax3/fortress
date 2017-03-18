@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Util
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace Castle.Windsor.MicroKernel.Util
+{
 	[Serializable]
 	public class SimpleTypeEqualityComparer : IEqualityComparer<Type>
 	{

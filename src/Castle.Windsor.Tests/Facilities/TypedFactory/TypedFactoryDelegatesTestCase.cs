@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Facilities.TypedFactory;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.Releasers;
+
 namespace CastleTests.Facilities.TypedFactory
 {
 	using System;
 	using System.Linq;
-
-	using Castle.Facilities.TypedFactory;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.Releasers;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.Windsor.Tests.Facilities.TypedFactory;
 	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;

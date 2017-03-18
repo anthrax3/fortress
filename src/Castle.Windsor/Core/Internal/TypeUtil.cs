@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System;
-	using System.Diagnostics;
-	using System.Text;
+using System;
+using System.Diagnostics;
+using System.Text;
 
+namespace Castle.Windsor.Core.Internal
+{
 	public static class TypeUtil
 	{
 		public static bool IsPrimitiveTypeOrCollection(this Type type)

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel.ModelBuilder
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-
-	using Castle.Core;
-
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class ComponentModelDescriptorUtil
 	{

@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.LifecycleConcerns;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.LifecycleConcerns;
-
 	public class Burden
 	{
 		private readonly IHandler handler;

@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Windsor.Installer;
 
 namespace CastleTests
 {
 	using System.Collections.Generic;
-	using Castle.Windsor.Installer;
-
 	using NUnit.Framework;
 
 	[TestFixture]

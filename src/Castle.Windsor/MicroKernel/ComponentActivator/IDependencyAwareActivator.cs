@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ComponentActivator
-{
-	using Castle.Core;
+using Castle.Windsor.Core;
 
+namespace Castle.Windsor.MicroKernel.ComponentActivator
+{
 	public interface IDependencyAwareActivator
 	{
 		bool CanProvideRequiredDependencies(ComponentModel component);

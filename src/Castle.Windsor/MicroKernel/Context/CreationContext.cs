@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using Castle.Core.Core;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.MicroKernel.Context
+namespace Castle.Windsor.MicroKernel.Context
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-
-	using Castle.Core;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Releasers;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	[Serializable]
 	public class CreationContext : ISubDependencyResolver
 	{

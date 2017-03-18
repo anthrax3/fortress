@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel
+using System;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
-
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{
 		IComponentModelBuilder ComponentModelBuilder { get; }

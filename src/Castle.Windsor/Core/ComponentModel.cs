@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
 
-namespace Castle.Core
+namespace Castle.Windsor.Core
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Threading;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-
 	[Serializable]
 	public sealed class ComponentModel : GraphNode
 	{

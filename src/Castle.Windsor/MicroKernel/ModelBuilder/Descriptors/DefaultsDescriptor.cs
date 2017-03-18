@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using System;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-
 	public class DefaultsDescriptor : IComponentModelDescriptor
 	{
 		private readonly Type implementation;

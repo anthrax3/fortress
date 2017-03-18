@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.TypedFactory
+using System;
+using System.Reflection;
+using Castle.Windsor.MicroKernel;
+
+namespace Castle.Windsor.Facilities.TypedFactory
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.MicroKernel;
-
 	public interface ITypedFactoryComponentSelector
 	{
 		Func<IKernelInternal, IReleasePolicy, object> SelectComponent(MethodInfo method, Type type, object[] arguments);

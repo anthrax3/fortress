@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Facilities.Startable
+using System.Reflection;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.Facilities.Startable
 {
-	using System.Reflection;
-
-	using Castle.Core;
-
 	public class StartConcern : ICommissionConcern
 	{
 		private static readonly StartConcern instance = new StartConcern();

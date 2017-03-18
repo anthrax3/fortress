@@ -13,15 +13,16 @@
 // limitations under the License.
 
 using System.Diagnostics;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor.Diagnostics;
 
 namespace CastleTests.Diagnostics
 {
 	using System.Linq;
 
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
-	using Castle.Windsor.Diagnostics;
 	using Castle.Windsor.Tests.Interceptors;
 
 	using CastleTests.Components;

@@ -9,12 +9,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Core.Core.Internal;
 
-namespace Castle.Core.Internal
+namespace Castle.Windsor.Core.Internal
 {
-	using System.Collections.Generic;
-
 	public class SimpleThreadSafeCollection<T>
 	{
 		private readonly List<T> implementation = new List<T>();

@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Windsor.MicroKernel.Registration;
+
 namespace CastleTests.Windsor.Tests
 {
 	using System;
 
 	using Castle.Generics;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Handlers;
-	using Castle.MicroKernel.Registration;
-
 	using CastleTests.Components;
 
 	using NUnit.Framework;

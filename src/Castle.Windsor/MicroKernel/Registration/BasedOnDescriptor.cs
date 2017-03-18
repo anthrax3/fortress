@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Registration
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+
+namespace Castle.Windsor.MicroKernel.Registration
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.Lifestyle.Scoped;
-
 	public class BasedOnDescriptor : IRegistration
 	{
 		private readonly List<Type> potentialBases;

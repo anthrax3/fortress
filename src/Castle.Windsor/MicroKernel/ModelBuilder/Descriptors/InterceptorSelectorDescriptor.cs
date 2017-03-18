@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Proxy;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using Castle.Core;
-	using Castle.MicroKernel.Proxy;
-
 	public class InterceptorSelectorDescriptor : IComponentModelDescriptor
 	{
 		private readonly IReference<IInterceptorSelector> selector;

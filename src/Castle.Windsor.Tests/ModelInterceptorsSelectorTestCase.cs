@@ -13,13 +13,15 @@
 // limitations under the License.
 
 using System.Diagnostics;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
 
 namespace Castle.Windsor.Tests
 {
 	using System;
 
 	using Castle.Core;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor.Tests.Interceptors;
 
 	using CastleTests.Components;

@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.ModelBuilder.Inspectors;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+
+namespace Castle.Windsor.MicroKernel.ModelBuilder
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using Castle.MicroKernel.ModelBuilder.Inspectors;
-	using Castle.MicroKernel.SubSystems.Conversion;
-
 	[Serializable]
 	public class DefaultComponentModelBuilder : IComponentModelBuilder
 	{

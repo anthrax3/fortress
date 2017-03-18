@@ -13,14 +13,17 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.Windsor;
 
 namespace CastleTests.Facilities.EventWiring
 {
 	using Castle.Core;
 	using Castle.Facilities.EventWiring;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.Windsor;
 	using Castle.Windsor.Tests.Interceptors;
 

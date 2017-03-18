@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.Remoting.Messaging;
 using Castle.Core.Core.Internal;
+using Castle.Windsor.Core;
+using Castle.Windsor.Windsor;
 
-namespace Castle.MicroKernel.Lifestyle.Scoped
+namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 {
-	using System.Diagnostics;
-	using System.Globalization;
-	using System;
-	using System.Collections.Concurrent;
-	using System.Runtime.Remoting.Messaging;
-	using System.Security;
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.Windsor;
-
 	public class CallContextLifetimeScope : ILifetimeScope
 	{
 		private static readonly ConcurrentDictionary<Guid, CallContextLifetimeScope> appDomainLocalInstanceCache =

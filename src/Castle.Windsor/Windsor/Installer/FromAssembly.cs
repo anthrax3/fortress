@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.Installer
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.Registration;
+
+namespace Castle.Windsor.Windsor.Installer
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Registration;
-
 	public class FromAssembly
 	{
 		public static IWindsorInstaller Containing(Type type)

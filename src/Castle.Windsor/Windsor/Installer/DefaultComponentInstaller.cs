@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
 
-namespace Castle.Windsor.Installer
+namespace Castle.Windsor.Windsor.Installer
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core;
-	using Castle.Core.Internal;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
-	using Castle.MicroKernel.SubSystems.Conversion;
-	using Castle.Windsor.Configuration.Interpreters;
-
 	public class DefaultComponentInstaller : IComponentsInstaller
 	{
 		private string assemblyName;

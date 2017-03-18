@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Resolvers
+using System;
+using System.Runtime.Serialization;
+using Castle.Windsor.Core.Internal;
+
+namespace Castle.Windsor.MicroKernel.Resolvers
 {
-	using System;
-	using System.Runtime.Serialization;
-
-	using Castle.Core.Internal;
-
 	[Serializable]
 	public class DependencyResolverException : Exception
 	{

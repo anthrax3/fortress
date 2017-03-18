@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+
 namespace CastleTests
 {
-	using Castle.Facilities.TypedFactory;
 	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
 	using Castle.Windsor;
-	using Castle.Windsor.Configuration.Interpreters;
 	using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
 
 	using CastleTests.Components;

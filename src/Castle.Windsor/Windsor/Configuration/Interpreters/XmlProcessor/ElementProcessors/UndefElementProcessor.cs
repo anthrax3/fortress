@@ -13,11 +13,10 @@
 // limitations under the License.
 
 
+using System;
 
-namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	using System;
-
 	public class UndefElementProcessor : DefineElementProcessor
 	{
 		public override String Name

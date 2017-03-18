@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Windsor.Installer;
+
 namespace CastleTests.Installer
 {
 	using System;
 	using System.IO;
 	using System.Reflection;
-
-	using Castle.Core.Internal;
-	using Castle.MicroKernel.Registration;
-	using Castle.Windsor.Installer;
-
 	using NUnit.Framework;
 
 	[TestFixture]

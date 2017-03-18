@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using Castle.Windsor.Core;
+
+namespace Castle.Windsor.MicroKernel.Handlers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-
-	using Castle.Core;
-
 	public class DependencyInspector : IDependencyInspector
 	{
 		private readonly HashSet<IHandler> handlersChecked = new HashSet<IHandler>();

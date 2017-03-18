@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
-{
-	using Castle.Core;
+using Castle.Windsor.Core;
 
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+{
 	public class ReferenceDependencyDescriptor : IComponentModelDescriptor
 	{
 		private readonly IReference<object> dependency;

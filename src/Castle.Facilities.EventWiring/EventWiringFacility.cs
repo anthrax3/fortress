@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Facilities;
+
 namespace Castle.Facilities.EventWiring
 {
 	using System;
@@ -19,8 +23,6 @@ namespace Castle.Facilities.EventWiring
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Facilities;
 
 	public class EventWiringFacility : AbstractFacility
 	{

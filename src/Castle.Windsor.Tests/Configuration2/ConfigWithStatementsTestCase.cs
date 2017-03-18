@@ -13,6 +13,9 @@
 // limitations under the License.
 
 // we do not support xml config on SL
+
+using Castle.Windsor.Windsor;
+
 namespace Castle.Windsor.Tests.Configuration2
 {
 	using NUnit.Framework;

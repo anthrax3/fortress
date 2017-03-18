@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Linq;
 using Castle.Core.Core;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.ComponentActivator;
 
-namespace Castle.MicroKernel
+namespace Castle.Windsor.MicroKernel
 {
-	using System;
-	using System.Collections;
-	using System.ComponentModel;
-	using System.Linq;
-
-	using Castle.Core;
-	using Castle.MicroKernel.ComponentActivator;
-	using Castle.MicroKernel.Registration;
-
 	public partial class DefaultKernel
 	{
 		[Obsolete("Use Resolve(key, new Arguments()) instead")]

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.MicroKernel.Handlers
-{
-	using System;
+using System;
 
+namespace Castle.Windsor.MicroKernel.Handlers
+{
 	public class ReleaseInvocation
 	{
 		private Action proceed;

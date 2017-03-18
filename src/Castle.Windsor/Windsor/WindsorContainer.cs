@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Castle.Core.Core;
+using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Windsor.Configuration;
+using Castle.Windsor.Windsor.Configuration.Interpreters;
+using Castle.Windsor.Windsor.Diagnostics;
+using Castle.Windsor.Windsor.Installer;
+using Castle.Windsor.Windsor.Proxy;
 
-namespace Castle.Windsor
+namespace Castle.Windsor.Windsor
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-
-	using Castle.Core;
-	using Castle.MicroKernel;
-	using Castle.MicroKernel.Registration;
-	using Castle.MicroKernel.SubSystems.Configuration;
-	using Castle.MicroKernel.SubSystems.Resource;
-	using Castle.Windsor.Configuration;
-	using Castle.Windsor.Configuration.Interpreters;
-	using Castle.Windsor.Diagnostics;
-	using Castle.Windsor.Installer;
-	using Castle.Windsor.Proxy;
-
 	[Serializable]
 	[DebuggerDisplay("{name,nq}")]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]

@@ -13,12 +13,11 @@
 // limitations under the License.
 
 using Castle.Core.Core.Configuration;
+using Castle.Windsor.Core;
+using Castle.Windsor.MicroKernel.Registration;
 
-namespace Castle.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
-	using Castle.Core;
-	using Castle.MicroKernel.Registration;
-
 	public abstract class AbstractOverwriteableDescriptor<TService> : IComponentModelDescriptor
 		where TService : class
 	{

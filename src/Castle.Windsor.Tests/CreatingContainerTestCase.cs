@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Windsor;
 
 namespace CastleTests
 {
