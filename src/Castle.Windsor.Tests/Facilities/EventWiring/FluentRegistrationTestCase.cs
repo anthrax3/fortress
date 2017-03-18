@@ -33,7 +33,6 @@ namespace CastleTests.Facilities.EventWiring
 		}
 
 		private IWindsorContainer container;
-#if !SILVERLIGHT
 		[Test]
 		public void Can_publish_events_via_AllTypes()
 		{
@@ -52,7 +51,6 @@ namespace CastleTests.Facilities.EventWiring
 			Assert.IsTrue(subscriber.Listened);
 			Assert.AreSame(publisher, subscriber.Sender);
 		}
-#endif
 
 		[Test]
 		public void Can_publish_events_via_AllTypes_weakly_typed()
@@ -90,7 +88,6 @@ namespace CastleTests.Facilities.EventWiring
 			Assert.AreSame(publisher, listener.Sender);
 		}
 
-#if !SILVERLIGHT
 		[Test]
 		public void Can_specify_strongly_typed_event()
 		{
@@ -108,7 +105,6 @@ namespace CastleTests.Facilities.EventWiring
 			Assert.IsTrue(listener.Listened);
 			Assert.AreSame(publisher, listener.Sender);
 		}
-#endif
 
 		[Test]
 		public void Can_specify_event_as_string()

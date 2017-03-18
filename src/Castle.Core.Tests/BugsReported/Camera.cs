@@ -34,9 +34,7 @@ namespace Castle.DynamicProxy.Tests.BugsReported
 	}
 
 	public class CameraService :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		ICameraService
 	{
 		public ICamera Add(String name, String ipNumber)

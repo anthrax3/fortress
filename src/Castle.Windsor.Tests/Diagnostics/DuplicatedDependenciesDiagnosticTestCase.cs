@@ -31,9 +31,7 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-#if SILVERLIGHT
 			host.AddDiagnostic<IDuplicatedDependenciesDiagnostic>(new DuplicatedDependenciesDiagnostic(Kernel));
-#endif
 			diagnostic = host.GetDiagnostic<IDuplicatedDependenciesDiagnostic>();
 		}
 

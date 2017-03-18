@@ -167,12 +167,10 @@ namespace Castle.DynamicProxy.Generators
 				}
 			}
 			// 4. plus special interfaces
-#if FEATURE_SERIALIZATION
 			if (targetType.IsSerializable)
 			{
 				AddMappingForISerializable(typeImplementerMapping, proxyInstance);
 			}
-#endif
 			try
 			{
 				AddMappingNoCheck(typeof(IProxyTargetAccessor), proxyInstance, typeImplementerMapping);

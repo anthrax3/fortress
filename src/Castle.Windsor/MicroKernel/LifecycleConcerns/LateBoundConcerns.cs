@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,8 @@ namespace Castle.MicroKernel.LifecycleConcerns
 	using System.Collections.Generic;
 
 	using Castle.Core;
-#if !(SILVERLIGHT)
 	using System.Collections.Concurrent;
-#else
 	using Castle.Core.Internal;
-#endif
 
 	/// <summary>
 	///   Lifetime concern that works for components that don't have their actual type determined upfront
@@ -31,13 +28,9 @@ namespace Castle.MicroKernel.LifecycleConcerns
 	public abstract class LateBoundConcerns<TConcern>
 	{
 		private IDictionary<Type, TConcern> concerns;
-#if !(SILVERLIGHT)
 		private ConcurrentDictionary<Type, List<TConcern>> concernsCache;
-#else
-		private IDictionary<Type, List<TConcern>> concernsCache;
 		private readonly Lock cacheLock = Lock.Create();
 
-#endif
 
 		public bool HasConcerns
 		{
@@ -49,11 +42,7 @@ namespace Castle.MicroKernel.LifecycleConcerns
 			if (concerns == null)
 			{
 				concerns = new Dictionary<Type, TConcern>(2);
-#if !(SILVERLIGHT)
 				concernsCache = new ConcurrentDictionary<Type, List<TConcern>>(2, 2);
-#else
-				concernsCache = new Dictionary<Type, List<TConcern>>(2);
-#endif
 			}
 			concerns.Add(typeof(TForType), lifecycleConcern);
 		}
@@ -75,28 +64,7 @@ namespace Castle.MicroKernel.LifecycleConcerns
 
 		protected List<TConcern> GetComponentConcerns(Type type)
 		{
-#if !(SILVERLIGHT)
 			return concernsCache.GetOrAdd(type, BuildConcernCache);
-#else
-			List<TConcern> componentConcerns;
-			using(var @lock = cacheLock.ForReadingUpgradeable())
-			{
-				if (concernsCache.TryGetValue(type, out componentConcerns))
-				{
-					return componentConcerns;
-				}
-
-				@lock.Upgrade();
-				if (concernsCache.TryGetValue(type, out componentConcerns))
-				{
-					return componentConcerns;
-				}
-
-				componentConcerns = BuildConcernCache(type);
-				concernsCache.Add(type, componentConcerns);
-				return componentConcerns;
-			}
-#endif
 		}
 	}
 }

@@ -153,9 +153,7 @@ namespace CastleTests
 		}
 	}
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class LogHook : IProxyGenerationHook
 	{
 		private readonly Type targetTypeToAssert;

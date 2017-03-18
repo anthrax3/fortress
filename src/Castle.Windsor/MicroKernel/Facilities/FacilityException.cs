@@ -35,11 +35,9 @@ namespace Castle.MicroKernel.Facilities
 			ExceptionHelper.SetUp(this);
 		}
 
-#if (!SILVERLIGHT)
 		public FacilityException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 	}
 }

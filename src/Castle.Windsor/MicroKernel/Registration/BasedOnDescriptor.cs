@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -352,7 +352,6 @@ namespace Castle.MicroKernel.Registration
 			return Configure(c => c.LifestyleBoundToNearest<TBaseForRoot>());
 		}
 
-#if !(SILVERLIGHT)
 		/// <summary>
 		///   Sets component lifestyle to instance per web request.
 		/// </summary>
@@ -361,7 +360,6 @@ namespace Castle.MicroKernel.Registration
 		{
 			return Configure(c => c.LifestylePerWebRequest());
 		}
-#endif
 
 		/// <summary>
 		///   Sets component lifestyle to pooled. If <paramref name = "initialSize" /> or <paramref name = "maxSize" /> are not set default values will be used.

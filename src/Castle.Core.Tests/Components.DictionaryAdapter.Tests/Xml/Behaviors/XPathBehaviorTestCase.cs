@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,9 +62,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Set()
 			{
 				var xml = Xml("<Foo/>");
@@ -125,9 +123,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Set()
 			{
 				var xml = Xml("<Foo/>");
@@ -255,9 +251,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Realize_Missing()
 			{
 				var xml = Xml("<Foo/>");
@@ -277,9 +271,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Realize_Partial()
 			{
 				var xml = Xml("<Foo> <A> <X/> </A> </Foo>");
@@ -299,9 +291,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void SelectOnVirtual()
 			{
 				var xml = Xml("<Foo> <A/> </Foo>");
@@ -334,9 +324,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Delete_NotDoAnything()
 			{
 				var xml = Xml
@@ -361,9 +349,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Delete_Partial()
 			{
 				var xml = Xml
@@ -389,9 +375,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Delete_Whole()
 			{
 				var xml = Xml
@@ -439,9 +423,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Set()
 			{
 				var xml = Xml("<Foo> <X>x</X> <Y>y</Y> </Foo>");
@@ -500,18 +482,14 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.Xml.XPath.XPathException : variable p:v not found")]
-#endif
 			public void Get()
 			{
 				TestGet<IFoo>(f => f.Item);
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Set()
 			{
 				TestSet<IFoo>((f, v) => f.Item = v);
@@ -540,18 +518,14 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.Xml.XPath.XPathException : variable p:v not found")]
-#endif
 			public void Get()
 			{
 				TestGet<IFoo>(f => f.Item);
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 			public void Set()
 			{
 				TestSet<IFoo>((f, v) => f.Item = v);
@@ -569,9 +543,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("String lengths are both 7. Strings differ at index 0.  Expected: 'correct'  But was: 'wrong B'")]
-#endif
 			public void Get()
 			{
 				TestGet<IFoo>(f => f.Item);
@@ -603,9 +575,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-#if __MonoCS__
 			[Ignore("String lengths are both 7. Strings differ at index 0.  Expected: 'correct'  But was: 'wrong B'")]
-#endif
 			public void Get()
 			{
 				TestGet<IFoo>(f => f.Item);

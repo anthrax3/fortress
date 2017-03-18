@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if (!SILVERLIGHT)
 
 namespace CastleTests.Facilities.EventWiring
 {
@@ -45,4 +44,3 @@ namespace CastleTests.Facilities.EventWiring
 	}
 }
 
-#endif

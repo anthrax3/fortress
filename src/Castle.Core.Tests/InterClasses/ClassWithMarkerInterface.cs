@@ -20,9 +20,7 @@ namespace Castle.DynamicProxy.Tests.Classes
 	{
 	}
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class ClassWithMarkerInterface
 	{
 	}

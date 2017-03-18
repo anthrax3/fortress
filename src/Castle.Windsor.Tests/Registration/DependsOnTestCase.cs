@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ namespace CastleTests.Registration
 
 	public class DependsOnTestCase : AbstractContainerTestCase
 	{
-#if !SILVERLIGHT
 		[Test]
 		public void Can_register_configuration_parameters_from_appSettings_inline()
 		{
@@ -51,7 +50,6 @@ namespace CastleTests.Registration
 
 			Assert.AreEqual("Some resource value", obj.Arg1);
 		}
-#endif
 
 		[Test]
 		public void can_register_value_from_a_resource_file_with_resourceManager()

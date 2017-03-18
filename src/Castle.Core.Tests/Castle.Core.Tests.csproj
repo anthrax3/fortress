@@ -16,6 +16,7 @@
 	<Reference Include="NUnit">
       <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+	<Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !(SILVERLIGHT)
 
 namespace Castle.MicroKernel.ComponentActivator
 {
@@ -128,4 +127,3 @@ namespace Castle.MicroKernel.ComponentActivator
 	}
 }
 
-#endif

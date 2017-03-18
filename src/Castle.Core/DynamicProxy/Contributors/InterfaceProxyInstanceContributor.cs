@@ -33,7 +33,6 @@ namespace Castle.DynamicProxy.Contributors
 		{
 		}
 
-#if FEATURE_SERIALIZATION
 		protected override void CustomizeGetObjectData(AbstractCodeBuilder codebuilder, ArgumentReference serializationInfo,
 		                                               ArgumentReference streamingContext, ClassEmitter emitter)
 		{
@@ -52,6 +51,5 @@ namespace Castle.DynamicProxy.Contributors
 			                         	                               new ConstReference(targetType.AssemblyQualifiedName).
 			                         	                               	ToExpression())));
 		}
-#endif
 	}
 }

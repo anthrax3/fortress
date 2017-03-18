@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,9 +19,7 @@ namespace Castle.Facilities.WcfIntegration.Tests
 	using System.ServiceModel;
 	using System.ServiceModel.Activation;
 	using System.ServiceModel.Description;
-#if !(SILVERLIGHT)
 	using System.ServiceModel.Discovery;
-#endif
 	using Castle.Core.Resource;
 	using Castle.Facilities.Logging;
 	using Castle.Facilities.WcfIntegration.Behaviors;
@@ -946,7 +944,6 @@ namespace Castle.Facilities.WcfIntegration.Tests
 				client.DoSomething();
 			}
 		}
-#if !(SILVERLIGHT)
 		[Test]
 		public void WillRegisterServiceWithServiceCatalog()
 		{
@@ -1018,7 +1015,6 @@ namespace Castle.Facilities.WcfIntegration.Tests
 				CollectionAssert.AreEqual(domain.Scopes, endpoint.Scopes);
 			}
 		}
-#endif
 		protected IWindsorContainer RegisterLoggingFacility(IWindsorContainer container)
 		{
 			var logging = new LoggingFacility(LoggerImplementation.ExtendedLog4net);

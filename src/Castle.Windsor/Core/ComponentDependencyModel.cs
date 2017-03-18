@@ -30,9 +30,7 @@ namespace Castle.Core
 
 		public override void Init(ParameterModelCollection parameters)
 		{
-#if DEBUG
 			initialized = true;
-#endif
 			reference = DependencyKey;
 		}
 	}

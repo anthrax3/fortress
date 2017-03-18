@@ -52,7 +52,6 @@ namespace Castle.MicroKernel.Handlers
 		{
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
 		/// </summary>
@@ -62,7 +61,6 @@ namespace Castle.MicroKernel.Handlers
 			: base(info, context)
 		{
 		}
-#endif
 
 		private static string BuildMessage(string[] argumentsUsed, ComponentModel componentModel, DefaultGenericHandler handler)
 		{

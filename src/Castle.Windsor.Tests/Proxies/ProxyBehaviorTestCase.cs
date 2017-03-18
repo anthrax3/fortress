@@ -24,9 +24,7 @@ namespace Castle.Proxies
 	using Castle.ProxyInfrastructure;
 	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests.Interceptors;
-#if !SILVERLIGHT
 	using Castle.XmlFiles;
-#endif
 	using CastleTests;
 	using CastleTests.Components;
 
@@ -35,7 +33,6 @@ namespace Castle.Proxies
 	[TestFixture]
 	public class ProxyBehaviorTestCase : AbstractContainerTestCase
 	{
-#if !SILVERLIGHT
 		// we do not support xml config on SL
 		[Test]
 		public void Proxy_exposes_only_service_interfaces_from_configuration()
@@ -46,7 +43,6 @@ namespace Castle.Proxies
 			Assert.IsNotNull(calcService);
 			Assert.IsNotInstanceOf<IDisposable>(calcService, "Service proxy should NOT expose the IDisposable interface");
 		}
-#endif
 
 		[Test]
 		public void ProxyGenarationHook_can_be_OnBehalfAware()
@@ -208,7 +204,6 @@ namespace Castle.Proxies
 			Assert.IsInstanceOf<ICommon2>(common);
 		}
 
-#if !SILVERLIGHT
 		[Test]
 		public void RequestMarshalByRefProxyWithAttribute()
 		{
@@ -231,6 +226,5 @@ namespace Castle.Proxies
 
 			Assert.DoesNotThrow(() => Container.Resolve<object>("hasInternalInterface"));
 		}
-#endif
 	}
 }

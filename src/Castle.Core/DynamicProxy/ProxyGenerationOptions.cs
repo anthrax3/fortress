@@ -17,19 +17,13 @@ namespace Castle.DynamicProxy
 	using System;
 	using System.Collections.Generic;
 	using System.Reflection.Emit;
-#if FEATURE_SERIALIZATION
 	using System.Runtime.Serialization;
-#endif
 	using Castle.Core.Internal;
 	using System.Security;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class ProxyGenerationOptions
-#if FEATURE_SERIALIZATION
 		: ISerializable
-#endif
 	{
 		public static readonly ProxyGenerationOptions Default = new ProxyGenerationOptions();
 
@@ -37,9 +31,7 @@ namespace Castle.DynamicProxy
 		internal readonly IList<Attribute> attributesToAddToGeneratedTypes = new List<Attribute>();
 		private readonly IList<CustomAttributeInfo> additionalAttributes = new List<CustomAttributeInfo>();
 
-#if FEATURE_SERIALIZATION
 		[NonSerialized]
-#endif
 		private MixinData mixinData; // this is calculated dynamically on proxy type creation
 
 		/// <summary>
@@ -60,7 +52,6 @@ namespace Castle.DynamicProxy
 		{
 		}
 
-#if FEATURE_SERIALIZATION
 		private ProxyGenerationOptions(SerializationInfo info, StreamingContext context)
 		{
 			Hook = (IProxyGenerationHook)info.GetValue("hook", typeof(IProxyGenerationHook));
@@ -68,7 +59,6 @@ namespace Castle.DynamicProxy
 			mixins = (List<object>)info.GetValue("mixins", typeof(List<object>));
 			BaseTypeForInterfaceProxy = Type.GetType(info.GetString("baseTypeForInterfaceProxy.AssemblyQualifiedName"));
 		}
-#endif
 
 		public void Initialize()
 		{
@@ -86,10 +76,7 @@ namespace Castle.DynamicProxy
 			}
 		}
 
-#if FEATURE_SERIALIZATION
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("hook", Hook);
@@ -97,7 +84,6 @@ namespace Castle.DynamicProxy
 			info.AddValue("mixins", mixins);
 			info.AddValue("baseTypeForInterfaceProxy.AssemblyQualifiedName", BaseTypeForInterfaceProxy.AssemblyQualifiedName);
 		}
-#endif
 
 		public IProxyGenerationHook Hook { get; set; }
 

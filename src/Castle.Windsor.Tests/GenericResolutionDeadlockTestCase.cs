@@ -1,4 +1,4 @@
-﻿namespace CastleTests
+namespace CastleTests
 {
 	using System;
 	using System.Collections.Generic;

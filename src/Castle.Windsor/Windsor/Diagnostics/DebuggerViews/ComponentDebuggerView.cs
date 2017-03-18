@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ namespace Castle.Windsor.Diagnostics.DebuggerViews
 	using Castle.MicroKernel;
 	using Castle.Windsor.Diagnostics.Helpers;
 
-#if !SILVERLIGHT
 	[DebuggerDisplay("{description,nq}", Name = "{name,nq}")]
 	public class ComponentDebuggerView
 	{
@@ -83,5 +82,4 @@ namespace Castle.Windsor.Diagnostics.DebuggerViews
 			       Enumerable.Empty<IComponentDebuggerExtension>();
 		}
 	}
-#endif
 }

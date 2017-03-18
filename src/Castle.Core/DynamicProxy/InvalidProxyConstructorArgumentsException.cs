@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@ namespace Castle.DynamicProxy
 {
 	using System;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class InvalidProxyConstructorArgumentsException : ArgumentException
 	{
 		public InvalidProxyConstructorArgumentsException(string message, Type proxyType, Type classToProxy) : base(message)

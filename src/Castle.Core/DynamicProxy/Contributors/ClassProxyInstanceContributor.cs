@@ -17,9 +17,7 @@ namespace Castle.DynamicProxy.Contributors
 	using System;
 	using System.Collections.Generic;
 	using System.Reflection;
-#if FEATURE_SERIALIZATION
 	using System.Runtime.Serialization;
-#endif
 
 	using Castle.DynamicProxy.Generators.Emitters;
 	using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
@@ -29,24 +27,20 @@ namespace Castle.DynamicProxy.Contributors
 
 	public class ClassProxyInstanceContributor : ProxyInstanceContributor
 	{
-#if FEATURE_SERIALIZATION
 		private readonly bool delegateToBaseGetObjectData;
 		private readonly bool implementISerializable;
 		private ConstructorInfo serializationConstructor;
 		private readonly IList<FieldReference> serializedFields = new List<FieldReference>();
-#endif
 
 		public ClassProxyInstanceContributor(Type targetType, IList<MethodInfo> methodsToSkip, Type[] interfaces,
 		                                     string typeId)
 			: base(targetType, interfaces, typeId)
 		{
-#if FEATURE_SERIALIZATION
 			if (targetType.IsSerializable)
 			{
 				implementISerializable = true;
 				delegateToBaseGetObjectData = VerifyIfBaseImplementsGetObjectData(targetType, methodsToSkip);
 			}
-#endif
 		}
 
 		protected override Expression GetTargetReferenceExpression(ClassEmitter emitter)
@@ -57,13 +51,11 @@ namespace Castle.DynamicProxy.Contributors
 		public override void Generate(ClassEmitter @class, ProxyGenerationOptions options)
 		{
 			var interceptors = @class.GetField("__interceptors");
-#if FEATURE_SERIALIZATION
 			if (implementISerializable)
 			{
 				ImplementGetObjectData(@class);
 				Constructor(@class);
 			}
-#endif
 			ImplementProxyTargetAccessor(@class, interceptors);
 			foreach (var attribute in targetType.GetTypeInfo().GetNonInheritableAttributes())
 			{
@@ -71,7 +63,6 @@ namespace Castle.DynamicProxy.Contributors
 			}
 		}
 
-#if FEATURE_SERIALIZATION
 		protected override void AddAddValueInvocation(ArgumentReference serializationInfo, MethodEmitter getObjectData,
 		                                              FieldReference field)
 		{
@@ -234,6 +225,5 @@ namespace Castle.DynamicProxy.Contributors
 		{
 			return baseType.BaseType == typeof(MulticastDelegate);
 		}
-#endif
 	}
 }

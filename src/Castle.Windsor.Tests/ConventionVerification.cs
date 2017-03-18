@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !(SILVERLIGHT)
 
 namespace CastleTests
 {
@@ -124,4 +123,3 @@ namespace CastleTests
 	}
 }
 
-#endif

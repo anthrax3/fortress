@@ -17,13 +17,9 @@ namespace Castle.Core.Logging
 	using System;
 	using System.IO;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public abstract class AbstractLoggerFactory :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		ILoggerFactory
 	{
 		public virtual ILogger Create(Type type)

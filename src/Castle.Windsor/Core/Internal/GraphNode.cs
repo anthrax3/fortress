@@ -16,9 +16,7 @@ namespace Castle.Core.Internal
 
 	[Serializable]
 	public class GraphNode :
-#if !SILVERLIGHT
 		MarshalByRefObject,
-#endif
 		IVertex
 	{
 		private SimpleThreadSafeCollection<GraphNode> outgoing;

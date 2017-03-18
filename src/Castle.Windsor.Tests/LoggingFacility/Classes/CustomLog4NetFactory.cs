@@ -1,4 +1,4 @@
-﻿//// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+//// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 //// 
 //// Licensed under the Apache License, Version 2.0 (the "License");
 //// you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 // GVDM: TODO: Why are we abstracting logging frameworks? Why is this coming from castle.core? Why do we want these dependencies? What is going on? This is mental! 
 
-//#if !(SILVERLIGHT)
 
 //namespace CastleTests.LoggingFacility.Tests.Classes
 //{
@@ -46,4 +45,3 @@
 //	}
 //}
 
-//#endif

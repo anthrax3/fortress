@@ -14,7 +14,6 @@
 
 namespace Castle.Windsor.Diagnostics
 {
-#if !SILVERLIGHT
 	using System;
 	using System.ComponentModel;
 	using System.Diagnostics;
@@ -130,5 +129,4 @@ namespace Castle.Windsor.Diagnostics
 			}
 		}
 	}
-#endif
 }

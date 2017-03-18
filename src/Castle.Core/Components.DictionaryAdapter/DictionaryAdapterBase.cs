@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2009 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2009 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,11 +27,8 @@ namespace Castle.Components.DictionaryAdapter
 
 			CanEdit = typeof(IEditableObject).IsAssignableFrom(Meta.Type);
 			CanNotify = typeof(INotifyPropertyChanged).IsAssignableFrom(Meta.Type);
-#if FEATURE_IDATAERRORINFO
 			CanValidate = typeof(IDataErrorInfo).IsAssignableFrom(Meta.Type);
-#else
 			CanValidate = false;
-#endif
 
 			Initialize();
 		}

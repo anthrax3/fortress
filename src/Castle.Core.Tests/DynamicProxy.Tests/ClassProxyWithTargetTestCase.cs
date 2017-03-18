@@ -163,9 +163,7 @@ namespace Castle.DynamicProxy.Tests
 			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
 			Assert.AreEqual("field", memberInfo.Name);
-#if FEATURE_LEGACY_REFLECTION_API
 			Assert.AreEqual(MemberTypes.Field, memberInfo.MemberType);
-#endif
 		}
 
 		[Test]
@@ -178,9 +176,7 @@ namespace Castle.DynamicProxy.Tests
 			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
 			Assert.AreEqual("field", memberInfo.Name);
-#if FEATURE_LEGACY_REFLECTION_API
 			Assert.AreEqual(MemberTypes.Field, memberInfo.MemberType);
-#endif
 		}
 
 		[Test]

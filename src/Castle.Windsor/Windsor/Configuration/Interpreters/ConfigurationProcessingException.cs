@@ -32,11 +32,9 @@ namespace Castle.Windsor.Configuration.Interpreters
 			ExceptionHelper.SetUp(this);
 		}
 
-#if (!SILVERLIGHT)
 		public ConfigurationProcessingException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 	}
 }

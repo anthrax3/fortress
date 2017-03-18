@@ -16,22 +16,16 @@ namespace Castle.Core.Logging
 {
 	using System;
 	using System.Globalization;
-#if FEATURE_SECURITY_PERMISSIONS
 	using System.Security;
-#endif
 
 	/// <summary>
 	/// The Level Filtered Logger class.  This is a base clase which
 	/// provides a LogLevel attribute and reroutes all functions into
 	/// one Log method.
 	/// </summary>
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public abstract class LevelFilteredLogger :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		ILogger
 	{
 		private LoggerLevel level = LoggerLevel.Off;
@@ -59,19 +53,15 @@ namespace Castle.Core.Logging
 			ChangeName(loggerName);
 		}
 
-#if FEATURE_REMOTING
 		/// <summary>
 		/// Keep the instance alive in a remoting scenario
 		/// </summary>
 		/// <returns></returns>
-#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
-#endif
 		public override object InitializeLifetimeService()
 		{
 			return null;
 		}
-#endif
 
 		public abstract ILogger CreateChildLogger(string loggerName);
 

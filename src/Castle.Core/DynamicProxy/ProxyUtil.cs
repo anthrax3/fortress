@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,17 +16,13 @@ namespace Castle.DynamicProxy
 {
 	using System;
 	using System.Reflection;
-#if FEATURE_REMOTING
 	using System.Runtime.Remoting;
-#endif
 
 	public class ProxyUtil
 	{
 		public static object GetUnproxiedInstance(object instance)
 		{
-#if FEATURE_REMOTING
 			if (!RemotingServices.IsTransparentProxy(instance))
-#endif
 			{
 				var accessor = instance as IProxyTargetAccessor;
 				if (accessor != null)
@@ -40,9 +36,7 @@ namespace Castle.DynamicProxy
 
 		public static Type GetUnproxiedType(object instance)
 		{
-#if FEATURE_REMOTING
 			if (!RemotingServices.IsTransparentProxy(instance))
-#endif
 			{
 				var accessor = instance as IProxyTargetAccessor;
 
@@ -67,12 +61,10 @@ namespace Castle.DynamicProxy
 
 		public static bool IsProxy(object instance)
 		{
-#if FEATURE_REMOTING
 			if (RemotingServices.IsTransparentProxy(instance))
 			{
 				return true;
 			}
-#endif
 			return instance is IProxyTargetAccessor;
 		}
 

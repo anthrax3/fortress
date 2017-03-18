@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !SILVERLIGHT
 // we do not support xml config on SL
 
 namespace Castle.Windsor.Tests.Configuration2.Properties
@@ -156,4 +155,3 @@ namespace Castle.Windsor.Tests.Configuration2.Properties
 	}
 }
 
-#endif

@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -75,19 +75,8 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 				return null;
 			}
 			var tokens = assemblyQualifiedName.Split(new[] { ',' }, StringSplitOptions.None);
-#if SILVERLIGHT
-			var indexOfVersion = -1;
-			for (int i = tokens.Length - 1; i >= 0; i--)
-			{
-				if(tokens[i].TrimStart(' ').StartsWith("Version="))
-				{
-					indexOfVersion = i;
-					break;
-				}
-			}
-#else
+			
 			var indexOfVersion = Array.FindLastIndex(tokens, s => s.TrimStart(' ').StartsWith("Version="));
-#endif
 			if (indexOfVersion <= 0)
 			{
 				return tokens.Last().Trim();

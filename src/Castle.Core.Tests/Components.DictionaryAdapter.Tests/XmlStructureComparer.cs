@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -196,14 +196,10 @@ namespace Castle.Components.DictionaryAdapter.Tests
         {
             return Enumerable.Concat(
                 (IEnumerable<XmlNode>) node.Attributes.OfType<XmlAttribute>().Where(a => !IsNamespace(a))
-#if DOTNET35
 				.Cast<XmlNode>()
-#endif
 				,
                 (IEnumerable<XmlNode>) node.ChildNodes.OfType<XmlElement>()
-#if DOTNET35
 				.Cast<XmlNode>()
-#endif
 );
         }
 

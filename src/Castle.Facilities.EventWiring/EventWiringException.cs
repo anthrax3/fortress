@@ -22,9 +22,7 @@ namespace Castle.Facilities.EventWiring
 	/// <summary>
 	/// Exception that is thrown when a error occurs during the Event Wiring process
 	/// </summary>
-#if (!SILVERLIGHT)
 	[Serializable]
-#endif
 	public class EventWiringException : FacilityException
 	{
 		/// <summary>
@@ -44,7 +42,6 @@ namespace Castle.Facilities.EventWiring
 		{
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "EventWiringException" /> class.
 		/// </summary>
@@ -53,6 +50,5 @@ namespace Castle.Facilities.EventWiring
 		public EventWiringException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
-#endif
 	}
 }

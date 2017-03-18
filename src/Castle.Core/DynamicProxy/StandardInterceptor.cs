@@ -16,13 +16,9 @@ namespace Castle.DynamicProxy
 {
 	using System;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class StandardInterceptor :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		IInterceptor
 	{
 		public void Intercept(IInvocation invocation)

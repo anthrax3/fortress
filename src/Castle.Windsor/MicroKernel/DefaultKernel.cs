@@ -46,12 +46,8 @@ namespace Castle.MicroKernel
 	///   Default implementation of <see cref = "IKernel" />. This implementation is complete and also support a kernel hierarchy (sub containers).
 	/// </summary>
 	[Serializable]
-#if !SILVERLIGHT
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
 	public partial class DefaultKernel : MarshalByRefObject, IKernel, IKernelEvents, IKernelInternal
-#else
-	public partial class DefaultKernel : IKernel, IKernelEvents, IKernelInternal
-#endif
 	{
 		[ThreadStatic]
 		private static CreationContext currentCreationContext;
@@ -106,13 +102,11 @@ namespace Castle.MicroKernel
 			Resolver = resolver;
 			Resolver.Initialize(this, RaiseDependencyResolving);
 
-#if !SILVERLIGHT
 			if (new SecurityPermission(SecurityPermissionFlag.ControlEvidence | SecurityPermissionFlag.ControlPolicy).IsUnrestricted())
 			{
 				Logger = new TraceLogger("Castle.Windsor", LoggerLevel.Warn);
 			}
 			else
-#endif
 			{
 				Logger = NullLogger.Instance;
 			}
@@ -126,7 +120,6 @@ namespace Castle.MicroKernel
 		{
 		}
 
-#if !SILVERLIGHT
 		[SecurityCritical]
 		public DefaultKernel(SerializationInfo info, StreamingContext context)
 		{
@@ -137,7 +130,6 @@ namespace Castle.MicroKernel
 
 			HandlerRegistered += (HandlerDelegate)info.GetValue("HandlerRegisteredEvent", typeof(Delegate));
 		}
-#endif
 
 		public IComponentModelBuilder ComponentModelBuilder { get; set; }
 
@@ -210,7 +202,6 @@ namespace Castle.MicroKernel
 
 		protected INamingSubSystem NamingSubSystem { get; private set; }
 
-#if !SILVERLIGHT
 		[SecurityCritical]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
@@ -222,7 +213,6 @@ namespace Castle.MicroKernel
 
 			info.AddValue("HandlerRegisteredEvent", HandlerRegistered);
 		}
-#endif
 
 		/// <summary>
 		///   Starts the process of component disposal.
@@ -559,11 +549,9 @@ namespace Castle.MicroKernel
 				case LifestyleType.Transient:
 					manager = new TransientLifestyleManager();
 					break;
-#if !(SILVERLIGHT)
 				case LifestyleType.PerWebRequest:
 					manager = new ScopedLifestyleManager(new WebRequestScopeAccessor());
 					break;
-#endif
 				case LifestyleType.Custom:
 					manager = model.CustomLifestyle.CreateInstance<ILifestyleManager>();
 

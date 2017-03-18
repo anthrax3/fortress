@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_SERIALIZATION
 
 namespace Castle.DynamicProxy.Serialization
 {
@@ -29,7 +28,6 @@ namespace Castle.DynamicProxy.Serialization
 	///   Applied to the assemblies saved by <see cref="ModuleScope" /> in order to persist the cache data included in the persisted assembly.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
-	[CLSCompliant(false)]
 	public class CacheMappingsAttribute : Attribute
 	{
 		private static readonly ConstructorInfo constructor =
@@ -70,4 +68,3 @@ namespace Castle.DynamicProxy.Serialization
 	}
 }
 
-#endif

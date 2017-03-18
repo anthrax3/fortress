@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_SERIALIZATION
 
 namespace Castle.DynamicProxy.Tests
 {
@@ -32,9 +31,7 @@ namespace Castle.DynamicProxy.Tests
 		}
 
 		[Test]
-#if __MonoCS__
 		[Ignore("Expected: True  But was:  False")]
-#endif
 		public void PersistentProxyBuilder_SavesSignedFile()
 		{
 			PersistentProxyBuilder builder = new PersistentProxyBuilder();
@@ -48,4 +45,3 @@ namespace Castle.DynamicProxy.Tests
 	}
 }
 
-#endif

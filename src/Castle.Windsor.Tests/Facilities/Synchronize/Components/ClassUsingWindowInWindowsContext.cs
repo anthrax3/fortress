@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 namespace CastleTests.Facilities.Synchronize.Components
 {
-#if !SILVERLIGHT
 	using System.Windows.Threading;
 
 	using Castle.Facilities.Synchronize;
@@ -23,5 +22,4 @@ namespace CastleTests.Facilities.Synchronize.Components
 	public class ClassUsingWindowInWindowsContext : ClassUsingWindow
 	{
 	}
-#endif
 }

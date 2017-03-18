@@ -16,11 +16,7 @@ namespace CastleTests.Components
 {
 	using System;
 
-#if (SILVERLIGHT)
-	public class MarshalCalculatorService : ICalcService
-#else
 	public class MarshalCalculatorService : MarshalByRefObject, ICalcService
-#endif
 	{
 		public int Sum(int x, int y)
 		{

@@ -31,9 +31,7 @@ namespace Castle.MicroKernel.Releasers
 	[Serializable]
 	public class LifecycledComponentsReleasePolicy : IReleasePolicy
 	{
-#if !SILVERLIGHT
 		private static int instanceId;
-#endif
 
 		private readonly Dictionary<object, Burden> instance2Burden =
 			new Dictionary<object, Burden>(ReferenceEqualityComparer<object>.Instance);
@@ -225,20 +223,14 @@ namespace Castle.MicroKernel.Releasers
 		/// </summary>
 		/// <param name = "perfMetricsFactory"></param>
 		/// <returns></returns>
-#if !(SILVERLIGHT)
 		[SecuritySafeCritical]
-#endif
 		public static ITrackedComponentsPerformanceCounter GetTrackedComponentsPerformanceCounter(
 			IPerformanceMetricsFactory perfMetricsFactory)
 		{
-#if SILVERLIGHT
-			return NullPerformanceCounter.Instance;
-#else
 			var process = Process.GetCurrentProcess();
 			var name = string.Format("Instance {0} | process {1} (id:{2})", Interlocked.Increment(ref instanceId),
 			                         process.ProcessName, process.Id);
 			return perfMetricsFactory.CreateInstancesTrackedByReleasePolicyCounter(name);
-#endif
 		}
 	}
 }

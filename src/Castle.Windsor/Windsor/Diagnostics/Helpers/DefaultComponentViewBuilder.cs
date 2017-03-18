@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ namespace Castle.Windsor.Diagnostics.Helpers
 	using Castle.MicroKernel.Handlers;
 	using Castle.Windsor.Diagnostics.DebuggerViews;
 
-#if !SILVERLIGHT
 	public class DefaultComponentViewBuilder : IComponentDebuggerExtension
 	{
 		private readonly IHandler handler;
@@ -89,5 +88,4 @@ namespace Castle.Windsor.Diagnostics.Helpers
 			return handler.ComponentModel.HasInterceptors;
 		}
 	}
-#endif
 }

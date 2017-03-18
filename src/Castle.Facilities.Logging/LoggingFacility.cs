@@ -30,7 +30,6 @@ namespace Castle.Facilities.Logging
 	/// </summary>
 	public class LoggingFacility : AbstractFacility
 	{
-#if !SILVERLIGHT
 		private static readonly String ExtendedLog4NetLoggerFactoryTypeName =
 			"Castle.Services.Logging.Log4netIntegration.ExtendedLog4netFactory," +
 			"Castle.Services.Logging.Log4netIntegration,Version=3.3.0.0, Culture=neutral," +
@@ -50,7 +49,6 @@ namespace Castle.Facilities.Logging
 			"Castle.Services.Logging.NLogIntegration.NLogFactory," +
 			"Castle.Services.Logging.NLogIntegration,Version=3.3.0.0, Culture=neutral," +
 			"PublicKeyToken=407dd0808d44fbdc";
-#endif
 		private readonly string customLoggerFactoryTypeName;
 		private string configFileName;
 
@@ -164,7 +162,6 @@ namespace Castle.Facilities.Logging
 			return this;
 		}
 
-#if !SILVERLIGHT
 		public LoggingFacility UseLog4Net()
 		{
 			return LogUsing(LoggerImplementation.Log4net);
@@ -184,9 +181,7 @@ namespace Castle.Facilities.Logging
 		{
 			return LogUsing(LoggerImplementation.NLog).WithConfig(configFile);
 		}
-#endif
 
-#if !SILVERLIGHT
 		/// <summary>
 		///   loads configuration from current AppDomain's config file (aka web.config/app.config)
 		/// </summary>
@@ -196,7 +191,6 @@ namespace Castle.Facilities.Logging
 			configFileName = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
 			return this;
 		}
-#endif
 
 		protected override void Init()
 		{
@@ -332,7 +326,6 @@ namespace Castle.Facilities.Logging
 					return typeof(NullLogFactory);
 				case LoggerImplementation.Console:
 					return typeof(ConsoleFactory);
-#if !SILVERLIGHT
 				case LoggerImplementation.Diagnostics:
 					return typeof(DiagnosticsLoggerFactory);
 				case LoggerImplementation.Trace:
@@ -345,7 +338,6 @@ namespace Castle.Facilities.Logging
 					return converter.PerformConversion<Type>(ExtendedLog4NetLoggerFactoryTypeName);
 				case LoggerImplementation.ExtendedNLog:
 					return converter.PerformConversion<Type>(ExtendedNLogLoggerFactoryTypeName);
-#endif
 				default:
 					{
 						throw new FacilityException("An invalid loggingApi was specified: " + loggerApi);

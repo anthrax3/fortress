@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_SERIALIZATION
 
 namespace Castle.DynamicProxy.Serialization
 {
@@ -84,9 +83,7 @@ namespace Castle.DynamicProxy.Serialization
 			get { return scope; }
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		protected ProxyObjectReference(SerializationInfo info, StreamingContext context)
 		{
 			this.info = info;
@@ -116,9 +113,7 @@ namespace Castle.DynamicProxy.Serialization
 			return Type.GetType(info.GetString(key), true, false);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
-#endif
 		protected virtual object RecreateProxy()
 		{
 			var generatorType = GetValue<string>("__proxyTypeId");
@@ -136,9 +131,7 @@ namespace Castle.DynamicProxy.Serialization
 			return RecreateInterfaceProxy(generatorType);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		private object RecreateClassProxyWithTarget()
 		{
 			var generator = new ClassProxyWithTargetGenerator(scope, baseType, interfaces, proxyGenerationOptions);
@@ -146,9 +139,7 @@ namespace Castle.DynamicProxy.Serialization
 			return InstantiateClassProxy(proxyType);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		public object RecreateInterfaceProxy(string generatorType)
 		{
 			var @interface = DeserializeTypeFromString("__theInterface");
@@ -179,9 +170,7 @@ namespace Castle.DynamicProxy.Serialization
 			return FormatterServices.GetSafeUninitializedObject(proxyType);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		public object RecreateClassProxy()
 		{
 			var generator = new ClassProxyGenerator(scope, baseType);
@@ -189,9 +178,7 @@ namespace Castle.DynamicProxy.Serialization
 			return InstantiateClassProxy(proxyType);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		private object InstantiateClassProxy(Type proxy_type)
 		{
 			delegateToBase = GetValue<bool>("__delegateToBase");
@@ -213,26 +200,20 @@ namespace Castle.DynamicProxy.Serialization
 			}
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		public object GetRealObject(StreamingContext context)
 		{
 			return proxy;
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			// There is no need to implement this method as 
 			// this class would never be serialized.
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
-#endif
 		public void OnDeserialization(object sender)
 		{
 			var interceptors = GetValue<IInterceptor[]>("__interceptors");
@@ -245,9 +226,7 @@ namespace Castle.DynamicProxy.Serialization
 			InvokeCallback(proxy);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
-#endif
 		private void DeserializeProxyMembers()
 		{
 			var proxyType = proxy.GetType();
@@ -272,9 +251,7 @@ namespace Castle.DynamicProxy.Serialization
 			FormatterServices.PopulateObjectMembers(proxy, deserializedMembers.ToArray(), deserializedValues.ToArray());
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		private void DeserializeProxyState()
 		{
 			if (isInterfaceProxy)
@@ -325,4 +302,3 @@ namespace Castle.DynamicProxy.Serialization
 	}
 }
 
-#endif

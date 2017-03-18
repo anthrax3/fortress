@@ -14,12 +14,10 @@
 
 namespace CastleTests.Facilities.Synchronize.Components
 {
-#if !SILVERLIGHT
 	using System.Windows.Forms;
 
 	public interface IDummyForm
 	{
 		int AddControl(Control control);
 	}
-#endif
 }

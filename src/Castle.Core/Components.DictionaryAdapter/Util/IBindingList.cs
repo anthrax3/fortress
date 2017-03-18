@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,9 +19,7 @@ namespace Castle.Components.DictionaryAdapter
 	using SysPropertyDescriptor = System.ComponentModel.PropertyDescriptor;
 
 	public interface IBindingList<T> : IList<T>
-#if FEATURE_BINDINGLIST
 		, IBindingListSource, ICancelAddNew, IRaiseItemChangedEvents
-#endif
 	{
 		bool AllowNew                      { get; }
 		bool AllowEdit                     { get; }
@@ -31,21 +29,15 @@ namespace Castle.Components.DictionaryAdapter
 		bool SupportsSorting               { get; }
 		bool IsSorted                      { get; }
 		SysPropertyDescriptor SortProperty { get; }
-#if FEATURE_LISTSORT
 		ListSortDirection SortDirection    { get; }
-#endif
 
-#if FEATURE_BINDINGLIST
 		event ListChangedEventHandler ListChanged;
-#endif
 
 		T    AddNew     ();
 		int  Find       (SysPropertyDescriptor property, object key);
 		void AddIndex   (SysPropertyDescriptor property);
 		void RemoveIndex(SysPropertyDescriptor property);
-#if FEATURE_LISTSORT
 		void ApplySort  (SysPropertyDescriptor property, ListSortDirection direction);
-#endif
 		void RemoveSort ();
 	}
 }

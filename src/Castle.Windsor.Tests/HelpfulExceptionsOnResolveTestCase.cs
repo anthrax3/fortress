@@ -175,19 +175,16 @@ namespace CastleTests
 			Exception exception = Assert.Throws<ComponentActivatorException>(() =>
 			                                                           Container.Resolve<HasInternalConstructor>());
 			var message =
-#if SILVERLIGHT
 				string.Format("Type {0} does not have a public default constructor and could not be instantiated.",
 				              typeof(HasInternalConstructor).FullName);
 
 			exception = exception.InnerException;
-#else
 				string.Format(
 					"Could not find a public constructor for type {1}.{0}" +
 					"Windsor by default cannot instantiate types that don't expose public constructors.{0}" +
 					"To expose the type as a service add public constructor, or use custom component activator.",
 					Environment.NewLine,
 					typeof(HasInternalConstructor).FullName);
-#endif
 			Assert.AreEqual(message, exception.Message);
 		}
 
@@ -200,18 +197,15 @@ namespace CastleTests
 
 			Exception exception = Assert.Throws<ComponentActivatorException>(() => Container.Resolve<HasProtectedConstructor>());
 			var message =
-#if SILVERLIGHT
 				string.Format("Type {0} does not have a public default constructor and could not be instantiated.",
 							  typeof(HasProtectedConstructor).FullName);
 			exception = exception.InnerException;
-#else
 				string.Format(
 					"Could not find a public constructor for type {1}.{0}" +
 					"Windsor by default cannot instantiate types that don't expose public constructors.{0}" +
 					"To expose the type as a service add public constructor, or use custom component activator.",
 					Environment.NewLine,
 					typeof(HasProtectedConstructor).FullName);
-#endif
 			Assert.AreEqual(message, exception.Message);
 		}
 

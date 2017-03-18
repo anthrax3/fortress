@@ -55,9 +55,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 		protected virtual void InspectProperties(ComponentModel model)
 		{
 			var targetType = model.Implementation;
-#if SILVERLIGHT
-			if(targetType.IsVisible == false) return;
-#endif
 			if (model.InspectionBehavior == PropertiesInspectionBehavior.Undefined)
 			{
 				model.InspectionBehavior = GetInspectionBehaviorFromTheConfiguration(model.Configuration);
@@ -127,17 +124,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 						"Value found is '{0}' while possible values are '{1}'",
 						enumStringVal,
 						String.Join(", ",
-#if SILVERLIGHT
-				                                        new[]
-				                                        {
-				                                        	"Undefined",
-				                                        	"None",
-				                                        	"All",
-				                                        	"DeclaredOnly"
-				                                        }
-#else
 						            Enum.GetNames(typeof(PropertiesInspectionBehavior))
-#endif
 							));
 
 				throw new ConverterException(message);

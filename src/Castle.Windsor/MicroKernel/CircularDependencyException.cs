@@ -58,7 +58,6 @@ namespace Castle.MicroKernel
 		{
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the
 		///   <see cref="CircularDependencyException" />
@@ -83,6 +82,5 @@ namespace Castle.MicroKernel
 		protected CircularDependencyException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
-#endif
 	}
 }

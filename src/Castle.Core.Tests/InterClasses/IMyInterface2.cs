@@ -33,9 +33,7 @@ namespace Castle.DynamicProxy.Tests.InterClasses
 	/// <summary>
 	/// Summary description for MyInterfaceImpl.
 	/// </summary>
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	[MyAttribute("MyInterfaceImpl")]
 	public class MyInterfaceImpl : IMyInterface2
 	{

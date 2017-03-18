@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,9 +33,7 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-#if SILVERLIGHT
 			host.AddDiagnostic<IPotentialLifestyleMismatchesDiagnostic>(new PotentialLifestyleMismatchesDiagnostic(Kernel));
-#endif
 			diagnostic = host.GetDiagnostic<IPotentialLifestyleMismatchesDiagnostic>();
 		}
 

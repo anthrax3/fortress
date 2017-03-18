@@ -422,7 +422,6 @@ namespace Castle.DynamicProxy.Tests
 				typeof(IGenInterfaceHierarchyBase<int>), BindingFlags.Public | BindingFlags.Instance).Length);
 		}
 
-#if FEATURE_APPDOMAIN
 		[Test(Description =
 			"There is a strange CLR bug resulting from our loading the tokens of methods in generic types. " +
 			"This test ensures we do not trigger it across AppDomains. If we do, MethodFinder must provide a cross-AppDomain workaround.")]
@@ -440,6 +439,5 @@ namespace Castle.DynamicProxy.Tests
 				AppDomain.Unload(newDomain);
 			}
 		}
-#endif
 	}
 }

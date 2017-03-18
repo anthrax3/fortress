@@ -111,11 +111,7 @@ namespace Castle.DynamicProxy.Generators.Emitters
 		{
 			get
 			{
-#if FEATURE_LEGACY_REFLECTION_API
 				var attributes = builder.GetMethodImplementationFlags();
-#else
-				var attributes = builder.MethodImplementationFlags;
-#endif
 				return (attributes & MethodImplAttributes.Runtime) != 0;
 			}
 		}
@@ -173,21 +169,11 @@ namespace Castle.DynamicProxy.Generators.Emitters
 		{
 			builder.SetSignature(
 				returnType,
-#if FEATURE_EMIT_CUSTOMMODIFIERS
 				returnParameter.GetRequiredCustomModifiers(),
 				returnParameter.GetOptionalCustomModifiers(),
-#else
-				null,
-				null,
-#endif
 				parameters,
-#if FEATURE_EMIT_CUSTOMMODIFIERS
 				baseMethodParameters.Select(x => x.GetRequiredCustomModifiers()).ToArray(),
 				baseMethodParameters.Select(x => x.GetOptionalCustomModifiers()).ToArray()
-#else
-				null,
-				null
-#endif
 			);
 		}
 	}

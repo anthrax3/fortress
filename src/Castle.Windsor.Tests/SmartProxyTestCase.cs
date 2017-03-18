@@ -38,9 +38,7 @@ namespace Castle.Windsor.Tests
 			var service = container.Resolve<CalculatorService>("key");
 
 			Assert.IsNotNull(service);
-#if (!SILVERLIGHT)
 			Assert.IsFalse(RemotingServices.IsTransparentProxy(service));
-#endif
 			Assert.AreEqual(5, service.Sum(2, 2));
 		}
 
@@ -72,9 +70,7 @@ namespace Castle.Windsor.Tests
 			var service = container.Resolve<ICalcService>("key");
 
 			Assert.IsNotNull(service);
-#if (!SILVERLIGHT)
 			Assert.IsFalse(RemotingServices.IsTransparentProxy(service));
-#endif
 			Assert.AreEqual(5, service.Sum(2, 2));
 		}
 

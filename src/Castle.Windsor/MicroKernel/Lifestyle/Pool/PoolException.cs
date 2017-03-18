@@ -27,11 +27,9 @@ namespace Castle.MicroKernel.Lifestyle.Pool
 			ExceptionHelper.SetUp(this);
 		}
 
-#if (!SILVERLIGHT)
 		public PoolException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 	}
 }

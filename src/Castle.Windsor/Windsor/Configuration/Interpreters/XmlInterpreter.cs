@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !SILVERLIGHT
 
 namespace Castle.Windsor.Configuration.Interpreters
 {
@@ -289,4 +288,3 @@ namespace Castle.Windsor.Configuration.Interpreters
 	}
 }
 
-#endif

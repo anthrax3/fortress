@@ -13,6 +13,4 @@
 // limitations under the License.
 
 using System.Runtime.CompilerServices;
-#if SILVERLIGHT
 [assembly: InternalsVisibleTo(Castle.Core.Internal.InternalsVisible.ToCastleCore)]
-#endif

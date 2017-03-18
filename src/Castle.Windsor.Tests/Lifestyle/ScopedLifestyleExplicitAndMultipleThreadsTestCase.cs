@@ -14,7 +14,6 @@
 
 namespace CastleTests.Lifestyle
 {
-#if !SILVERLIGHT
 	// this is not working in SL at all
 	using System;
 	using System.Threading;
@@ -133,12 +132,9 @@ namespace CastleTests.Lifestyle
 				var signalled = @event.WaitOne(TimeSpan.FromSeconds(2));
 				if (exceptionFromTheOtherThread != null)
 				{
-#if DOTNET45
 					var capture = System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(exceptionFromTheOtherThread);
 					capture.Throw();
-#else
 					throw exceptionFromTheOtherThread;
-#endif
 				}
 				Assert.IsTrue(signalled, "The other thread didn't finish on time.");
 				Assert.AreSame(instance, instanceFromOtherThread);
@@ -176,17 +172,13 @@ namespace CastleTests.Lifestyle
 				var signalled = @event.WaitOne(TimeSpan.FromSeconds(2));
 				if (exceptionFromTheOtherThread != null)
 				{
-#if DOTNET45
 					var capture = System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(exceptionFromTheOtherThread);
 					capture.Throw();
-#else
 					throw exceptionFromTheOtherThread;
-#endif
 				}
 				Assert.IsTrue(signalled, "The other thread didn't finish on time.");
 				Assert.AreSame(instance, instanceFromOtherThread);
 			}
 		}
 	}
-#endif
 }

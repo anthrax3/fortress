@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if(!SILVERLIGHT)
 
 namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
@@ -32,4 +31,3 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 	}
 }
 
-#endif

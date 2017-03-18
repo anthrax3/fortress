@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_LEGACY_REFLECTION_API
 
 namespace System.Reflection
 {
@@ -25,34 +24,33 @@ namespace System.Reflection
 	//
 	// This class only implemented the required extensions so add more if needed in the order
 	// from https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Extensions/ref/System.Reflection.Extensions.cs
-	internal static class CustomAttributeExtensions
-	{
-		public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
-		{
-			foreach (T a in Attribute.GetCustomAttributes(element, typeof(T)))
-			{
-				yield return a;
-			}
-		}
+	//internal static class CustomAttributeExtensions
+	//{
+	//	public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
+	//	{
+	//		foreach (T a in Attribute.GetCustomAttributes(element, typeof(T)))
+	//		{
+	//			yield return a;
+	//		}
+	//	}
 
-		public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element, bool inherit) where T : Attribute
-		{
-			foreach (T a in Attribute.GetCustomAttributes(element, typeof(T), inherit))
-			{
-				yield return a;
-			}
-		}
+	//	public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element, bool inherit) where T : Attribute
+	//	{
+	//		foreach (T a in Attribute.GetCustomAttributes(element, typeof(T), inherit))
+	//		{
+	//			yield return a;
+	//		}
+	//	}
 
-		public static bool IsDefined(this MemberInfo element, Type attributeType)
-		{
-			return Attribute.IsDefined(element, attributeType);
-		}
+	//	public static bool IsDefined(this MemberInfo element, Type attributeType)
+	//	{
+	//		return Attribute.IsDefined(element, attributeType);
+	//	}
 
-		public static bool IsDefined(this ParameterInfo element, Type attributeType)
-		{
-			return Attribute.IsDefined(element, attributeType);
-		}
-	}
+	//	public static bool IsDefined(this ParameterInfo element, Type attributeType)
+	//	{
+	//		return Attribute.IsDefined(element, attributeType);
+	//	}
+	//}
 }
 
-#endif

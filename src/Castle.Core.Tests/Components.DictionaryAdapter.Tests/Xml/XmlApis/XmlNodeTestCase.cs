@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,9 +80,7 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-#if __MonoCS__
 		[Ignore("Expected: urn:a:T  But was: T")]
-#endif
 		public void XsiType_OfElement_WhenXsiTypeAttributeIsPresent()
 		{
 			var node = NodeForElement("<X xsi:type='p:T' xmlns:p='urn:a' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>");

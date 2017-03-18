@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_LEGACY_REFLECTION_API
 
 namespace System.Reflection
 {
@@ -30,4 +29,3 @@ namespace System.Reflection
 	}
 }
 
-#endif

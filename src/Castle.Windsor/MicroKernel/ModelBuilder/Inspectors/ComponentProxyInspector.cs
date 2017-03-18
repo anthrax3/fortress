@@ -90,13 +90,11 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			{
 				return;
 			}
-#if !SILVERLIGHT
 			var mbrProxy = model.Configuration.Attributes["marshalByRefProxy"];
 			if (mbrProxy != null)
 			{
 				behavior.UseMarshalByRefProxy = converter.PerformConversion<bool?>(mbrProxy).GetValueOrDefault(false);
 			}
-#endif
 			var interfaces = model.Configuration.Children["additionalInterfaces"];
 			if (interfaces == null)
 			{
@@ -115,13 +113,11 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 		private static void ApplyProxyBehavior(ComponentProxyBehaviorAttribute behavior, ComponentModel model)
 		{
 			var options = model.ObtainProxyOptions();
-#if !SILVERLIGHT
 			if (behavior.UseMarshalByRefProxy)
 			{
 				EnsureComponentRegisteredWithInterface(model);
 			}
 			options.UseMarshalByRefAsBaseClass = behavior.UseMarshalByRefProxy;
-#endif
 			options.AddAdditionalInterfaces(behavior.AdditionalInterfaces);
 			if(model.Implementation.IsInterface)
 			{
@@ -129,7 +125,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			}
 		}
 
-#if !SILVERLIGHT
 		private static void EnsureComponentRegisteredWithInterface(ComponentModel model)
 		{
 			if (model.HasClassServices)
@@ -141,6 +136,5 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 				throw new ComponentRegistrationException(message);
 			}
 		}
-#endif
 	}
 }

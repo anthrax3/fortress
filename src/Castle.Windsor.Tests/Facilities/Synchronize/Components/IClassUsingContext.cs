@@ -14,12 +14,10 @@
 
 namespace CastleTests.Facilities.Synchronize.Components
 {
-#if !SILVERLIGHT
 	using System.Windows.Forms;
 
 	public interface IClassUsingContext<T> where T : Control
 	{
 		T DoWork(T work);
 	}
-#endif
 }

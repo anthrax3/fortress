@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -372,9 +372,7 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-#if __MonoCS__
 		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 		public void Create_BeforeEnd_IsInsert_ForAttribute()
 		{
 			var xml    = Xml("<X Other='2'/>");
@@ -412,9 +410,7 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-#if __MonoCS__
 		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-#endif
 		public void Create_AtEnd_IsAppend_ForAttribute()
 		{
 			var xml    = Xml("<X/>");

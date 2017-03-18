@@ -34,9 +34,7 @@ namespace Castle.MicroKernel.Context
 	/// </summary>
 	[Serializable]
 	public class CreationContext :
-#if (!SILVERLIGHT)
 		MarshalByRefObject,
-#endif
 		ISubDependencyResolver
 	{
 		private readonly ITypeConverter converter;

@@ -31,9 +31,7 @@ namespace CastleTests
 			int MethodWithRefParam(ref int refParam, out string outParam);
 		}
 
-#if FEATURE_SERIALIZATION
 		[Serializable]
-#endif
 		public class ClassHasMethodThrowException : IClassHasMethodThrowException
 		{
 			public virtual int MethodWithRefParam(ref int refParam, out string outParam)

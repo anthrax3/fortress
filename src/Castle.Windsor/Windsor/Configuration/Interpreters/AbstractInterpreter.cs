@@ -56,11 +56,9 @@ namespace Castle.Windsor.Configuration.Interpreters
 		{
 		}
 
-#if !SILVERLIGHT
 		public AbstractInterpreter() : this(new ConfigResource())
 		{
 		}
-#endif
 
 		/// <summary>
 		///   Should obtain the contents from the resource,

@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if !DOTNET35
 namespace CastleTests.DynamicProxy.Tests.Interfaces
 {
 	using System;
@@ -131,4 +130,3 @@ namespace CastleTests.DynamicProxy.Tests.Interfaces
 		void MethodWithOptionalNonDefaultNullableEnumParameter(ConsoleColor? c = ConsoleColor.Cyan);
 	}
 }
-#endif

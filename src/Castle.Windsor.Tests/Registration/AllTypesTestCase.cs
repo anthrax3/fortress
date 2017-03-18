@@ -56,7 +56,6 @@ namespace CastleTests.Registration
 			Assert.AreNotEqual(0, handlers.Length);
 		}
 
-#if !SILVERLIGHT
 		[Test]
 		public void RegisterDirectoryAssemblyTypes_BasedOn_RegisteredInContainer()
 		{
@@ -70,7 +69,6 @@ namespace CastleTests.Registration
 			handlers = Kernel.GetAssignableHandlers(typeof(ICommon));
 			Assert.AreNotEqual(0, handlers.Length);
 		}
-#endif
 
 		[Test]
 		public void RegisterAssemblyTypes_NoService_RegisteredInContainer()
@@ -302,7 +300,6 @@ namespace CastleTests.Registration
 			}
 		}
 
-#if(!SILVERLIGHT)
 		[Test]
 		public void RegisterTypes_WithLinq_RegisteredInContainer()
 		{
@@ -314,7 +311,6 @@ namespace CastleTests.Registration
 			var handlers = Kernel.GetAssignableHandlers(typeof(CustomerChain1));
 			Assert.AreEqual(2, handlers.Length);
 		}
-#endif
 
 		[Test]
 		public void RegisterAssemblyTypes_WithLinqConfiguration_RegisteredInContainer()

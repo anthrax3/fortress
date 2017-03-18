@@ -18,9 +18,7 @@ namespace Castle.Core.Logging
 	using System.IO;
 
 	public abstract class AbstractExtendedLoggerFactory :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		IExtendedLoggerFactory
 	{
 		/// <summary>

@@ -69,7 +69,6 @@ namespace Castle.MicroKernel
 		{
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the
 		///   <see cref = "ComponentNotFoundException" />
@@ -81,7 +80,6 @@ namespace Castle.MicroKernel
 			: base(info, context)
 		{
 		}
-#endif
 
 		public string Name { get; private set; }
 		public Type Service { get; private set; }

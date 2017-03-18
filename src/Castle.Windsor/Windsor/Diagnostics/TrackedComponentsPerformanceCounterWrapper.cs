@@ -14,7 +14,6 @@
 
 namespace Castle.Windsor.Diagnostics
 {
-#if !SILVERLIGHT
 	using System;
 	using System.Diagnostics;
 
@@ -42,5 +41,4 @@ namespace Castle.Windsor.Diagnostics
 			counter.Increment();
 		}
 	}
-#endif
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2015 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if !DOTNET35
 namespace Castle.DynamicProxy.Tests
 {
 	using CastleTests.DynamicProxy.Tests.Classes;
@@ -23,11 +22,9 @@ namespace Castle.DynamicProxy.Tests
 	public class ClassProxyWithMethodsWithOptionalParametersTestCase
 	{
 		[Test]
-#if __MonoCS__
 		// Seems like mono is too strict, and doesn't handle a nullable default parameter in ParameterBuilder
 		// https://github.com/mono/mono/blob/master/mcs/class/corlib/System.Reflection.Emit/ParameterBuilder.cs#L101
 		[Ignore("System.ArgumentException : Constant does not match the defined type.")]
-#endif
 		public void CanCreateClassProxy()
 		{
 			var proxyGenerator = new ProxyGenerator();
@@ -35,4 +32,3 @@ namespace Castle.DynamicProxy.Tests
 		}
 	}
 }
-#endif

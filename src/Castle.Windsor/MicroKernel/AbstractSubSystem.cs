@@ -18,21 +18,15 @@ namespace Castle.MicroKernel
 	using System.Security;
 
 	[Serializable]
-#if (SILVERLIGHT)
-	public abstract class AbstractSubSystem : ISubSystem
-#else
 	public abstract class AbstractSubSystem : MarshalByRefObject, ISubSystem
-#endif
 	{
 		private IKernelInternal kernel;
 
-#if (!SILVERLIGHT)
 		[SecurityCritical]
 		public override object InitializeLifetimeService()
 		{
 			return null;
 		}
-#endif
 
 		public virtual void Init(IKernelInternal kernel)
 		{

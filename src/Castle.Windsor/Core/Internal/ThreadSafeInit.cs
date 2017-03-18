@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,18 +54,15 @@ namespace Castle.Core.Internal
 			{
 				return false;
 			}
-#if !(SILVERLIGHT)
 			var spinWait = new SpinWait();
 			while (state != Initialized)
 			{
 				spinWait.SpinOnce();
 			}
-#else
 			while (state != Initialized)
 			{
 				Thread.SpinWait(5);
 			}
-#endif
 			return false;
 		}
 	}

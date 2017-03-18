@@ -128,7 +128,6 @@ namespace CastleTests
 			Assert.IsNotNull(b);
 		}
 
-#if !SILVERLIGHT
 		[Test]
 		public void StartWithParentContainer()
 		{
@@ -141,6 +140,5 @@ namespace CastleTests
 
 			Assert.IsNotNull(b);
 		}
-#endif
 	}
 }

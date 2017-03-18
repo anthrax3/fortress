@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@ namespace Castle.DynamicProxy.Generators
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
-#if FEATURE_SERIALIZATION
 	using System.Xml.Serialization;
-#endif
 
 	using Castle.DynamicProxy.Contributors;
 	using Castle.DynamicProxy.Generators.Emitters;
@@ -119,12 +117,10 @@ namespace Castle.DynamicProxy.Generators
 				}
 			}
 			// 4. plus special interfaces
-#if FEATURE_SERIALIZATION
 			if (targetType.IsSerializable)
 			{
 				AddMappingForISerializable(typeImplementerMapping, proxyInstance);
 			}
-#endif
 			try
 			{
 				AddMappingNoCheck(typeof(IProxyTargetAccessor), proxyInstance, typeImplementerMapping);
@@ -147,9 +143,7 @@ namespace Castle.DynamicProxy.Generators
 		private FieldReference CreateTargetField(ClassEmitter emitter)
 		{
 			var targetField = emitter.CreateField("__target", targetType);
-#if FEATURE_SERIALIZATION
 			emitter.DefineCustomAttributeFor<XmlIgnoreAttribute>(targetField);
-#endif
 			return targetField;
 		}
 

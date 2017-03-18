@@ -16,9 +16,7 @@ namespace Castle.DynamicProxy.Tests.Classes
 {
 	using System;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class ClassWithInterface : ISimpleInterface
 	{
 		public int Do()

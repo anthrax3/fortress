@@ -45,7 +45,6 @@ namespace Castle.MicroKernel
 			ExceptionHelper.SetUp(this);
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "KernelException" /> class.
 		/// </summary>
@@ -55,6 +54,5 @@ namespace Castle.MicroKernel
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 	}
 }

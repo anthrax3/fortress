@@ -24,9 +24,7 @@ namespace Castle.MicroKernel.ComponentActivator
 	using Castle.DynamicProxy;
 	using Castle.MicroKernel.Context;
 
-#if SILVERLIGHT
 	using System.Linq;
-#endif
 
 	/// <summary>
 	/// 	Standard implementation of <see cref = "IComponentActivator" />. Handles the selection of the best constructor, fills the writable properties the component exposes, run the commission and
@@ -38,9 +36,7 @@ namespace Castle.MicroKernel.ComponentActivator
 	[Serializable]
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{
-#if (!SILVERLIGHT)
 		private readonly bool useFastCreateInstance;
-#endif
 
 		/// <summary>
 		/// 	Initializes a new instance of the <see cref = "DefaultComponentActivator" /> class.
@@ -52,9 +48,7 @@ namespace Castle.MicroKernel.ComponentActivator
 		public DefaultComponentActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)
 			: base(model, kernel, onCreation, onDestruction)
 		{
-#if (!SILVERLIGHT)
 			useFastCreateInstance = !model.Implementation.IsContextful && new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).IsUnrestricted();
-#endif
 		}
 
 		protected override object InternalCreate(CreationContext context)
@@ -139,9 +133,7 @@ namespace Castle.MicroKernel.ComponentActivator
 			object instance;
 			try
 			{
-#if (SILVERLIGHT)
 				instance = implType.CreateInstance<object>(arguments);
-#else
 				if (useFastCreateInstance)
 				{
 					instance = FastCreateInstance(implType, arguments, constructor);
@@ -150,7 +142,6 @@ namespace Castle.MicroKernel.ComponentActivator
 				{
 					instance = implType.CreateInstance<object>(arguments);
 				}
-#endif
 			}
 			catch (Exception ex)
 			{
@@ -172,7 +163,6 @@ namespace Castle.MicroKernel.ComponentActivator
 			return instance;
 		}
 
-#if (!SILVERLIGHT)
 		[SecuritySafeCritical]
 		private object FastCreateInstance(Type implType, object[] arguments, ConstructorCandidate constructor)
 		{
@@ -191,7 +181,6 @@ namespace Castle.MicroKernel.ComponentActivator
 			constructor.Constructor.Invoke(instance, arguments);
 			return instance;
 		}
-#endif
 
 		protected virtual ConstructorCandidate SelectEligibleConstructor(CreationContext context)
 		{

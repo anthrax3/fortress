@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 namespace Castle.Bugs
 {
-#if !SILVERLIGHT
 	using System;
 	using System.CodeDom.Compiler;
 	using System.Linq;
@@ -56,5 +55,4 @@ namespace Castle.Bugs
 			// The type 'int' must be a reference type in order to use it as parameter 'S' in the generic type or method 'Castle.MicroKernel.Registration.Component.For<S>()'
 		}
 	}
-#endif
 }

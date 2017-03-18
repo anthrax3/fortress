@@ -50,7 +50,6 @@ namespace Castle.MicroKernel.Handlers
 			Name = name;
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "HandlerException" /> class.
 		/// </summary>
@@ -60,7 +59,6 @@ namespace Castle.MicroKernel.Handlers
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 
 		public ComponentName Name { get; private set; }
 	}

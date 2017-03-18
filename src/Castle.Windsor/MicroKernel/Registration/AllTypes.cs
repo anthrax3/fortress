@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,7 +76,6 @@ namespace Castle.MicroKernel.Registration
 			return Classes.FromAssemblyContaining<T>();
 		}
 
-#if !SILVERLIGHT
 		/// <summary>
 		///   Prepares to register types from assemblies found in a given directory that meet additional optional restrictions.
 		/// </summary>
@@ -86,7 +85,6 @@ namespace Castle.MicroKernel.Registration
 		{
 			return Classes.FromAssemblyInDirectory(filter);
 		}
-#endif
 
 		/// <summary>
 		///   Prepares to register types from an assembly.

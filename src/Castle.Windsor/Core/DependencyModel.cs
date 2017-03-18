@@ -31,9 +31,7 @@ namespace Castle.Core
 		protected ParameterModel parameterModel;
 		protected string reference;
 
-#if DEBUG
 		protected bool initialized;
-#endif
 
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "DependencyModel" /> class.
@@ -95,12 +93,10 @@ namespace Castle.Core
 		{
 			get
 			{
-#if DEBUG
 				if (!initialized)
 				{
 					throw new InvalidOperationException("Not initialized!");
 				}
-#endif
 				return parameterModel;
 			}
 			set
@@ -117,12 +113,10 @@ namespace Castle.Core
 		{
 			get
 			{
-#if DEBUG
 				if (!initialized)
 				{
 					throw new InvalidOperationException("Not initialized!");
 				}
-#endif
 				return reference;
 			}
 		}
@@ -178,9 +172,7 @@ namespace Castle.Core
 
 		public virtual void Init(ParameterModelCollection parameters)
 		{
-#if DEBUG
 			initialized = true;
-#endif
 			if (parameters == null)
 			{
 				return;

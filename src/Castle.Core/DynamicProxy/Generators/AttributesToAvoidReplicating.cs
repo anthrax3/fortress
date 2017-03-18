@@ -27,12 +27,8 @@ namespace Castle.DynamicProxy.Generators
 		{
 			Add<System.Runtime.InteropServices.ComImportAttribute>();
 			Add<System.Runtime.InteropServices.MarshalAsAttribute>();
-#if !DOTNET35
 			Add<System.Runtime.InteropServices.TypeIdentifierAttribute>();
-#endif
-#if FEATURE_SECURITY_PERMISSIONS
 			Add<System.Security.Permissions.SecurityAttribute>();
-#endif
 		}
 
 		public static void Add(Type attribute)

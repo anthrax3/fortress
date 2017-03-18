@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !SILVERLIGHT
 // we do not support xml config on SL
 
 namespace Castle.XmlFiles
@@ -54,4 +53,3 @@ namespace Castle.XmlFiles
 	}
 }
 
-#endif

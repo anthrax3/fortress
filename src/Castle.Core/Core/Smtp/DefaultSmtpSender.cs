@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if FEATURE_SMTP
 
 namespace Castle.Core.Smtp
 {
@@ -113,9 +112,7 @@ namespace Castle.Core.Smtp
 		/// <param name="to">To field</param>
 		/// <param name="subject">e-mail's subject</param>
 		/// <param name="messageText">message's body</param>
-#if FEATURE_SECURITY_PERMISSIONS
 		[SecuritySafeCritical]
-#endif
 		public void Send(String from, String to, String subject, String messageText)
 		{
 			if (from == null) throw new ArgumentNullException("from");
@@ -131,17 +128,13 @@ namespace Castle.Core.Smtp
 		/// </summary>
 		/// <exception cref="ArgumentNullException">If the message is null</exception>
 		/// <param name="message">Message instance</param>
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
-#endif
 		public void Send(MailMessage message)
 		{
 			InternalSend(message);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
-#endif
 		private void InternalSend(MailMessage message)
 		{
 			if (message == null) throw new ArgumentNullException("message");
@@ -178,9 +171,7 @@ namespace Castle.Core.Smtp
 			}
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
-#endif
 		public void Send(IEnumerable<MailMessage> messages)
 		{
 			foreach (MailMessage message in messages)
@@ -225,9 +216,7 @@ namespace Castle.Core.Smtp
 		/// informed
 		/// </summary>
 		/// <param name="smtpClient">Message instance</param>
-#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
-#endif
 		protected virtual void Configure(SmtpClient smtpClient)
 		{
 			smtpClient.Credentials = null;
@@ -259,9 +248,7 @@ namespace Castle.Core.Smtp
 			get { return !string.IsNullOrEmpty(credentials.UserName); }
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
-#endif
 		private SmtpClient CreateSmtpClient()
 		{
 			if (string.IsNullOrEmpty(hostname))
@@ -283,4 +270,3 @@ namespace Castle.Core.Smtp
 	}
 }
 
-#endif

@@ -46,11 +46,8 @@ namespace Castle.DynamicProxy.Tests
 			Assert.IsFalse(File.Exists(path));
 		}
 
-#if FEATURE_ASSEMBLYBUILDER_SAVE
 		[Test]
-#if __MonoCS__
 		[Ignore("Expected: True  But was: False")]
-#endif
 		public void TearDown_SavesAssembly_IfProxyGenerated()
 		{
 			string path = ModuleScope.DEFAULT_FILE_NAME;
@@ -64,7 +61,6 @@ namespace Castle.DynamicProxy.Tests
 			base.TearDown();
 			Assert.IsTrue(File.Exists(path));
 		}
-#endif
 
 		private void FindVerificationErrors()
 		{
@@ -73,11 +69,8 @@ namespace Castle.DynamicProxy.Tests
 			MethodBuilder invalidMethod = invalidType.DefineMethod("InvalidMethod", MethodAttributes.Public);
 			invalidMethod.GetILGenerator().Emit(OpCodes.Ldnull); // missing RET statement
 
-#if FEATURE_LEGACY_REFLECTION_API
 			invalidType.CreateType();
-#else
 			invalidType.CreateTypeInfo().AsType();
-#endif
 
 			if (!IsVerificationDisabled)
 			{
@@ -87,7 +80,6 @@ namespace Castle.DynamicProxy.Tests
 			base.TearDown();
 		}
 
-#if FEATURE_ASSEMBLYBUILDER_SAVE
 		[Test]
 		[Platform(Exclude = "mono", Reason = "Mono doesn't have peverify, so we can't perform verification.")]
 		public void TearDown_FindsVerificationErrors()
@@ -96,7 +88,6 @@ namespace Castle.DynamicProxy.Tests
 			StringAssert.Contains("PeVerify reported error(s)", ex.Message);
 			StringAssert.Contains("fall through end of the method without returning", ex.Message);
 		}
-#endif
 
 		[Test]
 		public void DisableVerification_DisablesVerificationForTestCase()

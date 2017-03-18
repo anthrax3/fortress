@@ -29,9 +29,7 @@ namespace Castle.MicroKernel.Handlers
 	/// </summary>
 	[Serializable]
 	public abstract class AbstractHandler :
-#if !SILVERLIGHT
 		MarshalByRefObject,
-#endif
 		IHandler, IExposeDependencyInfo, IDisposable
 	{
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]

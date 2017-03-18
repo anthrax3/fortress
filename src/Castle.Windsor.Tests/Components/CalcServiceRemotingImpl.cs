@@ -14,7 +14,6 @@
 
 namespace CastleTests.Components
 {
-#if !SILVERLIGHT
 	using System;
 	using System.Linq;
 
@@ -40,5 +39,4 @@ namespace CastleTests.Components
 			return x + y;
 		}
 	}
-#endif
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ namespace CastleTests.Diagnostics
 
 	using NUnit.Framework;
 	
-#if !SILVERLIGHT // althought diagnostics are available in Silverlight they are not installed by default.
 
 	public class AllComponentsDiagnosticTestCase : AbstractContainerTestCase
 	{
@@ -108,5 +107,4 @@ namespace CastleTests.Diagnostics
 			Assert.AreEqual(2, handlers.Length);
 		}
 	}
-#endif
 }

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !(SILVERLIGHT)
 
 namespace Castle.MicroKernel.Lifestyle
 {
@@ -38,4 +37,3 @@ namespace Castle.MicroKernel.Lifestyle
 	}
 }
 
-#endif

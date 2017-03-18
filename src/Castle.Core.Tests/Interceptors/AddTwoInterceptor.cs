@@ -16,9 +16,7 @@ namespace Castle.DynamicProxy.Tests.Interceptors
 {
 	using System;
 
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class AddTwoInterceptor : IInterceptor
 	{
 		#region IInterceptor Members

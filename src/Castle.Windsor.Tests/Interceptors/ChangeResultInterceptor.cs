@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2010 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2010 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@ namespace Castle.Windsor.Tests.Interceptors
 
 	using Castle.DynamicProxy;
 
-#if(!SILVERLIGHT)
 	[Serializable]
-#endif
 	public class ChangeResultInterceptor : IInterceptor
 	{
 		public void Intercept(IInvocation invocation)

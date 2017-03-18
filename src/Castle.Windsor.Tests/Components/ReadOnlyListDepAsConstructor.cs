@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2013 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2013 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ namespace CastleTests.Components
 {
 	using System.Collections.Generic;
 
-#if DOTNET45
 	public class ReadOnlyListDepAsConstructor
 	{
 		private readonly IReadOnlyList<IEmptyService> services;
@@ -31,5 +30,4 @@ namespace CastleTests.Components
 			get { return services; }
 		}
 	}
-#endif
 }

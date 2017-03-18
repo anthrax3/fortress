@@ -28,9 +28,7 @@ namespace Castle.Windsor.Tests
 	using Castle.ProxyInfrastructure;
 	using Castle.Windsor.Installer;
 	using Castle.Windsor.Tests.Interceptors;
-#if !SILVERLIGHT
 	using Castle.XmlFiles;
-#endif
 	using CastleTests.Components;
 
 	using NUnit.Framework;
@@ -110,7 +108,6 @@ namespace Castle.Windsor.Tests
 			Assert.AreEqual(5, service.Sum(2, 2));
 		}
 
-#if (!SILVERLIGHT)
 		//no xml in Silverlight
 
 		[Test]
@@ -197,7 +194,6 @@ namespace Castle.Windsor.Tests
 
 			Assert.AreEqual(1, SelectAllSelector.Calls);
 		}
-#endif
 
 		[Test]
 		public void OnBehalfOfTest()
@@ -303,12 +299,10 @@ namespace Castle.Windsor.Tests
 			}
 		}
 
-#if !SILVERLIGHT
 		private ConfigurationInstaller XmlResource(string fileName)
 		{
 			return Configuration.FromXml(Xml.Embedded(fileName));
 		}
-#endif
 	}
 
 	public class MyInterceptorGreedyFacility : IFacility

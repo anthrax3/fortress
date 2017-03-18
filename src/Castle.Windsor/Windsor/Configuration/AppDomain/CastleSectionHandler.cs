@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if(!SILVERLIGHT)
 
 namespace Castle.Windsor.Configuration.AppDomain
 {
@@ -33,4 +32,3 @@ namespace Castle.Windsor.Configuration.AppDomain
 	}
 }
 
-#endif

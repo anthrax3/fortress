@@ -19,9 +19,7 @@ namespace Castle.Core.Logging
 	/// <summary>
 	/// NullLogFactory used when logging is turned off.
 	/// </summary>
-#if FEATURE_SERIALIZATION
 	[Serializable]
-#endif
 	public class NullLogFactory : AbstractLoggerFactory
 	{
 		/// <summary>

@@ -14,7 +14,6 @@
 
 namespace Castle.MicroKernel.Lifestyle.Scoped
 {
-#if SILVERLIGHT
 	using System;
 
 	using Castle.Core;
@@ -85,5 +84,4 @@ namespace Castle.MicroKernel.Lifestyle.Scoped
 			return currentScope;
 		}
 	}
-#endif
 }

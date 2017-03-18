@@ -19,10 +19,8 @@ namespace Castle.DynamicProxy.Generators
 	using System.Diagnostics;
 	using System.Linq;
 	using System.Reflection;
-#if FEATURE_SERIALIZATION
 	using System.Runtime.Serialization;
 	using System.Xml.Serialization;
-#endif
 
 	using Castle.Core.Internal;
 	using Castle.Core.Logging;
@@ -92,13 +90,11 @@ namespace Castle.DynamicProxy.Generators
 			}
 		}
 
-#if FEATURE_SERIALIZATION
 		protected void AddMappingForISerializable(IDictionary<Type, ITypeContributor> typeImplementerMapping,
 		                                          ITypeContributor instance)
 		{
 			AddMapping(typeof(ISerializable), instance, typeImplementerMapping);
 		}
-#endif
 
 		/// <summary>
 		///   It is safe to add mapping (no mapping for the interface exists)
@@ -161,9 +157,7 @@ namespace Castle.DynamicProxy.Generators
 		{
 			var interceptorsField = emitter.CreateField("__interceptors", typeof(IInterceptor[]));
 
-#if FEATURE_SERIALIZATION
 			emitter.DefineCustomAttributeFor<XmlIgnoreAttribute>(interceptorsField);
-#endif
 		}
 
 		protected FieldReference CreateOptionsField(ClassEmitter emitter)
@@ -184,9 +178,7 @@ namespace Castle.DynamicProxy.Generators
 		protected virtual void CreateTypeAttributes(ClassEmitter emitter)
 		{
 			emitter.AddCustomAttributes(ProxyGenerationOptions);
-#if FEATURE_SERIALIZATION
 			emitter.DefineCustomAttribute<XmlIncludeAttribute>(new object[] { targetType });
-#endif
 		}
 
 		protected void EnsureOptionsOverrideEqualsAndGetHashCode(ProxyGenerationOptions options)

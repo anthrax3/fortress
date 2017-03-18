@@ -68,14 +68,8 @@ namespace Castle.Core.Internal
 
 		private static bool ReferencesCastleCore(Assembly inspectedAssembly)
 		{
-#if FEATURE_GET_REFERENCED_ASSEMBLIES
 			return inspectedAssembly.GetReferencedAssemblies()
 				.Any(r => r.FullName == Assembly.GetExecutingAssembly().FullName);
-#else
-			// .NET Core does not provide an API to do this, so we just fall back to the solution that will definitely work.
-			// After all it is just an exception message.
-			return false;
-#endif
 		}
 	}
 }

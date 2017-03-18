@@ -14,7 +14,6 @@
 
 namespace CastleTests.Facilities.Synchronize.Components
 {
-#if !SILVERLIGHT
 	using System.Windows.Forms;
 
 	public class DummyForm : Form, IDummyForm
@@ -30,5 +29,4 @@ namespace CastleTests.Facilities.Synchronize.Components
 			return Controls.Count;
 		}
 	}
-#endif
 }

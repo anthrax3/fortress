@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-#if !SILVERLIGHT
 // we do not support xml config on SL
 
 namespace CastleTests
@@ -59,4 +58,3 @@ namespace CastleTests
 	}
 }
 
-#endif

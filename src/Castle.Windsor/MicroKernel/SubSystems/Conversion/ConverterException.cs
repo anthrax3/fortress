@@ -41,7 +41,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			ExceptionHelper.SetUp(this);
 		}
 
-#if (!SILVERLIGHT)
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "ConverterException" /> class.
 		/// </summary>
@@ -51,6 +50,5 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 		{
 			ExceptionHelper.SetUp(this);
 		}
-#endif
 	}
 }

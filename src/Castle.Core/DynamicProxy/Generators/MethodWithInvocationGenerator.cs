@@ -18,9 +18,7 @@ namespace Castle.DynamicProxy.Generators
 	using System.Diagnostics;
 	using System.Reflection;
 	using System.Reflection.Emit;
-#if FEATURE_SERIALIZATION
 	using System.Xml.Serialization;
-#endif
 
 	using Castle.Core.Internal;
 	using Castle.DynamicProxy.Contributors;
@@ -52,9 +50,7 @@ namespace Castle.DynamicProxy.Generators
 				namingScope.GetUniqueName(string.Format("interceptors_{0}", method.Name)),
 				typeof(IInterceptor[]),
 				false);
-#if FEATURE_SERIALIZATION
 			@class.DefineCustomAttributeFor<XmlIgnoreAttribute>(methodInterceptors);
-#endif
 			return methodInterceptors;
 		}
 

@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 namespace CastleTests.Lifestyle
 {
-#if !SILVERLIGHT
 	using System;
 	using Castle.MicroKernel.Lifestyle;
 	using Castle.MicroKernel.Registration;
@@ -48,5 +47,4 @@ namespace CastleTests.Lifestyle
 			}
 		}
 	}
-#endif
 }

@@ -36,12 +36,8 @@ namespace Castle.Windsor
 	/// </summary>
 	[Serializable]
 	[DebuggerDisplay("{name,nq}")]
-#if (SILVERLIGHT)
-	public partial class WindsorContainer : IWindsorContainer
-#else
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
 	public partial class WindsorContainer : MarshalByRefObject, IWindsorContainer
-#endif
 	{
 		private const string CastleUnicode = " \uD83C\uDFF0 ";
 		private static int instanceCount = 0;
@@ -113,7 +109,6 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-#if !SILVERLIGHT
 		/// <summary>
 		///   Initializes a new instance of the <see cref = "WindsorContainer" /> class using a
 		///   resource pointed to by the parameter. That may be a file, an assembly embedded resource, a UNC path or a config file section.
@@ -134,7 +129,6 @@ namespace Castle.Windsor
 
 			RunInstaller();
 		}
-#endif
 
 		/// <summary>
 		///   Constructs a container using the specified <see cref = "IKernel" />
@@ -698,7 +692,6 @@ namespace Castle.Windsor
 			return ResolveAll<T>(new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-#if !SILVERLIGHT
 		private XmlInterpreter GetInterpreter(string configurationUri)
 		{
 			try
@@ -713,6 +706,5 @@ namespace Castle.Windsor
 				return new XmlInterpreter(configurationUri);
 			}
 		}
-#endif
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace Castle.Facilities.Logging.Tests
+namespace Castle.Facilities.Logging.Tests
 {
 	using System;
 

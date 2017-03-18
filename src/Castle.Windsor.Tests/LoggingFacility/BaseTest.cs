@@ -42,7 +42,6 @@ namespace Castle.Facilities.Logging.Tests
 		protected string GetConfigFile(LoggerImplementation loggerApi)
 		{
 			string configFile = string.Empty;
-#if !SILVERLIGHT
 			switch (loggerApi)
 			{
 				case LoggerImplementation.NLog:
@@ -66,7 +65,6 @@ namespace Castle.Facilities.Logging.Tests
 					break;
 				}
 			}
-#endif
 			return configFile;
 		}
 	}

@@ -22,9 +22,7 @@ namespace Castle.DynamicProxy.Tests.InterClasses
 	}
 
 	public class Service2 :
-#if FEATURE_REMOTING
 		MarshalByRefObject,
-#endif
 		IService2
 	{
 		public void DoOperation2()

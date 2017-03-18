@@ -14,7 +14,6 @@
 
 namespace CastleTests.Facilities.Synchronize
 {
-#if !SILVERLIGHT
 	using System;
 	using System.Reflection;
 	using System.Threading;
@@ -131,5 +130,4 @@ namespace CastleTests.Facilities.Synchronize
 			ExecuteInThread(() => instance.DoWork(form));
 		}
 	}
-#endif
 }

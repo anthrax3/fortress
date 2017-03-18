@@ -15,14 +15,11 @@
 namespace Castle.DynamicProxy.Tests
 {
 	using System;
-#if FEATURE_ASSEMBLYBUILDER_SAVE
 	using System.Diagnostics;
-#endif
 	using System.IO;
 
 	using NUnit.Framework;
 
-#if !__MonoCS__ // mono doesn't have PEVerify
 	public class FindPeVerify
 	{
 		private static readonly string[] PeVerifyProbingPaths =
@@ -66,7 +63,6 @@ namespace Castle.DynamicProxy.Tests
 			get { return peVerifyPath ?? (peVerifyPath = FindPeVerifyPath()); }
 		}
 	}
-#endif
 
 	public abstract class BasePEVerifyTestCase
 	{
@@ -84,11 +80,7 @@ namespace Castle.DynamicProxy.Tests
 
 		public void ResetGeneratorAndBuilder()
 		{
-#if FEATURE_ASSEMBLYBUILDER_SAVE
 			builder = new PersistentProxyBuilder();
-#else
-			builder = new DefaultProxyBuilder();
-#endif
 			generator = new ProxyGenerator(builder);
 		}
 
@@ -102,7 +94,6 @@ namespace Castle.DynamicProxy.Tests
 			get { return verificationDisabled; }
 		}
 
-#if FEATURE_ASSEMBLYBUILDER_SAVE && !__MonoCS__ // mono doesn't have PEVerify
 		[TearDown]
 		public virtual void TearDown()
 		{
@@ -145,11 +136,6 @@ namespace Castle.DynamicProxy.Tests
 				Assert.Fail("PeVerify reported error(s): " + Environment.NewLine + processOutput, result);
 			}
 		}
-#else
-		[TearDown]
-		public virtual void TearDown()
-		{
-		}
-#endif
+		
 	}
 }

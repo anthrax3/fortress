@@ -17,10 +17,8 @@ namespace Castle.Components.DictionaryAdapter
 {
 	using System;
 	using System.Collections;
-#if FEATURE_DICTIONARYADAPTER_XML
 	using System.Collections.Specialized;
 	using System.Xml.XPath;
-#endif
 
 	/// <summary>
 	/// Defines the contract for building typed dictionary adapters.
@@ -61,7 +59,6 @@ namespace Castle.Components.DictionaryAdapter
 		/// </remarks>
 		object GetAdapter(Type type, IDictionary dictionary, PropertyDescriptor descriptor);
 
-#if FEATURE_DICTIONARYADAPTER_XML
 		/// <summary>
 		/// Gets a typed adapter bound to the <see cref="NameValueCollection"/>.
 		/// </summary>
@@ -105,7 +102,6 @@ namespace Castle.Components.DictionaryAdapter
 		/// The type represented by T must be an interface with properties.
 		/// </remarks>
 		object GetAdapter(Type type, System.Xml.XmlNode xmlNode);
-#endif
 
 		/// <summary>
 		/// Gets the <see cref="DictionaryAdapterMeta"/> associated with the type.

@@ -39,11 +39,7 @@ namespace Castle.Windsor.Diagnostics
 			{
 				items.AddRange(GetMismatches(handler, handlersByComponentModel));
 			}
-#if SILVERLIGHT
-			return items.Select(m => m.GetHandlers()).ToArray();
-#else
 			return items.ConvertAll(m => m.GetHandlers()).ToArray();
-#endif
 		}
 
 		private IEnumerable<MismatchedLifestyleDependency> GetMismatch(MismatchedLifestyleDependency parent, ComponentModel component,
@@ -131,12 +127,8 @@ namespace Castle.Windsor.Diagnostics
 
 			public bool Mismatched()
 			{
-#if (SILVERLIGHT)
-				return Handler.ComponentModel.LifestyleType == LifestyleType.Transient;
-#else
 				return Handler.ComponentModel.LifestyleType == LifestyleType.PerWebRequest ||
 				       Handler.ComponentModel.LifestyleType == LifestyleType.Transient;
-#endif
 			}
 
 			private void BuildHandlersList(List<IHandler> handlers)

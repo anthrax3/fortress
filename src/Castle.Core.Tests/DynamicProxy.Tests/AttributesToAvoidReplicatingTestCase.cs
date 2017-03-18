@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2016 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2016 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@ namespace Castle.DynamicProxy.Tests
 	using System;
 	using System.Linq;
 	using System.Reflection;
-#if FEATURE_SECURITY_PERMISSIONS
 	using System.Security.Permissions;
-#endif
 
 	using Castle.DynamicProxy.Tests.Classes;
 
@@ -52,7 +50,6 @@ namespace Castle.DynamicProxy.Tests
 		{
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS
 		[Test]
 		public void SecurityPermissionAttribute_should_not_be_replicated_as_it_is_part_of_cas()
 		{
@@ -76,7 +73,6 @@ namespace Castle.DynamicProxy.Tests
 		public class AttributedClass_ReflectionPermission
 		{
 		}
-#endif
 
 		private int AttributeCount<TAttribute>(object proxy)
 			where TAttribute : Attribute

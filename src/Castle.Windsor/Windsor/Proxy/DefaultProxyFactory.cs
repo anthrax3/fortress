@@ -38,9 +38,7 @@ namespace Castle.Windsor.Proxy
 	/// </remarks>
 	[Serializable]
 	public class DefaultProxyFactory : AbstractProxyFactory
-#if (!SILVERLIGHT)
 	                                   , IDeserializationCallback
-#endif
 	{
 		[NonSerialized]
 		protected ProxyGenerator generator;
@@ -169,12 +167,10 @@ namespace Castle.Windsor.Proxy
 				}
 				proxyGenOptions.Selector = selector;
 			}
-#if (!SILVERLIGHT)
 			if (proxyOptions.UseMarshalByRefAsBaseClass)
 			{
 				proxyGenOptions.BaseTypeForInterfaceProxy = typeof(MarshalByRefObject);
 			}
-#endif
 			foreach (var mixInReference in proxyOptions.MixIns)
 			{
 				var mixIn = mixInReference.Resolve(kernel, context);
@@ -206,11 +202,9 @@ namespace Castle.Windsor.Proxy
 			       proxyOptions.OmitTarget == false;
 		}
 
-#if !SILVERLIGHT
 		public void OnDeserialization(object sender)
 		{
 			generator = new ProxyGenerator();
 		}
-#endif
 	}
 }

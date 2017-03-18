@@ -364,12 +364,10 @@ namespace Castle.MicroKernel.Handlers
 			var extendedProperties = ComponentModel.ExtendedProperties;
 			if (extendedProperties != null && extendedProperties.Count > 0)
 			{
-#if !SILVERLIGHT
 				if (extendedProperties is ICloneable)
 				{
 					extendedProperties = (IDictionary)((ICloneable)extendedProperties).Clone();
 				}
-#endif
 				extendedProperties = new Arguments(extendedProperties);
 			}
 			return extendedProperties;
@@ -400,13 +398,11 @@ namespace Castle.MicroKernel.Handlers
 					{
 						closedServices.Add(closed);
 					}
-#if !SILVERLIGHT
 					else
 					{
 						// NOTE: it's an interface not exposed by the implementation type. Possibly aimed at a proxy... I guess we can ignore it for now. Don't have any better idea.
 						Debug.Fail(string.Format("Could not find mapping for interface {0} on implementation type {1}", service, closedImplementationType));
 					}
-#endif
 				}
 				else
 				{
@@ -432,13 +428,11 @@ namespace Castle.MicroKernel.Handlers
 					{
 						closedServices.Add(closed);
 					}
-#if !SILVERLIGHT
 					else
 					{
 						// NOTE: it's an interface not exposed by the implementation type. Possibly aimed at a proxy... I guess we can ignore it for now. Don't have any better idea.
 						Debug.Fail(string.Format("Could not find mapping for interface {0} on implementation type {1}", service, closedImplementationType));
 					}
-#endif
 				}
 				else
 				{

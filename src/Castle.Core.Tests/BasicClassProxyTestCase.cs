@@ -78,9 +78,7 @@ namespace CastleTests
 		}
 
 		[Test]
-#if __MonoCS__
 		[Ignore("Expected: Castle.DynamicProxy.Generators.GeneratorException, But was: System.ArgumentNullException")]
-#endif
 		public void ProxyForNonPublicClass()
 		{
 			// We need to use a type that is not from our assembly, because we are marked as internals visible to DynamicProxy2
@@ -285,9 +283,7 @@ namespace CastleTests
 		}
 
 		[Test]
-#if DOTNET35
 		[Ignore("https://support.microsoft.com/en-us/kb/960240")]
-#endif
 		public void ProxyTypeWithMultiDimentionalArrayAsParameters()
 		{
 			LogInvocationInterceptor log = new LogInvocationInterceptor();

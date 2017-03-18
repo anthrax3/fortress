@@ -19,7 +19,6 @@ namespace CastleTests.Components
 	using Castle.Core;
 	using Castle.DynamicProxy;
 
-#if !SILVERLIGHT
 
 	[Interceptor(typeof(StandardInterceptor))]
 	[ComponentProxyBehavior(UseMarshalByRefProxy = true)]
@@ -29,5 +28,4 @@ namespace CastleTests.Components
 		{
 		}
 	}
-#endif
 }

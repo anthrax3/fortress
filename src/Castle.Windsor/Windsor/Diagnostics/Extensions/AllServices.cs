@@ -1,4 +1,4 @@
-﻿// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2012 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ namespace Castle.Windsor.Diagnostics.Extensions
 	using Castle.MicroKernel;
 	using Castle.Windsor.Diagnostics.DebuggerViews;
 
-#if !SILVERLIGHT
 	public class AllServices : AbstractContainerDebuggerExtension
 	{
 		private const string name = "All services";
@@ -51,5 +50,4 @@ namespace Castle.Windsor.Diagnostics.Extensions
 			return new DebuggerViewItem(name, "Count = " + components.Length, components);
 		}
 	}
-#endif
 }
