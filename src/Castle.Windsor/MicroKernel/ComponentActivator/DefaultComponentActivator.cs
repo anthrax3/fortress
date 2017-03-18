@@ -133,7 +133,6 @@ namespace Castle.MicroKernel.ComponentActivator
 			object instance;
 			try
 			{
-				instance = implType.CreateInstance<object>(arguments);
 				if (useFastCreateInstance)
 				{
 					instance = FastCreateInstance(implType, arguments, constructor);
