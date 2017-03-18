@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net45;net451;net46;net461;net462</TargetFrameworks>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
