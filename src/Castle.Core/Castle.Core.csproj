@@ -3,7 +3,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;FEATURE_EVENTLOG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_SYSTEM_CONFIGURATION;NET45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FEATURE_SECURITY_PERMISSIONS;FEATURE_EVENTLOG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_SYSTEM_CONFIGURATION;NET45</DefineConstants>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

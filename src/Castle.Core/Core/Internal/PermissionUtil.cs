@@ -22,19 +22,12 @@ namespace Castle.Core.Internal
 
 	public static class PermissionUtil
 	{
-#if DOTNET40
 		[SecuritySafeCritical]
-#endif
 		public static bool IsGranted(this IPermission permission)
 		{
-#if DOTNET35
-			return SecurityManager.IsGranted(permission);
-#else
 			var permissionSet = new PermissionSet(PermissionState.None);
 			permissionSet.AddPermission(permission);
-
 			return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-#endif
 		}
 	}
 }

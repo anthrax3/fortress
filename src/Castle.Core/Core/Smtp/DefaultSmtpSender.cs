@@ -21,9 +21,7 @@ namespace Castle.Core.Smtp
 	using System.ComponentModel;
 	using System.Net;
 	using System.Net.Mail;
-#if DOTNET40
 	using System.Security;
-#endif
 	using System.Security.Permissions;
 	using Castle.Core.Internal;
 
@@ -115,7 +113,7 @@ namespace Castle.Core.Smtp
 		/// <param name="to">To field</param>
 		/// <param name="subject">e-mail's subject</param>
 		/// <param name="messageText">message's body</param>
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecuritySafeCritical]
 #endif
 		public void Send(String from, String to, String subject, String messageText)
@@ -133,7 +131,7 @@ namespace Castle.Core.Smtp
 		/// </summary>
 		/// <exception cref="ArgumentNullException">If the message is null</exception>
 		/// <param name="message">Message instance</param>
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
 #endif
 		public void Send(MailMessage message)
@@ -141,7 +139,7 @@ namespace Castle.Core.Smtp
 			InternalSend(message);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS 
 		[SecurityCritical]
 #endif
 		private void InternalSend(MailMessage message)
@@ -180,7 +178,7 @@ namespace Castle.Core.Smtp
 			}
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
 #endif
 		public void Send(IEnumerable<MailMessage> messages)
@@ -227,7 +225,7 @@ namespace Castle.Core.Smtp
 		/// informed
 		/// </summary>
 		/// <param name="smtpClient">Message instance</param>
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
 #endif
 		protected virtual void Configure(SmtpClient smtpClient)
@@ -261,7 +259,7 @@ namespace Castle.Core.Smtp
 			get { return !string.IsNullOrEmpty(credentials.UserName); }
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS 
 		[SecuritySafeCritical]
 #endif
 		private SmtpClient CreateSmtpClient()

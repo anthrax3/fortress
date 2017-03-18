@@ -1,6 +1,6 @@
 ﻿// Sets up assembly level security settings
-#if ! SILVERLIGHT
+#if !SILVERLIGHT
 [assembly: System.Security.AllowPartiallyTrustedCallers]
 [assembly: System.Security.SecurityRules(System.Security.SecurityRuleSet.Level2)]
-// [assembly: System.Security.SecurityTransparent]
+[assembly: System.Security.SecurityTransparent]
 #endif

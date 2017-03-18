@@ -14,7 +14,7 @@
 
 namespace Castle.Core.Logging
 {
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 	using System.Security;
 #endif
 
@@ -23,7 +23,7 @@ namespace Castle.Core.Logging
 	/// </summary>
 	public class TraceLoggerFactory : AbstractLoggerFactory
 	{
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecuritySafeCritical]
 #endif
 		public override ILogger Create(string name)
@@ -31,7 +31,7 @@ namespace Castle.Core.Logging
 			return InternalCreate(name);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
 #endif
 		private ILogger InternalCreate(string name)
@@ -39,7 +39,7 @@ namespace Castle.Core.Logging
 			return new TraceLogger(name);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecuritySafeCritical]
 #endif
 		public override ILogger Create(string name, LoggerLevel level)
@@ -47,7 +47,7 @@ namespace Castle.Core.Logging
 			return InternalCreate(name, level);
 		}
 
-#if FEATURE_SECURITY_PERMISSIONS && DOTNET40
+#if FEATURE_SECURITY_PERMISSIONS
 		[SecurityCritical]
 #endif
 		private ILogger InternalCreate(string name, LoggerLevel level)

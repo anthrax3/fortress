@@ -220,11 +220,7 @@ namespace Castle.Components.DictionaryAdapter
 
 			if (descriptor != null)
 			{
-#if DOTNET40
 				initializers.AddBehaviors(descriptor.MetaInitializers);
-#else
-				initializers.AddBehaviors(descriptor.MetaInitializers.Cast<IDictionaryBehavior>());
-#endif
 				typeBehaviors = typeBehaviors.Union(descriptor.Annotations).ToArray();
 			}
 
@@ -453,13 +449,8 @@ namespace Castle.Components.DictionaryAdapter
 			var interfaceBehaviors = typeBehaviors = ExpandBehaviors(InterfaceAttributeUtil.GetAttributes(type, true)).ToArray();
 			var defaultFetch = typeBehaviors.OfType<FetchAttribute>().Select(b => (bool?)b.Fetch).FirstOrDefault().GetValueOrDefault();
 
-#if DOTNET40
 			initializers.AddBehaviors(typeBehaviors.OfType<IDictionaryMetaInitializer>())
 						.AddBehaviors(typeBehaviors.OfType<IDictionaryInitializer>());
-#else
-			initializers.AddBehaviors(typeBehaviors.OfType<IDictionaryMetaInitializer>().Cast<IDictionaryBehavior>())
-						.AddBehaviors(typeBehaviors.OfType<IDictionaryInitializer>    ().Cast<IDictionaryBehavior>());
-#endif
 
 			CollectProperties(type, (property, reflectedType) =>
 			{
@@ -469,12 +460,7 @@ namespace Castle.Components.DictionaryAdapter
 					.AddBehaviors(interfaceBehaviors.OfType<IDictionaryBehavior>().Where(b => b is IDictionaryKeyBuilder == false));
 				var expandedBehaviors = ExpandBehaviors(InterfaceAttributeUtil
 					.GetAttributes(reflectedType, true))
-#if DOTNET40
 					.OfType<IDictionaryKeyBuilder>();
-#else
-					.OfType<IDictionaryKeyBuilder>()
-					.Cast<IDictionaryBehavior>();
-#endif
 				propertyDescriptor = propertyDescriptor.AddBehaviors(expandedBehaviors);
 
 				AddDefaultGetter(propertyDescriptor);
@@ -488,11 +474,7 @@ namespace Castle.Components.DictionaryAdapter
 					descriptorInitializer.Initialize(propertyDescriptor, propertyBehaviors);
 				}
 
-#if DOTNET40
 				initializers.AddBehaviors(propertyBehaviors.OfType<IDictionaryMetaInitializer>());
-#else
-				initializers.AddBehaviors(propertyBehaviors.OfType<IDictionaryMetaInitializer>().Cast<IDictionaryBehavior>());
-#endif
 
 				PropertyDescriptor existingDescriptor;
 				if (propertyMap.TryGetValue(property.Name, out existingDescriptor))
