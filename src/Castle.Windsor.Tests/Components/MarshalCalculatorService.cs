@@ -16,7 +16,7 @@ namespace CastleTests.Components
 {
 	using System;
 
-	public class MarshalCalculatorService : MarshalByRefObject, ICalcService
+	public class MarshalCalculatorService : ICalcService
 	{
 		public int Sum(int x, int y)
 		{

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Diagnostics;
+
 namespace CastleTests.Diagnostics
 {
 	using System.Linq;
@@ -33,7 +35,6 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-			host.AddDiagnostic<IPotentialLifestyleMismatchesDiagnostic>(new PotentialLifestyleMismatchesDiagnostic(Kernel));
 			diagnostic = host.GetDiagnostic<IPotentialLifestyleMismatchesDiagnostic>();
 		}
 

@@ -205,20 +205,6 @@ namespace Castle.Proxies
 		}
 
 		[Test]
-		public void RequestMarshalByRefProxyWithAttribute()
-		{
-			Container.Register(Component.For<StandardInterceptor>(),
-			                   Component.For<ICalcService>().ImplementedBy<CalculatorServiceWithMarshalByRefProxyBehavior>());
-
-			var calcService = Container.Resolve<ICalcService>();
-
-			Assert.IsNotInstanceOf<CalculatorServiceWithMarshalByRefProxyBehavior>(calcService,
-			                                                                       "Service proxy should not expose CalculatorServiceWithMarshalByRefProxyBehavior");
-			Assert.IsInstanceOf<MarshalByRefObject>(calcService, "Service proxy should expose MarshalByRefObject");
-			Assert.IsNotInstanceOf<IDisposable>(calcService, "Service proxy should expose the IDisposable interface");
-		}
-
-		[Test]
 		public void InternalInterfaceIgnoredByProxy()
 		{
 			Container.Install(

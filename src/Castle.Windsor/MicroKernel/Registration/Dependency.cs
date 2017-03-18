@@ -205,29 +205,29 @@ namespace Castle.MicroKernel.Registration
 			return false;
 		}
 
-		public static Property OnResource<TResources>(string dependencyName, string resourceName)
-		{
-			var resourceManagerProperty = typeof(TResources).GetProperty("ResourceManager", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, typeof(ResourceManager), Type.EmptyTypes,
-			                                                             null);
-			if (resourceManagerProperty == null)
-			{
-				throw new ArgumentException(string.Format("Type {0} does not appear to be a correct 'resources' type. It doesn't have 'ResourceManager' property.", typeof(TResources)));
-			}
-			ResourceManager resourceManager;
-			try
-			{
-				resourceManager = (ResourceManager)resourceManagerProperty.GetValue(null, null);
-			}
-			catch (Exception e)
-			{
-				throw new ArgumentException(string.Format("Could not read property {1} on type {0}", typeof(TResources), resourceManagerProperty), e);
-			}
-			return OnResource(dependencyName, resourceManager, resourceName);
-		}
+		//public static Property OnResource<TResources>(string dependencyName, string resourceName)
+		//{
+		//	var resourceManagerProperty = typeof(TResources).GetProperty("ResourceManager", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, typeof(ResourceManager), Type.EmptyTypes,
+		//	                                                             null);
+		//	if (resourceManagerProperty == null)
+		//	{
+		//		throw new ArgumentException(string.Format("Type {0} does not appear to be a correct 'resources' type. It doesn't have 'ResourceManager' property.", typeof(TResources)));
+		//	}
+		//	ResourceManager resourceManager;
+		//	try
+		//	{
+		//		resourceManager = (ResourceManager)resourceManagerProperty.GetValue(null, null);
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		throw new ArgumentException(string.Format("Could not read property {1} on type {0}", typeof(TResources), resourceManagerProperty), e);
+		//	}
+		//	return OnResource(dependencyName, resourceManager, resourceName);
+		//}
 
-		public static Property OnResource(string dependencyName, ResourceManager resourceManager, string resourceName)
-		{
-			return Property.ForKey(dependencyName).Eq(resourceManager.GetObject(resourceName));
-		}
+		//public static Property OnResource(string dependencyName, ResourceManager resourceManager, string resourceName)
+		//{
+		//	return Property.ForKey(dependencyName).Eq(resourceManager.GetObject(resourceName));
+		//}
 	}
 }

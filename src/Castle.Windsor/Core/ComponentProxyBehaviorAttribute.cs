@@ -25,13 +25,6 @@ namespace Castle.Core
 		private Type[] additionalInterfaces;
 
 		/// <summary>
-		///   Gets or sets a value indicating whether the generated 
-		///   interface proxy should inherit from <see cref = "MarshalByRefObject" />.
-		/// </summary>
-		public bool UseMarshalByRefProxy { get; set; }
-
-
-		/// <summary>
 		///   Gets or sets the additional interfaces used during proxy generation.
 		/// </summary>
 		public Type[] AdditionalInterfaces

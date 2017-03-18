@@ -17,7 +17,7 @@ namespace CastleTests.Components
 	using System;
 	using System.Text;
 
-	public class GenericToStringServiceImpl<T> : MarshalByRefObject, IGenericToStringService<T> where T : class
+	public class GenericToStringServiceImpl<T> : IGenericToStringService<T> where T : class
 	{
 		public string ToString(params T[] instances)
 		{

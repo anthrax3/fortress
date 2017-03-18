@@ -18,9 +18,7 @@ namespace Castle.Core.Logging
 	using System.IO;
 
 	[Serializable]
-	public abstract class AbstractLoggerFactory :
-		MarshalByRefObject,
-		ILoggerFactory
+	public abstract class AbstractLoggerFactory : ILoggerFactory
 	{
 		public virtual ILogger Create(Type type)
 		{

@@ -165,10 +165,9 @@ namespace Castle.Facilities.Synchronize
 		/// </summary>
 		/// <param name = "metaInfo">The meta info.</param>
 		/// <param name = "implementation">The implementation type.</param>
-		private static void PopulateMetaInfoFromType(SynchronizeMetaInfo metaInfo,
-		                                             Type implementation)
+		private static void PopulateMetaInfoFromType(SynchronizeMetaInfo metaInfo, Type implementation)
 		{
-			if (implementation == typeof(object) || implementation == typeof(MarshalByRefObject))
+			if (implementation == typeof(object))
 			{
 				return;
 			}

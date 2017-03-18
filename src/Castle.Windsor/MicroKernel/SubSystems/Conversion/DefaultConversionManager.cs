@@ -51,6 +51,7 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			Add(new ComponentConverter());
 			Add(new AttributeAwareConverter());
 			Add(new ComponentModelConverter());
+			Add(new NullableConverter(this));
 		}
 
 		public void Add(ITypeConverter converter)

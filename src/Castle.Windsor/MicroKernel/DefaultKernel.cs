@@ -47,7 +47,7 @@ namespace Castle.MicroKernel
 	/// </summary>
 	[Serializable]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
-	public partial class DefaultKernel : MarshalByRefObject, IKernel, IKernelEvents, IKernelInternal
+	public partial class DefaultKernel : IKernel, IKernelEvents, IKernelInternal
 	{
 		[ThreadStatic]
 		private static CreationContext currentCreationContext;

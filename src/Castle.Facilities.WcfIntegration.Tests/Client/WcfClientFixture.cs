@@ -2110,7 +2110,7 @@ namespace Castle.Facilities.WcfIntegration.Tests
         </configuration>";
 	}
 
-	public class EmptyInterceptor : MarshalByRefObject, IInterceptor
+	public class EmptyInterceptor : IInterceptor
 	{
 		public void Intercept(IInvocation invocation)
 		{

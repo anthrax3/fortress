@@ -24,9 +24,7 @@ namespace Castle.Core.Logging
 	/// one Log method.
 	/// </summary>
 	[Serializable]
-	public abstract class LevelFilteredLogger :
-		MarshalByRefObject,
-		ILogger
+	public abstract class LevelFilteredLogger : ILogger
 	{
 		private LoggerLevel level = LoggerLevel.Off;
 		private String name = "unnamed";
@@ -51,15 +49,6 @@ namespace Castle.Core.Logging
 		protected LevelFilteredLogger(String loggerName, LoggerLevel loggerLevel) : this(loggerLevel)
 		{
 			ChangeName(loggerName);
-		}
-
-		/// <summary>
-		/// Keep the instance alive in a remoting scenario
-		/// </summary>
-		/// <returns></returns>
-		public override object InitializeLifetimeService()
-		{
-			return null;
 		}
 
 		public abstract ILogger CreateChildLogger(string loggerName);

@@ -64,12 +64,6 @@ namespace Castle.MicroKernel.Proxy
 		public bool AllowChangeTarget { get; set; }
 
 		/// <summary>
-		/// 	Determines if the interface proxied component should inherit 
-		/// 	from <see cref="MarshalByRefObject" />
-		/// </summary>
-		public bool UseMarshalByRefAsBaseClass { get; set; }
-
-		/// <summary>
 		/// 	Gets or sets the proxy hook.
 		/// </summary>
 		public IReference<IProxyGenerationHook> Hook

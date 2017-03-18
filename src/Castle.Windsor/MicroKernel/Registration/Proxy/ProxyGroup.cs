@@ -27,11 +27,6 @@ namespace Castle.MicroKernel.Registration.Proxy
 		{
 		}
 
-		public ComponentRegistration<S> AsMarshalByRefClass
-		{
-			get { return AddAttributeDescriptor("marshalByRefProxy", bool.TrueString); }
-		}
-
 		public ComponentRegistration<S> AdditionalInterfaces(params Type[] interfaces)
 		{
 			if (interfaces != null && interfaces.Length > 0)

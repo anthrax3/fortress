@@ -21,7 +21,7 @@ namespace CastleTests.Components
 
 
 	[Interceptor(typeof(StandardInterceptor))]
-	[ComponentProxyBehavior(UseMarshalByRefProxy = true)]
+	[ComponentProxyBehavior()]
 	public class CalculatorServiceWithMarshalByRefProxyBehavior : CalculatorService, IDisposable
 	{
 		public void Dispose()

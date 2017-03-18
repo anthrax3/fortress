@@ -17,7 +17,7 @@ namespace CastleTests.Components
 	using System;
 	using System.Text;
 
-	public class CustomToStringService : MarshalByRefObject, IGenericToStringService<StringBuilder>
+	public class CustomToStringService : IGenericToStringService<StringBuilder>
 	{
 		public string ToString(params StringBuilder[] instances)
 		{

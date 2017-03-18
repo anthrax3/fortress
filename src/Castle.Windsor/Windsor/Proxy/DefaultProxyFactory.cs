@@ -167,10 +167,7 @@ namespace Castle.Windsor.Proxy
 				}
 				proxyGenOptions.Selector = selector;
 			}
-			if (proxyOptions.UseMarshalByRefAsBaseClass)
-			{
-				proxyGenOptions.BaseTypeForInterfaceProxy = typeof(MarshalByRefObject);
-			}
+			
 			foreach (var mixInReference in proxyOptions.MixIns)
 			{
 				var mixIn = mixInReference.Resolve(kernel, context);

@@ -24,7 +24,6 @@ namespace Castle.DynamicProxy
 		protected static readonly ICollection<Type> SkippedTypes = new[]
 		{
 			typeof(object),
-			typeof(MarshalByRefObject),
 			typeof(ContextBoundObject)
 		};
 

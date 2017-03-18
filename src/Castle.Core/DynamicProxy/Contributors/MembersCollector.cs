@@ -208,13 +208,9 @@ namespace Castle.DynamicProxy.Contributors
 			var isOverridable = method.IsVirtual && !method.IsFinal;
 			if (onlyVirtuals && !isOverridable)
 			{
-				if (
-					method.DeclaringType != typeof(MarshalByRefObject) &&
-					method.IsGetType() == false &&
-					method.IsMemberwiseClone() == false)
+				if (method.IsGetType() == false && method.IsMemberwiseClone() == false)
 				{
-					Logger.DebugFormat("Excluded non-overridable method {0} on {1} because it cannot be intercepted.", method.Name,
-					                   method.DeclaringType.FullName);
+					Logger.DebugFormat("Excluded non-overridable method {0} on {1} because it cannot be intercepted.", method.Name, method.DeclaringType.FullName);
 					hook.NonProxyableMemberNotification(type, method);
 				}
 				return false;
@@ -234,10 +230,6 @@ namespace Castle.DynamicProxy.Contributors
 				return false;
 			}
 
-			if (method.DeclaringType == typeof(MarshalByRefObject))
-			{
-				return false;
-			}
 			if (method.IsFinalizer())
 			{
 				return false;

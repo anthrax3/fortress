@@ -37,7 +37,7 @@ namespace Castle.Windsor
 	[Serializable]
 	[DebuggerDisplay("{name,nq}")]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
-	public partial class WindsorContainer : MarshalByRefObject, IWindsorContainer
+	public partial class WindsorContainer : IWindsorContainer
 	{
 		private const string CastleUnicode = " \uD83C\uDFF0 ";
 		private static int instanceCount = 0;

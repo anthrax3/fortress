@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Diagnostics;
+
 namespace CastleTests.Registration
 {
 	using System.Collections.Generic;
@@ -40,27 +42,28 @@ namespace CastleTests.Registration
 			Assert.AreEqual(42, obj.Arg2);
 		}
 
-		[Test]
-		public void can_register_value_from_a_resource_file_with_type()
-		{
-			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(Dependency.OnResource<Resources>("arg1", "SomeResource"),
-				                              Dependency.OnValue("arg2", 2)));
-			var obj = Container.Resolve<ClassWithArguments>();
+		//[Test]
+		//public void can_register_value_from_a_resource_file_with_type()
+		//{
 
-			Assert.AreEqual("Some resource value", obj.Arg1);
-		}
+		//	Container.Register(Component.For<ClassWithArguments>()
+		//		                   .DependsOn(Dependency.OnResource<Resources>("arg1", "SomeResource"),
+		//		                              Dependency.OnValue("arg2", 2)));
+		//	var obj = Container.Resolve<ClassWithArguments>();
 
-		[Test]
-		public void can_register_value_from_a_resource_file_with_resourceManager()
-		{
-			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(Dependency.OnResource("arg1", Resources.ResourceManager, "SomeResource"),
-				                              Dependency.OnValue("arg2", 2)));
-			var obj = Container.Resolve<ClassWithArguments>();
+		//	Assert.AreEqual("Some resource value", obj.Arg1);
+		//}
 
-			Assert.AreEqual("Some resource value", obj.Arg1);
-		}
+		//[Test]
+		//public void can_register_value_from_a_resource_file_with_resourceManager()
+		//{
+		//	Container.Register(Component.For<ClassWithArguments>()
+		//		                   .DependsOn(Dependency.OnResource("arg1", Resources.ResourceManager, "SomeResource"),
+		//		                              Dependency.OnValue("arg2", 2)));
+		//	var obj = Container.Resolve<ClassWithArguments>();
+
+		//	Assert.AreEqual("Some resource value", obj.Arg1);
+		//}
 
 		[Test]
 		public void Can_register_configuration_parameters_from_dynamic_parameters_inline()

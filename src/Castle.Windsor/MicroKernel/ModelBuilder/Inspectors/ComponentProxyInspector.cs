@@ -27,7 +27,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	///   Inspects the component configuration and type looking for information
 	///   that can influence the generation of a proxy for that component.
 	///   <para>
-	///     We specifically look for <c>additionalInterfaces</c> and <c>marshalByRefProxy</c> 
+	///     We specifically look for <c>additionalInterfaces</c>  
 	///     on the component configuration or the <see cref = "ComponentProxyBehaviorAttribute" /> 
 	///     attribute.
 	///   </para>
@@ -90,11 +90,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 			{
 				return;
 			}
-			var mbrProxy = model.Configuration.Attributes["marshalByRefProxy"];
-			if (mbrProxy != null)
-			{
-				behavior.UseMarshalByRefProxy = converter.PerformConversion<bool?>(mbrProxy).GetValueOrDefault(false);
-			}
+			
 			var interfaces = model.Configuration.Children["additionalInterfaces"];
 			if (interfaces == null)
 			{
@@ -113,11 +109,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 		private static void ApplyProxyBehavior(ComponentProxyBehaviorAttribute behavior, ComponentModel model)
 		{
 			var options = model.ObtainProxyOptions();
-			if (behavior.UseMarshalByRefProxy)
-			{
-				EnsureComponentRegisteredWithInterface(model);
-			}
-			options.UseMarshalByRefAsBaseClass = behavior.UseMarshalByRefProxy;
+			
 			options.AddAdditionalInterfaces(behavior.AdditionalInterfaces);
 			if(model.Implementation.IsInterface)
 			{

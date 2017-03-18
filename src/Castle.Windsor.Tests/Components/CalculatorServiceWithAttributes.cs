@@ -23,7 +23,7 @@ namespace CastleTests.Components
 	///   Summary description for CalculatorServiceWithAttributes.
 	/// </summary>
 	[Interceptor(typeof(ResultModifierInterceptor))]
-	public class CalculatorServiceWithAttributes : MarshalByRefObject
+	public class CalculatorServiceWithAttributes
 	{
 		public virtual int Sum(int x, int y)
 		{

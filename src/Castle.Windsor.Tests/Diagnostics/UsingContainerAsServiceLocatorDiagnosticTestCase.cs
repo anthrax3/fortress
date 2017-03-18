@@ -34,7 +34,6 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-			host.AddDiagnostic<IUsingContainerAsServiceLocatorDiagnostic>(new UsingContainerAsServiceLocatorDiagnostic(Kernel));
 			diagnostic = host.GetDiagnostic<IUsingContainerAsServiceLocatorDiagnostic>();
 		}
 

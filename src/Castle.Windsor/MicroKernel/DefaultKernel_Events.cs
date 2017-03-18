@@ -30,11 +30,6 @@ namespace Castle.MicroKernel
 		private bool handlersChanged;
 		private volatile bool handlersChangedDeferred;
 
-		public override object InitializeLifetimeService()
-		{
-			return null;
-		}
-
 		public IDisposable OptimizeDependencyResolution()
 		{
 			if (handlersChangedDeferred)

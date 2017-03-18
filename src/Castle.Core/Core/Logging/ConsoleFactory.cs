@@ -17,9 +17,7 @@ namespace Castle.Core.Logging
 	using System;
 
 	[Serializable]
-	public class ConsoleFactory :
-		MarshalByRefObject,
-		ILoggerFactory
+	public class ConsoleFactory : ILoggerFactory
 	{
 		private LoggerLevel? level;
 

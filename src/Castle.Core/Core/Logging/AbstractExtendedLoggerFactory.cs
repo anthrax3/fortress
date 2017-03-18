@@ -17,9 +17,7 @@ namespace Castle.Core.Logging
 	using System;
 	using System.IO;
 
-	public abstract class AbstractExtendedLoggerFactory :
-		MarshalByRefObject,
-		IExtendedLoggerFactory
+	public abstract class AbstractExtendedLoggerFactory : IExtendedLoggerFactory
 	{
 		/// <summary>
 		///   Creates a new extended logger, getting the logger name from the specified type.

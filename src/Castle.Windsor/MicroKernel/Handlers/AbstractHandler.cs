@@ -28,9 +28,7 @@ namespace Castle.MicroKernel.Handlers
 	///   Implements the basis of <see cref = "IHandler" />
 	/// </summary>
 	[Serializable]
-	public abstract class AbstractHandler :
-		MarshalByRefObject,
-		IHandler, IExposeDependencyInfo, IDisposable
+	public abstract class AbstractHandler : IHandler, IExposeDependencyInfo, IDisposable
 	{
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private readonly ComponentModel model;

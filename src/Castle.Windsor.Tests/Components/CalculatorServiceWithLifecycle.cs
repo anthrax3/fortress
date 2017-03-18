@@ -19,7 +19,7 @@ namespace CastleTests.Components
 	using Castle.Core;
 
 	[Transient]
-	public class CalculatorServiceWithLifecycle : MarshalByRefObject, ICalcService, IInitializable, IDisposable
+	public class CalculatorServiceWithLifecycle : ICalcService, IInitializable, IDisposable
 	{
 		private bool initialized;
 		private bool disposed;

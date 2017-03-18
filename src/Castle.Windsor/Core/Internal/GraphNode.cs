@@ -15,9 +15,7 @@ namespace Castle.Core.Internal
 	using System.Threading;
 
 	[Serializable]
-	public class GraphNode :
-		MarshalByRefObject,
-		IVertex
+	public class GraphNode : IVertex
 	{
 		private SimpleThreadSafeCollection<GraphNode> outgoing;
 

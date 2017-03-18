@@ -17,7 +17,7 @@ namespace CastleTests.Components
 	using System;
 	using System.Linq;
 
-	public class CalcServiceRemotingImpl : MarshalByRefObject, ICalcService
+	public class CalcServiceRemotingImpl : ICalcService
 	{
 		public bool Disposed
 		{

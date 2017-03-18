@@ -31,7 +31,6 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-			host.AddDiagnostic<IDuplicatedDependenciesDiagnostic>(new DuplicatedDependenciesDiagnostic(Kernel));
 			diagnostic = host.GetDiagnostic<IDuplicatedDependenciesDiagnostic>();
 		}
 

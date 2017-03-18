@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Diagnostics;
+
 namespace Castle.MicroKernel.Tests.Configuration
 {
 	using Castle.Core;

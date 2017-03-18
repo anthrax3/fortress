@@ -18,14 +18,9 @@ namespace Castle.MicroKernel
 	using System.Security;
 
 	[Serializable]
-	public abstract class AbstractSubSystem : MarshalByRefObject, ISubSystem
+	public abstract class AbstractSubSystem : ISubSystem
 	{
 		private IKernelInternal kernel;
-
-		public override object InitializeLifetimeService()
-		{
-			return null;
-		}
 
 		public virtual void Init(IKernelInternal kernel)
 		{

@@ -33,9 +33,7 @@ namespace Castle.DynamicProxy.Tests.BugsReported
 		void Record(ICamera cam);
 	}
 
-	public class CameraService :
-		MarshalByRefObject,
-		ICameraService
+	public class CameraService : ICameraService
 	{
 		public ICamera Add(String name, String ipNumber)
 		{

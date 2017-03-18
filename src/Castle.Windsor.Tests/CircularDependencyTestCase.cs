@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Diagnostics;
+
 namespace Castle.Windsor.Tests
 {
 	using System;
@@ -30,7 +32,6 @@ namespace Castle.Windsor.Tests
 	[TestFixture]
 	public class CircularDependencyTestCase : AbstractContainerTestCase
 	{
-		// we do not support xml config on SL
 		[Test]
 		public void ShouldNotGetCircularDepencyExceptionWhenResolvingTypeOnItselfWithDifferentModels()
 		{

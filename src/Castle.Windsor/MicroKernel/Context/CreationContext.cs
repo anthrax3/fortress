@@ -33,9 +33,7 @@ namespace Castle.MicroKernel.Context
 	///   to provide arguments to components.
 	/// </summary>
 	[Serializable]
-	public class CreationContext :
-		MarshalByRefObject,
-		ISubDependencyResolver
+	public class CreationContext : ISubDependencyResolver
 	{
 		private readonly ITypeConverter converter;
 

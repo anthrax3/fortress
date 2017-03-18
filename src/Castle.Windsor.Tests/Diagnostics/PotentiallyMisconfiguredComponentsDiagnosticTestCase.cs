@@ -29,7 +29,6 @@ namespace CastleTests.Diagnostics
 		protected override void AfterContainerCreated()
 		{
 			var host = Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IDiagnosticsHost;
-			host.AddDiagnostic<IPotentiallyMisconfiguredComponentsDiagnostic>(new PotentiallyMisconfiguredComponentsDiagnostic(Kernel));
 			diagnostic = host.GetDiagnostic<IPotentiallyMisconfiguredComponentsDiagnostic>();
 		}
 
