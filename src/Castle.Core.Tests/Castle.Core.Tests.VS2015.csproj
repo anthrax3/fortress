@@ -130,7 +130,6 @@
   <ItemGroup>
     <Compile Include="AccessLevelTestCase.cs" />
     <Compile Include="BasePEVerifyTestCase.cs" />
-    <Compile Include="BasicClassProxyTestCase.cs" />
     <Compile Include="BasicInterfaceProxyTestCase.cs" />
     <Compile Include="BugAttribute.cs" />
     <Compile Include="BugsReported\Core40.cs" />
@@ -260,7 +259,6 @@
     <Compile Include="DynamicProxy.Tests\Interfaces\IBase.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\ISub1.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\ISub2.cs" />
-    <Compile Include="DynamicProxy.Tests\ProxyTypeCachingTestCase.cs" />
     <Compile Include="DynamicProxy.Tests\ExplicitInterfaceTestCase.cs" />
     <Compile Include="CustomAttributesTestCase.cs" />
     <Compile Include="GenClasses\GenClassWithExplicitImpl.cs">
