@@ -41,43 +41,6 @@ namespace Castle.Core.Tests.Resources
 			Assert.IsFalse( resFactory.Accept( new CustomUri("http://www.castleproject.org") ) );
 		}
 
-		[Test]
-		public void CreateWithAbsolutePath()
-		{
-			String file = Path.Combine(basePath, "file1.txt");
-
-			FileInfo fileInfo = new FileInfo(file);
-
-			CustomUri uri = new CustomUri(fileInfo.FullName);
-
-			IResource resource = resFactory.Create(uri, null);
-
-			Assert.IsNotNull(resource);
-			String line = resource.GetStreamReader().ReadLine();
-			Assert.AreEqual("Something", line);
-		}
-
-		[Test]
-		public void CreateWithRelativePath()
-		{
-			IResource resource = resFactory.Create( new CustomUri(basePath + "/file1.txt") );
-
-			Assert.IsNotNull(resource);
-			String line = resource.GetStreamReader().ReadLine();
-			Assert.AreEqual("Something", line);
-		}
-
-		[Test]
-		public void CreateWithRelativePathAndContext()
-		{
-			CustomUri uri = new CustomUri("file://file1.txt");
-
-			IResource resource = resFactory.Create( uri, basePath );
-
-			Assert.IsNotNull(resource);
-			String line = resource.GetStreamReader().ReadLine();
-			Assert.AreEqual("Something", line);
-		}
 
 		[Test]
 		public void NonExistingResource()

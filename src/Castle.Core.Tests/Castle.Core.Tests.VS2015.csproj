@@ -97,12 +97,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net35\adodb.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -115,11 +109,16 @@
     <Reference Include="Serilog">
       <HintPath>..\..\packages\Serilog\lib\net45\Serilog.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Data" />
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkVersion)!='v3.5'">
@@ -137,10 +136,6 @@
     <Compile Include="BugsReported\Core40.cs" />
     <Compile Include="BugsReported\DynProxy159.cs" />
     <Compile Include="BugsReported\DynProxy145_SynchronizationContext.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\CustomAssert.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\DynamicDictionaryTests.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPhoneWithFetch.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\NameValueCollectionAdapterTests.cs" />
     <Compile Include="DynamicProxy.Tests\AttributesToAvoidReplicatingTestCase.cs" />
     <Compile Include="DynamicProxy.Tests\CustomAttributeInfoTestCase.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\ClassWithMethodsWithAllKindsOfOptionalParameters.cs" />
@@ -151,69 +146,7 @@
     <Compile Include="DynamicProxy.Tests\GenericInterfaceWithGenericMethod.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\InterfaceWithMethodsWithAllKindsOfOptionalParameters.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\InterfaceWithMethodWithParameterWithNullDefaultValue.cs" />
-    <Compile Include="DynamicProxy.Tests\WinFormsTestCase.cs" />
     <Compile Include="MultipleSavedAssembliesTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\AdaptingGenericDictionaryTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\VirtualObjectTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\ConflictBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\ReferenceBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlReferenceManagerTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlArrayBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlAttributeBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlElementBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlIncludeBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XPathBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlAdapterAcceptanceTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\DefaultBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlRootBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Behaviors\XmlTypeBehaviorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Collections\XmlNodeListTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\Collections\XmlNodeSetTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlAdapterTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Address.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Color.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IEmptyTest.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IBook.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\MemberwiseEqualityHashCodeStrategyTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IUseBehaviorBuilder.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\KeyBehaviorBuilderAttribute.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\CustomGetter.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IAddress.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IConversions.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IConversionsToString.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IEnsureMetaDoesNotConflict.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IItemContainer.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IItemContainerWithComponent.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IMutableName.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IName.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\InfrastructureStub.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPerson.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithDeniedInheritancePrefix.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithMethod.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithoutPrefix.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithPrefix.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithPrefixOverride.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithPrefixOverrideFurtherOverride.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPersonWithTypePrefixOverride.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IPhone.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\IStringLists.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Phone.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\PhoneConverter.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\XmlStructureComparer.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\MockXmlIncludedTypeMap.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\MockXPathFunction.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\MockXPathVariable.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\NamespaceSource.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\XPathCompilerTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\XPathCursorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\DummyXmlNode.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\SysXmlCursorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\SysXmlNodeTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\XmlNodeTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\XPathReadableCursorTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlApis\XPathNodeTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlTypeSerializerCacheTestCase.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\Xml\XmlTypeSerializerTests.cs" />
     <Compile Include="Core.Tests\Internal\InterfaceAttributeUtilTestCase.cs" />
     <Compile Include="Core.Tests\Internal\PermissionUtilTestCase.cs" />
     <Compile Include="Core.Tests\Internal\WeakKeyDictionaryTestCase.cs" />
@@ -305,11 +238,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components.DictionaryAdapter.Tests\AdaptingNameValueCollectionsTestCase.cs" />
     <Compile Include="BugsReported\DynProxy132.cs" />
     <Compile Include="ChangeProxyTargetInterceptor.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\CreateHashtableDictionaryStrategy.cs" />
-    <Compile Include="Components.DictionaryAdapter.Tests\DictionaryAdapterFactoryTestCase.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\ClassWithAttributesOnMethodParameters.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\ClassWithExplicitInterface.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\ClassWithInterface.cs" />
@@ -340,7 +270,6 @@
     <Compile Include="GenInterfaces\GenInterfaceWithMethodWithNestedGenericParameter.cs" />
     <Compile Include="GenInterfaces\GenInterfaceWithMethodWithNestedGenericParameterByRef.cs" />
     <Compile Include="GenInterfaces\GenInterfaceWithMethodWithNestedGenericReturn.cs" />
-    <Compile Include="IdEqualityHashCodeStrategy.cs" />
     <Compile Include="Interceptors\AssertCanChangeTargetInterceptor.cs" />
     <Compile Include="Interceptors\AssertCannotChangeTargetInterceptor.cs" />
     <Compile Include="Interceptors\CallCountingInterceptor.cs" />
@@ -456,7 +385,6 @@
     </Compile>
     <Compile Include="Core.Tests\Resources\UncResourceFactoryTestCase.cs" />
     <Compile Include="StreamLoggerTests.cs" />
-    <Compile Include="TestDictionaryValidator.cs" />
     <Compile Include="TraceLoggerTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -468,7 +396,9 @@
       <LastGenOutput>TestRes.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="Core.Tests\Resources\MoreRes\file2.txt" />
+    <EmbeddedResource Include="Core.Tests\Resources\MoreRes\file2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Castle.Core\Castle.Core.VS2015.csproj">

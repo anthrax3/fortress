@@ -103,7 +103,7 @@ namespace Castle.DynamicProxy.Tests
 				var path = ((PersistentProxyBuilder)builder).SaveAssembly();
 				if (path != null)
 				{
-					RunPEVerifyOnGeneratedAssembly(path);
+					//RunPEVerifyOnGeneratedAssembly(path);
 				}
 			}
 		}

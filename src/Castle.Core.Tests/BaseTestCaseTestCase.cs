@@ -65,15 +65,6 @@ namespace Castle.DynamicProxy.Tests
 		}
 
 		[Test]
-		[Platform(Exclude = "mono", Reason = "Mono doesn't have peverify, so we can't perform verification.")]
-		public void TearDown_FindsVerificationErrors()
-		{
-			var ex = Assert.Throws<AssertionException>(() => FindVerificationErrors());
-			StringAssert.Contains("PeVerify reported error(s)", ex.Message);
-			StringAssert.Contains("fall through end of the method without returning", ex.Message);
-		}
-
-		[Test]
 		public void DisableVerification_DisablesVerificationForTestCase()
 		{
 			DisableVerification();

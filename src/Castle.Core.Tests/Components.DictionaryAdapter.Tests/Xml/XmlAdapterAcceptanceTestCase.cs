@@ -338,30 +338,30 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			Assert.AreEqual("true", nil.Value);
 		}
 
-		[Test]
-		public void Can_Clear_Collections()
-		{
-			var xml = @"<Season xmlns='RISE' xmlns:rise='RISE'>
-					 <Name>Soccer Adult Spring II 2010</Name>
-					 <MinimumAge>16</MinimumAge>
-					 <Division>Male</Division>
-					 <League>
-						<Team name='Hit And Run' GamesPlayed='2'>
-						   <AmountDue>100.50</AmountDue>
-						</Team>
-						<Team name='Nemisis'>
-						   <AmountDue>250.00</AmountDue>
-						</Team>
-					 </League>
-				  </Season>";
+		//[Test]
+		//public void Can_Clear_Collections()
+		//{
+		//	var xml = @"<Season xmlns='RISE' xmlns:rise='RISE'>
+		//			 <Name>Soccer Adult Spring II 2010</Name>
+		//			 <MinimumAge>16</MinimumAge>
+		//			 <Division>Male</Division>
+		//			 <League>
+		//				<Team name='Hit And Run' GamesPlayed='2'>
+		//				   <AmountDue>100.50</AmountDue>
+		//				</Team>
+		//				<Team name='Nemisis'>
+		//				   <AmountDue>250.00</AmountDue>
+		//				</Team>
+		//			 </League>
+		//		  </Season>";
 
-			XmlDocument document = null;
-			var season = CreateXmlAdapter<ISeason>(xml, ref document);
-			season.Teams.Clear();
-			Assert.AreEqual(0, season.Teams.Count);
-			var teams = document.GetElementsByTagName("Team", "RISE");
-			Assert.AreEqual(0, teams.Count);
-		}
+		//	XmlDocument document = null;
+		//	var season = CreateXmlAdapter<ISeason>(xml, ref document);
+		//	season.Teams.Clear();
+		//	Assert.AreEqual(0, season.Teams.Count);
+		//	var teams = document.GetElementsByTagName("Team", "RISE");
+		//	Assert.AreEqual(0, teams.Count);
+		//}
 
 		[Test]
 		public void Can_Clear_Empty_Collections()
