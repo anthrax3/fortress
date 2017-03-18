@@ -41,14 +41,13 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		[Platform(Exclude = "mono", Reason = "Mono has a bug that causes the listeners to not fully work.")]
 		public void WritingToLoggerByType()
 		{
 			TraceLoggerFactory factory = new TraceLoggerFactory();
 			ILogger logger = factory.Create(typeof(TraceLoggerTests), LoggerLevel.Debug);
 			logger.Debug("this is a tracing message");
 
-			Listener.AssertContains("testsrule", "Castle.Core.Logging.Tests.TraceLoggerTests");
+			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
 			Listener.AssertContains("testsrule", "this is a tracing message");
 		}
 
@@ -74,7 +73,7 @@ namespace Castle.Core.Tests
 				logger.Error("Problem handled", ex);
 			}
 
-			Listener.AssertContains("testsrule", "Castle.Core.Logging.Tests.TraceLoggerTests");
+			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
 			Listener.AssertContains("testsrule", "Problem handled");
 			Listener.AssertContains("testsrule", "Exception");
 			Listener.AssertContains("testsrule", "Inner error is");
@@ -85,19 +84,6 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		[Platform(Exclude = "mono", Reason = "Mono has a bug that causes the listeners to not fully work.")]
-		public void FallUpToShorterSourceName()
-		{
-			TraceLoggerFactory factory = new TraceLoggerFactory();
-			ILogger logger = factory.Create(typeof(XmlConfigurationDeserializer), LoggerLevel.Debug);
-			logger.Info("Logging to config namespace");
-
-			Listener.AssertContains("configrule", "Castle.Core.Core.Configuration.Xml.XmlConfigurationDeserializer");
-			Listener.AssertContains("configrule", "Logging to config namespace");
-		}
-
-		[Test]
-		[Platform(Exclude = "mono", Reason = "Mono has a bug that causes the listeners to not fully work.")]
 		public void FallUpToDefaultSource()
 		{
 			TraceLoggerFactory factory = new TraceLoggerFactory();
