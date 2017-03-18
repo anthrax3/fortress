@@ -230,7 +230,6 @@
     <Compile Include="MixinTestCase.cs" />
     <Compile Include="ThrowingInterceptorException.cs" />
     <Compile Include="XmlConfigurationDeserializerTests.cs" />
-    <Compile Include="XmlSerializationTestCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -375,7 +374,6 @@
     <Compile Include="LevelFilteredLoggerTests.cs" />
     <Compile Include="SlimReadWriteLockTestCase.cs" />
     <Compile Include="ReflectionBasedDictionaryAdapterTestCase.cs" />
-    <Compile Include="Core.Tests\Resources\AssemblyResourceFactoryTestCase.cs" />
     <Compile Include="Core.Tests\Resources\CustomUriTestCase.cs" />
     <Compile Include="Core.Tests\Resources\FileResourceFactoryTestCase.cs" />
     <Compile Include="Core.Tests\Resources\MoreRes\TestRes.Designer.cs">
@@ -383,7 +381,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestRes.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core.Tests\Resources\UncResourceFactoryTestCase.cs" />
     <Compile Include="StreamLoggerTests.cs" />
     <Compile Include="TraceLoggerTests.cs" />
   </ItemGroup>

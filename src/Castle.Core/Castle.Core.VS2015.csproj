@@ -13,7 +13,7 @@
     <ProjectGuid>{E4FA5B53-7D36-429E-8E5C-53D5479242BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Castle</RootNamespace>
+    <RootNamespace>Castle.Core</RootNamespace>
     <AssemblyName>Castle.Core</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\buildscripts\CastleKey.snk</AssemblyOriginatorKeyFile>
