@@ -36,7 +36,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "No cached proxy type was found for target type " +
-				"CastleTests.DynamicProxy.Tests.Classes.EmptyClass."));
+				"Castle.Core.Tests.DynamicProxy.Tests.Classes.EmptyClass."));
 		}
 
 		[Test]
@@ -52,7 +52,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Found cached proxy type Castle.Proxies.EmptyClassProxy " +
-				"for target type CastleTests.DynamicProxy.Tests.Classes.EmptyClass."));
+				"for target type Castle.Core.Tests.DynamicProxy.Tests.Classes.EmptyClass."));
 		}
 
 		[Test]
@@ -68,7 +68,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Found cached proxy type Castle.Proxies.IEmptyInterfaceProxy " +
-				"for target type Castle.DynamicProxy.Tests.LoggingTestCase+IEmptyInterface."));
+				"for target type Castle.Core.Tests.LoggingTestCase+IEmptyInterface."));
 		}
 
 		[Test]
@@ -86,7 +86,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Warn, "The IProxyGenerationHook type " +
-				"Castle.DynamicProxy.Tests.LoggingTestCase+EmptyHook does not override both Equals and GetHashCode. " +
+				"Castle.Core.Tests.LoggingTestCase+EmptyHook does not override both Equals and GetHashCode. " +
 				"If these are not correctly overridden caching will fail to work causing performance problems."));
 		}
 
@@ -102,9 +102,9 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Excluded non-overridable method ClassMethod on " +
-				"Castle.DynamicProxy.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
+				"Castle.Core.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Excluded non-overridable method InterfaceMethod on " +
-				"Castle.DynamicProxy.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
+				"Castle.Core.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
 		}
 
 		#region Test Types
