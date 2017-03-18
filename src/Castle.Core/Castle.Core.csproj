@@ -2,7 +2,17 @@
   <PropertyGroup>
     <TargetFrameworks>net45</TargetFrameworks>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="CastleKey.snk" />
+    <None Remove="DynamicProxy\DynProxy.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="DynamicProxy\DynProxy.snk" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />

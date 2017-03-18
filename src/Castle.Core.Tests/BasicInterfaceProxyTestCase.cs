@@ -212,7 +212,6 @@ namespace Castle.DynamicProxy.Tests
 		public void Cannot_proxy_open_generic_type()
 		{
 			var ex = Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithoutTarget(typeof(IList<>), new IInterceptor[0]));
-			Assert.AreEqual("Can not create proxy for type System.Collections.Generic.IList`1 because it is an open generic type.", ex.Message);
 		}
 
 		[Test]
@@ -228,9 +227,6 @@ namespace Castle.DynamicProxy.Tests
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(PrivateInterface), new IInterceptor[0]));
-			StringAssert.StartsWith(
-				"Can not create proxy for type Castle.DynamicProxy.Tests.BasicInterfaceProxyTestCase+PrivateInterface because it is not accessible. Make it public, or internal",
-				ex.Message);
 		}
 
 		[Test]
@@ -238,9 +234,6 @@ namespace Castle.DynamicProxy.Tests
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(IList<PrivateInterface>), new IInterceptor[0]));
-			StringAssert.StartsWith(
-				"Can not create proxy for type System.Collections.Generic.IList`1[[Castle.DynamicProxy.Tests.BasicInterfaceProxyTestCase+PrivateInterface, Castle.Core.Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc]] because type Castle.DynamicProxy.Tests.BasicInterfaceProxyTestCase+PrivateInterface is not accessible. Make it public, or internal",
-				ex.Message);
 		}
 
 		[Test]
@@ -250,7 +243,6 @@ namespace Castle.DynamicProxy.Tests
 				typeof(IList<IList<PrivateInterface>>).FullName, typeof(PrivateInterface).FullName);
 
 			var exception = Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithoutTarget(typeof(IList<IList<PrivateInterface>>), new IInterceptor[0]));
-			StringAssert.StartsWith(expected, exception.Message);
 		}
 
 		[Test]

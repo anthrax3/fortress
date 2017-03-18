@@ -166,22 +166,7 @@ namespace CastleTests.Installer
 			Assert.IsFalse(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));
 		}
 
-		[Test]
-		public void Install_from_assembly_by_directory_with_key_as_string_installs()
-		{
-			var location = AppDomain.CurrentDomain.BaseDirectory;
-
-			var fullName = GetType().Assembly.FullName;
-			var index = fullName.IndexOf("PublicKeyToken=");
-			if (index == -1)
-			{
-				return;
-			}
-			var publicKeyToken = fullName.Substring(index + "PublicKeyToken=".Length, 16);
-			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).WithKeyToken(publicKeyToken)));
-			Assert.IsTrue(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));
-		}
-
+		
 		[Test]
 		public void Install_from_assembly_by_directory_with_key_installs()
 		{
