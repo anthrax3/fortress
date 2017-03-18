@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
+namespace Castle.Core.Core.Logging
 {
-	using System.Security;
-
 	/// <summary>
 	///   Used to create the TraceLogger implementation of ILogger interface. See <see cref = "TraceLogger" />.
 	/// </summary>

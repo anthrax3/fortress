@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Contributors;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Contributors;
-
 	public class DelegateMembersCollector : MembersCollector
 	{
 		public DelegateMembersCollector(Type type) : base(type)

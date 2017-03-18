@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection.Emit;
-	using System.Runtime.Serialization;
-	using Castle.Core.Internal;
-	using System.Security;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Castle.Core.Core.Internal;
 
+namespace Castle.Core.DynamicProxy
+{
 	[Serializable]
 	public class ProxyGenerationOptions
 		: ISerializable

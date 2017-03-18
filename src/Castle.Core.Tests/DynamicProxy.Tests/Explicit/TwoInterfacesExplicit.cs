@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Explicit
-{
-	using System;
+using System;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Explicit
+{
 	public class TwoInterfacesExplicit : ISimpleInterface, IDisposable
 	{
 		void IDisposable.Dispose()

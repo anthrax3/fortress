@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
+using System;
+using System.Linq;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+
+namespace Castle.Core.Core.Internal
 {
-	using System;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators.Emitters;
-
 	internal static class ExceptionMessageBuilder
 	{
 		/// <summary>

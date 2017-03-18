@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy.Generators
+{
 	/// <summary>
 	///   Returns the methods implemented by a type. Use this instead of Type.GetMethods() to work around a CLR issue
 	///   where duplicate MethodInfos are returned by Type.GetMethods() after a token of a generic type's method was loaded.

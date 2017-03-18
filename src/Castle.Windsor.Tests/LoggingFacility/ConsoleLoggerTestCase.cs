@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Logging;
+
 namespace CastleTests.LoggingFacility
 {
-	using Castle.Core.Logging;
 	using Castle.Facilities.Logging;
 	using Castle.Facilities.Logging.Tests.Classes;
 	using Castle.MicroKernel.Registration;

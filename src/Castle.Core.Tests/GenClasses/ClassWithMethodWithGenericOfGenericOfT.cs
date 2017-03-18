@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenClasses
-{
-	using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace Castle.Core.Tests.GenClasses
+{
 	public abstract class ClassWithMethodWithGenericOfGenericOfT
 	{
 		public virtual void GenericMethodWithGenericOfGenericArgument<T>(IEnumerable<IComparer<T>> compararers) { }

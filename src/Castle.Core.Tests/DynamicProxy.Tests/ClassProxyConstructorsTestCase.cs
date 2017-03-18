@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections.Generic;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Tests.Classes;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ClassProxyConstructorsTestCase : BasePEVerifyTestCase
 	{

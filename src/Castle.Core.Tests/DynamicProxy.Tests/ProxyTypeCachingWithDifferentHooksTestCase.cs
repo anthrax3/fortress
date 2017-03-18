@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.Interceptors;
+using Castle.Core.Tests.Interfaces;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	using System;
-
-	using Castle.DynamicProxy.Tests.Interceptors;
-	using Castle.DynamicProxy.Tests.Interfaces;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ProxyTypeCachingWithDifferentHooksTestCase : BasePEVerifyTestCase
 	{

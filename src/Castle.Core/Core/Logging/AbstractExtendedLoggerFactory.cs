@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.IO;
+using System;
+using System.IO;
 
+namespace Castle.Core.Core.Logging
+{
 	public abstract class AbstractExtendedLoggerFactory : IExtendedLoggerFactory
 	{
 		/// <summary>

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
-{
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Castle.Core.Core
+{
 	/// <summary>
 	/// Readonly implementation of <see cref="IDictionary"/> which uses an anonymous object as its source. Uses names of properties as keys, and property values as... well - values. Keys are not case sensitive.
 	/// </summary>

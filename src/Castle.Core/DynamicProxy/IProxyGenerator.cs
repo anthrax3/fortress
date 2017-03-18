@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+using System;
+using System.Reflection;
+using Castle.Core.Core.Logging;
+
+namespace Castle.Core.DynamicProxy
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.Core.Logging;
-
 	/// <summary>
 	///   Provides proxy objects for classes and interfaces.
 	/// </summary>
@@ -80,7 +79,7 @@ namespace Castle.DynamicProxy
 		/// <remarks>
 		///   This method generates new proxy type for each type of <paramref name = "target" />, which affects performance. If you don't want to proxy types differently depending on the type of the target
 		///   use <see
-		///    cref = "CreateInterfaceProxyWithTargetInterface{TInterface}(TInterface,Castle.DynamicProxy.ProxyGenerationOptions,IInterceptor[])" /> method.
+		///    cref = "CreateInterfaceProxyWithTargetInterface{TInterface}(TInterface,Castle.Core.DynamicProxy.ProxyGenerationOptions,Castle.Core.DynamicProxy.IInterceptor[])" /> method.
 		///   This method uses <see cref = "IProxyBuilder" /> implementation to generate a proxy type.
 		///   As such caller should expect any type of exception that given <see cref = "IProxyBuilder" /> implementation may throw.
 		/// </remarks>

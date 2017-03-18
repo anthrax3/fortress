@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.Interceptors;
+using Castle.Core.Tests.InterClasses;
+using Castle.Core.Tests.Mixins;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-
-	using Interceptors;
-	using InterClasses;
-	using Mixins;
-	using NUnit.Framework;
-
 	/// <summary>
 	/// See http://support.castleproject.org/projects/DYNPROXY/issues/view/DYNPROXY-ISSUE-96 for details
 	/// </summary>

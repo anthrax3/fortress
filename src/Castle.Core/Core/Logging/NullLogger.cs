@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core.Logging
+{
 	///<summary>
 	///  The Null Logger class.  This is useful for implementations where you need
 	///  to provide a logger to a utility class, but do not want any output from it.

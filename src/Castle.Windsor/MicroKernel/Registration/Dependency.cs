@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.Registration
 {
 	using System;
@@ -20,8 +22,6 @@ namespace Castle.MicroKernel.Registration
 	using System.Configuration;
 	using System.Reflection;
 	using System.Resources;
-
-	using Castle.Core.Configuration;
 
 	public sealed class Dependency
 	{

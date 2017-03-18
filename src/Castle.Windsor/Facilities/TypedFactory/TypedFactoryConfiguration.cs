@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System.Linq;
+using Castle.Core.Core.Internal;
 
 namespace Castle.Facilities.TypedFactory
 {
@@ -29,7 +30,7 @@ namespace Castle.Facilities.TypedFactory
 		public TypedFactoryConfiguration(string defaultComponentSelectorKey, Type factoryType)
 		{
 			this.defaultComponentSelectorKey = defaultComponentSelectorKey;
-			var attributes = factoryType.GetAttributes<FactoryAttribute>().ToArray();
+			var attributes = AttributesUtil.GetAttributes<FactoryAttribute>(factoryType).ToArray();
 			if (attributes.Length > 0)
 			{
 				var defaults = attributes[0];

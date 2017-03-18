@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Classes
-{
-	using System;
-	using System.IO;
+using System;
+using System.IO;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
+{
 	[NonInheritable]
 	public class HasNonInheritableAttribute
 	{
@@ -46,15 +46,15 @@ namespace Castle.DynamicProxy.Tests.Classes
 		}
 	}
 
-	[ComplexNonInheritableAttribute(1, 2, true, "class", FileAccess.Write)]
+	[ComplexNonInheritable(1, 2, true, "class", FileAccess.Write)]
 	public class AttributedClass2
 	{
-		[ComplexNonInheritableAttribute(2, 3, "Do1", Access = FileAccess.ReadWrite)]
+		[ComplexNonInheritable(2, 3, "Do1", Access = FileAccess.ReadWrite)]
 		public virtual void Do1()
 		{
 		}
 
-		[ComplexNonInheritableAttribute(3, 4, "Do2", IsSomething = true)]
+		[ComplexNonInheritable(3, 4, "Do2", IsSomething = true)]
 		public virtual void Do2()
 		{
 		}

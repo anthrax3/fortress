@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Logging;
+
 namespace Castle.Facilities.Logging
 {
 	using System;
@@ -19,7 +21,6 @@ namespace Castle.Facilities.Logging
 	using System.Reflection;
 
 	using Castle.Core.Internal;
-	using Castle.Core.Logging;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Facilities;
 	using Castle.MicroKernel.Registration;

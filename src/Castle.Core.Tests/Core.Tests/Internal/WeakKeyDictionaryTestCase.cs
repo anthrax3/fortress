@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.Core.Tests.Internal
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Castle.Core.Core.Internal;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.Core.Tests.Internal
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-
-	using Castle.Core.Internal;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class WeakKeyDictionaryTestCase
 	{

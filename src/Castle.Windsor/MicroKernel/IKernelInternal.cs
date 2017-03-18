@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Logging;
+
 namespace Castle.MicroKernel
 {
 	using System;
 	using System.Collections;
 
 	using Castle.Core;
-	using Castle.Core.Logging;
 
 	/// <summary>
 	/// Extended contract of kernel, used internally.

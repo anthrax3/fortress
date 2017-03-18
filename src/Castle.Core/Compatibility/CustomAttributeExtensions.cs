@@ -13,10 +13,8 @@
 // limitations under the License.
 
 
-namespace System.Reflection
+namespace Castle.Core.Compatibility
 {
-	using System.Collections.Generic;
-
 	// This allows us to use the new reflection API while still supporting .NET 3.5 and 4.0.
 	//
 	// Methods like Attribute.IsDefined no longer exist in .NET Core so this provides a shim

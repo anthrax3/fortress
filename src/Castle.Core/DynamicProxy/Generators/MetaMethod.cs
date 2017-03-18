@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System;
-	using System.Diagnostics;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Internal;
-
 	[DebuggerDisplay("{Method}")]
 	public class MetaMethod : MetaTypeElement, IEquatable<MetaMethod>
 	{

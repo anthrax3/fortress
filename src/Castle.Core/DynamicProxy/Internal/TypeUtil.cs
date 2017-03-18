@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Internal
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+
+namespace Castle.Core.DynamicProxy.Internal
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.DynamicProxy.Generators.Emitters;
-
 	public static class TypeUtil
 	{
 		public static FieldInfo[] GetAllFields(this Type type)

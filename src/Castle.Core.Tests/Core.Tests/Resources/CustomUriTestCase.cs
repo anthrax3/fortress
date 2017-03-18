@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Tests.Resources
-{
-	using System;
-	using Castle.Core.Resource;
-	using NUnit.Framework;
+using System;
+using Castle.Core.Core.Resource;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests.Core.Tests.Resources
+{
 	[TestFixture]
 	public class CustomUriTestCase
 	{

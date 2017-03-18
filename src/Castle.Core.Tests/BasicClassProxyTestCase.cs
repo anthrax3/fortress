@@ -16,17 +16,16 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.DynamicProxy;
-using Castle.DynamicProxy.Generators.Emitters;
-using Castle.DynamicProxy.Tests;
-using Castle.DynamicProxy.Tests.BugsReported;
-using Castle.DynamicProxy.Tests.Classes;
-using Castle.DynamicProxy.Tests.Interceptors;
-using Castle.DynamicProxy.Tests.InterClasses;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.Tests.BugsReported;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.Core.Tests.Interceptors;
+using Castle.Core.Tests.InterClasses;
 using NUnit.Framework;
-using ClassWithIndexer = Castle.DynamicProxy.Tests.Classes.ClassWithIndexer;
+using ClassWithIndexer = Castle.Core.Tests.DynamicProxy.Tests.Classes.ClassWithIndexer;
 
-namespace CastleTests
+namespace Castle.Core.Tests
 {
 	[TestFixture]
 	public class BasicClassProxyTestCase : BasePEVerifyTestCase

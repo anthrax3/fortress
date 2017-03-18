@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 #pragma warning disable 618
 namespace CastleTests.Bugs
 {
-	using Castle.Core.Configuration;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Tests.ClassComponents;
 

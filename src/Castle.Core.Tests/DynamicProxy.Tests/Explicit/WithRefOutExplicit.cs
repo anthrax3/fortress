@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Explicit
-{
-	using Castle.DynamicProxy.Tests.Interfaces;
+using Castle.Core.Tests.Interfaces;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Explicit
+{
 	public class WithRefOutExplicit : IWithRefOut
 	{
 		void IWithRefOut.Did(ref int i)

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
+namespace Castle.Core.Core.Internal
+{
 	public sealed class InterfaceAttributeUtil
 	{
 		private readonly Aged<Type>[] types; // in order from most to least derived

@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-	using System.Reflection;
-
-	using Castle.DynamicProxy;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CustomAttributeInfoTestCase
 	{

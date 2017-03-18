@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System.Reflection;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-
 	public interface IInvocationCreationContributor
 	{
 		ConstructorEmitter CreateConstructor(ArgumentReference[] baseCtorArguments, AbstractTypeEmitter invocation);

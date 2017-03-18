@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Contributors
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.Serialization;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Internal;
+using Castle.Core.DynamicProxy.Tokens;
+
+namespace Castle.Core.DynamicProxy.Contributors
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using System.Runtime.Serialization;
-
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.DynamicProxy.Internal;
-	using Castle.DynamicProxy.Tokens;
-
 	public class ClassProxyInstanceContributor : ProxyInstanceContributor
 	{
 		private readonly bool delegateToBaseGetObjectData;

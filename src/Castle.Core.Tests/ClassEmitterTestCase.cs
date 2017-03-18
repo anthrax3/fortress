@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class ClassEmitterTestCase : BasePEVerifyTestCase
 	{

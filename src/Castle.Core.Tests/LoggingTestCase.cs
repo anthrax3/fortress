@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Castle.Core.Core.Logging;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using Castle.Core.Logging;
-
-	using CastleTests.DynamicProxy.Tests.Classes;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class LoggingTestCase
 	{
@@ -34,7 +32,7 @@ namespace Castle.DynamicProxy.Tests
 			ProxyGenerator generator = new ProxyGenerator { Logger = logger };
 
 			// Act
-			generator.CreateClassProxy<EmptyClass>();
+			generator.CreateClassProxy<DynamicProxy.Tests.Classes.EmptyClass>();
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "No cached proxy type was found for target type " +
@@ -49,8 +47,8 @@ namespace Castle.DynamicProxy.Tests
 			ProxyGenerator generator = new ProxyGenerator { Logger = logger };
 
 			// Act
-			generator.CreateClassProxy<EmptyClass>();
-			generator.CreateClassProxy<EmptyClass>();
+			generator.CreateClassProxy<DynamicProxy.Tests.Classes.EmptyClass>();
+			generator.CreateClassProxy<DynamicProxy.Tests.Classes.EmptyClass>();
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Found cached proxy type Castle.Proxies.EmptyClassProxy " +
@@ -84,7 +82,7 @@ namespace Castle.DynamicProxy.Tests
 			ProxyGenerationOptions options = new ProxyGenerationOptions {
 				Hook = new EmptyHook()
 			};
-			generator.CreateClassProxy(typeof(EmptyClass), options);
+			generator.CreateClassProxy(typeof(DynamicProxy.Tests.Classes.EmptyClass), options);
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Warn, "The IProxyGenerationHook type " +

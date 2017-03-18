@@ -13,11 +13,12 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests.Serialization
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
+{
 	[Serializable]
 	public class SerializableInterceptorSelector : IInterceptorSelector
 	{

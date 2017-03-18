@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests.Serialization
-{
-	using System;
+using System;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
+{
 	[Serializable]
 	public class EventHandlerClass
 	{

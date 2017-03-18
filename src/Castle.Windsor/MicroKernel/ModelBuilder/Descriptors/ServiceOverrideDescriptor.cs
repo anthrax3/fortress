@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	using System;
@@ -20,7 +22,6 @@ namespace Castle.MicroKernel.ModelBuilder.Descriptors
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Util;
 

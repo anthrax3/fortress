@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.InterClasses
-{
-	using System;
+using System;
 
+namespace Castle.Core.Tests.InterClasses
+{
 	/// <summary>
 	/// Summary description for IMyInterface.
 	/// </summary>
@@ -34,7 +34,7 @@ namespace Castle.DynamicProxy.Tests.InterClasses
 	/// Summary description for MyInterfaceImpl.
 	/// </summary>
 	[Serializable]
-	[MyAttribute("MyInterfaceImpl")]
+	[My("MyInterfaceImpl")]
 	public class MyInterfaceImpl : IMyInterface2
 	{
 		private String _name;
@@ -52,13 +52,13 @@ namespace Castle.DynamicProxy.Tests.InterClasses
 			set { _started = value; }
 		}
 
-		[MyAttribute("Calc1")]
+		[My("Calc1")]
 		public virtual int Calc(int x, int y)
 		{
 			return x + y;
 		}
 
-		[MyAttribute("Calc2")]
+		[My("Calc2")]
 		public virtual int Calc(int x, int y, int z, Single k)
 		{
 			return x + y + z + (int) k;

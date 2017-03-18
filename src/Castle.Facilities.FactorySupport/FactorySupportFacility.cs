@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.Facilities.FactorySupport
 {
 	using System;
 	using System.ComponentModel;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Facilities;
 

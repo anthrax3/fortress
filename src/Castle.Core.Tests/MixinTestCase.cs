@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.InterClasses;
+using Castle.Core.Tests.Mixins;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Tests.Classes;
-	using Castle.DynamicProxy.Tests.Mixins;
-	using Castle.DynamicProxy.Tests.InterClasses;
-	using Interceptors;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class MixinTestCase : BasePEVerifyTestCase
 	{

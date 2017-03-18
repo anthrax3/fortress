@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Castle.Core.Core.Internal;
+using Castle.Core.Core.Logging;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core.Internal;
-	using Castle.Core.Logging;
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Internal;
-
-
 	/// <summary>
 	///   Default implementation of <see cref = "IProxyBuilder" /> interface producing in-memory proxy assemblies.
 	/// </summary>

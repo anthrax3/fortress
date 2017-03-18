@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Internal;
+
 namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	using System;
@@ -133,7 +135,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 		/// <summary>Check if the type expose one of the lifestyle attributes defined in Castle.Model namespace.</summary>
 		protected virtual void ReadLifestyleFromType(ComponentModel model)
 		{
-			var attributes = model.Implementation.GetAttributes<LifestyleAttribute>().ToArray();
+			var attributes = AttributesUtil.GetAttributes<LifestyleAttribute>(model.Implementation).ToArray();
 			if (attributes.Length == 0)
 			{
 				return;

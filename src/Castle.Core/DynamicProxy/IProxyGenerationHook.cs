@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy
+{
 	/// <summary>
 	///   Used during the target type inspection process. Implementors have a chance to customize the
 	///   proxy generation process.

@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Internal
-{
-	using System;
-	using System.Security;
-	using System.Security.Permissions;
+using System;
+using System.Security;
+using System.Security.Permissions;
 
+namespace Castle.Core.Core.Internal
+{
 	public static class PermissionUtil
 	{
 		public static bool IsGranted(this IPermission permission)

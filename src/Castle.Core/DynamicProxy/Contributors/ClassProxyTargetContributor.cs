@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Contributors
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Internal;
+using Castle.Core.DynamicProxy.Tokens;
+
+namespace Castle.Core.DynamicProxy.Contributors
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.DynamicProxy.Internal;
-	using Castle.DynamicProxy.Tokens;
-
 	public class ClassProxyTargetContributor : CompositeTypeContributor
 	{
 		private readonly IList<MethodInfo> methodsToSkip;

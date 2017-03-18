@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.IO;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.IO;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.Core.Tests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class BaseTestCaseTestCase : BasePEVerifyTestCase
 	{

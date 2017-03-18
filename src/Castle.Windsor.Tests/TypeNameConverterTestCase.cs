@@ -15,8 +15,6 @@
 namespace CastleTests
 {
 	using System;
-
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel.SubSystems.Conversion;
 	using Castle.MicroKernel.Tests.ClassComponents;
 

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Contributors
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Contributors
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Internal;
-
 	public class InterfaceMembersCollector : MembersCollector
 	{
 		public InterfaceMembersCollector(Type @interface)

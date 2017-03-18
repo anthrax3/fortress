@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Contributors
-{
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Generators.Emitters;
 
+namespace Castle.Core.DynamicProxy.Contributors
+{
 	public class InterfaceProxyWithOptionalTargetContributor : InterfaceProxyWithoutTargetContributor
 	{
 		private readonly GetTargetReferenceDelegate getTargetReference;

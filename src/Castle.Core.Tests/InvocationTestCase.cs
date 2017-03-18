@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System.Reflection;
-	using Castle.DynamicProxy.Tests.Classes;
-	using Castle.DynamicProxy.Tests.Interceptors;
-	using Castle.DynamicProxy.Tests.InterClasses;
-	using NUnit.Framework;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.Core.Tests.Interceptors;
+using Castle.Core.Tests.InterClasses;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class InvocationTestCase : BasePEVerifyTestCase
 	{

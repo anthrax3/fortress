@@ -14,9 +14,10 @@
 
 // we do not support xml config on SL
 
+using Castle.Core.DynamicProxy;
+
 namespace CastleTests.Proxies
 {
-	using Castle.DynamicProxy;
 	using Castle.TypedFactoryInterfaces;
 	using Castle.Windsor;
 	using Castle.Windsor.Configuration.Interpreters;

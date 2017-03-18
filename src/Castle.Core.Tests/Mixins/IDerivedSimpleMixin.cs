@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Mixins
+namespace Castle.Core.Tests.Mixins
 {
 	public interface IDerivedSimpleMixin : ISimpleMixin
 	{

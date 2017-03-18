@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.InterClasses
+using System;
+using Castle.Core.Tests.Interfaces;
+
+namespace Castle.Core.Tests.InterClasses
 {
-	using System;
-
-	using Castle.DynamicProxy.Tests.Interfaces;
-
 	[Serializable]
 	public class Two : ITwo
 	{

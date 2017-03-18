@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
 	using System;
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.Facilities.Startable;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.ModelBuilder;

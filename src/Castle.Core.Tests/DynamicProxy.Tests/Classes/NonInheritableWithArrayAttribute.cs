@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.DynamicProxy.Tests.Classes
-{
-	using System;
+using System;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
+{
 	[Serializable]
 	[AttributeUsage(AttributeTargets.All, Inherited = false)]
 	public class NonInheritableWithArrayAttribute : Attribute

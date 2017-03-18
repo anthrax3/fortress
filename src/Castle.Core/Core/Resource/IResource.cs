@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Resource
-{
-	using System;
-	using System.IO;
-	using System.Text;
+using System;
+using System.IO;
+using System.Text;
 
+namespace Castle.Core.Core.Resource
+{
 	/// <summary>
 	/// Represents a 'streamable' resource. Can
 	/// be a file, a resource in an assembly.

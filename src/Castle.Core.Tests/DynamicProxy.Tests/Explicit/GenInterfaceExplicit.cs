@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Explicit
-{
-	using Castle.DynamicProxy.Tests.GenInterfaces;
+using Castle.Core.Tests.GenInterfaces;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Explicit
+{
 	public class GenInterfaceExplicit : GenInterface<int>
 	{
 		int GenInterface<int>.DoSomething(int t)

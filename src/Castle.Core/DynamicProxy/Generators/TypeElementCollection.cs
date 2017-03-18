@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
-{
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
+namespace Castle.Core.DynamicProxy.Generators
+{
 	public class TypeElementCollection<TElement> : ICollection<TElement>
 		where TElement : MetaTypeElement, IEquatable<TElement>
 	{

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
+using System;
 
+namespace Castle.Core.DynamicProxy
+{
 	[Serializable]
 	public class StandardInterceptor :
 		IInterceptor

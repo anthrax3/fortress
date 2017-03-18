@@ -13,12 +13,11 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
-	using System.IO;
-	using NUnit.Framework;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class PersistentProxyBuilderTestCase
 	{

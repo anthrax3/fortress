@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenInterfaces
-{
-	using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace Castle.Core.Tests.GenInterfaces
+{
 	public class GenInterfaceHierarchy<T> : IGenInterfaceHierarchySpecialization<T>
 	{
 		private List<T> items = new List<T>();

@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenInterfaces
-{
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Reflection;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.GenInterfaces
+{
 	public interface GenInterfaceWithGenericTypes
 	{
 		IList Find(string[,] query);

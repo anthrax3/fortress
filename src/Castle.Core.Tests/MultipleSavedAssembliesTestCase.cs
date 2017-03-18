@@ -13,15 +13,13 @@
 // limitations under the License.
 
 
-namespace CastleTests
+using System.Reflection;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.Interceptors;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System.Reflection;
-
-	using Castle.DynamicProxy;
-	using Castle.DynamicProxy.Tests.Interceptors;
-
-	using NUnit.Framework;
-
 	public interface IGenericInterface<T>
 	{
 		void GenericMethod(T toto);

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection.Emit;
+using System;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
+namespace Castle.Core.DynamicProxy.Generators.Emitters
+{
 	/// <summary>
 	///   Provides appropriate Stind.X opcode 
 	///   for the type of primitive value to be stored indirectly.

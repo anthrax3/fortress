@@ -13,15 +13,15 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Resource
-{
-	using System;
-	using System.Configuration;
-	using System.Globalization;
-	using System.IO;
-	using System.Text;
-	using System.Xml;
+using System;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Xml;
 
+namespace Castle.Core.Core.Resource
+{
 	public class ConfigResource : AbstractResource
 	{
 		private readonly XmlNode configSectionNode;

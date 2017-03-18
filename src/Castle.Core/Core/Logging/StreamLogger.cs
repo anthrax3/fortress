@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.IO;
-	using System.Text;
+using System;
+using System.IO;
+using System.Text;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	///	The Stream Logger class.  This class can stream log information
 	///	to any stream, it is suitable for storing a log file to disk,

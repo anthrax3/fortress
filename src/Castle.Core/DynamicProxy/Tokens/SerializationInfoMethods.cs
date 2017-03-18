@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tokens
-{
-	using System;
-	using System.Reflection;
-	using System.Runtime.Serialization;
+using System;
+using System.Reflection;
+using System.Runtime.Serialization;
 
+namespace Castle.Core.DynamicProxy.Tokens
+{
 	/// <summary>
 	///   Holds <see cref = "MethodInfo" /> objects representing methods of <see cref = "SerializationInfo" /> class.
 	/// </summary>

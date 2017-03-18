@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interceptors
+using System.Linq;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+
+namespace Castle.Core.Tests.Interceptors
 {
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.Core.Tests.Classes;
-
 	public class RequiredParamInterceptor : IInterceptor
 	{
 		public void Intercept(IInvocation invocation)

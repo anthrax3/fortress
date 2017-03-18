@@ -13,12 +13,12 @@
 // limitations under the License.
 
 using System.Diagnostics;
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Resource;
 
 namespace Castle.MicroKernel.Tests.Configuration
 {
 	using Castle.Core;
-	using Castle.Core.Configuration;
-	using Castle.Core.Resource;
 	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.Tests.ClassComponents;
 	using Castle.MicroKernel.Tests.Configuration.Components;

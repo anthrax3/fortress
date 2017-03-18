@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.Diagnostics;
-	using System.Globalization;
+using System;
+using System.Diagnostics;
+using System.Globalization;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	///   The Logger using standard Diagnostics namespace.
 	/// </summary>

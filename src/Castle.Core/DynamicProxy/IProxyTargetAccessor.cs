@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+namespace Castle.Core.DynamicProxy
 {
 	/// <summary>
 	///   Exposes access to the target object and interceptors of proxy objects.

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters.CodeBuilders
+using System;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+
+namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
 {
-	using System;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-
 	public class ConstructorCodeBuilder : AbstractCodeBuilder
 	{
 		private readonly Type baseType;

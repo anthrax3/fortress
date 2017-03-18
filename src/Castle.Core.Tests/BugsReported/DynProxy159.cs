@@ -13,18 +13,15 @@
 // limitations under the License.
 
 
-namespace CastleTests.BugsReported
+using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.BugsReported
 {
-	using System;
-	using System.IO;
-	using System.Reflection;
-	using System.Runtime.Serialization;
-	using System.Runtime.Serialization.Formatters.Binary;
-
-	using Castle.DynamicProxy.Tests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DynProxy159 : BasePEVerifyTestCase
 	{

@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.DynamicProxy.Generators.Emitters;
-
 	public class MetaProperty : MetaTypeElement, IEquatable<MetaProperty>
 	{
 		private readonly Type[] arguments;

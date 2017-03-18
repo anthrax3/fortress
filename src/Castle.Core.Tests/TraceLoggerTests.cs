@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging.Tests
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using Castle.Core.Core.Configuration.Xml;
+using Castle.Core.Core.Logging;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Text;
-	using System.Diagnostics;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Tests the TraceLogger and TraceLoggerFactory classes
 	/// </summary>
@@ -88,10 +89,10 @@ namespace Castle.Core.Logging.Tests
 		public void FallUpToShorterSourceName()
 		{
 			TraceLoggerFactory factory = new TraceLoggerFactory();
-			ILogger logger = factory.Create(typeof(Configuration.Xml.XmlConfigurationDeserializer), LoggerLevel.Debug);
+			ILogger logger = factory.Create(typeof(XmlConfigurationDeserializer), LoggerLevel.Debug);
 			logger.Info("Logging to config namespace");
 
-			Listener.AssertContains("configrule", "Castle.Core.Configuration.Xml.XmlConfigurationDeserializer");
+			Listener.AssertContains("configrule", "Castle.Core.Core.Configuration.Xml.XmlConfigurationDeserializer");
 			Listener.AssertContains("configrule", "Logging to config namespace");
 		}
 

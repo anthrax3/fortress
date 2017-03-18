@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Classes
-{
-	using Castle.DynamicProxy.Tests.GenClasses;
+using Castle.Core.Tests.GenClasses;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
+{
 	public class ClassWithIndexer : ClassWithIndexer<string, int>
 	{ }
 }

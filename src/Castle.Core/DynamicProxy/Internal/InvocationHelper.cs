@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Internal
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using Castle.Core.Core.Internal;
+using Castle.Core.DynamicProxy.Generators;
+
+namespace Castle.Core.DynamicProxy.Internal
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Reflection;
-
-	using Castle.Core.Internal;
-	using Castle.DynamicProxy.Generators;
-
 	public static class InvocationHelper
 	{
 		private static readonly Dictionary<KeyValuePair<MethodInfo, Type>, MethodInfo> cache =

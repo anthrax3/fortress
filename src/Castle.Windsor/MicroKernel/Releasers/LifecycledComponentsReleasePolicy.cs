@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core;
+using Castle.Core.Core.Internal;
+
 namespace Castle.MicroKernel.Releasers
 {
 	using System;

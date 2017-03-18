@@ -13,17 +13,16 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Smtp
-{
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Net;
-	using System.Net.Mail;
-	using System.Security;
-	using System.Security.Permissions;
-	using Castle.Core.Internal;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Permissions;
+using Castle.Core.Core.Internal;
 
+namespace Castle.Core.Core.Smtp
+{
 	/// <summary>
 	/// Default <see cref="IEmailSender"/> implementation.
 	/// </summary>

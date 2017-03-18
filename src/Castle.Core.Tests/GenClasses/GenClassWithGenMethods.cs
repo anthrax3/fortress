@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenClasses
+namespace Castle.Core.Tests.GenClasses
 {
-	using System;
-
 	public class GenClassWithGenMethods<T> where T : new()
 	{
 		private object savedParam;

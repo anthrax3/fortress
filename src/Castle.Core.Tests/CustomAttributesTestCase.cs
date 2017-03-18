@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System.Reflection;
-	using NUnit.Framework;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class CustomAttributesTestCase:BasePEVerifyTestCase
 	{
@@ -24,7 +24,7 @@ namespace Castle.DynamicProxy.Tests
 		public void Should_Proxy_type_having_complicated_arguments()
 		{
 			// http://support.castleproject.org/projects/DYNPROXY/issues/view/DYNPROXY-ISSUE-108
-			var proxy = generator.CreateClassProxy(typeof(Classes.ClassWith_Smart_Attribute));
+			var proxy = generator.CreateClassProxy(typeof(ClassWith_Smart_Attribute));
 			var properties = proxy.GetType().GetProperties();
 			Assert.IsNotEmpty(properties);
 			Assert.DoesNotThrow(() => properties[0].GetCustomAttributes(false));

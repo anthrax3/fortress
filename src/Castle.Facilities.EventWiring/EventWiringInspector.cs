@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.Facilities.EventWiring
 {
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.ModelBuilder;
 	using Castle.MicroKernel.Util;

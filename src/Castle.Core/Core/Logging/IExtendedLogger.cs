@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
+namespace Castle.Core.Core.Logging
 {
 	/// <summary>
 	///   Provides an interface that supports <see cref = "ILogger" /> and

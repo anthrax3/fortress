@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Resource
-{
-	using System;
-	using System.IO;
-	using System.Text;
+using System;
+using System.IO;
+using System.Text;
 
+namespace Castle.Core.Core.Resource
+{
 	/// <summary>
 	/// Adapts a static string content as an <see cref="IResource"/>
 	/// </summary>

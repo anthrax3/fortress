@@ -13,22 +13,21 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Serialization;
+using Castle.Core.Tests.BugsReported;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.Core.Tests.DynamicProxy.Tests.Serialization;
+using Castle.Core.Tests.InterClasses;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	using System;
-	using System.Collections;
-	using System.IO;
-	using System.Runtime.Serialization;
-	using System.Runtime.Serialization.Formatters.Binary;
-
-	using Castle.DynamicProxy.Serialization;
-	using Castle.DynamicProxy.Tests.Classes;
-	using Castle.DynamicProxy.Tests.BugsReported;
-	using Castle.DynamicProxy.Tests.InterClasses;
-	using Castle.DynamicProxy.Tests.Serialization;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SerializableClassTestCase : BasePEVerifyTestCase
 	{

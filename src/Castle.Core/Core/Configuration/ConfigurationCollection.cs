@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Configuration
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace Castle.Core.Core.Configuration
+{
 	/// <summary>
 	/// A collection of <see cref="IConfiguration"/> objects.
 	/// </summary>

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters.CodeBuilders
-{
-	using System.Reflection.Emit;
+using System.Reflection.Emit;
 
+namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
+{
 	public class MethodCodeBuilder : AbstractCodeBuilder
 	{
 		public MethodCodeBuilder(ILGenerator generator) : base(generator)

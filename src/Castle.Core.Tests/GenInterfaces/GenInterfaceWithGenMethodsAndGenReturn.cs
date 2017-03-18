@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenInterfaces
+namespace Castle.Core.Tests.GenInterfaces
 {
 	public interface GenInterfaceWithGenMethodsAndGenReturn<T>
 	{

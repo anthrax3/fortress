@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Facilities.TypedFactory
 {
 	using System;
@@ -20,7 +22,6 @@ namespace Castle.Facilities.TypedFactory
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.DynamicProxy;
 	using Castle.Facilities.TypedFactory.Internal;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.ModelBuilder.Descriptors;

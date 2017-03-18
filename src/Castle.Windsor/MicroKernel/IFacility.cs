@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel
 {
-	using Castle.Core.Configuration;
-
 	/// <summary>
 	///   Unit of extension. A facility should use 
 	///   the extension points offered by the kernel

@@ -13,14 +13,12 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Tests.Internal
+using System.Security.Permissions;
+using Castle.Core.Core.Internal;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.Core.Tests.Internal
 {
-	using System.Security.Permissions;
-
-	using Castle.Core.Internal;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class PermissionUtilTestCase
 	{

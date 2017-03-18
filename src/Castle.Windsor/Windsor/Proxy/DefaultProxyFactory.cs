@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Windsor.Proxy
 {
 	using System;
@@ -21,7 +23,6 @@ namespace Castle.Windsor.Proxy
 	using Castle.Core;
 	using Castle.Core.Interceptor;
 	using Castle.Core.Internal;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Proxy;

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.Tests.ClassComponents
 {
-	using Castle.Core.Configuration;
-
 	using NUnit.Framework;
 
 	public class HiperFacility : IFacility

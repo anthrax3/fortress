@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy.Generators
+{
 	public class MethodSignatureComparer : IEqualityComparer<MethodInfo>
 	{
 		public static readonly MethodSignatureComparer Instance = new MethodSignatureComparer();

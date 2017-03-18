@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Resource
-{
-	using System;
-	using System.Globalization;
-	using System.IO;
+using System;
+using System.Globalization;
+using System.IO;
 
+namespace Castle.Core.Core.Resource
+{
 	/// <summary>
 	/// Enable access to files on network shares
 	/// </summary>

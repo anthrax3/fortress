@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interceptors
-{
-	using NUnit.Framework;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
 
-    public class AssertCanChangeTargetInterceptor : IInterceptor
+namespace Castle.Core.Tests.Interceptors
+{
+	public class AssertCanChangeTargetInterceptor : IInterceptor
     {
         #region IInterceptor Members
 

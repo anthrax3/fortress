@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+namespace Castle.Core.DynamicProxy.Generators
 {
 	/// <summary>
 	///   Represents the scope of uniquenes of names for types and their members

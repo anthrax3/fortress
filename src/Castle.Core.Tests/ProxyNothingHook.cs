@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests
+{
 	[Serializable]
 	public class ProxyNothingHook : IProxyGenerationHook
 	{

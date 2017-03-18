@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using Castle.DynamicProxy;
-
 	public class CollectInterceptedIdInterceptor : IInterceptor
 	{
 		public static int InterceptedId;

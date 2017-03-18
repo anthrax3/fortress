@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core;
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	using System;
@@ -19,7 +22,6 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 	using System.Threading;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.MicroKernel.Context;
 
 	/// <summary>

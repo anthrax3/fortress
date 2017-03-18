@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
-	using System.IO;
-	using System.Reflection;
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Serialization;
-	using Castle.DynamicProxy.Tests.InterClasses;
-	using NUnit.Framework;
+using System;
+using System.IO;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Serialization;
+using Castle.Core.Tests.InterClasses;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class ModuleScopeTestCase
 	{

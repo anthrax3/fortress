@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.DynamicProxy.Tests.Interfaces
+using System;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests.Interfaces
 {
-	using System;
 	public interface InterfaceWithMethodsWithAllKindsOfOptionalParameters
 	{
 		void MethodWithOptionalByteParameter(byte b = 0);

@@ -13,12 +13,13 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests.Serialization
-{
-	using System;
-	using System.Reflection;
-	using System.Text.RegularExpressions;
+using System;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
+{
 	[Serializable]
 	public class MethodFilterHook : IProxyGenerationHook
 	{

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-namespace System.Reflection
+namespace Castle.Core.Compatibility
 {
 	//internal static class IntrospectionExtensions
 	//{

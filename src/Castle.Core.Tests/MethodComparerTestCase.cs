@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections.Generic;
+using Castle.Core.DynamicProxy.Generators;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class MethodComparerTestCase
 	{

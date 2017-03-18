@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Internal;
+using Castle.Core.DynamicProxy;
+
 namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	using System;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.Core.Internal;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel.Proxy;
 	using Castle.MicroKernel.Util;
 
@@ -43,7 +45,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 
 		protected virtual void CollectFromAttributes(ComponentModel model)
 		{
-			var attributes = model.Implementation.GetAttributes<InterceptorAttribute>();
+			var attributes = AttributesUtil.GetAttributes<InterceptorAttribute>(model.Implementation);
 			foreach (var attribute in attributes)
 			{
 				AddInterceptor(attribute.Interceptor, model.Interceptors);

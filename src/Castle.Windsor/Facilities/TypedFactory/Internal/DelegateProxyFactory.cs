@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators;
+
 namespace Castle.Facilities.TypedFactory.Internal
 {
 	using System;
 
 	using Castle.Core;
 	using Castle.Core.Internal;
-	using Castle.DynamicProxy;
-	using Castle.DynamicProxy.Generators;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Context;
 

@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	using Castle.Core;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel.Proxy;
 
 	public class ProxyHookDescriptor : IComponentModelDescriptor

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
-{
-	using System.Collections.Generic;
-	using System.Diagnostics;
+using System.Collections.Generic;
+using System.Diagnostics;
 
+namespace Castle.Core.DynamicProxy.Generators
+{
 	public class NamingScope : INamingScope
 	{
 		private readonly IDictionary<string, int> names = new Dictionary<string, int>();

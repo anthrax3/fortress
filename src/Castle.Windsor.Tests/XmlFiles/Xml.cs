@@ -15,12 +15,12 @@
 
 // we do not support xml config on SL
 
+using Castle.Core.Core.Resource;
+
 namespace Castle.XmlFiles
 {
 	using System;
 	using System.IO;
-
-	using Castle.Core.Resource;
 
 	public class Xml
 	{

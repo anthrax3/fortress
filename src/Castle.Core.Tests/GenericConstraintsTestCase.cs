@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using CastleTests.GenInterfaces;
-	using NUnit.Framework;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.GenInterfaces;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	[TestFixture]
 	public class GenericConstraintsTestCase : BasePEVerifyTestCase
 	{

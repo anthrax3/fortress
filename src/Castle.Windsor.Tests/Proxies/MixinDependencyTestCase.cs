@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace CastleTests.Proxies
 {
 	using System.Linq;
-
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel.Registration;
 
 	using CastleTests.Components;

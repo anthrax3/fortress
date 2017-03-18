@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	using System;
 	using System.Diagnostics;
-
-	using Castle.Core.Configuration;
 
 	[Serializable]
 	public class ArrayConverter : AbstractTypeConverter

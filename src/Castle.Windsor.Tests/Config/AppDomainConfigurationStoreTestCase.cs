@@ -15,9 +15,10 @@
 
 // we do not support xml config on SL
 
+using Castle.Core.Core.Resource;
+
 namespace Castle.Windsor.Tests.Config
 {
-	using Castle.Core.Resource;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.MicroKernel.Tests.ClassComponents;

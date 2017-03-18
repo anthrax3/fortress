@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Resource
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core.Resource
+{
 	public class ConfigResourceFactory : IResourceFactory
 	{
 		public ConfigResourceFactory()

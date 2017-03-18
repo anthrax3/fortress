@@ -13,6 +13,9 @@
 // limitations under the License.
 
 
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Configuration.Xml;
+using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.Configuration.Interpreters
 {
@@ -20,9 +23,6 @@ namespace Castle.Windsor.Configuration.Interpreters
 	using System.Xml;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
-	using Castle.Core.Configuration.Xml;
-	using Castle.Core.Resource;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.SubSystems.Configuration;
 	using Castle.MicroKernel.SubSystems.Conversion;

@@ -12,24 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using Castle.Core.Core.Logging;
+using Castle.Core.DynamicProxy.Contributors;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.Serialization;
-	using System.Xml.Serialization;
-
-	using Castle.Core.Internal;
-	using Castle.Core.Logging;
-	using Castle.DynamicProxy.Contributors;
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.DynamicProxy.Internal;
-
 	/// <summary>
 	///   Base class that exposes the common functionalities
 	///   to proxy generation.

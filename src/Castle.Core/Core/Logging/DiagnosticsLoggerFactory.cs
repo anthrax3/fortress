@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Logging
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core.Logging
+{
 	[Serializable]
 	public class DiagnosticsLoggerFactory : AbstractLoggerFactory
 	{

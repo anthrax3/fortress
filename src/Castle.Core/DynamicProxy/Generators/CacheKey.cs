@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy.Generators
+{
 	[Serializable]
 	public class CacheKey
 	{

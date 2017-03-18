@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Tests.Classes
-{
-	using NUnit.Framework;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
+{
 	public class ClassWithAttributesOnMethodParameters
 	{
 		public virtual void MethodOne([Required(BadValue = -1)] int val)

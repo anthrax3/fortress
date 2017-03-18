@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System.Reflection;
+using Castle.Core.DynamicProxy.Contributors;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Contributors;
-	using Castle.DynamicProxy.Generators.Emitters;
-
 	public abstract class MethodGenerator : IGenerator<MethodEmitter>
 	{
 		private readonly MetaMethod method;

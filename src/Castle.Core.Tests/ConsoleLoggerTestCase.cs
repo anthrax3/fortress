@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging.Tests
+using System;
+using System.IO;
+using Castle.Core.Core.Logging;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.IO;
-
-	using Castle.Core.Logging;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConsoleLoggerTestCase
 	{

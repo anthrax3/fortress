@@ -13,10 +13,11 @@
 // limitations under the License.
 
 
-namespace System.Reflection
-{
-	using System.Reflection.Emit;
+using System;
+using System.Reflection.Emit;
 
+namespace Castle.Core.Compatibility
+{
 	// This allows us to use the new reflection API while still supporting .NET 3.5 and 4.0.
 	internal static class TypeBuilderExtensions
 	{

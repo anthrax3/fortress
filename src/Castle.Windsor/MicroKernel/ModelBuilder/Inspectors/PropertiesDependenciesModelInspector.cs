@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+
 namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	using System;
@@ -20,7 +22,6 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
 	using Castle.Core.Internal;
 	using Castle.MicroKernel.SubSystems.Conversion;
 

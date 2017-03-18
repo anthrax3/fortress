@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Tests.Internal
-{
-	using System;
-	using Castle.Core.Internal;
-	using NUnit.Framework;
+using System;
+using Castle.Core.Core.Internal;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests.Core.Tests.Internal
+{
 	[TestFixture]
 	public class InterfaceAttributeUtilTestCase
 	{

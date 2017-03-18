@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Internal;
+
 namespace Castle.Core.Tests
 {
 	using System.Threading;
-	using Castle.Core.Internal;
 	using NUnit.Framework;
 
 	[TestFixture]

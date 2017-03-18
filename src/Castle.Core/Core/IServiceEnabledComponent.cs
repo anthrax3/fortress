@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core
+{
 	/// <summary>
 	/// Defines that the implementation wants a 
 	/// <see cref="IServiceProvider"/> in order to 

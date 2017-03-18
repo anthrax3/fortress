@@ -13,17 +13,16 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Castle.Core.DynamicProxy;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Runtime.Serialization.Formatters.Binary;
-
-	using Castle.DynamicProxy.Tests.Classes;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DictionarySerializationTestCase
 	{

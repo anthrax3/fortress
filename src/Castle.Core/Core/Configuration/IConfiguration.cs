@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Configuration
-{
-	using System;
-	using System.Collections;
+using System;
+using System.Collections;
 
+namespace Castle.Core.Core.Configuration
+{
 	/// <summary>
 	/// <see cref="IConfiguration"/> is a interface encapsulating a configuration node
 	///	used to retrieve configuration values.

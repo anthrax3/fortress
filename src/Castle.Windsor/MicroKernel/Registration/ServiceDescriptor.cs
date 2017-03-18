@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy.Internal;
+
 namespace Castle.MicroKernel.Registration
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-
-	using Castle.DynamicProxy.Internal;
 
 	/// <summary>
 	///   Describes how to select a types service.

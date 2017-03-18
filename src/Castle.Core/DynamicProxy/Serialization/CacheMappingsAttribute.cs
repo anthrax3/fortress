@@ -13,17 +13,16 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Serialization
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.Serialization.Formatters.Binary;
+using Castle.Core.DynamicProxy.Generators;
+
+namespace Castle.Core.DynamicProxy.Serialization
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Reflection;
-	using System.Reflection.Emit;
-	using System.Runtime.Serialization.Formatters.Binary;
-
-	using Castle.DynamicProxy.Generators;
-
 	/// <summary>
 	///   Applied to the assemblies saved by <see cref="ModuleScope" /> in order to persist the cache data included in the persisted assembly.
 	/// </summary>

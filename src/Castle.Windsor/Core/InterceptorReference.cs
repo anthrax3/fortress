@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Core
 {
 	using System;
 	using System.Diagnostics;
 	using System.Text;
-
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Proxy;

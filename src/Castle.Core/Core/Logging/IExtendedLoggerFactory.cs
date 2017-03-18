@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	///   Provides a factory that can produce either <see cref = "ILogger" /> or
 	///   <see cref = "IExtendedLogger" /> classes.

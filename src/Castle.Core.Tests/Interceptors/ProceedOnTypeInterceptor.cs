@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interceptors
-{
-    using System;
+using System;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.Interceptors
+{
 	public class ProceedOnTypeInterceptor : IInterceptor
     {
         private Type type;

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace CastleTests.DynamicProxy.Tests.Classes
-{
-	using System;
-	using CastleTests.DynamicProxy.Tests.Interfaces;
+using System;
+using Castle.Core.Tests.DynamicProxy.Tests.Interfaces;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
+{
 	public class ClassWithMethodsWithAllKindsOfOptionalParameters : InterfaceWithMethodsWithAllKindsOfOptionalParameters
 	{
 		public virtual void MethodWithOptionalByteParameter(byte b = 0)

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters.SimpleAST
-{
-	using System;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Reflection.Emit;
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Emit;
 
+namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
+{
 	/// <summary>
 	///   Wraps a reference that is passed 
 	///   ByRef and provides indirect load/store support.

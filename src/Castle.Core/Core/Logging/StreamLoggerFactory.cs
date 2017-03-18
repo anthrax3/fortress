@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.IO;
-	using System.Text;
+using System;
+using System.IO;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	///   Creates <see cref = "StreamLogger" /> outputing 
 	///   to files. The name of the file is derived from the log name

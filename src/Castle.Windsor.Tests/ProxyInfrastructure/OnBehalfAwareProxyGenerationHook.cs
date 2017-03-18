@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.ProxyInfrastructure
 {
 	using System;
@@ -19,8 +21,6 @@ namespace Castle.ProxyInfrastructure
 
 	using Castle.Core;
 	using Castle.Core.Interceptor;
-	using Castle.DynamicProxy;
-
 	using NUnit.Framework;
 
 	public class OnBehalfAwareProxyGenerationHook : IProxyGenerationHook, IOnBehalfAware

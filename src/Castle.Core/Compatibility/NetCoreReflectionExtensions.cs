@@ -13,10 +13,12 @@
 // limitations under the License.
 
 
-namespace System.Reflection
-{
-	using System.Linq;
+using System;
+using System.Linq;
+using System.Reflection;
 
+namespace Castle.Core.Compatibility
+{
 	internal static class NetCoreReflectionExtensions
 	{
 		// .NET Core needs to expose GetConstructor that takes both flags and parameter types,

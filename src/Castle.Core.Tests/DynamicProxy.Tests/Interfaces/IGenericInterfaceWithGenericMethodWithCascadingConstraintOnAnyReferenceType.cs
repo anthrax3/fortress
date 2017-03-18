@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interfaces
+namespace Castle.Core.Tests.DynamicProxy.Tests.Interfaces
 {
 	public interface IGenericInterfaceWithGenericMethodWithCascadingConstraintOnAnyReferenceType<TGenericType>
 		where TGenericType : class

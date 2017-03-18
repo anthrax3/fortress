@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.MicroKernel.Proxy
 {
 	using System;
@@ -19,7 +21,6 @@ namespace Castle.MicroKernel.Proxy
 	using System.Collections.Generic;
 
 	using Castle.Core;
-	using Castle.DynamicProxy;
 
 	/// <summary>
 	/// 	Represents options to configure proxies.

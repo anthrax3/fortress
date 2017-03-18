@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.Diagnostics;
-	using System.Collections.Generic;
-	using System.Security;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	///   The TraceLogger sends all logging to the System.Diagnostics.TraceSource
 	///   built into the .net framework.

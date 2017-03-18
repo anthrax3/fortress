@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.MicroKernel.Registration.Proxy
 {
 	using System;
-
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel.ModelBuilder.Descriptors;
 
 	public class ProxyGroup<S> : RegistrationGroup<S>

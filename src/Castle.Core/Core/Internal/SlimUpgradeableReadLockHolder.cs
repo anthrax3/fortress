@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Internal
-{
-	using System.Threading;
+using System.Threading;
 
+namespace Castle.Core.Core.Internal
+{
 	internal class SlimUpgradeableReadLockHolder : IUpgradeableLockHolder
 	{
 		private readonly ReaderWriterLockSlim locker;

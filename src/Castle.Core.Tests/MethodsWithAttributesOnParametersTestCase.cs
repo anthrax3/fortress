@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.Core.Tests.Interceptors;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-
-	using Castle.Core.Tests.Classes;
-
-	using Interceptors;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class MethodsWithAttributesOnParametersTestCase : BasePEVerifyTestCase
 	{

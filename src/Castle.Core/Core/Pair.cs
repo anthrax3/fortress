@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
-{
-	using System;
+using System;
 
+namespace Castle.Core.Core
+{
 	/// <summary>
 	/// General purpose class to represent a standard pair of values. 
 	/// </summary>

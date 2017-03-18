@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
-	using System.Diagnostics;
-	using System.Reflection;
+using System;
+using System.Diagnostics;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy
+{
 	public abstract class AbstractInvocation : IInvocation
 	{
 		private readonly IInterceptor[] interceptors;

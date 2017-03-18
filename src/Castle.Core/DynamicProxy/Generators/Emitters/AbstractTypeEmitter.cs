@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.DynamicProxy.Internal;
-
 	public abstract class AbstractTypeEmitter
 	{
 		private const MethodAttributes defaultAttributes =

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Logging;
+
 namespace Castle.Facilities.Logging
 {
-	using Castle.Core.Logging;
-
 	/// <summary>
 	///   The supported <see cref = "ILogger" /> implementations
 	/// </summary>

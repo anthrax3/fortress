@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Xml.Serialization;
+using Castle.Core.Core.Internal;
+using Castle.Core.DynamicProxy.Contributors;
+using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Tokens;
+
+namespace Castle.Core.DynamicProxy.Generators
 {
-	using System;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Reflection.Emit;
-	using System.Xml.Serialization;
-
-	using Castle.Core.Internal;
-	using Castle.DynamicProxy.Contributors;
-	using Castle.DynamicProxy.Generators.Emitters;
-	using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-	using Castle.DynamicProxy.Tokens;
-
 	public class MethodWithInvocationGenerator : MethodGenerator
 	{
 		private readonly IInvocationCreationContributor contributor;
@@ -161,7 +160,7 @@ namespace Castle.DynamicProxy.Generators
 
 		private void EmitLoadGenricMethodArguments(MethodEmitter methodEmitter, MethodInfo method, Reference invocationLocal)
 		{
-			var genericParameters = method.GetGenericArguments().FindAll(t => t.GetTypeInfo().IsGenericParameter);
+			var genericParameters = method.GetGenericArguments().FindAll(t => IntrospectionExtensions.GetTypeInfo(t).IsGenericParameter);
 			var genericParamsArrayLocal = methodEmitter.CodeBuilder.DeclareLocal(typeof(Type[]));
 			methodEmitter.CodeBuilder.AddStatement(
 				new AssignStatement(genericParamsArrayLocal, new NewArrayExpression(genericParameters.Length, typeof(Type))));

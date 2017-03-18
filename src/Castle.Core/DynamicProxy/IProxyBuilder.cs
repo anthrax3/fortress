@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+using System;
+using System.Runtime.CompilerServices;
+using Castle.Core.Core.Logging;
+using Castle.Core.DynamicProxy.Generators;
+
+namespace Castle.Core.DynamicProxy
 {
-	using System;
-	using System.Runtime.CompilerServices;
-
-	using Castle.Core.Logging;
-	using Castle.DynamicProxy.Generators;
-
 	/// <summary>
 	///   Abstracts the implementation of proxy type construction.
 	/// </summary>

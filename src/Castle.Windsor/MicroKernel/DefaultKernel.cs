@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Logging;
+
 namespace Castle.MicroKernel
 {
 	using System;
@@ -24,7 +26,6 @@ namespace Castle.MicroKernel
 
 	using Castle.Core;
 	using Castle.Core.Internal;
-	using Castle.Core.Logging;
 	using Castle.MicroKernel.ComponentActivator;
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Handlers;

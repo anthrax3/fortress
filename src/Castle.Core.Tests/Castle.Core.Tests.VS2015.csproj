@@ -13,7 +13,7 @@
     <ProjectGuid>{087AD3BF-5E40-450D-8138-FBB5F57AC474}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CastleTests</RootNamespace>
+    <RootNamespace>Castle.Core.Tests</RootNamespace>
     <AssemblyName>Castle.Core.Tests</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <FileUpgradeFlags>

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.GenInterfaces
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace Castle.Core.Tests.GenInterfaces
+{
 	public interface GenInterfaceWithMethodWithNestedGenericParameterByRef
 	{
 		void Foo<T>(ref IEnumerable<IComparable<T>> bars);

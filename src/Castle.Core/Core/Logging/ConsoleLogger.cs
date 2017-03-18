@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging
-{
-	using System;
-	using System.Globalization;
+using System;
+using System.Globalization;
 
+namespace Castle.Core.Core.Logging
+{
 	/// <summary>
 	/// The Logger sending everything to the standard output streams.
 	/// This is mainly for the cases when you have a utility that

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tokens
+using System.Reflection;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Tokens
 {
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Internal;
-
 	public static class TypeUtilMethods
 	{
 		public static readonly MethodInfo Sort = typeof(TypeUtil).GetMethod("Sort", BindingFlags.Public | BindingFlags.Static);

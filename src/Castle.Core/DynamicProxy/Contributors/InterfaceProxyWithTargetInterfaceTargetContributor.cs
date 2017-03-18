@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Contributors
+using System;
+using Castle.Core.DynamicProxy.Generators;
+
+namespace Castle.Core.DynamicProxy.Contributors
 {
-	using System;
-
-	using Castle.DynamicProxy.Generators;
-
 	public class InterfaceProxyWithTargetInterfaceTargetContributor : InterfaceProxyTargetContributor
 	{
 		public InterfaceProxyWithTargetInterfaceTargetContributor(Type proxyTargetType, bool allowChangeTarget,

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
 
+namespace Castle.Core.DynamicProxy
+{
 	/// <summary>
 	///   Provides an extension point that allows proxies to choose specific interceptors on
 	///   a per method basis.

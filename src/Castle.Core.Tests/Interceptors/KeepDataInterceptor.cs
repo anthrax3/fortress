@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interceptors
-{
-	using System;
-	using System.Reflection;
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.Interceptors
+{
 	public class KeepDataInterceptor : IInterceptor
 	{
 		private IInvocation invocation;

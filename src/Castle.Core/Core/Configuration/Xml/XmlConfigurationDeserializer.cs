@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Configuration.Xml
-{
-	using System.Text;
-	using System.Xml;
+using System.Text;
+using System.Xml;
 
+namespace Castle.Core.Core.Configuration.Xml
+{
 	public class XmlConfigurationDeserializer
 	{
 		/// <summary>

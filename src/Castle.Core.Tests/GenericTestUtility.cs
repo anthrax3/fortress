@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
-	using System.Reflection;
-	using NUnit.Framework;
+using System;
+using System.Reflection;
+using NUnit.Framework;
 
+namespace Castle.Core.Tests
+{
 	public class GenericTestUtility
 	{
 		public static void CheckMethodInfoIsClosed(MethodInfo method, Type returnType, params Type[] parameterTypes)

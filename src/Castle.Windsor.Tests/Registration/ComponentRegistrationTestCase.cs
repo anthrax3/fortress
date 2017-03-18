@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+using Castle.Core.DynamicProxy;
+
 namespace Castle.MicroKernel.Tests.Registration
 {
 	using System;
@@ -19,8 +22,6 @@ namespace Castle.MicroKernel.Tests.Registration
 	using System.Linq;
 
 	using Castle.Core;
-	using Castle.Core.Configuration;
-	using Castle.DynamicProxy;
 	using Castle.Facilities.Startable;
 	using Castle.MicroKernel.Proxy;
 	using Castle.MicroKernel.Registration;

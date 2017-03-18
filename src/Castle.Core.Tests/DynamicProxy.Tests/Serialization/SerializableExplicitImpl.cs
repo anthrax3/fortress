@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests.Serialization
-{
-	using System;
-	using System.Runtime.Serialization;
+using System;
+using System.Runtime.Serialization;
 
+namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
+{
 	[Serializable]
 	public class SerializableExplicitImpl : ISerializable
 	{

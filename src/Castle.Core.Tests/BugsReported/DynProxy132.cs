@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.BugsReported
+using Castle.Core.Tests.Interfaces;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.BugsReported
 {
-	using Castle.DynamicProxy.Tests.Interfaces;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DynProxy132 : BasePEVerifyTestCase
 	{

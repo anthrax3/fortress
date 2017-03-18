@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Internal;
+
 namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	using System;
@@ -59,7 +61,7 @@ namespace Castle.MicroKernel.ModelBuilder.Inspectors
 		/// <param name = "implementation"></param>
 		protected virtual ComponentProxyBehaviorAttribute ReadProxyBehaviorFromType(Type implementation)
 		{
-			return implementation.GetAttributes<ComponentProxyBehaviorAttribute>().FirstOrDefault();
+			return AttributesUtil.GetAttributes<ComponentProxyBehaviorAttribute>(implementation).FirstOrDefault();
 		}
 
 		/// <summary>

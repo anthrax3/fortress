@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Configuration
-{
-	using System;
-	using System.Globalization;
+using System;
+using System.Globalization;
 
+namespace Castle.Core.Core.Configuration
+{
 	/// <summary>
 	///   This is an abstract <see cref = "IConfiguration" /> implementation
 	///   that deals with methods that can be abstracted away

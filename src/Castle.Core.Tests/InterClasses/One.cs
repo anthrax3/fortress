@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.InterClasses
-{
-	using Castle.DynamicProxy.Tests.Interfaces;
+using Castle.Core.Tests.Interfaces;
 
+namespace Castle.Core.Tests.InterClasses
+{
 	public class One : IOne
 	{
 		public int OneMethod()

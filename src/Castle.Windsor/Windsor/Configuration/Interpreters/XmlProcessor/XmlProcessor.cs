@@ -13,13 +13,12 @@
 // limitations under the License.
 
 
+using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	using System;
 	using System.Xml;
-
-	using Castle.Core.Resource;
 	using Castle.MicroKernel.SubSystems.Resource;
 	using Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 

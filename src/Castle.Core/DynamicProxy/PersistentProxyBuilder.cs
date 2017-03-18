@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy
+namespace Castle.Core.DynamicProxy
 {
 	/// <summary>
 	///   ProxyBuilder that persists the generated type.

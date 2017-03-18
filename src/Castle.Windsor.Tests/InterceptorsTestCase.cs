@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Windsor.Tests
 {
 	using System;
@@ -20,7 +23,6 @@ namespace Castle.Windsor.Tests
 
 	using Castle.Core;
 	using Castle.Core.Internal;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.Handlers;
 	using Castle.MicroKernel.Proxy;
@@ -307,7 +309,7 @@ namespace Castle.Windsor.Tests
 
 	public class MyInterceptorGreedyFacility : IFacility
 	{
-		public void Init(IKernel kernel, Core.Configuration.IConfiguration facilityConfig)
+		public void Init(IKernel kernel, IConfiguration facilityConfig)
 		{
 			kernel.ComponentRegistered += OnComponentRegistered;
 		}
@@ -328,7 +330,7 @@ namespace Castle.Windsor.Tests
 
 	public class MyInterceptorGreedyFacility2 : IFacility
 	{
-		public void Init(IKernel kernel, Core.Configuration.IConfiguration facilityConfig)
+		public void Init(IKernel kernel, IConfiguration facilityConfig)
 		{
 			kernel.ComponentRegistered += OnComponentRegistered;
 		}

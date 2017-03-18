@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core.Logging.Tests
+using System;
+using Castle.Core.Core.Logging;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.ComponentModel;
-
-	using NUnit.Framework;
-
-	using Castle.Core.Logging;
-
 	/// <summary>
 	/// Contains all tests relating to the properties.
 	/// </summary>

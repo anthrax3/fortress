@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.BugsReported
+using System;
+using Castle.Core.DynamicProxy;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.BugsReported
 {
-	using System;
-
-	using NUnit.Framework;
-
 	public class Core40ClassToProxy
 	{
 		public Core40ClassToProxy(Object arg1, Object arg2)

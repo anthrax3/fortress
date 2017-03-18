@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Internal
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Castle.Core.Core.Internal;
+
+namespace Castle.Core.DynamicProxy.Internal
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
-
-	using Castle.Core.Internal;
-
 	public static class InternalsUtil
 	{
 		private static readonly IDictionary<Assembly, bool> internalsToDynProxy = new Dictionary<Assembly, bool>();

@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.InterClasses
+namespace Castle.Core.Tests.InterClasses
 {
-	using System;
-
 	public interface IService2
 	{
 		void DoOperation2();

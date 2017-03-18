@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Internal
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using Castle.Core.DynamicProxy.Generators;
+
+namespace Castle.Core.DynamicProxy.Internal
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators;
-
 	public static class AttributeUtil
 	{
 		public static CustomAttributeInfo CreateInfo(CustomAttributeData attribute)

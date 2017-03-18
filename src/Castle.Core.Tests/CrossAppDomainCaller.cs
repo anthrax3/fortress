@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Tests
-{
-	using System;
+using System;
 
+namespace Castle.Core.Tests
+{
 	[Serializable]
 	public class CrossAppDomainCaller
 	{

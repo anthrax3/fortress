@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+namespace Castle.Core.DynamicProxy
 {
 	/// <summary>
 	///   Provides the main DynamicProxy extension point that allows member interception.

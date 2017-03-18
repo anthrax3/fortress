@@ -13,18 +13,16 @@
 // limitations under the License.
 
 
-namespace Castle.DynamicProxy.Serialization
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.Serialization;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Serialization
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Runtime.Serialization;
-	using System.Security;
-
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Internal;
-
 	/// <summary>
 	///   Handles the deserialization of proxies.
 	/// </summary>

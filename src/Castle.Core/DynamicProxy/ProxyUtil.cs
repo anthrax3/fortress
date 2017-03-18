@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
-{
-	using System;
-	using System.Reflection;
-	using System.Runtime.Remoting;
+using System;
+using System.Reflection;
+using System.Runtime.Remoting;
 
+namespace Castle.Core.DynamicProxy
+{
 	public class ProxyUtil
 	{
 		public static object GetUnproxiedInstance(object instance)

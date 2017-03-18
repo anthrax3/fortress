@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Resource;
+
 namespace Castle.Windsor.Installer
 {
 	using System;
-
-	using Castle.Core.Configuration;
-	using Castle.Core.Resource;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.SubSystems.Configuration;
 

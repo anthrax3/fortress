@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
+using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.Installer
 {
-	using Castle.Core.Resource;
 	using Castle.Windsor.Configuration.Interpreters;
 
 	public static class Configuration

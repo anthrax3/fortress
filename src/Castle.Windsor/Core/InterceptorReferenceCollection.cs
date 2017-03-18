@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Core
 {
 	using System;
@@ -20,7 +22,6 @@ namespace Castle.Core
 	using System.Diagnostics;
 
 	using Castle.Core.Internal;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel;
 
 	/// <summary>

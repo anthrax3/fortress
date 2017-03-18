@@ -12,22 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.Core.Tests.Mixins;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Tests.Classes;
-	using Castle.DynamicProxy.Tests.Mixins;
-
-	using CastleTests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ClassProxyWithTargetTestCase : BasePEVerifyTestCase
 	{
@@ -188,9 +185,9 @@ namespace Castle.DynamicProxy.Tests
 		[Bug("DYNPROXY-185")]
 		public void Returns_proxy_target_instead_of_self()
 		{
-			var target = new CastleTests.DynamicProxy.Tests.Classes.EmptyClass();
+			var target = new Classes.EmptyClass();
 			var proxy = generator.CreateClassProxyWithTarget(target);
-			var result = (CastleTests.DynamicProxy.Tests.Classes.EmptyClass)((IProxyTargetAccessor)proxy).DynProxyGetTarget();
+			var result = (Classes.EmptyClass)((IProxyTargetAccessor)proxy).DynProxyGetTarget();
 			Assert.AreEqual(target, result);
 		}
 

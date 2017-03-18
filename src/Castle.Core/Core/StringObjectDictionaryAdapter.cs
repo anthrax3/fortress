@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
-{
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
+namespace Castle.Core.Core
+{
 	public sealed class StringObjectDictionaryAdapter : IDictionary<string, object>
 	{
 		private readonly IDictionary dictionary;

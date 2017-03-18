@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Core
+namespace Castle.Core.Core
 {
 	/// <summary>
 	/// This interface should be implemented by classes

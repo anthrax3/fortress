@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Generators.Emitters
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Internal;
+
+namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Reflection;
-	using System.Reflection.Emit;
-
-	using Castle.Core.Internal;
-	using Castle.DynamicProxy.Internal;
-
 	internal delegate GenericTypeParameterBuilder[] ApplyGenArgs(String[] argumentNames);
 
 	internal class GenericUtil

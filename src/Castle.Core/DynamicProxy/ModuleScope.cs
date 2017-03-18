@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Resources;
+using Castle.Core.Core.Internal;
+using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.DynamicProxy.Serialization;
+
+namespace Castle.Core.DynamicProxy
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Reflection;
-	using System.Reflection.Emit;
-	using System.Resources;
-
-	using Castle.Core.Internal;
-	using Castle.DynamicProxy.Generators;
-	using Castle.DynamicProxy.Serialization;
-
 	/// <summary>
 	///   Summary description for ModuleScope.
 	/// </summary>

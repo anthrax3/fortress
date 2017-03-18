@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests
+using System;
+using System.Reflection;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Internal;
+using NUnit.Framework;
+
+namespace Castle.Core.Tests
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.DynamicProxy.Internal;
-
-	using CastleTests;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CanDefineAdditionalCustomAttributes : BasePEVerifyTestCase
 	{

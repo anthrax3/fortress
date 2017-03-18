@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.DynamicProxy;
+
 namespace Castle.Facilities.FactorySupport
 {
 	using System;
@@ -19,7 +21,6 @@ namespace Castle.Facilities.FactorySupport
 	using System.Reflection;
 
 	using Castle.Core;
-	using Castle.DynamicProxy;
 	using Castle.MicroKernel;
 	using Castle.MicroKernel.ComponentActivator;
 	using Castle.MicroKernel.Context;

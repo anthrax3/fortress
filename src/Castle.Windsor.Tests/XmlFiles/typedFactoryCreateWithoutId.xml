@@ -11,7 +11,7 @@
   </facilities>
 
   <components>
-    <component type="Castle.DynamicProxy.StandardInterceptor, Castle.Core" />
+    <component type="Castle.Core.DynamicProxy.StandardInterceptor, Castle.Core" />
 
     <component id="default" type="CalculatorServiceWithMultipleInterfaces" service="ICalcService" />
   </components>

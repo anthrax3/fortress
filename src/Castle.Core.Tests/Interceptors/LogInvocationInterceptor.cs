@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.DynamicProxy.Tests.Interceptors
-{
-	using System;
-	using System.Collections;
-	using System.Reflection;
-	using System.Text;
-	using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using Castle.Core.DynamicProxy;
 
+namespace Castle.Core.Tests.Interceptors
+{
 	public class LogInvocationInterceptor : StandardInterceptor
 	{
 		private StringBuilder sb = new StringBuilder();

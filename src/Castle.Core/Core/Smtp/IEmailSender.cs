@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-namespace Castle.Core.Smtp
-{
-	using System.Collections.Generic;
-	using System.Net.Mail;
+using System.Collections.Generic;
+using System.Net.Mail;
 
+namespace Castle.Core.Core.Smtp
+{
 	/// <summary>
 	/// Email sender abstraction.
 	/// </summary>
