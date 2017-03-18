@@ -58,7 +58,7 @@ namespace CastleTests
 
 			var value = Container.Resolve<CtorWithDefaultValueAndDefault>();
 
-			Assert.That(value.Name, Is.Null.Or.Empty);
+			Assert.That(value.Name, Is.EqualTo("Stefan Mucha"));
 		}
 
 		[Test]
