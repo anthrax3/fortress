@@ -63,20 +63,5 @@ namespace CastleTests.Facilities.FactorySupport
 			Assert.IsTrue(ServiceFactory.CreateWasCalled);
 			Assert.IsInstanceOf(typeof(ServiceImplementation), service);
 		}
-
-		[Test]
-		[Ignore("Kernel doesn't treat ${} as an special expression for config/primitives, not sure it should - leave this up for discussion")]
-		public void Factory_AsAPublisherOfValues_CanBeResolvedByDependents()
-		{
-			var serviceKey = "someService";
-#pragma warning disable 0618 //call to obsolete method
-			facility.AddFactory<TimeSpan, ServiceFactory>(serviceKey, "get_Something");
-#pragma warning restore
-
-			Kernel.Register(Component.For<SettingsConsumer>().
-			                	DependsOn(Parameter.ForKey("something").Eq("${serviceKey}")));
-
-			var consumer = Kernel.Resolve<SettingsConsumer>();
-		}
 	}
 }

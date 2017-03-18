@@ -192,17 +192,6 @@ namespace CastleTests.Facilities.TypedFactory
 		}
 
 		[Test]
-		[Ignore("Not supported for Func delegates")]
-		public void Does_not_duplicate_arguments_matching_delegate_parameters()
-		{
-			Container.Register(Component.For(typeof(HasOnlyOneArgMatchingDelegatesParameter)).Named("fizz"));
-			var factory = Container.Resolve<Func<string, string, HasOnlyOneArgMatchingDelegatesParameter>>("fizzFactory");
-			var obj = factory("arg1", "name");
-			Assert.AreEqual("name", obj.Name);
-			Assert.AreEqual("arg1", obj.Arg1);
-		}
-
-		[Test]
 		public void Explicitly_registered_factory_is_tracked()
 		{
 			Container.Register(Component.For<Func<A>>().AsFactory());
@@ -345,20 +334,6 @@ namespace CastleTests.Facilities.TypedFactory
 		}
 
 		[Test]
-		[Ignore("Not supported for Func delegates")]
-		public void Factory_parameters_are_used_in_order_first_ctor_then_properties()
-		{
-			Container.Register(Component.For(typeof(Baz)).Named("baz"));
-			Container.Register(Component.For(typeof(Bar)).Named("bar"));
-			Container.Register(Component.For(typeof(UsesBarDelegate)).Named("barBar"));
-
-			var dependsOnFoo = Container.Resolve<UsesBarDelegate>();
-			var bar = dependsOnFoo.GetBar("a name", "a description");
-			Assert.AreEqual("a name", bar.Name);
-			Assert.AreEqual("a description", bar.Description);
-		}
-
-		[Test]
 		public void Factory_property_dependency_is_satisfied_implicitly()
 		{
 			Container.Register(Component.For<Bar>().LifeStyle.Transient,
@@ -367,18 +342,6 @@ namespace CastleTests.Facilities.TypedFactory
 			var component = Container.Resolve<UsesBarDelegateProperty>();
 
 			Assert.IsNotNull(component.BarFactory);
-		}
-
-		[Test]
-		[Ignore("Not supported for Func delegates")]
-		public void Factory_pulls_unspecified_dependencies_from_container()
-		{
-			Container.Register(Component.For(typeof(Baz)).Named("baz"));
-			Container.Register(Component.For(typeof(Bar)).Named("bar"));
-			Container.Register(Component.For(typeof(UsesBarDelegate)).Named("uBar"));
-
-			var dependsOnFoo = Container.Resolve<UsesBarDelegate>();
-			dependsOnFoo.GetBar("aaa", "bbb");
 		}
 
 		[Test]

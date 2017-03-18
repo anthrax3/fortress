@@ -80,15 +80,6 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-		[Ignore("Expected: urn:a:T  But was: T")]
-		public void XsiType_OfElement_WhenXsiTypeAttributeIsPresent()
-		{
-			var node = NodeForElement("<X xsi:type='p:T' xmlns:p='urn:a' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>");
-
-			Assert.AreEqual(new XmlName("T", "urn:a"), node.XsiType);
-		}
-
-		[Test]
 		public void XsiType_OfAttribute()
 		{
 			var node = NodeForAttribute("<X A='a'/>");

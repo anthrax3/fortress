@@ -37,16 +37,6 @@ namespace Castle.DynamicProxy.Tests
 		}
 
 		[Test]
-		[Ignore("I don't see any simple way of doing this...")]
-		public void Should_properly_interpret_array_of_objects()
-		{
-			var proxy =
-				(ClassWithVariousConstructors)
-				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] { new object[] { null } });
-			Assert.AreEqual(Constructor.ArrayOfObjects, proxy.ConstructorCalled);
-		}
-
-		[Test]
 		public void Should_properly_interpret_array_of_objects_and_string()
 		{
 			var proxy =
@@ -150,16 +140,6 @@ namespace Castle.DynamicProxy.Tests
 		public void Can_proxy_generic_class()
 		{
 			generator.CreateClassProxy(typeof(List<object>), new IInterceptor[0]);
-		}
-
-		[Test]
-		[Ignore("I don't see any simple way of doing this...")]
-		public void Should_properly_interpret_null_as_ctor_argument()
-		{
-			var proxy =
-				(ClassWithVariousConstructors)
-				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new[] { default(object) });
-			Assert.AreEqual(Constructor.Object, proxy.ConstructorCalled);
 		}
 
 		private class PrivateClass { }

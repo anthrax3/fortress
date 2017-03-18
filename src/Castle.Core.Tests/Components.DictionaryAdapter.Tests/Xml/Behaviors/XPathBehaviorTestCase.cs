@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
+using System.Xml.XPath;
+using System.Xml.Xsl;
+using Castle.Components.DictionaryAdapter.Tests;
+using NUnit.Framework;
+
 namespace Castle.Components.DictionaryAdapter.Xml.Tests
 {
-	using System;
-	using System.Linq;
-	using System.Xml.XPath;
-	using System.Xml.Xsl;
-	using Castle.Components.DictionaryAdapter.Tests;
-    using NUnit.Framework;
-
 	public class XPathBehaviorTestCase
 	{
 		[TestFixture]
@@ -38,15 +38,15 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var foo = Create<IFoo>
 				(
 					"<Foo>",
-						"<A>",
-							"<B>b</B>",
-							"<C H='value'>",
-								"<D E='?'>",
-									"<F>f</F>",
-								"</D>",
-								"<G/>",
-							"</C>",
-						"</A>",
+					"<A>",
+					"<B>b</B>",
+					"<C H='value'>",
+					"<D E='?'>",
+					"<F>f</F>",
+					"</D>",
+					"<G/>",
+					"</C>",
+					"</A>",
 					"</Foo>"
 				);
 
@@ -59,32 +59,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var foo = Create<IFoo>("<Foo/>");
 
 				Assert.IsNull(foo.Value);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				var xml = Xml("<Foo/>");
-				var foo = Create<IFoo>(xml);
-
-				foo.Value = "value";
-
-				CustomAssert.AreXmlEquivalent(string.Concat
-				(
-					"<Foo>",
-						"<A>",
-							"<C H='value'>",
-								"<D E=''>",
-									"<F>f</F>",
-								"</D>",
-								"<G/>",
-							"</C>",
-							"<B>b</B>",
-						"</A>",
-					"</Foo>"
-				), xml);
-				Assert.AreEqual("value", foo.Value);
 			}
 		}
 
@@ -103,11 +77,11 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var foo = Create<IFoo>
 				(
 					"<Foo>",
-						"<A D='value'>",
-							"<B>",
-								"<C>2</C>",
-							"</B>",
-						"</A>",
+					"<A D='value'>",
+					"<B>",
+					"<C>2</C>",
+					"</B>",
+					"</A>",
 					"</Foo>"
 				);
 
@@ -120,28 +94,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var foo = Create<IFoo>("<Foo/>");
 
 				Assert.IsNull(foo.Value);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				var xml = Xml("<Foo/>");
-				var foo = Create<IFoo>(xml);
-
-				foo.Value = "value";
-
-				CustomAssert.AreXmlEquivalent(string.Concat
-				(
-					"<Foo>",
-						"<A D='value'>",
-							"<B>",
-								"<C>2</C>",
-							"</B>",
-						"</A>",
-					"</Foo>"
-				), xml);
-				Assert.AreEqual("value", foo.Value);
 			}
 		}
 
@@ -195,16 +147,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-			public void Get_OnVirtual()
-			{
-				var foo = Create<IFoo>();
-
-				Assert.IsNull(foo.StringValue);
-				Assert.AreEqual(0, foo.NumberValue);
-				Assert.False(foo.BooleanValue);
-			}
-
-			[Test]
 			public void Get_OnActual()
 			{
 				var foo = Create<IFoo>("<Foo> <A>a</A> </Foo>");
@@ -215,13 +157,13 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 
 			[Test]
-			public void Set()
+			public void Get_OnVirtual()
 			{
-				var foo = Create<IFoo>("<Foo/>");
+				var foo = Create<IFoo>();
 
-				Assert.Throws<XPathException>(() => foo.StringValue  = "a");
-				Assert.Throws<XPathException>(() => foo.NumberValue  = 1);
-				Assert.Throws<XPathException>(() => foo.BooleanValue = true);
+				Assert.IsNull(foo.StringValue);
+				Assert.AreEqual(0, foo.NumberValue);
+				Assert.False(foo.BooleanValue);
 			}
 
 			[Test]
@@ -229,167 +171,19 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			{
 				var foo = Create<IFoo>("<Foo> <A>a</A> </Foo>");
 
-				Assert.False(XmlAdapter.For(foo).HasProperty("StringValue",  foo));
-				Assert.False(XmlAdapter.For(foo).HasProperty("NumberValue",  foo));
+				Assert.False(XmlAdapter.For(foo).HasProperty("StringValue", foo));
+				Assert.False(XmlAdapter.For(foo).HasProperty("NumberValue", foo));
 				Assert.False(XmlAdapter.For(foo).HasProperty("BooleanValue", foo));
 			}
-		}
-
-		[TestFixture]
-		public class VirtualComponent : XmlAdapterTestCase
-		{
-			public interface IFoo
-			{
-				[XPath("A/B")]
-				IBar Bar { get; set; }
-			}
-
-			public interface IBar
-			{
-				[XPath("C")]
-				string Value { get; set; }
-			}
 
 			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Realize_Missing()
+			public void Set()
 			{
-				var xml = Xml("<Foo/>");
-				var foo = Create<IFoo>(xml);
+				var foo = Create<IFoo>("<Foo/>");
 
-				var bar = foo.Bar;
-				CustomAssert.AreXmlEquivalent("<Foo/>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-				Assert.IsNull(bar.Value);
-
-				bar.Value = "value";
-				CustomAssert.AreXmlEquivalent("<Foo> <A> <B> <C>value</C> </B> </A> </Foo>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-				Assert.AreEqual("value", bar.Value);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Realize_Partial()
-			{
-				var xml = Xml("<Foo> <A> <X/> </A> </Foo>");
-				var foo = Create<IFoo>(xml);
-
-				var bar = foo.Bar;
-				CustomAssert.AreXmlEquivalent("<Foo> <A> <X/> </A> </Foo>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-				Assert.IsNull(bar.Value);
-
-				bar.Value = "value";
-				CustomAssert.AreXmlEquivalent("<Foo> <A> <X/> <B> <C>value</C> </B> </A> </Foo>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-				Assert.AreEqual("value", bar.Value);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void SelectOnVirtual()
-			{
-				var xml = Xml("<Foo> <A/> </Foo>");
-				var foo = Create<IFoo>(xml);
-
-				var bar = foo.Bar;
-				CustomAssert.AreXmlEquivalent("<Foo> <A/> </Foo>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-
-				var value = bar.Value;
-				CustomAssert.AreXmlEquivalent("<Foo> <A/> </Foo>", xml);
-				Assert.IsNull(value);
-
-				bar.Value = "value";
-				CustomAssert.AreXmlEquivalent("<Foo> <A> <B> <C>value</C> </B> </A> </Foo>", xml);
-				Assert.NotNull(bar);
-				Assert.AreSame(foo.Bar, bar);
-				Assert.AreEqual("value", bar.Value);
-			}
-		}
-
-		[TestFixture]
-		public class PartialPaths : XmlAdapterTestCase
-		{
-			public interface IFoo
-			{
-				[XPath("A/B[@Id='2']/C")]
-				string A { get; set; }
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Delete_NotDoAnything()
-			{
-				var xml = Xml
-				(
-					"<Foo>",
-						"<A>",
-							"<B Id='1'> <C>value1</C> </B>",
-						"</A>",
-					"</Foo>"
-				);
-
-				Create<IFoo>(xml).A = null;
-
-				CustomAssert.AreXmlEquivalent(string.Concat
-				(
-					"<Foo>",
-						"<A>",
-							"<B Id='1'> <C>value1</C> </B>",
-						"</A>",
-					"</Foo>"
-				), xml);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Delete_Partial()
-			{
-				var xml = Xml
-				(
-					"<Foo>",
-						"<A>",
-							"<B Id='1'> <C>value1</C> </B>",
-							"<B Id='2'> <C>value2</C> </B>",
-						"</A>",
-					"</Foo>"
-				);
-
-				Create<IFoo>(xml).A = null;
-
-				CustomAssert.AreXmlEquivalent(string.Concat
-				(
-					"<Foo>",
-						"<A>",
-							"<B Id='1'> <C>value1</C> </B>",
-						"</A>",
-					"</Foo>"
-				), xml);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Delete_Whole()
-			{
-				var xml = Xml
-				(
-					"<Foo>",
-						"<A>",
-							"<B Id='2'> <C>value2</C> </B>",
-						"</A>",
-					"</Foo>"
-				);
-
-				Create<IFoo>(xml).A = null;
-
-				CustomAssert.AreXmlEquivalent("<Foo/>", xml);
+				Assert.Throws<XPathException>(() => foo.StringValue = "a");
+				Assert.Throws<XPathException>(() => foo.NumberValue = 1);
+				Assert.Throws<XPathException>(() => foo.BooleanValue = true);
 			}
 		}
 
@@ -398,7 +192,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 		{
 			public interface IFoo
 			{
-				[XPath(get: "X", set: "Y")]
+				[XPath("X", "Y")]
 				string A { get; set; }
 			}
 
@@ -421,18 +215,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 
 				Assert.AreEqual("y", a);
 			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				var xml = Xml("<Foo> <X>x</X> <Y>y</Y> </Foo>");
-				var foo = Create<IFoo>(xml);
-
-				foo.A = "*";
-
-				CustomAssert.AreXmlEquivalent("<Foo> <X>x</X> <Y>*</Y> </Foo>", xml);
-			}
 		}
 
 		[TestFixture]
@@ -440,11 +222,13 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 		{
 			public interface IFoo
 			{
-				[XPath(get: "X", set: "Y")]
+				[XPath("X", "Y")]
 				IBar A { get; set; }
 			}
 
-			public interface IBar { }
+			public interface IBar
+			{
+			}
 
 			[Test]
 			public void Get()
@@ -463,12 +247,8 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var xml = Xml("<Foo> <X>x</X> <Y>y</Y> </Foo>");
 				var foo = Create<IFoo>(xml);
 
-				Assert.Throws<InvalidOperationException>(() =>
-				{
-					foo.A = Create<IBar>();
-				});
+				Assert.Throws<InvalidOperationException>(() => { foo.A = Create<IBar>(); });
 			}
-
 		}
 
 		[TestFixture]
@@ -479,20 +259,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			{
 				[XPath("A[@B=$p:v]")]
 				string Item { get; set; }
-			}
-
-			[Test]
-			[Ignore("System.Xml.XPath.XPathException : variable p:v not found")]
-			public void Get()
-			{
-				TestGet<IFoo>(f => f.Item);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				TestSet<IFoo>((f, v) => f.Item = v);
 			}
 
 			[Test]
@@ -509,30 +275,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[TestFixture]
-		public class WithVariable_DefinedOnProperty : WithVariableOrFunction
-		{
-			public interface IFoo
-			{
-				[XPath("A[@B=$p:v]"), WithMockVariable]
-				string Item { get; set; }
-			}
-
-			[Test]
-			[Ignore("System.Xml.XPath.XPathException : variable p:v not found")]
-			public void Get()
-			{
-				TestGet<IFoo>(f => f.Item);
-			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				TestSet<IFoo>((f, v) => f.Item = v);
-			}
-		}
-
-		[TestFixture]
 		public class WithFunction_DefinedOnType : WithVariableOrFunction
 		{
 			[WithMockFunction]
@@ -540,13 +282,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			{
 				[XPath("A[@B=p:f('a')]")]
 				string Item { get; }
-			}
-
-			[Test]
-			[Ignore("String lengths are both 7. Strings differ at index 0.  Expected: 'correct'  But was: 'wrong B'")]
-			public void Get()
-			{
-				TestGet<IFoo>(f => f.Item);
 			}
 
 			[Test]
@@ -565,27 +300,17 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			}
 		}
 
-		[TestFixture]
-		public class WithFunction_DefinedOnProperty : WithVariableOrFunction
-		{
-			public interface IFoo
-			{
-				[XPath("A[@B=p:f('a')]"), WithMockFunction]
-				string Item { get; }
-			}
-
-			[Test]
-			[Ignore("String lengths are both 7. Strings differ at index 0.  Expected: 'correct'  But was: 'wrong B'")]
-			public void Get()
-			{
-				TestGet<IFoo>(f => f.Item);
-			}
-		}
-
 		public class WithMockVariableAttribute : XPathVariableAttribute
 		{
-			public override XmlName Name { get { return new XmlName("v", "p"); } }
-			public override XPathResultType VariableType { get { return XPathResultType.String; } }
+			public override XmlName Name
+			{
+				get { return new XmlName("v", "p"); }
+			}
+
+			public override XPathResultType VariableType
+			{
+				get { return XPathResultType.String; }
+			}
 
 			public override object Evaluate(XsltContext context)
 			{
@@ -595,9 +320,20 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 
 		public class WithMockFunctionAttribute : XPathFunctionAttribute
 		{
-			public override XmlName Name { get { return new XmlName("f", "p"); } }
-			public override XPathResultType ReturnType { get { return XPathResultType.String; } }
-			public override XPathResultType[] ArgTypes { get { return new[] { XPathResultType.String }; } }
+			public override XmlName Name
+			{
+				get { return new XmlName("f", "p"); }
+			}
+
+			public override XPathResultType ReturnType
+			{
+				get { return XPathResultType.String; }
+			}
+
+			public override XPathResultType[] ArgTypes
+			{
+				get { return new[] {XPathResultType.String}; }
+			}
 
 			public override object Invoke(XsltContext context, object[] args, XPathNavigator node)
 			{
@@ -615,9 +351,9 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				var xml = Xml
 				(
 					"<Foo>",
-						"<A B='other'>wrong A</A>",
-						"<A B='value'>correct</A>",
-						"<A B='other'>wrong B</A>",
+					"<A B='other'>wrong A</A>",
+					"<A B='value'>correct</A>",
+					"<A B='other'>wrong B</A>",
 					"</Foo>"
 				);
 				var obj = Create<T>(xml);
@@ -637,7 +373,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 				CustomAssert.AreXmlEquivalent(string.Concat
 				(
 					"<Foo>",
-						"<A B='value'>correct</A>",
+					"<A B='value'>correct</A>",
 					"</Foo>"
 				), xml);
 			}

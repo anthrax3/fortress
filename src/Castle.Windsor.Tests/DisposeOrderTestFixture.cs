@@ -58,25 +58,6 @@ namespace Castle.Windsor.Tests
 			}
 		}
 
-		[Test]
-		[Ignore(
-			"This is not possible to implement w/o serious changes, and the scenario is quite uncommon/bad practice anyway")]
-		public void ShouldDisposeComponentsInProperOrder()
-		{
-			var container = new WindsorContainer();
-
-			container.Install(
-				new ActionBasedInstaller(
-					c => c.Register(Component.For<IMyService>().ImplementedBy<MyService>().LifeStyle.Transient,
-					                Component.For<IMyComponent>().ImplementedBy<MyComponent>()))
-				);
-
-			var component = container.Resolve<IMyComponent>();
-			container.Release(component);
-
-			container.Dispose();
-		}
-
 		private interface IMyComponent : IInitializable, IDisposable
 		{
 			bool IsInitialized { get; }

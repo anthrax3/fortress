@@ -106,15 +106,6 @@ namespace Castle.DynamicProxy.Tests
 		}
 
 		[Test]
-		[Ignore("Expected: True  But was: False")]
-		public void EnsureProxyHasAttributesOnGenericArgument()
-		{
-			var proxy = generator.CreateClassProxy<HasNonInheritableAttribute>();
-			var nameProperty = proxy.GetType().GetMethod("OnGenericArgument").GetGenericArguments().Single();
-			Assert.IsTrue(nameProperty.GetTypeInfo().IsDefined(typeof(NonInheritableAttribute), false));
-		}
-
-		[Test]
 		public void Can_proxy_type_with_non_inheritable_attribute_depending_on_array_of_something_via_property()
 		{
 			var proxy = generator.CreateInterfaceProxyWithoutTarget<IHasNonInheritableAttributeWithArray>();

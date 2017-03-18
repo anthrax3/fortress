@@ -63,47 +63,6 @@ namespace Castle.DynamicProxy.Tests
 			Assert.AreSame(two, four);
 		}
 
-		[Test]
-		[Ignore("Expected: CastleDynProxy2.dll  But was:  /home/teamcity/buildagent/work/...")]
-		public void ImplicitModulePaths()
-		{
-			var scope = new ModuleScope(true);
-			Assert.AreEqual(ModuleScope.DEFAULT_FILE_NAME, scope.StrongNamedModuleName);
-			Assert.AreEqual(Path.Combine(Directory.GetCurrentDirectory(), ModuleScope.DEFAULT_FILE_NAME),
-			                scope.ObtainDynamicModuleWithStrongName().FullyQualifiedName);
-			Assert.IsNull(scope.StrongNamedModuleDirectory);
-
-			Assert.AreEqual(ModuleScope.DEFAULT_FILE_NAME, scope.WeakNamedModuleName);
-			Assert.AreEqual(Path.Combine(Directory.GetCurrentDirectory(), ModuleScope.DEFAULT_FILE_NAME),
-			                scope.ObtainDynamicModuleWithWeakName().FullyQualifiedName);
-			Assert.IsNull(scope.WeakNamedModuleDirectory);
-		}
-
-		[Test]
-		[Ignore("Expected: StrongModule.dll  But was:  /home/teamcity/buildagent/work/...")]
-		public void ExplicitModulePaths()
-		{
-			var scope = new ModuleScope(true, false, "Strong", "StrongModule.dll", "Weak", "WeakModule.dll");
-			Assert.AreEqual("StrongModule.dll", scope.StrongNamedModuleName);
-			Assert.AreEqual(Path.Combine(Directory.GetCurrentDirectory(), "StrongModule.dll"),
-			                scope.ObtainDynamicModuleWithStrongName().FullyQualifiedName);
-			Assert.IsNull(scope.StrongNamedModuleDirectory);
-
-			Assert.AreEqual("WeakModule.dll", scope.WeakNamedModuleName);
-			Assert.AreEqual(Path.Combine(Directory.GetCurrentDirectory(), "WeakModule.dll"),
-			                scope.ObtainDynamicModuleWithWeakName().FullyQualifiedName);
-			Assert.IsNull(scope.WeakNamedModuleDirectory);
-
-			scope = new ModuleScope(true, false, "Strong", @"c:\Foo\StrongModule.dll", "Weak", @"d:\Bar\WeakModule.dll");
-			Assert.AreEqual("StrongModule.dll", scope.StrongNamedModuleName);
-			Assert.AreEqual(@"c:\Foo\StrongModule.dll", scope.ObtainDynamicModuleWithStrongName().FullyQualifiedName);
-			Assert.AreEqual(@"c:\Foo", scope.StrongNamedModuleDirectory);
-
-			Assert.AreEqual("WeakModule.dll", scope.WeakNamedModuleName);
-			Assert.AreEqual(@"d:\Bar\WeakModule.dll", scope.ObtainDynamicModuleWithWeakName().FullyQualifiedName);
-			Assert.AreEqual(@"d:\Bar", scope.WeakNamedModuleDirectory);
-		}
-
 		private static void CheckSignedSavedAssembly(string path)
 		{
 			Assert.IsTrue(File.Exists(path));
@@ -120,46 +79,6 @@ namespace Castle.DynamicProxy.Tests
 			{
 				Assert.AreEqual(keyPair.PublicKey[i], loadedPublicKey[i]);
 			}
-		}
-
-		[Test]
-		[Ignore("Expected: CastleDynProxy2.dll  But was:  /home/teamcity/buildagent/work/...")]
-		public void SaveSigned()
-		{
-			var scope = new ModuleScope(true);
-			scope.ObtainDynamicModuleWithStrongName();
-
-			var path = ModuleScope.DEFAULT_FILE_NAME;
-			if (File.Exists(path))
-				File.Delete(path);
-
-			Assert.IsFalse(File.Exists(path));
-			var savedPath = scope.SaveAssembly();
-
-			Assert.AreEqual(savedPath, Path.GetFullPath(path));
-
-			CheckSignedSavedAssembly(path);
-			File.Delete(path);
-		}
-
-		[Test]
-		[Ignore("Expected: CastleDynProxy2.dll  But was:  /home/teamcity/buildagent/work/...")]
-		public void SaveUnsigned()
-		{
-			var scope = new ModuleScope(true);
-			scope.ObtainDynamicModuleWithWeakName();
-
-			var path = ModuleScope.DEFAULT_FILE_NAME;
-			if (File.Exists(path))
-				File.Delete(path);
-
-			Assert.IsFalse(File.Exists(path));
-			var savedPath = scope.SaveAssembly();
-
-			Assert.AreEqual(savedPath, Path.GetFullPath(path));
-
-			CheckUnsignedSavedAssembly(path);
-			File.Delete(path);
 		}
 
 		[Test]

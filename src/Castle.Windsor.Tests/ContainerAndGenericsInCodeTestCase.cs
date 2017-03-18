@@ -92,19 +92,6 @@ namespace CastleTests
 		}
 
 		[Test]
-		[Ignore("Currently due to how we obtain open-generic handlers that can't be fixed easily.")]
-		public void Open_generic_as_dependency_does_not_block_resolvability_of_parent()
-		{
-			Container.Register(Component.For(typeof(IGeneric<>))
-				                   .ImplementedBy(typeof(GenericWithTDependency<>)),
-			                   Component.For<UsesIGeneric<A>>(),
-			                   Component.For<A>().UsingFactoryMethod(() => new A()));
-
-			var handler = Kernel.GetHandler(typeof(UsesIGeneric<A>));
-			Assert.AreEqual(HandlerState.Valid, handler.CurrentState);
-		}
-
-		[Test]
 		public void Open_generic_singleton_produces_unique_instances_per_closed_type()
 		{
 			Container.Register(

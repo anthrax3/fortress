@@ -76,11 +76,5 @@ namespace CastleTests
 
 			container.Resolve<A>();
 		}
-
-		[Test]
-		[Ignore("Not really possible to test in isolation...")]
-		public void With_unc_path()
-		{
-		}
 	}
 }

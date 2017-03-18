@@ -105,19 +105,6 @@ namespace Castle.DynamicProxy.Tests
 		}
 
 		[Test]
-		[Ignore("Signature of the body and declaration in a method implementation do not match. https://support.microsoft.com/en-us/kb/960240")]
-		public void ProxyTypeWithMultiDimentionalArrayAsParameter()
-		{
-			var proxy = generator.CreateInterfaceProxyWithTarget<IClassWithMultiDimentionalArray>(
-				new ClassWithMultiDimentionalArray(),
-				new LogInvocationInterceptor());
-		    proxy.Do(new[] { 1, 2, 3 });
-		    proxy.Do2(new[,] { { 1, 2 }, { 3, 4 } });
-		    proxy.Do3(new[] { "a", "b", "c" });
-		    proxy.Do4(new[,] { { "a", "b" }, { "c", "d" } });
-		}
-
-		[Test]
 		public void BaseTypeForInterfaceProxyHonored()
 		{
 			var options = new ProxyGenerationOptions();

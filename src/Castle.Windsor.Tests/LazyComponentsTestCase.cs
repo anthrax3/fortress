@@ -42,20 +42,6 @@ namespace CastleTests
 		}
 
 		[Test]
-		[Ignore(
-			"This is not supported. Actually this is a sign of a bigger design direction - ResolveAll does not trigger lazy loaders. Should we perhaps re-implement this?"
-			)]
-		public void Can_pull_lazy_via_ResolveAll()
-		{
-			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
-
-			var all = Container.ResolveAll<Lazy<IEmptyService>>();
-
-			Assert.AreEqual(2, all.Length);
-		}
-
-		[Test]
 		public void Can_resolve_component_via_lazy()
 		{
 			Container.Register(Component.For<A>());

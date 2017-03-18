@@ -46,22 +46,6 @@ namespace Castle.DynamicProxy.Tests
 			Assert.IsFalse(File.Exists(path));
 		}
 
-		[Test]
-		[Ignore("Expected: True  But was: False")]
-		public void TearDown_SavesAssembly_IfProxyGenerated()
-		{
-			string path = ModuleScope.DEFAULT_FILE_NAME;
-			if (File.Exists(path))
-			{
-				File.Delete(path);
-			}
-
-			generator.CreateClassProxy(typeof(object), new StandardInterceptor());
-
-			base.TearDown();
-			Assert.IsTrue(File.Exists(path));
-		}
-
 		private void FindVerificationErrors()
 		{
 			ModuleBuilder moduleBuilder = generator.ProxyBuilder.ModuleScope.ObtainDynamicModule(true);

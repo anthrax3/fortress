@@ -259,37 +259,6 @@ namespace Castle.MicroKernel.Tests.Configuration
 			Assert.AreEqual("CommonImpl2", instance.Services[1].GetType().Name);
 		}
 
-		[Ignore("Type conversion does not work in tests under Silverlight because the assembly is not in the starting manifest (of Statlight)")]
-
-		[Test]
-		public void ConstructorWithListParameterAndCustomType()
-		{
-			var confignode = new MutableConfiguration("key");
-
-			IConfiguration parameters = new MutableConfiguration("parameters");
-			confignode.Children.Add(parameters);
-
-			IConfiguration services = new MutableConfiguration("services");
-			parameters.Children.Add(services);
-			var list = new MutableConfiguration("list");
-			services.Children.Add(list);
-			list.Attributes.Add("type", "ICommon");
-
-			list.Children.Add(new MutableConfiguration("item", "${commonservice1}"));
-			list.Children.Add(new MutableConfiguration("item", "${commonservice2}"));
-
-			Kernel.ConfigurationStore.AddComponentConfiguration("key", confignode);
-			Kernel.Register(Component.For(typeof(ClassWithListConstructor)).Named("key"));
-
-			Kernel.Register(Component.For(typeof(ICommon)).ImplementedBy(typeof(CommonImpl1)).Named("commonservice1"));
-			Kernel.Register(Component.For(typeof(ICommon)).ImplementedBy(typeof(CommonImpl2)).Named("commonservice2"));
-
-			var instance = Kernel.Resolve<ClassWithListConstructor>("key");
-			Assert.IsNotNull(instance.Services);
-			Assert.AreEqual(2, instance.Services.Count);
-			Assert.AreEqual("CommonImpl1", instance.Services[0].GetType().Name);
-			Assert.AreEqual("CommonImpl2", instance.Services[1].GetType().Name);
-		}
 
 		[Test]
 		public void ConstructorWithStringParameters()
@@ -309,29 +278,6 @@ namespace Castle.MicroKernel.Tests.Configuration
 			Assert.IsNotNull(instance);
 			Assert.IsNotNull(instance.Host);
 			Assert.AreEqual("castleproject.org", instance.Host);
-		}
-
-		[Ignore("Type conversion does not work in tests under Silverlight because the assembly is not in the starting manifest (of Statlight)")]
-
-		[Test]
-		public void CustomLifestyleManager()
-		{
-			var key = "key";
-
-			var confignode = new MutableConfiguration(key);
-			confignode.Attributes.Add("lifestyle", "custom");
-
-			confignode.Attributes.Add("customLifestyleType", "CustomLifestyleManager");
-
-			Kernel.ConfigurationStore.AddComponentConfiguration(key, confignode);
-			Kernel.Register(Component.For(typeof(ICommon)).ImplementedBy(typeof(CommonImpl1)).Named(key));
-
-			var instance = Kernel.Resolve<ICommon>(key);
-			var handler = Kernel.GetHandler(key);
-
-			Assert.IsNotNull(instance);
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
-			Assert.AreEqual(typeof(CustomLifestyleManager), handler.ComponentModel.CustomLifestyle);
 		}
 
 		[Test]

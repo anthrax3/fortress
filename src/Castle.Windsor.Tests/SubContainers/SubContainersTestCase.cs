@@ -270,21 +270,6 @@ namespace CastleTests.SubContainers
 		}
 
 		[Test]
-		[Ignore(
-			"Support for this was removed due to issues with scoping (SimpleComponent1 would become visible from parent container)."
-			)]
-		public void Requesting_parent_component_with_child_dependency_from_child_component()
-		{
-			var subkernel = new DefaultKernel();
-			Kernel.AddChildKernel(subkernel);
-
-			Kernel.Register(Component.For<UsesSimpleComponent1>());
-			subkernel.Register(Component.For<SimpleComponent1>());
-
-			subkernel.Resolve<UsesSimpleComponent1>();
-		}
-
-		[Test]
 		public void Parent_component_will_NOT_have_dependencies_from_child()
 		{
 			Kernel.Register(Component.For<DefaultTemplateEngine>(),
@@ -326,30 +311,6 @@ namespace CastleTests.SubContainers
 			var spamservice2 = subkernel2.Resolve<DefaultSpamService>("spamservice");
 
 			Assert.AreSame(spamservice1, spamservice2);
-		}
-
-		[Test]
-		[Ignore(
-			"Support for this was removed due to issues with scoping (SimpleComponent1 would become visible from parent container)."
-			)]
-		public void Three_level_hierarchy([Values(0, 1, 2)] int parentComponentContainer,
-		                                  [Values(0, 1, 2)] int childComponentContainer)
-		{
-			var subKernel = new DefaultKernel();
-			var subSubKernel = new DefaultKernel();
-			Kernel.AddChildKernel(subKernel);
-			subKernel.AddChildKernel(subSubKernel);
-			var containers = new[]
-			{
-				Kernel,
-				subKernel,
-				subSubKernel
-			};
-
-			containers[parentComponentContainer].Register(Component.For<UsesSimpleComponent1>());
-			containers[childComponentContainer].Register(Component.For<SimpleComponent1>());
-
-			subSubKernel.Resolve<UsesSimpleComponent1>();
 		}
 
 		[Test]

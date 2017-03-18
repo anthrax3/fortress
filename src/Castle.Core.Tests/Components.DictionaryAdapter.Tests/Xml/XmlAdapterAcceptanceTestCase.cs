@@ -77,31 +77,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Adapter_OnXml_CanTargetWithXPath()
-		{
-			var line1 = "2922 South Highway 205";
-			var city = "Rockwall";
-			var state = "TX";
-			var zipCode = "75032";
-
-			var xml = string.Format(
-				@"<Season xmlns='RISE'>
-					 <Address xmlns='Common'>
-						<Line1>{0}</Line1>
-						<City>{1}</City>
-						<State>{2}</State>
-						<ZipCode>{3}</ZipCode>
-					 </Address>
-				  </Season>",
-				line1, city, state, zipCode);
-
-			XmlDocument document = null;
-			var address = CreateXmlAdapter<IAddress>(xml, ref document);
-			Assert.AreEqual(line1, address.Line1);
-		}
-
-		[Test]
 		public void Adapter_OnXml_CanReadProperties()
 		{
 			var name = "Soccer Adult Winter II 2010";
@@ -240,167 +215,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Adapter_OnXml_CanWriteProperties()
-		{
-			var name = "Soccer Adult Winter II 2010";
-			var minAge = 30;
-			var division = Division.Coed;
-			var startsOn = new DateTime(2010, 2, 21);
-			var endsOn = new DateTime(2010, 4, 18);
-			var line1 = "2922 South Highway 205";
-			var city = "Rockwall";
-			var state = "TX";
-			var zipCode = "75032";
-			var team1Name = "Fairly Oddparents";
-			var team1Balance = 450.00M;
-			var team3Name = "Barcelona";
-			var team3Balance = 175.15M;
-			var notes = "Some Notes";
-
-			var xml = string.Format(
-				@"<Season xmlns='RISE' xmlns:rise='RISE'>
-					 <Name>Soccer Adult Spring II 2010</Name>
-					 <MinimumAge>16</MinimumAge>
-					 <Division>Male</Division>
-					 <StartsOn>{0}</StartsOn>
-					 <EndsOn>{1}</EndsOn>
-					 <League>
-						<Team name='Hit And Run'>
-						   <AmountDue>100.50</AmountDue>
-						</Team>
-						<Team name='Nemisis'>
-						   <AmountDue>250.00</AmountDue>
-						</Team>
-					 </League>
-					 <ExtraStuff>
-						<LicenseNo>9999</LicenseNo>
-					 </ExtraStuff>
-				  </Season>",
-				XmlConvert.ToString(new DateTime(2010, 7, 19), XmlDateTimeSerializationMode.Local),
-				XmlConvert.ToString(new DateTime(2010, 9, 20), XmlDateTimeSerializationMode.Local));
-
-			XmlDocument document = null;
-			var season = CreateXmlAdapter<ISeason>(xml, ref document);
-			season.Name = name;
-			season.MinimumAge = minAge;
-			season.Division = division;
-			season.StartsOn = startsOn;
-			season.EndsOn = endsOn;
-			Assert.IsNotNull(season.Location);
-			Assert.IsNull(document.DocumentElement["Address", "Common"]);
-			season.Location.Line1 = line1;
-			season.Location.City = city;
-			season.Location.State = state;
-			season.Location.ZipCode = zipCode;
-			season.Teams[0].Name = team1Name;
-			season.Teams[0].Balance = team1Balance;
-			var team3 = season.Teams.AddNew();
-			team3.Name = team3Name;
-			team3.Balance = team3Balance;
-			season.Notes = notes;
-
-			Assert.AreEqual(name, season.Name);
-			Assert.AreEqual(minAge, season.MinimumAge);
-			Assert.AreEqual(division, season.Division);
-			Assert.AreEqual(startsOn.Date, season.StartsOn.Date);
-			Assert.AreEqual(endsOn.Date, season.EndsOn.Date);
-			Assert.AreEqual(line1, season.Location.Line1);
-			Assert.AreEqual(city, season.Location.City);
-			Assert.AreEqual(state, season.Location.State);
-			Assert.AreEqual(zipCode, season.Location.ZipCode);
-			Assert.AreEqual(3, season.Teams.Count);
-			Assert.AreEqual(team1Name, season.Teams[0].Name);
-			Assert.AreEqual(team1Balance, season.Teams[0].Balance);
-			Assert.AreEqual(team3Name, season.Teams[2].Name);
-			Assert.AreEqual(team3Balance, season.Teams[2].Balance);
-			Assert.AreEqual(notes, season.Notes);
-
-			season.Teams.RemoveAt(1);
-			Assert.AreEqual(2, season.Teams.Count);
-			Assert.AreEqual(team3Name, season.Teams[1].Name);
-			Assert.AreEqual(team3Balance, season.Teams[1].Balance);
-		}
-
-		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Adapter_OnXml_CanCopySubTree()
-		{
-			var xml = string.Format(
-				@"<Season xmlns='RISE' xmlns:rise='RISE'>
-					 <Name>Soccer Adult Spring II 2010</Name>
-					 <MinimumAge>16</MinimumAge>
-					 <Division>Male</Division>
-					 <StartsOn>{0}</StartsOn>
-					 <EndsOn>{1}</EndsOn>
-					 <Address xmlns='Common'>
-						<Line1>2922 South Highway 205</Line1>
-						<City>Rockwall</City>
-						<State>TX</State>
-						<ZipCode>75032</ZipCode>
-					 </Address>
-					 <League>
-						<Team name='Hit And Run'>
-						   <AmountDue>100.50</AmountDue>
-						   <Roster>
-							  <Participant FirstName='Mickey' lastName='Mouse'>
-							  </Participant>
-							  <Participant FirstName='Donald' lastName='Ducks'>
-							  </Participant>
-						   </Roster>
-						</Team>
-						<Team name='Nemisis'>
-						   <AmountDue>250.00</AmountDue>
-						</Team>
-					 </League>
-					 <Tag>Soccer</Tag>
-					 <Tag>Cheetahs</Tag>
-					 <Tag>Hot Shots</Tag>
-					 <ExtraStuff>
-						<LicenseNo>9999</LicenseNo>
-					 </ExtraStuff>
-				  </Season>",
-				XmlConvert.ToString(new DateTime(2010, 7, 19), XmlDateTimeSerializationMode.Local),
-				XmlConvert.ToString(new DateTime(2010, 9, 20), XmlDateTimeSerializationMode.Local));
-
-			XmlDocument document1 = null;
-			XmlDocument document2 = null;
-			var season1 = CreateXmlAdapter<ISeason>(xml, ref document1);
-			var season2 = CreateXmlAdapter<ISeason>(null, ref document2);
-			season2.Location = season1.Location;
-			season2.Tags = season1.Tags;
-			season2.Teams = season1.Teams;
-				var player = season2.Teams[1].Players.AddNew();
-			player.FirstName = "Dave";
-			player.LastName = "O'Hara";
-			season1.Teams[0].Players[1] = player;
-
-			Assert.AreNotSame(season1.Location, season2.Location);
-			Assert.AreEqual(season1.Location.Line1, season2.Location.Line1);
-			Assert.AreEqual(season1.Location.City, season2.Location.City);
-			Assert.AreEqual(season1.Location.State, season2.Location.State);
-			Assert.AreEqual(season1.Location.ZipCode, season2.Location.ZipCode);
-			Assert.AreEqual(season1.Tags.Length, season2.Tags.Length);
-			Assert.AreEqual(season2.Tags[0], season1.Tags[0]);
-			Assert.AreEqual(season2.Tags[1], season1.Tags[1]);
-			Assert.AreEqual(season2.Tags[2], season1.Tags[2]);
-			Assert.AreEqual(season2.Teams.Count, season1.Teams.Count);
-			Assert.AreEqual(season2.Teams[0].Name, season1.Teams[0].Name);
-			Assert.AreEqual(season2.Teams[0].Balance, season1.Teams[0].Balance);
-			Assert.AreEqual(season2.Teams[0].Players.Count, season2.Teams[0].Players.Count);
-			Assert.AreEqual(season2.Teams[0].Players[0].FirstName, season1.Teams[0].Players[0].FirstName);
-			Assert.AreEqual(season2.Teams[0].Players[0].LastName, season1.Teams[0].Players[0].LastName);
-			Assert.AreEqual(season2.Teams[1].Name, season1.Teams[1].Name);
-			Assert.AreEqual(season2.Teams[1].Balance, season1.Teams[1].Balance);
-			Assert.AreEqual(player.FirstName, season1.Teams[0].Players[1].FirstName);
-			Assert.AreEqual(player.LastName, season1.Teams[0].Players[1].LastName);
-
-			season2.Location = null;
-			season2.Tags = null;
-			Assert.AreEqual(0, season2.Tags.Length);
-		}
-
-		[Test]
 		public void Will_Ignore_If_Reassigned_Same_Component()
 		{
 			var xml = @"<Season xmlns='RISE' xmlns:rise='RISE'>
@@ -416,30 +230,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			var season = CreateXmlAdapter<ISeason>(xml, ref document);
 			season.Location = season.Location;
 			Assert.AreEqual("Rockwall", season.Location.City);
-		}
-
-		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Adapter_OnXml_CanCreate_Other_Adapter()
-		{
-			var xml = @"<Season xmlns='RISE' xmlns:rise='RISE'>
-					 <Name>Soccer Adult Spring II 2010</Name>
-					 <MinimumAge>16</MinimumAge>
-					 <Division>Male</Division>
-					 <League>
-						<Team name='Hit And Run'>
-						   <AmountDue>100.50</AmountDue>
-						</Team>
-						<Team name='Nemisis'>
-						   <AmountDue>250.00</AmountDue>
-						</Team>
-					 </League>
-				  </Season>";
-
-			XmlDocument document = null;
-			var season = CreateXmlAdapter<ISeason>(xml, ref document);
-			var address = season.Create<IAddress>();
-			Assert.IsNull(address.Line1);
 		}
 
 		[Test]
@@ -819,31 +609,6 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			season.Tags = new[] { "Hello", "Goodbye" };
 			season.Tags = new[] { "Alpha", "Beta" };
 			CollectionAssert.AreEqual(new[] { "Alpha", "Beta" }, season.Tags);
-		}
-
-		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Can_Reassign_Lists()
-		{
-			var xml = @"<Season xmlns='RISE' xmlns:rise='RISE'>
-					 <League>
-						<Team name='Hit And Run'>
-						   <AmountDue>100.50</AmountDue>
-						</Team>
-						<Team name='Nemisis'>
-						   <AmountDue>250.00</AmountDue>
-						</Team>
-					 </League>
-				  </Season>";
-
-			XmlDocument document = null, teamDoc = null;
-			var season = CreateXmlAdapter<ISeason>(xml, ref document);
-			var team = CreateXmlAdapter<ITeam>(null, ref teamDoc);
-			team.Name = "Turfmonsters";
-			var newTeams = new BindingList<ITeam>();
-			newTeams.Add(team);
-			season.Teams = newTeams;
-			Assert.AreEqual(1, season.Teams.Count);
 		}
 
 		[Test]

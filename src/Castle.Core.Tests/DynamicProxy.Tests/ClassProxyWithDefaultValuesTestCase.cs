@@ -28,30 +28,6 @@ namespace Castle.DynamicProxy.Tests
 	public class ClassProxyWithDefaultValuesTestCase : BasePEVerifyTestCase
 	{
 		[Test]
-		// Seems like mono is too strict, and doesn't handle a nullable default parameter in ParameterBuilder
-		// https://github.com/mono/mono/blob/master/mcs/class/corlib/System.Reflection.Emit/ParameterBuilder.cs#L101
-		[Ignore("System.ArgumentException : Constant does not match the defined type.")]
-		public void MethodParameterWithDefaultValue_DefaultValueIsNotSetOnProxiedMethod()
-		{
-			var proxiedType = generator.CreateClassProxy<ClassWithMethodWithParameterWithDefaultValue>().GetType();
-
-			var parameter = proxiedType.GetMethod("Method").GetParameters().Single(paramInfo => paramInfo.Name == "value");
-
-			Assert.False(parameter.HasDefaultValue);
-		}
-
-		[Test]
-		[Ignore("Expected: False  But was: True")]
-		public void MethodParameterWithDefaultValue_DefaultValueNullIsSetOnProxiedMethodAsWell()
-		{
-			var proxiedType = generator.CreateClassProxy<ClassWithMethodWithParameterWithNullDefaultValue>().GetType();
-
-			var parameter = proxiedType.GetMethod("Method").GetParameters().Single(paramInfo => paramInfo.Name == "value");
-
-			Assert.False(parameter.HasDefaultValue);
-		}
-
-		[Test]
 		public void MethodParameterWithDefaultValue_UseNullDefaultValue_class_proxy()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithMethodWithParameterWithNullDefaultValue>();

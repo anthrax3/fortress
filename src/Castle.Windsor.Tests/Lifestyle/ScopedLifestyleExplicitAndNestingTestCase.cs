@@ -30,21 +30,6 @@ namespace CastleTests.Lifestyle
 		}
 
 		[Test]
-		[Ignore("Should we support this scenario or not... there's no explicit parent/child relationship here...")]
-		public void Inner_scope_resolves_from_outer_scope()
-		{
-			using (Container.BeginScope())
-			{
-				var outer = Container.Resolve<A>();
-				using (Container.BeginScope())
-				{
-					var inner = Container.Resolve<A>();
-					Assert.AreSame(outer, inner);
-				}
-			}
-		}
-
-		[Test]
 		public void Inner_scope_should_not_cause_outer_one_to_drop_cache()
 		{
 			using (Container.BeginScope())

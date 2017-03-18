@@ -62,20 +62,6 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
-		[Ignore("This is not supported. Should be?")]
-		public void Should_not_try_to_instantiate_singletons_twice_when_circular_property_dependency()
-		{
-			SingletonPropertyComponent.CtorCallsCount = 0;
-			Container.Register(Component.For<SingletonPropertyComponent>(),
-			                   Component.For<SingletonPropertyDependency>());
-
-			var component = Container.Resolve<SingletonPropertyComponent>();
-			Assert.IsNotNull(component.Dependency);
-			Assert.AreSame(component, component.Dependency.Component);
-			Assert.AreEqual(1, SingletonPropertyComponent.CtorCallsCount);
-		}
-
-		[Test]
 		public void ThrowsACircularDependencyException2()
 		{
 			Container.Register(Component.For<CompA>().Named("compA"),

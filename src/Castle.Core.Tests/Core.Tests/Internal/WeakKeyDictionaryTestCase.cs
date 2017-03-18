@@ -44,18 +44,6 @@ namespace CastleTests.Core.Tests.Internal
 		}
 
 		[Test]
-		[Ignore("Expected: 0  But was: 1")]
-		public void AfterExplicitTrim_DeadObject()
-		{
-			CreateDictionary(); AddItem(); ResetItem();
-
-			GC.Collect();
-			Dictionary.TrimDeadObjects();
-
-			Assert.AreEqual(0, Dictionary.Count);
-		}
-
-		[Test]
 		public void AfterAutomaticTrim_LiveObject()
 		{
 			CreateDictionary(); AddItem();

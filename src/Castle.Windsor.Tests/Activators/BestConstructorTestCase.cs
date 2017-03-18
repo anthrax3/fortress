@@ -188,26 +188,6 @@ namespace CastleTests.Activators
 		}
 
 		[Test]
-		[Ignore("This is not actually supported. Not sure if should be.")]
-		public void Two_satisfiable_constructors_equal_number_of_inline_parameters_pick_one_with_more_service_overrides()
-		{
-			Container.Register(Component.For<ICommon>().ImplementedBy<CommonImpl1>().Named("Mucha"),
-			                   Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("Stefan"),
-			                   Component.For<HasTwoConstructors>().Named("first")
-			                            .DependsOn(ServiceOverride.ForKey("customer").Eq("Stefan"))
-			                            .Properties(PropertyFilter.IgnoreAll),
-			                   Component.For<HasTwoConstructors>().Named("second")
-			                            .DependsOn(ServiceOverride.ForKey("common").Eq("Mucha"))
-			                            .Properties(PropertyFilter.IgnoreAll));
-
-			var first = Container.Resolve<HasTwoConstructors>("first");
-			var second = Container.Resolve<HasTwoConstructors>("second");
-
-			Assert.IsNotNull(first.Customer);
-			Assert.IsNotNull(second.Common);
-		}
-
-		[Test]
 		public void Two_satisfiable_constructors_identical_dependency_kinds_pick_based_on_parameter_names()
 		{
 			Container.Register(Component.For<ICommon>().ImplementedBy<CommonImpl1>(),

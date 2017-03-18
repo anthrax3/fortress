@@ -105,21 +105,6 @@ namespace CastleTests.Installer
 			var camera = Container.Resolve<ICamera>();
 			Assert.AreEqual("from configuration", camera.Name);
 		}
-
-		[Test]
-		[Ignore("This does not work. Would be cool if it did, but we need deeper restructuring first.")]
-		public void InstallComponents_from_code_first_and_FromXmlFile()
-		{
-			Container.Install(
-				new Installer(c => c.Register(Component.For<ICamera>()
-				                              	.ImplementedBy<Camera>()
-				                              	.Named("camera"))),
-				Configuration.FromXml(Xml.Embedded("justConfiguration.xml"))
-				);
-
-			var camera = Container.Resolve<ICamera>();
-			Assert.AreEqual("from configuration", camera.Name);
-		}
 	}
 
 	internal class Installer : IWindsorInstaller

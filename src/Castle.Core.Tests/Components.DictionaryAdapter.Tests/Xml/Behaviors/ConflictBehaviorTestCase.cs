@@ -40,24 +40,7 @@ namespace Castle.Components.DictionaryAdapter.Xml.Tests
 			{
 				string A { get; set; }
 			}
-
-			[Test]
-			[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-			public void Set()
-			{
-				XmlMetadataBehavior.Default.AddReservedNamespaceUri("urn:a");
-
-				var xml = Xml("<Foo/>");
-				var foo = Create<IFoo>(xml);
-				var bar = (IBar) foo.Coerce(typeof(IBar));
-
-				foo.A = "x";
-				bar.A = "y";
-
-				CustomAssert.AreXmlEquivalent("<Foo xmlns:a='urn:a' a:A='x'> <A>y</A> </Foo>", xml);
-				Assert.AreEqual("x", foo.A, "foo.A");
-				Assert.AreEqual("y", bar.A, "bar.A");
-			}
+		
 		}
 
 		[TestFixture]

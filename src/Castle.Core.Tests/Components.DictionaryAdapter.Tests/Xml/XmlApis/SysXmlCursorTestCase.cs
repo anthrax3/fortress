@@ -372,27 +372,6 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 		}
 
 		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Create_BeforeEnd_IsInsert_ForAttribute()
-		{
-			var xml    = Xml("<X Other='2'/>");
-			var cursor = Cursor(xml, CursorFlags.Attributes);
-
-			cursor.MoveNext();
-			cursor.Create(ItemType.ClrType);
-			cursor.Value = "1";
-
-			Assert.AreEqual(ItemType.Name.LocalName, cursor.Name.LocalName);
-			Assert.AreEqual("1", cursor.Value);
-			Assert.True(cursor.MoveNext());
-			Assert.AreEqual(OtherType.Name.LocalName, cursor.Name.LocalName);
-			Assert.AreEqual("2", cursor.Value);
-			Assert.False(cursor.MoveNext());
-
-			CustomAssert.AreXmlEquivalent("<X Item='1' Other='2'/>", xml.GetNode());
-		}
-
-		[Test]
 		public void Create_AtEnd_IsAppend_ForElement()
 		{
 			var xml    = Xml("<X/>");
@@ -407,24 +386,6 @@ namespace CastleTests.Components.DictionaryAdapter.Xml.Tests
 			Assert.False(cursor.MoveNext());
 
 			CustomAssert.AreXmlEquivalent("<X> <Item>1</Item> </X>", xml.GetNode());
-		}
-
-		[Test]
-		[Ignore("System.NullReferenceException : Object reference not set to an instance of an object")]
-		public void Create_AtEnd_IsAppend_ForAttribute()
-		{
-			var xml    = Xml("<X/>");
-			var cursor = Cursor(xml, CursorFlags.Attributes);
-
-			cursor.MoveNext();
-			cursor.Create(ItemType.ClrType);
-			cursor.Value = "1";
-
-			Assert.AreEqual(ItemType.Name.LocalName, cursor.Name.LocalName);
-			Assert.AreEqual("1", cursor.Value);
-			Assert.False(cursor.MoveNext());
-
-			CustomAssert.AreXmlEquivalent("<X Item='1'/>", xml.GetNode());
 		}
 
 		[Test]

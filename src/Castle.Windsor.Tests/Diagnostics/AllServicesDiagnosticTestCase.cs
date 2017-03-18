@@ -38,19 +38,6 @@ namespace CastleTests.Diagnostics
 		}
 
 		[Test]
-		[Ignore("We order them alphabetically now.")]
-		public void Default_component_for_given_service_comes_first()
-		{
-			Container.Register(Component.For<IEmptyService, EmptyServiceA>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceDecorator>(),
-			                   Component.For<A>());
-
-			var services = diagnostic.Inspect();
-			Assert.AreEqual(typeof(EmptyServiceB), services[typeof(IEmptyService)].First().ComponentModel.Implementation);
-		}
-
-		[Test]
 		public void Groups_components_by_exposed_service()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),

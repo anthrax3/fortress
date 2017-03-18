@@ -97,23 +97,6 @@ namespace CastleTests.Lifestyle
 		}
 
 		[Test]
-		[Ignore("This fails... not sure what the behavior should be... that has to be discussed based on some real life usages")]
-		public void Scoped_component_instance_from_outer_scope_is_reused_within_nested_scope()
-		{
-			Container.Register(Component.For<A>().LifeStyle.Scoped());
-
-			using (Container.BeginScope())
-			{
-				var a1 = Container.Resolve<A>();
-				using (Container.BeginScope())
-				{
-					var a2 = Container.Resolve<A>();
-					Assert.AreSame(a1, a2);
-				}
-			}
-		}
-
-		[Test]
 		public void Scoped_component_instance_is_reused_within_the_scope()
 		{
 			Container.Register(Component.For<A>().LifeStyle.Scoped());

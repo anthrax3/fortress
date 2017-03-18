@@ -57,47 +57,6 @@ namespace CastleTests.Facilities.FactorySupport
 			Kernel.Resolve("stringdictComponent", typeof(StringDictionaryDependentComponent));
 		}
 
-		[Test]
-		[Ignore("BUG: not working")]
-		public void Can_instantiate_abstract_service_via_factory()
-		{
-			Container.Install(Configuration.FromXmlFile(
-				ConfigHelper.ResolveConfigPath("Configuration2/abstract_component_factory.xml")));
-
-			Container.Resolve<IComponent>("abstract");
-		}
-
-		[Test]
-		[Ignore("Bug confirmed, but cant fix it without undesired side effects")]
-		public void KernelDoesNotTryToWireComponentsPropertiesWithFactoryConfiguration()
-		{
-			Kernel.Register(Component.For(typeof(Factory)).Named("a"));
-
-			var model = AddComponent("cool.service", typeof(MyCoolServiceWithProperties), "CreateCoolService");
-
-			model.Parameters.Add("someProperty", "Abc");
-
-			var service = Kernel.Resolve<MyCoolServiceWithProperties>("cool.service");
-
-			Assert.IsNotNull(service);
-			Assert.IsNull(service.SomeProperty);
-		}
-
-		[Test]
-		[Ignore("Since the facility is mostly for legacy stuff, I don't think it's crucial to support this.")]
-		public void Late_bound_factory_properly_applies_lifetime_concerns()
-		{
-			Kernel.AddFacility<FactorySupportFacility>();
-			Kernel.Register(Component.For(typeof(DisposableComponentFactory)).Named("a"));
-			var componentModel = AddComponent("foo", typeof(IComponent), "Create");
-			componentModel.LifestyleType = LifestyleType.Transient;
-			var component = Kernel.Resolve<IComponent>("foo") as ComponentWithDispose;
-			Assert.IsNotNull(component);
-			Assert.IsFalse(component.Disposed);
-			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Disposed);
-		}
-
 		private ComponentModel AddComponent(string key, Type type, string factoryMethod)
 		{
 			var config = new MutableConfiguration(key);

@@ -62,17 +62,6 @@ namespace CastleTests
 			Assert.AreEqual(false, converter.PerformConversion("false", typeof(bool)));
 		}
 
-		[Ignore("This does not work in tests under Silverlight")]
-
-		[Test]
-		public void PerformConversionType()
-		{
-			Assert.AreEqual(typeof(DefaultConversionManagerTestCase),
-			                converter.PerformConversion(
-			                	"CastleTests.DefaultConversionManagerTestCase, Castle.Windsor.Tests",
-			                	typeof(Type)));
-		}
-
 		[Test]
 		public void PerformConversionList()
 		{
