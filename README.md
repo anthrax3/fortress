@@ -1,6 +1,6 @@
-# fortress.windsor
+# Fortress Windsor
 
-A leaner meaner version of Castle.Windsor
+A leaner meaner version of Castle Windsor
 
 
 | Build |
