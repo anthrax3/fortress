@@ -20,24 +20,17 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 	[Serializable]
 	public class InitializationConcern : ICommissionConcern
 	{
-		private static readonly InitializationConcern instance = new InitializationConcern();
-
-		public static InitializationConcern Instance
-		{
-			get { return instance; }
-		}
-
 		protected InitializationConcern()
 		{
 		}
+
+		public static InitializationConcern Instance { get; } = new InitializationConcern();
 
 		public void Apply(ComponentModel model, object component)
 		{
 			var initable = component as IInitializable;
 			if (initable != null)
-			{
 				initable.Initialize();
-			}
 		}
 	}
 }

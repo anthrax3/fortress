@@ -32,13 +32,11 @@ namespace Castle.Windsor.Facilities.TypedFactory
 				if (arg.Contains(parameters[i].ParameterType))
 				{
 					if (IsFunc(method.DeclaringType))
-					{
 						throw new ArgumentException(
 							string.Format("Factory delegate {0} has duplicated arguments of type {1}. " +
 							              "Using generic purpose delegates with duplicated argument types is unsupported, because then it is not possible to match arguments properly. " +
 							              "Use some custom delegate with meaningful argument names or interface based factory instead.",
-							              method.DeclaringType, parameters[i].ParameterType));
-					}
+								method.DeclaringType, parameters[i].ParameterType));
 
 					// else we just ignore it. It will likely be matched by name so we don't want to throw prematurely. We could log this though.
 				}

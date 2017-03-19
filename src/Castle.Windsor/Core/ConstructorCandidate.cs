@@ -20,50 +20,37 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class ConstructorCandidate : IComparable<ConstructorCandidate>
 	{
-		private readonly ConstructorInfo constructorInfo;
-		private readonly ConstructorDependencyModel[] dependencies;
-
 		public ConstructorCandidate(ConstructorInfo constructorInfo, ConstructorDependencyModel[] dependencies)
 		{
-			this.constructorInfo = constructorInfo;
-			this.dependencies = dependencies;
+			Constructor = constructorInfo;
+			Dependencies = dependencies;
 			Array.ForEach(dependencies, InitParameter);
 		}
 
-		public ConstructorInfo Constructor
-		{
-			get { return constructorInfo; }
-		}
+		public ConstructorInfo Constructor { get; }
 
-		public ConstructorDependencyModel[] Dependencies
-		{
-			get { return dependencies; }
-		}
-
-		private void InitParameter(ConstructorDependencyModel parameter)
-		{
-			parameter.SetParentConstructor(this);
-		}
+		public ConstructorDependencyModel[] Dependencies { get; }
 
 		int IComparable<ConstructorCandidate>.CompareTo(ConstructorCandidate other)
 		{
 			// we sort greedier first
 			var value = other.Dependencies.Length - Dependencies.Length;
 			if (value != 0)
-			{
 				return value;
-			}
 			for (var index = 0; index < Dependencies.Length; index++)
 			{
 				var mine = Dependencies[index];
 				var othr = other.Dependencies[index];
 				value = string.Compare(mine.TargetItemType.FullName, othr.TargetItemType.FullName, StringComparison.OrdinalIgnoreCase);
 				if (value != 0)
-				{
 					return value;
-				}
 			}
 			return 0;
+		}
+
+		private void InitParameter(ConstructorDependencyModel parameter)
+		{
+			parameter.SetParentConstructor(this);
 		}
 	}
 }

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
 
@@ -36,16 +35,10 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		public void BuildComponentModel(IKernel kernel, ComponentModel model)
 		{
 			if (configuration != null)
-			{
 				model.Configuration.Children.Add(configuration);
-			}
 			else
-			{
 				foreach (var configNode in configNodes)
-				{
 					configNode.ApplyTo(model.Configuration);
-				}
-			}
 		}
 
 		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)

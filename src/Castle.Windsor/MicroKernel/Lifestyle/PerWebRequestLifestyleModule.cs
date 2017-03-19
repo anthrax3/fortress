@@ -35,14 +35,12 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 			context.EndRequest += Application_EndRequest;
 		}
 
-		protected void Application_EndRequest(Object sender, EventArgs e)
+		protected void Application_EndRequest(object sender, EventArgs e)
 		{
-			var application = (HttpApplication)sender;
-			var scope = GetScope(application.Context, createIfNotPresent: false);
+			var application = (HttpApplication) sender;
+			var scope = GetScope(application.Context, false);
 			if (scope != null)
-			{
 				scope.Dispose();
-			}
 		}
 
 		internal static ILifetimeScope GetScope()
@@ -50,49 +48,37 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 			EnsureInitialized();
 			var context = HttpContext.Current;
 			if (context == null)
-			{
 				throw new InvalidOperationException(
 					"HttpContext.Current is null. PerWebRequestLifestyle can only be used in ASP.Net");
-			}
-			return GetScope(context, createIfNotPresent: true);
+			return GetScope(context, true);
 		}
 
 		internal static ILifetimeScope YieldScope()
 		{
 			var context = HttpContext.Current;
 			if (context == null)
-			{
 				return null;
-			}
-			var scope = GetScope(context, createIfNotPresent: true);
+			var scope = GetScope(context, true);
 			if (scope != null)
-			{
 				context.Items.Remove(key);
-			}
 			return scope;
 		}
 
 		private static void EnsureInitialized()
 		{
 			if (initialized)
-			{
 				return;
-			}
 			var message = new StringBuilder();
 			message.AppendLine("Looks like you forgot to register the http module " + typeof(PerWebRequestLifestyleModule).FullName);
 			message.AppendLine("To fix this add");
 			message.AppendLine("<add name=\"PerRequestLifestyle\" type=\"Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule, Castle.Windsor\" />");
 			message.AppendLine("to the <httpModules> section on your web.config.");
 			if (HttpRuntime.UsingIntegratedPipeline)
-			{
 				message.AppendLine(
 					"Windsor also detected you're running IIS in Integrated Pipeline mode. This means that you also need to add the module to the <modules> section under <system.webServer>.");
-			}
 			else
-			{
 				message.AppendLine(
 					"If you plan running on IIS in Integrated Pipeline mode, you also need to add the module to the <modules> section under <system.webServer>.");
-			}
 			message.AppendLine("Alternatively make sure you have " + PerWebRequestLifestyleModuleRegistration.MicrosoftWebInfrastructureDll +
 			                   " assembly in your GAC (it is installed by ASP.NET MVC3 or WebMatrix) and Windsor will be able to register the module automatically without having to add anything to the config file.");
 			throw new ComponentResolutionException(message.ToString());
@@ -100,7 +86,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 
 		private static ILifetimeScope GetScope(HttpContext context, bool createIfNotPresent)
 		{
-			var candidates = (ILifetimeScope)context.Items[key];
+			var candidates = (ILifetimeScope) context.Items[key];
 			if (candidates == null && createIfNotPresent)
 			{
 				candidates = new DefaultLifetimeScope(new ScopeCache());
@@ -110,4 +96,3 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		}
 	}
 }
-

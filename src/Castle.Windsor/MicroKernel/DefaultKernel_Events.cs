@@ -23,12 +23,32 @@ namespace Castle.Windsor.MicroKernel
 		private bool handlersChanged;
 		private volatile bool handlersChangedDeferred;
 
+		public event HandlerDelegate HandlerRegistered = delegate { };
+
+		public event HandlersChangedDelegate HandlersChanged = delegate { };
+
+		public event ComponentDataDelegate ComponentRegistered = delegate { };
+
+		public event ComponentInstanceDelegate ComponentCreated = delegate { };
+
+		public event ComponentInstanceDelegate ComponentDestroyed = delegate { };
+
+		public event EventHandler AddedAsChildKernel = delegate { };
+
+		public event EventHandler RegistrationCompleted = delegate { };
+
+		public event EventHandler RemovedAsChildKernel = delegate { };
+
+		public event ComponentModelDelegate ComponentModelCreated = delegate { };
+
+		public event DependencyDelegate DependencyResolving = delegate { };
+
+		public event ServiceDelegate EmptyCollectionResolving = delegate { };
+
 		public IDisposable OptimizeDependencyResolution()
 		{
 			if (handlersChangedDeferred)
-			{
 				return null;
-			}
 
 			handlersChangedDeferred = true;
 
@@ -55,12 +75,12 @@ namespace Castle.Windsor.MicroKernel
 			ComponentModelCreated(model);
 		}
 
-		protected virtual void RaiseComponentRegistered(String key, IHandler handler)
+		protected virtual void RaiseComponentRegistered(string key, IHandler handler)
 		{
 			ComponentRegistered(key, handler);
 		}
 
-		protected virtual void RaiseDependencyResolving(ComponentModel client, DependencyModel model, Object dependency)
+		protected virtual void RaiseDependencyResolving(ComponentModel client, DependencyModel model, object dependency)
 		{
 			DependencyResolving(client, model, dependency);
 		}
@@ -110,28 +130,6 @@ namespace Castle.Windsor.MicroKernel
 			}
 		}
 
-		public event HandlerDelegate HandlerRegistered = delegate { };
-
-		public event HandlersChangedDelegate HandlersChanged = delegate { };
-
-		public event ComponentDataDelegate ComponentRegistered = delegate { };
-
-		public event ComponentInstanceDelegate ComponentCreated = delegate { };
-
-		public event ComponentInstanceDelegate ComponentDestroyed = delegate { };
-
-		public event EventHandler AddedAsChildKernel = delegate { };
-
-		public event EventHandler RegistrationCompleted = delegate { };
-
-		public event EventHandler RemovedAsChildKernel = delegate { };
-
-		public event ComponentModelDelegate ComponentModelCreated = delegate { };
-
-		public event DependencyDelegate DependencyResolving = delegate { };
-
-		public event ServiceDelegate EmptyCollectionResolving = delegate { };
-
 		private class OptimizeDependencyResolutionDisposable : IDisposable
 		{
 			private readonly DefaultKernel kernel;
@@ -148,9 +146,7 @@ namespace Castle.Windsor.MicroKernel
 					try
 					{
 						if (kernel.handlersChanged == false)
-						{
 							return;
-						}
 
 						kernel.DoActualRaisingOfHandlersChanged();
 						kernel.RaiseRegistrationCompleted();

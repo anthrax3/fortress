@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.Util;
 
@@ -24,6 +23,12 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 	[Serializable]
 	public class DefaultNamingSubSystem : AbstractSubSystem, INamingSubSystem
 	{
+		private readonly IDictionary<Type, IHandler[]> assignableHandlerListsByTypeCache =
+			new Dictionary<Type, IHandler[]>(SimpleTypeEqualityComparer.Instance);
+
+		private readonly IDictionary<Type, IHandler[]> handlerListsByTypeCache =
+			new Dictionary<Type, IHandler[]>(SimpleTypeEqualityComparer.Instance);
+
 		protected readonly Lock @lock = Lock.Create();
 
 		protected readonly Dictionary<string, IHandler> name2Handler =
@@ -33,21 +38,10 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			new Dictionary<Type, HandlerWithPriority>(SimpleTypeEqualityComparer.Instance);
 
 		protected IList<IHandlersFilter> filters;
-		protected IList<IHandlerSelector> selectors;
-
-		private readonly IDictionary<Type, IHandler[]> assignableHandlerListsByTypeCache =
-			new Dictionary<Type, IHandler[]>(SimpleTypeEqualityComparer.Instance);
-
-		private readonly IDictionary<Type, IHandler[]> handlerListsByTypeCache =
-			new Dictionary<Type, IHandler[]>(SimpleTypeEqualityComparer.Instance);
 
 		private Dictionary<string, IHandler> handlerByNameCache;
 		private Dictionary<Type, IHandler> handlerByServiceCache;
-
-		public virtual int ComponentCount
-		{
-			get { return HandlerByNameCache.Count; }
-		}
+		protected IList<IHandlerSelector> selectors;
 
 		protected IDictionary<string, IHandler> HandlerByNameCache
 		{
@@ -55,9 +49,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			{
 				var cache = handlerByNameCache;
 				if (cache != null)
-				{
 					return cache;
-				}
 				using (@lock.ForWriting())
 				{
 					cache = new Dictionary<string, IHandler>(name2Handler, name2Handler.Comparer);
@@ -73,41 +65,38 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			{
 				var cache = handlerByServiceCache;
 				if (cache != null)
-				{
 					return cache;
-				}
 				using (@lock.ForWriting())
 				{
 					cache = new Dictionary<Type, IHandler>(service2Handler.Count, service2Handler.Comparer);
 					foreach (var item in service2Handler)
-					{
 						cache.Add(item.Key, item.Value.Handler);
-					}
 					handlerByServiceCache = cache;
 					return cache;
 				}
 			}
 		}
 
+		public virtual int ComponentCount
+		{
+			get { return HandlerByNameCache.Count; }
+		}
+
 		public void AddHandlerSelector(IHandlerSelector selector)
 		{
 			if (selectors == null)
-			{
 				selectors = new List<IHandlerSelector>();
-			}
 			selectors.Add(selector);
 		}
 
 		public void AddHandlersFilter(IHandlersFilter filter)
 		{
 			if (filters == null)
-			{
 				filters = new List<IHandlersFilter>();
-			}
 			filters.Add(filter);
 		}
 
-		public virtual bool Contains(String name)
+		public virtual bool Contains(string name)
 		{
 			return HandlerByNameCache.ContainsKey(name);
 		}
@@ -128,30 +117,22 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		public virtual IHandler[] GetAssignableHandlers(Type service)
 		{
 			if (service == null)
-			{
 				throw new ArgumentNullException("service");
-			}
 			if (service == typeof(object))
-			{
 				return GetAllHandlers();
-			}
 			return GetAssignableHandlersNoFiltering(service);
 		}
 
-		public virtual IHandler GetHandler(String name)
+		public virtual IHandler GetHandler(string name)
 		{
 			if (name == null)
-			{
 				throw new ArgumentNullException("name");
-			}
 
 			if (selectors != null)
 			{
 				var selectorsOpinion = GetSelectorsOpinion(name, null);
 				if (selectorsOpinion != null)
-				{
 					return selectorsOpinion;
-				}
 			}
 
 			IHandler value;
@@ -162,39 +143,27 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		public virtual IHandler GetHandler(Type service)
 		{
 			if (service == null)
-			{
 				throw new ArgumentNullException("service");
-			}
 			if (selectors != null)
 			{
 				var selectorsOpinion = GetSelectorsOpinion(null, service);
 				if (selectorsOpinion != null)
-				{
 					return selectorsOpinion;
-				}
 			}
 			IHandler handler;
 			if (HandlerByServiceCache.TryGetValue(service, out handler))
-			{
 				return handler;
-			}
 
 			if (service.IsGenericType && service.IsGenericTypeDefinition == false)
 			{
 				var openService = service.GetGenericTypeDefinition();
 				if (HandlerByServiceCache.TryGetValue(openService, out handler) && handler.Supports(service))
-				{
 					return handler;
-				}
 
 				var handlerCandidates = GetHandlers(openService);
 				foreach (var handlerCandidate in handlerCandidates)
-				{
 					if (handlerCandidate.Supports(service))
-					{
 						return handlerCandidate;
-					}
-				}
 			}
 
 			return null;
@@ -203,25 +172,19 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		public virtual IHandler[] GetHandlers(Type service)
 		{
 			if (service == null)
-			{
 				throw new ArgumentNullException("service");
-			}
 			if (filters != null)
 			{
 				var filtersOpinion = GetFiltersOpinion(service);
 				if (filtersOpinion != null)
-				{
 					return filtersOpinion;
-				}
 			}
 
 			IHandler[] result;
 			using (var locker = @lock.ForReadingUpgradeable())
 			{
 				if (handlerListsByTypeCache.TryGetValue(service, out result))
-				{
 					return result;
-				}
 				result = GetHandlersNoLock(service);
 
 				locker.Upgrade();
@@ -244,7 +207,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 				catch (ArgumentException)
 				{
 					throw new ComponentRegistrationException(
-						String.Format(
+						string.Format(
 							"Component {0} could not be registered. There is already a component with that name. Did you want to modify the existing component instead? If not, make sure you specify a unique name.",
 							name));
 				}
@@ -254,9 +217,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 					var handlerForService = serviceSelector(service);
 					HandlerWithPriority previous;
 					if (service2Handler.TryGetValue(service, out previous) == false || handlerForService.Triumphs(previous))
-					{
 						service2Handler[service] = handlerForService;
-					}
 				}
 				InvalidateCache();
 			}
@@ -268,15 +229,11 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			using (var locker = @lock.ForReadingUpgradeable())
 			{
 				if (assignableHandlerListsByTypeCache.TryGetValue(service, out result))
-				{
 					return result;
-				}
 
 				locker.Upgrade();
 				if (assignableHandlerListsByTypeCache.TryGetValue(service, out result))
-				{
 					return result;
-				}
 				result = name2Handler.Values.Where(h => h.SupportsAssignable(service)).ToArray();
 				assignableHandlerListsByTypeCache[service] = result;
 			}
@@ -287,26 +244,18 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		protected virtual IHandler[] GetFiltersOpinion(Type service)
 		{
 			if (filters == null)
-			{
 				return null;
-			}
 
 			IHandler[] handlers = null;
 			foreach (var filter in filters)
 			{
 				if (filter.HasOpinionAbout(service) == false)
-				{
 					continue;
-				}
 				if (handlers == null)
-				{
 					handlers = GetAssignableHandlersNoFiltering(service);
-				}
 				handlers = filter.SelectHandlers(service, handlers);
 				if (handlers != null)
-				{
 					return handlers;
-				}
 			}
 			return null;
 		}
@@ -314,26 +263,18 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		protected virtual IHandler GetSelectorsOpinion(string name, Type type)
 		{
 			if (selectors == null)
-			{
 				return null;
-			}
 			type = type ?? typeof(object); // if type is null, we want everything, so object does well for that
 			IHandler[] handlers = null; //only init if we have a selector with an opinion about this type
 			foreach (var selector in selectors)
 			{
 				if (selector.HasOpinionAbout(name, type) == false)
-				{
 					continue;
-				}
 				if (handlers == null)
-				{
 					handlers = GetAssignableHandlersNoFiltering(type);
-				}
 				var handler = selector.SelectHandler(name, type, handlers);
 				if (handler != null)
-				{
 					return handler;
-				}
 			}
 			return null;
 		}
@@ -356,9 +297,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			foreach (var handler in name2Handler.Values)
 			{
 				if (handler.Supports(service) == false)
-				{
 					continue;
-				}
 				if (IsDefault(handler, service))
 				{
 					handlers.AddFirst(defaults, handler);
@@ -381,15 +320,11 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 			if (defaultsFilter == null)
 			{
 				if (fallbackFilter == null)
-				{
 					return service => new HandlerWithPriority(0, handler);
-				}
 				return service => new HandlerWithPriority(fallbackFilter(service) ? -1 : 0, handler);
 			}
 			if (fallbackFilter == null)
-			{
 				return service => new HandlerWithPriority(defaultsFilter(service) ? 1 : 0, handler);
-			}
 			return service => new HandlerWithPriority(defaultsFilter(service) ? 1 : (fallbackFilter(service) ? -1 : 0), handler);
 		}
 
@@ -397,9 +332,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		{
 			var filter = handler.ComponentModel.GetDefaultComponentForServiceFilter();
 			if (filter == null)
-			{
 				return false;
-			}
 			return filter(service);
 		}
 
@@ -407,38 +340,28 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 		{
 			var filter = handler.ComponentModel.GetFallbackComponentForServiceFilter();
 			if (filter == null)
-			{
 				return false;
-			}
 			return filter(service);
 		}
 
 		protected struct HandlerWithPriority
 		{
-			private readonly IHandler handler;
 			private readonly int priority;
 
 			public HandlerWithPriority(int priority, IHandler handler)
 			{
 				this.priority = priority;
-				this.handler = handler;
+				Handler = handler;
 			}
 
-			public IHandler Handler
-			{
-				get { return handler; }
-			}
+			public IHandler Handler { get; }
 
 			public bool Triumphs(HandlerWithPriority other)
 			{
 				if (priority > other.priority)
-				{
 					return true;
-				}
 				if (priority == other.priority && priority > 0)
-				{
 					return true;
-				}
 				return false;
 			}
 		}

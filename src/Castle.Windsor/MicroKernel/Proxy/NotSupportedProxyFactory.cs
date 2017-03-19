@@ -26,7 +26,7 @@ namespace Castle.Windsor.MicroKernel.Proxy
 		}
 
 		public object Create(IKernel kernel, object instance, ComponentModel mode, CreationContext context,
-		                     params object[] constructorArguments)
+			params object[] constructorArguments)
 		{
 			throw new NotImplementedException(
 				"You must supply an implementation of IProxyFactory " +
@@ -34,7 +34,7 @@ namespace Castle.Windsor.MicroKernel.Proxy
 		}
 
 		public object Create(IProxyFactoryExtension customFactory, IKernel kernel, ComponentModel model,
-		                     CreationContext context, params object[] constructorArguments)
+			CreationContext context, params object[] constructorArguments)
 		{
 			throw new NotImplementedException(
 				"You must supply an implementation of IProxyFactory " +

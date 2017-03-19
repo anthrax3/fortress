@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.MicroKernel.Registration;
-
 namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
 	public class AttributeDescriptor<S> : AbstractOverwriteableDescriptor<S>
 		where S : class
 	{
-		private readonly String name;
-		private readonly String value;
+		private readonly string name;
+		private readonly string value;
 
-		public AttributeDescriptor(String name, String value)
+		public AttributeDescriptor(string name, string value)
 		{
 			this.name = name;
 			this.value = value;
@@ -33,28 +29,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		protected override void ApplyToConfiguration(IKernel kernel, IConfiguration configuration)
 		{
 			if (configuration.Attributes[name] == null || IsOverWrite)
-			{
 				configuration.Attributes[name] = value;
-			}
-		}
-	}
-
-	public class AttributeKeyDescriptor<S>
-		where S : class
-	{
-		private readonly ComponentRegistration<S> component;
-		private readonly String name;
-
-		public AttributeKeyDescriptor(ComponentRegistration<S> component, String name)
-		{
-			this.component = component;
-			this.name = name;
-		}
-
-		public ComponentRegistration<S> Eq(Object value)
-		{
-			var attribValue = (value != null) ? value.ToString() : "";
-			return component.AddAttributeDescriptor(name, attribValue);
 		}
 	}
 }

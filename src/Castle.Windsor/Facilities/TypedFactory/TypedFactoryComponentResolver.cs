@@ -20,20 +20,18 @@ namespace Castle.Windsor.Facilities.TypedFactory
 {
 	public class TypedFactoryComponentResolver
 	{
+		private readonly Type actualSelectorType;
 		protected readonly IDictionary additionalArguments;
 		protected readonly string componentName;
 		protected readonly Type componentType;
 		protected readonly bool fallbackToResolveByTypeIfNameNotFound;
-		private readonly Type actualSelectorType;
 
 		public TypedFactoryComponentResolver(string componentName, Type componentType, IDictionary additionalArguments,
-		                                     bool fallbackToResolveByTypeIfNameNotFound, Type actualSelectorType)
+			bool fallbackToResolveByTypeIfNameNotFound, Type actualSelectorType)
 		{
 			if (string.IsNullOrEmpty(componentName) && componentType == null)
-			{
 				throw new ArgumentNullException("componentType",
-				                                "At least one - componentName or componentType must not be null or empty");
-			}
+					"At least one - componentName or componentType must not be null or empty");
 
 			this.componentType = componentType;
 			this.componentName = componentName;
@@ -45,7 +43,6 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		public virtual object Resolve(IKernelInternal kernel, IReleasePolicy scope)
 		{
 			if (LoadByName(kernel))
-			{
 				try
 				{
 					return kernel.Resolve(componentName, componentType, additionalArguments, scope);
@@ -59,16 +56,13 @@ namespace Castle.Windsor.Facilities.TypedFactory
 					}
 					throw;
 				}
-			}
 			return kernel.Resolve(componentType, additionalArguments, scope);
 		}
 
 		private bool LoadByName(IKernelInternal kernel)
 		{
 			if (componentName == null)
-			{
 				return false;
-			}
 			return fallbackToResolveByTypeIfNameNotFound == false || kernel.LoadHandlerByName(componentName, componentType, additionalArguments) != null;
 		}
 	}

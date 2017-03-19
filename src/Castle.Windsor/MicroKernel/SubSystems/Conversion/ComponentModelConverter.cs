@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -23,15 +22,13 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public override bool CanHandleType(Type type)
 		{
 			if (type.IsInterface)
-			{
 				return false;
-			}
 
 			var converter = TypeDescriptor.GetConverter(type);
-			return (converter != null && converter.CanConvertFrom(typeof(String)));
+			return converter != null && converter.CanConvertFrom(typeof(string));
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			var converter = TypeDescriptor.GetConverter(targetType);
 
@@ -41,7 +38,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format(
+				var message = string.Format(
 					"Could not convert from '{0}' to {1}",
 					value, targetType.FullName);
 

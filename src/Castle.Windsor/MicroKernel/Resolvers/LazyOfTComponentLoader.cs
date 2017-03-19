@@ -26,17 +26,11 @@ namespace Castle.Windsor.MicroKernel.Resolvers
 		public IRegistration Load(string name, Type service, IDictionary arguments)
 		{
 			if (service == null)
-			{
 				return null;
-			}
 			if (service.IsGenericType == false)
-			{
 				return null;
-			}
 			if (service.GetGenericTypeDefinition() != typeof(Lazy<>))
-			{
 				return null;
-			}
 			return Component.For(typeof(Lazy<>))
 				.ImplementedBy(typeof(LazyEx<>), LazyServiceStrategy.Instance)
 				.LifeStyle.Transient

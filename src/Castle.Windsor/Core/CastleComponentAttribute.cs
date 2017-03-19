@@ -19,7 +19,7 @@ namespace Castle.Windsor.Core
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 	public class CastleComponentAttribute : LifestyleAttribute
 	{
-		public CastleComponentAttribute(String name) : this(name, null)
+		public CastleComponentAttribute(string name) : this(name, null)
 		{
 		}
 
@@ -28,12 +28,12 @@ namespace Castle.Windsor.Core
 		{
 		}
 
-		public CastleComponentAttribute(String name, params Type[] services)
+		public CastleComponentAttribute(string name, params Type[] services)
 			: this(name, LifestyleType.Undefined, services)
 		{
 		}
 
-		public CastleComponentAttribute(String name, LifestyleType lifestyle, params Type[] services) : base(lifestyle)
+		public CastleComponentAttribute(string name, LifestyleType lifestyle, params Type[] services) : base(lifestyle)
 		{
 			Name = name;
 			Services = services ?? Type.EmptyTypes;
@@ -45,20 +45,18 @@ namespace Castle.Windsor.Core
 			get { return string.IsNullOrEmpty(Name) == false; }
 		}
 
-		public String Name { get; private set; }
+		public string Name { get; }
 
 		public Type[] Services { get; private set; }
-		public bool ServicesSpecifiedExplicitly { get; private set; }
+		public bool ServicesSpecifiedExplicitly { get; }
 
 		public static CastleComponentAttribute GetDefaultsFor(Type type)
 		{
-			var attribute = (CastleComponentAttribute)GetCustomAttribute(type, typeof(CastleComponentAttribute));
+			var attribute = (CastleComponentAttribute) GetCustomAttribute(type, typeof(CastleComponentAttribute));
 			if (attribute != null)
 			{
 				if (attribute.ServicesSpecifiedExplicitly == false)
-				{
-					attribute.Services = new[] { type };
-				}
+					attribute.Services = new[] {type};
 				return attribute;
 			}
 			return new CastleComponentAttribute(type);

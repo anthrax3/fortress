@@ -15,46 +15,36 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
 	public class TypeDescriptor
 	{
 		private static readonly Lock @lock = Lock.Create();
-		private static readonly IDictionary<Type,TypeConverter> convertersByType = new Dictionary<Type, TypeConverter>();
+		private static readonly IDictionary<Type, TypeConverter> convertersByType = new Dictionary<Type, TypeConverter>();
 
 
 		public static TypeConverter GetConverter(Type type)
 		{
-			using(var holder = @lock.ForReadingUpgradeable())
+			using (var holder = @lock.ForReadingUpgradeable())
 			{
 				TypeConverter converter;
 				if (convertersByType.TryGetValue(type, out converter))
-				{
 					return converter;
-				}
 
 				holder.Upgrade();
 				if (convertersByType.TryGetValue(type, out converter))
-				{
 					return converter;
-				}
 
 				var converterAttribute = Attribute.GetCustomAttribute(type, typeof(TypeConverterAttribute), false) as TypeConverterAttribute;
 				if (converterAttribute == null)
-				{
 					return null;
-				}
 				var converterType = Type.GetType(converterAttribute.ConverterTypeName, false);
 				if (converterType == null)
-				{
-					// this should really never happen, but just in case...
 					return null;
-				}
 				try
 				{
-					converter = (TypeConverter)Activator.CreateInstance(converterType);
+					converter = (TypeConverter) Activator.CreateInstance(converterType);
 				}
 				catch (Exception)
 				{

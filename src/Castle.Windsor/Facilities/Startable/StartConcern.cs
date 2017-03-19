@@ -19,11 +19,11 @@ namespace Castle.Windsor.Facilities.Startable
 {
 	public class StartConcern : ICommissionConcern
 	{
-		private static readonly StartConcern instance = new StartConcern();
-
 		protected StartConcern()
 		{
 		}
+
+		public static StartConcern Instance { get; } = new StartConcern();
 
 		public void Apply(ComponentModel model, object component)
 		{
@@ -35,15 +35,8 @@ namespace Castle.Windsor.Facilities.Startable
 			{
 				var startMethod = model.ExtendedProperties["Castle.StartableFacility.StartMethod"] as MethodInfo;
 				if (startMethod != null)
-				{
 					startMethod.Invoke(component, null);
-				}
 			}
-		}
-
-		public static StartConcern Instance
-		{
-			get { return instance; }
 		}
 	}
 }

@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
@@ -30,18 +29,16 @@ using Castle.Windsor.Windsor.Proxy;
 namespace Castle.Windsor.Windsor
 {
 	[Serializable]
-	[DebuggerDisplay("{name,nq}")]
+	[DebuggerDisplay("{Name,nq}")]
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
 	public partial class WindsorContainer : IWindsorContainer
 	{
 		private const string CastleUnicode = " \uD83C\uDFF0 ";
-		private static int instanceCount = 0;
+		private static int instanceCount;
 		private readonly Dictionary<string, IWindsorContainer> childContainers = new Dictionary<string, IWindsorContainer>(StringComparer.OrdinalIgnoreCase);
 		private readonly object childContainersLocker = new object();
-		private readonly IComponentsInstaller installer;
 
 		private readonly IKernel kernel;
-		private readonly string name;
 
 
 		private IWindsorContainer parent;
@@ -60,9 +57,7 @@ namespace Castle.Windsor.Windsor
 		public WindsorContainer(IConfigurationInterpreter interpreter) : this()
 		{
 			if (interpreter == null)
-			{
 				throw new ArgumentNullException("interpreter");
-			}
 			interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
 
 			RunInstaller();
@@ -71,13 +66,9 @@ namespace Castle.Windsor.Windsor
 		public WindsorContainer(IConfigurationInterpreter interpreter, IEnvironmentInfo environmentInfo) : this()
 		{
 			if (interpreter == null)
-			{
 				throw new ArgumentNullException("interpreter");
-			}
 			if (environmentInfo == null)
-			{
 				throw new ArgumentNullException("environmentInfo");
-			}
 
 			interpreter.EnvironmentName = environmentInfo.GetEnvironmentName();
 			interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
@@ -85,12 +76,10 @@ namespace Castle.Windsor.Windsor
 			RunInstaller();
 		}
 
-		public WindsorContainer(String configurationUri) : this()
+		public WindsorContainer(string configurationUri) : this()
 		{
 			if (configurationUri == null)
-			{
 				throw new ArgumentNullException("configurationUri");
-			}
 
 			var interpreter = GetInterpreter(configurationUri);
 			interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
@@ -103,49 +92,37 @@ namespace Castle.Windsor.Windsor
 		{
 		}
 
-		public WindsorContainer(String name, IKernel kernel, IComponentsInstaller installer)
+		public WindsorContainer(string name, IKernel kernel, IComponentsInstaller installer)
 		{
 			if (name == null)
-			{
 				throw new ArgumentNullException("name");
-			}
 			if (kernel == null)
-			{
 				throw new ArgumentNullException("kernel");
-			}
 			if (installer == null)
-			{
 				throw new ArgumentNullException("installer");
-			}
 
-			this.name = name;
+			Name = name;
 			this.kernel = kernel;
 			this.kernel.ProxyFactory = new DefaultProxyFactory();
-			this.installer = installer;
+			Installer = installer;
 		}
 
 		public WindsorContainer(IProxyFactory proxyFactory)
 		{
 			if (proxyFactory == null)
-			{
 				throw new ArgumentNullException("proxyFactory");
-			}
 
 			kernel = new DefaultKernel(proxyFactory);
 
-			installer = new DefaultComponentInstaller();
+			Installer = new DefaultComponentInstaller();
 		}
 
 		public WindsorContainer(IWindsorContainer parent, IConfigurationInterpreter interpreter) : this()
 		{
 			if (parent == null)
-			{
 				throw new ArgumentNullException("parent");
-			}
 			if (interpreter == null)
-			{
 				throw new ArgumentNullException("interpreter");
-			}
 
 			parent.AddChildContainer(this);
 
@@ -157,19 +134,13 @@ namespace Castle.Windsor.Windsor
 		public WindsorContainer(string name, IWindsorContainer parent, IConfigurationInterpreter interpreter) : this()
 		{
 			if (name == null)
-			{
 				throw new ArgumentNullException("name");
-			}
 			if (parent == null)
-			{
 				throw new ArgumentNullException("parent");
-			}
 			if (interpreter == null)
-			{
 				throw new ArgumentNullException("interpreter");
-			}
 
-			this.name = name;
+			Name = name;
 
 			parent.AddChildContainer(this);
 
@@ -178,20 +149,14 @@ namespace Castle.Windsor.Windsor
 			RunInstaller();
 		}
 
-		public IComponentsInstaller Installer
-		{
-			get { return installer; }
-		}
+		public IComponentsInstaller Installer { get; }
 
 		public virtual IKernel Kernel
 		{
 			get { return kernel; }
 		}
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 
 		public virtual IWindsorContainer Parent
 		{
@@ -217,27 +182,6 @@ namespace Castle.Windsor.Windsor
 			}
 		}
 
-		protected virtual void RunInstaller()
-		{
-			if (installer != null)
-			{
-				installer.SetUp(this, kernel.ConfigurationStore);
-			}
-		}
-
-		private void Install(IWindsorInstaller[] installers, DefaultComponentInstaller scope)
-		{
-			using (var store = new PartialConfigurationStore((IKernelInternal)kernel))
-			{
-				foreach (var windsorInstaller in installers)
-				{
-					windsorInstaller.Install(this, store);
-				}
-
-				scope.SetUp(this, store);
-			}
-		}
-
 		public virtual void Dispose()
 		{
 			Parent = null;
@@ -248,12 +192,9 @@ namespace Castle.Windsor.Windsor
 		public virtual void AddChildContainer(IWindsorContainer childContainer)
 		{
 			if (childContainer == null)
-			{
 				throw new ArgumentNullException("childContainer");
-			}
 
 			if (!childContainers.ContainsKey(childContainer.Name))
-			{
 				lock (childContainersLocker)
 				{
 					if (!childContainers.ContainsKey(childContainer.Name))
@@ -263,7 +204,6 @@ namespace Castle.Windsor.Windsor
 						childContainer.Parent = this;
 					}
 				}
-			}
 		}
 
 		public IWindsorContainer AddFacility(IFacility facility)
@@ -298,14 +238,10 @@ namespace Castle.Windsor.Windsor
 		public IWindsorContainer Install(params IWindsorInstaller[] installers)
 		{
 			if (installers == null)
-			{
 				throw new ArgumentNullException("installers");
-			}
 
 			if (installers.Length == 0)
-			{
 				return this;
-			}
 
 			var scope = new DefaultComponentInstaller();
 
@@ -319,9 +255,7 @@ namespace Castle.Windsor.Windsor
 				var token = internalKernel.OptimizeDependencyResolution();
 				Install(installers, scope);
 				if (token != null)
-				{
 					token.Dispose();
-				}
 			}
 
 			return this;
@@ -341,12 +275,9 @@ namespace Castle.Windsor.Windsor
 		public virtual void RemoveChildContainer(IWindsorContainer childContainer)
 		{
 			if (childContainer == null)
-			{
 				throw new ArgumentNullException("childContainer");
-			}
 
 			if (childContainers.ContainsKey(childContainer.Name))
-			{
 				lock (childContainersLocker)
 				{
 					if (childContainers.ContainsKey(childContainer.Name))
@@ -356,7 +287,6 @@ namespace Castle.Windsor.Windsor
 						childContainer.Parent = null;
 					}
 				}
-			}
 		}
 
 		public virtual object Resolve(Type service, IDictionary arguments)
@@ -371,57 +301,57 @@ namespace Castle.Windsor.Windsor
 
 		public virtual object Resolve(Type service)
 		{
-			return kernel.Resolve(service, arguments: null);
+			return kernel.Resolve(service, null);
 		}
 
-		public virtual object Resolve(String key, Type service)
+		public virtual object Resolve(string key, Type service)
 		{
-			return kernel.Resolve(key, service, arguments: null);
+			return kernel.Resolve(key, service, null);
 		}
 
-		public virtual object Resolve(String key, Type service, IDictionary arguments)
+		public virtual object Resolve(string key, Type service, IDictionary arguments)
 		{
 			return kernel.Resolve(key, service, arguments);
 		}
 
-		public virtual object Resolve(String key, Type service, object argumentsAsAnonymousType)
+		public virtual object Resolve(string key, Type service, object argumentsAsAnonymousType)
 		{
 			return kernel.Resolve(key, service, new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
 		public T Resolve<T>(IDictionary arguments)
 		{
-			return (T)kernel.Resolve(typeof(T), arguments);
+			return (T) kernel.Resolve(typeof(T), arguments);
 		}
 
 		public T Resolve<T>(object argumentsAsAnonymousType)
 		{
-			return (T)kernel.Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
+			return (T) kernel.Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
-		public virtual T Resolve<T>(String key, IDictionary arguments)
+		public virtual T Resolve<T>(string key, IDictionary arguments)
 		{
-			return (T)kernel.Resolve(key, typeof(T), arguments);
+			return (T) kernel.Resolve(key, typeof(T), arguments);
 		}
 
-		public virtual T Resolve<T>(String key, object argumentsAsAnonymousType)
+		public virtual T Resolve<T>(string key, object argumentsAsAnonymousType)
 		{
-			return (T)kernel.Resolve(key, typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
+			return (T) kernel.Resolve(key, typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
 		public T Resolve<T>()
 		{
-			return (T)kernel.Resolve(typeof(T), arguments: null);
+			return (T) kernel.Resolve(typeof(T), null);
 		}
 
-		public virtual T Resolve<T>(String key)
+		public virtual T Resolve<T>(string key)
 		{
-			return (T)kernel.Resolve(key, typeof(T), arguments: null);
+			return (T) kernel.Resolve(key, typeof(T), null);
 		}
 
 		public T[] ResolveAll<T>()
 		{
-			return (T[])ResolveAll(typeof(T));
+			return (T[]) ResolveAll(typeof(T));
 		}
 
 		public Array ResolveAll(Type service)
@@ -441,7 +371,7 @@ namespace Castle.Windsor.Windsor
 
 		public T[] ResolveAll<T>(IDictionary arguments)
 		{
-			return (T[])ResolveAll(typeof(T), arguments);
+			return (T[]) ResolveAll(typeof(T), arguments);
 		}
 
 		public T[] ResolveAll<T>(object argumentsAsAnonymousType)
@@ -449,11 +379,28 @@ namespace Castle.Windsor.Windsor
 			return ResolveAll<T>(new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
+		protected virtual void RunInstaller()
+		{
+			if (Installer != null)
+				Installer.SetUp(this, kernel.ConfigurationStore);
+		}
+
+		private void Install(IWindsorInstaller[] installers, DefaultComponentInstaller scope)
+		{
+			using (var store = new PartialConfigurationStore((IKernelInternal) kernel))
+			{
+				foreach (var windsorInstaller in installers)
+					windsorInstaller.Install(this, store);
+
+				scope.SetUp(this, store);
+			}
+		}
+
 		private XmlInterpreter GetInterpreter(string configurationUri)
 		{
 			try
 			{
-				var resources = (IResourceSubSystem)Kernel.GetSubSystem(SubSystemConstants.ResourceKey);
+				var resources = (IResourceSubSystem) Kernel.GetSubSystem(SubSystemConstants.ResourceKey);
 				var resource = resources.CreateResource(configurationUri);
 				return new XmlInterpreter(resource);
 			}

@@ -13,42 +13,28 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.Core
 {
 	[Serializable]
 	public class ParameterModel
 	{
-		private readonly IConfiguration configValue;
-		private readonly String name;
-		private readonly String value;
-
-		public ParameterModel(String name, String value)
+		public ParameterModel(string name, string value)
 		{
-			this.name = name;
-			this.value = value;
+			Name = name;
+			Value = value;
 		}
 
-		public ParameterModel(String name, IConfiguration value)
+		public ParameterModel(string name, IConfiguration value)
 		{
-			this.name = name;
-			configValue = value;
+			Name = name;
+			ConfigValue = value;
 		}
 
-		public IConfiguration ConfigValue
-		{
-			get { return configValue; }
-		}
+		public IConfiguration ConfigValue { get; }
 
-		public String Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 
-		public String Value
-		{
-			get { return value; }
-		}
+		public string Value { get; }
 	}
 }

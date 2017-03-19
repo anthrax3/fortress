@@ -35,6 +35,7 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 		public ComponentActivatorException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
+
 		public ComponentModel ComponentModel { get; private set; }
 	}
 }

@@ -21,7 +21,6 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 	public class DefaultXmlProcessorNodeList : IXmlProcessorNodeList
 	{
 		private readonly IList<XmlNode> nodes;
-		private int index = -1;
 
 		public DefaultXmlProcessorNodeList(XmlNode node)
 		{
@@ -46,23 +45,19 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 
 		public XmlNode Current
 		{
-			get { return nodes[index]; }
+			get { return nodes[CurrentPosition]; }
 		}
 
-		public int CurrentPosition
-		{
-			get { return index; }
-			set { index = value; }
-		}
+		public int CurrentPosition { get; set; } = -1;
 
 		public bool HasCurrent
 		{
-			get { return index < nodes.Count; }
+			get { return CurrentPosition < nodes.Count; }
 		}
 
 		public bool MoveNext()
 		{
-			return ++index < nodes.Count;
+			return ++CurrentPosition < nodes.Count;
 		}
 
 		protected IList<XmlNode> CloneNodeList(XmlNodeList nodeList)
@@ -70,12 +65,9 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			IList<XmlNode> nodes = new List<XmlNode>(nodeList.Count);
 
 			foreach (XmlNode node in nodeList)
-			{
 				nodes.Add(node);
-			}
 
 			return nodes;
 		}
 	}
 }
-

@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class PerWebRequestAttribute : LifestyleAttribute
 	{
 		public PerWebRequestAttribute() : base(LifestyleType.PerWebRequest)

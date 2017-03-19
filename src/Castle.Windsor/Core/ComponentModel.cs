@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 
@@ -27,37 +26,25 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public sealed class ComponentModel : GraphNode
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly ConstructorCandidateCollection constructors = new ConstructorCandidateCollection();
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly ConstructorCandidateCollection constructors = new ConstructorCandidateCollection();
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly LifecycleConcernsCollection lifecycle = new LifecycleConcernsCollection();
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly LifecycleConcernsCollection lifecycle = new LifecycleConcernsCollection();
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly List<Type> services = new List<Type>(4);
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly List<Type> services = new List<Type>(4);
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private ComponentName componentName;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private ComponentName componentName;
 
-		[NonSerialized]
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private IDictionary customDependencies;
+		[NonSerialized] [DebuggerBrowsable(DebuggerBrowsableState.Never)] private IDictionary customDependencies;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private DependencyModelCollection dependencies;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private DependencyModelCollection dependencies;
 
-		[NonSerialized]
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private IDictionary extendedProperties;
+		[NonSerialized] [DebuggerBrowsable(DebuggerBrowsableState.Never)] private IDictionary extendedProperties;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private InterceptorReferenceCollection interceptors;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private InterceptorReferenceCollection interceptors;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private ParameterModelCollection parameters;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private ParameterModelCollection parameters;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private PropertySetCollection properties;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private PropertySetCollection properties;
 
 		public ComponentModel(ComponentName name, ICollection<Type> services, Type implementation, IDictionary extendedProperties)
 		{
@@ -66,9 +53,7 @@ namespace Castle.Windsor.Core
 			this.extendedProperties = extendedProperties;
 			services = Must.NotBeEmpty(services, "services");
 			foreach (var type in services)
-			{
 				AddService(type);
-			}
 		}
 
 		public ComponentModel()
@@ -98,9 +83,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = customDependencies;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new Arguments();
 				var originalValue = Interlocked.CompareExchange(ref customDependencies, value, null);
 				return originalValue ?? value;
@@ -116,9 +99,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = dependencies;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new DependencyModelCollection();
 				var originalValue = Interlocked.CompareExchange(ref dependencies, value, null);
 				return originalValue ?? value;
@@ -132,9 +113,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = extendedProperties;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new Arguments();
 				var originalValue = Interlocked.CompareExchange(ref extendedProperties, value, null);
 				return originalValue ?? value;
@@ -187,9 +166,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = interceptors;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new InterceptorReferenceCollection(this);
 				var originalValue = Interlocked.CompareExchange(ref interceptors, value, null);
 				return originalValue ?? value;
@@ -198,7 +175,7 @@ namespace Castle.Windsor.Core
 
 		[DebuggerDisplay(
 			"Count = {(lifecycle.commission != null ? lifecycle.commission.Count : 0) + (lifecycle.decommission != null ? lifecycle.decommission.Count : 0)}"
-			)]
+		)]
 		public LifecycleConcernsCollection Lifecycle
 		{
 			get { return lifecycle; }
@@ -218,9 +195,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = parameters;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new ParameterModelCollection();
 				var originalValue = Interlocked.CompareExchange(ref parameters, value, null);
 				return originalValue ?? value;
@@ -234,9 +209,7 @@ namespace Castle.Windsor.Core
 			{
 				var value = properties;
 				if (value != null)
-				{
 					return value;
-				}
 				value = new PropertySetCollection();
 				var originalValue = Interlocked.CompareExchange(ref properties, value, null);
 				return originalValue ?? value;
@@ -261,9 +234,7 @@ namespace Castle.Windsor.Core
 		{
 			(Constructors as IMutableCollection<ConstructorCandidate>).Add(constructor);
 			foreach (var ctorDependency in constructor.Dependencies)
-			{
 				Dependencies.Add(ctorDependency);
-			}
 		}
 
 		public void AddProperty(PropertySet property)
@@ -275,15 +246,11 @@ namespace Castle.Windsor.Core
 		public void AddService(Type type)
 		{
 			if (type == null)
-			{
 				return;
-			}
 			if (type.IsPrimitiveType())
-			{
 				throw new ArgumentException(
 					string.Format("Type {0} can not be used as a service. only classes, and interfaces can be exposed as a service.",
-					              type));
-			}
+						type));
 
 			ComponentServicesUtil.AddService(services, type);
 		}
@@ -291,44 +258,30 @@ namespace Castle.Windsor.Core
 		public void Requires(params Predicate<PropertySet>[] selectors)
 		{
 			foreach (var property in Properties)
-			{
 				if (selectors.Any(s => s(property)))
-				{
 					property.Dependency.IsOptional = false;
-				}
-			}
 		}
 
 		public void Requires<D>() where D : class
 		{
-			Requires(p => p.Dependency.TargetItemType == typeof (D));
+			Requires(p => p.Dependency.TargetItemType == typeof(D));
 		}
 
 		public override string ToString()
 		{
 			var services = Services.ToArray();
 			if (services.Length == 1 && services[0] == Implementation)
-			{
 				return Implementation.ToCSharpString();
-			}
 
 			string value;
-			if (Implementation == typeof (LateBoundComponent))
-			{
+			if (Implementation == typeof(LateBoundComponent))
 				value = string.Format("late bound {0}", services[0].ToCSharpString());
-			}
 			else if (Implementation == null)
-			{
 				value = "no impl / " + services[0].ToCSharpString();
-			}
 			else
-			{
 				value = string.Format("{0} / {1}", Implementation.ToCSharpString(), services[0].ToCSharpString());
-			}
 			if (services.Length > 1)
-			{
 				value += string.Format(" and {0} other services", services.Length - 1);
-			}
 			return value;
 		}
 	}

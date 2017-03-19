@@ -15,7 +15,6 @@
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.Core.Internal;
@@ -27,10 +26,9 @@ namespace Castle.Windsor.Windsor.Proxy
 {
 	[Serializable]
 	public class DefaultProxyFactory : AbstractProxyFactory
-	                                   , IDeserializationCallback
+		, IDeserializationCallback
 	{
-		[NonSerialized]
-		protected ProxyGenerator generator;
+		[NonSerialized] protected ProxyGenerator generator;
 
 		public DefaultProxyFactory() : this(new ProxyGenerator())
 		{
@@ -46,8 +44,13 @@ namespace Castle.Windsor.Windsor.Proxy
 			this.generator = generator;
 		}
 
+		public void OnDeserialization(object sender)
+		{
+			generator = new ProxyGenerator();
+		}
+
 		public override object Create(IProxyFactoryExtension customFactory, IKernel kernel, ComponentModel model, CreationContext context,
-		                              params object[] constructorArguments)
+			params object[] constructorArguments)
 		{
 			var interceptors = ObtainInterceptors(kernel, model, context);
 			var proxyOptions = model.ObtainProxyOptions();
@@ -65,9 +68,7 @@ namespace Castle.Windsor.Windsor.Proxy
 		private void ReleaseHook(ProxyGenerationOptions proxyGenOptions, IKernel kernel)
 		{
 			if (proxyGenOptions.Hook == null)
-			{
 				return;
-			}
 			kernel.ReleaseComponent(proxyGenOptions.Hook);
 		}
 
@@ -87,29 +88,19 @@ namespace Castle.Windsor.Windsor.Proxy
 				var firstService = model.Services.First();
 				var additionalInterfaces = model.Services.Skip(1).Concat(interfaces).ToArray();
 				if (proxyOptions.OmitTarget)
-				{
 					proxy = generator.CreateInterfaceProxyWithoutTarget(firstService, additionalInterfaces, proxyGenOptions, interceptors);
-				}
 				else if (proxyOptions.AllowChangeTarget)
-				{
 					proxy = generator.CreateInterfaceProxyWithTargetInterface(firstService, additionalInterfaces, target, proxyGenOptions, interceptors);
-				}
 				else
-				{
 					proxy = generator.CreateInterfaceProxyWithTarget(firstService, additionalInterfaces, target, proxyGenOptions, interceptors);
-				}
 			}
 			else
 			{
 				Type classToProxy;
 				if (model.Implementation != null && model.Implementation != typeof(LateBoundComponent))
-				{
 					classToProxy = model.Implementation;
-				}
 				else
-				{
 					classToProxy = model.Services.First();
-				}
 				var additionalInterfaces = model.Services
 					.SkipWhile(s => s.IsClass)
 					.Concat(interfaces)
@@ -129,9 +120,7 @@ namespace Castle.Windsor.Windsor.Proxy
 			{
 				var hook = proxyOptions.Hook.Resolve(kernel, context);
 				if (hook != null && hook is IOnBehalfAware)
-				{
 					((IOnBehalfAware) hook).SetInterceptedComponentModel(model);
-				}
 				proxyGenOptions.Hook = hook;
 			}
 
@@ -139,12 +128,10 @@ namespace Castle.Windsor.Windsor.Proxy
 			{
 				var selector = proxyOptions.Selector.Resolve(kernel, context);
 				if (selector != null && selector is IOnBehalfAware)
-				{
 					((IOnBehalfAware) selector).SetInterceptedComponentModel(model);
-				}
 				proxyGenOptions.Selector = selector;
 			}
-			
+
 			foreach (var mixInReference in proxyOptions.MixIns)
 			{
 				var mixIn = mixInReference.Resolve(kernel, context);
@@ -168,11 +155,6 @@ namespace Castle.Windsor.Windsor.Proxy
 
 			return model.HasClassServices == false &&
 			       proxyOptions.OmitTarget == false;
-		}
-
-		public void OnDeserialization(object sender)
-		{
-			generator = new ProxyGenerator();
 		}
 	}
 }

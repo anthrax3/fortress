@@ -29,40 +29,26 @@ namespace Castle.Windsor.Core.Internal
 		public void EndThreadSafeOnceSection()
 		{
 			if (state == Initialized)
-			{
 				return;
-			}
 			if (state == Thread.CurrentThread.ManagedThreadId)
-			{
 				state = Initialized;
-			}
 		}
 
 		public bool ExecuteThreadSafeOnce()
 		{
 			if (state == Initialized)
-			{
 				return false;
-			}
 			var inProgressByThisThread = Thread.CurrentThread.ManagedThreadId;
 			var preexistingState = Interlocked.CompareExchange(ref state, inProgressByThisThread, NotInitialized);
 			if (preexistingState == NotInitialized)
-			{
 				return true;
-			}
 			if (preexistingState == Initialized || preexistingState == inProgressByThisThread)
-			{
 				return false;
-			}
 			var spinWait = new SpinWait();
 			while (state != Initialized)
-			{
 				spinWait.SpinOnce();
-			}
 			while (state != Initialized)
-			{
 				Thread.SpinWait(5);
-			}
 			return false;
 		}
 	}

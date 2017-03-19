@@ -14,10 +14,9 @@
 
 using System;
 using System.Linq;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
+using Castle.Windsor.MicroKernel.Internal;
 using Castle.Windsor.MicroKernel.Resolvers;
 
 namespace Castle.Windsor.Windsor.Diagnostics
@@ -25,21 +24,21 @@ namespace Castle.Windsor.Windsor.Diagnostics
 	public class UsingContainerAsServiceLocatorDiagnostic : IUsingContainerAsServiceLocatorDiagnostic
 	{
 		public static Type[] ContainerTypes =
-			{
-				typeof(IKernel),
-				typeof(IWindsorContainer),
-				typeof(IKernelEvents),
-				typeof(IKernelInternal),
-				typeof(DefaultKernel),
-				typeof(WindsorContainer),
-			};
+		{
+			typeof(IKernel),
+			typeof(IWindsorContainer),
+			typeof(IKernelEvents),
+			typeof(IKernelInternal),
+			typeof(DefaultKernel),
+			typeof(WindsorContainer)
+		};
 
 		public static Predicate<IHandler>[] ExceptionsToTheRule =
-			{
-				h => h.ComponentModel.Implementation.Is<IInterceptor>(),
-				h => h.ComponentModel.Services.Any(s => s.Is<ILazyComponentLoader>()),
-				h => h.ComponentModel.Implementation == typeof(MicroKernel.Internal.LazyEx<>),
-			};
+		{
+			h => h.ComponentModel.Implementation.Is<IInterceptor>(),
+			h => h.ComponentModel.Services.Any(s => s.Is<ILazyComponentLoader>()),
+			h => h.ComponentModel.Implementation == typeof(LazyEx<>)
+		};
 
 		private readonly IKernel kernel;
 

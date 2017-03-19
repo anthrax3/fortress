@@ -15,46 +15,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core;
 using Castle.Windsor.MicroKernel.Handlers;
 
 namespace Castle.Windsor.MicroKernel
 {
 	public partial class DefaultKernel
 	{
-		public virtual object Resolve(String key, Type service)
+		public virtual object Resolve(string key, Type service)
 		{
 			return (this as IKernelInternal).Resolve(key, service, null, ReleasePolicy);
 		}
 
-		public virtual object Resolve(String key, Type service, IDictionary arguments)
+		public virtual object Resolve(string key, Type service, IDictionary arguments)
 		{
 			return (this as IKernelInternal).Resolve(key, service, arguments, ReleasePolicy);
 		}
 
 		public T Resolve<T>(IDictionary arguments)
 		{
-			return (T)Resolve(typeof(T), arguments);
+			return (T) Resolve(typeof(T), arguments);
 		}
 
 		public T Resolve<T>(object argumentsAsAnonymousType)
 		{
-			return (T)Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
+			return (T) Resolve(typeof(T), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType));
 		}
 
 		public T Resolve<T>()
 		{
-			return (T)Resolve(typeof(T), null);
+			return (T) Resolve(typeof(T), null);
 		}
 
-		public T Resolve<T>(String key)
+		public T Resolve<T>(string key)
 		{
-			return (T)(this as IKernelInternal).Resolve(key, typeof(T), arguments: null, policy: ReleasePolicy);
+			return (T) (this as IKernelInternal).Resolve(key, typeof(T), null, ReleasePolicy);
 		}
 
-		public T Resolve<T>(String key, IDictionary arguments)
+		public T Resolve<T>(string key, IDictionary arguments)
 		{
-			return (T)(this as IKernelInternal).Resolve(key, typeof(T), arguments, ReleasePolicy);
+			return (T) (this as IKernelInternal).Resolve(key, typeof(T), arguments, ReleasePolicy);
 		}
 
 		public object Resolve(Type service)
@@ -90,20 +89,20 @@ namespace Castle.Windsor.MicroKernel
 		public TService[] ResolveAll<TService>(object argumentsAsAnonymousType)
 		{
 			return
-				(TService[])(this as IKernelInternal).ResolveAll(typeof(TService), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType), ReleasePolicy);
+				(TService[]) (this as IKernelInternal).ResolveAll(typeof(TService), new ReflectionBasedDictionaryAdapter(argumentsAsAnonymousType), ReleasePolicy);
 		}
 
 		public TService[] ResolveAll<TService>(IDictionary arguments)
 		{
-			return (TService[])(this as IKernelInternal).ResolveAll(typeof(TService), arguments, ReleasePolicy);
+			return (TService[]) (this as IKernelInternal).ResolveAll(typeof(TService), arguments, ReleasePolicy);
 		}
 
 		public TService[] ResolveAll<TService>()
 		{
-			return (TService[])(this as IKernelInternal).ResolveAll(typeof(TService), null, ReleasePolicy);
+			return (TService[]) (this as IKernelInternal).ResolveAll(typeof(TService), null, ReleasePolicy);
 		}
 
-		object IKernelInternal.Resolve(String key, Type service, IDictionary arguments, IReleasePolicy policy)
+		object IKernelInternal.Resolve(string key, Type service, IDictionary arguments, IReleasePolicy policy)
 		{
 			var handler = (this as IKernelInternal).LoadHandlerByName(key, service, arguments);
 			if (handler == null)
@@ -117,10 +116,8 @@ namespace Castle.Windsor.MicroKernel
 		object IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
 		{
 			var handler = (this as IKernelInternal).LoadHandlerByType(null, service, arguments);
-			if(handler == null)
-			{
+			if (handler == null)
 				throw new ComponentNotFoundException(service);
-			}
 			return ResolveComponent(handler, service, arguments, policy);
 		}
 
@@ -130,9 +127,7 @@ namespace Castle.Windsor.MicroKernel
 			foreach (var handler in GetHandlers(service))
 			{
 				if (handler.IsBeingResolvedInContext(currentCreationContext))
-				{
 					continue;
-				}
 
 				try
 				{
@@ -147,11 +142,9 @@ namespace Castle.Windsor.MicroKernel
 			}
 
 			if (resolved.Count == 0)
-			{
 				EmptyCollectionResolving(service);
-			}
 			var components = Array.CreateInstance(service, resolved.Count);
-			((ICollection)resolved).CopyTo(components, 0);
+			((ICollection) resolved).CopyTo(components, 0);
 			return components;
 		}
 	}

@@ -24,7 +24,7 @@ namespace Castle.Windsor.Windsor
 	{
 		[Obsolete("Use Resolve<object>(key) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object this[String key] { get; }
+		object this[string key] { get; }
 
 		[Obsolete("Use Resolve(service) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -32,11 +32,11 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponent(String key, Type classType);
+		IWindsorContainer AddComponent(string key, Type classType);
 
 		[Obsolete("Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponent(String key, Type serviceType, Type classType);
+		IWindsorContainer AddComponent(string key, Type serviceType, Type classType);
 
 		[Obsolete("Use Register(Component.For<T>()) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -44,7 +44,7 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For<T>().Named(key)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponent<T>(String key);
+		IWindsorContainer AddComponent<T>(string key);
 
 		[Obsolete("Use Register(Component.For<I>().ImplementedBy<T>()) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -52,16 +52,16 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For<I>().ImplementedBy<T>().Named(key)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponent<I, T>(String key) where T : class;
+		IWindsorContainer AddComponent<I, T>(string key) where T : class;
 
 		[Obsolete("Use Register(Component.For(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentLifeStyle(String key, Type classType, LifestyleType lifestyle);
+		IWindsorContainer AddComponentLifeStyle(string key, Type classType, LifestyleType lifestyle);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentLifeStyle(String key, Type serviceType, Type classType, LifestyleType lifestyle);
+		IWindsorContainer AddComponentLifeStyle(string key, Type serviceType, Type classType, LifestyleType lifestyle);
 
 		[Obsolete("Use Register(Component.For<T>().Lifestyle.Is(lifestyle)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -69,7 +69,7 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For<T>().Named(key).Lifestyle.Is(lifestyle)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentLifeStyle<T>(String key, LifestyleType lifestyle);
+		IWindsorContainer AddComponentLifeStyle<T>(string key, LifestyleType lifestyle);
 
 		[Obsolete("Use Register(Component.For<I>().ImplementedBy<T>().Lifestyle.Is(lifestyle)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -77,7 +77,7 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For<I>().ImplementedBy<T>().Named(key).Lifestyle.Is(lifestyle)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentLifeStyle<I, T>(String key, LifestyleType lifestyle) where T : class;
+		IWindsorContainer AddComponentLifeStyle<I, T>(string key, LifestyleType lifestyle) where T : class;
 
 		[Obsolete("Use Register(Component.For<I>().ImplementedBy<T>().ExtendedProperties(extendedProperties)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -86,18 +86,18 @@ namespace Castle.Windsor.Windsor
 		[Obsolete(
 			"Use Register(Component.For<I>().ImplementedBy<T>().Named(key).ExtendedProperties(extendedProperties)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentProperties<I, T>(String key, IDictionary extendedProperties) where T : class;
+		IWindsorContainer AddComponentProperties<I, T>(string key, IDictionary extendedProperties) where T : class;
 
 		[Obsolete("Use Register(Component.For(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentWithProperties(String key, Type classType, IDictionary extendedProperties);
+		IWindsorContainer AddComponentWithProperties(string key, Type classType, IDictionary extendedProperties);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentWithProperties(String key, Type serviceType, Type classType,
-		                                             IDictionary extendedProperties);
+		IWindsorContainer AddComponentWithProperties(string key, Type serviceType, Type classType,
+			IDictionary extendedProperties);
 
 		[Obsolete("Use Register(Component.For<T>().ExtendedProperties(extendedProperties)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -105,27 +105,27 @@ namespace Castle.Windsor.Windsor
 
 		[Obsolete("Use Register(Component.For<T>().Named(key).ExtendedProperties(extendedProperties)) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddComponentWithProperties<T>(String key, IDictionary extendedProperties);
+		IWindsorContainer AddComponentWithProperties<T>(string key, IDictionary extendedProperties);
 
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddFacility(String idInConfiguration, IFacility facility);
+		IWindsorContainer AddFacility(string idInConfiguration, IFacility facility);
 
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility> onCreate) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddFacility<TFacility>(String idInConfiguration) where TFacility : IFacility, new();
+		IWindsorContainer AddFacility<TFacility>(string idInConfiguration) where TFacility : IFacility, new();
 
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IWindsorContainer AddFacility<TFacility>(String idInConfiguration, Action<TFacility> configureFacility)
+		IWindsorContainer AddFacility<TFacility>(string idInConfiguration, Action<TFacility> configureFacility)
 			where TFacility : IFacility, new();
 
 		[Obsolete("Use Resolve<object>(key, arguments) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object Resolve(String key, IDictionary arguments);
+		object Resolve(string key, IDictionary arguments);
 
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object Resolve(String key, object argumentsAsAnonymousType);
+		object Resolve(string key, object argumentsAsAnonymousType);
 	}
 }

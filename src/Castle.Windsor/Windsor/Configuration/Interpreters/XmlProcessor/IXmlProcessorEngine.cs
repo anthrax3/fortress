@@ -15,13 +15,12 @@
 
 using System;
 using System.Xml;
-using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	public interface IXmlProcessorEngine
 	{
-		void AddFlag(String flag);
+		void AddFlag(string flag);
 
 		void AddNodeProcessor(Type type);
 
@@ -31,13 +30,13 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 
 		void DispatchProcessCurrent(IXmlProcessorNodeList nodeList);
 
-		XmlElement GetProperty(String name);
+		XmlElement GetProperty(string name);
 
 		IResource GetResource(string uri);
 
-		bool HasFlag(String flag);
+		bool HasFlag(string flag);
 
-		bool HasProperty(String name);
+		bool HasProperty(string name);
 
 		bool HasSpecialProcessor(XmlNode node);
 
@@ -45,7 +44,6 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 
 		void PushResource(IResource resource);
 
-		void RemoveFlag(String flag);
+		void RemoveFlag(string flag);
 	}
 }
-

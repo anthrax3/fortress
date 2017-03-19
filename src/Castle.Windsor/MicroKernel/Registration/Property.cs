@@ -13,32 +13,22 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {
 	public class Property
 	{
-		private readonly object key;
-		private readonly object value;
-
 		public Property(object key, object value)
 		{
-			this.key = key;
-			this.value = value;
+			Key = key;
+			Value = value;
 		}
 
-		public object Key
-		{
-			get { return key; }
-		}
+		public object Key { get; }
 
-		public object Value
-		{
-			get { return value; }
-		}
+		public object Value { get; }
 
-		public static PropertyKey ForKey(String key)
+		public static PropertyKey ForKey(string key)
 		{
 			return new PropertyKey(key);
 		}
@@ -56,54 +46,6 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static implicit operator Dependency(Property item)
 		{
 			return item == null ? null : new Dependency(item);
-		}
-	}
-
-	public class PropertyKey
-	{
-		private readonly object key;
-
-		internal PropertyKey(object key)
-		{
-			this.key = key;
-		}
-
-		public object Key
-		{
-			get { return key; }
-		}
-
-		public Property Eq(Object value)
-		{
-			return new Property(key, value);
-		}
-
-		public ServiceOverride Is(string componentName)
-		{
-			return GetServiceOverrideKey().Eq(componentName);
-		}
-
-		public ServiceOverride Is(Type componentImplementation)
-		{
-			if (componentImplementation == null)
-			{
-				throw new ArgumentNullException("componentImplementation");
-			}
-			return GetServiceOverrideKey().Eq(ComponentName.DefaultNameFor(componentImplementation));
-		}
-
-		public ServiceOverride Is<TComponentImplementation>()
-		{
-			return Is(typeof(TComponentImplementation));
-		}
-
-		private ServiceOverrideKey GetServiceOverrideKey()
-		{
-			if (key is Type)
-			{
-				return ServiceOverride.ForKey((Type)key);
-			}
-			return ServiceOverride.ForKey((string)key);
 		}
 	}
 }

@@ -64,9 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compatibility\Extensions.cs" />
+    <Compile Include="Compatibility\CustomAttributeExtensions.cs" />
+    <Compile Include="Compatibility\EnumerableExtensions.cs" />
     <Compile Include="Core\Internal\SimpleThreadSafeCollection.cs" />
     <Compile Include="Core\Internal\SimpleThreadSafeSet.cs" />
+    <Compile Include="Core\Internal\TimestampSet.cs" />
+    <Compile Include="Core\Internal\VertexColor.cs" />
+    <Compile Include="Core\PropertySetBuilder.cs" />
     <Compile Include="Facilities\Startable\IStartFlagInternal.cs" />
     <Compile Include="Facilities\Startable\StartableFacility.nested.cs" />
     <Compile Include="Facilities\Startable\StartFlag.cs" />
@@ -135,6 +139,9 @@
     <Compile Include="MicroKernel\ComponentActivator\ComponentActivatorException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MicroKernel\ComponentDataDelegate.cs" />
+    <Compile Include="MicroKernel\ComponentInstanceDelegate.cs" />
+    <Compile Include="MicroKernel\ComponentModelDelegate.cs" />
     <Compile Include="MicroKernel\ComponentResolutionException.cs" />
     <Compile Include="MicroKernel\ComponentActivator\DefaultComponentActivator.cs">
       <SubType>Code</SubType>
@@ -147,6 +154,9 @@
     <Compile Include="MicroKernel\ComponentActivator\ExternalInstanceActivator.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MicroKernel\DependencyDelegate.cs" />
+    <Compile Include="MicroKernel\HandlerDelegate.cs" />
+    <Compile Include="MicroKernel\HandlersChangedDelegate.cs" />
     <Compile Include="MicroKernel\HandlerState.cs" />
     <Compile Include="MicroKernel\HandlerStateDelegate.cs" />
     <Compile Include="MicroKernel\Handlers\ComponentLifecycleExtension.cs" />
@@ -259,7 +269,7 @@
     <Compile Include="MicroKernel\IKernel_Resolve.cs" />
     <Compile Include="Core\Interceptor\IOnBehalfAware.cs" />
     <Compile Include="Core\Internal\GraphNode.cs" />
-    <Compile Include="Core\Internal\GraphSets.cs" />
+    <Compile Include="Core\Internal\ColorsSet.cs" />
     <Compile Include="Core\Internal\IVertex.cs" />
     <Compile Include="Core\Internal\TopologicalSortAlgo.cs" />
     <Compile Include="MicroKernel\LifecycleConcerns\DisposalConcern.cs">
@@ -322,9 +332,20 @@
     <Compile Include="MicroKernel\Lifestyle\Scoped\ThreadStaticLifetimeScope.cs" />
     <Compile Include="MicroKernel\Lifestyle\WebRequestScopeAccessor.cs" />
     <Compile Include="MicroKernel\ModelBuilder\ComponentModelDescriptorUtil.cs" />
+    <Compile Include="MicroKernel\ModelBuilder\Descriptors\AttributeKeyDescriptor.cs" />
     <Compile Include="MicroKernel\ModelBuilder\Descriptors\DelegatingModelDescriptor.cs" />
     <Compile Include="MicroKernel\ModelBuilder\IMetaComponentModelDescriptor.cs" />
+    <Compile Include="MicroKernel\Registration\Attrib.cs" />
+    <Compile Include="MicroKernel\Registration\Child.cs" />
     <Compile Include="MicroKernel\Registration\Classes.cs" />
+    <Compile Include="MicroKernel\Registration\ComplexChild.cs" />
+    <Compile Include="MicroKernel\Registration\CompoundChild.cs" />
+    <Compile Include="MicroKernel\Registration\NamedAttribute.cs" />
+    <Compile Include="MicroKernel\Registration\NamedChild.cs" />
+    <Compile Include="MicroKernel\Registration\ParameterKey.cs" />
+    <Compile Include="MicroKernel\Registration\PropertyKey.cs" />
+    <Compile Include="MicroKernel\Registration\ServiceOverrideKey.cs" />
+    <Compile Include="MicroKernel\Registration\SimpleChild.cs" />
     <Compile Include="MicroKernel\Registration\Types.cs" />
     <Compile Include="MicroKernel\Lifestyle\SingletonLifestyleManager.cs">
       <SubType>Code</SubType>
@@ -411,7 +432,7 @@
     <Compile Include="MicroKernel\ModelBuilder\Descriptors\AbstractOverwriteableDescriptor.cs" />
     <Compile Include="MicroKernel\Registration\ComponentRegistration.cs" />
     <Compile Include="MicroKernel\Registration\ComponentRegistration.nonGeneric.cs" />
-    <Compile Include="MicroKernel\Registration\Configuration.cs" />
+    <Compile Include="MicroKernel\Registration\Node.cs" />
     <Compile Include="MicroKernel\ModelBuilder\Descriptors\ConfigurationDescriptor.cs" />
     <Compile Include="MicroKernel\ModelBuilder\Descriptors\CustomDependencyDescriptor.cs" />
     <Compile Include="MicroKernel\ModelBuilder\Descriptors\ReferenceDependencyDescriptor.cs" />
@@ -476,6 +497,7 @@
     <Compile Include="MicroKernel\AbstractSubSystem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MicroKernel\ServiceDelegate.cs" />
     <Compile Include="MicroKernel\SubSystems\Configuration\DefaultConfigurationStore.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -619,6 +641,7 @@
     <Compile Include="Windsor\Configuration\Interpreters\XmlProcessor\ElementProcessors\PropertiesElementProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Windsor\Configuration\Interpreters\XmlProcessor\ElementProcessors\StatementState.cs" />
     <Compile Include="Windsor\Configuration\Interpreters\XmlProcessor\ElementProcessors\UndefElementProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -700,6 +723,7 @@
     <Compile Include="Windsor\Installer\DefaultComponentInstaller.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Windsor\Installer\EnvironmentDelegate.cs" />
     <Compile Include="Windsor\Installer\FromAssembly.cs" />
     <Compile Include="Windsor\Installer\InstallerFactory.cs" />
     <Compile Include="Windsor\Installer\PartialConfigurationStore.cs" />

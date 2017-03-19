@@ -33,11 +33,9 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public KernelDebuggerProxy(IKernel kernel)
 		{
 			if (kernel == null)
-			{
 				throw new ArgumentNullException("kernel");
-			}
 			extensions =
-				(IEnumerable<IContainerDebuggerExtension>)(kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IContainerDebuggerExtensionHost) ??
+				(IEnumerable<IContainerDebuggerExtension>) (kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey) as IContainerDebuggerExtensionHost) ??
 				new IContainerDebuggerExtension[0];
 		}
 

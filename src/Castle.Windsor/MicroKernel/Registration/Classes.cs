@@ -36,18 +36,14 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static FromAssemblyDescriptor FromAssembly(Assembly assembly)
 		{
 			if (assembly == null)
-			{
 				throw new ArgumentNullException("assembly");
-			}
 			return new FromAssemblyDescriptor(assembly, Filter);
 		}
 
 		public static FromAssemblyDescriptor FromAssemblyContaining(Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 			return new FromAssemblyDescriptor(type.Assembly, Filter);
 		}
 
@@ -59,9 +55,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static FromAssemblyDescriptor FromAssemblyInDirectory(AssemblyFilter filter)
 		{
 			if (filter == null)
-			{
 				throw new ArgumentNullException("filter");
-			}
 			var assemblies = ReflectionUtil.GetAssemblies(filter);
 			return new FromAssemblyDescriptor(assemblies, Filter);
 		}

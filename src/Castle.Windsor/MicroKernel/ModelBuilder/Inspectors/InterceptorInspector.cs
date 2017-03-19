@@ -13,9 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Proxy;
 using Castle.Windsor.MicroKernel.Util;
@@ -40,23 +37,17 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var attributes = AttributesUtil.GetAttributes<InterceptorAttribute>(model.Implementation);
 			foreach (var attribute in attributes)
-			{
 				AddInterceptor(attribute.Interceptor, model.Interceptors);
-			}
 		}
 
 		protected virtual void CollectFromConfiguration(ComponentModel model)
 		{
 			if (model.Configuration == null)
-			{
 				return;
-			}
 
 			var interceptors = model.Configuration.Children["interceptors"];
 			if (interceptors == null)
-			{
 				return;
-			}
 
 			CollectInterceptors(model, interceptors);
 			var options = model.ObtainProxyOptions();
@@ -68,16 +59,12 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var hook = interceptors.Attributes["hook"];
 			if (hook == null)
-			{
 				return;
-			}
 
 			var hookComponent = ReferenceExpressionUtil.ExtractComponentName(hook);
 			if (hookComponent == null)
-			{
 				throw new Exception(
-					String.Format("The value for the hook must be a reference to a component (Currently {0})", hook));
-			}
+					string.Format("The value for the hook must be a reference to a component (Currently {0})", hook));
 
 			options.Hook = new ComponentReference<IProxyGenerationHook>(hookComponent);
 		}
@@ -86,16 +73,12 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var selector = interceptors.Attributes["selector"];
 			if (selector == null)
-			{
 				return;
-			}
 
 			var selectorComponent = ReferenceExpressionUtil.ExtractComponentName(selector);
 			if (selectorComponent == null)
-			{
 				throw new Exception(
-					String.Format("The value for the selector must be a reference to a component (Currently {0})", selector));
-			}
+					string.Format("The value for the selector must be a reference to a component (Currently {0})", selector));
 
 			options.Selector = new ComponentReference<IInterceptorSelector>(selectorComponent);
 		}
@@ -106,10 +89,8 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			{
 				var interceptorComponent = ReferenceExpressionUtil.ExtractComponentName(interceptor.Value);
 				if (interceptorComponent == null)
-				{
 					throw new Exception(
-						String.Format("The value for the interceptor must be a reference to a component (Currently {0})", interceptor.Value));
-				}
+						string.Format("The value for the interceptor must be a reference to a component (Currently {0})", interceptor.Value));
 
 				var reference = new InterceptorReference(interceptorComponent);
 

@@ -19,6 +19,14 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 {
 	public class InterceptorDescriptor : IComponentModelDescriptor
 	{
+		public enum Where
+		{
+			First,
+			Last,
+			Insert,
+			Default
+		}
+
 		private readonly int insertIndex;
 		private readonly InterceptorReference[] interceptors;
 		private readonly Where where;
@@ -33,9 +41,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 			: this(interceptors, Where.Insert)
 		{
 			if (insertIndex < 0)
-			{
 				throw new ArgumentOutOfRangeException("insertIndex", "insertIndex must be >= 0");
-			}
 
 			this.insertIndex = insertIndex;
 		}
@@ -53,7 +59,6 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)
 		{
 			foreach (var interceptor in interceptors)
-			{
 				switch (where)
 				{
 					case Where.First:
@@ -72,15 +77,6 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 						model.Interceptors.Add(interceptor);
 						break;
 				}
-			}
-		}
-
-		public enum Where
-		{
-			First,
-			Last,
-			Insert,
-			Default
 		}
 	}
 }

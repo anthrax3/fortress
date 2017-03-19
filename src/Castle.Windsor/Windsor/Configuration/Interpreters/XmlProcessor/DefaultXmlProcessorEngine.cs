@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.SubSystems.Resource;
 using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
@@ -60,9 +59,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			{
 				var processor = type.CreateInstance<IXmlNodeProcessor>();
 				foreach (var nodeType in processor.AcceptNodeTypes)
-				{
 					RegisterProcessor(nodeType, processor);
-				}
 			}
 			else
 			{
@@ -78,9 +75,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 		public void DispatchProcessAll(IXmlProcessorNodeList nodeList)
 		{
 			while (nodeList.MoveNext())
-			{
 				DispatchProcessCurrent(nodeList);
-			}
 		}
 
 		public void DispatchProcessCurrent(IXmlProcessorNodeList nodeList)
@@ -88,49 +83,37 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			var processor = GetProcessor(nodeList.Current);
 
 			if (processor != null)
-			{
 				processor.Process(nodeList, this);
-			}
 		}
 
 		public XmlElement GetProperty(string key)
 		{
 			XmlElement property;
 			if (!properties.TryGetValue(key, out property))
-			{
 				return null;
-			}
 
 			return property.CloneNode(true) as XmlElement;
 		}
 
-		public IResource GetResource(String uri)
+		public IResource GetResource(string uri)
 		{
 			IResource resource;
 			if (resourceStack.Count > 0)
-			{
 				resource = resourceStack.Peek();
-			}
 			else
-			{
 				resource = null;
-			}
 
 			if (uri.IndexOf(Uri.SchemeDelimiter) != -1)
 			{
 				if (resource == null)
-				{
 					return resourceSubSystem.CreateResource(uri);
-				}
 
 				return resourceSubSystem.CreateResource(uri, resource.FileBasePath);
 			}
 
 			// NOTE: what if resource is null at this point?
 			if (resourceStack.Count > 0)
-			{
 				return resource.CreateRelative(uri);
-			}
 
 			throw new XmlProcessorException("Cannot get relative resource '" + uri + "', resource stack is empty");
 		}
@@ -140,7 +123,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			return flags.ContainsKey(GetCanonicalFlagName(flag));
 		}
 
-		public bool HasProperty(String name)
+		public bool HasProperty(string name)
 		{
 			return properties.ContainsKey(name);
 		}
@@ -168,9 +151,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 		private void AddEnvNameAsFlag(string environmentName)
 		{
 			if (environmentName != null)
-			{
 				AddFlag(environmentName);
-			}
 		}
 
 		private string GetCanonicalFlagName(string flag)
@@ -178,9 +159,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			flag = flag.Trim().ToLower();
 
 			if (!flagPattern.IsMatch(flag))
-			{
 				throw new XmlProcessorException("Invalid flag name '{0}'", flag);
-			}
 
 			return flag;
 		}
@@ -189,19 +168,13 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 		{
 			IDictionary<string, IXmlNodeProcessor> processors;
 			if (!nodeProcessors.TryGetValue(node.NodeType, out processors))
-			{
 				return null;
-			}
 
 			// sometimes nodes with the same name will not accept a processor
 			IXmlNodeProcessor processor;
 			if (!processors.TryGetValue(node.Name, out processor) || !processor.Accept(node))
-			{
 				if (node.NodeType == XmlNodeType.Element)
-				{
 					processor = defaultElementProcessor;
-				}
-			}
 
 			return processor;
 		}
@@ -216,12 +189,9 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			}
 
 			if (typeProcessors.ContainsKey(processor.Name))
-			{
 				throw new XmlProcessorException("There is already a processor register for {0} with name {1} ", type, processor.Name);
-			}
 
 			typeProcessors.Add(processor.Name, processor);
 		}
 	}
 }
-

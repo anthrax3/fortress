@@ -33,9 +33,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var current = Scope.ObtainCurrentScope();
 			if (current == null)
-			{
 				return kernel.BeginScope();
-			}
 			return null;
 		}
 
@@ -48,9 +46,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var current = Scope.ObtainCurrentScope();
 			if (current == null)
-			{
 				return container.BeginScope();
-			}
 			return null;
 		}
 	}

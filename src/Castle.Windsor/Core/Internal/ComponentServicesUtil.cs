@@ -24,26 +24,20 @@ namespace Castle.Windsor.Core.Internal
 		public static void AddService(IList<Type> existingServices, Type newService)
 		{
 			if (existingServices.Contains(newService))
-			{
 				return;
-			}
 			if (newService.IsInterface)
 			{
 				existingServices.Add(newService);
 				return;
 			}
 			if (newService.IsClass == false)
-			{
 				throw new ArgumentException(
 					string.Format("Type {0} is not a class nor an interface, and those are the only values allowed.", newService));
-			}
 			var count = existingServices.Count;
 			for (var i = 0; i < count; i++)
 			{
 				if (existingServices[i].IsInterface)
-				{
 					existingServices.Insert(i, newService);
-				}
 				var result = comparer.Compare(newService, existingServices[i]);
 				if (result < 0)
 				{
@@ -51,9 +45,7 @@ namespace Castle.Windsor.Core.Internal
 					return;
 				}
 				if (result == 0)
-				{
 					return;
-				}
 			}
 			existingServices.Add(newService);
 		}

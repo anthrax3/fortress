@@ -23,12 +23,12 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 	{
 		public PoolException(string message) : base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public PoolException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 	}
 }

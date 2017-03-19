@@ -14,7 +14,6 @@
 
 using System;
 using System.ComponentModel;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.Facilities.TypedFactory.Internal;
 using Castle.Windsor.MicroKernel;
@@ -27,8 +26,6 @@ using Component = Castle.Windsor.MicroKernel.Registration.Component;
 
 namespace Castle.Windsor.Facilities.TypedFactory
 {
-	using Component = Component;
-
 	public class TypedFactoryFacility : AbstractFacility
 	{
 		public static readonly string DelegateFactoryKey = "Castle.TypedFactory.DelegateFactory";
@@ -48,24 +45,22 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		{
 			var model = new ComponentModel(
 				new ComponentName(entry.Id, true),
-				new[] { entry.FactoryInterface },
+				new[] {entry.FactoryInterface},
 				typeof(Empty),
-				new Arguments { { "typed.fac.entry", entry } }) { LifestyleType = LifestyleType.Singleton };
+				new Arguments {{"typed.fac.entry", entry}}) {LifestyleType = LifestyleType.Singleton};
 
 			model.Interceptors.Add(new InterceptorReference("typed.fac.interceptor"));
 
 			var proxyOptions = model.ObtainProxyOptions();
 			proxyOptions.OmitTarget = true;
 
-			((IKernelInternal)Kernel).AddCustomComponent(model);
+			((IKernelInternal) Kernel).AddCustomComponent(model);
 		}
 
 		protected virtual void AddFactories(IConfiguration facilityConfig, ITypeConverter converter)
 		{
 			if (facilityConfig == null)
-			{
 				return;
-			}
 
 			foreach (var config in facilityConfig.Children["factories"].Children)
 			{
@@ -112,16 +107,16 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		private void InitFacility()
 		{
 			Kernel.Register(Component.For<TypedFactoryInterceptor>()
-			                	.NamedAutomatically(InterceptorKey),
-			                Component.For<ILazyComponentLoader>()
-			                	.ImplementedBy<DelegateFactory>()
-			                	.NamedAutomatically(DelegateFactoryKey),
-			                Component.For<ITypedFactoryComponentSelector>()
-			                	.ImplementedBy<DefaultTypedFactoryComponentSelector>()
-			                	.NamedAutomatically(DefaultInterfaceSelectorKey),
-			                Component.For<ITypedFactoryComponentSelector>()
-			                	.ImplementedBy<DefaultDelegateComponentSelector>()
-			                	.NamedAutomatically(DefaultDelegateSelectorKey));
+					.NamedAutomatically(InterceptorKey),
+				Component.For<ILazyComponentLoader>()
+					.ImplementedBy<DelegateFactory>()
+					.NamedAutomatically(DelegateFactoryKey),
+				Component.For<ITypedFactoryComponentSelector>()
+					.ImplementedBy<DefaultTypedFactoryComponentSelector>()
+					.NamedAutomatically(DefaultInterfaceSelectorKey),
+				Component.For<ITypedFactoryComponentSelector>()
+					.ImplementedBy<DefaultDelegateComponentSelector>()
+					.NamedAutomatically(DefaultDelegateSelectorKey));
 
 			Kernel.ComponentModelBuilder.AddContributor(new TypedFactoryCachingInspector());
 		}

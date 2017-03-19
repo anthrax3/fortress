@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Castle.Core.Core;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Releasers;
@@ -31,11 +30,7 @@ namespace Castle.Windsor.MicroKernel.Context
 	{
 		private readonly ITypeConverter converter;
 
-		private readonly IHandler handler;
-
 		private readonly Stack<IHandler> handlerStack;
-
-		private readonly Type requestedType;
 
 		private readonly Stack<ResolutionContext> resolutionStack;
 		private IDictionary additionalArguments;
@@ -47,27 +42,21 @@ namespace Castle.Windsor.MicroKernel.Context
 			: this(parentContext.Handler, parentContext.ReleasePolicy, requestedType, null, null, parentContext)
 		{
 			if (parentContext == null)
-			{
 				throw new ArgumentNullException("parentContext");
-			}
 
 			if (parentContext.extendedProperties != null)
-			{
 				extendedProperties = new Arguments(parentContext.extendedProperties);
-			}
 
 			if (propagateInlineDependencies && parentContext.HasAdditionalArguments)
-			{
 				additionalArguments = new Arguments(parentContext.additionalArguments);
-			}
 		}
 
 		public CreationContext(IHandler handler, IReleasePolicy releasePolicy, Type requestedType,
-		                       IDictionary additionalArguments, ITypeConverter converter,
-		                       CreationContext parent)
+			IDictionary additionalArguments, ITypeConverter converter,
+			CreationContext parent)
 		{
-			this.requestedType = requestedType;
-			this.handler = handler;
+			RequestedType = requestedType;
+			Handler = handler;
 			ReleasePolicy = releasePolicy;
 			this.additionalArguments = EnsureAdditionalArgumentsWriteable(additionalArguments);
 			this.converter = converter;
@@ -96,9 +85,7 @@ namespace Castle.Windsor.MicroKernel.Context
 			get
 			{
 				if (additionalArguments == null)
-				{
 					additionalArguments = new Arguments();
-				}
 				return additionalArguments;
 			}
 		}
@@ -108,17 +95,12 @@ namespace Castle.Windsor.MicroKernel.Context
 			get
 			{
 				if (genericArguments == null)
-				{
-					genericArguments = ExtractGenericArguments(requestedType);
-				}
+					genericArguments = ExtractGenericArguments(RequestedType);
 				return genericArguments;
 			}
 		}
 
-		public IHandler Handler
-		{
-			get { return handler; }
-		}
+		public IHandler Handler { get; }
 
 		public bool HasAdditionalArguments
 		{
@@ -132,9 +114,25 @@ namespace Castle.Windsor.MicroKernel.Context
 
 		public IReleasePolicy ReleasePolicy { get; set; }
 
-		public Type RequestedType
+		public Type RequestedType { get; }
+
+		public virtual bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
+			ComponentModel model,
+			DependencyModel dependency)
 		{
-			get { return requestedType; }
+			return HasAdditionalArguments && (CanResolveByKey(dependency) || CanResolveByType(dependency));
+		}
+
+		public virtual object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
+			ComponentModel model,
+			DependencyModel dependency)
+		{
+			Debug.Assert(CanResolve(context, contextHandlerResolver, model, dependency),
+				"CanResolve(context, contextHandlerResolver, model, dependency)");
+			object result = null;
+			if (dependency.DependencyKey != null)
+				result = Resolve(dependency, additionalArguments[dependency.DependencyKey]);
+			return result ?? Resolve(dependency, additionalArguments[dependency.TargetType]);
 		}
 
 		public void AttachExistingBurden(Burden burden)
@@ -182,9 +180,7 @@ namespace Castle.Windsor.MicroKernel.Context
 
 			var activator = componentActivator as IDependencyAwareActivator;
 			if (activator != null)
-			{
 				trackedExternally |= activator.IsManagedExternally(resolutionContext.Handler.ComponentModel);
-			}
 
 			return resolutionContext.CreateBurden(trackedExternally);
 		}
@@ -195,23 +191,19 @@ namespace Castle.Windsor.MicroKernel.Context
 		}
 
 		public ResolutionContext EnterResolutionContext(IHandler handlerBeingResolved, bool trackContext,
-		                                                bool requiresDecommission)
+			bool requiresDecommission)
 		{
 			var resolutionContext = new ResolutionContext(this, handlerBeingResolved, requiresDecommission, trackContext);
 			handlerStack.Push(handlerBeingResolved);
 			if (trackContext)
-			{
 				resolutionStack.Push(resolutionContext);
-			}
 			return resolutionContext;
 		}
 
 		public object GetContextualProperty(object key)
 		{
 			if (extendedProperties == null)
-			{
 				return null;
-			}
 
 			var value = extendedProperties[key];
 			return value;
@@ -230,9 +222,7 @@ namespace Castle.Windsor.MicroKernel.Context
 			{
 				var resolutionContext = resolutionStack.SingleOrDefault(s => s.Handler == selected);
 				if (resolutionContext != null)
-				{
 					return resolutionContext;
-				}
 			}
 			return null;
 		}
@@ -240,35 +230,10 @@ namespace Castle.Windsor.MicroKernel.Context
 		public void SetContextualProperty(object key, object value)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (extendedProperties == null)
-			{
 				extendedProperties = new Arguments();
-			}
 			extendedProperties[key] = value;
-		}
-
-		public virtual bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                               ComponentModel model,
-		                               DependencyModel dependency)
-		{
-			return HasAdditionalArguments && (CanResolveByKey(dependency) || CanResolveByType(dependency));
-		}
-
-		public virtual object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                              ComponentModel model,
-		                              DependencyModel dependency)
-		{
-			Debug.Assert(CanResolve(context, contextHandlerResolver, model, dependency),
-			             "CanResolve(context, contextHandlerResolver, model, dependency)");
-			object result = null;
-			if (dependency.DependencyKey != null)
-			{
-				result = Resolve(dependency, additionalArguments[dependency.DependencyKey]);
-			}
-			return result ?? Resolve(dependency, additionalArguments[dependency.TargetType]);
 		}
 
 		private bool CanConvertParameter(Type type)
@@ -280,18 +245,14 @@ namespace Castle.Windsor.MicroKernel.Context
 		{
 			var type = dependency.TargetItemType;
 			if (inlineArgument == null || type == null)
-			{
 				return false;
-			}
 			return type.IsInstanceOfType(inlineArgument) || CanConvertParameter(type);
 		}
 
 		private bool CanResolveByKey(DependencyModel dependency)
 		{
 			if (dependency.DependencyKey == null)
-			{
 				return false;
-			}
 			Debug.Assert(additionalArguments != null, "additionalArguments != null");
 			return CanResolve(dependency, additionalArguments[dependency.DependencyKey]);
 		}
@@ -300,9 +261,7 @@ namespace Castle.Windsor.MicroKernel.Context
 		{
 			var type = dependency.TargetItemType;
 			if (type == null)
-			{
 				return false;
-			}
 			Debug.Assert(additionalArguments != null, "additionalArguments != null");
 			return CanResolve(dependency, additionalArguments[type]);
 		}
@@ -315,14 +274,10 @@ namespace Castle.Windsor.MicroKernel.Context
 			// We better just ignore not known implementations and if someone uses one, it's their problem to take that into
 			// account when dealing with DynamicParameters
 			if (dictionary == null)
-			{
 				return null;
-			}
 
 			if (!(dictionary is ReflectionBasedDictionaryAdapter))
-			{
 				return dictionary;
-			}
 			return new Arguments(dictionary);
 		}
 
@@ -331,28 +286,18 @@ namespace Castle.Windsor.MicroKernel.Context
 			handlerStack.Pop();
 
 			if (trackContext)
-			{
 				resolutionStack.Pop();
-			}
 			if (burden == null)
-			{
 				return;
-			}
 			if (burden.Instance == null)
-			{
 				return;
-			}
 			if (burden.RequiresPolicyRelease == false)
-			{
 				return;
-			}
 			if (resolutionStack.Count != 0)
 			{
 				var parent = resolutionStack.Peek().Burden;
 				if (parent == null)
-				{
 					return;
-				}
 				parent.AddChild(burden);
 			}
 		}
@@ -363,13 +308,9 @@ namespace Castle.Windsor.MicroKernel.Context
 			if (inlineArgument != null)
 			{
 				if (targetType.IsInstanceOfType(inlineArgument))
-				{
 					return inlineArgument;
-				}
 				if (CanConvertParameter(targetType))
-				{
 					return converter.PerformConversion(inlineArgument.ToString(), targetType);
-				}
 			}
 			return null;
 		}
@@ -390,63 +331,52 @@ namespace Castle.Windsor.MicroKernel.Context
 		private static Type[] ExtractGenericArguments(Type typeToExtractGenericArguments)
 		{
 			if (typeToExtractGenericArguments.IsGenericType)
-			{
 				return typeToExtractGenericArguments.GetGenericArguments();
-			}
 			return Type.EmptyTypes;
 		}
 
 		public class ResolutionContext : IDisposable
 		{
-			private readonly CreationContext context;
-			private readonly IHandler handler;
 			private readonly bool requiresDecommission;
 			private readonly bool trackContext;
-			private Burden burden;
 			private IDictionary extendedProperties;
 
 			public ResolutionContext(CreationContext context, IHandler handler, bool requiresDecommission, bool trackContext)
 			{
-				this.context = context;
+				Context = context;
 				this.requiresDecommission = requiresDecommission;
 				this.trackContext = trackContext;
-				this.handler = handler;
+				Handler = handler;
 			}
 
-			public Burden Burden
-			{
-				get { return burden; }
-			}
+			public Burden Burden { get; private set; }
 
-			public CreationContext Context
-			{
-				get { return context; }
-			}
+			public CreationContext Context { get; }
 
-			public IHandler Handler
+			public IHandler Handler { get; }
+
+			public void Dispose()
 			{
-				get { return handler; }
+				Context.ExitResolutionContext(Burden, trackContext);
 			}
 
 			public void AttachBurden(Burden burden)
 			{
-				this.burden = burden;
+				Burden = burden;
 			}
 
 			public Burden CreateBurden(bool trackedExternally)
 			{
 				// NOTE: not sure we should allow crreating burden again, when it was already created...
 				// this is currently employed by pooled lifestyle
-				burden = new Burden(handler, requiresDecommission, trackedExternally);
-				return burden;
+				Burden = new Burden(Handler, requiresDecommission, trackedExternally);
+				return Burden;
 			}
 
 			public object GetContextualProperty(object key)
 			{
 				if (extendedProperties == null)
-				{
 					return null;
-				}
 
 				var value = extendedProperties[key];
 				return value;
@@ -455,19 +385,10 @@ namespace Castle.Windsor.MicroKernel.Context
 			public void SetContextualProperty(object key, object value)
 			{
 				if (key == null)
-				{
 					throw new ArgumentNullException("key");
-				}
 				if (extendedProperties == null)
-				{
 					extendedProperties = new Arguments();
-				}
 				extendedProperties[key] = value;
-			}
-
-			public void Dispose()
-			{
-				context.ExitResolutionContext(burden, trackContext);
 			}
 		}
 	}

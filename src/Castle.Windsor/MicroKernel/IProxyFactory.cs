@@ -25,7 +25,7 @@ namespace Castle.Windsor.MicroKernel
 		object Create(IKernel kernel, object instance, ComponentModel model, CreationContext context, params object[] constructorArguments);
 
 		object Create(IProxyFactoryExtension customFactory, IKernel kernel, ComponentModel model, CreationContext context,
-		              params object[] constructorArguments);
+			params object[] constructorArguments);
 
 		bool RequiresTargetInstance(IKernel kernel, ComponentModel model);
 

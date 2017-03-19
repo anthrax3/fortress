@@ -26,13 +26,22 @@ namespace Castle.Windsor.Facilities.TypedFactory
 {
 	public class TypedFactoryCachingInspector : IContributeComponentModelConstruction
 	{
+		void IContributeComponentModelConstruction.ProcessModel(IKernel kernel, ComponentModel model)
+		{
+			if (model.Configuration == null)
+				return;
+			if (model.Configuration.Attributes[TypedFactoryFacility.IsFactoryKey] == null)
+				return;
+			if (model.Services.Any(s => s.IsGenericTypeDefinition))
+				return;
+			BuildCache(model);
+		}
+
 		public virtual void BuildCache(ComponentModel model)
 		{
 			var map = new Dictionary<MethodInfo, FactoryMethod>(new SimpleMethodEqualityComparer());
 			foreach (var service in model.Services)
-			{
 				BuildHandlersMap(service, map);
-			}
 
 			model.ExtendedProperties[TypedFactoryFacility.FactoryMapCacheKey] = map;
 		}
@@ -40,9 +49,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		private void BuildHandlersMap(Type service, Dictionary<MethodInfo, FactoryMethod> map)
 		{
 			if (service == null)
-			{
 				return;
-			}
 
 			if (service.Equals(typeof(IDisposable)))
 			{
@@ -63,31 +70,12 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			}
 
 			foreach (var @interface in service.GetInterfaces())
-			{
 				BuildHandlersMap(@interface, map);
-			}
 		}
 
 		private bool IsReleaseMethod(MethodInfo methodInfo)
 		{
 			return methodInfo.ReturnType == typeof(void);
-		}
-
-		void IContributeComponentModelConstruction.ProcessModel(IKernel kernel, ComponentModel model)
-		{
-			if (model.Configuration == null)
-			{
-				return;
-			}
-			if (model.Configuration.Attributes[TypedFactoryFacility.IsFactoryKey] == null)
-			{
-				return;
-			}
-			if (model.Services.Any(s => s.IsGenericTypeDefinition))
-			{
-				return;
-			}
-			BuildCache(model);
 		}
 	}
 }

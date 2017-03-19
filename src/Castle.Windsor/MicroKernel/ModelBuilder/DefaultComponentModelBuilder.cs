@@ -66,9 +66,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder
 				if (meta != null)
 				{
 					if (metaDescriptors == null)
-					{
 						metaDescriptors = model.GetMetaDescriptors(true);
-					}
 					metaDescriptors.Add(meta);
 				}
 			});

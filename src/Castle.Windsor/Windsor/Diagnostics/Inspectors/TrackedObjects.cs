@@ -18,23 +18,14 @@ namespace Castle.Windsor.Windsor.Diagnostics.Inspectors
 {
 	public class TrackedObjects
 	{
-		private readonly IReleasePolicy[] subScopes;
-		private readonly Burden[] trackedObjects;
-
 		public TrackedObjects(Burden[] trackedObjects, IReleasePolicy[] subScopes)
 		{
-			this.trackedObjects = trackedObjects;
-			this.subScopes = subScopes;
+			TrackedObjectBurdens = trackedObjects;
+			SubScopes = subScopes;
 		}
 
-		public IReleasePolicy[] SubScopes
-		{
-			get { return subScopes; }
-		}
+		public IReleasePolicy[] SubScopes { get; }
 
-		public Burden[] TrackedObjectBurdens
-		{
-			get { return trackedObjects; }
-		}
+		public Burden[] TrackedObjectBurdens { get; }
 	}
 }

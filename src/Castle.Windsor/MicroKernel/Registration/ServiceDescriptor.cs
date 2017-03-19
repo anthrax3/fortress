@@ -15,12 +15,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.DynamicProxy.Internal;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {
 	public class ServiceDescriptor
 	{
+		public delegate IEnumerable<Type> ServiceSelector(Type type, Type[] baseTypes);
+
 		private readonly BasedOnDescriptor basedOnDescriptor;
 		private ServiceSelector serviceSelector;
 
@@ -42,8 +43,8 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public BasedOnDescriptor DefaultInterfaces()
 		{
 			return Select((type, @base) =>
-			              type.GetAllInterfaces()
-			              	.Where(i => type.Name.Contains(GetInterfaceName(i))));
+				type.GetAllInterfaces()
+					.Where(i => type.Name.Contains(GetInterfaceName(i))));
 		}
 
 		public BasedOnDescriptor FirstInterface()
@@ -52,11 +53,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 			{
 				var first = type.GetInterfaces().FirstOrDefault();
 				if (first == null)
-				{
 					return null;
-				}
 
-				return new[] { first };
+				return new[] {first};
 			});
 		}
 
@@ -66,28 +65,18 @@ namespace Castle.Windsor.MicroKernel.Registration
 			{
 				var matches = new HashSet<Type>();
 				if (implements != null)
-				{
 					AddFromInterface(type, implements, matches);
-				}
 				else
-				{
 					foreach (var baseType in baseTypes)
-					{
 						AddFromInterface(type, baseType, matches);
-					}
-				}
 
 				if (matches.Count == 0)
-				{
 					foreach (var baseType in baseTypes.Where(t => t != typeof(object)))
-					{
 						if (baseType.IsAssignableFrom(type))
 						{
 							matches.Add(baseType);
 							break;
 						}
-					}
-				}
 
 				return matches;
 			});
@@ -111,47 +100,35 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public BasedOnDescriptor Self()
 		{
-			return Select((t, b) => new[] { t });
+			return Select((t, b) => new[] {t});
 		}
 
 		internal ICollection<Type> GetServices(Type type, Type[] baseType)
 		{
 			var services = new HashSet<Type>();
 			if (serviceSelector != null)
-			{
 				foreach (ServiceSelector selector in serviceSelector.GetInvocationList())
 				{
 					var selected = selector(type, baseType);
 					if (selected != null)
-					{
 						foreach (var service in selected.Select(WorkaroundCLRBug))
-						{
 							services.Add(service);
-						}
-					}
 				}
-			}
 			return services;
 		}
 
 		private void AddFromInterface(Type type, Type implements, ICollection<Type> matches)
 		{
 			foreach (var @interface in GetTopLevelInterfaces(type))
-			{
 				if (@interface.GetInterface(implements.FullName, false) != null)
-				{
 					matches.Add(@interface);
-				}
-			}
 		}
 
 		private string GetInterfaceName(Type @interface)
 		{
 			var name = @interface.Name;
-			if ((name.Length > 1 && name[0] == 'I') && char.IsUpper(name[1]))
-			{
+			if (name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]))
 				return name.Substring(1);
-			}
 			return name;
 		}
 
@@ -161,12 +138,8 @@ namespace Castle.Windsor.MicroKernel.Registration
 			var topLevel = new List<Type>(interfaces);
 
 			foreach (var @interface in interfaces)
-			{
-				foreach (var parent in @interface.GetInterfaces())
-				{
-					topLevel.Remove(parent);
-				}
-			}
+			foreach (var parent in @interface.GetInterfaces())
+				topLevel.Remove(parent);
 
 			return topLevel;
 		}
@@ -174,9 +147,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		private static Type WorkaroundCLRBug(Type serviceType)
 		{
 			if (!serviceType.IsInterface)
-			{
 				return serviceType;
-			}
 			// This is a workaround for a CLR bug in
 			// which GetInterfaces() returns interfaces
 			// with no implementations.
@@ -184,17 +155,11 @@ namespace Castle.Windsor.MicroKernel.Registration
 			{
 				var shouldUseGenericTypeDefinition = false;
 				foreach (var argument in serviceType.GetGenericArguments())
-				{
 					shouldUseGenericTypeDefinition |= argument.IsGenericParameter;
-				}
 				if (shouldUseGenericTypeDefinition)
-				{
 					return serviceType.GetGenericTypeDefinition();
-				}
 			}
 			return serviceType;
 		}
-
-		public delegate IEnumerable<Type> ServiceSelector(Type type, Type[] baseTypes);
 	}
 }

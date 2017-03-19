@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -33,7 +32,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format(
+				var message = string.Format(
 					"Could not convert from '{0}' to {1}",
 					value, targetType.FullName);
 

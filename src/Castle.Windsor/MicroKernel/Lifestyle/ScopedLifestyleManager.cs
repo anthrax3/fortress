@@ -38,9 +38,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var scope = Interlocked.Exchange(ref accessor, null);
 			if (scope != null)
-			{
 				scope.Dispose();
-			}
 		}
 
 		public override object Resolve(CreationContext context, IReleasePolicy releasePolicy)
@@ -48,7 +46,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 			var scope = GetScope(context);
 			var burden = scope.GetCachedInstance(Model, afterCreated =>
 			{
-				var localBurden = base.CreateInstance(context, trackedExternally: true);
+				var localBurden = CreateInstance(context, true);
 				afterCreated(localBurden);
 				Track(localBurden, releasePolicy);
 				return localBurden;
@@ -60,19 +58,15 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var localScope = accessor;
 			if (localScope == null)
-			{
 				throw new ObjectDisposedException("Scope was already disposed. This is most likely a bug in the calling code.");
-			}
 			var scope = localScope.GetScope(context);
-			if(scope == null)
-			{
+			if (scope == null)
 				throw new ComponentResolutionException(
 					string.Format(
 						"Could not obtain scope for component {0}. This is most likely either a bug in custom {1} or you're trying to access scoped component outside of the scope (like a per-web-request component outside of web request etc)",
 						Model.Name,
 						typeof(IScopeAccessor).ToCSharpString()),
 					Model);
-			}
 			return scope;
 		}
 	}

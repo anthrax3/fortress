@@ -14,13 +14,12 @@
 
 using System;
 using System.Linq;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
-	public class NullableConverter:AbstractTypeConverter
+	public class NullableConverter : AbstractTypeConverter
 	{
-		private ITypeConverter innerConverter;
+		private readonly ITypeConverter innerConverter;
 
 		public NullableConverter(ITypeConverter innerConverter)
 		{
@@ -41,10 +40,8 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 
 		public override object PerformConversion(string value, Type targetType)
 		{
-			if(string.IsNullOrEmpty(value))
-			{
+			if (string.IsNullOrEmpty(value))
 				return null;
-			}
 			return innerConverter.PerformConversion(value, GetInnerType(targetType));
 		}
 

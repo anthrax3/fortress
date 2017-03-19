@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel.LifecycleConcerns
@@ -23,9 +22,9 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 	[Serializable]
 	public abstract class LateBoundConcerns<TConcern>
 	{
+		private readonly Lock cacheLock = Lock.Create();
 		private IDictionary<Type, TConcern> concerns;
 		private ConcurrentDictionary<Type, List<TConcern>> concernsCache;
-		private readonly Lock cacheLock = Lock.Create();
 
 
 		public bool HasConcerns
@@ -49,12 +48,8 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 		{
 			var componentConcerns = new List<TConcern>(concerns.Count);
 			foreach (var concern in concerns)
-			{
 				if (concern.Key.IsAssignableFrom(type))
-				{
 					componentConcerns.Add(concern.Value);
-				}
-			}
 			return componentConcerns;
 		}
 

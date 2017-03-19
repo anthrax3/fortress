@@ -24,9 +24,7 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		{
 			var @event = TrackedInstancesRequested;
 			if (@event == null)
-			{
 				return null;
-			}
 			var args = new TrackedInstancesEventArgs();
 			@event(this, args);
 

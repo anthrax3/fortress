@@ -23,11 +23,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static ComponentRegistration For(Type serviceType)
 		{
 			if (serviceType == null)
-			{
 				throw new ArgumentNullException("serviceType",
-				                                "The argument was null. Check that the assembly "
-				                                + "is referenced and the type available to your application.");
-			}
+					"The argument was null. Check that the assembly "
+					+ "is referenced and the type available to your application.");
 
 			return new ComponentRegistration(serviceType);
 		}
@@ -35,9 +33,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static ComponentRegistration For(params Type[] serviceTypes)
 		{
 			if (serviceTypes.Length == 0)
-			{
 				throw new ArgumentException("At least one service type must be supplied");
-			}
 			return new ComponentRegistration(serviceTypes);
 		}
 
@@ -46,21 +42,13 @@ namespace Castle.Windsor.MicroKernel.Registration
 			ComponentRegistration registration = null;
 
 			foreach (var serviceType in serviceTypes)
-			{
 				if (registration == null)
-				{
 					registration = For(serviceType);
-				}
 				else
-				{
 					registration.Forward(serviceType);
-				}
-			}
 
 			if (registration == null)
-			{
 				throw new ArgumentException("At least one service type must be supplied");
-			}
 
 			return registration;
 		}
@@ -103,7 +91,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static Predicate<Type> HasAttribute<TAttribute>(Predicate<TAttribute> filter) where TAttribute : Attribute
 		{
 			return type => HasAttribute<TAttribute>(type) &&
-			               filter((TAttribute)Attribute.GetCustomAttribute(type, typeof(TAttribute)));
+			               filter((TAttribute) Attribute.GetCustomAttribute(type, typeof(TAttribute)));
 		}
 
 		public static bool IsCastleComponent(Type type)
@@ -119,11 +107,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static Predicate<Type> IsInNamespace(string @namespace, bool includeSubnamespaces)
 		{
 			if (includeSubnamespaces)
-			{
 				return type => type.Namespace == @namespace ||
 				               type.Namespace != null &&
 				               type.Namespace.StartsWith(@namespace + ".");
-			}
 
 			return type => type.Namespace == @namespace;
 		}

@@ -29,7 +29,7 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 
 		public void Apply(ComponentModel model, object component)
 		{
-			var item = (TComponent)component;
+			var item = (TComponent) component;
 			action(kernel, item);
 		}
 	}

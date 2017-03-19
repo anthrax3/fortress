@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Castle.Core.Core;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
@@ -30,6 +29,19 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public DuplicatedDependenciesDiagnostic(IKernel kernel)
 		{
 			this.kernel = kernel;
+		}
+
+		public Pair<IHandler, DependencyDuplicate[]>[] Inspect()
+		{
+			var allHandlers = kernel.GetAssignableHandlers(typeof(object));
+			var result = new List<Pair<IHandler, DependencyDuplicate[]>>();
+			foreach (var handler in allHandlers)
+			{
+				var duplicateDependencies = FindDuplicateDependenciesFor(handler);
+				if (duplicateDependencies.Length > 0)
+					result.Add(new Pair<IHandler, DependencyDuplicate[]>(handler, duplicateDependencies));
+			}
+			return result.ToArray();
 		}
 
 		public string GetDetails(DependencyDuplicate duplicates)
@@ -56,42 +68,21 @@ namespace Castle.Windsor.Windsor.Diagnostics
 			return details.ToString();
 		}
 
-		public Pair<IHandler, DependencyDuplicate[]>[] Inspect()
-		{
-			var allHandlers = kernel.GetAssignableHandlers(typeof(object));
-			var result = new List<Pair<IHandler, DependencyDuplicate[]>>();
-			foreach (var handler in allHandlers)
-			{
-				var duplicateDependencies = FindDuplicateDependenciesFor(handler);
-				if (duplicateDependencies.Length > 0)
-				{
-					result.Add(new Pair<IHandler, DependencyDuplicate[]>(handler, duplicateDependencies));
-				}
-			}
-			return result.ToArray();
-		}
-
 		private void CollectDuplicatesBetween(DependencyModel[] array, ICollection<DependencyDuplicate> duplicates)
 		{
 			for (var i = 0; i < array.Length; i++)
+			for (var j = i + 1; j < array.Length; j++)
 			{
-				for (var j = i + 1; j < array.Length; j++)
-				{
-					var reason = IsDuplicate(array[i], array[j]);
-					if (reason != DependencyDuplicationReason.Unspecified)
-					{
-						duplicates.Add(new DependencyDuplicate(array[i], array[j], reason));
-					}
-				}
+				var reason = IsDuplicate(array[i], array[j]);
+				if (reason != DependencyDuplicationReason.Unspecified)
+					duplicates.Add(new DependencyDuplicate(array[i], array[j], reason));
 			}
 		}
 
 		private void CollectDuplicatesBetweenConstructorParameters(ConstructorCandidateCollection constructors, ICollection<DependencyDuplicate> duplicates)
 		{
 			foreach (var constructor in constructors)
-			{
 				CollectDuplicatesBetween(constructor.Dependencies, duplicates);
-			}
 		}
 
 		private void CollectDuplicatesBetweenProperties(DependencyModel[] properties, ICollection<DependencyDuplicate> duplicates)
@@ -102,18 +93,12 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		private void CollectDuplicatesBetweenPropertiesAndConstructors(ConstructorCandidateCollection constructors, DependencyModel[] properties, ICollection<DependencyDuplicate> duplicates)
 		{
 			foreach (var constructor in constructors)
+			foreach (var dependency in constructor.Dependencies)
+			foreach (var property in properties)
 			{
-				foreach (var dependency in constructor.Dependencies)
-				{
-					foreach (var property in properties)
-					{
-						var reason = IsDuplicate(property, dependency);
-						if (reason != DependencyDuplicationReason.Unspecified)
-						{
-							duplicates.Add(new DependencyDuplicate(property, dependency, reason));
-						}
-					}
-				}
+				var reason = IsDuplicate(property, dependency);
+				if (reason != DependencyDuplicationReason.Unspecified)
+					duplicates.Add(new DependencyDuplicate(property, dependency, reason));
 			}
 		}
 
@@ -137,42 +122,28 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		private DependencyDuplicationReason IsDuplicate(DependencyModel foo, DependencyModel bar)
 		{
 			if (foo.ReferencedComponentName != null || bar.ReferencedComponentName != null)
-			{
 				if (string.Equals(foo.ReferencedComponentName, bar.ReferencedComponentName, StringComparison.OrdinalIgnoreCase))
-				{
 					return DependencyDuplicationReason.Reference;
-				}
-			}
 
 			if (string.Equals(foo.DependencyKey, bar.DependencyKey, StringComparison.OrdinalIgnoreCase))
 			{
 				if (foo.TargetItemType == bar.TargetItemType)
-				{
 					return DependencyDuplicationReason.NameAndType;
-				}
 				return DependencyDuplicationReason.Name;
 			}
 			if (foo.TargetItemType == bar.TargetItemType)
-			{
 				return DependencyDuplicationReason.Type;
-			}
 			return 0;
 		}
 
 		private static void Describe(StringBuilder details, DependencyModel dependency)
 		{
 			if (dependency is PropertyDependencyModel)
-			{
 				details.Append("Property ");
-			}
 			else if (dependency is ConstructorDependencyModel)
-			{
 				details.Append("Constructor parameter ");
-			}
 			else
-			{
 				details.Append("Depdendency ");
-			}
 			details.Append(dependency.TargetItemType.ToCSharpString() + " " + dependency.DependencyKey);
 		}
 	}

@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections;
-using Castle.Core.Core.Logging;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel
@@ -37,7 +36,7 @@ namespace Castle.Windsor.MicroKernel
 
 		object Resolve(Type service, IDictionary arguments, IReleasePolicy policy);
 
-		object Resolve(String key, Type service, IDictionary arguments, IReleasePolicy policy);
+		object Resolve(string key, Type service, IDictionary arguments, IReleasePolicy policy);
 
 		Array ResolveAll(Type service, IDictionary arguments, IReleasePolicy policy);
 

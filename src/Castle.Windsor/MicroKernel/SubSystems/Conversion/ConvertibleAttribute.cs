@@ -17,11 +17,9 @@ using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
-	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
 	public class ConvertibleAttribute : Attribute
 	{
-		private readonly Type converterType;
-
 		public ConvertibleAttribute() : this(typeof(DefaultComplexConverter))
 		{
 		}
@@ -29,18 +27,13 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public ConvertibleAttribute(Type converterType)
 		{
 			if (converterType.Is<ITypeConverter>() == false)
-			{
 				throw new ArgumentException(
 					string.Format("ConverterType {0} does not implement {1} interface", converterType.FullName,
-					              typeof(ITypeConverter).FullName), "converterType");
-			}
+						typeof(ITypeConverter).FullName), "converterType");
 
-			this.converterType = converterType;
+			ConverterType = converterType;
 		}
 
-		public Type ConverterType
-		{
-			get { return converterType; }
-		}
+		public Type ConverterType { get; }
 	}
 }

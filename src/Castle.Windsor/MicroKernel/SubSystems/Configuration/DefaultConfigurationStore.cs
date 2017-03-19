@@ -16,8 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel.SubSystems.Resource;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
@@ -31,19 +29,19 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 		private readonly ICollection<IConfiguration> installers = new List<IConfiguration>();
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void AddChildContainerConfiguration(String key, IConfiguration config)
+		public void AddChildContainerConfiguration(string key, IConfiguration config)
 		{
 			childContainers[key] = config;
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void AddComponentConfiguration(String key, IConfiguration config)
+		public void AddComponentConfiguration(string key, IConfiguration config)
 		{
 			components[key] = config;
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void AddFacilityConfiguration(String key, IConfiguration config)
+		public void AddFacilityConfiguration(string key, IConfiguration config)
 		{
 			facilities[key] = config;
 		}
@@ -55,7 +53,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public IConfiguration GetChildContainerConfiguration(String key)
+		public IConfiguration GetChildContainerConfiguration(string key)
 		{
 			IConfiguration value;
 			childContainers.TryGetValue(key, out value);
@@ -63,7 +61,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public IConfiguration GetComponentConfiguration(String key)
+		public IConfiguration GetComponentConfiguration(string key)
 		{
 			IConfiguration value;
 			components.TryGetValue(key, out value);
@@ -89,7 +87,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public IConfiguration GetFacilityConfiguration(String key)
+		public IConfiguration GetFacilityConfiguration(string key)
 		{
 			IConfiguration value;
 			facilities.TryGetValue(key, out value);
@@ -102,14 +100,12 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 			return installers.ToArray();
 		}
 
-		public IResource GetResource(String resourceUri, IResource resource)
+		public IResource GetResource(string resourceUri, IResource resource)
 		{
 			if (resourceUri.IndexOf(Uri.SchemeDelimiter) == -1)
-			{
 				return resource.CreateRelative(resourceUri);
-			}
 
-			var subSystem = (IResourceSubSystem)Kernel.GetSubSystem(SubSystemConstants.ResourceKey);
+			var subSystem = (IResourceSubSystem) Kernel.GetSubSystem(SubSystemConstants.ResourceKey);
 
 			return subSystem.CreateResource(resourceUri, resource.FileBasePath);
 		}

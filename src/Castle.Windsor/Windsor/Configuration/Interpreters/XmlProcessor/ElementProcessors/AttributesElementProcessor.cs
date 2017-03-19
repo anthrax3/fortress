@@ -13,14 +13,13 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class AttributesElementProcessor : AbstractXmlNodeProcessor
 	{
-		public override String Name
+		public override string Name
 		{
 			get { return "attributes"; }
 		}
@@ -36,9 +35,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 				engine.DispatchProcessCurrent(childNodes);
 
 				if (IgnoreNode(childNodes.Current))
-				{
 					continue;
-				}
 
 				var elem = GetNodeAsElement(element, childNodes.Current);
 
@@ -58,4 +55,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

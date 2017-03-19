@@ -25,8 +25,8 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 	public class WebUserControlComponentActivator : DefaultComponentActivator
 	{
 		public WebUserControlComponentActivator(ComponentModel model, IKernelInternal kernel,
-		                                        ComponentInstanceDelegate onCreation,
-		                                        ComponentInstanceDelegate onDestruction)
+			ComponentInstanceDelegate onCreation,
+			ComponentInstanceDelegate onDestruction)
 			: base(model, kernel, onCreation, onDestruction)
 		{
 		}
@@ -41,46 +41,33 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 			var createInstance = true;
 
 			if (createProxy)
-			{
 				createInstance = Kernel.ProxyFactory.RequiresTargetInstance(Kernel, Model);
-			}
 
 			if (createInstance)
-			{
 				try
 				{
 					var currentContext = HttpContext.Current;
 					if (currentContext == null)
-					{
 						throw new InvalidOperationException(
 							"System.Web.HttpContext.Current is null.  WebUserControlComponentActivator can only be used in an ASP.Net environment.");
-					}
 
 					var currentPage = currentContext.Handler as Page;
 					if (currentPage == null)
-					{
 						throw new InvalidOperationException("System.Web.HttpContext.Current.Handler is not of type System.Web.UI.Page");
-					}
 
 					var virtualPath = Model.Configuration.Attributes["VirtualPath"];
 					if (!string.IsNullOrEmpty(virtualPath))
-					{
 						instance = currentPage.LoadControl(virtualPath);
-					}
 					else
-					{
 						instance = currentPage.LoadControl(implType, arguments);
-					}
 				}
 				catch (Exception ex)
 				{
 					throw new ComponentActivatorException(
 						"WebUserControlComponentActivator: could not instantiate " + Model.Implementation.FullName, ex, Model);
 				}
-			}
 
 			if (createProxy)
-			{
 				try
 				{
 					instance = Kernel.ProxyFactory.Create(Kernel, instance, Model, context, arguments);
@@ -89,10 +76,8 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 				{
 					throw new ComponentActivatorException("ComponentActivator: could not proxy " + Model.Implementation.FullName, ex, Model);
 				}
-			}
 
 			return instance;
 		}
 	}
 }
-

@@ -13,21 +13,20 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class DefinedProcessingInstructionProcessor : AbstractXmlNodeProcessor
 	{
-		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.ProcessingInstruction };
+		private static readonly XmlNodeType[] acceptNodes = {XmlNodeType.ProcessingInstruction};
 
 		public override XmlNodeType[] AcceptNodeTypes
 		{
 			get { return acceptNodes; }
 		}
 
-		public override String Name
+		public override string Name
 		{
 			get { return "define"; }
 		}
@@ -42,4 +41,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

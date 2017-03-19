@@ -19,7 +19,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 {
 	public class EvalProcessingInstructionProcessor : AbstractXmlNodeProcessor
 	{
-		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.ProcessingInstruction };
+		private static readonly XmlNodeType[] acceptNodes = {XmlNodeType.ProcessingInstruction};
 
 		public override XmlNodeType[] AcceptNodeTypes
 		{
@@ -45,9 +45,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			object evaluated = "";
 
 			if (string.Compare(expression, "$basedirectory", true) == 0)
-			{
 				evaluated = System.AppDomain.CurrentDomain.BaseDirectory;
-			}
 
 			fragment.AppendChild(node.OwnerDocument.CreateTextNode(evaluated.ToString()));
 
@@ -55,4 +53,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

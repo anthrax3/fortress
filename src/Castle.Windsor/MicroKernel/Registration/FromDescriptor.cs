@@ -30,6 +30,17 @@ namespace Castle.Windsor.MicroKernel.Registration
 			criterias = new List<BasedOnDescriptor>();
 		}
 
+		void IRegistration.Register(IKernelInternal kernel)
+		{
+			if (criterias.Count == 0)
+				return;
+
+			foreach (var type in SelectedTypes(kernel))
+			foreach (var criteria in criterias)
+				if (criteria.TryRegister(type, kernel) && !allowMultipleMatches)
+					break;
+		}
+
 		protected abstract IEnumerable<Type> SelectedTypes(IKernel kernel);
 
 		public FromDescriptor AllowMultipleMatches()
@@ -45,12 +56,12 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public BasedOnDescriptor BasedOn(Type basedOn)
 		{
-			return BasedOn((IEnumerable<Type>)new[] { basedOn });
+			return BasedOn((IEnumerable<Type>) new[] {basedOn});
 		}
 
 		public BasedOnDescriptor BasedOn(params Type[] basedOn)
 		{
-			return BasedOn((IEnumerable<Type>)basedOn);
+			return BasedOn((IEnumerable<Type>) basedOn);
 		}
 
 		public BasedOnDescriptor BasedOn(IEnumerable<Type> basedOn)
@@ -97,28 +108,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public BasedOnDescriptor Where(Predicate<Type> accepted)
 		{
-			var descriptor = new BasedOnDescriptor(new[] { typeof(object) }, this, additionalFilters).If(accepted);
+			var descriptor = new BasedOnDescriptor(new[] {typeof(object)}, this, additionalFilters).If(accepted);
 			criterias.Add(descriptor);
 			return descriptor;
-		}
-
-		void IRegistration.Register(IKernelInternal kernel)
-		{
-			if (criterias.Count == 0)
-			{
-				return;
-			}
-
-			foreach (var type in SelectedTypes(kernel))
-			{
-				foreach (var criteria in criterias)
-				{
-					if (criteria.TryRegister(type, kernel) && !allowMultipleMatches)
-					{
-						break;
-					}
-				}
-			}
 		}
 	}
 }

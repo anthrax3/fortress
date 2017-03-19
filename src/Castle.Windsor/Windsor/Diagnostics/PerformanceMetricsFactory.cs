@@ -40,18 +40,14 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		{
 			var counter = BuildInstancesTrackedByReleasePolicyCounter(name);
 			if (counter == null)
-			{
 				return NullPerformanceCounter.Instance;
-			}
 			return new TrackedComponentsPerformanceCounterWrapper(counter);
 		}
 
 		private PerformanceCounter BuildInstancesTrackedByReleasePolicyCounter(string name)
 		{
 			if (InitializedSuccessfully == false)
-			{
 				return null;
-			}
 			try
 			{
 				return new PerformanceCounter
@@ -80,18 +76,18 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		private void CreateWindsorCategoryAndCounters()
 		{
 			PerformanceCounterCategory.Create(CastleWindsorCategoryName,
-			                                  "Performance counters published by the Castle Windsor container",
-			                                  PerformanceCounterCategoryType.MultiInstance,
-			                                  new CounterCreationDataCollection
-			                                  {
-			                                  	new CounterCreationData
-			                                  	{
-			                                  		CounterType = PerformanceCounterType.NumberOfItems32,
-			                                  		CounterName = InstanesTrackedByTheReleasePolicyCounterName,
-			                                  		CounterHelp = "List of instances tracked by the release policy in the container. " +
-			                                  		              "Notice that does not include all alive objects tracked by the container, just the ones tracked by the policy."
-			                                  	}
-			                                  });
+				"Performance counters published by the Castle Windsor container",
+				PerformanceCounterCategoryType.MultiInstance,
+				new CounterCreationDataCollection
+				{
+					new CounterCreationData
+					{
+						CounterType = PerformanceCounterType.NumberOfItems32,
+						CounterName = InstanesTrackedByTheReleasePolicyCounterName,
+						CounterHelp = "List of instances tracked by the release policy in the container. " +
+						              "Notice that does not include all alive objects tracked by the container, just the ones tracked by the policy."
+					}
+				});
 		}
 
 		private void Initialize()
@@ -99,13 +95,9 @@ namespace Castle.Windsor.Windsor.Diagnostics
 			try
 			{
 				if (PerformanceCounterCategory.Exists(CastleWindsorCategoryName))
-				{
 					Debug.Assert(PerformanceCounterCategory.GetCategories().Count(c => c.CategoryName == CastleWindsorCategoryName) == 1);
-				}
 				else
-				{
 					CreateWindsorCategoryAndCounters();
-				}
 			}
 			catch (Win32Exception e)
 			{

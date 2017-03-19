@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Context;
 
@@ -23,49 +22,28 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 	[Serializable]
 	public abstract class AbstractComponentActivator : IComponentActivator
 	{
-		private readonly IKernelInternal kernel;
-		private readonly ComponentModel model;
-		private readonly ComponentInstanceDelegate onCreation;
-		private readonly ComponentInstanceDelegate onDestruction;
-
 		protected AbstractComponentActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)
 		{
-			this.model = model;
-			this.kernel = kernel;
-			this.onCreation = onCreation;
-			this.onDestruction = onDestruction;
+			Model = model;
+			Kernel = kernel;
+			OnCreation = onCreation;
+			OnDestruction = onDestruction;
 		}
 
-		public IKernelInternal Kernel
-		{
-			get { return kernel; }
-		}
+		public IKernelInternal Kernel { get; }
 
-		public ComponentModel Model
-		{
-			get { return model; }
-		}
+		public ComponentModel Model { get; }
 
-		public ComponentInstanceDelegate OnCreation
-		{
-			get { return onCreation; }
-		}
+		public ComponentInstanceDelegate OnCreation { get; }
 
-		public ComponentInstanceDelegate OnDestruction
-		{
-			get { return onDestruction; }
-		}
-
-		protected abstract object InternalCreate(CreationContext context);
-
-		protected abstract void InternalDestroy(object instance);
+		public ComponentInstanceDelegate OnDestruction { get; }
 
 		public virtual object Create(CreationContext context, Burden burden)
 		{
 			var instance = InternalCreate(context);
 			burden.SetRootInstance(instance);
 
-			onCreation(model, instance);
+			OnCreation(Model, instance);
 
 			return instance;
 		}
@@ -74,47 +52,40 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 		{
 			InternalDestroy(instance);
 
-			onDestruction(model, instance);
+			OnDestruction(Model, instance);
 		}
+
+		protected abstract object InternalCreate(CreationContext context);
+
+		protected abstract void InternalDestroy(object instance);
 
 		protected virtual void ApplyCommissionConcerns(object instance)
 		{
 			if (Model.Lifecycle.HasCommissionConcerns == false)
-			{
 				return;
-			}
 
 			instance = ProxyUtil.GetUnproxiedInstance(instance);
 			if (instance == null)
-			{
-				// see http://issues.castleproject.org/issue/IOC-332 for details
 				throw new NotSupportedException(string.Format("Can not apply commission concerns to component {0} because it appears to be a target-less proxy. Currently those are not supported.", Model.Name));
-			}
 			ApplyConcerns(Model.Lifecycle.CommissionConcerns, instance);
 		}
 
 		protected virtual void ApplyConcerns(IEnumerable<ICommissionConcern> steps, object instance)
 		{
 			foreach (var concern in steps)
-			{
 				concern.Apply(Model, instance);
-			}
 		}
 
 		protected virtual void ApplyConcerns(IEnumerable<IDecommissionConcern> steps, object instance)
 		{
 			foreach (var concern in steps)
-			{
 				concern.Apply(Model, instance);
-			}
 		}
 
 		protected virtual void ApplyDecommissionConcerns(object instance)
 		{
 			if (Model.Lifecycle.HasDecommissionConcerns == false)
-			{
 				return;
-			}
 
 			instance = ProxyUtil.GetUnproxiedInstance(instance);
 			ApplyConcerns(Model.Lifecycle.DecommissionConcerns, instance);

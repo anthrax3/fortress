@@ -13,9 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.Util;
 
 namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
@@ -26,15 +24,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model.Configuration == null)
-			{
 				return;
-			}
 
 			var parameters = model.Configuration.Children["parameters"];
 			if (parameters == null)
-			{
 				return;
-			}
 
 			foreach (var parameter in parameters.Children)
 			{
@@ -61,15 +55,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			foreach (var item in config.Children)
 			{
 				if (item.Children.Count > 0)
-				{
 					AddAnyServiceOverrides(model, item, parameter);
-				}
 
 				var componentName = ReferenceExpressionUtil.ExtractComponentName(item.Value);
 				if (componentName == null)
-				{
 					continue;
-				}
 				model.Dependencies.Add(new ComponentDependencyModel(componentName));
 			}
 		}
@@ -79,17 +69,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			foreach (var parameter in model.Parameters)
 			{
 				if (parameter.ConfigValue != null)
-				{
 					if (IsArray(parameter) || IsList(parameter))
-					{
 						AddAnyServiceOverrides(model, parameter.ConfigValue, parameter);
-					}
-				}
 
 				if (ReferenceExpressionUtil.IsReference(parameter.Value))
-				{
 					model.Dependencies.Add(new DependencyModel(parameter.Name, null, false));
-				}
 			}
 		}
 

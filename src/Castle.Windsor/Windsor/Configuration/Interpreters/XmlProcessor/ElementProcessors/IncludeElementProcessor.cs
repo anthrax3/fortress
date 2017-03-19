@@ -20,7 +20,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 {
 	public class IncludeElementProcessor : AbstractXmlNodeProcessor
 	{
-		public override String Name
+		public override string Name
 		{
 			get { return "include"; }
 		}
@@ -39,21 +39,18 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			ReplaceItself(result, element);
 		}
 
-		public XmlNode ProcessInclude(XmlElement element, String includeUri, IXmlProcessorEngine engine)
+		public XmlNode ProcessInclude(XmlElement element, string includeUri, IXmlProcessorEngine engine)
 		{
 			XmlDocumentFragment frag = null;
 
 			if (includeUri == null)
-			{
 				throw new ConfigurationProcessingException(
-					String.Format("Found an include node without an 'uri' attribute: {0}", element.BaseURI));
-			}
+					string.Format("Found an include node without an 'uri' attribute: {0}", element.BaseURI));
 
 			var uriList = includeUri.Split(',');
 			frag = CreateFragment(element);
 
 			foreach (var uri in uriList)
-			{
 				using (var resource = engine.GetResource(uri))
 				{
 					var doc = new XmlDocument();
@@ -68,7 +65,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 					catch (Exception ex)
 					{
 						throw new ConfigurationProcessingException(
-							String.Format("Error processing include node: {0}", includeUri), ex);
+							string.Format("Error processing include node: {0}", includeUri), ex);
 					}
 
 					engine.PushResource(resource);
@@ -78,18 +75,12 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 					engine.PopResource();
 
 					if (element.GetAttribute("preserve-wrapper") == "yes")
-					{
 						AppendChild(frag, doc.DocumentElement);
-					}
 					else
-					{
 						AppendChild(frag, doc.DocumentElement.ChildNodes);
-					}
 				}
-			}
 
 			return frag;
 		}
 	}
 }
-

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-using Castle.Core.Core.Resource;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
 
 namespace Castle.Windsor.Windsor.Installer
@@ -36,4 +35,3 @@ namespace Castle.Windsor.Windsor.Installer
 		}
 	}
 }
-

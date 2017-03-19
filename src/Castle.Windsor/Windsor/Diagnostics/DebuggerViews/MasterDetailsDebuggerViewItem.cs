@@ -18,17 +18,13 @@ namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 {
 	public class MasterDetailsDebuggerViewItem
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly object[] details;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly object[] details;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly object master;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly object master;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string masterDescription;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string masterDescription;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string masterName;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string masterName;
 
 		public MasterDetailsDebuggerViewItem(object master, string masterDescription, string masterName, object[] details)
 		{

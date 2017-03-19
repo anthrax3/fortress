@@ -14,30 +14,29 @@
 
 using System;
 using System.Globalization;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
 	[Serializable]
 	public class PrimitiveConverter : AbstractTypeConverter
 	{
-		private readonly Type[] types = new[]
+		private readonly Type[] types =
 		{
-			typeof(Char),
+			typeof(char),
 			typeof(DateTime),
-			typeof(Decimal),
-			typeof(Boolean),
-			typeof(Int16),
-			typeof(Int32),
-			typeof(Int64),
-			typeof(UInt16),
-			typeof(UInt32),
-			typeof(UInt64),
-			typeof(Byte),
-			typeof(SByte),
-			typeof(Single),
-			typeof(Double),
-			typeof(String)
+			typeof(decimal),
+			typeof(bool),
+			typeof(short),
+			typeof(int),
+			typeof(long),
+			typeof(ushort),
+			typeof(uint),
+			typeof(ulong),
+			typeof(byte),
+			typeof(sbyte),
+			typeof(float),
+			typeof(double),
+			typeof(string)
 		};
 
 		public override bool CanHandleType(Type type)
@@ -45,12 +44,10 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			return Array.IndexOf(types, type) != -1;
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
-			if (targetType == typeof(String))
-			{
+			if (targetType == typeof(string))
 				return value;
-			}
 
 			try
 			{
@@ -58,7 +55,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format(
+				var message = string.Format(
 					"Could not convert from '{0}' to {1}",
 					value, targetType.FullName);
 

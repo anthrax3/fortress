@@ -24,8 +24,7 @@ namespace Castle.Windsor.Core
 	[DebuggerDisplay("Count = {dependencies.Count}")]
 	public class DependencyModelCollection : IMutableCollection<DependencyModel>
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		private readonly List<DependencyModel> dependencies = new List<DependencyModel>();
+		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)] private readonly List<DependencyModel> dependencies = new List<DependencyModel>();
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		public int Count
@@ -42,9 +41,7 @@ namespace Castle.Windsor.Core
 		public void Add(DependencyModel dependencyModel)
 		{
 			if (dependencyModel == null)
-			{
 				throw new ArgumentNullException("dependencyModel");
-			}
 			dependencies.Add(dependencyModel);
 		}
 

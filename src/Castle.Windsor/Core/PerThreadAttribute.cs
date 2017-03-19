@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class PerThreadAttribute : LifestyleAttribute
 	{
 		public PerThreadAttribute() : base(LifestyleType.Thread)

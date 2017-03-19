@@ -23,47 +23,38 @@ namespace Castle.Windsor.MicroKernel.Handlers
 	[Serializable]
 	public class DefaultHandler : AbstractHandler
 	{
-		private ILifestyleManager lifestyleManager;
-
 		public DefaultHandler(ComponentModel model) : base(model)
 		{
 		}
 
-		protected ILifestyleManager LifestyleManager
-		{
-			get { return lifestyleManager; }
-		}
+		protected ILifestyleManager LifestyleManager { get; private set; }
 
 		public override void Dispose()
 		{
-			lifestyleManager.Dispose();
+			LifestyleManager.Dispose();
 		}
 
 		public override bool ReleaseCore(Burden burden)
 		{
-			return lifestyleManager.Release(burden.Instance);
+			return LifestyleManager.Release(burden.Instance);
 		}
 
 		protected void AssertNotWaitingForDependency()
 		{
 			if (CurrentState == HandlerState.WaitingDependency)
-			{
 				throw UnresolvableHandlerException();
-			}
 		}
 
 		protected override void InitDependencies()
 		{
 			var activator = Kernel.CreateComponentActivator(ComponentModel);
-			lifestyleManager = Kernel.CreateLifestyleManager(ComponentModel, activator);
+			LifestyleManager = Kernel.CreateLifestyleManager(ComponentModel, activator);
 
 			var awareActivator = activator as IDependencyAwareActivator;
 			if (awareActivator != null && awareActivator.CanProvideRequiredDependencies(ComponentModel))
 			{
 				foreach (var dependency in ComponentModel.Dependencies)
-				{
 					dependency.Init(ComponentModel.ParametersInternal);
-				}
 				return;
 			}
 
@@ -80,7 +71,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			if (IsBeingResolvedInContext(context))
 			{
-				var cache = lifestyleManager as IContextLifestyleManager;
+				var cache = LifestyleManager as IContextLifestyleManager;
 				if (cache != null)
 				{
 					var instance = cache.GetContextInstance(context);
@@ -98,7 +89,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 				}
 				var message = new StringBuilder();
 				message.AppendFormat("Dependency cycle has been detected when trying to resolve component '{0}'.",
-				                     ComponentModel.Name);
+					ComponentModel.Name);
 				message.AppendLine();
 				message.AppendLine("The resolution tree that resulted in the cycle is the following:");
 				context.BuildCycleMessageFor(this, message);
@@ -119,7 +110,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			{
 				using (var ctx = context.EnterResolutionContext(this, requiresDecommission))
 				{
-					var instance = lifestyleManager.Resolve(context, context.ReleasePolicy);
+					var instance = LifestyleManager.Resolve(context, context.ReleasePolicy);
 					burden = ctx.Burden;
 					return instance;
 				}

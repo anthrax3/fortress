@@ -26,9 +26,7 @@ namespace Castle.Windsor.Windsor.Installer
 		public static IWindsorInstaller Containing(Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 			var assembly = type.Assembly;
 			return Instance(assembly);
 		}
@@ -36,9 +34,7 @@ namespace Castle.Windsor.Windsor.Installer
 		public static IWindsorInstaller Containing(Type type, InstallerFactory installerFactory)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 			var assembly = type.Assembly;
 			return Instance(assembly, installerFactory);
 		}
@@ -63,9 +59,7 @@ namespace Castle.Windsor.Windsor.Installer
 			var assemblies = new HashSet<Assembly>(ReflectionUtil.GetAssemblies(filter));
 			var installer = new CompositeInstaller();
 			foreach (var assembly in assemblies)
-			{
 				installer.Add(Instance(assembly, installerFactory));
-			}
 			return installer;
 		}
 
@@ -122,9 +116,7 @@ namespace Castle.Windsor.Windsor.Installer
 			var assemblies = new HashSet<Assembly>(ReflectionUtil.GetApplicationAssemblies(rootAssembly));
 			var installer = new CompositeInstaller();
 			foreach (var assembly in assemblies)
-			{
 				installer.Add(Instance(assembly, installerFactory));
-			}
 			return installer;
 		}
 	}

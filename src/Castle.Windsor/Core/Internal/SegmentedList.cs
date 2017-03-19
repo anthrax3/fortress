@@ -47,10 +47,8 @@ namespace Castle.Windsor.Core.Internal
 		{
 			var group = segments[segmentIndex];
 			if (group == null)
-			{
 				group = segments[segmentIndex] = new List<T>(4);
-			}
-			return @group;
+			return group;
 		}
 	}
 }

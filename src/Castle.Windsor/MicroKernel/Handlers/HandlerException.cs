@@ -24,20 +24,20 @@ namespace Castle.Windsor.MicroKernel.Handlers
 	{
 		public HandlerException(string message, ComponentName name) : base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 			Name = name;
 		}
 
 		public HandlerException(string message, ComponentName name, Exception innerException)
 			: base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 			Name = name;
 		}
 
 		public HandlerException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ComponentName Name { get; private set; }

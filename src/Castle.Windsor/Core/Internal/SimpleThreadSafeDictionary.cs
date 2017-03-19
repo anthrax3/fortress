@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.Core.Internal
 {
@@ -48,18 +47,14 @@ namespace Castle.Windsor.Core.Internal
 			{
 				TValue value;
 				if (inner.TryGetValue(key, out value))
-				{
 					return value;
-				}
 				// We can safely allow reads from other threads while preparing new value, since 
 				// only 1 thread can hold upgradable read lock (even write requests will wait on it).
 				// Also this helps to prevent downstream deadlocks due to factory method call
 				var newValue = factory(key);
 				token.Upgrade();
 				if (inner.TryGetValue(key, out value))
-				{
 					return value;
-				}
 				value = newValue;
 				inner.Add(key, value);
 				return value;
@@ -72,9 +67,7 @@ namespace Castle.Windsor.Core.Internal
 			{
 				TValue value;
 				if (inner.TryGetValue(key, out value))
-				{
 					return value;
-				}
 			}
 			throw new ArgumentException(string.Format("Item for key {0} was not found.", key));
 		}

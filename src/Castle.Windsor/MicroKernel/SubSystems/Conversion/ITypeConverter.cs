@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -25,11 +24,11 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 
 		bool CanHandleType(Type type, IConfiguration configuration);
 
-		object PerformConversion(String value, Type targetType);
+		object PerformConversion(string value, Type targetType);
 
 		object PerformConversion(IConfiguration configuration, Type targetType);
 
-		TTarget PerformConversion<TTarget>(String value);
+		TTarget PerformConversion<TTarget>(string value);
 
 		TTarget PerformConversion<TTarget>(IConfiguration configuration);
 	}

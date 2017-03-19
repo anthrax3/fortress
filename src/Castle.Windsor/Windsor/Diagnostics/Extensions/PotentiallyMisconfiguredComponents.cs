@@ -25,13 +25,16 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		private const string name = "Potentially misconfigured components";
 		private IPotentiallyMisconfiguredComponentsDiagnostic diagnostic;
 
+		public static string Name
+		{
+			get { return name; }
+		}
+
 		public override IEnumerable<DebuggerViewItem> Attach()
 		{
 			var handlers = diagnostic.Inspect();
 			if (handlers.Length == 0)
-			{
 				return Enumerable.Empty<DebuggerViewItem>();
-			}
 
 			Array.Sort(handlers, (f, s) => f.ComponentModel.Name.CompareTo(s.ComponentModel.Name));
 			var items = Array.ConvertAll(handlers, DefaultComponentView);
@@ -45,11 +48,6 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		{
 			diagnostic = new PotentiallyMisconfiguredComponentsDiagnostic(kernel);
 			diagnosticsHost.AddDiagnostic(diagnostic);
-		}
-
-		public static string Name
-		{
-			get { return name; }
 		}
 	}
 }

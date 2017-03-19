@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
@@ -24,14 +23,14 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		private static readonly IncludeElementProcessor includeProcessor = new IncludeElementProcessor();
 		private static readonly DefaultTextNodeProcessor textProcessor = new DefaultTextNodeProcessor();
 
-		public override String Name
+		public override string Name
 		{
 			get { return ""; }
 		}
 
 		public override void Process(IXmlProcessorNodeList nodeList, IXmlProcessorEngine engine)
 		{
-			var element = (XmlElement)nodeList.Current;
+			var element = (XmlElement) nodeList.Current;
 
 			ProcessAttributes(element, engine);
 
@@ -43,9 +42,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			ProcessIncludeAttribute(element, engine);
 
 			foreach (XmlAttribute att in element.Attributes)
-			{
 				textProcessor.ProcessString(att, att.Value, engine);
-			}
 		}
 
 		private static void ProcessIncludeAttribute(XmlElement element, IXmlProcessorEngine engine)
@@ -53,19 +50,14 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			var include = element.Attributes[IncludeAttrName];
 
 			if (include == null)
-			{
 				return;
-			}
 			// removing the include attribute from the element
 			element.Attributes.RemoveNamedItem(IncludeAttrName);
 
 			var includeContent = includeProcessor.ProcessInclude(element, include.Value, engine);
 
 			if (includeContent != null)
-			{
 				element.PrependChild(includeContent);
-			}
 		}
 	}
 }
-

@@ -25,17 +25,13 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		private readonly IResolveExtension[] resolveExtensions;
 
 		public ExtendedHandler(ComponentModel model, ICollection<IResolveExtension> resolveExtensions,
-		                       ICollection<IReleaseExtension> releaseExtensions)
+			ICollection<IReleaseExtension> releaseExtensions)
 			: base(model)
 		{
 			if (resolveExtensions != null)
-			{
 				this.resolveExtensions = resolveExtensions.ToArray();
-			}
 			if (releaseExtensions != null)
-			{
 				this.releaseExtensions = releaseExtensions.ToArray();
-			}
 		}
 
 		public override void Init(IKernelInternal kernel)
@@ -43,27 +39,17 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			base.Init(kernel);
 
 			if (resolveExtensions != null)
-			{
 				foreach (var extension in resolveExtensions)
-				{
 					extension.Init(kernel, this);
-				}
-			}
 			if (releaseExtensions != null)
-			{
 				foreach (var extension in releaseExtensions)
-				{
 					extension.Init(kernel, this);
-				}
-			}
 		}
 
 		public override bool Release(Burden burden)
 		{
 			if (releaseExtensions == null)
-			{
 				return base.Release(burden);
-			}
 
 			var invocation = new ReleaseInvocation(burden);
 			InvokeReleasePipeline(0, invocation);
@@ -73,9 +59,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		protected override object Resolve(CreationContext context, bool instanceRequired)
 		{
 			if (resolveExtensions == null)
-			{
 				return base.Resolve(context, instanceRequired);
-			}
 			var invocation = new ResolveInvocation(context, instanceRequired);
 			InvokeResolvePipeline(0, invocation);
 			return invocation.ResolvedInstance;
@@ -99,9 +83,9 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			{
 				Burden burden;
 				invocation.ResolvedInstance = ResolveCore(invocation.Context,
-				                                          invocation.DecommissionRequired,
-				                                          invocation.InstanceRequired,
-				                                          out burden);
+					invocation.DecommissionRequired,
+					invocation.InstanceRequired,
+					out burden);
 				invocation.Burden = burden;
 				return;
 			}

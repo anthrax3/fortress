@@ -13,14 +13,13 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class IfElementProcessor : AbstractStatementElementProcessor
 	{
-		public override String Name
+		public override string Name
 		{
 			get { return "if"; }
 		}
@@ -45,4 +44,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

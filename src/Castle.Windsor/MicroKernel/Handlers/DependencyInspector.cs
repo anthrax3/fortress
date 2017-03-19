@@ -40,23 +40,18 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		public void Inspect(IHandler handler, DependencyModel[] missingDependencies, IKernel kernel)
 		{
 			if (handlersChecked.Add(handler) == false)
-			{
 				return;
-			}
 			Debug.Assert(missingDependencies.Length > 0, "missingDependencies.Length > 0");
 			var uniqueOverrides = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 			message.AppendLine();
 			message.AppendFormat("'{0}' is waiting for the following dependencies:", handler.ComponentModel.Name);
 			message.AppendLine();
 			foreach (var dependency in missingDependencies)
-			{
 				if (dependency.ReferencedComponentName != null)
 				{
 					// NOTE: that's a workaround for us having dependency twice potentially, once from configuration and once from actual type scan
 					if (uniqueOverrides.Add(dependency.ReferencedComponentName))
-					{
 						InspectServiceOverrideDependency(dependency, kernel);
-					}
 				}
 				else if (dependency.IsPrimitiveTypeDependency)
 				{
@@ -67,7 +62,6 @@ namespace Castle.Windsor.MicroKernel.Handlers
 				{
 					InspectServiceDependency(handler, dependency, kernel);
 				}
-			}
 		}
 
 		private void InspectParameterDependency(DependencyModel dependency)
@@ -112,7 +106,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 						{
 							message.AppendLine();
 							message.AppendFormat("'{0}' is registered and is matching the required service, but cannot be resolved.",
-							                     maybeDecoratedHandler.ComponentModel.Name);
+								maybeDecoratedHandler.ComponentModel.Name);
 						}
 					}
 				}
@@ -122,9 +116,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 				message.AppendFormat("- Service '{0}' which was registered but is also waiting for dependencies.", handler.ComponentModel.Name);
 				var info = handler as IExposeDependencyInfo;
 				if (info != null)
-				{
 					info.ObtainDependencyDetails(this);
-				}
 			}
 		}
 
@@ -147,9 +139,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 
 				var info = handler as IExposeDependencyInfo;
 				if (info != null)
-				{
 					info.ObtainDependencyDetails(this);
-				}
 			}
 		}
 	}

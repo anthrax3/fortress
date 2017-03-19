@@ -26,9 +26,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		public static ICollection<IReleaseExtension> ReleaseExtensions(this ComponentModel model, bool ensureExists)
 		{
 			if (model == null)
-			{
 				throw new ArgumentNullException("model");
-			}
 
 			var releaseExtensions = model.ExtendedProperties[ReleaseExtensionsKey] as ICollection<IReleaseExtension>;
 			if (releaseExtensions == null && ensureExists)
@@ -42,9 +40,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		public static ICollection<IResolveExtension> ResolveExtensions(this ComponentModel model, bool ensureExists)
 		{
 			if (model == null)
-			{
 				throw new ArgumentNullException("model");
-			}
 
 			var resolveExtensions = model.ExtendedProperties[ResolveExtensionsKey] as ICollection<IResolveExtension>;
 			if (resolveExtensions == null && ensureExists)

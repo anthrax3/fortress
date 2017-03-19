@@ -22,37 +22,24 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 	[Serializable]
 	public abstract class AbstractLifestyleManager : ILifestyleManager
 	{
-		private IComponentActivator componentActivator;
-		private IKernel kernel;
-		private ComponentModel model;
+		protected IComponentActivator ComponentActivator { get; private set; }
 
-		protected IComponentActivator ComponentActivator
-		{
-			get { return componentActivator; }
-		}
+		protected IKernel Kernel { get; private set; }
 
-		protected IKernel Kernel
-		{
-			get { return kernel; }
-		}
-
-		protected ComponentModel Model
-		{
-			get { return model; }
-		}
+		protected ComponentModel Model { get; private set; }
 
 		public abstract void Dispose();
 
 		public virtual void Init(IComponentActivator componentActivator, IKernel kernel, ComponentModel model)
 		{
-			this.componentActivator = componentActivator;
-			this.kernel = kernel;
-			this.model = model;
+			ComponentActivator = componentActivator;
+			Kernel = kernel;
+			Model = model;
 		}
 
 		public virtual bool Release(object instance)
 		{
-			componentActivator.Destroy(instance);
+			ComponentActivator.Destroy(instance);
 			return true;
 		}
 
@@ -67,7 +54,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var burden = context.CreateBurden(ComponentActivator, trackedExternally);
 
-			var instance = componentActivator.Create(context, burden);
+			var instance = ComponentActivator.Create(context, burden);
 			Debug.Assert(ReferenceEquals(instance, burden.Instance));
 			return burden;
 		}
@@ -75,9 +62,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		protected virtual void Track(Burden burden, IReleasePolicy releasePolicy)
 		{
 			if (burden.RequiresPolicyRelease)
-			{
 				releasePolicy.Track(burden.Instance, burden);
-			}
 		}
 	}
 }

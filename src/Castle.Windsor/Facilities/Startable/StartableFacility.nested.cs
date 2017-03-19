@@ -39,9 +39,7 @@ namespace Castle.Windsor.Facilities.Startable
 			protected override void Start(IHandler handler)
 			{
 				if (TryStart(handler) == false)
-				{
 					CacheHandler(handler);
-				}
 			}
 
 			private bool TryStart(IHandler handler)
@@ -65,18 +63,14 @@ namespace Castle.Windsor.Facilities.Startable
 				events.Kernel.ComponentRegistered += delegate
 				{
 					if (inStart == false)
-					{
 						Signal();
-					}
 				};
 			}
 
 			protected override void Start(IHandler handler)
 			{
 				if (TryStart(handler) == false)
-				{
 					CacheHandler(handler);
-				}
 			}
 
 			private bool TryStart(IHandler handler)
@@ -101,13 +95,11 @@ namespace Castle.Windsor.Facilities.Startable
 				kernel.ComponentRegistered += (key, handler) =>
 				{
 					if (IsStartable(handler))
-					{
 						StartableComponentRegistered(handler);
-					}
 				};
 			}
 
-			public IKernelEvents Kernel { get; private set; }
+			public IKernelEvents Kernel { get; }
 
 			public event Action<IHandler> StartableComponentRegistered = delegate { };
 		}

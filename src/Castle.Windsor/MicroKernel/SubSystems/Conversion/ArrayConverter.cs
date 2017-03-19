@@ -14,7 +14,6 @@
 
 using System;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -26,7 +25,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			return type.IsArray;
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			throw new NotImplementedException();
 		}

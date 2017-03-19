@@ -46,7 +46,7 @@ namespace Castle.Windsor.Windsor
 
 		void RemoveChildContainer(IWindsorContainer childContainer);
 
-		object Resolve(String key, Type service);
+		object Resolve(string key, Type service);
 
 		object Resolve(Type service);
 
@@ -60,15 +60,15 @@ namespace Castle.Windsor.Windsor
 
 		T Resolve<T>(object argumentsAsAnonymousType);
 
-		T Resolve<T>(String key);
+		T Resolve<T>(string key);
 
-		T Resolve<T>(String key, IDictionary arguments);
+		T Resolve<T>(string key, IDictionary arguments);
 
-		T Resolve<T>(String key, object argumentsAsAnonymousType);
+		T Resolve<T>(string key, object argumentsAsAnonymousType);
 
-		object Resolve(String key, Type service, IDictionary arguments);
+		object Resolve(string key, Type service, IDictionary arguments);
 
-		object Resolve(String key, Type service, object argumentsAsAnonymousType);
+		object Resolve(string key, Type service, object argumentsAsAnonymousType);
 
 		T[] ResolveAll<T>();
 

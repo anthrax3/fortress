@@ -24,6 +24,6 @@ namespace Castle.Windsor.Core
 
 		IgnoreAll,
 
-		IgnoreBase,
+		IgnoreBase
 	}
 }

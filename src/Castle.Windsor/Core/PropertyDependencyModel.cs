@@ -20,7 +20,7 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class PropertyDependencyModel : DependencyModel
 	{
-		public PropertyDependencyModel(PropertyInfo property, bool isOptional) : base(property.Name, property.PropertyType, isOptional: isOptional)
+		public PropertyDependencyModel(PropertyInfo property, bool isOptional) : base(property.Name, property.PropertyType, isOptional)
 		{
 			Property = property;
 		}

@@ -29,13 +29,16 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		private const string name = "Potential lifestyle mismatches";
 		private IPotentialLifestyleMismatchesDiagnostic diagnostic;
 
+		public static string Name
+		{
+			get { return name; }
+		}
+
 		public override IEnumerable<DebuggerViewItem> Attach()
 		{
 			var mismatches = diagnostic.Inspect();
 			if (mismatches.Length == 0)
-			{
 				return Enumerable.Empty<DebuggerViewItem>();
-			}
 
 			Array.Sort(mismatches, (f, s) => f[0].ComponentModel.Name.CompareTo(s[0].ComponentModel.Name));
 			var items = Array.ConvertAll(mismatches, MismatchedComponentView);
@@ -80,31 +83,24 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 
 		private string GetName(IHandler[] handlers, IHandler root)
 		{
-			var indirect = (handlers.Length > 2) ? "indirectly " : string.Empty;
+			var indirect = handlers.Length > 2 ? "indirectly " : string.Empty;
 			return string.Format("\"{0}\" »{1}« {2}depends on", GetNameDescription(root.ComponentModel), root.ComponentModel.GetLifestyleDescription(),
-			                     indirect);
+				indirect);
 		}
 
 		private string GetNameDescription(ComponentModel componentModel)
 		{
 			if (componentModel.ComponentName.SetByUser)
-			{
 				return componentModel.ComponentName.Name;
-			}
 			return componentModel.ToString();
 		}
 
 		private object MismatchedComponentView(IHandler[] handlers)
 		{
 			return new DebuggerViewItemWithDetails(GetName(handlers, handlers.First()),
-			                                       GetKey(handlers.Last()),
-			                                       GetMismatchMessage(handlers),
-			                                       Array.ConvertAll(handlers, h => ComponentDebuggerView.BuildFor(h)));
-		}
-
-		public static string Name
-		{
-			get { return name; }
+				GetKey(handlers.Last()),
+				GetMismatchMessage(handlers),
+				Array.ConvertAll(handlers, h => ComponentDebuggerView.BuildFor(h)));
 		}
 	}
 }

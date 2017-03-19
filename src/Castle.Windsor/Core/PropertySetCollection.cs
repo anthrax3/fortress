@@ -31,11 +31,6 @@ namespace Castle.Windsor.Core
 			get { return properties.Count; }
 		}
 
-		public PropertySet FindByPropertyInfo(PropertyInfo info)
-		{
-			return this.FirstOrDefault(prop => info == prop.Property);
-		}
-
 		public IEnumerator<PropertySet> GetEnumerator()
 		{
 			return properties.GetEnumerator();
@@ -49,15 +44,18 @@ namespace Castle.Windsor.Core
 		void IMutableCollection<PropertySet>.Add(PropertySet property)
 		{
 			if (property == null)
-			{
 				throw new ArgumentNullException("property");
-			}
 			properties.Add(property);
 		}
 
 		bool IMutableCollection<PropertySet>.Remove(PropertySet item)
 		{
 			return properties.Remove(item);
+		}
+
+		public PropertySet FindByPropertyInfo(PropertyInfo info)
+		{
+			return this.FirstOrDefault(prop => info == prop.Property);
 		}
 	}
 }

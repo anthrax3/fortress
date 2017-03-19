@@ -15,7 +15,6 @@
 using System;
 using System.Diagnostics;
 using System.Text;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Proxy;
@@ -26,37 +25,65 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class InterceptorReference : IReference<IInterceptor>, IEquatable<InterceptorReference>
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string referencedComponentName;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string referencedComponentName;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly Type referencedComponentType;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly Type referencedComponentType;
 
-		public InterceptorReference(String referencedComponentName)
+		public InterceptorReference(string referencedComponentName)
 		{
 			if (referencedComponentName == null)
-			{
 				throw new ArgumentNullException("referencedComponentName");
-			}
 			this.referencedComponentName = referencedComponentName;
 		}
 
 		public InterceptorReference(Type componentType)
 		{
 			if (componentType == null)
-			{
 				throw new ArgumentNullException("componentType");
-			}
 			referencedComponentName = ComponentName.DefaultNameFor(componentType);
 			referencedComponentType = componentType;
+		}
+
+		public bool Equals(InterceptorReference other)
+		{
+			if (other == null)
+				return false;
+			return Equals(referencedComponentName, other.referencedComponentName);
+		}
+
+		void IReference<IInterceptor>.Attach(ComponentModel component)
+		{
+			component.Dependencies.Add(new ComponentDependencyModel(referencedComponentName, ComponentType()));
+		}
+
+		void IReference<IInterceptor>.Detach(ComponentModel component)
+		{
+			throw new NotSupportedException();
+		}
+
+		IInterceptor IReference<IInterceptor>.Resolve(IKernel kernel, CreationContext context)
+		{
+			var handler = GetInterceptorHandler(kernel);
+			if (handler == null)
+			{
+				var message = GetExceptionMessageOnHandlerNotFound(kernel);
+				throw new DependencyResolverException(message.ToString());
+			}
+
+			if (handler.IsBeingResolvedInContext(context))
+				throw new DependencyResolverException(
+					string.Format(
+						"Cycle detected - interceptor {0} wants to use itself as its interceptor. This usually signifies a bug in custom {1}",
+						handler.ComponentModel.Name, typeof(IModelInterceptorsSelector).Name));
+
+			var contextForInterceptor = RebuildContext(ComponentType(), context);
+			return (IInterceptor) handler.Resolve(contextForInterceptor);
 		}
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(this, obj))
-			{
 				return true;
-			}
 			return Equals(obj as InterceptorReference);
 		}
 
@@ -68,15 +95,6 @@ namespace Castle.Windsor.Core
 		public override string ToString()
 		{
 			return referencedComponentName;
-		}
-
-		public bool Equals(InterceptorReference other)
-		{
-			if (other == null)
-			{
-				return false;
-			}
-			return Equals(referencedComponentName, other.referencedComponentName);
 		}
 
 		private Type ComponentType()
@@ -110,9 +128,7 @@ namespace Castle.Windsor.Core
 				//try old behavior first
 				var handler = kernel.GetHandler(referencedComponentType.FullName);
 				if (handler != null)
-				{
 					return handler;
-				}
 				// new bahavior as a fallback
 				return kernel.GetHandler(referencedComponentType);
 			}
@@ -123,45 +139,12 @@ namespace Castle.Windsor.Core
 		private CreationContext RebuildContext(Type handlerType, CreationContext current)
 		{
 			if (handlerType.ContainsGenericParameters)
-			{
 				return current;
-			}
 
 			return new CreationContext(handlerType, current, true);
 		}
 
-		void IReference<IInterceptor>.Attach(ComponentModel component)
-		{
-			component.Dependencies.Add(new ComponentDependencyModel(referencedComponentName, ComponentType()));
-		}
-
-		void IReference<IInterceptor>.Detach(ComponentModel component)
-		{
-			throw new NotSupportedException();
-		}
-
-		IInterceptor IReference<IInterceptor>.Resolve(IKernel kernel, CreationContext context)
-		{
-			var handler = GetInterceptorHandler(kernel);
-			if (handler == null)
-			{
-				var message = GetExceptionMessageOnHandlerNotFound(kernel);
-				throw new DependencyResolverException(message.ToString());
-			}
-
-			if (handler.IsBeingResolvedInContext(context))
-			{
-				throw new DependencyResolverException(
-					string.Format(
-						"Cycle detected - interceptor {0} wants to use itself as its interceptor. This usually signifies a bug in custom {1}",
-						handler.ComponentModel.Name, typeof(IModelInterceptorsSelector).Name));
-			}
-
-			var contextForInterceptor = RebuildContext(ComponentType(), context);
-			return (IInterceptor)handler.Resolve(contextForInterceptor);
-		}
-
-		public static InterceptorReference ForKey(String key)
+		public static InterceptorReference ForKey(string key)
 		{
 			return new InterceptorReference(key);
 		}

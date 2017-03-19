@@ -25,14 +25,14 @@ namespace Castle.Windsor.Core
 	{
 		private readonly SimpleSortedSet<ConstructorCandidate> ctors = new SimpleSortedSet<ConstructorCandidate>();
 
-		public int Count
-		{
-			get { return ctors.Count; }
-		}
-
 		public ConstructorCandidate this[int index]
 		{
 			get { return ctors[index]; }
+		}
+
+		public int Count
+		{
+			get { return ctors.Count; }
 		}
 
 		[DebuggerStepThrough]

@@ -10,7 +10,6 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.Core.Internal
 {

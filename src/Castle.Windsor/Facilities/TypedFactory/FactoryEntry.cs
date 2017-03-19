@@ -20,54 +20,29 @@ namespace Castle.Windsor.Facilities.TypedFactory
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class FactoryEntry
 	{
-		private readonly String creationMethod;
-		private readonly String destructionMethod;
-		private readonly Type factoryInterface;
-		private readonly String id;
-
-		public FactoryEntry(String id, Type factoryInterface, String creationMethod, String destructionMethod)
+		public FactoryEntry(string id, Type factoryInterface, string creationMethod, string destructionMethod)
 		{
 			if (string.IsNullOrEmpty(id))
-			{
 				throw new ArgumentNullException("id");
-			}
 			if (factoryInterface == null)
-			{
 				throw new ArgumentNullException("factoryInterface");
-			}
 			if (!factoryInterface.IsInterface)
-			{
 				throw new ArgumentException("factoryInterface must be an interface");
-			}
 			if (string.IsNullOrEmpty(creationMethod))
-			{
 				throw new ArgumentNullException("creationMethod");
-			}
 
-			this.id = id;
-			this.factoryInterface = factoryInterface;
-			this.creationMethod = creationMethod;
-			this.destructionMethod = destructionMethod;
+			Id = id;
+			FactoryInterface = factoryInterface;
+			CreationMethod = creationMethod;
+			DestructionMethod = destructionMethod;
 		}
 
-		public String CreationMethod
-		{
-			get { return creationMethod; }
-		}
+		public string CreationMethod { get; }
 
-		public String DestructionMethod
-		{
-			get { return destructionMethod; }
-		}
+		public string DestructionMethod { get; }
 
-		public Type FactoryInterface
-		{
-			get { return factoryInterface; }
-		}
+		public Type FactoryInterface { get; }
 
-		public String Id
-		{
-			get { return id; }
-		}
+		public string Id { get; }
 	}
 }

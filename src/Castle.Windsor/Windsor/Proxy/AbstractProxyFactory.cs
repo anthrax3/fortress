@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.MicroKernel;
@@ -30,38 +29,30 @@ namespace Castle.Windsor.Windsor.Proxy
 		private List<IModelInterceptorsSelector> selectors;
 
 		public abstract object Create(IKernel kernel, object instance, ComponentModel model, CreationContext context,
-		                              params object[] constructorArguments);
+			params object[] constructorArguments);
 
 		public abstract object Create(IProxyFactoryExtension customFactory, IKernel kernel, ComponentModel model,
-		                              CreationContext context, params object[] constructorArguments);
+			CreationContext context, params object[] constructorArguments);
 
 		public abstract bool RequiresTargetInstance(IKernel kernel, ComponentModel model);
 
 		public void AddInterceptorSelector(IModelInterceptorsSelector selector)
 		{
 			if (selectors == null)
-			{
 				selectors = new List<IModelInterceptorsSelector>();
-			}
 			selectors.Add(selector);
 		}
 
 		public bool ShouldCreateProxy(ComponentModel model)
 		{
 			if (model.HasInterceptors)
-			{
 				return true;
-			}
 
 			var options = model.ObtainProxyOptions(false);
 			if (options != null && options.RequiresProxy)
-			{
 				return true;
-			}
 			if (selectors != null && selectors.Any(s => s.HasInterceptors(model)))
-			{
 				return true;
-			}
 
 			return false;
 		}
@@ -70,21 +61,15 @@ namespace Castle.Windsor.Windsor.Proxy
 		{
 			var interceptors = model.Interceptors.ToArray();
 			if (selectors != null)
-			{
 				foreach (var selector in selectors)
 				{
 					if (selector.HasInterceptors(model) == false)
-					{
 						continue;
-					}
 
 					interceptors = selector.SelectInterceptors(model, interceptors);
 					if (interceptors == null)
-					{
 						interceptors = new InterceptorReference[0];
-					}
 				}
-			}
 			return interceptors;
 		}
 
@@ -92,7 +77,6 @@ namespace Castle.Windsor.Windsor.Proxy
 		{
 			var interceptors = new List<IInterceptor>();
 			foreach (IReference<IInterceptor> interceptorRef in GetInterceptorsFor(model))
-			{
 				try
 				{
 					var interceptor = interceptorRef.Resolve(kernel, context);
@@ -102,13 +86,11 @@ namespace Castle.Windsor.Windsor.Proxy
 				catch (Exception e)
 				{
 					foreach (var interceptor in interceptors)
-					{
 						kernel.ReleaseComponent(interceptor);
-					}
 
 					if (e is InvalidCastException)
 					{
-						var message = String.Format(
+						var message = string.Format(
 							"An interceptor registered for {0} doesn't implement the {1} interface",
 							model.Name, typeof(IInterceptor).Name);
 
@@ -116,7 +98,6 @@ namespace Castle.Windsor.Windsor.Proxy
 					}
 					throw;
 				}
-			}
 
 			return interceptors.ToArray();
 		}
@@ -124,9 +105,7 @@ namespace Castle.Windsor.Windsor.Proxy
 		protected static void SetOnBehalfAware(IOnBehalfAware onBehalfAware, ComponentModel target)
 		{
 			if (onBehalfAware != null)
-			{
 				onBehalfAware.SetInterceptedComponentModel(target);
-			}
 		}
 	}
 }

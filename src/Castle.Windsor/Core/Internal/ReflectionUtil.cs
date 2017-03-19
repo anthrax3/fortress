@@ -21,7 +21,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Compatibility;
 
 namespace Castle.Windsor.Core.Internal
@@ -47,13 +46,11 @@ namespace Castle.Windsor.Core.Internal
 
 		public static IEnumerable<Assembly> GetApplicationAssemblies(Assembly rootAssembly)
 		{
-			var index = rootAssembly.FullName.IndexOfAny(new[] { '.', ',' });
+			var index = rootAssembly.FullName.IndexOfAny(new[] {'.', ','});
 			if (index < 0)
-			{
 				throw new ArgumentException(
 					string.Format("Could not determine application name for assembly \"{0}\". Please use a different method for obtaining assemblies.",
-					              rootAssembly.FullName));
-			}
+						rootAssembly.FullName));
 
 			var applicationName = rootAssembly.FullName.Substring(0, index);
 			var assemblies = new HashSet<Assembly>();
@@ -74,20 +71,12 @@ namespace Castle.Windsor.Core.Internal
 			{
 				Assembly assembly;
 				if (IsAssemblyFile(assemblyName))
-				{
 					if (Path.GetDirectoryName(assemblyName) == AppDomain.CurrentDomain.BaseDirectory)
-					{
 						assembly = Assembly.Load(Path.GetFileNameWithoutExtension(assemblyName));
-					}
 					else
-					{
 						assembly = Assembly.LoadFile(assemblyName);
-					}
-				}
 				else
-				{
 					assembly = Assembly.Load(assemblyName);
-				}
 				return assembly;
 			}
 			catch (FileNotFoundException)
@@ -110,30 +99,18 @@ namespace Castle.Windsor.Core.Internal
 		}
 
 		public static Assembly GetAssemblyNamed(string filePath, Predicate<AssemblyName> nameFilter,
-		                                        Predicate<Assembly> assemblyFilter)
+			Predicate<Assembly> assemblyFilter)
 		{
 			var assemblyName = GetAssemblyName(filePath);
 			if (nameFilter != null)
-			{
 				foreach (Predicate<AssemblyName> predicate in nameFilter.GetInvocationList())
-				{
 					if (predicate(assemblyName) == false)
-					{
 						return null;
-					}
-				}
-			}
 			var assembly = LoadAssembly(assemblyName);
 			if (assemblyFilter != null)
-			{
 				foreach (Predicate<Assembly> predicate in assemblyFilter.GetInvocationList())
-				{
 					if (predicate(assembly) == false)
-					{
 						return null;
-					}
-				}
-			}
 			return assembly;
 		}
 
@@ -146,10 +123,8 @@ namespace Castle.Windsor.Core.Internal
 		{
 			try
 			{
-				if(includeNonExported)
-				{
+				if (includeNonExported)
 					return assembly.GetTypes();
-				}
 				return assembly.GetExportedTypes();
 			}
 			catch (ReflectionTypeLoadException e)
@@ -168,30 +143,23 @@ namespace Castle.Windsor.Core.Internal
 		{
 			return Assembly.Load(assemblyName);
 		}
+
 		public static TAttribute[] GetAttributes<TAttribute>(this MemberInfo item) where TAttribute : Attribute
 		{
-			return (TAttribute[])Attribute.GetCustomAttributes(item, typeof(TAttribute), true);
+			return (TAttribute[]) Attribute.GetCustomAttributes(item, typeof(TAttribute), true);
 		}
 
 		public static Type GetCompatibleArrayItemType(this Type type)
 		{
 			if (type == null)
-			{
 				return null;
-			}
 			if (type.IsArray)
-			{
 				return type.GetElementType();
-			}
 			if (type.IsGenericType == false || type.IsGenericTypeDefinition)
-			{
 				return null;
-			}
 			var openGeneric = type.GetGenericTypeDefinition();
 			if (OpenGenericArrayInterfaces.Contains(openGeneric))
-			{
 				return type.GetGenericArguments()[0];
-			}
 			return null;
 		}
 
@@ -208,9 +176,7 @@ namespace Castle.Windsor.Core.Internal
 		public static bool IsAssemblyFile(string filePath)
 		{
 			if (filePath == null)
-			{
 				throw new ArgumentNullException("filePath");
-			}
 
 			string extension;
 			try
@@ -231,33 +197,24 @@ namespace Castle.Windsor.Core.Internal
 			var parameterExpressions = new Expression[parameterInfos.Length];
 			var argument = Expression.Parameter(typeof(object[]), "parameters");
 			for (var i = 0; i < parameterExpressions.Length; i++)
-			{
 				parameterExpressions[i] = Expression.Convert(
 					Expression.ArrayIndex(argument, Expression.Constant(i, typeof(int))),
 					parameterInfos[i].ParameterType.IsByRef ? parameterInfos[i].ParameterType.GetElementType() : parameterInfos[i].ParameterType);
-			}
 			return Expression.Lambda<Func<object[], object>>(
-				Expression.New(ctor, parameterExpressions),
-				new[] { argument }).Compile();
+				Expression.New(ctor, parameterExpressions), argument).Compile();
 		}
 
 		private static void EnsureIsAssignable<TBase>(Type subtypeofTBase)
 		{
 			if (subtypeofTBase.Is<TBase>())
-			{
 				return;
-			}
 
 			string message;
 			if (typeof(TBase).IsInterface)
-			{
-				message = String.Format("Type {0} does not implement the interface {1}.", subtypeofTBase.FullName,
-				                        typeof(TBase).FullName);
-			}
+				message = string.Format("Type {0} does not implement the interface {1}.", subtypeofTBase.FullName,
+					typeof(TBase).FullName);
 			else
-			{
-				message = String.Format("Type {0} does not inherit from {1}.", subtypeofTBase.FullName, typeof(TBase).FullName);
-			}
+				message = string.Format("Type {0} does not inherit from {1}.", subtypeofTBase.FullName, typeof(TBase).FullName);
 			throw new InvalidCastException(message);
 		}
 
@@ -270,7 +227,7 @@ namespace Castle.Windsor.Core.Internal
 			}
 			catch (ArgumentException)
 			{
-				assemblyName = new AssemblyName { CodeBase = filePath };
+				assemblyName = new AssemblyName {CodeBase = filePath};
 			}
 			return assemblyName;
 		}
@@ -281,38 +238,34 @@ namespace Castle.Windsor.Core.Internal
 			var types = ctorArgs.ConvertAll(a => a == null ? typeof(object) : a.GetType());
 			var constructor = subtypeofTBase.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, types, null);
 			if (constructor != null)
-			{
-				return (TBase)Instantiate(constructor, ctorArgs);
-			}
+				return (TBase) Instantiate(constructor, ctorArgs);
 			try
 			{
-				return (TBase)Activator.CreateInstance(subtypeofTBase, ctorArgs);
+				return (TBase) Activator.CreateInstance(subtypeofTBase, ctorArgs);
 			}
 			catch (MissingMethodException ex)
 			{
 				string message;
 				if (ctorArgs.Length == 0)
 				{
-					message = String.Format("Type {0} does not have a public default constructor and could not be instantiated.",
-					                        subtypeofTBase.FullName);
+					message = string.Format("Type {0} does not have a public default constructor and could not be instantiated.",
+						subtypeofTBase.FullName);
 				}
 				else
 				{
 					var messageBuilder = new StringBuilder();
 					messageBuilder.AppendLine(
-						String.Format("Type {0} does not have a public constructor matching arguments of the following types:",
-						              subtypeofTBase.FullName));
+						string.Format("Type {0} does not have a public constructor matching arguments of the following types:",
+							subtypeofTBase.FullName));
 					foreach (var type in ctorArgs.Select(o => o.GetType()))
-					{
 						messageBuilder.AppendLine(type.FullName);
-					}
 					message = messageBuilder.ToString();
 				}
 				throw new ArgumentException(message, ex);
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format("Could not instantiate {0}.", subtypeofTBase.FullName);
+				var message = string.Format("Could not instantiate {0}.", subtypeofTBase.FullName);
 				throw new Exception(message, ex);
 			}
 		}
@@ -321,7 +274,7 @@ namespace Castle.Windsor.Core.Internal
 		{
 			Func<object[], object> factory;
 			factory = factories.GetOrAdd(ctor, BuildFactory);
-			
+
 			return factory.Invoke(ctorArgs);
 		}
 
@@ -337,18 +290,11 @@ namespace Castle.Windsor.Core.Internal
 
 		private static void AddApplicationAssemblies(Assembly assembly, HashSet<Assembly> assemblies, string applicationName)
 		{
-			
 			if (assemblies.Add(assembly) == false)
-			{
 				return;
-			}
 			foreach (var referencedAssembly in assembly.GetReferencedAssemblies())
-			{
 				if (IsApplicationAssembly(applicationName, referencedAssembly.FullName))
-				{
 					AddApplicationAssemblies(LoadAssembly(referencedAssembly), assemblies, applicationName);
-				}
-			}
 		}
 
 		private static bool IsApplicationAssembly(string applicationName, string assemblyName)

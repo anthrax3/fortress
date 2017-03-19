@@ -50,21 +50,21 @@ namespace Castle.Windsor.MicroKernel
 
 		void AddHandlersFilter(IHandlersFilter filter);
 
-		void AddSubSystem(String name, ISubSystem subsystem);
+		void AddSubSystem(string name, ISubSystem subsystem);
 
 		IHandler[] GetAssignableHandlers(Type service);
 
 		IFacility[] GetFacilities();
 
-		IHandler GetHandler(String name);
+		IHandler GetHandler(string name);
 
 		IHandler GetHandler(Type service);
 
 		IHandler[] GetHandlers(Type service);
 
-		ISubSystem GetSubSystem(String name);
+		ISubSystem GetSubSystem(string name);
 
-		bool HasComponent(String name);
+		bool HasComponent(string name);
 
 		bool HasComponent(Type service);
 

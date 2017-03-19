@@ -25,7 +25,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 	public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
 	{
 		public DefaultTypedFactoryComponentSelector(bool getMethodsResolveByName = true,
-		                                            bool fallbackToResolveByTypeIfNameNotFound = false)
+			bool fallbackToResolveByTypeIfNameNotFound = false)
 		{
 			FallbackToResolveByTypeIfNameNotFound = fallbackToResolveByTypeIfNameNotFound;
 			GetMethodsResolveByName = getMethodsResolveByName;
@@ -49,33 +49,27 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		}
 
 		protected virtual Func<IKernelInternal, IReleasePolicy, object> BuildFactoryComponent(MethodInfo method,
-		                                                                                      string componentName,
-		                                                                                      Type componentType,
-		                                                                                      IDictionary additionalArguments)
+			string componentName,
+			Type componentType,
+			IDictionary additionalArguments)
 		{
 			var itemType = componentType.GetCompatibleArrayItemType();
 			if (itemType == null)
-			{
 				return new TypedFactoryComponentResolver(componentName,
-				                                         componentType,
-				                                         additionalArguments,
-				                                         FallbackToResolveByTypeIfNameNotFound, GetType()).Resolve;
-			}
+					componentType,
+					additionalArguments,
+					FallbackToResolveByTypeIfNameNotFound, GetType()).Resolve;
 			return (k, s) => k.ResolveAll(itemType, additionalArguments, s);
 		}
 
 		protected virtual IDictionary GetArguments(MethodInfo method, object[] arguments)
 		{
 			if (arguments == null)
-			{
 				return null;
-			}
 			var argumentMap = new Arguments();
 			var parameters = method.GetParameters();
 			for (var i = 0; i < parameters.Length; i++)
-			{
 				argumentMap.Add(parameters[i].Name, arguments[i]);
-			}
 			return argumentMap;
 		}
 
@@ -83,9 +77,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		{
 			string componentName = null;
 			if (GetMethodsResolveByName && method.Name.StartsWith("Get", StringComparison.OrdinalIgnoreCase))
-			{
 				componentName = method.Name.Substring("Get".Length);
-			}
 			return componentName;
 		}
 

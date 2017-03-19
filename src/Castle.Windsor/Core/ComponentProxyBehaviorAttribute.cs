@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class ComponentProxyBehaviorAttribute : Attribute
 	{
 		private Type[] additionalInterfaces;
@@ -26,9 +26,7 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (additionalInterfaces != null)
-				{
 					return additionalInterfaces;
-				}
 
 				return Type.EmptyTypes;
 			}

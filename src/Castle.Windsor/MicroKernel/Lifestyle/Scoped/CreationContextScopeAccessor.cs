@@ -39,13 +39,11 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 		{
 			var selected = context.SelectScopeRoot(scopeRootSelector);
 			if (selected == null)
-			{
 				throw new InvalidOperationException(
 					string.Format(
 						"Scope was not available for '{0}'. No component higher up in the resolution stack met the criteria specified for scoping the component. This usually indicates a bug in custom scope root selector or means that the component is being resolved in a unforseen context (a.k.a - it's probably a bug in how the dependencies in the application are wired).",
 						componentModel.Name));
-			}
-			var stash = (DefaultLifetimeScope)selected.GetContextualProperty(ScopeStash);
+			var stash = (DefaultLifetimeScope) selected.GetContextualProperty(ScopeStash);
 			if (stash == null)
 			{
 				DefaultLifetimeScope newStash = null;

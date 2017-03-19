@@ -23,14 +23,11 @@ namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 	[DebuggerDisplay("{description,nq}", Name = "{name,nq}")]
 	public class ComponentDebuggerView
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string description;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string description;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly IComponentDebuggerExtension[] extension;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly IComponentDebuggerExtension[] extension;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string name;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string name;
 
 		public ComponentDebuggerView(IHandler handler, string description, params IComponentDebuggerExtension[] defaultExtension)
 		{
@@ -59,7 +56,7 @@ namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 
 		public static ComponentDebuggerView BuildFor(IHandler handler, string description = null)
 		{
-			var extensions = new List<IComponentDebuggerExtension> { new DefaultComponentViewBuilder(handler) };
+			var extensions = new List<IComponentDebuggerExtension> {new DefaultComponentViewBuilder(handler)};
 			extensions.AddRange(GetExtensions(handler));
 			return BuildRawFor(handler, description ?? handler.ComponentModel.GetLifestyleDescription(), extensions.ToArray());
 		}
@@ -77,7 +74,7 @@ namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 		private static IEnumerable<IComponentDebuggerExtension> GetExtensions(IHandler handler)
 		{
 			var handlerExtensions = handler.ComponentModel.ExtendedProperties["DebuggerExtensions"];
-			return (IEnumerable<IComponentDebuggerExtension>)handlerExtensions ??
+			return (IEnumerable<IComponentDebuggerExtension>) handlerExtensions ??
 			       Enumerable.Empty<IComponentDebuggerExtension>();
 		}
 	}

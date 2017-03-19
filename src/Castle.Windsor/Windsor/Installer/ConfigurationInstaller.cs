@@ -19,8 +19,6 @@ using Castle.Windsor.Windsor.Configuration;
 
 namespace Castle.Windsor.Windsor.Installer
 {
-	public delegate String EnvironmentDelegate();
-
 	public class ConfigurationInstaller : IWindsorInstaller
 	{
 		private readonly IConfigurationInterpreter interpreter;
@@ -29,13 +27,19 @@ namespace Castle.Windsor.Windsor.Installer
 		public ConfigurationInstaller(IConfigurationInterpreter interpreter)
 		{
 			if (interpreter == null)
-			{
 				throw new ArgumentNullException("interpreter");
-			}
 			this.interpreter = interpreter;
 		}
 
-		public ConfigurationInstaller Environment(String environmentName)
+		void IWindsorInstaller.Install(IWindsorContainer container, IConfigurationStore store)
+		{
+			if (environment != null)
+				interpreter.EnvironmentName = environment();
+
+			interpreter.ProcessResource(interpreter.Source, store, container.Kernel);
+		}
+
+		public ConfigurationInstaller Environment(string environmentName)
 		{
 			return Environment(() => environmentName);
 		}
@@ -44,16 +48,6 @@ namespace Castle.Windsor.Windsor.Installer
 		{
 			this.environment = environment;
 			return this;
-		}
-
-		void IWindsorInstaller.Install(IWindsorContainer container, IConfigurationStore store)
-		{
-			if (environment != null)
-			{
-				interpreter.EnvironmentName = environment();
-			}
-
-			interpreter.ProcessResource(interpreter.Source, store, container.Kernel);
 		}
 	}
 }

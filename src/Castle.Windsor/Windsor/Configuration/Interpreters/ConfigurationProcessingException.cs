@@ -23,17 +23,17 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters
 	{
 		public ConfigurationProcessingException(string message) : base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ConfigurationProcessingException(string message, Exception innerException) : base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ConfigurationProcessingException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 	}
 }

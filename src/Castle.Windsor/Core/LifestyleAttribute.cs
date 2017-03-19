@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public abstract class LifestyleAttribute : Attribute
 	{
 		protected LifestyleAttribute(LifestyleType type)

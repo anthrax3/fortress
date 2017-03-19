@@ -61,9 +61,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			where TFactoryInterface : class
 		{
 			if (registration == null)
-			{
 				throw new ArgumentNullException("registration");
-			}
 			var classServices = registration.Services.TakeWhile(s => s.IsClass).ToArray();
 			if (classServices.Any() == false)
 			{
@@ -71,17 +69,13 @@ namespace Castle.Windsor.Facilities.TypedFactory
 				return RegisterInterfaceBasedFactory(registration, configuration);
 			}
 			if (classServices.Length != 1)
-			{
 				throw new ComponentRegistrationException(
 					"This component can not be used as typed factory because it exposes more than one class service. Only component exposing single depegate, or interfaces can be used as typed factories.");
-			}
 			var classService = classServices[0];
 			if (classService.BaseType == typeof(MulticastDelegate))
 			{
 				if (registration.ServicesCount == 1) // the delegate is the only service we expose
-				{
 					return RegisterDelegateBasedFactory(registration, configuration, classService);
-				}
 				throw new ComponentRegistrationException(
 					string.Format(
 						"Type {0} is a delegate, however the component has also {1} inteface(s) specified as its service. Delegate-based typed factories can't expose any additional services.",
@@ -127,9 +121,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			var factoryConfiguration = new TypedFactoryConfiguration(defaultComponentSelectorKey, factoryType);
 
 			if (configuration != null)
-			{
 				configuration.Invoke(factoryConfiguration);
-			}
 			return factoryConfiguration.Reference;
 		}
 
@@ -145,23 +137,17 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			where TDelegate : class
 		{
 			if (HasOutArguments(delegateType))
-			{
 				throw new ComponentRegistrationException(
 					string.Format("Delegate type {0} can not be used as typed factory because it has 'out' arguments.",
-					              delegateType));
-			}
+						delegateType));
 			var invoke = DelegateFactory.ExtractInvokeMethod(delegateType);
 			if (invoke == null)
-			{
 				throw new ComponentRegistrationException(
 					string.Format("Delegate type {0} can not be used as typed factory because it has void return type.",
-					              delegateType));
-			}
+						delegateType));
 			var settings = new TypedFactoryConfiguration(TypedFactoryFacility.DefaultDelegateSelectorKey, typeof(TDelegate));
 			if (configuration != null)
-			{
 				configuration.Invoke(settings);
-			}
 
 			var componentRegistration = AttachFactoryInterceptor(registration)
 				.Activator<DelegateFactoryActivator>();
@@ -176,11 +162,9 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			{
 				Debug.Assert(serviceType.IsInterface, "serviceType.IsInterface");
 				if (HasOutArguments(serviceType))
-				{
 					throw new ComponentRegistrationException(
 						string.Format("Type {0} can not be used as typed factory because it has methods with 'out' arguments.",
-						              serviceType));
-				}
+							serviceType));
 			}
 			var componentRegistration = AttachFactoryInterceptor(registration);
 			return AttachConfiguration(componentRegistration, configuration, TypedFactoryFacility.DefaultInterfaceSelectorKey);

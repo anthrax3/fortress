@@ -24,9 +24,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var scope = PerWebRequestLifestyleModule.YieldScope();
 			if (scope != null)
-			{
 				scope.Dispose();
-			}
 		}
 
 		public ILifetimeScope GetScope(CreationContext context)
@@ -35,4 +33,3 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		}
 	}
 }
-

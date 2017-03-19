@@ -23,10 +23,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 {
 	public class BasedOnDescriptor : IRegistration
 	{
+		private readonly FromDescriptor from;
 		private readonly List<Type> potentialBases;
 		private Action<ComponentRegistration> configuration;
-		private readonly FromDescriptor from;
-		private readonly ServiceDescriptor service;
 		private Predicate<Type> ifFilter;
 		private Predicate<Type> unlessFilter;
 
@@ -34,13 +33,15 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			potentialBases = basedOn.ToList();
 			this.from = from;
-			service = new ServiceDescriptor(this);
+			WithService = new ServiceDescriptor(this);
 			If(additionalFilters);
 		}
 
-		public ServiceDescriptor WithService
+		public ServiceDescriptor WithService { get; }
+
+		void IRegistration.Register(IKernelInternal kernel)
 		{
-			get { return service; }
+			((IRegistration) from).Register(kernel);
 		}
 
 		public FromDescriptor AllowMultipleMatches()
@@ -80,32 +81,26 @@ namespace Castle.Windsor.MicroKernel.Registration
 		}
 
 		public BasedOnDescriptor ConfigureIf(Predicate<ComponentRegistration> condition,
-		                                     Action<ComponentRegistration> configurer)
+			Action<ComponentRegistration> configurer)
 		{
 			configuration += r =>
 			{
 				if (condition(r))
-				{
 					configurer(r);
-				}
 			};
 			return this;
 		}
 
 		public BasedOnDescriptor ConfigureIf(Predicate<ComponentRegistration> condition,
-		                                     Action<ComponentRegistration> configurerWhenTrue,
-		                                     Action<ComponentRegistration> configurerWhenFalse)
+			Action<ComponentRegistration> configurerWhenTrue,
+			Action<ComponentRegistration> configurerWhenFalse)
 		{
 			configuration += r =>
 			{
 				if (condition(r))
-				{
 					configurerWhenTrue(r);
-				}
 				else
-				{
 					configurerWhenFalse(r);
-				}
 			};
 			return this;
 		}
@@ -123,7 +118,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		}
 
 		[Obsolete("Calling this method resets registration. If that's what you want, start anew, with Classes.FromAssembly..."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public BasedOnDescriptor Where(Predicate<Type> accepted)
 		{
@@ -250,17 +245,11 @@ namespace Castle.Windsor.MicroKernel.Registration
 		protected bool ExecuteIfCondition(Type type)
 		{
 			if (ifFilter == null)
-			{
 				return true;
-			}
 
 			foreach (Predicate<Type> filter in ifFilter.GetInvocationList())
-			{
 				if (filter(type) == false)
-				{
 					return false;
-				}
-			}
 
 			return true;
 		}
@@ -268,16 +257,10 @@ namespace Castle.Windsor.MicroKernel.Registration
 		protected bool ExecuteUnlessCondition(Type type)
 		{
 			if (unlessFilter == null)
-			{
 				return false;
-			}
 			foreach (Predicate<Type> filter in unlessFilter.GetInvocationList())
-			{
 				if (filter(type))
-				{
 					return true;
-				}
-			}
 			return false;
 		}
 
@@ -285,7 +268,6 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			var actuallyBasedOn = new List<Type>();
 			foreach (var potentialBase in potentialBases)
-			{
 				if (potentialBase.IsAssignableFrom(type))
 				{
 					actuallyBasedOn.Add(potentialBase);
@@ -293,19 +275,12 @@ namespace Castle.Windsor.MicroKernel.Registration
 				else if (potentialBase.IsGenericTypeDefinition)
 				{
 					if (potentialBase.IsInterface)
-					{
 						if (IsBasedOnGenericInterface(type, potentialBase, out baseTypes))
-						{
 							actuallyBasedOn.AddRange(baseTypes);
-						}
-					}
 
 					if (IsBasedOnGenericClass(type, potentialBase, out baseTypes))
-					{
 						actuallyBasedOn.AddRange(baseTypes);
-					}
 				}
-			}
 			baseTypes = actuallyBasedOn.Distinct().ToArray();
 			return baseTypes.Length > 0;
 		}
@@ -315,30 +290,20 @@ namespace Castle.Windsor.MicroKernel.Registration
 			Type[] baseTypes;
 
 			if (!Accepts(type, out baseTypes))
-			{
 				return false;
-			}
 			var defaults = CastleComponentAttribute.GetDefaultsFor(type);
-			var serviceTypes = service.GetServices(type, baseTypes);
+			var serviceTypes = WithService.GetServices(type, baseTypes);
 			if (serviceTypes.Count == 0 && defaults.Services.Length > 0)
-			{
 				serviceTypes = defaults.Services;
-			}
 			var registration = Component.For(serviceTypes);
 			registration.ImplementedBy(type);
 
 			if (configuration != null)
-			{
 				configuration(registration);
-			}
-			if (String.IsNullOrEmpty(registration.Name) && !String.IsNullOrEmpty(defaults.Name))
-			{
+			if (string.IsNullOrEmpty(registration.Name) && !string.IsNullOrEmpty(defaults.Name))
 				registration.Named(defaults.Name);
-			}
 			else
-			{
 				registration.RegisterOptionally();
-			}
 			kernel.Register(registration);
 			return true;
 		}
@@ -350,7 +315,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 				if (type.IsGenericType &&
 				    type.GetGenericTypeDefinition() == basedOn)
 				{
-					baseTypes = new[] { type };
+					baseTypes = new[] {type};
 					return true;
 				}
 
@@ -364,28 +329,15 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			var types = new List<Type>(4);
 			foreach (var @interface in type.GetInterfaces())
-			{
 				if (@interface.IsGenericType &&
 				    @interface.GetGenericTypeDefinition() == basedOn)
-				{
 					if (@interface.ReflectedType == null &&
 					    @interface.ContainsGenericParameters)
-					{
 						types.Add(@interface.GetGenericTypeDefinition());
-					}
 					else
-					{
 						types.Add(@interface);
-					}
-				}
-			}
 			baseTypes = types.ToArray();
 			return baseTypes.Length > 0;
-		}
-
-		void IRegistration.Register(IKernelInternal kernel)
-		{
-			((IRegistration)from).Register(kernel);
 		}
 	}
 }

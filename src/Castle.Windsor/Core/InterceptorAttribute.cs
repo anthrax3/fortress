@@ -20,21 +20,16 @@ namespace Castle.Windsor.Core
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
 	public class InterceptorAttribute : Attribute
 	{
-		private readonly InterceptorReference interceptorRef;
-
 		public InterceptorAttribute(string componentKey)
 		{
-			interceptorRef = new InterceptorReference(componentKey);
+			Interceptor = new InterceptorReference(componentKey);
 		}
 
 		public InterceptorAttribute(Type interceptorType)
 		{
-			interceptorRef = new InterceptorReference(interceptorType);
+			Interceptor = new InterceptorReference(interceptorType);
 		}
 
-		public virtual InterceptorReference Interceptor
-		{
-			get { return interceptorRef; }
-		}
+		public virtual InterceptorReference Interceptor { get; }
 	}
 }

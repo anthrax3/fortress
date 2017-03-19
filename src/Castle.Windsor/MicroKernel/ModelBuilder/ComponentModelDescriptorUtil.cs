@@ -27,9 +27,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder
 		public static ICollection<IMetaComponentModelDescriptor> GetMetaDescriptors(this ComponentModel model, bool ensureExists)
 		{
 			if (model == null)
-			{
 				throw new ArgumentNullException("model");
-			}
 
 			var metaDescriptors = model.ExtendedProperties[MetaDescriptorsKey] as ICollection<IMetaComponentModelDescriptor>;
 			if (metaDescriptors == null && ensureExists)

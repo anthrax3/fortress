@@ -25,7 +25,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			Burden = burden;
 		}
 
-		public Burden Burden { get; private set; }
+		public Burden Burden { get; }
 
 		public object Instance
 		{

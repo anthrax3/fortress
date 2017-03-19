@@ -22,44 +22,44 @@ namespace Castle.Windsor.MicroKernel
 	[Serializable]
 	public class ComponentResolutionException : Exception
 	{
-		public ComponentModel Component { get; private set; }
-
 		public ComponentResolutionException(string message)
 			: base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ComponentResolutionException(string message, Exception innerException)
 			: base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ComponentResolutionException(string message, ComponentModel component)
 			: base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 			Component = component;
 		}
 
 		public ComponentResolutionException(string message, Exception innerException, ComponentModel component)
 			: base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 			Component = component;
 		}
 
 		public ComponentResolutionException(ComponentModel component)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 			Component = component;
 		}
 
 		public ComponentResolutionException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
+
+		public ComponentModel Component { get; private set; }
 	}
 }

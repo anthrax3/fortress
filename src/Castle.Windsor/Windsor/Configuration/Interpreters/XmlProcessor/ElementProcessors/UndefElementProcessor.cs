@@ -13,21 +13,18 @@
 // limitations under the License.
 
 
-using System;
-
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class UndefElementProcessor : DefineElementProcessor
 	{
-		public override String Name
+		public override string Name
 		{
 			get { return "undef"; }
 		}
 
-		protected override void Process(String flag, IXmlProcessorEngine engine)
+		protected override void Process(string flag, IXmlProcessorEngine engine)
 		{
 			engine.RemoveFlag(flag);
 		}
 	}
 }
-

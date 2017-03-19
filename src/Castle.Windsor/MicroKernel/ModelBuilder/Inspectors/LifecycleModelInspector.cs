@@ -27,9 +27,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model == null)
-			{
 				throw new ArgumentNullException("model");
-			}
 			if (IsLateBoundComponent(model))
 			{
 				ProcessLateBoundModel(model);
@@ -47,25 +45,15 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var commission = new LateBoundCommissionConcerns();
 			if (model.Services.Any(s => s.Is<IInitializable>()))
-			{
 				model.Lifecycle.Add(InitializationConcern.Instance);
-			}
 			else
-			{
 				commission.AddConcern<IInitializable>(InitializationConcern.Instance);
-			}
 			if (model.Services.Any(s => s.Is<ISupportInitialize>()))
-			{
 				model.Lifecycle.Add(SupportInitializeConcern.Instance);
-			}
 			else
-			{
 				commission.AddConcern<ISupportInitialize>(SupportInitializeConcern.Instance);
-			}
 			if (commission.HasConcerns)
-			{
 				model.Lifecycle.Add(commission);
-			}
 
 			if (model.Services.Any(s => s.Is<IDisposable>()))
 			{
@@ -82,17 +70,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		private void ProcessModel(ComponentModel model)
 		{
 			if (model.Implementation.Is<IInitializable>())
-			{
 				model.Lifecycle.Add(InitializationConcern.Instance);
-			}
 			if (model.Implementation.Is<ISupportInitialize>())
-			{
 				model.Lifecycle.Add(SupportInitializeConcern.Instance);
-			}
 			if (model.Implementation.Is<IDisposable>())
-			{
 				model.Lifecycle.Add(DisposalConcern.Instance);
-			}
 		}
 	}
 }

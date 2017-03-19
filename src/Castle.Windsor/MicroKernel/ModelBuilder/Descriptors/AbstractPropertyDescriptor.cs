@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
@@ -26,7 +24,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		{
 		}
 
-		protected void AddParameter(ComponentModel model, String name, IConfiguration value)
+		protected void AddParameter(ComponentModel model, string name, IConfiguration value)
 		{
 			var parameters = EnsureParametersConfiguration(model);
 
@@ -36,7 +34,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 			parameters.Children.Add(parameter);
 		}
 
-		protected void AddParameter(ComponentModel model, String name, String value)
+		protected void AddParameter(ComponentModel model, string name, string value)
 		{
 			var parameters = EnsureParametersConfiguration(model);
 			parameters.Children.Add(new MutableConfiguration(name, value));

@@ -14,8 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
@@ -31,18 +29,14 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters
 		protected static readonly string ComponentNodeName = "component";
 		protected static readonly string InstallersNodeName = "installers";
 		protected static readonly string InstallNodeName = "install";
-
-		private readonly IResource source;
 		private readonly Stack<IResource> resourceStack = new Stack<IResource>();
 
 		protected AbstractInterpreter(IResource source)
 		{
 			if (source == null)
-			{
 				throw new ArgumentNullException("source", "IResource is null");
-			}
 
-			this.source = source;
+			Source = source;
 
 			PushResource(source);
 		}
@@ -55,7 +49,22 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters
 		{
 		}
 
+		protected IResource CurrentResource
+		{
+			get
+			{
+				if (resourceStack.Count == 0)
+					return null;
+
+				return resourceStack.Peek();
+			}
+		}
+
 		public abstract void ProcessResource(IResource resource, IConfigurationStore store, IKernel kernel);
+
+		public IResource Source { get; }
+
+		public string EnvironmentName { get; set; }
 
 		protected void PushResource(IResource resource)
 		{
@@ -66,26 +75,6 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters
 		{
 			resourceStack.Pop();
 		}
-
-		protected IResource CurrentResource
-		{
-			get
-			{
-				if (resourceStack.Count == 0)
-				{
-					return null;
-				}
-
-				return resourceStack.Peek();
-			}
-		}
-
-		public IResource Source
-		{
-			get { return source; }
-		}
-
-		public string EnvironmentName { get; set; }
 
 		protected static void AddChildContainerConfig(string name, IConfiguration childContainer, IConfigurationStore store)
 		{

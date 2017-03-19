@@ -26,18 +26,14 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var scope = Scope.ObtainCurrentScope();
 			if (scope != null)
-			{
 				scope.Dispose();
-			}
 		}
 
 		public ILifetimeScope GetScope(CreationContext context)
 		{
 			var scope = Scope.ObtainCurrentScope();
 			if (scope == null)
-			{
 				throw new InvalidOperationException("Scope was not available. Did you forget to call container.BeginScope()?");
-			}
 			return scope;
 		}
 	}

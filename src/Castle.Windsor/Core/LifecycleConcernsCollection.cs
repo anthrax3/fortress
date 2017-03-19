@@ -21,20 +21,16 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class LifecycleConcernsCollection
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private List<ICommissionConcern> commission;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private List<ICommissionConcern> commission;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private List<IDecommissionConcern> decommission;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private List<IDecommissionConcern> decommission;
 
 		public IEnumerable<ICommissionConcern> CommissionConcerns
 		{
 			get
 			{
 				if (HasCommissionConcerns == false)
-				{
 					return new ICommissionConcern[0];
-				}
 				return commission;
 			}
 		}
@@ -44,9 +40,7 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (HasDecommissionConcerns == false)
-				{
 					return new IDecommissionConcern[0];
-				}
 				return decommission;
 			}
 		}
@@ -69,9 +63,7 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (commission == null)
-				{
 					commission = new List<ICommissionConcern>();
-				}
 				return commission;
 			}
 		}
@@ -82,9 +74,7 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (decommission == null)
-				{
 					decommission = new List<IDecommissionConcern>();
-				}
 				return decommission;
 			}
 		}
@@ -92,18 +82,14 @@ namespace Castle.Windsor.Core
 		public void Add(ICommissionConcern concern)
 		{
 			if (concern == null)
-			{
 				throw new ArgumentNullException("concern");
-			}
 			Commission.Add(concern);
 		}
 
 		public void Add(IDecommissionConcern concern)
 		{
 			if (concern == null)
-			{
 				throw new ArgumentNullException("concern");
-			}
 
 			Decommission.Add(concern);
 		}
@@ -111,18 +97,14 @@ namespace Castle.Windsor.Core
 		public void AddFirst(ICommissionConcern concern)
 		{
 			if (concern == null)
-			{
 				throw new ArgumentNullException("concern");
-			}
 			Commission.Insert(0, concern);
 		}
 
 		public void AddFirst(IDecommissionConcern concern)
 		{
 			if (concern == null)
-			{
 				throw new ArgumentNullException("concern");
-			}
 
 			Decommission.Insert(0, concern);
 		}

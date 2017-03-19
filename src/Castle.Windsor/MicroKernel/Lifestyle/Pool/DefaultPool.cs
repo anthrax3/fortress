@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Context;
 
@@ -25,8 +24,8 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 	{
 		private readonly Stack<Burden> available;
 		private readonly IComponentActivator componentActivator;
-		private readonly Dictionary<object, Burden> inUse = new Dictionary<object, Burden>();
 		private readonly int initialSize;
+		private readonly Dictionary<object, Burden> inUse = new Dictionary<object, Burden>();
 		private readonly int maxsize;
 		private readonly Lock rwlock = Lock.Create();
 		private bool initialized;
@@ -44,9 +43,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 			initialized = false;
 
 			foreach (var burden in available)
-			{
 				burden.Release();
-			}
 			inUse.Clear();
 			available.Clear();
 		}
@@ -59,25 +56,19 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 
 				if (initialized == false)
 				{
-					if (inUse.TryGetValue(instance, out burden) == true)
-					{
+					if (inUse.TryGetValue(instance, out burden))
 						inUse.Remove(instance);
-					}
 				}
 				else
 				{
 					if (inUse.TryGetValue(instance, out burden) == false)
-					{
 						return false;
-					}
 					inUse.Remove(instance);
 
 					if (available.Count < maxsize)
 					{
 						if (instance is IRecyclable)
-						{
 							(instance as IRecyclable).Recycle();
-						}
 
 						available.Push(burden);
 						return false;
@@ -97,9 +88,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
 			using (rwlock.ForWriting())
 			{
 				if (!initialized)
-				{
 					Intitialize(creationCallback, context);
-				}
 
 				if (available.Count != 0)
 				{

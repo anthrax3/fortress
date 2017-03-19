@@ -25,6 +25,11 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 
 		private IAllComponentsDiagnostic diagnostic;
 
+		public static string Name
+		{
+			get { return name; }
+		}
+
 		public override IEnumerable<DebuggerViewItem> Attach()
 		{
 			var handlers = diagnostic.Inspect();
@@ -41,11 +46,6 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		{
 			diagnostic = new AllComponentsDiagnostic(kernel);
 			diagnosticsHost.AddDiagnostic(diagnostic);
-		}
-
-		public static string Name
-		{
-			get { return name; }
 		}
 	}
 }

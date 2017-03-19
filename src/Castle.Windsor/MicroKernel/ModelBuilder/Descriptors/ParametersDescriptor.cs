@@ -35,13 +35,9 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		private void Apply(ComponentModel model, Parameter parameter)
 		{
 			if (parameter.Value != null)
-			{
 				AddParameter(model, parameter.Key, parameter.Value);
-			}
 			else if (parameter.ConfigNode != null)
-			{
 				AddParameter(model, parameter.Key, parameter.ConfigNode);
-			}
 		}
 	}
 }

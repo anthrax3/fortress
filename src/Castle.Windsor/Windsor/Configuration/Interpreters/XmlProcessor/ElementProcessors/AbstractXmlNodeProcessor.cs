@@ -20,9 +20,9 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 {
 	public abstract class AbstractXmlNodeProcessor : IXmlNodeProcessor
 	{
-		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.Element };
+		private static readonly XmlNodeType[] acceptNodes = {XmlNodeType.Element};
 
-		public abstract String Name { get; }
+		public abstract string Name { get; }
 
 		public virtual XmlNodeType[] AcceptNodeTypes
 		{
@@ -41,9 +41,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			var childNodes = new DefaultXmlProcessorNodeList(nodes);
 
 			while (childNodes.MoveNext())
-			{
 				AppendChild(element, childNodes.Current);
-			}
 		}
 
 		protected void AppendChild(XmlNode element, string text)
@@ -71,21 +69,17 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			var result = child as XmlElement;
 
 			if (result == null)
-			{
 				throw new XmlProcessorException("{0} expects XmlElement found {1}", element.Name, child.NodeType);
-			}
 
 			return result;
 		}
 
-		protected String GetRequiredAttribute(XmlElement element, String attribute)
+		protected string GetRequiredAttribute(XmlElement element, string attribute)
 		{
 			var attValue = element.GetAttribute(attribute).Trim();
 
 			if (attValue == string.Empty)
-			{
 				throw new XmlProcessorException("'{0}' requires a non empty '{1}' attribute", element.Name, attribute);
-			}
 
 			return attValue;
 		}
@@ -100,8 +94,8 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		protected XmlNode ImportNode(XmlNode targetElement, XmlNode node)
 		{
 			return targetElement.OwnerDocument == node.OwnerDocument
-			       	? node
-			       	: targetElement.OwnerDocument.ImportNode(node, true);
+				? node
+				: targetElement.OwnerDocument.ImportNode(node, true);
 		}
 
 		protected bool IsTextNode(XmlNode node)
@@ -112,9 +106,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		protected void MoveChildNodes(XmlDocumentFragment fragment, XmlElement element)
 		{
 			while (element.ChildNodes.Count > 0)
-			{
 				fragment.AppendChild(element.ChildNodes[0]);
-			}
 		}
 
 		protected void RemoveItSelf(XmlNode node)
@@ -130,9 +122,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		protected void ReplaceNode(XmlNode element, XmlNode newNode, XmlNode oldNode)
 		{
 			if (newNode == oldNode)
-			{
 				return;
-			}
 
 			var importedNode = ImportNode(element, newNode);
 
@@ -140,4 +130,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

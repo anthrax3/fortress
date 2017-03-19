@@ -19,6 +19,22 @@ namespace Castle.Windsor.Core.Internal
 	{
 		private SimpleThreadSafeCollection<GraphNode> outgoing;
 
+		public GraphNode[] Dependents
+		{
+			get
+			{
+				var collection = outgoing;
+				if (collection == null)
+					return new GraphNode[0];
+				return collection.ToArray();
+			}
+		}
+
+		IVertex[] IVertex.Adjacencies
+		{
+			get { return Dependents; }
+		}
+
 		public void AddDependent(GraphNode node)
 		{
 			var collection = outgoing;
@@ -28,24 +44,6 @@ namespace Castle.Windsor.Core.Internal
 				collection = Interlocked.CompareExchange(ref outgoing, @new, null) ?? @new;
 			}
 			collection.Add(node);
-		}
-
-		public GraphNode[] Dependents
-		{
-			get
-			{
-				var collection = outgoing;
-				if (collection == null)
-				{
-					return new GraphNode[0];
-				}
-				return collection.ToArray();
-			}
-		}
-
-		IVertex[] IVertex.Adjacencies
-		{
-			get { return Dependents; }
 		}
 	}
 }

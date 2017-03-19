@@ -20,28 +20,19 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class PropertySet
 	{
-		private readonly DependencyModel dependency;
-		private readonly PropertyInfo propertyInfo;
-
 		public PropertySet(PropertyInfo propertyInfo, DependencyModel dependency)
 		{
-			this.propertyInfo = propertyInfo;
-			this.dependency = dependency;
+			Property = propertyInfo;
+			Dependency = dependency;
 		}
 
-		public DependencyModel Dependency
-		{
-			get { return dependency; }
-		}
+		public DependencyModel Dependency { get; }
 
-		public PropertyInfo Property
-		{
-			get { return propertyInfo; }
-		}
+		public PropertyInfo Property { get; }
 
 		public override string ToString()
 		{
-			return dependency.ToString();
+			return Dependency.ToString();
 		}
 	}
 }

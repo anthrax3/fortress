@@ -31,13 +31,11 @@ namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
 		}
 
 		public virtual bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                               ComponentModel model,
-		                               DependencyModel dependency)
+			ComponentModel model,
+			DependencyModel dependency)
 		{
 			if (dependency.TargetItemType == null)
-			{
 				return false;
-			}
 
 			var itemType = GetItemType(dependency.TargetItemType);
 			return itemType != null &&
@@ -46,7 +44,7 @@ namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
 		}
 
 		public virtual object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                              DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			return kernel.ResolveAll(GetItemType(dependency.TargetItemType), null);
 		}

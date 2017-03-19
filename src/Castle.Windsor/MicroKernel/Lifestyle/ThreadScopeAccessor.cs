@@ -30,9 +30,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			var values = items.EjectAllValues();
 			foreach (var item in values.Reverse())
-			{
 				item.Dispose();
-			}
 		}
 
 		public ILifetimeScope GetScope(CreationContext context)

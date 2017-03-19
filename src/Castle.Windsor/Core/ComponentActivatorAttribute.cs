@@ -16,19 +16,14 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class ComponentActivatorAttribute : Attribute
 	{
-		private readonly Type componentActivatorType;
-
 		public ComponentActivatorAttribute(Type componentActivatorType)
 		{
-			this.componentActivatorType = componentActivatorType;
+			ComponentActivatorType = componentActivatorType;
 		}
 
-		public Type ComponentActivatorType
-		{
-			get { return componentActivatorType; }
-		}
+		public Type ComponentActivatorType { get; }
 	}
 }

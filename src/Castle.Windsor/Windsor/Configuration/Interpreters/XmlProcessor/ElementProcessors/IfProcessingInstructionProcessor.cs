@@ -13,33 +13,25 @@
 // limitations under the License.
 
 
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
-	internal enum StatementState
-	{
-		Init,
-		Collect,
-		Finished
-	}
-
 	public class IfProcessingInstructionProcessor : AbstractXmlNodeProcessor
 	{
-		private static readonly String ElsePiName = "else";
-		private static readonly String ElsifPiName = "elsif";
-		private static readonly String EndPiName = "end";
-		private static readonly String IfPiName = "if";
-		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.ProcessingInstruction };
+		private static readonly string ElsePiName = "else";
+		private static readonly string ElsifPiName = "elsif";
+		private static readonly string EndPiName = "end";
+		private static readonly string IfPiName = "if";
+		private static readonly XmlNodeType[] acceptNodes = {XmlNodeType.ProcessingInstruction};
 
 		public override XmlNodeType[] AcceptNodeTypes
 		{
 			get { return acceptNodes; }
 		}
 
-		public override String Name
+		public override string Name
 		{
 			get { return IfPiName; }
 		}
@@ -88,24 +80,16 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 				}
 
 				if (state == StatementState.Collect)
-				{
 					nodesToProcess.Add(nodeList.Current);
-				}
 				else
-				{
 					RemoveItSelf(nodeList.Current);
-				}
 			}
 
 			if (nestedLevels != -1)
-			{
 				throw new XmlProcessorException("Unbalanced pi if element");
-			}
 
 			if (nodesToProcess.Count > 0)
-			{
 				engine.DispatchProcessAll(new DefaultXmlProcessorNodeList(nodesToProcess));
-			}
 		}
 
 		private void AssertData(XmlProcessingInstruction pi, bool requireData)
@@ -113,16 +97,10 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			var data = pi.Data.Trim();
 
 			if (data == "" && requireData)
-			{
 				throw new XmlProcessorException("Element '{0}' must have a flag attribute", pi.Name);
-			}
-			else if (data != "")
-			{
+			if (data != "")
 				if (!requireData)
-				{
 					throw new XmlProcessorException("Element '{0}' cannot have any attributes", pi.Name);
-				}
-			}
 		}
 
 		private void ProcessElseElement(XmlProcessingInstruction pi, IXmlProcessorEngine engine, ref StatementState state)
@@ -130,20 +108,12 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			AssertData(pi, pi.Name == ElsifPiName);
 
 			if (state == StatementState.Collect)
-			{
 				state = StatementState.Finished;
-			}
 			else if (pi.Name == ElsePiName || engine.HasFlag(pi.Data))
-			{
 				if (state == StatementState.Init)
-				{
 					state = StatementState.Collect;
-				}
-			}
 
 			RemoveItSelf(pi);
-			return;
 		}
 	}
 }
-

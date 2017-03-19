@@ -25,18 +25,19 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		private const string name = "Objects tracked by release policy";
 		private TrackedComponentsDiagnostic diagnostic;
 
+		public static string Name
+		{
+			get { return name; }
+		}
+
 		public override IEnumerable<DebuggerViewItem> Attach()
 		{
 			var result = diagnostic.Inspect();
 			if (result == null)
-			{
 				return new DebuggerViewItem[0];
-			}
 			var item = BuildItem(result);
 			if (item != null)
-			{
-				return new[] { item };
-			}
+				return new[] {item};
 			return new DebuggerViewItem[0];
 		}
 
@@ -57,17 +58,12 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 				totalCount += objects.Length;
 				var view = ComponentDebuggerView.BuildFor(handler);
 				var item = new DebuggerViewItem(handler.GetComponentName(),
-				                                "Count = " + objects.Length,
-				                                new MasterDetailsDebuggerViewItem(view, view.Description, "Component", objects));
+					"Count = " + objects.Length,
+					new MasterDetailsDebuggerViewItem(view, view.Description, "Component", objects));
 				items.Add(item);
 			}
 			items.Sort((f, s) => f.Name.CompareTo(s.Name));
 			return new DebuggerViewItem(name, "Count = " + totalCount, items.ToArray());
-		}
-
-		public static string Name
-		{
-			get { return name; }
 		}
 	}
 }

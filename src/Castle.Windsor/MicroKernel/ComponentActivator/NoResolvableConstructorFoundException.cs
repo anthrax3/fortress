@@ -21,14 +21,12 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 	[Serializable]
 	public class NoResolvableConstructorFoundException : ComponentActivatorException
 	{
-		private readonly Type type;
-
 		public NoResolvableConstructorFoundException(Type type, ComponentModel componentModel)
 			: base(
 				string.Format("Could not find resolvable constructor for {0}. Make sure all required dependencies are provided.",
-				              type.FullName), componentModel)
+					type.FullName), componentModel)
 		{
-			this.type = type;
+			Type = type;
 		}
 
 		public NoResolvableConstructorFoundException(string message, Exception innerException, ComponentModel componentModel)
@@ -41,9 +39,6 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 		{
 		}
 
-		public Type Type
-		{
-			get { return type; }
-		}
+		public Type Type { get; }
 	}
 }

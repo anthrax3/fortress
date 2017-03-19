@@ -24,7 +24,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 
 		void AddHandlersFilter(IHandlersFilter filter);
 
-		bool Contains(String name);
+		bool Contains(string name);
 
 		bool Contains(Type service);
 
@@ -32,7 +32,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Naming
 
 		IHandler[] GetAssignableHandlers(Type service);
 
-		IHandler GetHandler(String name);
+		IHandler GetHandler(string name);
 
 		IHandler GetHandler(Type service);
 

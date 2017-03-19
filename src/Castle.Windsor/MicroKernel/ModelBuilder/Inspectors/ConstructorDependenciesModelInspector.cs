@@ -27,15 +27,10 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var targetType = model.Implementation;
 			var constructors = targetType.GetConstructors(BindingFlags.Public | BindingFlags.Instance)
-										 .Where(IsVisibleToContainer);
+				.Where(IsVisibleToContainer);
 
 			foreach (var constructor in constructors)
-			{
-				// We register each public constructor
-				// and let the ComponentFactory select an 
-				// eligible amongst the candidates later
 				model.AddConstructor(CreateConstructorCandidate(model, constructor));
-			}
 		}
 
 		protected virtual ConstructorCandidate CreateConstructorCandidate(ComponentModel model, ConstructorInfo constructor)

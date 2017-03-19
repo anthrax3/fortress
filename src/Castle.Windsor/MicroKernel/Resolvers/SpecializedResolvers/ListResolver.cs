@@ -33,8 +33,8 @@ namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
 		}
 
 		public override object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                               ComponentModel model,
-		                               DependencyModel dependency)
+			ComponentModel model,
+			DependencyModel dependency)
 		{
 			var items = base.Resolve(context, contextHandlerResolver, model, dependency);
 			var listType = BuildListType(dependency);
@@ -45,9 +45,7 @@ namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
 		{
 			if (targetItemType.IsGenericType == false ||
 			    targetItemType.GetGenericTypeDefinition() != typeof(IList<>))
-			{
 				return null;
-			}
 			return targetItemType.GetGenericArguments()[0];
 		}
 

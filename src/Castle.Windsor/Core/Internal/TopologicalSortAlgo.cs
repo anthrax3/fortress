@@ -29,12 +29,8 @@ namespace Castle.Windsor.Core.Internal
 			var time = 0;
 
 			foreach (var node in graphNodes)
-			{
 				if (colors.ColorOf(node) == VertexColor.White)
-				{
 					Visit(node, colors, discovery, finish, list, ref time);
-				}
-			}
 
 			var vertices = new IVertex[list.Count];
 			list.CopyTo(vertices, 0);
@@ -48,12 +44,8 @@ namespace Castle.Windsor.Core.Internal
 			discovery.Register(node, time++);
 
 			foreach (var child in node.Adjacencies)
-			{
 				if (colors.ColorOf(child) == VertexColor.White)
-				{
 					Visit(child, colors, discovery, finish, list, ref time);
-				}
-			}
 
 			finish.Register(node, time++);
 

@@ -35,52 +35,34 @@ namespace Castle.Windsor.Windsor.Diagnostics
 
 			var items = new List<MismatchedLifestyleDependency>();
 			foreach (var handler in allHandlers)
-			{
 				items.AddRange(GetMismatches(handler, handlersByComponentModel));
-			}
 			return items.ConvertAll(m => m.GetHandlers()).ToArray();
 		}
 
 		private IEnumerable<MismatchedLifestyleDependency> GetMismatch(MismatchedLifestyleDependency parent, ComponentModel component,
-		                                                               IDictionary<ComponentModel, IHandler> model2Handler)
+			IDictionary<ComponentModel, IHandler> model2Handler)
 		{
 			if (parent.Checked(component))
-			{
 				yield break;
-			}
 
 			var handler = model2Handler[component];
 			var item = new MismatchedLifestyleDependency(handler, parent);
 			if (item.Mismatched())
-			{
 				yield return item;
-			}
 			else
-			{
 				foreach (ComponentModel dependent in handler.ComponentModel.Dependents)
-				{
-					foreach (var mismatch in GetMismatch(item, dependent, model2Handler))
-					{
-						yield return mismatch;
-					}
-				}
-			}
+				foreach (var mismatch in GetMismatch(item, dependent, model2Handler))
+					yield return mismatch;
 		}
 
 		private IEnumerable<MismatchedLifestyleDependency> GetMismatches(IHandler handler, IDictionary<ComponentModel, IHandler> model2Handler)
 		{
 			if (IsSingleton(handler) == false)
-			{
 				yield break;
-			}
 			var root = new MismatchedLifestyleDependency(handler);
 			foreach (ComponentModel dependent in handler.ComponentModel.Dependents)
-			{
-				foreach (var mismatch in GetMismatch(root, dependent, model2Handler))
-				{
-					yield return mismatch;
-				}
-			}
+			foreach (var mismatch in GetMismatch(root, dependent, model2Handler))
+				yield return mismatch;
 		}
 
 		private bool IsSingleton(IHandler component)
@@ -99,18 +81,14 @@ namespace Castle.Windsor.Windsor.Diagnostics
 				Parent = parent;
 
 				if (parent == null)
-				{
-					checkedComponents = new HashSet<ComponentModel> { handler.ComponentModel };
-				}
+					checkedComponents = new HashSet<ComponentModel> {handler.ComponentModel};
 				else
-				{
-					checkedComponents = new HashSet<ComponentModel> { parent.Handler.ComponentModel };
-				}
+					checkedComponents = new HashSet<ComponentModel> {parent.Handler.ComponentModel};
 			}
 
-			public IHandler Handler { get; private set; }
+			public IHandler Handler { get; }
 
-			public MismatchedLifestyleDependency Parent { get; private set; }
+			public MismatchedLifestyleDependency Parent { get; }
 
 			public bool Checked(ComponentModel component)
 			{
@@ -133,9 +111,7 @@ namespace Castle.Windsor.Windsor.Diagnostics
 			private void BuildHandlersList(List<IHandler> handlers)
 			{
 				if (Parent != null)
-				{
 					Parent.BuildHandlersList(handlers);
-				}
 				handlers.Add(Handler);
 			}
 		}

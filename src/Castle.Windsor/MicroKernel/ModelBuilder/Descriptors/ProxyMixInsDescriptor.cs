@@ -31,14 +31,10 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		public void BuildComponentModel(IKernel kernel, ComponentModel model)
 		{
 			if (!mixIns.Any())
-			{
 				return;
-			}
 			var options = model.ObtainProxyOptions();
 			foreach (var mixIn in mixIns)
-			{
 				options.AddMixinReference(mixIn);
-			}
 		}
 
 		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)

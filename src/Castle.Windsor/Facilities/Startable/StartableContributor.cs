@@ -51,12 +51,10 @@ namespace Castle.Windsor.Facilities.Startable
 			{
 				var method = model.Implementation.GetMethod(startMethod, Type.EmptyTypes);
 				if (method == null)
-				{
 					throw new ArgumentException(
 						string.Format(
 							"Could not find public parameterless method '{0}' on type {1} designated as start method. Make sure you didn't mistype the method name and that its signature matches.",
 							startMethod, model.Implementation));
-				}
 				model.ExtendedProperties.Add("Castle.StartableFacility.StartMethod", method);
 			}
 			model.Lifecycle.Add(StartConcern.Instance);
@@ -69,12 +67,10 @@ namespace Castle.Windsor.Facilities.Startable
 			{
 				var method = model.Implementation.GetMethod(stopMethod, Type.EmptyTypes);
 				if (method == null)
-				{
 					throw new ArgumentException(
 						string.Format(
 							"Could not find public parameterless method '{0}' on type {1} designated as stop method. Make sure you didn't mistype the method name and that its signature matches.",
 							stopMethod, model.Implementation));
-				}
 				model.ExtendedProperties.Add("Castle.StartableFacility.StopMethod", method);
 			}
 			model.Lifecycle.AddFirst(StopConcern.Instance);
@@ -83,15 +79,11 @@ namespace Castle.Windsor.Facilities.Startable
 		private bool HasStartableAttributeSet(ComponentModel model)
 		{
 			if (model.Configuration == null)
-			{
 				return false;
-			}
 
 			var startable = model.Configuration.Attributes["startable"];
 			if (startable != null)
-			{
 				return converter.PerformConversion<bool>(startable);
-			}
 
 			return false;
 		}

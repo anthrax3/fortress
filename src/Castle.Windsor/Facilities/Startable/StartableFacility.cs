@@ -54,7 +54,7 @@ namespace Castle.Windsor.Facilities.Startable
 		public static bool IsStartable(IHandler handler)
 		{
 			var startable = handler.ComponentModel.ExtendedProperties["startable"];
-			var isStartable = (bool?)startable;
+			var isStartable = (bool?) startable;
 			return isStartable.GetValueOrDefault();
 		}
 	}

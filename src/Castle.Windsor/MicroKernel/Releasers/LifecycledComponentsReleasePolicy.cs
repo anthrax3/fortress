@@ -17,8 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Castle.Core.Core;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.Windsor.Diagnostics;
 
@@ -42,15 +40,13 @@ namespace Castle.Windsor.MicroKernel.Releasers
 		}
 
 		public LifecycledComponentsReleasePolicy(ITrackedComponentsDiagnostic trackedComponentsDiagnostic,
-		                                         ITrackedComponentsPerformanceCounter trackedComponentsPerformanceCounter)
+			ITrackedComponentsPerformanceCounter trackedComponentsPerformanceCounter)
 		{
 			this.trackedComponentsDiagnostic = trackedComponentsDiagnostic;
 			perfCounter = trackedComponentsPerformanceCounter ?? NullPerformanceCounter.Instance;
 
 			if (trackedComponentsDiagnostic != null)
-			{
 				trackedComponentsDiagnostic.TrackedInstancesRequested += trackedComponentsDiagnostic_TrackedInstancesRequested;
-			}
 		}
 
 		private LifecycledComponentsReleasePolicy(LifecycledComponentsReleasePolicy parent)
@@ -107,9 +103,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 		public bool HasTrack(object instance)
 		{
 			if (instance == null)
-			{
 				return false;
-			}
 
 			using (@lock.ForReading())
 			{
@@ -120,9 +114,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 		public void Release(object instance)
 		{
 			if (instance == null)
-			{
 				return;
-			}
 
 			Burden burden;
 			using (@lock.ForWriting())
@@ -130,9 +122,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 				// NOTE: we don't physically remove the instance from the instance2Burden collection here.
 				// we do it in OnInstanceReleased event handler
 				if (instance2Burden.TryGetValue(instance, out burden) == false)
-				{
 					return;
-				}
 			}
 			burden.Release();
 		}
@@ -141,7 +131,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 		{
 			if (burden.RequiresPolicyRelease == false)
 			{
-				var lifestyle = ((object)burden.Model.CustomLifestyle) ?? burden.Model.LifestyleType;
+				var lifestyle = (object) burden.Model.CustomLifestyle ?? burden.Model.LifestyleType;
 				throw new ArgumentException(
 					string.Format(
 						"Release policy was asked to track object '{0}', but its burden has 'RequiresPolicyRelease' set to false. If object is to be tracked the flag must be true. This is likely a bug in the lifetime manager '{1}'.",
@@ -172,9 +162,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 			using (@lock.ForWriting())
 			{
 				if (instance2Burden.Remove(burden.Instance) == false)
-				{
 					return;
-				}
 			}
 			burden.Released -= OnInstanceReleased;
 			perfCounter.DecrementTrackedInstancesCount();
@@ -187,11 +175,9 @@ namespace Castle.Windsor.MicroKernel.Releasers
 
 		public static ITrackedComponentsDiagnostic GetTrackedComponentsDiagnostic(IKernel kernel)
 		{
-			var diagnosticsHost = (IDiagnosticsHost)kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
+			var diagnosticsHost = (IDiagnosticsHost) kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
 			if (diagnosticsHost == null)
-			{
 				return null;
-			}
 			return diagnosticsHost.GetDiagnostic<ITrackedComponentsDiagnostic>();
 		}
 
@@ -200,7 +186,7 @@ namespace Castle.Windsor.MicroKernel.Releasers
 		{
 			var process = Process.GetCurrentProcess();
 			var name = string.Format("Instance {0} | process {1} (id:{2})", Interlocked.Increment(ref instanceId),
-			                         process.ProcessName, process.Id);
+				process.ProcessName, process.Id);
 			return perfMetricsFactory.CreateInstancesTrackedByReleasePolicyCounter(name);
 		}
 	}

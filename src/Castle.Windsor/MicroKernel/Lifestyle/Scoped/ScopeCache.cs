@@ -25,6 +25,14 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 		// NOTE: does that need to be thread safe?
 		private IDictionary<object, Burden> cache = new Dictionary<object, Burden>();
 
+		public void Dispose()
+		{
+			var localCache = Interlocked.Exchange(ref cache, null);
+			if (localCache == null)
+				return;
+			localCache.Values.Reverse().ForEach(b => b.Release());
+		}
+
 		public Burden this[object id]
 		{
 			set
@@ -51,17 +59,6 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 					throw new ObjectDisposedException("Scope cache was already disposed. This is most likely a bug in the calling code.");
 				}
 			}
-		}
-
-		public void Dispose()
-		{
-			var localCache = Interlocked.Exchange(ref cache, null);
-			if (localCache == null)
-			{
-				// that should never happen but Dispose in general is expected to be safe to call so... let's obey the rules
-				return;
-			}
-			localCache.Values.Reverse().ForEach(b => b.Release());
 		}
 	}
 }

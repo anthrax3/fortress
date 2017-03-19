@@ -48,11 +48,9 @@ namespace Castle.Windsor.MicroKernel.Handlers
 				"Types {0} don't satisfy generic constraints of implementation type {1} of component '{2}'.",
 				string.Join(", ", argumentsUsed), componentModel.Implementation.FullName, handler.ComponentModel.Name);
 			if (handler.ImplementationMatchingStrategy == null)
-			{
 				return message + " This is most likely a bug in your code.";
-			}
 			return message + string.Format("this is likely a bug in the {0} used ({1})", typeof(IGenericImplementationMatchingStrategy).Name,
-			                               handler.ImplementationMatchingStrategy);
+				       handler.ImplementationMatchingStrategy);
 		}
 	}
 }

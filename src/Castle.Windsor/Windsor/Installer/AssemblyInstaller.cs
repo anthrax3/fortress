@@ -30,13 +30,9 @@ namespace Castle.Windsor.Windsor.Installer
 		public AssemblyInstaller(Assembly assembly, InstallerFactory factory)
 		{
 			if (assembly == null)
-			{
 				throw new ArgumentNullException("assembly");
-			}
 			if (factory == null)
-			{
 				throw new ArgumentNullException("factory");
-			}
 			this.assembly = assembly;
 			this.factory = factory;
 		}
@@ -45,9 +41,7 @@ namespace Castle.Windsor.Windsor.Installer
 		{
 			var installerTypes = factory.Select(FilterInstallerTypes(assembly.GetAvailableTypes()));
 			if (installerTypes == null)
-			{
 				return;
-			}
 
 			foreach (var installerType in installerTypes)
 			{

@@ -21,21 +21,16 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class ConstructorDependencyModel : DependencyModel
 	{
-		private ConstructorCandidate constructor;
-
 		public ConstructorDependencyModel(ParameterInfo parameter)
 			: base(parameter.Name, parameter.ParameterType, false, parameter.HasDefaultValue(), parameter.DefaultValue)
 		{
 		}
 
-		public ConstructorCandidate Constructor
-		{
-			get { return constructor; }
-		}
+		public ConstructorCandidate Constructor { get; private set; }
 
 		internal void SetParentConstructor(ConstructorCandidate ctor)
 		{
-			constructor = ctor;
+			Constructor = ctor;
 		}
 	}
 }

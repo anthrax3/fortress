@@ -24,6 +24,11 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		private readonly ThreadSafeInit init = new ThreadSafeInit();
 		private Burden cachedBurden;
 
+		public object GetContextInstance(CreationContext context)
+		{
+			return context.GetContextualProperty(ComponentActivator);
+		}
+
 		public override void Dispose()
 		{
 			var localInstance = cachedBurden;
@@ -38,17 +43,13 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		{
 			// 1. read from cache
 			if (cachedBurden != null)
-			{
 				return cachedBurden.Instance;
-			}
 			var initializing = false;
 			try
 			{
 				initializing = init.ExecuteThreadSafeOnce();
 				if (cachedBurden != null)
-				{
 					return cachedBurden.Instance;
-				}
 				var burden = CreateInstance(context, true);
 				cachedBurden = burden;
 				Track(burden, releasePolicy);
@@ -57,15 +58,8 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 			finally
 			{
 				if (initializing)
-				{
 					init.EndThreadSafeOnceSection();
-				}
 			}
-		}
-
-		public object GetContextInstance(CreationContext context)
-		{
-			return context.GetContextualProperty(ComponentActivator);
 		}
 	}
 }

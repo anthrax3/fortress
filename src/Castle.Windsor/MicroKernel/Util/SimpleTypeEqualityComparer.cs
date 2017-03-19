@@ -20,7 +20,7 @@ namespace Castle.Windsor.MicroKernel.Util
 	[Serializable]
 	public class SimpleTypeEqualityComparer : IEqualityComparer<Type>
 	{
-		private static readonly SimpleTypeEqualityComparer instance = new SimpleTypeEqualityComparer();
+		public static SimpleTypeEqualityComparer Instance { get; } = new SimpleTypeEqualityComparer();
 
 		public bool Equals(Type x, Type y)
 		{
@@ -30,11 +30,6 @@ namespace Castle.Windsor.MicroKernel.Util
 		public int GetHashCode(Type obj)
 		{
 			return obj.GetHashCode();
-		}
-
-		public static SimpleTypeEqualityComparer Instance
-		{
-			get { return instance; }
 		}
 	}
 }

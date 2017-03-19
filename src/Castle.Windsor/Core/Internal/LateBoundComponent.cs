@@ -18,8 +18,7 @@ namespace Castle.Windsor.Core.Internal
 {
 	public sealed class LateBoundComponent
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		public static readonly object Instance = new LateBoundComponent();
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] public static readonly object Instance = new LateBoundComponent();
 
 		public override string ToString()
 		{

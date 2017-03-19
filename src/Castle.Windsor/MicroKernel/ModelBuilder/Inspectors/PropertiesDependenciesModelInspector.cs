@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Compatibility;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
@@ -26,8 +25,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 	[Serializable]
 	public class PropertiesDependenciesModelInspector : IContributeComponentModelConstruction
 	{
-		[NonSerialized]
-		private readonly IConversionManager converter;
+		[NonSerialized] private readonly IConversionManager converter;
 
 		public PropertiesDependenciesModelInspector(IConversionManager converter)
 		{
@@ -43,59 +41,39 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var targetType = model.Implementation;
 			if (model.InspectionBehavior == PropertiesInspectionBehavior.Undefined)
-			{
 				model.InspectionBehavior = GetInspectionBehaviorFromTheConfiguration(model.Configuration);
-			}
 
 			if (model.InspectionBehavior == PropertiesInspectionBehavior.None)
-			{
-				// Nothing to be inspected
 				return;
-			}
 
 			var properties = GetProperties(model, targetType);
 			if (properties.Count == 0)
-			{
 				return;
-			}
 			var filters = StandardPropertyFilters.GetPropertyFilters(model, false);
 			if (filters == null)
-			{
-				properties.ForEach(p => model.AddProperty(BuildDependency(p, isOptional: true)));
-			}
+				properties.ForEach(p => model.AddProperty(BuildDependency(p, true)));
 			else
-			{
-				foreach (var filter in filters.Concat(new[] { StandardPropertyFilters.Create(PropertyFilter.Default) }))
+				foreach (var filter in filters.Concat(new[] {StandardPropertyFilters.Create(PropertyFilter.Default)}))
 				{
 					var dependencies = filter.Invoke(model, properties, BuildDependency);
 					if (dependencies != null)
-					{
 						foreach (var dependency in dependencies)
-						{
 							model.AddProperty(dependency);
-						}
-					}
 					if (properties.Count == 0)
-					{
 						return;
-					}
 				}
-			}
 		}
 
 		private PropertySet BuildDependency(PropertyInfo property, bool isOptional)
 		{
-			var dependency = new PropertyDependencyModel(property, isOptional: isOptional);
+			var dependency = new PropertyDependencyModel(property, isOptional);
 			return new PropertySet(property, dependency);
 		}
 
 		private PropertiesInspectionBehavior GetInspectionBehaviorFromTheConfiguration(IConfiguration config)
 		{
 			if (config == null || config.Attributes["inspectionBehavior"] == null)
-			{
-				// return default behavior
 				return PropertiesInspectionBehavior.All;
-			}
 
 			var enumStringVal = config.Attributes["inspectionBehavior"];
 
@@ -106,13 +84,13 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			catch (Exception)
 			{
 				var message =
-					String.Format(
+					string.Format(
 						"Error on properties inspection. Could not convert the inspectionBehavior attribute value into an expected enum value. " +
 						"Value found is '{0}' while possible values are '{1}'",
 						enumStringVal,
-						String.Join(", ",
-						            Enum.GetNames(typeof(PropertiesInspectionBehavior))
-							));
+						string.Join(", ",
+							Enum.GetNames(typeof(PropertiesInspectionBehavior))
+						));
 
 				throw new ConverterException(message);
 			}
@@ -122,13 +100,9 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			BindingFlags bindingFlags;
 			if (model.InspectionBehavior == PropertiesInspectionBehavior.DeclaredOnly)
-			{
 				bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-			}
 			else // if (model.InspectionBehavior == PropertiesInspectionBehavior.All) or Undefined
-			{
 				bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-			}
 
 			var properties = targetType.GetProperties(bindingFlags);
 			return properties.Where(IsValidPropertyDependency).ToList();

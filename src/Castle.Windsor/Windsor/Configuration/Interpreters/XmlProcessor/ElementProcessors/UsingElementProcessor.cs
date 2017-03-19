@@ -27,7 +27,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 
 		public override void Process(IXmlProcessorNodeList nodeList, IXmlProcessorEngine engine)
 		{
-			var assemblyName = GetRequiredAttribute((XmlElement)nodeList.Current, "assembly");
+			var assemblyName = GetRequiredAttribute((XmlElement) nodeList.Current, "assembly");
 
 			// that's it, at this point we just load the assembly into the appdomain so that it becomes
 			// available to type matching system.
@@ -36,4 +36,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

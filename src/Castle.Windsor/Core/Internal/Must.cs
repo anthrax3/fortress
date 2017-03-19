@@ -25,18 +25,14 @@ namespace Castle.Windsor.Core.Internal
 		public static T NotBeEmpty<T>(T arg, string name) where T : class, IEnumerable
 		{
 			if (NotBeNull(arg, name).GetEnumerator().MoveNext() == false)
-			{
 				throw new ArgumentException(name);
-			}
 			return arg;
 		}
 
 		public static T NotBeNull<T>(T arg, string name) where T : class
 		{
 			if (arg == null)
-			{
 				throw new ArgumentNullException(name);
-			}
 			return arg;
 		}
 	}

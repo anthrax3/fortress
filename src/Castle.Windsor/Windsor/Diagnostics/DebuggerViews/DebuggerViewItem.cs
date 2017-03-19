@@ -19,14 +19,11 @@ namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
 	[DebuggerDisplay("{description,nq}", Name = "{name,nq}")]
 	public class DebuggerViewItem
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly object description;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly object description;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly string name;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly string name;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		private readonly object value;
+		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)] private readonly object value;
 
 		public DebuggerViewItem(string name, string description, object value)
 		{

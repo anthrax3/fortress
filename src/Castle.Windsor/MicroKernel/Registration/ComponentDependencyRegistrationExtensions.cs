@@ -15,7 +15,6 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using Castle.Core.Core;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {
@@ -37,9 +36,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static IDictionary InsertAnonymous(this IDictionary arguments, object namedArgumentsAsAnonymousType)
 		{
 			foreach (DictionaryEntry item in new ReflectionBasedDictionaryAdapter(namedArgumentsAsAnonymousType))
-			{
 				arguments[item.Key] = item.Value;
-			}
 
 			return arguments;
 		}
@@ -53,9 +50,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static IDictionary InsertTypedCollection(this IDictionary arguments, object[] typedArgumentsArray)
 		{
 			foreach (var item in typedArgumentsArray)
-			{
 				arguments[item.GetType()] = item;
-			}
 
 			return arguments;
 		}

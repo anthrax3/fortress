@@ -20,5 +20,4 @@ namespace Castle.Windsor.Windsor.Diagnostics
 	{
 		IEnumerable<object> Attach();
 	}
-
 }

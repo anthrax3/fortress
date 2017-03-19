@@ -15,8 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Castle.Core.Core;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Context;
 
@@ -34,21 +32,19 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			InitDefaultConverters();
 		}
 
-		protected virtual void InitDefaultConverters()
+		private Stack<Pair<ComponentModel, CreationContext>> CurrentStack
 		{
-			Add(new PrimitiveConverter());
-			Add(new TimeSpanConverter());
-			Add(new TypeNameConverter(new TypeNameParser()));
-			Add(new EnumConverter());
-			Add(new ListConverter());
-			Add(new DictionaryConverter());
-			Add(new GenericDictionaryConverter());
-			Add(new GenericListConverter());
-			Add(new ArrayConverter());
-			Add(new ComponentConverter());
-			Add(new AttributeAwareConverter());
-			Add(new ComponentModelConverter());
-			Add(new NullableConverter(this));
+			get
+			{
+				var stack = (Stack<Pair<ComponentModel, CreationContext>>) Thread.GetData(slot);
+				if (stack == null)
+				{
+					stack = new Stack<Pair<ComponentModel, CreationContext>>();
+					Thread.SetData(slot, stack);
+				}
+
+				return stack;
+			}
 		}
 
 		public void Add(ITypeConverter converter)
@@ -58,9 +54,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			converters.Add(converter);
 
 			if (!(converter is IKernelDependentConverter))
-			{
 				standAloneConverters.Add(converter);
-			}
 		}
 
 		public ITypeConverterContext Context
@@ -72,12 +66,8 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public bool CanHandleType(Type type)
 		{
 			foreach (var converter in converters)
-			{
 				if (converter.CanHandleType(type))
-				{
 					return true;
-				}
-			}
 
 			return false;
 		}
@@ -85,28 +75,20 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public bool CanHandleType(Type type, IConfiguration configuration)
 		{
 			foreach (var converter in converters)
-			{
 				if (converter.CanHandleType(type, configuration))
-				{
 					return true;
-				}
-			}
 
 			return false;
 		}
 
-		public object PerformConversion(String value, Type targetType)
+		public object PerformConversion(string value, Type targetType)
 		{
 			foreach (var converter in converters)
-			{
 				if (converter.CanHandleType(targetType))
-				{
 					return converter.PerformConversion(value, targetType);
-				}
-			}
 
-			var message = String.Format("No converter registered to handle the type {0}",
-			                            targetType.FullName);
+			var message = string.Format("No converter registered to handle the type {0}",
+				targetType.FullName);
 
 			throw new ConverterException(message);
 		}
@@ -114,27 +96,23 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public object PerformConversion(IConfiguration configuration, Type targetType)
 		{
 			foreach (var converter in converters)
-			{
 				if (converter.CanHandleType(targetType, configuration))
-				{
 					return converter.PerformConversion(configuration, targetType);
-				}
-			}
 
-			var message = String.Format("No converter registered to handle the type {0}",
-			                            targetType.FullName);
+			var message = string.Format("No converter registered to handle the type {0}",
+				targetType.FullName);
 
 			throw new ConverterException(message);
 		}
 
 		public TTarget PerformConversion<TTarget>(string value)
 		{
-			return (TTarget)PerformConversion(value, typeof(TTarget));
+			return (TTarget) PerformConversion(value, typeof(TTarget));
 		}
 
 		public TTarget PerformConversion<TTarget>(IConfiguration configuration)
 		{
-			return (TTarget)PerformConversion(configuration, typeof(TTarget));
+			return (TTarget) PerformConversion(configuration, typeof(TTarget));
 		}
 
 		IKernelInternal ITypeConverterContext.Kernel
@@ -157,9 +135,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			get
 			{
 				if (CurrentStack.Count == 0)
-				{
 					return null;
-				}
 
 				return CurrentStack.Peek().First;
 			}
@@ -170,9 +146,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			get
 			{
 				if (CurrentStack.Count == 0)
-				{
 					return null;
-				}
 
 				return CurrentStack.Peek().Second;
 			}
@@ -183,21 +157,21 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			get { return this; }
 		}
 
-		private Stack<Pair<ComponentModel, CreationContext>> CurrentStack
+		protected virtual void InitDefaultConverters()
 		{
-			get
-			{
-				
-				var stack = (Stack<Pair<ComponentModel, CreationContext>>)Thread.GetData(slot);
-				if (stack == null)
-				{
-					stack = new Stack<Pair<ComponentModel, CreationContext>>();
-					Thread.SetData(slot, stack);
-				}
-
-				return stack;
-
-			}
+			Add(new PrimitiveConverter());
+			Add(new TimeSpanConverter());
+			Add(new TypeNameConverter(new TypeNameParser()));
+			Add(new EnumConverter());
+			Add(new ListConverter());
+			Add(new DictionaryConverter());
+			Add(new GenericDictionaryConverter());
+			Add(new GenericListConverter());
+			Add(new ArrayConverter());
+			Add(new ComponentConverter());
+			Add(new AttributeAwareConverter());
+			Add(new ComponentModelConverter());
+			Add(new NullableConverter(this));
 		}
 	}
 }

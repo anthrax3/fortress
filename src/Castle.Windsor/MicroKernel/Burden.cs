@@ -23,42 +23,30 @@ namespace Castle.Windsor.MicroKernel
 {
 	public class Burden
 	{
-		private readonly IHandler handler;
 		private Decommission decommission = Decommission.No;
 
 		private List<Burden> dependencies;
 
 		internal Burden(IHandler handler, bool requiresDecommission, bool trackedExternally)
 		{
-			this.handler = handler;
+			Handler = handler;
 			TrackedExternally = trackedExternally;
 			if (requiresDecommission)
-			{
 				decommission = Decommission.Yes;
-			}
 			else if (Model.Lifecycle.HasDecommissionConcerns)
-			{
 				if (Model.Implementation == typeof(LateBoundComponent) && Model.Lifecycle.DecommissionConcerns.All(IsLateBound))
-				{
 					decommission = Decommission.LateBound;
-				}
 				else
-				{
 					decommission = Decommission.Yes;
-				}
-			}
 		}
 
-		public IHandler Handler
-		{
-			get { return handler; }
-		}
+		public IHandler Handler { get; }
 
 		public object Instance { get; private set; }
 
 		public ComponentModel Model
 		{
-			get { return handler.ComponentModel; }
+			get { return Handler.ComponentModel; }
 		}
 
 		public bool RequiresDecommission
@@ -67,13 +55,9 @@ namespace Castle.Windsor.MicroKernel
 			set
 			{
 				if (value)
-				{
 					decommission = Decommission.Yes;
-				}
 				else
-				{
 					decommission = Decommission.No;
-				}
 			}
 		}
 
@@ -87,60 +71,41 @@ namespace Castle.Windsor.MicroKernel
 		public void AddChild(Burden child)
 		{
 			if (dependencies == null)
-			{
 				dependencies = new List<Burden>(Model.Dependents.Length);
-			}
 			dependencies.Add(child);
 
 			if (child.RequiresDecommission)
-			{
 				decommission = Decommission.Yes;
-			}
 		}
 
 		public bool Release()
 		{
 			var releasing = Releasing;
 			if (releasing != null)
-			{
 				releasing(this);
-			}
 
-			if (handler.Release(this) == false)
-			{
+			if (Handler.Release(this) == false)
 				return false;
-			}
 
 			var released = Released;
 			if (released != null)
-			{
 				released(this);
-			}
 
 			if (dependencies != null)
-			{
 				dependencies.ForEach(c => c.Release());
-			}
 			var graphReleased = GraphReleased;
 			if (graphReleased != null)
-			{
 				graphReleased(this);
-			}
 			return true;
 		}
 
 		public void SetRootInstance(object instance)
 		{
 			if (instance == null)
-			{
 				throw new ArgumentNullException("instance");
-			}
 			Instance = instance;
 			if (decommission == Decommission.LateBound)
-			{
-				// TODO: this may need to be extended if we lazily provide any other decimmission concerns
 				RequiresDecommission = instance is IDisposable;
-			}
 		}
 
 		private bool IsLateBound(IDecommissionConcern arg)

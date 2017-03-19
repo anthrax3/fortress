@@ -13,17 +13,16 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class ChooseElementProcessor : AbstractStatementElementProcessor
 	{
-		private static readonly String OtherwiseElemName = "otherwise";
-		private static readonly String WhenElemName = "when";
+		private static readonly string OtherwiseElemName = "otherwise";
+		private static readonly string WhenElemName = "when";
 
-		public override String Name
+		public override string Name
 		{
 			get { return "choose"; }
 		}
@@ -37,26 +36,18 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			foreach (XmlNode child in element.ChildNodes)
 			{
 				if (IgnoreNode(child))
-				{
 					continue;
-				}
 
 				var elem = GetNodeAsElement(element, child);
 
 				var found = false;
 
 				if (elem.Name == WhenElemName)
-				{
 					found = ProcessStatement(elem, engine);
-				}
 				else if (elem.Name == OtherwiseElemName)
-				{
 					found = true;
-				}
 				else
-				{
 					throw new XmlProcessorException("'{0} can not contain only 'when' and 'otherwise' elements found '{1}'", element.Name, elem.Name);
-				}
 
 				if (found)
 				{
@@ -73,4 +64,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

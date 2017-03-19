@@ -16,26 +16,21 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public class CustomLifestyleAttribute : LifestyleAttribute
 	{
-		private readonly Type customLifestyleType;
-
 		public CustomLifestyleAttribute(Type customLifestyleType)
 			: base(LifestyleType.Custom)
 		{
-			this.customLifestyleType = customLifestyleType;
+			CustomLifestyleType = customLifestyleType;
 		}
 
-		public Type CustomLifestyleType
-		{
-			get { return customLifestyleType; }
-		}
+		public Type CustomLifestyleType { get; }
 
 		[Obsolete("Use CustomLifestyleType property instead.")]
 		public Type LifestyleHandlerType
 		{
-			get { return customLifestyleType; }
+			get { return CustomLifestyleType; }
 		}
 	}
 }

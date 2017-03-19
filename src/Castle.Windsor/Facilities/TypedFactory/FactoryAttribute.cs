@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Windsor.Facilities.TypedFactory
 {
-	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
+	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Delegate)]
 	public class FactoryAttribute : Attribute
 	{
 		public string SelectorComponentName { get; set; }

@@ -13,9 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Linq;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 
 namespace Castle.Windsor.Facilities.TypedFactory
@@ -33,17 +30,11 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			{
 				var defaults = attributes[0];
 				if (defaults.SelectorComponentName != null)
-				{
 					SelectedWith(defaults.SelectorComponentName);
-				}
 				else if (defaults.SelectorComponentType != null)
-				{
 					SelectedWith(defaults.SelectorComponentType);
-				}
 				else if (defaults.SelectorType != null)
-				{
 					SelectedWith(defaults.SelectorType.CreateInstance<ITypedFactoryComponentSelector>());
-				}
 			}
 		}
 
@@ -52,9 +43,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 			get
 			{
 				if (selectorReference == null)
-				{
 					SelectedWith(defaultComponentSelectorKey);
-				}
 
 				return selectorReference;
 			}
@@ -78,9 +67,7 @@ namespace Castle.Windsor.Facilities.TypedFactory
 		public void SelectedWith(ITypedFactoryComponentSelector selector)
 		{
 			if (selector == null)
-			{
 				throw new ArgumentNullException("selector");
-			}
 
 			selectorReference = new InstanceReference<ITypedFactoryComponentSelector>(selector);
 		}

@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
@@ -28,13 +27,16 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		private const string name = "Components with potentially duplicated dependencies";
 		private DuplicatedDependenciesDiagnostic diagnostic;
 
+		public static string Name
+		{
+			get { return name; }
+		}
+
 		public override IEnumerable<DebuggerViewItem> Attach()
 		{
 			var result = diagnostic.Inspect();
 			if (result.Length == 0)
-			{
 				return Enumerable.Empty<DebuggerViewItem>();
-			}
 			var items = BuildItems(result);
 			return new[]
 			{
@@ -65,11 +67,6 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		private DebuggerViewItemWithDetails MismatchView(DependencyDuplicate input)
 		{
 			return new DebuggerViewItemWithDetails(Description(input.Dependency1), Description(input.Dependency2), diagnostic.GetDetails(input));
-		}
-
-		public static string Name
-		{
-			get { return name; }
 		}
 
 		private static string Description(DependencyModel dependencyModel)

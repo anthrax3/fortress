@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.Core
 {
@@ -24,8 +23,7 @@ namespace Castle.Windsor.Core
 	[DebuggerDisplay("Count = {dictionary.Count}")]
 	public class ParameterModelCollection : IEnumerable<ParameterModel>
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		private readonly IDictionary<string, ParameterModel> dictionary =
+		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)] private readonly IDictionary<string, ParameterModel> dictionary =
 			new Dictionary<string, ParameterModel>(StringComparer.OrdinalIgnoreCase);
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -42,6 +40,18 @@ namespace Castle.Windsor.Core
 				dictionary.TryGetValue(key, out result);
 				return result;
 			}
+		}
+
+		[DebuggerStepThrough]
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return dictionary.Values.GetEnumerator();
+		}
+
+		[DebuggerStepThrough]
+		IEnumerator<ParameterModel> IEnumerable<ParameterModel>.GetEnumerator()
+		{
+			return dictionary.Values.GetEnumerator();
 		}
 
 		public void Add(string name, string value)
@@ -64,18 +74,6 @@ namespace Castle.Windsor.Core
 			{
 				throw new ArgumentException(string.Format("Parameter '{0}' already exists.", key), e);
 			}
-		}
-
-		[DebuggerStepThrough]
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return dictionary.Values.GetEnumerator();
-		}
-
-		[DebuggerStepThrough]
-		IEnumerator<ParameterModel> IEnumerable<ParameterModel>.GetEnumerator()
-		{
-			return dictionary.Values.GetEnumerator();
 		}
 	}
 }

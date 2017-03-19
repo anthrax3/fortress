@@ -22,17 +22,15 @@ namespace Castle.Windsor.Windsor.Installer
 	{
 		private readonly HashSet<IWindsorInstaller> installers = new HashSet<IWindsorInstaller>();
 
-		public void Add(IWindsorInstaller instance)
-		{
-			installers.Add(instance);
-		}
-
 		public void Install(IWindsorContainer container, IConfigurationStore store)
 		{
 			foreach (var installer in installers)
-			{
 				installer.Install(container, store);
-			}
+		}
+
+		public void Add(IWindsorInstaller instance)
+		{
+			installers.Add(instance);
 		}
 	}
 }

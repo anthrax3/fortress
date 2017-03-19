@@ -21,14 +21,11 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class DependencyModel
 	{
-		private readonly Type targetItemType;
-		private readonly Type targetType;
+		protected bool initialized;
 		protected ParameterModel parameterModel;
 		protected string reference;
 
-		protected bool initialized;
-
-		public DependencyModel(String dependencyKey, Type targetType, bool isOptional)
+		public DependencyModel(string dependencyKey, Type targetType, bool isOptional)
 			: this(dependencyKey, targetType, isOptional, false, null)
 		{
 		}
@@ -36,15 +33,11 @@ namespace Castle.Windsor.Core
 		// TODO: add configuration so that information about override is attached to the dependency
 		public DependencyModel(string dependencyKey, Type targetType, bool isOptional, bool hasDefaultValue, object defaultValue)
 		{
-			this.targetType = targetType;
+			TargetType = targetType;
 			if (targetType != null && targetType.IsByRef)
-			{
-				targetItemType = targetType.GetElementType();
-			}
+				TargetItemType = targetType.GetElementType();
 			else
-			{
-				targetItemType = targetType;
-			}
+				TargetItemType = targetType;
 			DependencyKey = dependencyKey;
 			IsOptional = isOptional;
 			HasDefaultValue = hasDefaultValue;
@@ -61,7 +54,7 @@ namespace Castle.Windsor.Core
 
 		public bool IsPrimitiveTypeDependency
 		{
-			get { return targetItemType.IsPrimitiveTypeOrCollection(); }
+			get { return TargetItemType.IsPrimitiveTypeOrCollection(); }
 		}
 
 		public ParameterModel Parameter
@@ -69,18 +62,14 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (!initialized)
-				{
 					throw new InvalidOperationException("Not initialized!");
-				}
 				return parameterModel;
 			}
 			set
 			{
 				parameterModel = value;
 				if (parameterModel != null)
-				{
 					reference = ReferenceExpressionUtil.ExtractComponentName(parameterModel.Value);
-				}
 			}
 		}
 
@@ -89,39 +78,25 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (!initialized)
-				{
 					throw new InvalidOperationException("Not initialized!");
-				}
 				return reference;
 			}
 		}
 
-		public Type TargetItemType
-		{
-			get { return targetItemType; }
-		}
+		public Type TargetItemType { get; }
 
-		public Type TargetType
-		{
-			get { return targetType; }
-		}
+		public Type TargetType { get; }
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj))
-			{
 				return false;
-			}
 			if (ReferenceEquals(this, obj))
-			{
 				return true;
-			}
 			var other = obj as DependencyModel;
 			if (other == null)
-			{
 				return false;
-			}
-			return other.targetType == targetType &&
+			return other.TargetType == TargetType &&
 			       Equals(other.DependencyKey, DependencyKey);
 		}
 
@@ -129,8 +104,8 @@ namespace Castle.Windsor.Core
 		{
 			unchecked
 			{
-				var result = (targetType != null ? targetType.GetHashCode() : 0);
-				result = (result*397) ^ (DependencyKey != null ? DependencyKey.GetHashCode() : 0);
+				var result = TargetType != null ? TargetType.GetHashCode() : 0;
+				result = (result * 397) ^ (DependencyKey != null ? DependencyKey.GetHashCode() : 0);
 				return result;
 			}
 		}
@@ -139,9 +114,7 @@ namespace Castle.Windsor.Core
 		{
 			initialized = true;
 			if (parameters == null)
-			{
 				return;
-			}
 			Parameter = ObtainParameterModelByName(parameters) ?? ObtainParameterModelByType(parameters);
 		}
 
@@ -154,9 +127,7 @@ namespace Castle.Windsor.Core
 		{
 			var assemblyQualifiedName = type.AssemblyQualifiedName;
 			if (assemblyQualifiedName == null)
-			{
 				return null;
-			}
 
 			return parameters[assemblyQualifiedName];
 		}
@@ -164,9 +135,7 @@ namespace Castle.Windsor.Core
 		private ParameterModel ObtainParameterModelByName(ParameterModelCollection parameters)
 		{
 			if (DependencyKey == null)
-			{
 				return null;
-			}
 
 			return parameters[DependencyKey];
 		}
@@ -175,15 +144,10 @@ namespace Castle.Windsor.Core
 		{
 			var type = TargetItemType;
 			if (type == null)
-			{
-				// for example it's an interceptor
 				return null;
-			}
 			var found = GetParameterModelByType(type, parameters);
 			if (found == null && type.IsGenericType)
-			{
 				found = GetParameterModelByType(type.GetGenericTypeDefinition(), parameters);
-			}
 			return found;
 		}
 	}

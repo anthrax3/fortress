@@ -23,18 +23,18 @@ namespace Castle.Windsor.MicroKernel
 	{
 		public ComponentRegistrationException(string message) : base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ComponentRegistrationException(string message, Exception innerException)
 			: base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ComponentRegistrationException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 	}
 }

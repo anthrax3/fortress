@@ -24,14 +24,11 @@ namespace Castle.Windsor.MicroKernel
 	[Serializable]
 	public class ComponentReference<T> : IReference<T>
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		protected readonly string referencedComponentName;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] protected readonly string referencedComponentName;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		protected readonly Type referencedComponentType;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] protected readonly Type referencedComponentType;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		protected DependencyModel dependencyModel;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] protected DependencyModel dependencyModel;
 
 		public ComponentReference(Type componentType)
 		{
@@ -39,12 +36,10 @@ namespace Castle.Windsor.MicroKernel
 			referencedComponentType = componentType;
 		}
 
-		public ComponentReference(String referencedComponentName)
+		public ComponentReference(string referencedComponentName)
 		{
 			if (referencedComponentName == null)
-			{
 				throw new ArgumentNullException("referencedComponentName");
-			}
 			this.referencedComponentName = referencedComponentName;
 		}
 
@@ -57,32 +52,41 @@ namespace Castle.Windsor.MicroKernel
 		{
 			var handler = GetHandler(kernel);
 			if (handler == null)
-			{
 				throw new DependencyResolverException(
 					string.Format(
 						"The referenced component {0} could not be resolved. Make sure you didn't misspell the name, and that component is registered.",
 						referencedComponentName));
-			}
 
 			if (handler.IsBeingResolvedInContext(context))
-			{
 				throw new DependencyResolverException(
 					string.Format(
 						"Cycle detected - referenced component {0} wants to use itself as its dependency. This usually signifies a bug in your code.",
 						handler.ComponentModel.Name));
-			}
 
 			var contextForInterceptor = RebuildContext(handler, context);
 
 			try
 			{
-				return (T)handler.Resolve(contextForInterceptor);
+				return (T) handler.Resolve(contextForInterceptor);
 			}
 			catch (InvalidCastException e)
 			{
 				throw new ComponentResolutionException(
 					string.Format("Component {0} is not compatible with type {1}.", referencedComponentName, typeof(T)), e);
 			}
+		}
+
+		void IReference<T>.Attach(ComponentModel component)
+		{
+			dependencyModel = new ComponentDependencyModel(referencedComponentName, ComponentType);
+			component.Dependencies.Add(dependencyModel);
+		}
+
+		void IReference<T>.Detach(ComponentModel component)
+		{
+			if (dependencyModel == null)
+				return;
+			component.Dependencies.Remove(dependencyModel);
 		}
 
 		private IHandler GetHandler(IKernel kernel)
@@ -95,26 +99,9 @@ namespace Castle.Windsor.MicroKernel
 		{
 			var handlerType = ComponentType ?? handler.ComponentModel.Services.First();
 			if (handlerType.ContainsGenericParameters)
-			{
 				return current;
-			}
 
 			return new CreationContext(handlerType, current, false);
-		}
-
-		void IReference<T>.Attach(ComponentModel component)
-		{
-			dependencyModel = new ComponentDependencyModel(referencedComponentName, ComponentType);
-			component.Dependencies.Add(dependencyModel);
-		}
-
-		void IReference<T>.Detach(ComponentModel component)
-		{
-			if (dependencyModel == null)
-			{
-				return;
-			}
-			component.Dependencies.Remove(dependencyModel);
 		}
 	}
 }

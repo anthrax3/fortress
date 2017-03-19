@@ -21,26 +21,19 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 	[Serializable]
 	public class SupportInitializeConcern : ICommissionConcern
 	{
-		private static readonly SupportInitializeConcern instance = new SupportInitializeConcern();
-
 		protected SupportInitializeConcern()
 		{
 		}
+
+		public static SupportInitializeConcern Instance { get; } = new SupportInitializeConcern();
 
 		public void Apply(ComponentModel model, object component)
 		{
 			var supportInitialize = component as ISupportInitialize;
 			if (supportInitialize == null)
-			{
 				return;
-			}
 			supportInitialize.BeginInit();
 			supportInitialize.EndInit();
-		}
-
-		public static SupportInitializeConcern Instance
-		{
-			get { return instance; }
 		}
 	}
 }

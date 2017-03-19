@@ -25,7 +25,7 @@ namespace Castle.Windsor.MicroKernel
 
 		object Resolve(Type service, object argumentsAsAnonymousType);
 
-		object Resolve(String key, Type service);
+		object Resolve(string key, Type service);
 
 		T Resolve<T>(IDictionary arguments);
 
@@ -33,11 +33,11 @@ namespace Castle.Windsor.MicroKernel
 
 		T Resolve<T>();
 
-		T Resolve<T>(String key);
+		T Resolve<T>(string key);
 
-		T Resolve<T>(String key, IDictionary arguments);
+		T Resolve<T>(string key, IDictionary arguments);
 
-		object Resolve(String key, Type service, IDictionary arguments);
+		object Resolve(string key, Type service, IDictionary arguments);
 
 		Array ResolveAll(Type service);
 

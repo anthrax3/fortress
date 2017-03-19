@@ -26,21 +26,35 @@ namespace Castle.Windsor.MicroKernel.Handlers
 	[Serializable]
 	public abstract class AbstractHandler : IHandler, IExposeDependencyInfo, IDisposable
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly ComponentModel model;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly ComponentModel model;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private IKernelInternal kernel;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private IKernelInternal kernel;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private SimpleThreadSafeSet<DependencyModel> missingDependencies;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private SimpleThreadSafeSet<DependencyModel> missingDependencies;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private HandlerState state = HandlerState.Valid;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private HandlerState state = HandlerState.Valid;
 
 		protected AbstractHandler(ComponentModel model)
 		{
 			this.model = model;
+		}
+
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		protected IKernelInternal Kernel
+		{
+			get { return kernel; }
+		}
+
+		public virtual void Dispose()
+		{
+		}
+
+		public void ObtainDependencyDetails(IDependencyInspector inspector)
+		{
+			if (CurrentState == HandlerState.Valid)
+				return;
+			var missing = missingDependencies;
+			inspector.Inspect(this, missing != null ? missing.ToArray() : new DependencyModel[0], Kernel);
 		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
@@ -54,51 +68,10 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			get { return state; }
 		}
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		protected IKernelInternal Kernel
-		{
-			get { return kernel; }
-		}
-
-		public abstract bool ReleaseCore(Burden burden);
-
-		protected abstract object Resolve(CreationContext context, bool instanceRequired);
-
-		public override string ToString()
-		{
-			return string.Format("Model: {0}", model);
-		}
-
-		public virtual void Dispose()
-		{
-		}
-
-		public void ObtainDependencyDetails(IDependencyInspector inspector)
-		{
-			if (CurrentState == HandlerState.Valid)
-			{
-				return;
-			}
-			var missing = missingDependencies;
-			inspector.Inspect(this, missing != null ? missing.ToArray() : new DependencyModel[0], Kernel);
-		}
-
-		private bool HasCustomParameter(object key)
-		{
-			if (key == null)
-			{
-				return false;
-			}
-
-			return model.CustomDependencies.Contains(key);
-		}
-
 		public virtual void Init(IKernelInternal kernel)
 		{
 			if (kernel == null)
-			{
 				throw new ArgumentNullException("kernel");
-			}
 			this.kernel = kernel;
 			this.kernel.AddedAsChildKernel += OnAddedAsChildKernel;
 
@@ -108,14 +81,6 @@ namespace Castle.Windsor.MicroKernel.Handlers
 				SetNewState(HandlerState.Valid);
 				DisconnectEvents();
 				missingDependencies = null;
-			}
-		}
-
-		protected virtual void InitDependencies()
-		{
-			foreach (var dependency in ComponentModel.Dependencies)
-			{
-				AddDependency(dependency);
 			}
 		}
 
@@ -170,9 +135,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		public virtual bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
 		{
 			if (this.model.HasCustomDependencies == false)
-			{
 				return false;
-			}
 			return HasCustomParameter(dependency.DependencyKey) || HasCustomParameter(dependency.TargetItemType);
 		}
 
@@ -181,24 +144,41 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			Debug.Assert(CanResolve(context, contextHandlerResolver, model, dependency), "CanResolve(context, contextHandlerResolver, model, dependency)");
 			if (HasCustomParameter(dependency.DependencyKey))
-			{
 				return model.CustomDependencies[dependency.DependencyKey];
-			}
 
 			return model.CustomDependencies[dependency.TargetItemType];
+		}
+
+		public abstract bool ReleaseCore(Burden burden);
+
+		protected abstract object Resolve(CreationContext context, bool instanceRequired);
+
+		public override string ToString()
+		{
+			return string.Format("Model: {0}", model);
+		}
+
+		private bool HasCustomParameter(object key)
+		{
+			if (key == null)
+				return false;
+
+			return model.CustomDependencies.Contains(key);
+		}
+
+		protected virtual void InitDependencies()
+		{
+			foreach (var dependency in ComponentModel.Dependencies)
+				AddDependency(dependency);
 		}
 
 		protected void AddDependency(DependencyModel dependency)
 		{
 			dependency.Init(model.ParametersInternal);
 			if (AddOptionalDependency(dependency))
-			{
 				return;
-			}
 			if (AddResolvableDependency(dependency))
-			{
 				return;
-			}
 			AddMissingDependency(dependency);
 		}
 
@@ -231,21 +211,15 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			var missing = missingDependencies;
 			if (CurrentState == HandlerState.Valid || missing == null)
-			{
 				return true;
-			}
 			foreach (var dependency in missing.ToArray())
 			{
 				if (dependency.TargetItemType == null)
-				{
 					return CanProvideDependenciesDynamically(context);
-				}
 				// a self-dependency is not allowed
 				var handler = Kernel.GetHandler(dependency.TargetItemType);
 				if (handler == this || handler == null)
-				{
 					return CanProvideDependenciesDynamically(context);
-				}
 			}
 			return true;
 		}
@@ -259,18 +233,11 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			var missing = missingDependencies;
 			if (missing == null)
-			{
-				// handled on another thread?
 				return;
-			}
 			// Check within the Kernel
 			foreach (var dependency in missing.ToArray())
-			{
 				if (AddResolvableDependency(dependency))
-				{
 					missing.Remove(dependency);
-				}
-			}
 
 			if (AllRequiredDependenciesResolvable())
 			{
@@ -299,21 +266,15 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			var handler = GetDependencyHandler(dependency);
 			if (handler != null)
-			{
 				ComponentModel.AddDependent(handler.ComponentModel);
-			}
 		}
 
 		private IHandler GetDependencyHandler(DependencyModel dependency)
 		{
 			if (dependency.ReferencedComponentName != null)
-			{
 				return Kernel.GetHandler(dependency.ReferencedComponentName);
-			}
 			if (dependency.TargetItemType != null)
-			{
 				return Kernel.GetHandler(dependency.TargetItemType);
-			}
 			return null;
 		}
 
@@ -341,19 +302,13 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			var missing = missingDependencies;
 			if (missing == null)
-			{
 				return true;
-			}
 			var dependencies = missing.ToArray();
 			if (dependencies.Length == 0)
-			{
 				return true;
-			}
 			var constructorDependencies = dependencies.OfType<ConstructorDependencyModel>().ToList();
 			if (dependencies.Length != constructorDependencies.Count)
-			{
 				return false;
-			}
 
 			var ctorsWithMissingDependenciesCount = constructorDependencies.Select(d => d.Constructor).Distinct().Count();
 			return model.Constructors.Count > ctorsWithMissingDependenciesCount;

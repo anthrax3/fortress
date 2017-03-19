@@ -30,9 +30,7 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		{
 			var handlers = diagnostic.Inspect();
 			if (handlers.Length == 0)
-			{
 				return Enumerable.Empty<DebuggerViewItem>();
-			}
 			Array.Sort(handlers, (f, s) => f.ComponentModel.Name.CompareTo(s.ComponentModel.Name));
 			var items = Array.ConvertAll(handlers, DefaultComponentView);
 			return new[]

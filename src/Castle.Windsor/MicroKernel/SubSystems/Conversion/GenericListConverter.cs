@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
@@ -26,19 +25,17 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public override bool CanHandleType(Type type)
 		{
 			if (!type.IsGenericType)
-			{
 				return false;
-			}
 
 			var genericDef = type.GetGenericTypeDefinition();
 
-			return (genericDef == typeof(IList<>)
-			        || genericDef == typeof(ICollection<>)
-			        || genericDef == typeof(List<>)
-			        || genericDef == typeof(IEnumerable<>));
+			return genericDef == typeof(IList<>)
+			       || genericDef == typeof(ICollection<>)
+			       || genericDef == typeof(List<>)
+			       || genericDef == typeof(IEnumerable<>);
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			throw new NotImplementedException();
 		}
@@ -50,17 +47,13 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			var argTypes = targetType.GetGenericArguments();
 
 			if (argTypes.Length != 1)
-			{
 				throw new ConverterException("Expected type with one generic argument.");
-			}
 
 			var itemType = configuration.Attributes["type"];
 			var convertTo = argTypes[0];
 
 			if (itemType != null)
-			{
 				convertTo = Context.Composition.PerformConversion<Type>(itemType);
-			}
 
 			var helperType = typeof(ListHelper<>).MakeGenericType(convertTo);
 			var converterHelper = helperType.CreateInstance<IGenericCollectionConverterHelper>(this);

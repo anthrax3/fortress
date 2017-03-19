@@ -13,24 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel
 {
-	public delegate void ComponentDataDelegate(String key, IHandler handler);
-
-	public delegate void ComponentInstanceDelegate(ComponentModel model, object instance);
-
-	public delegate void ComponentModelDelegate(ComponentModel model);
-
-	public delegate void ServiceDelegate(Type service);
-
-	public delegate void HandlerDelegate(IHandler handler, ref bool stateChanged);
-
-	public delegate void HandlersChangedDelegate(ref bool stateChanged);
-
-	public delegate void DependencyDelegate(ComponentModel client, DependencyModel model, Object dependency);
-
 	public interface IKernelEvents
 	{
 		event ComponentDataDelegate ComponentRegistered;

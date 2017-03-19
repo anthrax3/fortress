@@ -33,18 +33,14 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 		{
 			var disposableCache = scopeCache as IDisposable;
 			if (disposableCache != null)
-			{
 				disposableCache.Dispose();
-			}
 		}
 
 		public Burden GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
 		{
 			var burden = scopeCache[model];
 			if (burden == null)
-			{
 				scopeCache[model] = burden = createInstance(onAfterCreated);
-			}
 			return burden;
 		}
 	}

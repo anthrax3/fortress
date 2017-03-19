@@ -28,20 +28,15 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 
 		public static void Run()
 		{
-			HttpApplication.RegisterModule(typeof(PerWebRequestLifestyleModule));            
+			HttpApplication.RegisterModule(typeof(PerWebRequestLifestyleModule));
 			var dynamicModuleUtil = Type.GetType("Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility, " + MicrosoftWebInfrastructureDll,
-			                                     throwOnError: false);
+				false);
 			if (dynamicModuleUtil == null)
-			{
 				return;
-			}
 			var registerModule = dynamicModuleUtil.GetMethod("RegisterModule", BindingFlags.Static | BindingFlags.Public);
 			if (registerModule == null)
-			{
 				return;
-			}
-			registerModule.Invoke(null, new object[] { typeof(PerWebRequestLifestyleModule) });
-        	}
+			registerModule.Invoke(null, new object[] {typeof(PerWebRequestLifestyleModule)});
+		}
 	}
 }
-

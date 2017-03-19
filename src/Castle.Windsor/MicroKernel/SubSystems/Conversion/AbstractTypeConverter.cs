@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -24,7 +23,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 
 		public abstract bool CanHandleType(Type type);
 
-		public abstract object PerformConversion(String value, Type targetType);
+		public abstract object PerformConversion(string value, Type targetType);
 
 		public abstract object PerformConversion(IConfiguration configuration, Type targetType);
 
@@ -33,14 +32,14 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			return CanHandleType(type);
 		}
 
-		public TTarget PerformConversion<TTarget>(String value)
+		public TTarget PerformConversion<TTarget>(string value)
 		{
-			return (TTarget)PerformConversion(value, typeof(TTarget));
+			return (TTarget) PerformConversion(value, typeof(TTarget));
 		}
 
 		public TTarget PerformConversion<TTarget>(IConfiguration configuration)
 		{
-			return (TTarget)PerformConversion(configuration, typeof(TTarget));
+			return (TTarget) PerformConversion(configuration, typeof(TTarget));
 		}
 	}
 }

@@ -67,10 +67,8 @@ namespace Castle.Windsor.Facilities.Startable
 		{
 			var casted = expression as TExpression;
 			if (casted == null)
-			{
 				throw new FacilityException(
 					"Unexpected shape of expression. Expected direct call to method, something like 'x => x.Foo'");
-			}
 
 			return casted;
 		}
@@ -81,9 +79,9 @@ namespace Castle.Windsor.Facilities.Startable
 			var createDelegate = EnsureIs<MethodCallExpression>(call.Operand);
 			var method = EnsureIs<ConstantExpression>(
 				createDelegate.Object
-				);
+			);
 
-			return ((MethodInfo)method.Value).Name;
+			return ((MethodInfo) method.Value).Name;
 		}
 	}
 }

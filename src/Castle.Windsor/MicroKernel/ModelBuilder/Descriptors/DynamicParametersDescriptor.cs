@@ -41,9 +41,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		private ComponentLifecycleExtension GetDynamicParametersExtension(ComponentModel model)
 		{
 			if (model.ExtendedProperties.Contains(key))
-			{
-				return (ComponentLifecycleExtension)model.ExtendedProperties[key];
-			}
+				return (ComponentLifecycleExtension) model.ExtendedProperties[key];
 
 			var dynamicParameters = new ComponentLifecycleExtension();
 			model.ExtendedProperties[key] = dynamicParameters;

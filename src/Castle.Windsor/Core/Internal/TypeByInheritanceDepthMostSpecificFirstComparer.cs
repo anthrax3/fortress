@@ -23,20 +23,14 @@ namespace Castle.Windsor.Core.Internal
 		public int Compare(Type x, Type y)
 		{
 			if (x == y)
-			{
 				return 0;
-			}
 			if (x.IsAssignableFrom(y))
-			{
 				return 1;
-			}
 			if (y.IsAssignableFrom(x))
-			{
 				return -1;
-			}
 			var message =
-				String.Format("Types {0} and {1} are unrelated. That is not allowed. Are you sure you want to make them both services on the same component?",
-				              x, y);
+				string.Format("Types {0} and {1} are unrelated. That is not allowed. Are you sure you want to make them both services on the same component?",
+					x, y);
 			throw new ArgumentOutOfRangeException("x", message);
 		}
 	}

@@ -21,11 +21,6 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		private readonly List<ComponentResolvingDelegate> resolvers = new List<ComponentResolvingDelegate>(4);
 		private IKernel kernel;
 
-		public void AddHandler(ComponentResolvingDelegate handler)
-		{
-			resolvers.Add(handler);
-		}
-
 		public void Init(IKernel kernel, IHandler handler)
 		{
 			this.kernel = kernel;
@@ -35,7 +30,6 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		{
 			Releasing releasing = null;
 			if (resolvers.Count > 0)
-			{
 				foreach (var resolver in resolvers)
 				{
 					var releaser = resolver(kernel, invocation.Context);
@@ -49,20 +43,20 @@ namespace Castle.Windsor.MicroKernel.Handlers
 						releasing.Add(releaser);
 					}
 				}
-			}
 
 			invocation.Proceed();
 
 			if (releasing == null)
-			{
 				return;
-			}
 			var burden = invocation.Burden;
 			if (burden == null)
-			{
 				return;
-			}
 			burden.Releasing += releasing.Invoked;
+		}
+
+		public void AddHandler(ComponentResolvingDelegate handler)
+		{
+			resolvers.Add(handler);
 		}
 
 		private class Releasing

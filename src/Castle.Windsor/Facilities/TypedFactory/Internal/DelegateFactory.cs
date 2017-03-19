@@ -29,24 +29,16 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 		public IRegistration Load(string name, Type service, IDictionary arguments)
 		{
 			if (service == null)
-			{
 				return null;
-			}
 
 			var invoke = ExtractInvokeMethod(service);
 			if (invoke == null)
-			{
 				return null;
-			}
 			if (invoke.ReturnType.IsPrimitiveTypeOrCollection())
-			{
 				return null;
-			}
 
 			if (service.IsGenericType)
-			{
 				service = service.GetGenericTypeDefinition();
-			}
 
 			return Component.For(service)
 				.ImplementedBy(service, DelegateServiceStrategy.Instance)
@@ -55,11 +47,11 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 				.Interceptors(new InterceptorReference(TypedFactoryFacility.InterceptorKey)).Last
 				.Activator<DelegateFactoryActivator>()
 				.DynamicParameters((k, d) =>
-				                   	{
-				                   		var selector = k.Resolve<ITypedFactoryComponentSelector>(TypedFactoryFacility.DefaultDelegateSelectorKey);
-				                   		d.InsertTyped(selector);
-				                   		return k2 => k2.ReleaseComponent(selector);
-				                   	})
+				{
+					var selector = k.Resolve<ITypedFactoryComponentSelector>(TypedFactoryFacility.DefaultDelegateSelectorKey);
+					d.InsertTyped(selector);
+					return k2 => k2.ReleaseComponent(selector);
+				})
 				.AddAttributeDescriptor(TypedFactoryFacility.IsFactoryKey, bool.TrueString);
 		}
 
@@ -67,24 +59,18 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 		{
 			var defaultName = ComponentName.DefaultNameFor(service);
 			if (string.IsNullOrEmpty(defaultName))
-			{
 				return "auto-factory: " + Guid.NewGuid();
-			}
 			return "auto-factory: " + defaultName;
 		}
 
 		public static MethodInfo ExtractInvokeMethod(Type service)
 		{
 			if (!service.Is<MulticastDelegate>())
-			{
 				return null;
-			}
 
 			var invoke = GetInvokeMethod(service);
 			if (!HasReturn(invoke))
-			{
 				return null;
-			}
 
 			return invoke;
 		}

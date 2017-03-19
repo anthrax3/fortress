@@ -34,9 +34,7 @@ namespace Castle.Windsor.Core.Internal
 		public SimpleSortedSet(IEnumerable<T> other, IComparer<T> comparer) : this(comparer)
 		{
 			foreach (var item in other)
-			{
 				Add(item);
-			}
 		}
 
 		public T this[int index]
@@ -66,9 +64,7 @@ namespace Castle.Windsor.Core.Internal
 					return;
 				}
 				if (result == 0)
-				{
 					return;
-				}
 			}
 			items.Add(item);
 		}

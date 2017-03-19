@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
@@ -22,10 +21,10 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 	{
 		public override XmlNodeType[] AcceptNodeTypes
 		{
-			get { return new[] { XmlNodeType.ProcessingInstruction }; }
+			get { return new[] {XmlNodeType.ProcessingInstruction}; }
 		}
 
-		public override String Name
+		public override string Name
 		{
 			get { return "undef"; }
 		}
@@ -40,4 +39,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

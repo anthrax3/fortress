@@ -26,4 +26,3 @@ namespace Castle.Windsor.Windsor.Configuration.AppDomain
 		}
 	}
 }
-

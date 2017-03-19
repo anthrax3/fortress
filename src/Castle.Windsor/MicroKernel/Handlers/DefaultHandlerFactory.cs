@@ -51,9 +51,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			var resolveExtensions = model.ResolveExtensions(false);
 			var releaseExtensions = model.ReleaseExtensions(false);
 			if (releaseExtensions == null && resolveExtensions == null)
-			{
 				return new DefaultHandler(model);
-			}
 			return new ExtendedHandler(model, resolveExtensions, releaseExtensions);
 		}
 

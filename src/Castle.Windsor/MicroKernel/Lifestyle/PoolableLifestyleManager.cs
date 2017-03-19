@@ -39,26 +39,20 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 			get
 			{
 				if (pool != null)
-				{
 					return pool;
-				}
 				var initializing = false;
 				try
 				{
 					initializing = init.ExecuteThreadSafeOnce();
 
 					if (pool == null)
-					{
 						pool = CreatePool(initialSize, maxSize);
-					}
 					return pool;
 				}
 				finally
 				{
 					if (initializing)
-					{
 						init.EndThreadSafeOnceSection();
-					}
 				}
 			}
 		}
@@ -66,17 +60,13 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		public override void Dispose()
 		{
 			if (pool != null)
-			{
 				pool.Dispose();
-			}
 		}
 
 		public override bool Release(object instance)
 		{
 			if (pool != null)
-			{
 				return pool.Release(instance);
-			}
 			return false;
 		}
 
@@ -88,12 +78,10 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 		protected IPool CreatePool(int initialSize, int maxSize)
 		{
 			if (!Kernel.HasComponent(typeof(IPoolFactory)))
-			{
 				Kernel.Register(
 					Component.For<IPoolFactory>()
 						.ImplementedBy<DefaultPoolFactory>()
 						.NamedAutomatically("castle.internal-pool-factory"));
-			}
 
 			var factory = Kernel.Resolve<IPoolFactory>();
 			return factory.Create(initialSize, maxSize, ComponentActivator);
@@ -101,7 +89,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 
 		protected virtual Burden PoolCreationCallback(CreationContext context, IReleasePolicy releasePolicy)
 		{
-			var burden = base.CreateInstance(context, false);
+			var burden = CreateInstance(context, false);
 			Track(burden, releasePolicy);
 			return burden;
 		}

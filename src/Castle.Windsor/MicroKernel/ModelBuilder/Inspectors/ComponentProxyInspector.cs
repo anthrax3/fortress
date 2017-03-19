@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Proxy;
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
@@ -46,9 +45,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			var proxyBehaviorAttribute = ReadProxyBehaviorFromType(model.Implementation);
 			if (proxyBehaviorAttribute == null)
-			{
 				proxyBehaviorAttribute = new ComponentProxyBehaviorAttribute();
-			}
 
 			ReadProxyBehaviorFromConfig(model, proxyBehaviorAttribute);
 
@@ -58,15 +55,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		private void ReadProxyBehaviorFromConfig(ComponentModel model, ComponentProxyBehaviorAttribute behavior)
 		{
 			if (model.Configuration == null)
-			{
 				return;
-			}
-			
+
 			var interfaces = model.Configuration.Children["additionalInterfaces"];
 			if (interfaces == null)
-			{
 				return;
-			}
 			var list = new List<Type>(behavior.AdditionalInterfaces);
 			foreach (var node in interfaces.Children)
 			{
@@ -80,21 +73,19 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		private static void ApplyProxyBehavior(ComponentProxyBehaviorAttribute behavior, ComponentModel model)
 		{
 			var options = model.ObtainProxyOptions();
-			
+
 			options.AddAdditionalInterfaces(behavior.AdditionalInterfaces);
-			if(model.Implementation.IsInterface)
-			{
+			if (model.Implementation.IsInterface)
 				options.OmitTarget = true;
-			}
 		}
 
 		private static void EnsureComponentRegisteredWithInterface(ComponentModel model)
 		{
 			if (model.HasClassServices)
 			{
-				var message = String.Format("The class {0} requested a single interface proxy, " +
+				var message = string.Format("The class {0} requested a single interface proxy, " +
 				                            "however the service {1} does not represent an interface",
-				                            model.Implementation.FullName, model.Services.First().FullName);
+					model.Implementation.FullName, model.Services.First().FullName);
 
 				throw new ComponentRegistrationException(message);
 			}

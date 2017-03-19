@@ -29,9 +29,7 @@ namespace Castle.Windsor.Core
 			get
 			{
 				if (methodInfo2Model == null)
-				{
 					methodInfo2Model = new Dictionary<object, object>();
-				}
 
 				return methodInfo2Model;
 			}

@@ -41,16 +41,10 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)
 		{
 			if (dictionary != null)
-			{
 				foreach (DictionaryEntry property in dictionary)
-				{
 					model.ExtendedProperties[property.Key] = property.Value;
-				}
-			}
 			if (properties != null)
-			{
 				Array.ForEach(properties, p => model.ExtendedProperties[p.Key] = p.Value);
-			}
 		}
 	}
 }

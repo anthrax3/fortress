@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Windsor;
 
@@ -21,20 +20,17 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 {
 	public class ThreadStaticLifetimeScope : ILifetimeScope
 	{
+		[ThreadStatic] private static ThreadStaticLifetimeScope currentScope;
+
 		private readonly Lock @lock = Lock.Create();
 		private readonly ThreadStaticLifetimeScope parentScope;
 		private ScopeCache cache = new ScopeCache();
-
-		[ThreadStatic]
-		private static ThreadStaticLifetimeScope currentScope;
 
 		public ThreadStaticLifetimeScope(IKernel container)
 		{
 			var parent = ObtainCurrentScope();
 			if (parent != null)
-			{
 				parentScope = parent;
-			}
 			SetCurrentScope(this);
 		}
 
@@ -47,9 +43,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 			using (var token = @lock.ForReadingUpgradeable())
 			{
 				if (cache == null)
-				{
 					return;
-				}
 				token.Upgrade();
 				cache.Dispose();
 				cache = null;

@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Linq;
-using Castle.Core.Core;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.ComponentActivator;
 
@@ -26,7 +25,7 @@ namespace Castle.Windsor.MicroKernel
 	{
 		[Obsolete("Use Resolve(key, new Arguments()) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual object this[String key]
+		public virtual object this[string key]
 		{
 			get { return Resolve<object>(key); }
 		}
@@ -40,7 +39,7 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual void AddComponent(String key, Type classType)
+		public virtual void AddComponent(string key, Type classType)
 		{
 			AddComponent(key, classType, classType);
 		}
@@ -61,7 +60,7 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual void AddComponent(String key, Type serviceType, Type classType)
+		public virtual void AddComponent(string key, Type serviceType, Type classType)
 		{
 			AddComponent(key, serviceType, classType, LifestyleType.Singleton);
 		}
@@ -78,27 +77,17 @@ namespace Castle.Windsor.MicroKernel
 		public void AddComponent(string key, Type serviceType, Type classType, LifestyleType lifestyle, bool overwriteLifestyle)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (serviceType == null)
-			{
 				throw new ArgumentNullException("serviceType");
-			}
 			if (classType == null)
-			{
 				throw new ArgumentNullException("classType");
-			}
 			if (LifestyleType.Undefined == lifestyle)
-			{
 				throw new ArgumentException("The specified lifestyle must be Thread, Transient, or Singleton.", "lifestyle");
-			}
-			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] { serviceType }, classType, null);
+			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] {serviceType}, classType, null);
 
 			if (overwriteLifestyle || LifestyleType.Undefined == model.LifestyleType)
-			{
 				model.LifestyleType = lifestyle;
-			}
 
 			AddCustomComponent(model);
 		}
@@ -154,19 +143,15 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(instance.GetType()).Named(key).Instance(instance)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public void AddComponentInstance(String key, object instance)
+		public void AddComponentInstance(string key, object instance)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (instance == null)
-			{
 				throw new ArgumentNullException("instance");
-			}
 
 			var classType = instance.GetType();
-			var model = new ComponentModel(new ComponentName(key, true), new[] { classType }, classType, new Arguments { { "instance", instance } })
+			var model = new ComponentModel(new ComponentName(key, true), new[] {classType}, classType, new Arguments {{"instance", instance}})
 			{
 				LifestyleType = LifestyleType.Singleton,
 				CustomComponentActivator = typeof(ExternalInstanceActivator)
@@ -177,7 +162,7 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(serviceType).Named(key).Instance(instance)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public void AddComponentInstance(String key, Type serviceType, object instance)
+		public void AddComponentInstance(string key, Type serviceType, object instance)
 		{
 			AddComponentInstance(key, serviceType, instance.GetType(), instance);
 		}
@@ -187,23 +172,15 @@ namespace Castle.Windsor.MicroKernel
 		public void AddComponentInstance(string key, Type serviceType, Type classType, object instance)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (serviceType == null)
-			{
 				throw new ArgumentNullException("serviceType");
-			}
 			if (instance == null)
-			{
 				throw new ArgumentNullException("instance");
-			}
 			if (classType == null)
-			{
 				throw new ArgumentNullException("classType");
-			}
 
-			var model = new ComponentModel(new ComponentName(key, true), new[] { serviceType }, classType, new Arguments { { "instance", instance } })
+			var model = new ComponentModel(new ComponentName(key, true), new[] {serviceType}, classType, new Arguments {{"instance", instance}})
 			{
 				LifestyleType = LifestyleType.Singleton,
 				CustomComponentActivator = typeof(ExternalInstanceActivator)
@@ -221,7 +198,7 @@ namespace Castle.Windsor.MicroKernel
 		}
 
 		[Obsolete("Use Register(Component.For(serviceType).ImplementedBy<T>().Instance(instance)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void AddComponentInstance<T>(Type serviceType, object instance)
 		{
@@ -231,67 +208,49 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual void AddComponentWithExtendedProperties(String key, Type classType, IDictionary extendedProperties)
+		public virtual void AddComponentWithExtendedProperties(string key, Type classType, IDictionary extendedProperties)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (extendedProperties == null)
-			{
 				throw new ArgumentNullException("extendedProperties");
-			}
 			if (classType == null)
-			{
 				throw new ArgumentNullException("classType");
-			}
 
-			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] { classType }, classType, extendedProperties);
+			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] {classType}, classType, extendedProperties);
 			AddCustomComponent(model);
 		}
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual void AddComponentWithExtendedProperties(String key, Type serviceType, Type classType, IDictionary extendedProperties)
+		public virtual void AddComponentWithExtendedProperties(string key, Type serviceType, Type classType, IDictionary extendedProperties)
 		{
 			if (key == null)
-			{
 				throw new ArgumentNullException("key");
-			}
 			if (extendedProperties == null)
-			{
 				throw new ArgumentNullException("extendedProperties");
-			}
 			if (serviceType == null)
-			{
 				throw new ArgumentNullException("serviceType");
-			}
 			if (classType == null)
-			{
 				throw new ArgumentNullException("classType");
-			}
 
-			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] { serviceType }, classType, extendedProperties);
+			var model = ComponentModelBuilder.BuildModel(new ComponentName(key, true), new[] {serviceType}, classType, extendedProperties);
 			AddCustomComponent(model);
 		}
 
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual IKernel AddFacility(String key, IFacility facility)
+		public virtual IKernel AddFacility(string key, IFacility facility)
 		{
 			if (facility == null)
-			{
 				throw new ArgumentNullException("facility");
-			}
 			var facilityType = facility.GetType();
 			if (facilities.Any(f => f.GetType() == facilityType))
-			{
 				throw new ArgumentException(
 					string.Format(
 						"Facility of type '{0}' has already been registered with the container. Only one facility of a given type can exist in the container.",
 						facilityType.FullName));
-			}
 			facilities.Add(facility);
 			facility.Init(this, ConfigurationStore.GetFacilityConfiguration(key));
 
@@ -300,14 +259,14 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use AddFacility<TFacility>() instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public IKernel AddFacility<T>(String key) where T : IFacility, new()
+		public IKernel AddFacility<T>(string key) where T : IFacility, new()
 		{
 			return AddFacility(new T());
 		}
 
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public IKernel AddFacility<T>(String key, Action<T> onCreate)
+		public IKernel AddFacility<T>(string key, Action<T> onCreate)
 			where T : IFacility, new()
 		{
 			return AddFacility(onCreate);
@@ -317,7 +276,7 @@ namespace Castle.Windsor.MicroKernel
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public object Resolve(string key, IDictionary arguments)
 		{
-			return (this as IKernelInternal).Resolve(key, service: null, arguments: arguments, policy: ReleasePolicy);
+			return (this as IKernelInternal).Resolve(key, null, arguments, ReleasePolicy);
 		}
 
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead")]

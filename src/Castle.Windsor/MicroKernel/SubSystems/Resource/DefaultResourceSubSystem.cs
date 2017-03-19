@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 {
@@ -27,22 +26,18 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 			InitDefaultResourceFactories();
 		}
 
-		public IResource CreateResource(String resource)
+		public IResource CreateResource(string resource)
 		{
 			if (resource == null)
-			{
 				throw new ArgumentNullException("resource");
-			}
 
 			return CreateResource(new CustomUri(resource));
 		}
 
-		public IResource CreateResource(String resource, String basePath)
+		public IResource CreateResource(string resource, string basePath)
 		{
 			if (resource == null)
-			{
 				throw new ArgumentNullException("resource");
-			}
 
 			return CreateResource(new CustomUri(resource), basePath);
 		}
@@ -50,40 +45,26 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 		public IResource CreateResource(CustomUri uri)
 		{
 			if (uri == null)
-			{
 				throw new ArgumentNullException("uri");
-			}
 
 			foreach (var resFactory in resourceFactories)
-			{
 				if (resFactory.Accept(uri))
-				{
 					return resFactory.Create(uri);
-				}
-			}
 
 			throw new KernelException("No Resource factory was able to " +
 			                          "deal with Uri " + uri);
 		}
 
-		public IResource CreateResource(CustomUri uri, String basePath)
+		public IResource CreateResource(CustomUri uri, string basePath)
 		{
 			if (uri == null)
-			{
 				throw new ArgumentNullException("uri");
-			}
 			if (basePath == null)
-			{
 				throw new ArgumentNullException("basePath");
-			}
 
 			foreach (var resFactory in resourceFactories)
-			{
 				if (resFactory.Accept(uri))
-				{
 					return resFactory.Create(uri, basePath);
-				}
-			}
 
 			throw new KernelException("No Resource factory was able to " +
 			                          "deal with Uri " + uri);
@@ -92,9 +73,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 		public void RegisterResourceFactory(IResourceFactory resourceFactory)
 		{
 			if (resourceFactory == null)
-			{
 				throw new ArgumentNullException("resourceFactory");
-			}
 
 			resourceFactories.Add(resourceFactory);
 		}

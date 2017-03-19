@@ -17,7 +17,6 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Remoting.Messaging;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Windsor;
 
@@ -36,16 +35,13 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 
 		public CallContextLifetimeScope(IKernel container) : this()
 		{
-
 		}
 
 		public CallContextLifetimeScope()
 		{
 			var parent = ObtainCurrentScope();
 			if (parent != null)
-			{
 				parentScope = parent;
-			}
 			contextId = Guid.NewGuid();
 			var added = appDomainLocalInstanceCache.TryAdd(contextId, this);
 			Debug.Assert(added);
@@ -61,21 +57,15 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 			using (var token = @lock.ForReadingUpgradeable())
 			{
 				if (cache == null)
-				{
 					return;
-				}
 				token.Upgrade();
 				cache.Dispose();
 				cache = null;
 
 				if (parentScope != null)
-				{
 					SetCurrentScope(parentScope);
-				}
 				else
-				{
 					CallContext.FreeNamedDataSlot(keyInCallContext);
-				}
 			}
 			CallContextLifetimeScope @this;
 			appDomainLocalInstanceCache.TryRemove(contextId, out @this);
@@ -96,7 +86,7 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 				return burden;
 			}
 		}
-		
+
 		private void SetCurrentScope(CallContextLifetimeScope lifetimeScope)
 		{
 			CallContext.LogicalSetData(keyInCallContext, lifetimeScope.contextId);
@@ -106,11 +96,9 @@ namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
 		{
 			var scopeKey = CallContext.LogicalGetData(keyInCallContext);
 			if (scopeKey == null)
-			{
 				return null;
-			}
 			CallContextLifetimeScope scope;
-			appDomainLocalInstanceCache.TryGetValue((Guid)scopeKey, out scope);
+			appDomainLocalInstanceCache.TryGetValue((Guid) scopeKey, out scope);
 			return scope;
 		}
 	}

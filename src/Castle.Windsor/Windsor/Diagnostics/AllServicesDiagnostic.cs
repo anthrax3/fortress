@@ -30,7 +30,7 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public ILookup<Type, IHandler> Inspect()
 		{
 			return kernel.GetAssignableHandlers(typeof(object))
-				.SelectMany(handler => handler.ComponentModel.Services, (handler, service) => new { handler, service })
+				.SelectMany(handler => handler.ComponentModel.Services, (handler, service) => new {handler, service})
 				.ToLookup(g => g.service, g => g.handler);
 		}
 	}

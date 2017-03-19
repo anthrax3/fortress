@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-using System;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -24,14 +23,14 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 	{
 		private static readonly Regex PropertyValidationRegExp = new Regex(@"(\#!?\{\s*((?:\w|\.)+)\s*\})", RegexOptions.Compiled);
 
-		private static readonly XmlNodeType[] acceptNodes = new[] { XmlNodeType.CDATA, XmlNodeType.Text };
+		private static readonly XmlNodeType[] acceptNodes = {XmlNodeType.CDATA, XmlNodeType.Text};
 
 		public override XmlNodeType[] AcceptNodeTypes
 		{
 			get { return acceptNodes; }
 		}
 
-		public override String Name
+		public override string Name
 		{
 			get { return "#text"; }
 		}
@@ -52,9 +51,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 			while ((match = PropertyValidationRegExp.Match(value, pos)).Success)
 			{
 				if (pos < match.Index)
-				{
 					AppendChild(fragment, value.Substring(pos, match.Index - pos));
-				}
 
 				var propRef = match.Groups[1].Value; // #!{ propKey }
 				var propKey = match.Groups[2].Value; // propKey
@@ -68,9 +65,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 					// When node has a parentNode (not an attribute)
 					// we copy any attributes for the property into the parentNode
 					if (node.ParentNode != null)
-					{
 						MoveAttributes(node.ParentNode as XmlElement, prop);
-					}
 
 					AppendChild(fragment, prop.ChildNodes);
 				}
@@ -79,13 +74,9 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 					// fallback to reading from appSettings
 					var appSetting = ConfigurationManager.AppSettings[propKey];
 					if (appSetting != null)
-					{
 						AppendChild(fragment, appSetting);
-					}
 					else
-					{
-						throw new XmlProcessorException(String.Format("Required configuration property {0} not found", propKey));
-					}
+						throw new XmlProcessorException(string.Format("Required configuration property {0} not found", propKey));
 				}
 
 				pos = match.Index + match.Length;
@@ -93,25 +84,17 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 
 			// Appending anything left
 			if (pos > 0 && pos < value.Length)
-			{
 				AppendChild(fragment, value.Substring(pos, value.Length - pos));
-			}
 
 			// we only process when there was at least one match
 			// even when the fragment contents is empty since
 			// that could mean that there was a match but the property
 			// reference was a silent property
 			if (pos > 0)
-			{
 				if (node.NodeType == XmlNodeType.Attribute)
-				{
 					node.Value = fragment.InnerText.Trim();
-				}
 				else
-				{
 					ReplaceNode(node.ParentNode, fragment, node);
-				}
-			}
 		}
 
 		private bool IsRequiredProperty(string propRef)
@@ -129,4 +112,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

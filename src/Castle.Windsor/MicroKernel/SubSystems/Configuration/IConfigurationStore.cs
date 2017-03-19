@@ -12,25 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
-
 namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 {
 	public interface IConfigurationStore : ISubSystem
 	{
-		void AddChildContainerConfiguration(String name, IConfiguration config);
+		void AddChildContainerConfiguration(string name, IConfiguration config);
 
-		void AddComponentConfiguration(String key, IConfiguration config);
+		void AddComponentConfiguration(string key, IConfiguration config);
 
-		void AddFacilityConfiguration(String key, IConfiguration config);
+		void AddFacilityConfiguration(string key, IConfiguration config);
 
 		void AddInstallerConfiguration(IConfiguration config);
 
-		IConfiguration GetChildContainerConfiguration(String key);
+		IConfiguration GetChildContainerConfiguration(string key);
 
-		IConfiguration GetComponentConfiguration(String key);
+		IConfiguration GetComponentConfiguration(string key);
 
 		IConfiguration[] GetComponents();
 
@@ -38,10 +34,10 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 
 		IConfiguration[] GetFacilities();
 
-		IConfiguration GetFacilityConfiguration(String key);
+		IConfiguration GetFacilityConfiguration(string key);
 
 		IConfiguration[] GetInstallers();
 
-		IResource GetResource(String resourceUri, IResource resource);
+		IResource GetResource(string resourceUri, IResource resource);
 	}
 }

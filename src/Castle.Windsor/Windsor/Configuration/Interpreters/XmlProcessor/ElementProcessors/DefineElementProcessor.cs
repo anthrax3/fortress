@@ -13,16 +13,15 @@
 // limitations under the License.
 
 
-using System;
 using System.Xml;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class DefineElementProcessor : AbstractXmlNodeProcessor
 	{
-		private static readonly String FlagAttrName = "flag";
+		private static readonly string FlagAttrName = "flag";
 
-		public override String Name
+		public override string Name
 		{
 			get { return "define"; }
 		}
@@ -43,4 +42,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.Element
 		}
 	}
 }
-

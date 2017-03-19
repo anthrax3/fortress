@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {
@@ -36,7 +35,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public object Value { get; private set; }
 
-		public static ServiceOverrideKey ForKey(String key)
+		public static ServiceOverrideKey ForKey(string key)
 		{
 			return new ServiceOverrideKey(key);
 		}
@@ -54,56 +53,6 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static implicit operator Dependency(ServiceOverride item)
 		{
 			return item == null ? null : new Dependency(item);
-		}
-	}
-
-	public class ServiceOverrideKey
-	{
-		private readonly object key;
-
-		internal ServiceOverrideKey(String key)
-		{
-			this.key = key;
-		}
-
-		internal ServiceOverrideKey(Type key)
-		{
-			this.key = key;
-		}
-
-		public ServiceOverride Eq(String value)
-		{
-			return new ServiceOverride(key, value);
-		}
-
-		public ServiceOverride Eq(params String[] value)
-		{
-			return new ServiceOverride(key, value);
-		}
-
-		public ServiceOverride Eq<V>(params String[] value)
-		{
-			return new ServiceOverride(key, value, typeof(V));
-		}
-
-		public ServiceOverride Eq(IEnumerable<String> value)
-		{
-			return new ServiceOverride(key, value);
-		}
-
-		public ServiceOverride Eq<V>(IEnumerable<String> value)
-		{
-			return new ServiceOverride(key, value, typeof(V));
-		}
-
-		public ServiceOverride Eq(params Type[] componentTypes)
-		{
-			return new ServiceOverride(key, componentTypes);
-		}
-
-		public ServiceOverride Eq<V>(params Type[] componentTypes)
-		{
-			return new ServiceOverride(key, componentTypes, typeof(V));
 		}
 	}
 }

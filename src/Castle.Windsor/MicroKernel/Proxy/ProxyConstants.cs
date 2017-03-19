@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.MicroKernel.Proxy
 {
 	public abstract class ProxyConstants
 	{
-		public static readonly String ProxyOptionsKey = "proxy.options";
+		public static readonly string ProxyOptionsKey = "proxy.options";
 	}
 }

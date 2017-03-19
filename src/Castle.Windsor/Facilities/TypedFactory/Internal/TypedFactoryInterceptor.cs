@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.MicroKernel;
@@ -39,7 +38,7 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 			scope = kernel.ReleasePolicy.CreateSubPolicy();
 		}
 
-		public ITypedFactoryComponentSelector ComponentSelector { get; private set; }
+		public ITypedFactoryComponentSelector ComponentSelector { get; }
 
 		public void Dispose()
 		{
@@ -47,20 +46,24 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 			scope.Dispose();
 		}
 
+		public void SetInterceptedComponentModel(ComponentModel target)
+		{
+			methods = (IDictionary<MethodInfo, FactoryMethod>) target.ExtendedProperties[TypedFactoryFacility.FactoryMapCacheKey];
+			if (methods == null)
+				throw new ArgumentException(
+					string.Format("Component {0} is not a typed factory. {1} only works with typed factories.", target.Name, GetType().Name));
+		}
+
 		public void Intercept(IInvocation invocation)
 		{
 			if (disposed)
-			{
 				throw new ObjectDisposedException("this", "The factory was disposed and can no longer be used.");
-			}
 
 			FactoryMethod method;
 			if (TryGetMethod(invocation, out method) == false)
-			{
 				throw new InvalidOperationException(
 					string.Format("Can't find information about factory method {0}. This is most likely a bug. Please report it.",
-					              invocation.Method));
-			}
+						invocation.Method));
 			switch (method)
 			{
 				case FactoryMethod.Resolve:
@@ -75,48 +78,30 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 			}
 		}
 
-		public void SetInterceptedComponentModel(ComponentModel target)
-		{
-			methods = (IDictionary<MethodInfo, FactoryMethod>)target.ExtendedProperties[TypedFactoryFacility.FactoryMapCacheKey];
-			if (methods == null)
-			{
-				throw new ArgumentException(
-					string.Format("Component {0} is not a typed factory. {1} only works with typed factories.", target.Name, GetType().Name));
-			}
-		}
-
 		private void Release(IInvocation invocation)
 		{
 			for (var i = 0; i < invocation.Arguments.Length; i++)
-			{
 				scope.Release(invocation.Arguments[i]);
-			}
 		}
 
 		private void Resolve(IInvocation invocation)
 		{
 			var component = ComponentSelector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
 			if (component == null)
-			{
 				throw new FacilityException(
 					string.Format(
 						"Selector {0} didn't select any component for method {1}. This usually signifies a bug in the selector.",
 						ComponentSelector,
 						invocation.Method));
-			}
 			invocation.ReturnValue = component(kernel, scope);
 		}
 
 		private bool TryGetMethod(IInvocation invocation, out FactoryMethod method)
 		{
 			if (methods.TryGetValue(invocation.Method, out method))
-			{
 				return true;
-			}
 			if (invocation.Method.IsGenericMethod == false)
-			{
 				return false;
-			}
 			return methods.TryGetValue(invocation.Method.GetGenericMethodDefinition(), out method);
 		}
 	}

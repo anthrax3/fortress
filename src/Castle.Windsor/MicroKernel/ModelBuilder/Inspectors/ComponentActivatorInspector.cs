@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Linq;
-using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.SubSystems.Conversion;
@@ -34,9 +32,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (!ReadComponentActivatorFromConfiguration(model))
-			{
 				ReadComponentActivatorFromType(model);
-			}
 		}
 
 		protected virtual bool ReadComponentActivatorFromConfiguration(ComponentModel model)
@@ -45,9 +41,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			{
 				var componentActivatorType = model.Configuration.Attributes["componentActivatorType"];
 				if (componentActivatorType == null)
-				{
 					return false;
-				}
 
 				var customComponentActivator = converter.PerformConversion<Type>(componentActivatorType);
 				ValidateComponentActivator(customComponentActivator);
@@ -76,7 +70,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			if (customComponentActivator.Is<IComponentActivator>() == false)
 			{
 				var message =
-					String.Format(
+					string.Format(
 						"The Type '{0}' specified in the componentActivatorType attribute must implement {1}",
 						customComponentActivator.FullName, typeof(IComponentActivator).FullName);
 				throw new InvalidOperationException(message);

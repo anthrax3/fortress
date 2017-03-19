@@ -49,10 +49,7 @@ namespace Castle.Windsor.MicroKernel.Internal
 		public void Dispose()
 		{
 			if (IsValueCreated)
-			{
 				kernel.ReleaseComponent(Value);
-			}
 		}
 	}
 }
-

@@ -46,7 +46,7 @@ namespace Castle.Windsor.Core
 
 		public static PropertySet[] Default(ComponentModel model, ICollection<PropertyInfo> properties, PropertySetBuilder propertySetBuilder)
 		{
-			var props = properties.Select(p => propertySetBuilder(p, isOptional: true)).ToArray();
+			var props = properties.Select(p => propertySetBuilder(p, true)).ToArray();
 			properties.Clear();
 			return props;
 		}
@@ -68,7 +68,7 @@ namespace Castle.Windsor.Core
 
 		public static ICollection<PropertyDependencyFilter> GetPropertyFilters(ComponentModel componentModel, bool createIfMissing)
 		{
-			var filters = (ICollection<PropertyDependencyFilter>)componentModel.ExtendedProperties[Constants.PropertyFilters];
+			var filters = (ICollection<PropertyDependencyFilter>) componentModel.ExtendedProperties[Constants.PropertyFilters];
 			if (filters == null && createIfMissing)
 			{
 				filters = new List<PropertyDependencyFilter>(4);
@@ -87,9 +87,7 @@ namespace Castle.Windsor.Core
 		{
 			var baseProperties = properties.Where(p => p.DeclaringType != model.Implementation).ToArray();
 			foreach (var baseProperty in baseProperties)
-			{
 				properties.Remove(baseProperty);
-			}
 			return new PropertySet[0];
 		}
 
@@ -98,19 +96,15 @@ namespace Castle.Windsor.Core
 			return (model, properties, callback) =>
 			{
 				foreach (var property in properties.ToArray())
-				{
 					if (selector(model, property))
-					{
 						properties.Remove(property);
-					}
-				}
 				return new PropertySet[0];
 			};
 		}
 
 		public static PropertySet[] RequireAll(ComponentModel model, ICollection<PropertyInfo> properties, PropertySetBuilder propertySetBuilder)
 		{
-			var props = properties.Select(p => propertySetBuilder(p, isOptional: false)).ToArray();
+			var props = properties.Select(p => propertySetBuilder(p, false)).ToArray();
 			properties.Clear();
 			return props;
 		}
@@ -129,11 +123,11 @@ namespace Castle.Windsor.Core
 		public static PropertyDependencyFilter RequireSelected(Func<ComponentModel, PropertyInfo, bool> selector)
 		{
 			return (model, properties, callback) => properties.ToArray().Where(property => selector(model, property))
-				                                        .Select(p =>
-				                                        {
-					                                        properties.Remove(p);
-					                                        return callback(p, isOptional: false);
-				                                        }).ToArray();
+				.Select(p =>
+				{
+					properties.Remove(p);
+					return callback(p, false);
+				}).ToArray();
 		}
 	}
 }

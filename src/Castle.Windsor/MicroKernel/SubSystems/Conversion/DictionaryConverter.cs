@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -25,10 +24,10 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 	{
 		public override bool CanHandleType(Type type)
 		{
-			return (type == typeof(IDictionary) || type == typeof(Hashtable));
+			return type == typeof(IDictionary) || type == typeof(Hashtable);
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			throw new NotImplementedException();
 		}
@@ -40,19 +39,15 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			var dict = new Dictionary<object, object>();
 
 			var keyTypeName = configuration.Attributes["keyType"];
-			var defaultKeyType = typeof(String);
+			var defaultKeyType = typeof(string);
 
 			var valueTypeName = configuration.Attributes["valueType"];
-			var defaultValueType = typeof(String);
+			var defaultValueType = typeof(string);
 
 			if (keyTypeName != null)
-			{
 				defaultKeyType = Context.Composition.PerformConversion<Type>(keyTypeName);
-			}
 			if (valueTypeName != null)
-			{
 				defaultValueType = Context.Composition.PerformConversion<Type>(valueTypeName);
-			}
 
 			foreach (var itemConfig in configuration.Children)
 			{
@@ -61,16 +56,12 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 				var keyValue = itemConfig.Attributes["key"];
 
 				if (keyValue == null)
-				{
 					throw new ConverterException("You must provide a key for the dictionary entry");
-				}
 
 				var convertKeyTo = defaultKeyType;
 
 				if (itemConfig.Attributes["keyType"] != null)
-				{
 					convertKeyTo = Context.Composition.PerformConversion<Type>(itemConfig.Attributes["keyType"]);
-				}
 
 				var key = Context.Composition.PerformConversion(keyValue, convertKeyTo);
 
@@ -79,22 +70,16 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 				var convertValueTo = defaultValueType;
 
 				if (itemConfig.Attributes["valueType"] != null)
-				{
 					convertValueTo = Context.Composition.PerformConversion<Type>(itemConfig.Attributes["valueType"]);
-				}
 
 				object value;
 
 				if (itemConfig.Children.Count == 0)
-				{
 					value = Context.Composition.PerformConversion(
 						itemConfig, convertValueTo);
-				}
 				else
-				{
 					value = Context.Composition.PerformConversion(
 						itemConfig.Children[0], convertValueTo);
-				}
 
 				dict.Add(key, value);
 			}

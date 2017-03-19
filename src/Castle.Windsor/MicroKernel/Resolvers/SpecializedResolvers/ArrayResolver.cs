@@ -31,9 +31,7 @@ namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
 		protected override Type GetItemType(Type targetItemType)
 		{
 			if (targetItemType.IsArray)
-			{
 				return targetItemType.GetElementType();
-			}
 			return null;
 		}
 	}

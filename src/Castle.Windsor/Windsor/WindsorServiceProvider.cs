@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core;
 using Castle.Windsor.MicroKernel;
 
 namespace Castle.Windsor.Windsor
@@ -26,9 +25,7 @@ namespace Castle.Windsor.Windsor
 		{
 			kernel = container.Kernel as IKernelInternal;
 			if (kernel == null)
-			{
 				throw new ArgumentException(string.Format("The kernel must implement {0}", typeof(IKernelInternal)));
-			}
 		}
 
 		public IKernel Kernel
@@ -39,15 +36,13 @@ namespace Castle.Windsor.Windsor
 		public object GetService(Type serviceType)
 		{
 			if (kernel.LoadHandlerByType(null, serviceType, null) != null)
-			{
 				return kernel.Resolve(serviceType);
-			}
 			return null;
 		}
 
 		public T GetService<T>() where T : class
 		{
-			return (T)GetService(typeof(T));
+			return (T) GetService(typeof(T));
 		}
 	}
 }

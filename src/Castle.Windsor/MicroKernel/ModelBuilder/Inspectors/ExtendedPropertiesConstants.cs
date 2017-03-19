@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 {
 	internal abstract class ExtendedPropertiesConstants
@@ -21,7 +19,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		public static readonly int Pool_Default_InitialPoolSize = 5;
 		public static readonly int Pool_Default_MaxPoolSize = 15;
 
-		public static readonly String Pool_InitialPoolSize = "pool.initial.pool.size";
-		public static readonly String Pool_MaxPoolSize = "pool.max.pool.size";
+		public static readonly string Pool_InitialPoolSize = "pool.initial.pool.size";
+		public static readonly string Pool_MaxPoolSize = "pool.max.pool.size";
 	}
 }

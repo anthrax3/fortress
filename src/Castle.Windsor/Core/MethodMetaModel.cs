@@ -13,23 +13,17 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.Core
 {
 	[Serializable]
 	public class MethodMetaModel
 	{
-		private readonly IConfiguration configNode;
-
 		public MethodMetaModel(IConfiguration configNode)
 		{
-			this.configNode = configNode;
+			ConfigNode = configNode;
 		}
 
-		public IConfiguration ConfigNode
-		{
-			get { return configNode; }
-		}
+		public IConfiguration ConfigNode { get; }
 	}
 }

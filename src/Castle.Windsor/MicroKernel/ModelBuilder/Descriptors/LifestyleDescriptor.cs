@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
@@ -30,9 +29,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		protected override void ApplyToConfiguration(IKernel kernel, IConfiguration configuration)
 		{
 			if (configuration.Attributes["lifestyle"] == null || IsOverWrite)
-			{
 				configuration.Attributes["lifestyle"] = lifestyle.ToString();
-			}
 		}
 	}
 }

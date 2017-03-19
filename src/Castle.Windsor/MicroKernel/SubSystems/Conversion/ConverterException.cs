@@ -23,17 +23,17 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 	{
 		public ConverterException(string message) : base(message)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ConverterException(string message, Exception innerException) : base(message, innerException)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 
 		public ConverterException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			ExceptionHelper.SetUp(this);
+			this.SetUp();
 		}
 	}
 }

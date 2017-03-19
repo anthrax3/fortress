@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 
@@ -25,12 +24,9 @@ namespace Castle.Windsor.Core
 	[Serializable]
 	public class InterceptorReferenceCollection : IMutableCollection<InterceptorReference>
 	{
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private readonly ComponentModel component;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly ComponentModel component;
 
-		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		[DebuggerDisplay("Count = {list.Count}", Name = "")]
-		private readonly List<InterceptorReference> list = new List<InterceptorReference>();
+		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)] [DebuggerDisplay("Count = {list.Count}", Name = "")] private readonly List<InterceptorReference> list = new List<InterceptorReference>();
 
 		public InterceptorReferenceCollection(ComponentModel component)
 		{
@@ -49,6 +45,26 @@ namespace Castle.Windsor.Core
 			get { return list.Count; }
 		}
 
+		public IEnumerator GetEnumerator()
+		{
+			return list.GetEnumerator();
+		}
+
+		public void Add(InterceptorReference item)
+		{
+			AddLast(item);
+		}
+
+		IEnumerator<InterceptorReference> IEnumerable<InterceptorReference>.GetEnumerator()
+		{
+			return list.GetEnumerator();
+		}
+
+		bool IMutableCollection<InterceptorReference>.Remove(InterceptorReference item)
+		{
+			return list.Remove(item);
+		}
+
 		public void AddFirst(InterceptorReference item)
 		{
 			Insert(0, item);
@@ -57,9 +73,7 @@ namespace Castle.Windsor.Core
 		public void AddIfNotInCollection(InterceptorReference interceptorReference)
 		{
 			if (list.Contains(interceptorReference) == false)
-			{
 				AddLast(interceptorReference);
-			}
 		}
 
 		public void AddLast(InterceptorReference item)
@@ -79,29 +93,9 @@ namespace Castle.Windsor.Core
 			return list.ToArray();
 		}
 
-		public IEnumerator GetEnumerator()
-		{
-			return list.GetEnumerator();
-		}
-
-		public void Add(InterceptorReference item)
-		{
-			AddLast(item);
-		}
-
 		private void Attach(IReference<IInterceptor> interceptor)
 		{
 			interceptor.Attach(component);
-		}
-
-		IEnumerator<InterceptorReference> IEnumerable<InterceptorReference>.GetEnumerator()
-		{
-			return list.GetEnumerator();
-		}
-
-		bool IMutableCollection<InterceptorReference>.Remove(InterceptorReference item)
-		{
-			return list.Remove(item);
 		}
 	}
 }

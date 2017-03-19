@@ -25,34 +25,28 @@ namespace Castle.Windsor.Windsor.Diagnostics
 			Reason = reason;
 		}
 
-		public DependencyModel Dependency1 { get; private set; }
-		public DependencyModel Dependency2 { get; private set; }
-		public DependencyDuplicationReason Reason { get; private set; }
+		public DependencyModel Dependency1 { get; }
+		public DependencyModel Dependency2 { get; }
+		public DependencyDuplicationReason Reason { get; }
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj))
-			{
 				return false;
-			}
 			if (ReferenceEquals(this, obj))
-			{
 				return true;
-			}
 			if (obj.GetType() != GetType())
-			{
 				return false;
-			}
-			return Equals((DependencyDuplicate)obj);
+			return Equals((DependencyDuplicate) obj);
 		}
 
 		public override int GetHashCode()
 		{
 			unchecked
 			{
-				var hashCode = (Dependency1 != null ? Dependency1.GetHashCode() : 0);
-				hashCode = (hashCode*397) ^ (Dependency2 != null ? Dependency2.GetHashCode() : 0);
-				hashCode = (hashCode*397) ^ Reason.GetHashCode();
+				var hashCode = Dependency1 != null ? Dependency1.GetHashCode() : 0;
+				hashCode = (hashCode * 397) ^ (Dependency2 != null ? Dependency2.GetHashCode() : 0);
+				hashCode = (hashCode * 397) ^ Reason.GetHashCode();
 				return hashCode;
 			}
 		}

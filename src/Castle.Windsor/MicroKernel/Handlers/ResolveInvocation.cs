@@ -19,7 +19,6 @@ namespace Castle.Windsor.MicroKernel.Handlers
 {
 	public class ResolveInvocation
 	{
-		private bool decommissionRequired;
 		private Action proceed;
 
 		public ResolveInvocation(CreationContext context, bool instanceRequired)
@@ -35,10 +34,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 
 		public object ResolvedInstance { get; set; }
 
-		internal bool DecommissionRequired
-		{
-			get { return decommissionRequired; }
-		}
+		internal bool DecommissionRequired { get; private set; }
 
 		public void Proceed()
 		{
@@ -47,7 +43,7 @@ namespace Castle.Windsor.MicroKernel.Handlers
 
 		public void RequireDecommission()
 		{
-			decommissionRequired = true;
+			DecommissionRequired = true;
 		}
 
 		internal void SetProceedDelegate(Action value)

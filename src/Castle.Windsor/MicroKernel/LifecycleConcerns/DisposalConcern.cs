@@ -20,24 +20,17 @@ namespace Castle.Windsor.MicroKernel.LifecycleConcerns
 	[Serializable]
 	public class DisposalConcern : IDecommissionConcern
 	{
-		private static readonly DisposalConcern instance = new DisposalConcern();
-
-		public static DisposalConcern Instance
-		{
-			get { return instance; }
-		}
-
 		protected DisposalConcern()
 		{
 		}
+
+		public static DisposalConcern Instance { get; } = new DisposalConcern();
 
 		public void Apply(ComponentModel model, object component)
 		{
 			var disposable = component as IDisposable;
 			if (disposable == null)
-			{
 				return;
-			}
 			disposable.Dispose();
 		}
 	}

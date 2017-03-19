@@ -12,25 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.Core.Configuration;
-
 namespace Castle.Windsor.MicroKernel.Registration
 {
 	public class Parameter
 	{
-		private readonly String key;
 		private readonly object value;
 
-		internal Parameter(String key, String value)
+		internal Parameter(string key, string value)
 		{
-			this.key = key;
+			Key = key;
 			this.value = value;
 		}
 
-		internal Parameter(String key, IConfiguration configNode)
+		internal Parameter(string key, IConfiguration configNode)
 		{
-			this.key = key;
+			Key = key;
 			value = configNode;
 		}
 
@@ -39,17 +35,14 @@ namespace Castle.Windsor.MicroKernel.Registration
 			get { return value as IConfiguration; }
 		}
 
-		public string Key
-		{
-			get { return key; }
-		}
+		public string Key { get; }
 
-		public String Value
+		public string Value
 		{
 			get { return value as string; }
 		}
 
-		public static ParameterKey ForKey(String key)
+		public static ParameterKey ForKey(string key)
 		{
 			return new ParameterKey(key);
 		}
@@ -57,31 +50,6 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public static implicit operator Dependency(Parameter parameter)
 		{
 			return parameter == null ? null : new Dependency(parameter);
-		}
-	}
-
-	public class ParameterKey
-	{
-		private readonly String name;
-
-		internal ParameterKey(String name)
-		{
-			this.name = name;
-		}
-
-		public string Name
-		{
-			get { return name; }
-		}
-
-		public Parameter Eq(String value)
-		{
-			return new Parameter(name, value);
-		}
-
-		public Parameter Eq(IConfiguration configNode)
-		{
-			return new Parameter(name, configNode);
 		}
 	}
 }

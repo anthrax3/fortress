@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
@@ -25,13 +24,8 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			var converter = TryGetConverterInstance(type);
 
 			if (converter != null)
-			{
 				return converter.CanHandleType(type);
-			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 
 		public override object PerformConversion(string value, Type targetType)
@@ -51,9 +45,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			var converter = TryGetConverterInstance(type);
 
 			if (converter == null)
-			{
 				throw new InvalidOperationException("Type " + type.Name + " does not have a Convertible attribute.");
-			}
 
 			return converter;
 		}
@@ -62,7 +54,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		{
 			ITypeConverter converter = null;
 
-			var attr = (ConvertibleAttribute)Attribute.GetCustomAttribute(type, typeof(ConvertibleAttribute));
+			var attr = (ConvertibleAttribute) Attribute.GetCustomAttribute(type, typeof(ConvertibleAttribute));
 
 			if (attr != null)
 			{

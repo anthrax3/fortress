@@ -35,26 +35,18 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			get { return false; }
 		}
 
-		protected abstract String ObtainNodeName();
-
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model == null)
-			{
 				throw new ArgumentNullException("model");
-			}
 
 			if (model.Configuration == null || model.Implementation == null)
-			{
 				return;
-			}
 
 			var methodsNode = model.Configuration.Children[ObtainNodeName()];
 
 			if (methodsNode == null)
-			{
 				return;
-			}
 
 			EnsureHasReferenceToConverter(kernel);
 
@@ -63,9 +55,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 				var name = methodNode.Name;
 
 				if ("method".Equals(name))
-				{
 					name = methodNode.Attributes["name"];
-				}
 
 				AssertNameIsNotNull(name, model);
 
@@ -84,7 +74,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 
 					if (methods.Count == 0)
 					{
-						var message = String.Format("The class {0} has tried to expose configuration for " +
+						var message = string.Format("The class {0} has tried to expose configuration for " +
 						                            "a method named {1} which could not be found.", model.Implementation.FullName, name);
 
 						throw new Exception(message);
@@ -100,6 +90,8 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			}
 		}
 
+		protected abstract string ObtainNodeName();
+
 		protected virtual bool IsValidMeta(ComponentModel model, MethodMetaModel metaModel)
 		{
 			return true;
@@ -113,7 +105,7 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		{
 			if (name == null)
 			{
-				var message = String.Format("The configuration nodes within 'methods' " +
+				var message = string.Format("The configuration nodes within 'methods' " +
 				                            "for the component '{0}' does not have a name. You can either name " +
 				                            "the node as the method name or provide an attribute 'name'", model.Name);
 
@@ -128,20 +120,18 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 			var types = new List<Type>();
 
 			foreach (var param in parameters)
-			{
 				try
 				{
 					types.Add(converter.PerformConversion<Type>(param));
 				}
 				catch (Exception)
 				{
-					var message = String.Format("The signature {0} contains an entry type {1} " +
+					var message = string.Format("The signature {0} contains an entry type {1} " +
 					                            "that could not be converted to System.Type. Check the inner exception for " +
 					                            "details", signature, param);
 
 					throw new Exception(message);
 				}
-			}
 
 			return types.ToArray();
 		}
@@ -149,15 +139,13 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		private void EnsureHasReferenceToConverter(IKernel kernel)
 		{
 			if (converter != null)
-			{
 				return;
-			}
 
 			converter = (ITypeConverter)
-			            kernel.GetSubSystem(SubSystemConstants.ConversionManagerKey);
+				kernel.GetSubSystem(SubSystemConstants.ConversionManagerKey);
 		}
 
-		private IList<MethodInfo> GetMethods(Type implementation, String name, String signature)
+		private IList<MethodInfo> GetMethods(Type implementation, string name, string signature)
 		{
 			if (string.IsNullOrEmpty(signature))
 			{
@@ -166,26 +154,17 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 				var methods = new List<MethodInfo>();
 
 				foreach (var method in allmethods)
-				{
 					if (CultureInfo.InvariantCulture.CompareInfo.Compare(method.Name, name, CompareOptions.IgnoreCase) == 0)
-					{
 						methods.Add(method);
-					}
-				}
 
 				return methods;
 			}
-			else
-			{
-				var methodInfo = implementation.GetMethod(name, AllMethods, null, ConvertSignature(signature), null);
+			var methodInfo = implementation.GetMethod(name, AllMethods, null, ConvertSignature(signature), null);
 
-				if (methodInfo == null)
-				{
-					return new MethodInfo[0];
-				}
+			if (methodInfo == null)
+				return new MethodInfo[0];
 
-				return new List<MethodInfo> { methodInfo };
-			}
+			return new List<MethodInfo> {methodInfo};
 		}
 	}
 }

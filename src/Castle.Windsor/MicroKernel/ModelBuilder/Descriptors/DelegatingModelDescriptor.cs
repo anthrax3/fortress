@@ -31,18 +31,14 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 		public void BuildComponentModel(IKernel kernel, ComponentModel model)
 		{
 			if (builder == null)
-			{
 				return;
-			}
 			builder(kernel, model);
 		}
 
 		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)
 		{
 			if (configurer == null)
-			{
 				return;
-			}
 			configurer(kernel, model);
 		}
 	}

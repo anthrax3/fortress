@@ -26,9 +26,7 @@ namespace Castle.Windsor.Windsor.Diagnostics.Extensions
 		{
 			var facilities = kernel.GetFacilities();
 			if (facilities.Length == 0)
-			{
 				yield break;
-			}
 			yield return new DebuggerViewItem("Facilities", "Count = " + facilities.Length, facilities);
 		}
 

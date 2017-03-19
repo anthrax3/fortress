@@ -21,7 +21,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 	[Serializable]
 	public class XmlProcessorException : Exception
 	{
-		public XmlProcessorException(string message, params object[] args) : base(String.Format(message, args))
+		public XmlProcessorException(string message, params object[] args) : base(string.Format(message, args))
 		{
 		}
 
@@ -34,4 +34,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 		}
 	}
 }
-

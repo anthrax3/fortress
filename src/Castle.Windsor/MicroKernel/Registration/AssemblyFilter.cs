@@ -34,21 +34,30 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public AssemblyFilter(string directoryName, string mask = null)
 		{
 			if (directoryName == null)
-			{
 				throw new ArgumentNullException("directoryName");
-			}
 
 			this.directoryName = GetFullPath(directoryName);
 			this.mask = mask;
 			assemblyFilter += a => a != CastleWindsorDll;
 		}
 
+		IEnumerable<Assembly> IAssemblyProvider.GetAssemblies()
+		{
+			foreach (var file in GetFiles())
+			{
+				if (!ReflectionUtil.IsAssemblyFile(file))
+					continue;
+
+				var assembly = LoadAssemblyIgnoringErrors(file);
+				if (assembly != null)
+					yield return assembly;
+			}
+		}
+
 		public AssemblyFilter FilterByAssembly(Predicate<Assembly> filter)
 		{
 			if (filter == null)
-			{
 				throw new ArgumentNullException("filter");
-			}
 
 			assemblyFilter += filter;
 			return this;
@@ -57,9 +66,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public AssemblyFilter FilterByName(Predicate<AssemblyName> filter)
 		{
 			if (filter == null)
-			{
 				throw new ArgumentNullException("filter");
-			}
 
 			nameFilter += filter;
 			return this;
@@ -73,9 +80,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public AssemblyFilter WithKeyToken(byte[] publicKeyToken)
 		{
 			if (publicKeyToken == null)
-			{
 				throw new ArgumentNullException("publicKeyToken");
-			}
 			return FilterByName(n => IsTokenEqual(n.GetPublicKeyToken(), publicKeyToken));
 		}
 
@@ -97,30 +102,24 @@ namespace Castle.Windsor.MicroKernel.Registration
 		private byte[] ExtractKeyToken(string keyToken)
 		{
 			if (keyToken == null)
-			{
 				throw new ArgumentNullException("keyToken");
-			}
 			if (keyToken.Length != 16)
-			{
 				throw new ArgumentException(
 					string.Format(
 						"The string '{1}' does not appear to be a valid public key token. It should have 16 characters, has {0}.",
 						keyToken.Length, keyToken));
-			}
 			try
 			{
 				var tokenBytes = new byte[8];
 				for (var i = 0; i < 8; i++)
-				{
-					tokenBytes[i] = byte.Parse(keyToken.Substring(2*i, 2), NumberStyles.HexNumber);
-				}
+					tokenBytes[i] = byte.Parse(keyToken.Substring(2 * i, 2), NumberStyles.HexNumber);
 				return tokenBytes;
 			}
 			catch (Exception e)
 			{
 				throw new ArgumentException(
 					string.Format("The string '{0}' does not appear to be a valid public key token. It could not be processed.",
-					              keyToken), e);
+						keyToken), e);
 			}
 		}
 
@@ -129,13 +128,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 			try
 			{
 				if (Directory.Exists(directoryName) == false)
-				{
 					return Enumerable.Empty<string>();
-				}
 				if (string.IsNullOrEmpty(mask))
-				{
 					return Directory.EnumerateFiles(directoryName);
-				}
 				return Directory.EnumerateFiles(directoryName, mask);
 			}
 			catch (IOException e)
@@ -170,50 +165,23 @@ namespace Castle.Windsor.MicroKernel.Registration
 			return null;
 		}
 
-		IEnumerable<Assembly> IAssemblyProvider.GetAssemblies()
-		{
-			foreach (var file in GetFiles())
-			{
-				if (!ReflectionUtil.IsAssemblyFile(file))
-				{
-					continue;
-				}
-
-				var assembly = LoadAssemblyIgnoringErrors(file);
-				if (assembly != null)
-				{
-					yield return assembly;
-				}
-			}
-		}
-
 		private static string GetFullPath(string path)
 		{
 			// NOTE: Can we support this somehow in SL?
 			if (Path.IsPathRooted(path) == false && AppDomain.CurrentDomain.BaseDirectory != null)
-			{
 				path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
-			}
 			return Path.GetFullPath(path);
 		}
 
 		private static bool IsTokenEqual(byte[] actualToken, byte[] expectedToken)
 		{
 			if (actualToken == null)
-			{
 				return false;
-			}
 			if (actualToken.Length != expectedToken.Length)
-			{
 				return false;
-			}
 			for (var i = 0; i < actualToken.Length; i++)
-			{
 				if (actualToken[i] != expectedToken[i])
-				{
 					return false;
-				}
-			}
 			return true;
 		}
 	}

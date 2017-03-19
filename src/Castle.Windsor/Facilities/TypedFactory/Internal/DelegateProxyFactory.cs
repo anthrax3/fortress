@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
@@ -25,7 +23,7 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 	public class DelegateProxyFactory : IProxyFactoryExtension
 	{
 		public object Generate(IProxyBuilder builder, ProxyGenerationOptions options, IInterceptor[] interceptors, ComponentModel model,
-		                       CreationContext context)
+			CreationContext context)
 		{
 			var targetDelegateType = context.RequestedType;
 			var type = GetProxyType(builder, targetDelegateType);

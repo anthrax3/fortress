@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
@@ -41,9 +40,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		public TypeNameConverter(ITypeNameParser parser)
 		{
 			if (parser == null)
-			{
 				throw new ArgumentNullException("parser");
-			}
 
 			this.parser = parser;
 		}
@@ -53,7 +50,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			return type == typeof(Type);
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			try
 			{
@@ -65,7 +62,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			}
 			catch (Exception ex)
 			{
-				throw new ConverterException(String.Format("Could not convert string '{0}' to a type.", value), ex);
+				throw new ConverterException(string.Format("Could not convert string '{0}' to a type.", value), ex);
 			}
 		}
 
@@ -74,51 +71,37 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			// try to create type using case sensitive search first.
 			var type = Type.GetType(name, false, false);
 			if (type != null)
-			{
 				return type;
-			}
 			// if case sensitive search did not create the type, try case insensitive.
 			type = Type.GetType(name, false, true);
 			if (type != null)
-			{
 				return type;
-			}
 			var typeName = ParseName(name);
 			if (typeName == null)
-			{
-				throw new ConverterException(String.Format("Could not convert string '{0}' to a type. It doesn't appear to be a valid type name.", name));
-			}
+				throw new ConverterException(string.Format("Could not convert string '{0}' to a type. It doesn't appear to be a valid type name.", name));
 
-			InitializeAppDomainAssemblies(forceLoad: false);
+			InitializeAppDomainAssemblies(false);
 			type = typeName.GetType(this);
 			if (type != null)
-			{
 				return type;
-			}
-			if (InitializeAppDomainAssemblies(forceLoad: true))
-			{
+			if (InitializeAppDomainAssemblies(true))
 				type = typeName.GetType(this);
-			}
 			if (type != null)
-			{
 				return type;
-			}
 			var assemblyName = typeName.ExtractAssemblyName();
 			if (assemblyName != null)
 			{
 				var namePart = assemblyName + ", Version=";
 				var assembly = assemblies.FirstOrDefault(a => a.FullName.StartsWith(namePart, StringComparison.OrdinalIgnoreCase));
 				if (assembly != null)
-				{
-					throw new ConverterException(String.Format(
+					throw new ConverterException(string.Format(
 						"Could not convert string '{0}' to a type. Assembly {1} was matched, but it doesn't contain the type. Make sure that the type name was not mistyped.",
 						name, assembly.FullName));
-				}
-				throw new ConverterException(String.Format(
+				throw new ConverterException(string.Format(
 					"Could not convert string '{0}' to a type. Assembly was not found. Make sure it was deployed and the name was not mistyped.",
 					name));
 			}
-			throw new ConverterException(String.Format(
+			throw new ConverterException(string.Format(
 				"Could not convert string '{0}' to a type. Make sure assembly containing the type has been loaded into the process, or consider specifying assembly qualified name of the type.",
 				name));
 		}
@@ -132,9 +115,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 				foreach (var assembly in loadedAssemblies)
 				{
 					if (assemblies.Contains(assembly) || ShouldSkipAssembly(assembly))
-					{
 						continue;
-					}
 					anyAssemblyAdded = true;
 					assemblies.Add(assembly);
 					Scan(assembly);
@@ -151,9 +132,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		private void Scan(Assembly assembly)
 		{
 			if (assembly.IsDynamic)
-			{
 				return;
-			}
 			try
 			{
 				var exportedTypes = assembly.GetAvailableTypes();
@@ -214,16 +193,12 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		private void EnsureUnique(MultiType type, string value, string missingInformation)
 		{
 			if (type.HasOne)
-			{
 				return;
-			}
 
 			var message = new StringBuilder(string.Format("Could not uniquely identify type for '{0}'. ", value));
 			message.AppendLine("The following types were matched:");
 			foreach (var matchedType in type)
-			{
 				message.AppendLine(matchedType.AssemblyQualifiedName);
-			}
 			message.AppendFormat("Provide more information ({0}) to uniquely identify the type.", missingInformation);
 			throw new ConverterException(message.ToString());
 		}
@@ -242,12 +217,6 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 				get { return inner.Count == 1; }
 			}
 
-			public MultiType AddInnerType(Type type)
-			{
-				inner.AddLast(type);
-				return this;
-			}
-
 			public IEnumerator<Type> GetEnumerator()
 			{
 				return inner.GetEnumerator();
@@ -255,7 +224,13 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 
 			IEnumerator IEnumerable.GetEnumerator()
 			{
-				return ((IEnumerable)inner).GetEnumerator();
+				return ((IEnumerable) inner).GetEnumerator();
+			}
+
+			public MultiType AddInnerType(Type type)
+			{
+				inner.AddLast(type);
+				return this;
 			}
 		}
 	}

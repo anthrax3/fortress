@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.MicroKernel;
@@ -31,6 +29,11 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 			this.kernel = kernel;
 		}
 
+		public void SetInterceptedComponentModel(ComponentModel target)
+		{
+			entry = (FactoryEntry) target.ExtendedProperties["typed.fac.entry"];
+		}
+
 		public void Intercept(IInvocation invocation)
 		{
 			var name = invocation.Method.Name;
@@ -42,27 +45,20 @@ namespace Castle.Windsor.Facilities.TypedFactory.Internal
 					invocation.ReturnValue = kernel.Resolve(invocation.Method.ReturnType);
 					return;
 				}
-				var key = (String)args[0];
+				var key = (string) args[0];
 				invocation.ReturnValue = kernel.Resolve<object>(key);
 				return;
 			}
 
 			if (name.Equals(entry.DestructionMethod))
-			{
 				if (args.Length == 1)
 				{
 					kernel.ReleaseComponent(args[0]);
 					invocation.ReturnValue = null;
 					return;
 				}
-			}
 
 			invocation.Proceed();
-		}
-
-		public void SetInterceptedComponentModel(ComponentModel target)
-		{
-			entry = (FactoryEntry)target.ExtendedProperties["typed.fac.entry"];
 		}
 	}
 }

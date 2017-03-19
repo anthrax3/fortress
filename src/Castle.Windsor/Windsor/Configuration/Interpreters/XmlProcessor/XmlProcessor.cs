@@ -15,7 +15,6 @@
 
 using System;
 using System.Xml;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel.SubSystems.Resource;
 using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 
@@ -46,9 +45,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			try
 			{
 				if (node.NodeType == XmlNodeType.Document)
-				{
 					node = (node as XmlDocument).DocumentElement;
-				}
 
 				engine.DispatchProcessAll(new DefaultXmlProcessorNodeList(node));
 
@@ -60,7 +57,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format("Error processing node {0}, inner content {1}", node.Name, node.InnerXml);
+				var message = string.Format("Error processing node {0}, inner content {1}", node.Name, node.InnerXml);
 
 				throw new ConfigurationProcessingException(message, ex);
 			}
@@ -93,7 +90,7 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format("Error processing node resource {0}", resource);
+				var message = string.Format("Error processing node resource {0}", resource);
 
 				throw new ConfigurationProcessingException(message, ex);
 			}
@@ -122,4 +119,3 @@ namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 		}
 	}
 }
-

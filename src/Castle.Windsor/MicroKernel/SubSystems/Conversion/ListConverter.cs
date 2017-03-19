@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {
@@ -25,10 +24,10 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 	{
 		public override bool CanHandleType(Type type)
 		{
-			return (type == typeof(IList) || type == typeof(ArrayList));
+			return type == typeof(IList) || type == typeof(ArrayList);
 		}
 
-		public override object PerformConversion(String value, Type targetType)
+		public override object PerformConversion(string value, Type targetType)
 		{
 			throw new NotImplementedException();
 		}
@@ -40,9 +39,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 			var list = new List<object>();
 			var convertTo = GetConvertToType(configuration);
 			foreach (var itemConfig in configuration.Children)
-			{
 				list.Add(Context.Composition.PerformConversion(itemConfig.Value, convertTo));
-			}
 
 			return list;
 		}
@@ -50,11 +47,9 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 		private Type GetConvertToType(IConfiguration configuration)
 		{
 			var itemType = configuration.Attributes["type"];
-			var convertTo = typeof(String);
+			var convertTo = typeof(string);
 			if (itemType != null)
-			{
 				convertTo = Context.Composition.PerformConversion<Type>(itemType);
-			}
 			return convertTo;
 		}
 	}

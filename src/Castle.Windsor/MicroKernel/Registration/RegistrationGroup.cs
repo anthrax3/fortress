@@ -20,26 +20,21 @@ namespace Castle.Windsor.MicroKernel.Registration
 	public abstract class RegistrationGroup<S>
 		where S : class
 	{
-		private readonly ComponentRegistration<S> registration;
-
 		public RegistrationGroup(ComponentRegistration<S> registration)
 		{
-			this.registration = registration;
+			Registration = registration;
 		}
 
-		public ComponentRegistration<S> Registration
-		{
-			get { return registration; }
-		}
+		public ComponentRegistration<S> Registration { get; }
 
 		protected ComponentRegistration<S> AddAttributeDescriptor(string name, string value)
 		{
-			return registration.AddDescriptor(new AttributeDescriptor<S>(name, value));
+			return Registration.AddDescriptor(new AttributeDescriptor<S>(name, value));
 		}
 
 		protected ComponentRegistration<S> AddDescriptor(IComponentModelDescriptor descriptor)
 		{
-			return registration.AddDescriptor(descriptor);
+			return Registration.AddDescriptor(descriptor);
 		}
 	}
 }

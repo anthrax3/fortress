@@ -21,23 +21,24 @@ namespace Castle.Windsor.MicroKernel.Handlers
 	public class ParentHandlerWrapper : IHandler, IDisposable
 	{
 		private readonly ISubDependencyResolver childResolver;
-		private readonly IReleasePolicy parentReleasePolicy;
 		private readonly IHandler parentHandler;
+		private readonly IReleasePolicy parentReleasePolicy;
 
 		public ParentHandlerWrapper(IHandler parentHandler, ISubDependencyResolver childResolver, IReleasePolicy parentReleasePolicy)
 		{
 			if (parentHandler == null)
-			{
 				throw new ArgumentNullException("parentHandler");
-			}
 			if (childResolver == null)
-			{
 				throw new ArgumentNullException("childResolver");
-			}
 
 			this.parentHandler = parentHandler;
 			this.childResolver = childResolver;
 			this.parentReleasePolicy = parentReleasePolicy;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
 		}
 
 		public virtual ComponentModel ComponentModel
@@ -50,18 +51,13 @@ namespace Castle.Windsor.MicroKernel.Handlers
 			get { return parentHandler.CurrentState; }
 		}
 
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
 		public virtual void Init(IKernelInternal kernel)
 		{
 		}
 
 		public bool IsBeingResolvedInContext(CreationContext context)
 		{
-			return (context != null && context.IsInResolutionContext(this)) || parentHandler.IsBeingResolvedInContext(context);
+			return context != null && context.IsInResolutionContext(this) || parentHandler.IsBeingResolvedInContext(context);
 		}
 
 		public virtual bool Release(Burden burden)
@@ -110,32 +106,26 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		}
 
 		public virtual bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                               ComponentModel model, DependencyModel dependency)
+			ComponentModel model, DependencyModel dependency)
 		{
 			var canResolve = false;
 
 			if (contextHandlerResolver != null)
-			{
 				canResolve = childResolver.CanResolve(context, null, model, dependency);
-			}
 
 			if (!canResolve)
-			{
 				canResolve = parentHandler.CanResolve(context, contextHandlerResolver, model, dependency);
-			}
 
 			return canResolve;
 		}
 
 		public virtual object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-		                              ComponentModel model, DependencyModel dependency)
+			ComponentModel model, DependencyModel dependency)
 		{
 			var value = childResolver.Resolve(context, null, model, dependency);
 
 			if (value == null)
-			{
 				value = parentHandler.Resolve(context, contextHandlerResolver, model, dependency);
-			}
 
 			return value;
 		}
@@ -143,11 +133,9 @@ namespace Castle.Windsor.MicroKernel.Handlers
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
 				if (parentHandler != null)
 				{
 				}
-			}
 		}
 	}
 }

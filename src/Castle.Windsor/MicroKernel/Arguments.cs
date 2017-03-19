@@ -15,13 +15,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core;
 using Castle.Windsor.MicroKernel.Context;
 
 namespace Castle.Windsor.MicroKernel
 {
 	public class Arguments : IDictionary
-	                         , ICloneable
+		, ICloneable
 	{
 		protected IDictionary arguments;
 
@@ -34,9 +33,7 @@ namespace Castle.Windsor.MicroKernel
 			: this(customComparers)
 		{
 			foreach (DictionaryEntry entry in values)
-			{
 				Add(entry.Key, entry.Value);
-			}
 		}
 
 		public Arguments(object[] typedArguments, params IArgumentsComparer[] customComparers)
@@ -45,10 +42,8 @@ namespace Castle.Windsor.MicroKernel
 			foreach (var @object in typedArguments)
 			{
 				if (@object == null)
-				{
 					throw new ArgumentNullException("typedArguments",
-					                                "Given array has null values. Only non-null values can be used as arguments.");
-				}
+						"Given array has null values. Only non-null values can be used as arguments.");
 
 				Add(@object.GetType(), @object);
 			}
@@ -57,13 +52,14 @@ namespace Castle.Windsor.MicroKernel
 		public Arguments(params IArgumentsComparer[] customComparers)
 		{
 			if (customComparers == null || customComparers.Length == 0)
-			{
 				arguments = new Dictionary<object, object>(new ArgumentsComparer());
-			}
 			else
-			{
 				arguments = new Dictionary<object, object>(new ArgumentsComparerExtended(customComparers));
-			}
+		}
+
+		object ICloneable.Clone()
+		{
+			return CreateDeepCopy();
 		}
 
 		public int Count
@@ -132,26 +128,6 @@ namespace Castle.Windsor.MicroKernel
 			arguments.Remove(key);
 		}
 
-		protected virtual Arguments CreateDeepCopy()
-		{
-			var dictionary = arguments as Dictionary<object, object>;
-			if (dictionary != null)
-			{
-				var comparerExtended = dictionary.Comparer as ArgumentsComparerExtended;
-				if (comparerExtended != null)
-				{
-					return new Arguments(arguments, comparerExtended.CustomComparers);
-				}
-			}
-
-			return new Arguments(arguments);
-		}
-
-		object ICloneable.Clone()
-		{
-			return CreateDeepCopy();
-		}
-
 		void ICollection.CopyTo(Array array, int index)
 		{
 			arguments.CopyTo(array, index);
@@ -162,25 +138,34 @@ namespace Castle.Windsor.MicroKernel
 			return GetEnumerator();
 		}
 
+		protected virtual Arguments CreateDeepCopy()
+		{
+			var dictionary = arguments as Dictionary<object, object>;
+			if (dictionary != null)
+			{
+				var comparerExtended = dictionary.Comparer as ArgumentsComparerExtended;
+				if (comparerExtended != null)
+					return new Arguments(arguments, comparerExtended.CustomComparers);
+			}
+
+			return new Arguments(arguments);
+		}
+
 		private class ArgumentsComparer : IEqualityComparer<object>
 		{
 			public new virtual bool Equals(object x, object y)
 			{
 				var a = x as string;
 				if (a != null)
-				{
 					return StringComparer.OrdinalIgnoreCase.Equals(a, y as string);
-				}
-				return Object.Equals(x, y);
+				return object.Equals(x, y);
 			}
 
 			public virtual int GetHashCode(object obj)
 			{
 				var str = obj as string;
 				if (str != null)
-				{
 					return StringComparer.OrdinalIgnoreCase.GetHashCode(str);
-				}
 				return obj.GetHashCode();
 			}
 		}
@@ -205,9 +190,7 @@ namespace Castle.Windsor.MicroKernel
 				{
 					bool areEqual;
 					if (store.RunEqualityComparison(x, y, out areEqual))
-					{
 						return areEqual;
-					}
 				}
 				return base.Equals(x, y);
 			}
@@ -218,9 +201,7 @@ namespace Castle.Windsor.MicroKernel
 				{
 					int hashCode;
 					if (store.RunHasCodeCalculation(obj, out hashCode))
-					{
 						return hashCode;
-					}
 				}
 				return base.GetHashCode(obj);
 			}

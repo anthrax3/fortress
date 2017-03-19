@@ -23,7 +23,7 @@ namespace Castle.Windsor.MicroKernel
 	{
 		[Obsolete("Use Resolve<object>(key) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object this[String key] { get; }
+		object this[string key] { get; }
 
 		[Obsolete("Use Resolve(service) or generic strongly typed version instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -31,29 +31,29 @@ namespace Castle.Windsor.MicroKernel
 
 		[Obsolete("Use Register(Component.For(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponent(String key, Type classType);
+		void AddComponent(string key, Type classType);
 
 		[Obsolete("Use Register(Component.For(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponent(String key, Type classType, LifestyleType lifestyle);
+		void AddComponent(string key, Type classType, LifestyleType lifestyle);
 
 		[Obsolete("Use Register(Component.For(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponent(String key, Type classType, LifestyleType lifestyle, bool overwriteLifestyle);
+		void AddComponent(string key, Type classType, LifestyleType lifestyle, bool overwriteLifestyle);
 
 		[Obsolete("Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponent(String key, Type serviceType, Type classType);
+		void AddComponent(string key, Type serviceType, Type classType);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponent(String key, Type serviceType, Type classType, LifestyleType lifestyle);
+		void AddComponent(string key, Type serviceType, Type classType, LifestyleType lifestyle);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).Lifestyle.Is(lifestyle)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		void AddComponent(string key, Type serviceType, Type classType, LifestyleType lifestyle, bool overwriteLifestyle);
 
@@ -88,56 +88,56 @@ namespace Castle.Windsor.MicroKernel
 		void AddComponentInstance<T>(object instance);
 
 		[Obsolete("Use Register(Component.For(serviceType).ImplementedBy<T>().Instance(instance)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		void AddComponentInstance<T>(Type serviceType, object instance);
 
 		[Obsolete("Use Register(Component.For(instance.GetType()).Named(key).Instance(instance)) or generic version instead.")
 		]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponentInstance(String key, object instance);
+		void AddComponentInstance(string key, object instance);
 
 		[Obsolete("Use Register(Component.For(serviceType).Named(key).Instance(instance)) or generic version instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponentInstance(String key, Type serviceType, object instance);
+		void AddComponentInstance(string key, Type serviceType, object instance);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).Instance(instance)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		void AddComponentInstance(string key, Type serviceType, Type classType, object instance);
 
 		[Obsolete(
 			"Use Register(Component.For(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponentWithExtendedProperties(String key, Type classType, IDictionary extendedProperties);
+		void AddComponentWithExtendedProperties(string key, Type classType, IDictionary extendedProperties);
 
 		[Obsolete(
 			"Use Register(Component.For(serviceType).ImplementedBy(classType).Named(key).ExtendedProperties(extendedProperties)) or generic version instead."
-			)]
+		)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		void AddComponentWithExtendedProperties(String key, Type serviceType, Type classType, IDictionary extendedProperties);
+		void AddComponentWithExtendedProperties(string key, Type serviceType, Type classType, IDictionary extendedProperties);
 
 		[Obsolete("Use AddFacility(IFacility) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IKernel AddFacility(String key, IFacility facility);
+		IKernel AddFacility(string key, IFacility facility);
 
 		[Obsolete("Use AddFacility<TFacility>() instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IKernel AddFacility<T>(String key) where T : IFacility, new();
+		IKernel AddFacility<T>(string key) where T : IFacility, new();
 
 		[Obsolete("Use AddFacility<TFacility>(Action<TFacility>) instead.")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		IKernel AddFacility<T>(String key, Action<T> onCreate)
+		IKernel AddFacility<T>(string key, Action<T> onCreate)
 			where T : IFacility, new();
 
 		[Obsolete("Use Resolve<object>(key, argumentsAsAnonymousType) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object Resolve(String key, object argumentsAsAnonymousType);
+		object Resolve(string key, object argumentsAsAnonymousType);
 
 		[Obsolete("Use Resolve<object>(key, arguments) instead")]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		object Resolve(String key, IDictionary arguments);
+		object Resolve(string key, IDictionary arguments);
 	}
 }

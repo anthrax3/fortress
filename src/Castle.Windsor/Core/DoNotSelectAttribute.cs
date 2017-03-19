@@ -17,7 +17,7 @@ using System;
 namespace Castle.Windsor.Core
 {
 	[AttributeUsage(AttributeTargets.Constructor)]
-    public sealed class DoNotSelectAttribute : Attribute
-    {
-    }
+	public sealed class DoNotSelectAttribute : Attribute
+	{
+	}
 }

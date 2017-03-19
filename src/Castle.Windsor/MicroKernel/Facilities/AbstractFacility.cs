@@ -13,30 +13,14 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.Facilities
 {
 	public abstract class AbstractFacility : IFacility, IDisposable
 	{
-		private IConfiguration facilityConfig;
-		private IKernel kernel;
+		protected IConfiguration FacilityConfig { get; private set; }
 
-		protected IConfiguration FacilityConfig
-		{
-			get { return facilityConfig; }
-		}
-
-		protected IKernel Kernel
-		{
-			get { return kernel; }
-		}
-
-		protected abstract void Init();
-
-		protected virtual void Dispose()
-		{
-		}
+		protected IKernel Kernel { get; private set; }
 
 		void IDisposable.Dispose()
 		{
@@ -45,8 +29,8 @@ namespace Castle.Windsor.MicroKernel.Facilities
 
 		void IFacility.Init(IKernel kernel, IConfiguration facilityConfig)
 		{
-			this.kernel = kernel;
-			this.facilityConfig = facilityConfig;
+			Kernel = kernel;
+			FacilityConfig = facilityConfig;
 
 			Init();
 		}
@@ -55,7 +39,13 @@ namespace Castle.Windsor.MicroKernel.Facilities
 		{
 			Dispose();
 
-			kernel = null;
+			Kernel = null;
+		}
+
+		protected abstract void Init();
+
+		protected virtual void Dispose()
+		{
 		}
 	}
 }

@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 
@@ -32,19 +30,19 @@ namespace Castle.Windsor.Windsor.Installer
 			partial.Init(kernel);
 		}
 
-		public void AddChildContainerConfiguration(String name, IConfiguration config)
+		public void AddChildContainerConfiguration(string name, IConfiguration config)
 		{
 			inner.AddChildContainerConfiguration(name, config);
 			partial.AddChildContainerConfiguration(name, config);
 		}
 
-		public void AddComponentConfiguration(String key, IConfiguration config)
+		public void AddComponentConfiguration(string key, IConfiguration config)
 		{
 			inner.AddComponentConfiguration(key, config);
 			partial.AddComponentConfiguration(key, config);
 		}
 
-		public void AddFacilityConfiguration(String key, IConfiguration config)
+		public void AddFacilityConfiguration(string key, IConfiguration config)
 		{
 			inner.AddFacilityConfiguration(key, config);
 			partial.AddFacilityConfiguration(key, config);
@@ -56,12 +54,12 @@ namespace Castle.Windsor.Windsor.Installer
 			partial.AddInstallerConfiguration(config);
 		}
 
-		public IConfiguration GetChildContainerConfiguration(String key)
+		public IConfiguration GetChildContainerConfiguration(string key)
 		{
 			return partial.GetChildContainerConfiguration(key);
 		}
 
-		public IConfiguration GetComponentConfiguration(String key)
+		public IConfiguration GetComponentConfiguration(string key)
 		{
 			return partial.GetComponentConfiguration(key);
 		}
@@ -81,7 +79,7 @@ namespace Castle.Windsor.Windsor.Installer
 			return partial.GetFacilities();
 		}
 
-		public IConfiguration GetFacilityConfiguration(String key)
+		public IConfiguration GetFacilityConfiguration(string key)
 		{
 			return partial.GetFacilityConfiguration(key);
 		}
@@ -91,14 +89,9 @@ namespace Castle.Windsor.Windsor.Installer
 			return partial.GetInstallers();
 		}
 
-		public IResource GetResource(String resourceUri, IResource resource)
+		public IResource GetResource(string resourceUri, IResource resource)
 		{
 			return inner.GetResource(resourceUri, resource);
-		}
-
-		public void Dispose()
-		{
-			Terminate();
 		}
 
 		public void Init(IKernelInternal kernel)
@@ -109,6 +102,11 @@ namespace Castle.Windsor.Windsor.Installer
 		public void Terminate()
 		{
 			partial.Terminate();
+		}
+
+		public void Dispose()
+		{
+			Terminate();
 		}
 	}
 }

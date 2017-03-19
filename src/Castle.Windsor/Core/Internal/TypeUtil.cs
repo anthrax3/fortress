@@ -23,9 +23,7 @@ namespace Castle.Windsor.Core.Internal
 		public static bool IsPrimitiveTypeOrCollection(this Type type)
 		{
 			if (type.IsPrimitiveType())
-			{
 				return true;
-			}
 
 			var itemType = type.GetCompatibleArrayItemType();
 			return itemType != null && itemType.IsPrimitiveTypeOrCollection();
@@ -76,19 +74,13 @@ namespace Castle.Windsor.Core.Internal
 				{
 					message.AppendLine("\t" + argument.AssemblyQualifiedName);
 					if (hasAssembliesFromGac == false)
-					{
 						hasAssembliesFromGac = argument.Assembly.GlobalAssemblyCache;
-					}
 				}
 				if (Debugger.IsAttached)
-				{
 					message.AppendLine("It look like your debugger is attached. Try running the code without the debugger. It's likely it will work correctly.");
-				}
 				message.AppendLine("If you're running the code inside your IDE try rebuilding your code (Clean, then Build) and make sure you don't have conflicting versions of referenced assemblies.");
 				if (hasAssembliesFromGac)
-				{
 					message.AppendLine("Notice that some assemblies involved were coming from GAC.");
-				}
 				message.AppendLine("If you tried all of the above and the issue still persists try asking on StackOverflow or castle users group.");
 				throw new ArgumentException(message.ToString(), e);
 			}
@@ -104,9 +96,7 @@ namespace Castle.Windsor.Core.Internal
 				name.Append(", ");
 			}
 			if (genericArguments.Length > 0)
-			{
 				ToCSharpString(genericArguments[genericArguments.Length - 1], name);
-			}
 			name.Append(">");
 		}
 

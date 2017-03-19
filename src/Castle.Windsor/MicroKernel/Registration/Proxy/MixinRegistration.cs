@@ -22,40 +22,6 @@ namespace Castle.Windsor.MicroKernel.Registration.Proxy
 	{
 		private readonly IList<IReference<object>> items = new List<IReference<object>>();
 
-		public MixinRegistration Component<TService>()
-		{
-			return Component(typeof(TService));
-		}
-
-		public MixinRegistration Component(Type serviceType)
-		{
-			if (serviceType == null)
-			{
-				throw new ArgumentNullException("serviceType");
-			}
-			items.Add(new ComponentReference<object>(serviceType));
-			return this;
-		}
-
-		public MixinRegistration Component(string name)
-		{
-			if (name == null)
-			{
-				throw new ArgumentNullException("name");
-			}
-			items.Add(new ComponentReference<object>(name));
-			return this;
-		}
-
-		public MixinRegistration Objects(params object[] objects)
-		{
-			foreach (var item in objects)
-			{
-				items.Add(new InstanceReference<object>(item));
-			}
-			return this;
-		}
-
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return items.GetEnumerator();
@@ -64,6 +30,34 @@ namespace Castle.Windsor.MicroKernel.Registration.Proxy
 		IEnumerator<IReference<object>> IEnumerable<IReference<object>>.GetEnumerator()
 		{
 			return items.GetEnumerator();
+		}
+
+		public MixinRegistration Component<TService>()
+		{
+			return Component(typeof(TService));
+		}
+
+		public MixinRegistration Component(Type serviceType)
+		{
+			if (serviceType == null)
+				throw new ArgumentNullException("serviceType");
+			items.Add(new ComponentReference<object>(serviceType));
+			return this;
+		}
+
+		public MixinRegistration Component(string name)
+		{
+			if (name == null)
+				throw new ArgumentNullException("name");
+			items.Add(new ComponentReference<object>(name));
+			return this;
+		}
+
+		public MixinRegistration Objects(params object[] objects)
+		{
+			foreach (var item in objects)
+				items.Add(new InstanceReference<object>(item));
+			return this;
 		}
 	}
 }

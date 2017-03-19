@@ -18,10 +18,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.Compatibility;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
@@ -45,11 +41,9 @@ namespace Castle.Windsor.MicroKernel.Registration
 		private readonly List<Type> potentialServices = new List<Type>();
 
 		private bool ifComponentRegisteredIgnore;
-		private Type implementation;
 		private ComponentName name;
-		private bool overwrite;
-		private bool registerNewServicesOnly;
 		private bool registered;
+		private bool registerNewServicesOnly;
 
 		public ComponentRegistration() : this(typeof(TService))
 		{
@@ -60,10 +54,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 			Forward(services);
 		}
 
-		public Type Implementation
-		{
-			get { return implementation; }
-		}
+		public Type Implementation { get; private set; }
 
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public LifestyleGroup<TService> LifeStyle
@@ -71,14 +62,12 @@ namespace Castle.Windsor.MicroKernel.Registration
 			get { return new LifestyleGroup<TService>(this); }
 		}
 
-		public String Name
+		public string Name
 		{
 			get
 			{
 				if (name == null)
-				{
 					return null;
-				}
 				return name.Name;
 			}
 		}
@@ -98,9 +87,24 @@ namespace Castle.Windsor.MicroKernel.Registration
 			get { return potentialServices.Count; }
 		}
 
-		internal bool IsOverWrite
+		internal bool IsOverWrite { get; private set; }
+
+		void IRegistration.Register(IKernelInternal kernel)
 		{
-			get { return overwrite; }
+			if (registered)
+				return;
+			registered = true;
+			var services = FilterServices(kernel);
+			if (services.Length == 0)
+				return;
+
+			var componentModel = kernel.ComponentModelBuilder.BuildModel(GetContributors(services));
+			if (SkipRegistration(kernel, componentModel))
+			{
+				kernel.Logger.Info("Skipping registration of " + componentModel.Name);
+				return;
+			}
+			kernel.AddCustomComponent(componentModel);
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -108,12 +112,8 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public ComponentRegistration<TService> ActAs(params object[] actors)
 		{
 			foreach (var actor in actors)
-			{
 				if (actor != null)
-				{
 					DependsOn(Property.ForKey(Guid.NewGuid().ToString()).Eq(actor));
-				}
-			}
 			return this;
 		}
 
@@ -133,9 +133,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 			descriptors.Add(descriptor);
 			var componentDescriptor = descriptor as AbstractOverwriteableDescriptor<TService>;
 			if (componentDescriptor != null)
-			{
 				componentDescriptor.Registration = this;
-			}
 			return this;
 		}
 
@@ -156,47 +154,33 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> DependsOn(Dependency dependency)
 		{
-			return DependsOn(new[] { dependency });
+			return DependsOn(new[] {dependency});
 		}
 
 		public ComponentRegistration<TService> DependsOn(params Dependency[] dependencies)
 		{
 			if (dependencies == null || dependencies.Length == 0)
-			{
 				return this;
-			}
 			var serviceOverrides = new List<ServiceOverride>(dependencies.Length);
 			var properties = new List<Property>(dependencies.Length);
 			var parameters = new List<Parameter>(dependencies.Length);
 			foreach (var dependency in dependencies)
 			{
 				if (dependency.Accept(properties))
-				{
 					continue;
-				}
 				if (dependency.Accept(parameters))
-				{
 					continue;
-				}
 				if (dependency.Accept(serviceOverrides))
-				{
 					continue;
-				}
 			}
 
 			if (serviceOverrides.Count > 0)
-			{
 				AddDescriptor(new ServiceOverrideDescriptor(serviceOverrides.ToArray()));
-			}
 			if (properties.Count > 0)
-			{
 				AddDescriptor(new CustomDependencyDescriptor(properties.ToArray()));
-			}
 
 			if (parameters.Count > 0)
-			{
 				AddDescriptor(new ParametersDescriptor(parameters.ToArray()));
-			}
 			return this;
 		}
 
@@ -257,7 +241,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> ExtendedProperties(Property property)
 		{
-			return ExtendedProperties(new[] { property });
+			return ExtendedProperties(new[] {property});
 		}
 
 		public ComponentRegistration<TService> ExtendedProperties(object anonymous)
@@ -267,35 +251,33 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> Forward(params Type[] types)
 		{
-			return Forward((IEnumerable<Type>)types);
+			return Forward((IEnumerable<Type>) types);
 		}
 
 		public ComponentRegistration<TService> Forward<TService2>()
 		{
-			return Forward(new[] { typeof(TService2) });
+			return Forward(typeof(TService2));
 		}
 
 		public ComponentRegistration<TService> Forward<TService2, TService3>()
 		{
-			return Forward(new[] { typeof(TService2), typeof(TService3) });
+			return Forward(typeof(TService2), typeof(TService3));
 		}
 
 		public ComponentRegistration<TService> Forward<TService2, TService3, TService4>()
 		{
-			return Forward(new[] { typeof(TService2), typeof(TService3), typeof(TService4) });
+			return Forward(typeof(TService2), typeof(TService3), typeof(TService4));
 		}
 
 		public ComponentRegistration<TService> Forward<TService2, TService3, TService4, TService5>()
 		{
-			return Forward(new[] { typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5) });
+			return Forward(typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5));
 		}
 
 		public ComponentRegistration<TService> Forward(IEnumerable<Type> types)
 		{
 			foreach (var type in types)
-			{
 				ComponentServicesUtil.AddService(potentialServices, type);
-			}
 			return this;
 		}
 
@@ -321,31 +303,25 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> ImplementedBy(Type type, IGenericImplementationMatchingStrategy genericImplementationMatchingStrategy, IGenericServiceStrategy genericServiceStrategy)
 		{
-			if (implementation != null && implementation != typeof(LateBoundComponent))
+			if (Implementation != null && Implementation != typeof(LateBoundComponent))
 			{
-				var message = String.Format("This component has already been assigned implementation {0}",
-				                            implementation.FullName);
+				var message = string.Format("This component has already been assigned implementation {0}",
+					Implementation.FullName);
 				throw new ComponentRegistrationException(message);
 			}
 
-			implementation = type;
+			Implementation = type;
 			if (genericImplementationMatchingStrategy != null)
-			{
 				ExtendedProperties(Property.ForKey(Constants.GenericImplementationMatchingStrategy).Eq(genericImplementationMatchingStrategy));
-			}
 			if (genericServiceStrategy != null)
-			{
 				ExtendedProperties(Property.ForKey(Constants.GenericServiceStrategy).Eq(genericServiceStrategy));
-			}
 			return this;
 		}
 
 		public ComponentRegistration<TService> Instance(TService instance)
 		{
 			if (instance == null)
-			{
 				throw new ArgumentNullException("instance");
-			}
 			return ImplementedBy(instance.GetType())
 				.Activator<ExternalInstanceActivator>()
 				.ExtendedProperties(Property.ForKey("instance").Eq(instance));
@@ -364,7 +340,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> Interceptors<TInterceptor>() where TInterceptor : IInterceptor
 		{
-			return AddDescriptor(new InterceptorDescriptor(new[] { new InterceptorReference(typeof(TInterceptor)) }));
+			return AddDescriptor(new InterceptorDescriptor(new[] {new InterceptorReference(typeof(TInterceptor))}));
 		}
 
 		public ComponentRegistration<TService> Interceptors<TInterceptor1, TInterceptor2>()
@@ -441,27 +417,25 @@ namespace Castle.Windsor.MicroKernel.Registration
 			return LifeStyle.Transient;
 		}
 
-		public ComponentRegistration<TService> Named(String name)
+		public ComponentRegistration<TService> Named(string name)
 		{
 			if (this.name != null)
 			{
-				var message = String.Format("This component has already been assigned name '{0}'", this.name.Name);
+				var message = string.Format("This component has already been assigned name '{0}'", this.name.Name);
 				throw new ComponentRegistrationException(message);
 			}
 			if (name == null)
-			{
 				return this;
-			}
 
 			this.name = new ComponentName(name, true);
 			return this;
 		}
 
-		public ComponentRegistration<TService> NamedAutomatically(String name)
+		public ComponentRegistration<TService> NamedAutomatically(string name)
 		{
 			if (this.name != null)
 			{
-				var message = String.Format("This component has already been assigned name '{0}'", this.name);
+				var message = string.Format("This component has already been assigned name '{0}'", this.name);
 				throw new ComponentRegistrationException(message);
 			}
 
@@ -472,9 +446,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public ComponentRegistration<TService> OnCreate(params Action<TService>[] actions)
 		{
 			if (actions.IsNullOrEmpty())
-			{
 				return this;
-			}
 			return OnCreate(actions.ConvertAll(a => new LifecycleActionDelegate<TService>((_, o) => a(o))));
 		}
 
@@ -482,8 +454,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			if (actions != null && actions.Length != 0)
 			{
-				
-				var action = (LifecycleActionDelegate<TService>)Delegate.Combine(actions);
+				var action = (LifecycleActionDelegate<TService>) Delegate.Combine(actions);
 				AddDescriptor(new OnCreateComponentDescriptor<TService>(action));
 			}
 			return this;
@@ -492,9 +463,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public ComponentRegistration<TService> OnDestroy(params Action<TService>[] actions)
 		{
 			if (actions.IsNullOrEmpty())
-			{
 				return this;
-			}
 			return OnDestroy(actions.ConvertAll(a => new LifecycleActionDelegate<TService>((_, o) => a(o))));
 		}
 
@@ -502,8 +471,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			if (actions != null && actions.Length != 0)
 			{
-				
-				var action = (LifecycleActionDelegate<TService>)Delegate.Combine(actions);
+				var action = (LifecycleActionDelegate<TService>) Delegate.Combine(actions);
 				AddDescriptor(new OnDestroyComponentDescriptor<TService>(action));
 			}
 			return this;
@@ -518,7 +486,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public ComponentRegistration<TService> OverWrite()
 		{
-			overwrite = true;
+			IsOverWrite = true;
 			return this;
 		}
 
@@ -569,14 +537,14 @@ namespace Castle.Windsor.MicroKernel.Registration
 		}
 
 		public ComponentRegistration<TService> UsingFactoryMethod<TImpl>(Func<TImpl> factoryMethod,
-		                                                                 bool managedExternally = false)
+			bool managedExternally = false)
 			where TImpl : TService
 		{
 			return UsingFactoryMethod((k, m, c) => factoryMethod(), managedExternally);
 		}
 
 		public ComponentRegistration<TService> UsingFactoryMethod<TImpl>(Converter<IKernel, TImpl> factoryMethod,
-		                                                                 bool managedExternally = false)
+			bool managedExternally = false)
 			where TImpl : TService
 		{
 			return UsingFactoryMethod((k, m, c) => factoryMethod(k), managedExternally);
@@ -591,15 +559,11 @@ namespace Castle.Windsor.MicroKernel.Registration
 				.ExtendedProperties(Property.ForKey("factoryMethodDelegate").Eq(factoryMethod));
 
 			if (managedExternally)
-			{
 				ExtendedProperties(Property.ForKey("factory.managedExternally").Eq(managedExternally));
-			}
 
-			if (implementation == null &&
+			if (Implementation == null &&
 			    (potentialServices.First().IsClass == false || potentialServices.First().IsSealed == false))
-			{
-				implementation = typeof(LateBoundComponent);
-			}
+				Implementation = typeof(LateBoundComponent);
 			return this;
 		}
 
@@ -618,9 +582,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		{
 			var services = new List<Type>(potentialServices);
 			if (registerNewServicesOnly)
-			{
 				services.RemoveAll(kernel.HasComponent);
-			}
 			return services.ToArray();
 		}
 
@@ -629,7 +591,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 			var list = new List<IComponentModelDescriptor>
 			{
 				new ServicesDescriptor(services),
-				new DefaultsDescriptor(name, implementation),
+				new DefaultsDescriptor(name, Implementation)
 			};
 			list.AddRange(descriptors);
 			return list.ToArray();
@@ -640,34 +602,10 @@ namespace Castle.Windsor.MicroKernel.Registration
 			return ifComponentRegisteredIgnore && internalKernel.HasComponent(componentModel.Name);
 		}
 
-		void IRegistration.Register(IKernelInternal kernel)
-		{
-			if (registered)
-			{
-				return;
-			}
-			registered = true;
-			var services = FilterServices(kernel);
-			if (services.Length == 0)
-			{
-				return;
-			}
-
-			var componentModel = kernel.ComponentModelBuilder.BuildModel(GetContributors(services));
-			if (SkipRegistration(kernel, componentModel))
-			{
-				kernel.Logger.Info("Skipping registration of " + componentModel.Name);
-				return;
-			}
-			kernel.AddCustomComponent(componentModel);
-		}
-
 		public ComponentRegistration<TService> IsDefault(Predicate<Type> serviceFilter)
 		{
 			if (serviceFilter == null)
-			{
 				throw new ArgumentNullException("serviceFilter");
-			}
 			var properties = new Property(Constants.DefaultComponentForServiceFilter, serviceFilter);
 			return ExtendedProperties(properties);
 		}
@@ -680,9 +618,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		public ComponentRegistration<TService> IsFallback(Predicate<Type> serviceFilter)
 		{
 			if (serviceFilter == null)
-			{
 				throw new ArgumentNullException("serviceFilter");
-			}
 			var properties = new Property(Constants.FallbackComponentForServiceFilter, serviceFilter);
 			return ExtendedProperties(properties);
 		}
@@ -696,7 +632,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 		[Obsolete("This method is now obsolete due to poor usability. Use explicit PropertiesRequire() or PropertiesIgnore() method instead.")]
 		public ComponentRegistration<TService> Properties(Predicate<PropertyInfo> filter)
 		{
-			return Properties(filter, isRequired: false);
+			return Properties(filter, false);
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -710,10 +646,10 @@ namespace Castle.Windsor.MicroKernel.Registration
 		[Obsolete("This method is now obsolete due to poor usability. Use explicit PropertiesRequire() or PropertiesIgnore() method instead.")]
 		public ComponentRegistration<TService> Properties(Func<ComponentModel, PropertyInfo, bool> filter, bool isRequired)
 		{
-			return AddDescriptor(new DelegatingModelDescriptor(builder: (k, c) =>
+			return AddDescriptor(new DelegatingModelDescriptor((k, c) =>
 			{
-				var filters = StandardPropertyFilters.GetPropertyFilters(c, createIfMissing: true);
-				filters.Add(StandardPropertyFilters.FromObsoleteFunction(filter, isRequired: isRequired));
+				var filters = StandardPropertyFilters.GetPropertyFilters(c, true);
+				filters.Add(StandardPropertyFilters.FromObsoleteFunction(filter, isRequired));
 			}));
 		}
 
@@ -729,27 +665,27 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		public ComponentRegistration<TService> PropertiesIgnore(Func<ComponentModel, PropertyInfo, bool> propertySelector)
 		{
-			return AddDescriptor(new DelegatingModelDescriptor(builder: (k, c) =>
+			return AddDescriptor(new DelegatingModelDescriptor((k, c) =>
 			{
-				var filters = StandardPropertyFilters.GetPropertyFilters(c, createIfMissing: true);
+				var filters = StandardPropertyFilters.GetPropertyFilters(c, true);
 				filters.Add(StandardPropertyFilters.IgnoreSelected(propertySelector));
 			}));
 		}
 
 		public ComponentRegistration<TService> PropertiesRequire(Func<ComponentModel, PropertyInfo, bool> propertySelector)
 		{
-			return AddDescriptor(new DelegatingModelDescriptor(builder: (k, c) =>
+			return AddDescriptor(new DelegatingModelDescriptor((k, c) =>
 			{
-				var filters = StandardPropertyFilters.GetPropertyFilters(c, createIfMissing: true);
+				var filters = StandardPropertyFilters.GetPropertyFilters(c, true);
 				filters.Add(StandardPropertyFilters.RequireSelected(propertySelector));
 			}));
 		}
 
 		public ComponentRegistration<TService> Properties(PropertyFilter filter)
 		{
-			return AddDescriptor(new DelegatingModelDescriptor(builder: (k, c) =>
+			return AddDescriptor(new DelegatingModelDescriptor((k, c) =>
 			{
-				var filters = StandardPropertyFilters.GetPropertyFilters(c, createIfMissing: true);
+				var filters = StandardPropertyFilters.GetPropertyFilters(c, true);
 				filters.Add(StandardPropertyFilters.Create(filter));
 			}));
 		}

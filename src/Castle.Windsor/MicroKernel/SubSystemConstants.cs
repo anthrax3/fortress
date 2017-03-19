@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.MicroKernel
 {
 	public abstract class SubSystemConstants
 	{
-		public static readonly String ConfigurationStoreKey = "config.store";
+		public static readonly string ConfigurationStoreKey = "config.store";
 
-		public static readonly String ConversionManagerKey = "conversion.mng";
+		public static readonly string ConversionManagerKey = "conversion.mng";
 
-		public static readonly String DiagnosticsKey = "Castle.DiagnosticsSubSystem";
+		public static readonly string DiagnosticsKey = "Castle.DiagnosticsSubSystem";
 
-		public static readonly String NamingKey = "naming.sub.key";
+		public static readonly string NamingKey = "naming.sub.key";
 
-		public static readonly String ResourceKey = "resource.sub.key";
+		public static readonly string ResourceKey = "resource.sub.key";
 	}
 }

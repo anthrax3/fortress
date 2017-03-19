@@ -40,7 +40,7 @@ namespace Castle.Windsor.MicroKernel
 		}
 
 		public ComponentNotFoundException(Type service) :
-			this(service, String.Format("No component for supporting the service {0} was found", service.FullName))
+			this(service, string.Format("No component for supporting the service {0} was found", service.FullName))
 		{
 		}
 
@@ -56,28 +56,22 @@ namespace Castle.Windsor.MicroKernel
 		{
 			var message =
 				string.Format("Requested component named '{0}' was not found in the container. Did you forget to register it?{1}",
-				              name, Environment.NewLine);
+					name, Environment.NewLine);
 			if (countOfHandlersForTheService == 0)
-			{
 				return message +
 				       string.Format(
-				       	"There are no components supporting requested service '{0}'. You need to register components in order to be able to use them.",
-				       	service.FullName);
-			}
+					       "There are no components supporting requested service '{0}'. You need to register components in order to be able to use them.",
+					       service.FullName);
 			if (countOfHandlersForTheService == 1)
-			{
 				return message +
 				       string.Format(
-				       	"There is one other component supporting requested service '{0}'. Is it what you were looking for?",
-				       	service.FullName);
-			}
+					       "There is one other component supporting requested service '{0}'. Is it what you were looking for?",
+					       service.FullName);
 			if (countOfHandlersForTheService > 1)
-			{
 				return message +
 				       string.Format(
-				       	"There are {0} other components supporting requested service '{1}'. Were you looking for any of them?",
-				       	countOfHandlersForTheService, service.FullName);
-			}
+					       "There are {0} other components supporting requested service '{1}'. Were you looking for any of them?",
+					       countOfHandlersForTheService, service.FullName);
 			// this should never happen but if someone passes us wrong information we just ignore it
 			return message;
 		}

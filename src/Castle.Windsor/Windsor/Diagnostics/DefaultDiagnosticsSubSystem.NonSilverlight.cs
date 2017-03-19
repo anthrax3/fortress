@@ -23,12 +23,6 @@ namespace Castle.Windsor.Windsor.Diagnostics
 	{
 		private readonly IList<IContainerDebuggerExtension> extensions = new List<IContainerDebuggerExtension>();
 
-		public override void Init(IKernelInternal kernel)
-		{
-			base.Init(kernel);
-			InitStandardExtensions();
-		}
-
 		public void Add(IContainerDebuggerExtension item)
 		{
 			item.Init(Kernel, this);
@@ -38,6 +32,17 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public IEnumerator<IContainerDebuggerExtension> GetEnumerator()
 		{
 			return extensions.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		public override void Init(IKernelInternal kernel)
+		{
+			base.Init(kernel);
+			InitStandardExtensions();
 		}
 
 		protected virtual void InitStandardExtensions()
@@ -50,11 +55,6 @@ namespace Castle.Windsor.Windsor.Diagnostics
 			Add(new UsingContainerAsServiceLocator());
 			Add(new ReleasePolicyTrackedObjects());
 			Add(new Extensions.Facilities());
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 	}
 }

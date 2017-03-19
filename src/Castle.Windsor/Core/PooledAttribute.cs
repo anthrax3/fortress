@@ -16,14 +16,11 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class PooledAttribute : LifestyleAttribute
 	{
 		private static readonly int Initial_PoolSize = 5;
 		private static readonly int Max_PoolSize = 15;
-
-		private readonly int initialPoolSize;
-		private readonly int maxPoolSize;
 
 		public PooledAttribute() : this(Initial_PoolSize, Max_PoolSize)
 		{
@@ -31,18 +28,12 @@ namespace Castle.Windsor.Core
 
 		public PooledAttribute(int initialPoolSize, int maxPoolSize) : base(LifestyleType.Pooled)
 		{
-			this.initialPoolSize = initialPoolSize;
-			this.maxPoolSize = maxPoolSize;
+			InitialPoolSize = initialPoolSize;
+			MaxPoolSize = maxPoolSize;
 		}
 
-		public int InitialPoolSize
-		{
-			get { return initialPoolSize; }
-		}
+		public int InitialPoolSize { get; }
 
-		public int MaxPoolSize
-		{
-			get { return maxPoolSize; }
-		}
+		public int MaxPoolSize { get; }
 	}
 }

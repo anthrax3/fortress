@@ -27,7 +27,7 @@ namespace Castle.Windsor.MicroKernel.Registration
 
 		protected internal FromAssemblyDescriptor(Assembly assembly, Predicate<Type> additionalFilters) : base(additionalFilters)
 		{
-			assemblies = new[] { assembly };
+			assemblies = new[] {assembly};
 		}
 
 		protected internal FromAssemblyDescriptor(IEnumerable<Assembly> assemblies, Predicate<Type> additionalFilters)

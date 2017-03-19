@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
 
 namespace Castle.Windsor.MicroKernel.Registration.Proxy
@@ -29,9 +28,7 @@ namespace Castle.Windsor.MicroKernel.Registration.Proxy
 		public ComponentRegistration<S> AdditionalInterfaces(params Type[] interfaces)
 		{
 			if (interfaces != null && interfaces.Length > 0)
-			{
 				AddDescriptor(new ProxyInterfacesDescriptor(interfaces));
-			}
 			return Registration;
 		}
 

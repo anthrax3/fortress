@@ -23,6 +23,12 @@ namespace Castle.Windsor.Facilities.Startable
 		protected readonly List<IHandler> waitList = new List<IHandler>();
 		protected StartableFacility.StartableEvents events;
 
+		void IStartFlagInternal.Init(StartableFacility.StartableEvents events)
+		{
+			this.events = events;
+			Init();
+		}
+
 		public virtual void Signal()
 		{
 			events.StartableComponentRegistered -= CacheHandler;
@@ -49,15 +55,7 @@ namespace Castle.Windsor.Facilities.Startable
 			var array = waitList.ToArray();
 			waitList.Clear();
 			foreach (var handler in array)
-			{
 				Start(handler);
-			}
-		}
-
-		void IStartFlagInternal.Init(StartableFacility.StartableEvents events)
-		{
-			this.events = events;
-			Init();
 		}
 	}
 }

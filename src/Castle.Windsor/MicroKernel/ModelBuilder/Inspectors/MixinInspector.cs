@@ -26,15 +26,11 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 		public void ProcessModel(IKernel kernel, ComponentModel model)
 		{
 			if (model.Configuration == null)
-			{
 				return;
-			}
 
 			var mixins = model.Configuration.Children["mixins"];
 			if (mixins == null)
-			{
 				return;
-			}
 
 			var mixinReferences = new List<ComponentReference<object>>();
 			foreach (var mixin in mixins.Children)
@@ -43,17 +39,13 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 
 				var mixinComponent = ReferenceExpressionUtil.ExtractComponentName(value);
 				if (mixinComponent == null)
-				{
 					throw new Exception(
-						String.Format("The value for the mixin must be a reference to a component (Currently {0})", value));
-				}
+						string.Format("The value for the mixin must be a reference to a component (Currently {0})", value));
 
 				mixinReferences.Add(new ComponentReference<object>(mixinComponent));
 			}
 			if (mixinReferences.Count == 0)
-			{
 				return;
-			}
 			var options = model.ObtainProxyOptions();
 			mixinReferences.ForEach(options.AddMixinReference);
 		}

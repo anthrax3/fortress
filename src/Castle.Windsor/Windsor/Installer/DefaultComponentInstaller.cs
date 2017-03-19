@@ -17,8 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
@@ -43,23 +41,19 @@ namespace Castle.Windsor.Windsor.Installer
 		}
 
 		protected virtual void SetUpInstallers(IConfiguration[] installers, IWindsorContainer container,
-		                                       IConversionManager converter)
+			IConversionManager converter)
 		{
 			var instances = new Dictionary<Type, IWindsorInstaller>();
 			var assemblies = new HashSet<Assembly>();
 			foreach (var installer in installers)
-			{
 				AddInstaller(installer, instances, converter, assemblies);
-			}
 
 			if (instances.Count != 0)
-			{
 				container.Install(instances.Values.ToArray());
-			}
 		}
 
 		private void AddInstaller(IConfiguration installer, Dictionary<Type, IWindsorInstaller> cache,
-		                          IConversionManager conversionManager, ICollection<Assembly> assemblies)
+			IConversionManager conversionManager, ICollection<Assembly> assemblies)
 		{
 			var typeName = installer.Attributes["type"];
 			if (string.IsNullOrEmpty(typeName) == false)
@@ -74,9 +68,7 @@ namespace Castle.Windsor.Windsor.Installer
 			{
 				var assembly = ReflectionUtil.GetAssemblyNamed(assemblyName);
 				if (assemblies.Contains(assembly))
-				{
 					return;
-				}
 				assemblies.Add(assembly);
 
 				GetAssemblyInstallers(cache, assembly);
@@ -89,16 +81,12 @@ namespace Castle.Windsor.Windsor.Installer
 			Debug.Assert(directory != null, "directory != null");
 			var assemblyFilter = new AssemblyFilter(directory, mask);
 			if (token != null)
-			{
 				assemblyFilter.WithKeyToken(token);
-			}
 
 			foreach (var assembly in ReflectionUtil.GetAssemblies(assemblyFilter))
 			{
 				if (assemblies.Contains(assembly))
-				{
 					continue;
-				}
 				assemblies.Add(assembly);
 				GetAssemblyInstallers(cache, assembly);
 			}
@@ -108,9 +96,7 @@ namespace Castle.Windsor.Windsor.Installer
 		{
 			var types = assembly.GetAvailableTypes();
 			foreach (var type in InstallerTypes(types))
-			{
 				AddInstaller(cache, type);
-			}
 		}
 
 		private IEnumerable<Type> InstallerTypes(IEnumerable<Type> types)
@@ -150,19 +136,15 @@ namespace Castle.Windsor.Windsor.Installer
 		private void AssertImplementsService(IConfiguration id, Type service, Type implementation)
 		{
 			if (service == null)
-			{
 				return;
-			}
 			if (service.IsGenericTypeDefinition)
-			{
 				implementation = implementation.MakeGenericType(service.GetGenericArguments());
-			}
 			if (!service.IsAssignableFrom(implementation))
 			{
 				var message = string.Format("Could not set up component '{0}'. Type '{1}' does not implement service '{2}'",
-				                            id.Attributes["id"],
-				                            implementation.AssemblyQualifiedName,
-				                            service.AssemblyQualifiedName);
+					id.Attributes["id"],
+					implementation.AssemblyQualifiedName,
+					service.AssemblyQualifiedName);
 				throw new ComponentRegistrationException(message);
 			}
 		}
@@ -175,9 +157,7 @@ namespace Castle.Windsor.Windsor.Installer
 				var firstService = GetType(converter, component.Attributes["service"]);
 				var services = new HashSet<Type>();
 				if (firstService != null)
-				{
 					services.Add(firstService);
-				}
 				CollectAdditionalServices(component, converter, services);
 
 				var name = default(string);
@@ -186,17 +166,13 @@ namespace Castle.Windsor.Windsor.Installer
 					AssertImplementsService(component, firstService, implementation);
 					var defaults = CastleComponentAttribute.GetDefaultsFor(implementation);
 					if (defaults.ServicesSpecifiedExplicitly && services.Count == 0)
-					{
-						foreach(var service in defaults.Services)
+						foreach (var service in defaults.Services)
 							services.Add(service);
-					}
 					name = GetName(defaults, component);
 				}
 
 				if (services.Count == 0 && implementation == null)
-				{
 					continue;
-				}
 
 				container.Register(Component.For(services).ImplementedBy(implementation).Named(name));
 			}
@@ -205,18 +181,14 @@ namespace Castle.Windsor.Windsor.Installer
 		private static string GetName(CastleComponentAttribute defaults, IConfiguration component)
 		{
 			if (component.Attributes["id-automatic"] != bool.TrueString)
-			{
 				return component.Attributes["id"];
-			}
 			return defaults.Name;
 		}
 
 		private Type GetType(IConversionManager converter, string typeName)
 		{
 			if (typeName == null)
-			{
 				return null;
-			}
 			return converter.PerformConversion<Type>(typeName);
 		}
 
@@ -224,9 +196,7 @@ namespace Castle.Windsor.Windsor.Installer
 		{
 			var forwardedTypes = component.Children["forwardedTypes"];
 			if (forwardedTypes == null)
-			{
 				return;
-			}
 
 			foreach (var forwardedType in forwardedTypes.Children)
 			{
@@ -252,7 +222,7 @@ namespace Castle.Windsor.Windsor.Installer
 				Debug.Assert(id != null);
 
 				new WindsorContainer(id, parentContainer,
-				                     new XmlInterpreter(new StaticContentResource(childContainerConfig.Value)));
+					new XmlInterpreter(new StaticContentResource(childContainerConfig.Value)));
 			}
 		}
 	}
