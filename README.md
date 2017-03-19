@@ -2,6 +2,14 @@
 
 A leaner meaner version of Castle.Windsor
 
+&nbsp;FluentWindsor<br /><br />
+=============
+
+| Build |
+|---------|
+| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress.windsor"><img src="https://ci.appveyor.com/api/projects/status/843yxnhrj4eq5ef5/branch/master?svg=true" /></a> |
+
+
 ## Castle Windsor
 
 <img align="right" src="docs/images/windsor-logo.png">
