@@ -25,9 +25,9 @@ namespace Castle.Core.Core.Internal
 		{
 			var targetAssembly = typeToProxy.GetTypeInfo().Assembly;
 
-			string strongNamedOrNotIndicator = " not"; // assume not strong-named
-			string assemblyToBeVisibleTo = "\"DynamicProxyGenAssembly2\""; // appropriate for non-strong-named
-	
+			var strongNamedOrNotIndicator = " not"; // assume not strong-named
+			var assemblyToBeVisibleTo = "\"DynamicProxyGenAssembly2\""; // appropriate for non-strong-named
+
 			if (targetAssembly.IsAssemblySigned())
 			{
 				strongNamedOrNotIndicator = "";
@@ -36,10 +36,10 @@ namespace Castle.Core.Core.Internal
 					: assemblyToBeVisibleTo = '"' + InternalsVisible.ToDynamicProxyGenAssembly2 + '"';
 			}
 
-			string inaccessibleTypeDescription = inaccessibleType == typeToProxy
+			var inaccessibleTypeDescription = inaccessibleType == typeToProxy
 				? "it"
 				: "type " + inaccessibleType.GetBestName();
-			
+
 			var messageFormat =
 				"Can not create proxy for type {0} because {1} is not accessible. " +
 				"Make it public, or internal and mark your assembly with " +

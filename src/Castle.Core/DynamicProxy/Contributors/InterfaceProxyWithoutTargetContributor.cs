@@ -43,21 +43,19 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		protected override MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod)
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod)
 		{
 			if (!method.Proxyable)
-			{
 				return new MinimialisticMethodGenerator(method, overrideMethod);
-			}
 
 			var invocation = GetInvocationType(method, @class, options);
 			return new MethodWithInvocationGenerator(method,
-			                                         @class.GetField("__interceptors"),
-			                                         invocation,
-			                                         getTargetExpression,
-			                                         overrideMethod,
-			                                         null);
+				@class.GetField("__interceptors"),
+				invocation,
+				getTargetExpression,
+				overrideMethod,
+				null);
 		}
 
 		private Type GetInvocationType(MetaMethod method, ClassEmitter emitter, ProxyGenerationOptions options)
@@ -65,28 +63,22 @@ namespace Castle.Core.DynamicProxy.Contributors
 			var scope = emitter.ModuleScope;
 			Type[] invocationInterfaces;
 			if (canChangeTarget)
-			{
-				invocationInterfaces = new[] { typeof(IInvocation), typeof(IChangeProxyTarget) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation), typeof(IChangeProxyTarget)};
 			else
-			{
-				invocationInterfaces = new[] { typeof(IInvocation) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation)};
 			var key = new CacheKey(method.Method, CompositionInvocationTypeGenerator.BaseType, invocationInterfaces, null);
 
 			// no locking required as we're already within a lock
 
 			var invocation = scope.GetFromCache(key);
 			if (invocation != null)
-			{
 				return invocation;
-			}
 
 			invocation = new CompositionInvocationTypeGenerator(method.Method.DeclaringType,
-																method,
-																method.Method,
-																canChangeTarget,
-																null)
+					method,
+					method.Method,
+					canChangeTarget,
+					null)
 				.Generate(emitter, options, namingScope)
 				.BuildType();
 

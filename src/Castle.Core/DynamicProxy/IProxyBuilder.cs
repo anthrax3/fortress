@@ -13,9 +13,7 @@
 // limitations under the License.
 
 using System;
-using System.Runtime.CompilerServices;
 using Castle.Core.Core.Logging;
-using Castle.Core.DynamicProxy.Generators;
 
 namespace Castle.Core.DynamicProxy
 {
@@ -28,15 +26,15 @@ namespace Castle.Core.DynamicProxy
 		Type CreateClassProxyType(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options);
 
 		Type CreateClassProxyTypeWithTarget(Type classToProxy, Type[] additionalInterfacesToProxy,
-		                                    ProxyGenerationOptions options);
+			ProxyGenerationOptions options);
 
 		Type CreateInterfaceProxyTypeWithTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy, Type targetType,
-		                                        ProxyGenerationOptions options);
+			ProxyGenerationOptions options);
 
 		Type CreateInterfaceProxyTypeWithTargetInterface(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                 ProxyGenerationOptions options);
+			ProxyGenerationOptions options);
 
 		Type CreateInterfaceProxyTypeWithoutTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                           ProxyGenerationOptions options);
+			ProxyGenerationOptions options);
 	}
 }

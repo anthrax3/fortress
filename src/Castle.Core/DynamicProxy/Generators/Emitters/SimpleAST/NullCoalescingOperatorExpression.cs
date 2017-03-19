@@ -25,14 +25,10 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		public NullCoalescingOperatorExpression(Expression expression, Expression @default)
 		{
 			if (expression == null)
-			{
 				throw new ArgumentNullException("expression");
-			}
 
 			if (@default == null)
-			{
 				throw new ArgumentNullException("default");
-			}
 
 			this.expression = expression;
 			this.@default = @default;

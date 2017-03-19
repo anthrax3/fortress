@@ -33,10 +33,8 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 
 		public override void Emit(IMemberEmitter member, ILGenerator gen)
 		{
-			foreach (Statement s in statements)
-			{
+			foreach (var s in statements)
 				s.Emit(member, gen);
-			}
 		}
 	}
 }

@@ -187,6 +187,7 @@
     <Compile Include="Core\Resource\IResourceFactory.cs" />
     <Compile Include="Core\Resource\ResourceException.cs" />
     <Compile Include="Core\Resource\StaticContentResource.cs" />
+    <Compile Include="Core\Resource\StreamFactory.cs" />
     <Compile Include="Core\Resource\UncResource.cs" />
     <Compile Include="Core\Resource\UncResourceFactory.cs" />
     <Compile Include="Core\Smtp\DefaultSmtpSender.cs" />
@@ -201,9 +202,11 @@
     <Compile Include="DynamicProxy\Contributors\ClassProxyWithTargetTargetContributor.cs" />
     <Compile Include="DynamicProxy\Contributors\CompositeTypeContributor.cs" />
     <Compile Include="DynamicProxy\Contributors\DelegateProxyTargetContributor.cs" />
-    <Compile Include="DynamicProxy\Contributors\Delegates.cs" />
+    <Compile Include="DynamicProxy\Contributors\OverrideMethodDelegate.cs" />
     <Compile Include="DynamicProxy\Contributors\DelegateTypeGenerator.cs" />
     <Compile Include="DynamicProxy\Contributors\ForwardingMethodGenerator.cs" />
+    <Compile Include="DynamicProxy\Contributors\GetTargetExpressionDelegate.cs" />
+    <Compile Include="DynamicProxy\Contributors\GetTargetReferenceDelegate.cs" />
     <Compile Include="DynamicProxy\Contributors\InterfaceMembersCollector.cs" />
     <Compile Include="DynamicProxy\Contributors\InterfaceMembersOnClassCollector.cs" />
     <Compile Include="DynamicProxy\Contributors\InterfaceProxyInstanceContributor.cs" />
@@ -232,6 +235,7 @@
     <Compile Include="DynamicProxy\Generators\DelegateProxyGenerationHook.cs" />
     <Compile Include="DynamicProxy\Generators\DelegateProxyGenerator.cs" />
     <Compile Include="DynamicProxy\Generators\Emitters\AbstractTypeEmitter.cs" />
+    <Compile Include="DynamicProxy\Generators\Emitters\ApplyGenArgs.cs" />
     <Compile Include="DynamicProxy\Generators\Emitters\ArgumentsUtil.cs" />
     <Compile Include="DynamicProxy\Generators\Emitters\ClassEmitter.cs" />
     <Compile Include="DynamicProxy\Generators\Emitters\CodeBuilders\AbstractCodeBuilder.cs" />

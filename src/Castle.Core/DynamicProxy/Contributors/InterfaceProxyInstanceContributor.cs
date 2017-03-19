@@ -22,33 +22,33 @@ namespace Castle.Core.DynamicProxy.Contributors
 {
 	public class InterfaceProxyInstanceContributor : ProxyInstanceContributor
 	{
-		protected override Expression GetTargetReferenceExpression(ClassEmitter emitter)
-		{
-			return emitter.GetField("__target").ToExpression();
-		}
-
 		public InterfaceProxyInstanceContributor(Type targetType, string proxyGeneratorId, Type[] interfaces)
 			: base(targetType, interfaces, proxyGeneratorId)
 		{
 		}
 
+		protected override Expression GetTargetReferenceExpression(ClassEmitter emitter)
+		{
+			return emitter.GetField("__target").ToExpression();
+		}
+
 		protected override void CustomizeGetObjectData(AbstractCodeBuilder codebuilder, ArgumentReference serializationInfo,
-		                                               ArgumentReference streamingContext, ClassEmitter emitter)
+			ArgumentReference streamingContext, ClassEmitter emitter)
 		{
 			var targetField = emitter.GetField("__target");
 
 			codebuilder.AddStatement(new ExpressionStatement(
-			                         	new MethodInvocationExpression(serializationInfo, SerializationInfoMethods.AddValue_Object,
-			                         	                               new ConstReference("__targetFieldType").ToExpression(),
-			                         	                               new ConstReference(
-			                         	                               	targetField.Reference.FieldType.AssemblyQualifiedName).
-			                         	                               	ToExpression())));
+				new MethodInvocationExpression(serializationInfo, SerializationInfoMethods.AddValue_Object,
+					new ConstReference("__targetFieldType").ToExpression(),
+					new ConstReference(
+							targetField.Reference.FieldType.AssemblyQualifiedName).
+						ToExpression())));
 
 			codebuilder.AddStatement(new ExpressionStatement(
-			                         	new MethodInvocationExpression(serializationInfo, SerializationInfoMethods.AddValue_Object,
-			                         	                               new ConstReference("__theInterface").ToExpression(),
-			                         	                               new ConstReference(targetType.AssemblyQualifiedName).
-			                         	                               	ToExpression())));
+				new MethodInvocationExpression(serializationInfo, SerializationInfoMethods.AddValue_Object,
+					new ConstReference("__theInterface").ToExpression(),
+					new ConstReference(targetType.AssemblyQualifiedName).
+						ToExpression())));
 		}
 	}
 }

@@ -26,13 +26,9 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		public ConstructorInvocationStatement(ConstructorInfo method, params Expression[] args)
 		{
 			if (method == null)
-			{
 				throw new ArgumentNullException("method");
-			}
 			if (args == null)
-			{
 				throw new ArgumentNullException("args");
-			}
 
 			cmethod = method;
 			this.args = args;
@@ -43,9 +39,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			gen.Emit(OpCodes.Ldarg_0);
 
 			foreach (var exp in args)
-			{
 				exp.Emit(member, gen);
-			}
 
 			gen.Emit(OpCodes.Call, cmethod);
 		}

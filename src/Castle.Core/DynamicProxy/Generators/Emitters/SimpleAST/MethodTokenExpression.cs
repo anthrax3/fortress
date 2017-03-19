@@ -21,8 +21,8 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 {
 	public class MethodTokenExpression : Expression
 	{
-		private readonly MethodInfo method;
 		private readonly Type declaringType;
+		private readonly MethodInfo method;
 
 		public MethodTokenExpression(MethodInfo method)
 		{
@@ -34,9 +34,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		{
 			gen.Emit(OpCodes.Ldtoken, method);
 			if (declaringType == null)
-			{
 				throw new GeneratorException("declaringType can't be null for this situation");
-			}
 			gen.Emit(OpCodes.Ldtoken, declaringType);
 
 			var minfo = MethodBaseMethods.GetMethodFromHandle;

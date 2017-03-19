@@ -41,19 +41,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			right.Emit(member, gen);
 
 			if (fromType == target)
-			{
 				return;
-			}
 
 			if (fromType.GetTypeInfo().IsByRef)
-			{
 				fromType = fromType.GetElementType();
-			}
 
 			if (target.IsByRef)
-			{
 				target = target.GetElementType();
-			}
 
 			if (target.GetTypeInfo().IsValueType)
 			{
@@ -61,20 +55,17 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 				{
 					throw new NotImplementedException("Cannot convert between distinct value types");
 				}
+				// Unbox conversion
+				// Assumes fromType is a boxed value
+				// if we can, we emit a box and ldind, otherwise, we will use unbox.any
+				if (LdindOpCodesDictionary.Instance[target] != LdindOpCodesDictionary.EmptyOpCode)
+				{
+					gen.Emit(OpCodes.Unbox, target);
+					OpCodeUtil.EmitLoadIndirectOpCodeForType(gen, target);
+				}
 				else
 				{
-					// Unbox conversion
-					// Assumes fromType is a boxed value
-					// if we can, we emit a box and ldind, otherwise, we will use unbox.any
-					if (LdindOpCodesDictionary.Instance[target] != LdindOpCodesDictionary.EmptyOpCode)
-					{
-						gen.Emit(OpCodes.Unbox, target);
-						OpCodeUtil.EmitLoadIndirectOpCodeForType(gen, target);
-					}
-					else
-					{
-						gen.Emit(OpCodes.Unbox_Any, target);
-					}
+					gen.Emit(OpCodes.Unbox_Any, target);
 				}
 			}
 			else
@@ -96,21 +87,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		private static void EmitCastIfNeeded(Type from, Type target, ILGenerator gen)
 		{
 			if (target.IsGenericParameter)
-			{
 				gen.Emit(OpCodes.Unbox_Any, target);
-			}
 			else if (from.GetTypeInfo().IsGenericParameter)
-			{
 				gen.Emit(OpCodes.Box, from);
-			}
 			else if (target.GetTypeInfo().IsGenericType && target != from)
-			{
 				gen.Emit(OpCodes.Castclass, target);
-			}
 			else if (target.GetTypeInfo().IsSubclassOf(from))
-			{
 				gen.Emit(OpCodes.Castclass, target);
-			}
 		}
 	}
 }

@@ -18,51 +18,38 @@ namespace Castle.Core.Core
 {
 	public class Pair<TFirst, TSecond> : IEquatable<Pair<TFirst, TSecond>>
 	{
-		private readonly TFirst first;
-		private readonly TSecond second;
-
 		public Pair(TFirst first, TSecond second)
 		{
-			this.first = first;
-			this.second = second;
+			First = first;
+			Second = second;
 		}
 
-		public TFirst First
-		{
-			get { return first; }
-		}
+		public TFirst First { get; }
 
-		public TSecond Second
-		{
-			get { return second; }
-		}
-
-		public override string ToString()
-		{
-			return first + " " + second;
-		}
+		public TSecond Second { get; }
 
 		public bool Equals(Pair<TFirst, TSecond> other)
 		{
 			if (other == null)
-			{
 				return false;
-			}
-			return Equals(first, other.first) && Equals(second, other.second);
+			return Equals(First, other.First) && Equals(Second, other.Second);
+		}
+
+		public override string ToString()
+		{
+			return First + " " + Second;
 		}
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(this, obj))
-			{
 				return true;
-			}
 			return Equals(obj as Pair<TFirst, TSecond>);
 		}
 
 		public override int GetHashCode()
 		{
-			return first.GetHashCode() + 29 * second.GetHashCode();
+			return First.GetHashCode() + 29 * Second.GetHashCode();
 		}
 	}
 }

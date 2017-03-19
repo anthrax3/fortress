@@ -21,6 +21,6 @@ namespace Castle.Core.Core.Logging
 		Error = 2,
 		Warn = 3,
 		Info = 4,
-		Debug = 5,
+		Debug = 5
 	}
 }

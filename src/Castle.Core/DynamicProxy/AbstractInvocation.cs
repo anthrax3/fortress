@@ -21,11 +21,8 @@ namespace Castle.Core.DynamicProxy
 	public abstract class AbstractInvocation : IInvocation
 	{
 		private readonly IInterceptor[] interceptors;
-		private readonly object[] arguments;
-		private int currentInterceptorIndex = -1;
-		private Type[] genericMethodArguments;
-		private readonly MethodInfo proxiedMethod;
 		protected readonly object proxyObject;
+		private int currentInterceptorIndex = -1;
 
 		protected AbstractInvocation(
 			object proxy,
@@ -36,13 +33,8 @@ namespace Castle.Core.DynamicProxy
 			Debug.Assert(proxiedMethod != null);
 			proxyObject = proxy;
 			this.interceptors = interceptors;
-			this.proxiedMethod = proxiedMethod;
-			this.arguments = arguments;
-		}
-
-		public void SetGenericMethodArguments(Type[] arguments)
-		{
-			genericMethodArguments = arguments;
+			Method = proxiedMethod;
+			Arguments = arguments;
 		}
 
 		public abstract object InvocationTarget { get; }
@@ -51,20 +43,14 @@ namespace Castle.Core.DynamicProxy
 
 		public abstract MethodInfo MethodInvocationTarget { get; }
 
-		public Type[] GenericArguments
-		{
-			get { return genericMethodArguments; }
-		}
+		public Type[] GenericArguments { get; private set; }
 
 		public object Proxy
 		{
 			get { return proxyObject; }
 		}
 
-		public MethodInfo Method
-		{
-			get { return proxiedMethod; }
-		}
+		public MethodInfo Method { get; }
 
 		public MethodInfo GetConcreteMethod()
 		{
@@ -76,25 +62,22 @@ namespace Castle.Core.DynamicProxy
 			// it is ensured by the InvocationHelper that method will be closed
 			var method = MethodInvocationTarget;
 			Debug.Assert(method == null || method.IsGenericMethodDefinition == false,
-			             "method == null || method.IsGenericMethodDefinition == false");
+				"method == null || method.IsGenericMethodDefinition == false");
 			return method;
 		}
 
 		public object ReturnValue { get; set; }
 
-		public object[] Arguments
-		{
-			get { return arguments; }
-		}
+		public object[] Arguments { get; }
 
 		public void SetArgumentValue(int index, object value)
 		{
-			arguments[index] = value;
+			Arguments[index] = value;
 		}
 
 		public object GetArgumentValue(int index)
 		{
-			return arguments[index];
+			return Arguments[index];
 		}
 
 		public void Proceed()
@@ -117,13 +100,9 @@ namespace Castle.Core.DynamicProxy
 				{
 					string interceptorsCount;
 					if (interceptors.Length > 1)
-					{
 						interceptorsCount = " each one of " + interceptors.Length + " interceptors";
-					}
 					else
-					{
 						interceptorsCount = " interceptor";
-					}
 
 					var message = "This is a DynamicProxy2 error: invocation.Proceed() has been called more times than expected." +
 					              "This usually signifies a bug in the calling code. Make sure that" + interceptorsCount +
@@ -142,6 +121,11 @@ namespace Castle.Core.DynamicProxy
 			}
 		}
 
+		public void SetGenericMethodArguments(Type[] arguments)
+		{
+			GenericArguments = arguments;
+		}
+
 		protected abstract void InvokeMethodOnTarget();
 
 		protected void ThrowOnNoTarget()
@@ -149,13 +133,9 @@ namespace Castle.Core.DynamicProxy
 			// let's try to build as friendly message as we can
 			string interceptorsMessage;
 			if (interceptors.Length == 0)
-			{
 				interceptorsMessage = "There are no interceptors specified";
-			}
 			else
-			{
 				interceptorsMessage = "The interceptor attempted to 'Proceed'";
-			}
 
 			string methodKindIs;
 			string methodKindDescription;
@@ -174,7 +154,7 @@ namespace Castle.Core.DynamicProxy
 			                            "When calling {3} there is no implementation to 'proceed' to and " +
 			                            "it is the responsibility of the interceptor to mimic the implementation " +
 			                            "(set return value, out arguments etc)",
-			                            interceptorsMessage, Method, methodKindIs, methodKindDescription);
+				interceptorsMessage, Method, methodKindIs, methodKindDescription);
 
 			throw new NotImplementedException(message);
 		}
@@ -183,8 +163,8 @@ namespace Castle.Core.DynamicProxy
 		{
 			if (method.ContainsGenericParameters)
 			{
-				Debug.Assert(genericMethodArguments != null);
-				return method.GetGenericMethodDefinition().MakeGenericMethod(genericMethodArguments);
+				Debug.Assert(GenericArguments != null);
+				return method.GetGenericMethodDefinition().MakeGenericMethod(GenericArguments);
 			}
 			return method;
 		}

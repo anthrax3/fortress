@@ -25,14 +25,14 @@ namespace Castle.Core.DynamicProxy.Generators
 {
 	public abstract class InvocationTypeGenerator : IGenerator<AbstractTypeEmitter>
 	{
-		protected readonly MetaMethod method;
-		protected readonly Type targetType;
 		private readonly MethodInfo callback;
 		private readonly bool canChangeTarget;
 		private readonly IInvocationCreationContributor contributor;
+		protected readonly MetaMethod method;
+		protected readonly Type targetType;
 
 		protected InvocationTypeGenerator(Type targetType, MetaMethod method, MethodInfo callback, bool canChangeTarget,
-		                                  IInvocationCreationContributor contributor)
+			IInvocationCreationContributor contributor)
 		{
 			this.targetType = targetType;
 			this.method = method;
@@ -41,14 +41,6 @@ namespace Castle.Core.DynamicProxy.Generators
 			this.contributor = contributor;
 		}
 
-		protected abstract ArgumentReference[] GetBaseCtorArguments(Type targetFieldType,
-		                                                            ProxyGenerationOptions proxyGenerationOptions,
-		                                                            out ConstructorInfo baseConstructor);
-
-		protected abstract Type GetBaseType();
-
-		protected abstract FieldReference GetTargetReference();
-
 		public AbstractTypeEmitter Generate(ClassEmitter @class, ProxyGenerationOptions options, INamingScope namingScope)
 		{
 			var methodInfo = method.Method;
@@ -56,9 +48,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			var interfaces = new Type[0];
 
 			if (canChangeTarget)
-			{
-				interfaces = new[] { typeof(IChangeProxyTarget) };
-			}
+				interfaces = new[] {typeof(IChangeProxyTarget)};
 			var invocation = GetEmitter(@class, interfaces, namingScope, methodInfo);
 
 			// invocation only needs to mirror the generic parameters of the MethodInfo
@@ -69,9 +59,7 @@ namespace Castle.Core.DynamicProxy.Generators
 
 			var targetField = GetTargetReference();
 			if (canChangeTarget)
-			{
 				ImplementChangeProxyTargetInterface(@class, invocation, targetField);
-			}
 
 			ImplemementInvokeMethodOnTarget(invocation, methodInfo.GetParameters(), targetField, callback);
 
@@ -80,25 +68,31 @@ namespace Castle.Core.DynamicProxy.Generators
 			return invocation;
 		}
 
+		protected abstract ArgumentReference[] GetBaseCtorArguments(Type targetFieldType,
+			ProxyGenerationOptions proxyGenerationOptions,
+			out ConstructorInfo baseConstructor);
+
+		protected abstract Type GetBaseType();
+
+		protected abstract FieldReference GetTargetReference();
+
 		protected virtual MethodInvocationExpression GetCallbackMethodInvocation(AbstractTypeEmitter invocation,
-		                                                                         Expression[] args, MethodInfo callbackMethod,
-		                                                                         Reference targetField,
-		                                                                         MethodEmitter invokeMethodOnTarget)
+			Expression[] args, MethodInfo callbackMethod,
+			Reference targetField,
+			MethodEmitter invokeMethodOnTarget)
 		{
 			if (contributor != null)
-			{
 				return contributor.GetCallbackMethodInvocation(invocation, args, targetField, invokeMethodOnTarget);
-			}
 			var methodOnTargetInvocationExpression = new MethodInvocationExpression(
 				new AsTypeReference(targetField, callbackMethod.DeclaringType),
 				callbackMethod,
-				args) { VirtualCall = true };
+				args) {VirtualCall = true};
 			return methodOnTargetInvocationExpression;
 		}
 
 		protected virtual void ImplementInvokeMethodOnTarget(AbstractTypeEmitter invocation, ParameterInfo[] parameters,
-		                                                     MethodEmitter invokeMethodOnTarget,
-		                                                     Reference targetField)
+			MethodEmitter invokeMethodOnTarget,
+			Reference targetField)
 		{
 			var callbackMethod = GetCallbackMethod(invocation);
 			if (callbackMethod == null)
@@ -108,9 +102,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			}
 
 			if (canChangeTarget)
-			{
 				EmitCallEnsureValidTarget(invokeMethodOnTarget);
-			}
 
 			var args = new Expression[parameters.Length];
 
@@ -129,10 +121,10 @@ namespace Castle.Core.DynamicProxy.Generators
 					invokeMethodOnTarget.CodeBuilder
 						.AddStatement(
 							new AssignStatement(localReference,
-							                    new ConvertExpression(paramType.GetElementType(),
-							                                          new MethodInvocationExpression(SelfReference.Self,
-							                                                                         InvocationMethods.GetArgumentValue,
-							                                                                         new LiteralIntExpression(i)))));
+								new ConvertExpression(paramType.GetElementType(),
+									new MethodInvocationExpression(SelfReference.Self,
+										InvocationMethods.GetArgumentValue,
+										new LiteralIntExpression(i)))));
 					var byRefReference = new ByRefReference(localReference);
 					args[i] = new ReferenceExpression(byRefReference);
 					byRefArguments[i] = localReference;
@@ -141,16 +133,14 @@ namespace Castle.Core.DynamicProxy.Generators
 				{
 					args[i] =
 						new ConvertExpression(paramType,
-						                      new MethodInvocationExpression(SelfReference.Self,
-						                                                     InvocationMethods.GetArgumentValue,
-						                                                     new LiteralIntExpression(i)));
+							new MethodInvocationExpression(SelfReference.Self,
+								InvocationMethods.GetArgumentValue,
+								new LiteralIntExpression(i)));
 				}
 			}
 
 			if (byRefArguments.Count > 0)
-			{
 				invokeMethodOnTarget.CodeBuilder.AddStatement(new TryStatement());
-			}
 
 			var methodOnTargetInvocationExpression = GetCallbackMethodInvocation(invocation, args, callbackMethod, targetField, invokeMethodOnTarget);
 
@@ -172,8 +162,8 @@ namespace Castle.Core.DynamicProxy.Generators
 			{
 				var setRetVal =
 					new MethodInvocationExpression(SelfReference.Self,
-					                               InvocationMethods.SetReturnValue,
-					                               new ConvertExpression(typeof(object), returnValue.Type, returnValue.ToExpression()));
+						InvocationMethods.SetReturnValue,
+						new ConvertExpression(typeof(object), returnValue.Type, returnValue.ToExpression()));
 
 				invokeMethodOnTarget.CodeBuilder.AddStatement(new ExpressionStatement(setRetVal));
 			}
@@ -184,9 +174,7 @@ namespace Castle.Core.DynamicProxy.Generators
 		private void AssignBackByRefArguments(MethodEmitter invokeMethodOnTarget, Dictionary<int, LocalReference> byRefArguments)
 		{
 			if (byRefArguments.Count == 0)
-			{
 				return;
-			}
 
 			invokeMethodOnTarget.CodeBuilder.AddStatement(new FinallyStatement());
 			foreach (var byRefArgument in byRefArguments)
@@ -203,7 +191,7 @@ namespace Castle.Core.DynamicProxy.Generators
 								typeof(object),
 								localReference.Type,
 								new ReferenceExpression(localReference)))
-						));
+					));
 			}
 			invokeMethodOnTarget.CodeBuilder.AddStatement(new EndExceptionBlockStatement());
 		}
@@ -221,9 +209,7 @@ namespace Castle.Core.DynamicProxy.Generators
 		private ConstructorEmitter CreateConstructor(AbstractTypeEmitter invocation, ArgumentReference[] baseCtorArguments)
 		{
 			if (contributor == null)
-			{
 				return invocation.CreateConstructor(baseCtorArguments);
-			}
 			return contributor.CreateConstructor(baseCtorArguments, invocation);
 		}
 
@@ -245,34 +231,28 @@ namespace Castle.Core.DynamicProxy.Generators
 		private MethodInfo GetCallbackMethod(AbstractTypeEmitter invocation)
 		{
 			if (contributor != null)
-			{
 				return contributor.GetCallbackMethod();
-			}
 			var callbackMethod = callback;
 			if (callbackMethod == null)
-			{
 				return null;
-			}
 
 			if (!callbackMethod.IsGenericMethod)
-			{
 				return callbackMethod;
-			}
 
 			return callbackMethod.MakeGenericMethod(invocation.GetGenericArgumentsFor(callbackMethod));
 		}
 
 		private AbstractTypeEmitter GetEmitter(ClassEmitter @class, Type[] interfaces, INamingScope namingScope,
-		                                       MethodInfo methodInfo)
+			MethodInfo methodInfo)
 		{
 			var suggestedName = string.Format("Castle.Proxies.Invocations.{0}_{1}", methodInfo.DeclaringType.Name,
-			                                  methodInfo.Name);
+				methodInfo.Name);
 			var uniqueName = namingScope.ParentScope.GetUniqueName(suggestedName);
 			return new ClassEmitter(@class.ModuleScope, uniqueName, GetBaseType(), interfaces);
 		}
 
 		private void ImplemementInvokeMethodOnTarget(AbstractTypeEmitter invocation, ParameterInfo[] parameters,
-		                                             FieldReference targetField, MethodInfo callbackMethod)
+			FieldReference targetField, MethodInfo callbackMethod)
 		{
 			var invokeMethodOnTarget = invocation.CreateMethod("InvokeMethodOnTarget", typeof(void));
 			ImplementInvokeMethodOnTarget(invocation, parameters, invokeMethodOnTarget, targetField);
@@ -280,16 +260,16 @@ namespace Castle.Core.DynamicProxy.Generators
 
 		private void ImplementChangeInvocationTarget(AbstractTypeEmitter invocation, FieldReference targetField)
 		{
-			var changeInvocationTarget = invocation.CreateMethod("ChangeInvocationTarget", typeof(void), new[] { typeof(object) });
+			var changeInvocationTarget = invocation.CreateMethod("ChangeInvocationTarget", typeof(void), typeof(object));
 			changeInvocationTarget.CodeBuilder.AddStatement(
 				new AssignStatement(targetField,
-				                    new ConvertExpression(targetType, changeInvocationTarget.Arguments[0].ToExpression())));
+					new ConvertExpression(targetType, changeInvocationTarget.Arguments[0].ToExpression())));
 			changeInvocationTarget.CodeBuilder.AddStatement(new ReturnStatement());
 		}
 
 		private void ImplementChangeProxyTarget(AbstractTypeEmitter invocation, ClassEmitter @class)
 		{
-			var changeInvocationTarget = invocation.CreateMethod("ChangeProxyTarget", typeof(void), new[] { typeof(object) });
+			var changeInvocationTarget = invocation.CreateMethod("ChangeProxyTarget", typeof(void), typeof(object));
 			changeInvocationTarget.CodeBuilder.AddStatement(
 				new ExpressionStatement(
 					new ConvertExpression(@class.TypeBuilder.AsType(), new FieldReference(InvocationMethods.ProxyObject).ToExpression())));
@@ -297,14 +277,14 @@ namespace Castle.Core.DynamicProxy.Generators
 			var field = @class.GetField("__target");
 			changeInvocationTarget.CodeBuilder.AddStatement(
 				new AssignStatement(
-					new FieldReference(field.Reference) { OwnerReference = null },
+					new FieldReference(field.Reference) {OwnerReference = null},
 					new ConvertExpression(field.Fieldbuilder.FieldType, changeInvocationTarget.Arguments[0].ToExpression())));
 
 			changeInvocationTarget.CodeBuilder.AddStatement(new ReturnStatement());
 		}
 
 		private void ImplementChangeProxyTargetInterface(ClassEmitter @class, AbstractTypeEmitter invocation,
-		                                                 FieldReference targetField)
+			FieldReference targetField)
 		{
 			ImplementChangeInvocationTarget(invocation, targetField);
 

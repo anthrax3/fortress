@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Core.Resource
 {
 	public class AssemblyResourceFactory : IResourceFactory
@@ -28,12 +26,10 @@ namespace Castle.Core.Core.Resource
 			return Create(uri, null);
 		}
 
-		public IResource Create(CustomUri uri, String basePath)
+		public IResource Create(CustomUri uri, string basePath)
 		{
 			if (basePath == null)
-			{
 				return new AssemblyResource(uri);
-			}
 
 			return new AssemblyResource(uri, basePath);
 		}

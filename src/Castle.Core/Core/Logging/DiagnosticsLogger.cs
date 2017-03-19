@@ -22,8 +22,7 @@ namespace Castle.Core.Core.Logging
 	[Serializable]
 	public class DiagnosticsLogger : LevelFilteredLogger, IDisposable
 	{
-		[NonSerialized]
-		private EventLog eventLog;
+		[NonSerialized] private EventLog eventLog;
 
 		public DiagnosticsLogger(string logName) : this(logName, "default")
 		{
@@ -33,9 +32,7 @@ namespace Castle.Core.Core.Logging
 		{
 			// Create the source, if it does not already exist.
 			if (!EventLog.SourceExists(source))
-			{
 				EventLog.CreateEventSource(source, logName);
-			}
 
 			eventLog = new EventLog(logName);
 			eventLog.Source = source;
@@ -54,51 +51,43 @@ namespace Castle.Core.Core.Logging
 			eventLog = new EventLog(logName, machineName, source);
 		}
 
-		public override ILogger CreateChildLogger(string loggerName)
-		{
-			return new DiagnosticsLogger(eventLog.Log, eventLog.MachineName, eventLog.Source);
-		}
-
 		public void Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
 
+		public override ILogger CreateChildLogger(string loggerName)
+		{
+			return new DiagnosticsLogger(eventLog.Log, eventLog.MachineName, eventLog.Source);
+		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
 				if (eventLog != null)
 				{
 					eventLog.Close();
 					eventLog = null;
 				}
-			}
 		}
 
 		protected override void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception)
 		{
 			if (eventLog == null)
-			{
 				return; // just in case it was disposed
-			}
 
 			var type = TranslateLevel(loggerLevel);
 
-			String contentToLog;
+			string contentToLog;
 
 			if (exception == null)
-			{
 				contentToLog = string.Format(CultureInfo.CurrentCulture, "[{0}] '{1}' message: {2}", loggerLevel, loggerName,
-				                             message);
-			}
+					message);
 			else
-			{
 				contentToLog = string.Format(CultureInfo.CurrentCulture, "[{0}] '{1}' message: {2} exception: {3} {4} {5}",
-				                             loggerLevel, loggerName, message, exception.GetType(), exception.Message,
-				                             exception.StackTrace);
-			}
+					loggerLevel, loggerName, message, exception.GetType(), exception.Message,
+					exception.StackTrace);
 
 			eventLog.WriteEntry(contentToLog, type);
 		}
@@ -123,4 +112,3 @@ namespace Castle.Core.Core.Logging
 		}
 	}
 }
-

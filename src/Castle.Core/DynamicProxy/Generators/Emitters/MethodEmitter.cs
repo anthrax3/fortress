@@ -23,37 +23,32 @@ using Castle.Core.DynamicProxy.Internal;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	[DebuggerDisplay("{builder.Name}")]
+	[DebuggerDisplay("{MethodBuilder.Name}")]
 	public class MethodEmitter : IMemberEmitter
 	{
-		private readonly MethodBuilder builder;
-		private readonly GenericTypeParameterBuilder[] genericTypeParams;
-
-		private ArgumentReference[] arguments;
-
 		private MethodCodeBuilder codebuilder;
 
 		protected internal MethodEmitter(MethodBuilder builder)
 		{
-			this.builder = builder;
+			MethodBuilder = builder;
 		}
 
-		internal MethodEmitter(AbstractTypeEmitter owner, String name, MethodAttributes attributes)
+		internal MethodEmitter(AbstractTypeEmitter owner, string name, MethodAttributes attributes)
 			: this(owner.TypeBuilder.DefineMethod(name, attributes))
 		{
 		}
 
-		internal MethodEmitter(AbstractTypeEmitter owner, String name,
-		                       MethodAttributes attributes, Type returnType,
-		                       params Type[] argumentTypes)
+		internal MethodEmitter(AbstractTypeEmitter owner, string name,
+			MethodAttributes attributes, Type returnType,
+			params Type[] argumentTypes)
 			: this(owner, name, attributes)
 		{
 			SetParameters(argumentTypes);
 			SetReturnType(returnType);
 		}
 
-		internal MethodEmitter(AbstractTypeEmitter owner, String name,
-		                       MethodAttributes attributes, MethodInfo methodToUseAsATemplate)
+		internal MethodEmitter(AbstractTypeEmitter owner, string name,
+			MethodAttributes attributes, MethodInfo methodToUseAsATemplate)
 			: this(owner, name, attributes)
 		{
 			var name2GenericType = GenericUtil.GetGenericArgumentsMap(owner);
@@ -62,69 +57,46 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			var baseMethodParameters = methodToUseAsATemplate.GetParameters();
 			var parameters = GenericUtil.ExtractParametersTypes(baseMethodParameters, name2GenericType);
 
-			genericTypeParams = GenericUtil.CopyGenericArguments(methodToUseAsATemplate, builder, name2GenericType);
+			GenericTypeParams = GenericUtil.CopyGenericArguments(methodToUseAsATemplate, MethodBuilder, name2GenericType);
 			SetParameters(parameters);
 			SetReturnType(returnType);
 			SetSignature(returnType, methodToUseAsATemplate.ReturnParameter, parameters, baseMethodParameters);
 			DefineParameters(baseMethodParameters);
 		}
 
-		public ArgumentReference[] Arguments
-		{
-			get { return arguments; }
-		}
+		public ArgumentReference[] Arguments { get; private set; }
 
 		public virtual MethodCodeBuilder CodeBuilder
 		{
 			get
 			{
 				if (codebuilder == null)
-				{
-					codebuilder = new MethodCodeBuilder(builder.GetILGenerator());
-				}
+					codebuilder = new MethodCodeBuilder(MethodBuilder.GetILGenerator());
 				return codebuilder;
 			}
 		}
 
-		public GenericTypeParameterBuilder[] GenericTypeParams
-		{
-			get { return genericTypeParams; }
-		}
+		public GenericTypeParameterBuilder[] GenericTypeParams { get; }
 
-		public MethodBuilder MethodBuilder
-		{
-			get { return builder; }
-		}
-
-		public MemberInfo Member
-		{
-			get { return builder; }
-		}
-
-		public Type ReturnType
-		{
-			get { return builder.ReturnType; }
-		}
+		public MethodBuilder MethodBuilder { get; }
 
 		private bool ImplementedByRuntime
 		{
 			get
 			{
-				var attributes = builder.GetMethodImplementationFlags();
+				var attributes = MethodBuilder.GetMethodImplementationFlags();
 				return (attributes & MethodImplAttributes.Runtime) != 0;
 			}
 		}
 
-		public void DefineCustomAttribute(CustomAttributeBuilder attribute)
+		public MemberInfo Member
 		{
-			builder.SetCustomAttribute(attribute);
+			get { return MethodBuilder; }
 		}
 
-		public void SetParameters(Type[] paramTypes)
+		public Type ReturnType
 		{
-			builder.SetParameters(paramTypes);
-			arguments = ArgumentsUtil.ConvertToArgumentReference(paramTypes);
-			ArgumentsUtil.InitializeArgumentsByPosition(arguments, MethodBuilder.IsStatic);
+			get { return MethodBuilder.ReturnType; }
 		}
 
 		public virtual void EnsureValidCodeBlock()
@@ -139,34 +111,42 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		public virtual void Generate()
 		{
 			if (ImplementedByRuntime)
-			{
 				return;
-			}
 
-			codebuilder.Generate(this, builder.GetILGenerator());
+			codebuilder.Generate(this, MethodBuilder.GetILGenerator());
+		}
+
+		public void DefineCustomAttribute(CustomAttributeBuilder attribute)
+		{
+			MethodBuilder.SetCustomAttribute(attribute);
+		}
+
+		public void SetParameters(Type[] paramTypes)
+		{
+			MethodBuilder.SetParameters(paramTypes);
+			Arguments = ArgumentsUtil.ConvertToArgumentReference(paramTypes);
+			ArgumentsUtil.InitializeArgumentsByPosition(Arguments, MethodBuilder.IsStatic);
 		}
 
 		private void DefineParameters(ParameterInfo[] parameters)
 		{
 			foreach (var parameter in parameters)
 			{
-				var parameterBuilder = builder.DefineParameter(parameter.Position + 1, parameter.Attributes, parameter.Name);
+				var parameterBuilder = MethodBuilder.DefineParameter(parameter.Position + 1, parameter.Attributes, parameter.Name);
 				foreach (var attribute in parameter.GetNonInheritableAttributes())
-				{
 					parameterBuilder.SetCustomAttribute(attribute.Builder);
-				}
 			}
 		}
 
 		private void SetReturnType(Type returnType)
 		{
-			builder.SetReturnType(returnType);
+			MethodBuilder.SetReturnType(returnType);
 		}
 
 		private void SetSignature(Type returnType, ParameterInfo returnParameter, Type[] parameters,
-		                          ParameterInfo[] baseMethodParameters)
+			ParameterInfo[] baseMethodParameters)
 		{
-			builder.SetSignature(
+			MethodBuilder.SetSignature(
 				returnType,
 				returnParameter.GetRequiredCustomModifiers(),
 				returnParameter.GetOptionalCustomModifiers(),

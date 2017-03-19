@@ -22,6 +22,8 @@ namespace Castle.Core.Core.Internal
 {
 	public static class AttributesUtil
 	{
+		private static readonly AttributeUsageAttribute DefaultAttributeUsage = new AttributeUsageAttribute(AttributeTargets.All);
+
 		public static T GetAttribute<T>(this Type type) where T : Attribute
 		{
 			return GetAttributes<T>(type).FirstOrDefault();
@@ -30,9 +32,7 @@ namespace Castle.Core.Core.Internal
 		public static IEnumerable<T> GetAttributes<T>(this Type type) where T : Attribute
 		{
 			foreach (T a in type.GetTypeInfo().GetCustomAttributes(typeof(T), false))
-			{
 				yield return a;
-			}
 		}
 
 		public static T GetAttribute<T>(this MemberInfo member) where T : Attribute
@@ -43,9 +43,7 @@ namespace Castle.Core.Core.Internal
 		public static IEnumerable<T> GetAttributes<T>(this MemberInfo member) where T : Attribute
 		{
 			foreach (T a in member.GetCustomAttributes(typeof(T), false))
-			{
 				yield return a;
-			}
 		}
 
 		public static T GetTypeAttribute<T>(this Type type) where T : Attribute
@@ -53,16 +51,12 @@ namespace Castle.Core.Core.Internal
 			var attribute = GetAttribute<T>(type);
 
 			if (attribute == null)
-			{
 				foreach (var baseInterface in type.GetInterfaces())
 				{
 					attribute = GetTypeAttribute<T>(baseInterface);
 					if (attribute != null)
-					{
 						break;
-					}
 				}
-			}
 
 			return attribute;
 		}
@@ -72,16 +66,12 @@ namespace Castle.Core.Core.Internal
 			var attributes = GetAttributes<T>(type).ToArray();
 
 			if (attributes.Length == 0)
-			{
 				foreach (var baseInterface in type.GetInterfaces())
 				{
 					attributes = GetTypeAttributes<T>(baseInterface);
 					if (attributes.Length > 0)
-					{
 						break;
-					}
 				}
-			}
 
 			return attributes;
 		}
@@ -92,16 +82,12 @@ namespace Castle.Core.Core.Internal
 			return attributes.Length != 0 ? attributes[0] : DefaultAttributeUsage;
 		}
 
-		private static readonly AttributeUsageAttribute DefaultAttributeUsage = new AttributeUsageAttribute(AttributeTargets.All);
-
 		public static Type GetTypeConverter(MemberInfo member)
 		{
 			var attrib = GetAttribute<TypeConverterAttribute>(member);
 
 			if (attrib != null)
-			{
 				return Type.GetType(attrib.ConverterTypeName);
-			}
 
 			return null;
 		}

@@ -72,13 +72,11 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 
 		private bool IsPrimitiveOrClass(Type type)
 		{
-			if ((type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr)))
-			{
+			if (type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr))
 				return true;
-			}
-			return ((type.GetTypeInfo().IsClass || type.GetTypeInfo().IsInterface) &&
-			        type.GetTypeInfo().IsGenericParameter == false &&
-			        type.GetTypeInfo().IsByRef == false);
+			return (type.GetTypeInfo().IsClass || type.GetTypeInfo().IsInterface) &&
+			       type.GetTypeInfo().IsGenericParameter == false &&
+			       type.GetTypeInfo().IsByRef == false;
 		}
 	}
 }

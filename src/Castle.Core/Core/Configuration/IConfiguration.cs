@@ -13,15 +13,14 @@
 // limitations under the License.
 
 using System;
-using System.Collections;
 
 namespace Castle.Core.Core.Configuration
 {
 	public interface IConfiguration
 	{
-		String Name { get; }
+		string Name { get; }
 
-		String Value { get; }
+		string Value { get; }
 
 		ConfigurationCollection Children { get; }
 

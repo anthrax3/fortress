@@ -24,36 +24,30 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		private const TypeAttributes DefaultAttributes =
 			TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Serializable;
 
-		private readonly ModuleScope moduleScope;
-
-		public ClassEmitter(ModuleScope modulescope, String name, Type baseType, IEnumerable<Type> interfaces)
+		public ClassEmitter(ModuleScope modulescope, string name, Type baseType, IEnumerable<Type> interfaces)
 			: this(modulescope, name, baseType, interfaces, DefaultAttributes, ShouldForceUnsigned())
 		{
 		}
 
-		public ClassEmitter(ModuleScope modulescope, String name, Type baseType, IEnumerable<Type> interfaces,
-		                    TypeAttributes flags)
+		public ClassEmitter(ModuleScope modulescope, string name, Type baseType, IEnumerable<Type> interfaces,
+			TypeAttributes flags)
 			: this(modulescope, name, baseType, interfaces, flags, ShouldForceUnsigned())
 		{
 		}
 
-		public ClassEmitter(ModuleScope modulescope, String name, Type baseType, IEnumerable<Type> interfaces,
-		                    TypeAttributes flags,
-		                    bool forceUnsigned)
+		public ClassEmitter(ModuleScope modulescope, string name, Type baseType, IEnumerable<Type> interfaces,
+			TypeAttributes flags,
+			bool forceUnsigned)
 			: this(CreateTypeBuilder(modulescope, name, baseType, interfaces, flags, forceUnsigned))
 		{
 			interfaces = InitializeGenericArgumentsFromBases(ref baseType, interfaces);
 
 			if (interfaces != null)
-			{
 				foreach (var inter in interfaces)
-				{
 					TypeBuilder.AddInterfaceImplementation(inter);
-				}
-			}
 
 			TypeBuilder.SetParent(baseType);
-			moduleScope = modulescope;
+			ModuleScope = modulescope;
 		}
 
 		public ClassEmitter(TypeBuilder typeBuilder)
@@ -61,37 +55,26 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		{
 		}
 
-		public ModuleScope ModuleScope
-		{
-			get { return moduleScope; }
-		}
+		public ModuleScope ModuleScope { get; }
 
 		protected virtual IEnumerable<Type> InitializeGenericArgumentsFromBases(ref Type baseType,
-		                                                                        IEnumerable<Type> interfaces)
+			IEnumerable<Type> interfaces)
 		{
 			if (baseType != null && baseType.GetTypeInfo().IsGenericTypeDefinition)
-			{
 				throw new NotSupportedException("ClassEmitter does not support open generic base types. Type: " + baseType.FullName);
-			}
 
 			if (interfaces == null)
-			{
 				return interfaces;
-			}
 
 			foreach (var inter in interfaces)
-			{
 				if (inter.GetTypeInfo().IsGenericTypeDefinition)
-				{
 					throw new NotSupportedException("ClassEmitter does not support open generic interfaces. Type: " + inter.FullName);
-				}
-			}
 			return interfaces;
 		}
 
 		private static TypeBuilder CreateTypeBuilder(ModuleScope modulescope, string name, Type baseType,
-		                                             IEnumerable<Type> interfaces,
-		                                             TypeAttributes flags, bool forceUnsigned)
+			IEnumerable<Type> interfaces,
+			TypeAttributes flags, bool forceUnsigned)
 		{
 			var isAssemblySigned = !forceUnsigned && !StrongNameUtil.IsAnyTypeFromUnsignedAssembly(baseType, interfaces);
 			return modulescope.DefineType(isAssemblySigned, name, flags);

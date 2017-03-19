@@ -20,7 +20,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 	public class InterfaceProxyWithTargetInterfaceTargetContributor : InterfaceProxyTargetContributor
 	{
 		public InterfaceProxyWithTargetInterfaceTargetContributor(Type proxyTargetType, bool allowChangeTarget,
-		                                                          INamingScope namingScope)
+			INamingScope namingScope)
 			: base(proxyTargetType, allowChangeTarget, namingScope)
 		{
 		}

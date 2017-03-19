@@ -27,4 +27,3 @@ namespace Castle.Core.Core.Smtp
 		void Send(IEnumerable<MailMessage> messages);
 	}
 }
-

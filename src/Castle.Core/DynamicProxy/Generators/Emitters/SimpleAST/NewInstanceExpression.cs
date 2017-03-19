@@ -41,19 +41,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		public override void Emit(IMemberEmitter member, ILGenerator gen)
 		{
 			foreach (var exp in arguments)
-			{
 				exp.Emit(member, gen);
-			}
 
 			if (constructor == null)
-			{
 				constructor = type.GetConstructor(constructorArgs);
-			}
 
 			if (constructor == null)
-			{
 				throw new ProxyGenerationException("Could not find constructor matching specified arguments");
-			}
 
 			gen.Emit(OpCodes.Newobj, constructor);
 		}

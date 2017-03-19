@@ -22,11 +22,11 @@ namespace Castle.Core.Core
 	[Serializable]
 	public class ReferenceEqualityComparer<T> : IEqualityComparer, IEqualityComparer<T>
 	{
-		private static readonly ReferenceEqualityComparer<T> instance = new ReferenceEqualityComparer<T>();
-
 		private ReferenceEqualityComparer()
 		{
 		}
+
+		public static ReferenceEqualityComparer<T> Instance { get; } = new ReferenceEqualityComparer<T>();
 
 		public int GetHashCode(object obj)
 		{
@@ -46,11 +46,6 @@ namespace Castle.Core.Core
 		int IEqualityComparer<T>.GetHashCode(T obj)
 		{
 			return RuntimeHelpers.GetHashCode(obj);
-		}
-
-		public static ReferenceEqualityComparer<T> Instance
-		{
-			get { return instance; }
 		}
 	}
 }

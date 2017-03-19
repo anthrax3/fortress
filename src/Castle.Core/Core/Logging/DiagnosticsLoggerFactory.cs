@@ -35,4 +35,3 @@ namespace Castle.Core.Core.Logging
 		}
 	}
 }
-

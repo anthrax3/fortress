@@ -37,9 +37,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			ifNull.Emit(member, gen);
 			gen.MarkLabel(notNull);
 			if (ifNotNull != null) // yeah, I know that reads funny :)
-			{
 				ifNotNull.Emit(member, gen);
-			}
 		}
 	}
 }

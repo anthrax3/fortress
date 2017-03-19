@@ -28,17 +28,13 @@ namespace Castle.Core.Core.Configuration
 		{
 		}
 
-		public IConfiguration this[String name]
+		public IConfiguration this[string name]
 		{
 			get
 			{
-				foreach(IConfiguration config in this)
-				{
+				foreach (var config in this)
 					if (name.Equals(config.Name))
-					{
 						return config;
-					}
-				}
 
 				return null;
 			}

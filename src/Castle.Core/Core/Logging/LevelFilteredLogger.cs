@@ -21,13 +21,12 @@ namespace Castle.Core.Core.Logging
 	public abstract class LevelFilteredLogger : ILogger
 	{
 		private LoggerLevel level = LoggerLevel.Off;
-		private String name = "unnamed";
 
 		protected LevelFilteredLogger()
 		{
 		}
 
-		protected LevelFilteredLogger(String name)
+		protected LevelFilteredLogger(string name)
 		{
 			ChangeName(name);
 		}
@@ -37,12 +36,10 @@ namespace Castle.Core.Core.Logging
 			level = loggerLevel;
 		}
 
-		protected LevelFilteredLogger(String loggerName, LoggerLevel loggerLevel) : this(loggerLevel)
+		protected LevelFilteredLogger(string loggerName, LoggerLevel loggerLevel) : this(loggerLevel)
 		{
 			ChangeName(loggerName);
 		}
-
-		public abstract ILogger CreateChildLogger(string loggerName);
 
 		public LoggerLevel Level
 		{
@@ -50,9 +47,23 @@ namespace Castle.Core.Core.Logging
 			set { level = value; }
 		}
 
-		public String Name
+		public string Name { get; private set; } = "unnamed";
+
+		public abstract ILogger CreateChildLogger(string loggerName);
+
+		protected abstract void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception);
+
+		protected void ChangeName(string newName)
 		{
-			get { return name; }
+			if (newName == null)
+				throw new ArgumentNullException("newName");
+
+			Name = newName;
+		}
+
+		private void Log(LoggerLevel loggerLevel, string message, Exception exception)
+		{
+			Log(loggerLevel, Name, message, exception);
 		}
 
 		#region ILogger implementation
@@ -62,9 +73,7 @@ namespace Castle.Core.Core.Logging
 		public void Debug(string message)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Debug, message, null);
 		}
@@ -72,9 +81,7 @@ namespace Castle.Core.Core.Logging
 		public void Debug(Func<string> messageFactory)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Debug, messageFactory.Invoke(), null);
 		}
@@ -82,9 +89,7 @@ namespace Castle.Core.Core.Logging
 		public void Debug(string message, Exception exception)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Debug, message, exception);
 		}
@@ -92,41 +97,33 @@ namespace Castle.Core.Core.Logging
 		public void DebugFormat(string format, params object[] args)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Debug, String.Format(CultureInfo.CurrentCulture, format, args), null);
+			Log(LoggerLevel.Debug, string.Format(CultureInfo.CurrentCulture, format, args), null);
 		}
 
 		public void DebugFormat(Exception exception, string format, params object[] args)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Debug, String.Format(CultureInfo.CurrentCulture, format, args), exception);
+			Log(LoggerLevel.Debug, string.Format(CultureInfo.CurrentCulture, format, args), exception);
 		}
 
 		public void DebugFormat(IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Debug, String.Format(formatProvider, format, args), null);
+			Log(LoggerLevel.Debug, string.Format(formatProvider, format, args), null);
 		}
 
 		public void DebugFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsDebugEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Debug, String.Format(formatProvider, format, args), exception);
+			Log(LoggerLevel.Debug, string.Format(formatProvider, format, args), exception);
 		}
 
 		#endregion
@@ -136,9 +133,7 @@ namespace Castle.Core.Core.Logging
 		public void Info(string message)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Info, message, null);
 		}
@@ -146,9 +141,7 @@ namespace Castle.Core.Core.Logging
 		public void Info(Func<string> messageFactory)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Info, messageFactory.Invoke(), null);
 		}
@@ -156,9 +149,7 @@ namespace Castle.Core.Core.Logging
 		public void Info(string message, Exception exception)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Info, message, exception);
 		}
@@ -166,41 +157,33 @@ namespace Castle.Core.Core.Logging
 		public void InfoFormat(string format, params object[] args)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Info, String.Format(CultureInfo.CurrentCulture, format, args), null);
+			Log(LoggerLevel.Info, string.Format(CultureInfo.CurrentCulture, format, args), null);
 		}
 
 		public void InfoFormat(Exception exception, string format, params object[] args)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Info, String.Format(CultureInfo.CurrentCulture, format, args), exception);
+			Log(LoggerLevel.Info, string.Format(CultureInfo.CurrentCulture, format, args), exception);
 		}
 
 		public void InfoFormat(IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Info, String.Format(formatProvider, format, args), null);
+			Log(LoggerLevel.Info, string.Format(formatProvider, format, args), null);
 		}
 
 		public void InfoFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsInfoEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Info, String.Format(formatProvider, format, args), exception);
+			Log(LoggerLevel.Info, string.Format(formatProvider, format, args), exception);
 		}
 
 		#endregion
@@ -210,9 +193,7 @@ namespace Castle.Core.Core.Logging
 		public void Warn(string message)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Warn, message, null);
 		}
@@ -220,9 +201,7 @@ namespace Castle.Core.Core.Logging
 		public void Warn(Func<string> messageFactory)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Warn, messageFactory.Invoke(), null);
 		}
@@ -230,9 +209,7 @@ namespace Castle.Core.Core.Logging
 		public void Warn(string message, Exception exception)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Warn, message, exception);
 		}
@@ -240,41 +217,33 @@ namespace Castle.Core.Core.Logging
 		public void WarnFormat(string format, params object[] args)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Warn, String.Format(CultureInfo.CurrentCulture, format, args), null);
+			Log(LoggerLevel.Warn, string.Format(CultureInfo.CurrentCulture, format, args), null);
 		}
 
 		public void WarnFormat(Exception exception, string format, params object[] args)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Warn, String.Format(CultureInfo.CurrentCulture, format, args), exception);
+			Log(LoggerLevel.Warn, string.Format(CultureInfo.CurrentCulture, format, args), exception);
 		}
 
 		public void WarnFormat(IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Warn, String.Format(formatProvider, format, args), null);
+			Log(LoggerLevel.Warn, string.Format(formatProvider, format, args), null);
 		}
 
 		public void WarnFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsWarnEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Warn, String.Format(formatProvider, format, args), exception);
+			Log(LoggerLevel.Warn, string.Format(formatProvider, format, args), exception);
 		}
 
 		#endregion
@@ -284,9 +253,7 @@ namespace Castle.Core.Core.Logging
 		public void Error(string message)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Error, message, null);
 		}
@@ -294,9 +261,7 @@ namespace Castle.Core.Core.Logging
 		public void Error(Func<string> messageFactory)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Error, messageFactory.Invoke(), null);
 		}
@@ -304,9 +269,7 @@ namespace Castle.Core.Core.Logging
 		public void Error(string message, Exception exception)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Error, message, exception);
 		}
@@ -314,41 +277,33 @@ namespace Castle.Core.Core.Logging
 		public void ErrorFormat(string format, params object[] args)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Error, String.Format(CultureInfo.CurrentCulture, format, args), null);
+			Log(LoggerLevel.Error, string.Format(CultureInfo.CurrentCulture, format, args), null);
 		}
 
 		public void ErrorFormat(Exception exception, string format, params object[] args)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Error, String.Format(CultureInfo.CurrentCulture, format, args), exception);
+			Log(LoggerLevel.Error, string.Format(CultureInfo.CurrentCulture, format, args), exception);
 		}
 
 		public void ErrorFormat(IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Error, String.Format(formatProvider, format, args), null);
+			Log(LoggerLevel.Error, string.Format(formatProvider, format, args), null);
 		}
 
 		public void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsErrorEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Error, String.Format(formatProvider, format, args), exception);
+			Log(LoggerLevel.Error, string.Format(formatProvider, format, args), exception);
 		}
 
 		#endregion
@@ -358,9 +313,7 @@ namespace Castle.Core.Core.Logging
 		public void Fatal(string message)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Fatal, message, null);
 		}
@@ -368,9 +321,7 @@ namespace Castle.Core.Core.Logging
 		public void Fatal(Func<string> messageFactory)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Fatal, messageFactory.Invoke(), null);
 		}
@@ -378,9 +329,7 @@ namespace Castle.Core.Core.Logging
 		public void Fatal(string message, Exception exception)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
 			Log(LoggerLevel.Fatal, message, exception);
 		}
@@ -388,87 +337,62 @@ namespace Castle.Core.Core.Logging
 		public void FatalFormat(string format, params object[] args)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Fatal, String.Format(CultureInfo.CurrentCulture, format, args), null);
+			Log(LoggerLevel.Fatal, string.Format(CultureInfo.CurrentCulture, format, args), null);
 		}
 
 		public void FatalFormat(Exception exception, string format, params object[] args)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Fatal, String.Format(CultureInfo.CurrentCulture, format, args), exception);
+			Log(LoggerLevel.Fatal, string.Format(CultureInfo.CurrentCulture, format, args), exception);
 		}
 
 		public void FatalFormat(IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Fatal, String.Format(formatProvider, format, args), null);
+			Log(LoggerLevel.Fatal, string.Format(formatProvider, format, args), null);
 		}
 
 		public void FatalFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
 		{
 			if (!IsFatalEnabled)
-			{
 				return;
-			}
 
-			Log(LoggerLevel.Fatal, String.Format(formatProvider, format, args), exception);
+			Log(LoggerLevel.Fatal, string.Format(formatProvider, format, args), exception);
 		}
 
 		#endregion
 
 		public bool IsDebugEnabled
 		{
-			get { return (Level >= LoggerLevel.Debug); }
+			get { return Level >= LoggerLevel.Debug; }
 		}
 
 		public bool IsInfoEnabled
 		{
-			get { return (Level >= LoggerLevel.Info); }
+			get { return Level >= LoggerLevel.Info; }
 		}
 
 		public bool IsWarnEnabled
 		{
-			get { return (Level >= LoggerLevel.Warn); }
+			get { return Level >= LoggerLevel.Warn; }
 		}
 
 		public bool IsErrorEnabled
 		{
-			get { return (Level >= LoggerLevel.Error); }
+			get { return Level >= LoggerLevel.Error; }
 		}
 
 		public bool IsFatalEnabled
 		{
-			get { return (Level >= LoggerLevel.Fatal); }
+			get { return Level >= LoggerLevel.Fatal; }
 		}
 
 		#endregion
-
-		protected abstract void Log(LoggerLevel loggerLevel, String loggerName, String message, Exception exception);
-
-		protected void ChangeName(String newName)
-		{
-			if (newName == null)
-			{
-				throw new ArgumentNullException("newName");
-			}
-
-			name = newName;
-		}
-
-		private void Log(LoggerLevel loggerLevel, String message, Exception exception)
-		{
-			Log(loggerLevel, Name, message, exception);
-		}
 	}
 }

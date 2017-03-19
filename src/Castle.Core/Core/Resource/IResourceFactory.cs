@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Core.Resource
 {
 	public interface IResourceFactory
@@ -22,6 +20,6 @@ namespace Castle.Core.Core.Resource
 
 		IResource Create(CustomUri uri);
 
-		IResource Create(CustomUri uri, String basePath);
+		IResource Create(CustomUri uri, string basePath);
 	}
 }

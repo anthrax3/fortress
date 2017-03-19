@@ -28,9 +28,7 @@ namespace Castle.Core.Core
 		public ReflectionBasedDictionaryAdapter(object target)
 		{
 			if (target == null)
-			{
 				throw new ArgumentNullException("target");
-			}
 			Read(properties, target);
 		}
 
@@ -174,9 +172,7 @@ namespace Castle.Core.Core
 				var moved = enumerator.MoveNext();
 
 				if (moved)
-				{
-					current = (KeyValuePair<string, object>)enumerator.Current;
-				}
+					current = (KeyValuePair<string, object>) enumerator.Current;
 
 				return moved;
 			}

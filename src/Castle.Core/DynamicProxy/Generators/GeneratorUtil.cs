@@ -22,22 +22,18 @@ namespace Castle.Core.DynamicProxy.Generators
 	public static class GeneratorUtil
 	{
 		public static void CopyOutAndRefParameters(TypeReference[] dereferencedArguments, LocalReference invocation,
-		                                           MethodInfo method, MethodEmitter emitter)
+			MethodInfo method, MethodEmitter emitter)
 		{
 			var parameters = method.GetParameters();
 			if (!ArgumentsUtil.IsAnyByRef(parameters))
-			{
 				return; //saving the need to create locals if there is no need
-			}
 
 			var arguments = StoreInvocationArgumentsInLocal(emitter, invocation);
 
 			for (var i = 0; i < parameters.Length; i++)
 			{
 				if (!parameters[i].ParameterType.GetTypeInfo().IsByRef)
-				{
 					continue;
-				}
 
 				emitter.CodeBuilder.AddStatement(AssignArgument(dereferencedArguments, i, arguments));
 			}
@@ -49,7 +45,7 @@ namespace Castle.Core.DynamicProxy.Generators
 		}
 
 		private static AssignStatement AssignArgument(TypeReference[] dereferencedArguments, int i,
-		                                              LocalReference invocationArgs)
+			LocalReference invocationArgs)
 		{
 			return new AssignStatement(dereferencedArguments[i], Argument(i, invocationArgs, dereferencedArguments));
 		}

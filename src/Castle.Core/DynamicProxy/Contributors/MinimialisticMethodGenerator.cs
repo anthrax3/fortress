@@ -27,18 +27,14 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		protected override MethodEmitter BuildProxiedMethodBody(MethodEmitter emitter, ClassEmitter @class,
-		                                                        ProxyGenerationOptions options, INamingScope namingScope)
+			ProxyGenerationOptions options, INamingScope namingScope)
 		{
 			InitOutParameters(emitter, MethodToOverride.GetParameters());
 
 			if (emitter.ReturnType == typeof(void))
-			{
 				emitter.CodeBuilder.AddStatement(new ReturnStatement());
-			}
 			else
-			{
 				emitter.CodeBuilder.AddStatement(new ReturnStatement(new DefaultValueExpression(emitter.ReturnType)));
-			}
 
 			return emitter;
 		}
@@ -49,11 +45,9 @@ namespace Castle.Core.DynamicProxy.Contributors
 			{
 				var parameter = parameters[index];
 				if (parameter.IsOut)
-				{
 					emitter.CodeBuilder.AddStatement(
 						new AssignArgumentStatement(new ArgumentReference(parameter.ParameterType, index + 1),
-						                            new DefaultValueExpression(parameter.ParameterType)));
-				}
+							new DefaultValueExpression(parameter.ParameterType)));
 			}
 		}
 	}

@@ -26,9 +26,7 @@ namespace Castle.Core.DynamicProxy
 			{
 				var accessor = instance as IProxyTargetAccessor;
 				if (accessor != null)
-				{
 					instance = accessor.DynProxyGetTarget();
-				}
 			}
 
 			return instance;
@@ -47,9 +45,7 @@ namespace Castle.Core.DynamicProxy
 					if (target != null)
 					{
 						if (ReferenceEquals(target, instance))
-						{
 							return instance.GetType().GetTypeInfo().BaseType;
-						}
 
 						instance = target;
 					}
@@ -62,9 +58,7 @@ namespace Castle.Core.DynamicProxy
 		public static bool IsProxy(object instance)
 		{
 			if (RemotingServices.IsTransparentProxy(instance))
-			{
 				return true;
-			}
 			return instance is IProxyTargetAccessor;
 		}
 

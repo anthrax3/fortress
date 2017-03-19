@@ -19,11 +19,11 @@ namespace Castle.Core.Core.Configuration
 	[Serializable]
 	public class MutableConfiguration : AbstractConfiguration
 	{
-		public MutableConfiguration(String name) : this(name, null)
+		public MutableConfiguration(string name) : this(name, null)
 		{
 		}
 
-		public MutableConfiguration(String name, String value)
+		public MutableConfiguration(string name, string value)
 		{
 			Name = name;
 			Value = value;
@@ -48,14 +48,14 @@ namespace Castle.Core.Core.Configuration
 
 		public MutableConfiguration CreateChild(string name)
 		{
-			MutableConfiguration child = new MutableConfiguration(name);
+			var child = new MutableConfiguration(name);
 			Children.Add(child);
 			return child;
 		}
 
 		public MutableConfiguration CreateChild(string name, string value)
 		{
-			MutableConfiguration child = new MutableConfiguration(name, value);
+			var child = new MutableConfiguration(name, value);
 			Children.Add(child);
 			return child;
 		}

@@ -49,7 +49,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		private void BuildConstructor(AbstractTypeEmitter emitter)
 		{
 			var constructor = emitter.CreateConstructor(new ArgumentReference(typeof(object)),
-			                                            new ArgumentReference(typeof(IntPtr)));
+				new ArgumentReference(typeof(IntPtr)));
 			constructor.ConstructorBuilder.SetImplementationFlags(MethodImplAttributes.Runtime | MethodImplAttributes.Managed);
 		}
 
@@ -57,12 +57,12 @@ namespace Castle.Core.DynamicProxy.Contributors
 		{
 			var paramTypes = GetParamTypes(@delegate);
 			var invoke = @delegate.CreateMethod("Invoke",
-			                                    MethodAttributes.Public |
-			                                    MethodAttributes.HideBySig |
-			                                    MethodAttributes.NewSlot |
-			                                    MethodAttributes.Virtual,
-			                                    @delegate.GetClosedParameterType(method.MethodOnTarget.ReturnType),
-			                                    paramTypes);
+				MethodAttributes.Public |
+				MethodAttributes.HideBySig |
+				MethodAttributes.NewSlot |
+				MethodAttributes.Virtual,
+				@delegate.GetClosedParameterType(method.MethodOnTarget.ReturnType),
+				paramTypes);
 			invoke.MethodBuilder.SetImplementationFlags(MethodImplAttributes.Runtime | MethodImplAttributes.Managed);
 		}
 
@@ -70,15 +70,15 @@ namespace Castle.Core.DynamicProxy.Contributors
 		{
 			var methodInfo = method.MethodOnTarget;
 			var suggestedName = string.Format("Castle.Proxies.Delegates.{0}_{1}",
-			                                  methodInfo.DeclaringType.Name,
-			                                  method.Method.Name);
+				methodInfo.DeclaringType.Name,
+				method.Method.Name);
 			var uniqueName = namingScope.ParentScope.GetUniqueName(suggestedName);
 
 			var @delegate = new ClassEmitter(@class.ModuleScope,
-			                                 uniqueName,
-			                                 typeof(MulticastDelegate),
-			                                 Type.EmptyTypes,
-			                                 DelegateFlags);
+				uniqueName,
+				typeof(MulticastDelegate),
+				Type.EmptyTypes,
+				DelegateFlags);
 			@delegate.CopyGenericParametersFromMethod(method.Method);
 			return @delegate;
 		}
@@ -91,17 +91,13 @@ namespace Castle.Core.DynamicProxy.Contributors
 				var types = new Type[parameters.Length];
 
 				for (var i = 0; i < parameters.Length; i++)
-				{
 					types[i] = @delegate.GetClosedParameterType(parameters[i].ParameterType);
-				}
 				return types;
 			}
 			var paramTypes = new Type[parameters.Length + 1];
 			paramTypes[0] = targetType;
 			for (var i = 0; i < parameters.Length; i++)
-			{
 				paramTypes[i + 1] = @delegate.GetClosedParameterType(parameters[i].ParameterType);
-			}
 			return paramTypes;
 		}
 	}

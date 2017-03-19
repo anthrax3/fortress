@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 namespace Castle.Core.DynamicProxy.Generators
 {
@@ -25,18 +27,16 @@ namespace Castle.Core.DynamicProxy.Generators
 
 		static AttributesToAvoidReplicating()
 		{
-			Add<System.Runtime.InteropServices.ComImportAttribute>();
-			Add<System.Runtime.InteropServices.MarshalAsAttribute>();
-			Add<System.Runtime.InteropServices.TypeIdentifierAttribute>();
-			Add<System.Security.Permissions.SecurityAttribute>();
+			Add<ComImportAttribute>();
+			Add<MarshalAsAttribute>();
+			Add<TypeIdentifierAttribute>();
+			Add<SecurityAttribute>();
 		}
 
 		public static void Add(Type attribute)
 		{
 			if (!attributes.Contains(attribute))
-			{
 				attributes.Add(attribute);
-			}
 		}
 
 		public static void Add<T>()

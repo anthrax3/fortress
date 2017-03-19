@@ -23,9 +23,7 @@ namespace Castle.Core.Core.Logging
 		public virtual ILogger Create(Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			return Create(type.FullName);
 		}
@@ -33,16 +31,14 @@ namespace Castle.Core.Core.Logging
 		public virtual ILogger Create(Type type, LoggerLevel level)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			return Create(type.FullName, level);
 		}
 
-		public abstract ILogger Create(String name);
+		public abstract ILogger Create(string name);
 
-		public abstract ILogger Create(String name, LoggerLevel level);
+		public abstract ILogger Create(string name, LoggerLevel level);
 
 		protected static FileInfo GetConfigFile(string fileName)
 		{
@@ -54,7 +50,7 @@ namespace Castle.Core.Core.Logging
 			}
 			else
 			{
-				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 				result = new FileInfo(Path.Combine(baseDirectory, fileName));
 			}
 

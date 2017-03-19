@@ -82,28 +82,18 @@ namespace Castle.Core.DynamicProxy
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(this, obj))
-			{
 				return true;
-			}
 
 			var other = obj as MixinData;
 			if (ReferenceEquals(other, null))
-			{
 				return false;
-			}
 
 			if (mixinsImpl.Count != other.mixinsImpl.Count)
-			{
 				return false;
-			}
 
 			for (var i = 0; i < mixinsImpl.Count; ++i)
-			{
 				if (mixinsImpl[i].GetType() != other.mixinsImpl[i].GetType())
-				{
 					return false;
-				}
-			}
 
 			return true;
 		}
@@ -113,9 +103,7 @@ namespace Castle.Core.DynamicProxy
 		{
 			var hashCode = 0;
 			foreach (var mixinImplementation in mixinsImpl)
-			{
-				hashCode = 29*hashCode + mixinImplementation.GetType().GetHashCode();
-			}
+				hashCode = 29 * hashCode + mixinImplementation.GetType().GetHashCode();
 
 			return hashCode;
 		}

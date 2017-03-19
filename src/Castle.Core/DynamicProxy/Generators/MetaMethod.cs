@@ -28,13 +28,11 @@ namespace Castle.Core.DynamicProxy.Generators
 		                                                                  MethodAttributes.NewSlot |
 		                                                                  MethodAttributes.Final;
 
-		private string name;
-
 		public MetaMethod(MethodInfo method, MethodInfo methodOnTarget, bool standalone, bool proxyable, bool hasTarget)
 			: base(method.DeclaringType)
 		{
 			Method = method;
-			name = method.Name;
+			Name = method.Name;
 			MethodOnTarget = methodOnTarget;
 			Standalone = standalone;
 			Proxyable = proxyable;
@@ -44,50 +42,35 @@ namespace Castle.Core.DynamicProxy.Generators
 
 		public MethodAttributes Attributes { get; private set; }
 		public bool HasTarget { get; private set; }
-		public MethodInfo Method { get; private set; }
+		public MethodInfo Method { get; }
 
 		public MethodInfo MethodOnTarget { get; private set; }
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; private set; }
 
 		public bool Proxyable { get; private set; }
 
-		public bool Standalone { get; private set; }
+		public bool Standalone { get; }
 
 		public bool Equals(MetaMethod other)
 		{
 			if (ReferenceEquals(null, other))
-			{
 				return false;
-			}
 			if (ReferenceEquals(this, other))
-			{
 				return true;
-			}
 
-			if (!StringComparer.OrdinalIgnoreCase.Equals(name, other.name))
-			{
+			if (!StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name))
 				return false;
-			}
 
 			var comparer = MethodSignatureComparer.Instance;
 			if (!comparer.EqualSignatureTypes(Method.ReturnType, other.Method.ReturnType))
-			{
 				return false;
-			}
 
 			if (!comparer.EqualGenericParameters(Method, other.Method))
-			{
 				return false;
-			}
 
 			if (!comparer.EqualParameters(Method, other.Method))
-			{
 				return false;
-			}
 
 			return true;
 		}
@@ -96,11 +79,9 @@ namespace Castle.Core.DynamicProxy.Generators
 		{
 			Attributes = ExplicitImplementationAttributes;
 			if (Standalone == false)
-			{
 				Attributes |= MethodAttributes.SpecialName;
-			}
 
-			name = string.Format("{0}.{1}", Method.DeclaringType.Name, Method.Name);
+			Name = string.Format("{0}.{1}", Method.DeclaringType.Name, Method.Name);
 		}
 
 		private MethodAttributes ObtainAttributes()
@@ -109,41 +90,25 @@ namespace Castle.Core.DynamicProxy.Generators
 			var attributes = MethodAttributes.Virtual;
 
 			if (methodInfo.IsFinal || Method.DeclaringType.GetTypeInfo().IsInterface)
-			{
 				attributes |= MethodAttributes.NewSlot;
-			}
 
 			if (methodInfo.IsPublic)
-			{
 				attributes |= MethodAttributes.Public;
-			}
 
 			if (methodInfo.IsHideBySig)
-			{
 				attributes |= MethodAttributes.HideBySig;
-			}
-			if (InternalsUtil.IsInternal(methodInfo) &&
-				InternalsUtil.IsInternalToDynamicProxy(methodInfo.DeclaringType.GetTypeInfo().Assembly))
-			{
+			if (methodInfo.IsInternal() &&
+			    methodInfo.DeclaringType.GetTypeInfo().Assembly.IsInternalToDynamicProxy())
 				attributes |= MethodAttributes.Assembly;
-			}
 			if (methodInfo.IsFamilyAndAssembly)
-			{
 				attributes |= MethodAttributes.FamANDAssem;
-			}
 			else if (methodInfo.IsFamilyOrAssembly)
-			{
 				attributes |= MethodAttributes.FamORAssem;
-			}
 			else if (methodInfo.IsFamily)
-			{
 				attributes |= MethodAttributes.Family;
-			}
 
 			if (Standalone == false)
-			{
 				attributes |= MethodAttributes.SpecialName;
-			}
 			return attributes;
 		}
 	}

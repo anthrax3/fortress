@@ -13,16 +13,10 @@
 // limitations under the License.
 
 
-using System;
-
 namespace Castle.Core.Core.Resource
 {
 	public class ConfigResourceFactory : IResourceFactory
 	{
-		public ConfigResourceFactory()
-		{
-		}
-
 		public bool Accept(CustomUri uri)
 		{
 			return "config".Equals(uri.Scheme);
@@ -33,10 +27,9 @@ namespace Castle.Core.Core.Resource
 			return new ConfigResource(uri);
 		}
 
-		public IResource Create(CustomUri uri, String basePath)
+		public IResource Create(CustomUri uri, string basePath)
 		{
 			return Create(uri);
 		}
 	}
 }
-

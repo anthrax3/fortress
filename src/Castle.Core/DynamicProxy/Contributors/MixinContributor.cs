@@ -46,23 +46,19 @@ namespace Castle.Core.DynamicProxy.Contributors
 			Debug.Assert(@interface != null, "@interface == null", "Shouldn't be adding empty interfaces...");
 			Debug.Assert(@interface.GetTypeInfo().IsInterface, "@interface.IsInterface", "Should be adding interfaces only...");
 			Debug.Assert(!interfaces.Contains(@interface), "!interfaces.Contains(@interface)",
-			             "Shouldn't be adding same interface twice...");
+				"Shouldn't be adding same interface twice...");
 			Debug.Assert(!empty.Contains(@interface), "!empty.Contains(@interface)",
-			             "Shouldn't be adding same interface twice...");
+				"Shouldn't be adding same interface twice...");
 			empty.Add(@interface);
 		}
 
 		public override void Generate(ClassEmitter @class, ProxyGenerationOptions options)
 		{
 			foreach (var @interface in interfaces)
-			{
 				fields[@interface] = BuildTargetField(@class, @interface);
-			}
 
 			foreach (var emptyInterface in empty)
-			{
 				fields[emptyInterface] = BuildTargetField(@class, emptyInterface);
-			}
 
 			base.Generate(@class, options);
 		}
@@ -78,35 +74,31 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		protected override MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod)
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod)
 		{
 			if (!method.Proxyable)
-			{
 				return new ForwardingMethodGenerator(method,
-				                                     overrideMethod,
-				                                     (c, i) => fields[i.DeclaringType]);
-			}
+					overrideMethod,
+					(c, i) => fields[i.DeclaringType]);
 
 			var invocation = GetInvocationType(method, @class, options);
 			return new MethodWithInvocationGenerator(method,
-			                                         @class.GetField("__interceptors"),
-			                                         invocation,
-			                                         getTargetExpression,
-			                                         overrideMethod,
-			                                         null);
+				@class.GetField("__interceptors"),
+				invocation,
+				getTargetExpression,
+				overrideMethod,
+				null);
 		}
 
 		private GetTargetExpressionDelegate BuildGetTargetExpression()
 		{
 			if (!canChangeTarget)
-			{
 				return (c, m) => fields[m.DeclaringType].ToExpression();
-			}
 
 			return (c, m) => new NullCoalescingOperatorExpression(
-			                 	new AsTypeReference(c.GetField("__target"), m.DeclaringType).ToExpression(),
-			                 	fields[m.DeclaringType].ToExpression());
+				new AsTypeReference(c.GetField("__target"), m.DeclaringType).ToExpression(),
+				fields[m.DeclaringType].ToExpression());
 		}
 
 		private FieldReference BuildTargetField(ClassEmitter @class, Type type)
@@ -120,28 +112,22 @@ namespace Castle.Core.DynamicProxy.Contributors
 			var scope = emitter.ModuleScope;
 			Type[] invocationInterfaces;
 			if (canChangeTarget)
-			{
-				invocationInterfaces = new[] { typeof(IInvocation), typeof(IChangeProxyTarget) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation), typeof(IChangeProxyTarget)};
 			else
-			{
-				invocationInterfaces = new[] { typeof(IInvocation) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation)};
 			var key = new CacheKey(method.Method, CompositionInvocationTypeGenerator.BaseType, invocationInterfaces, null);
 
 			// no locking required as we're already within a lock
 
 			var invocation = scope.GetFromCache(key);
 			if (invocation != null)
-			{
 				return invocation;
-			}
 
 			invocation = new CompositionInvocationTypeGenerator(method.Method.DeclaringType,
-			                                                    method,
-			                                                    method.Method,
-			                                                    canChangeTarget,
-			                                                    null)
+					method,
+					method.Method,
+					canChangeTarget,
+					null)
 				.Generate(emitter, options, namingScope)
 				.BuildType();
 

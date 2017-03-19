@@ -22,11 +22,21 @@ namespace Castle.Core.Core.Internal
 {
 	public sealed class InterfaceAttributeUtil
 	{
-		private readonly Aged<Type>[] types; // in order from most to least derived
-		private readonly Dictionary<Type, Aged<object>> singletons;
+		private static readonly object
+			ConflictMarker = new object();
+
 		private readonly List<object> results;
+		private readonly Dictionary<Type, Aged<object>> singletons;
+		private readonly Aged<Type>[] types; // in order from most to least derived
 
 		private int index;
+
+		private InterfaceAttributeUtil(Type derivedType, Type[] baseTypes)
+		{
+			types = CollectTypes(derivedType, baseTypes);
+			singletons = new Dictionary<Type, Aged<object>>();
+			results = new List<object>();
+		}
 
 		private Type CurrentType
 		{
@@ -49,20 +59,13 @@ namespace Castle.Core.Core.Internal
 				throw new ArgumentOutOfRangeException("type");
 
 			var attributes = type.GetTypeInfo().GetCustomAttributes(false).ToArray();
-			var baseTypes  = type.GetInterfaces();
+			var baseTypes = type.GetInterfaces();
 
 			if (baseTypes.Length == 0 || !inherit)
 				return attributes;
 
 			return new InterfaceAttributeUtil(type, baseTypes)
 				.GetAttributes(attributes);
-		}
-
-		private InterfaceAttributeUtil(Type derivedType, Type[] baseTypes)
-		{
-			types      = CollectTypes(derivedType, baseTypes);
-			singletons = new Dictionary<Type, Aged<object>>();
-			results    = new List<object>();
 		}
 
 		private Aged<Type>[] CollectTypes(Type derivedType, Type[] baseTypes)
@@ -83,7 +86,7 @@ namespace Castle.Core.Core.Internal
 							ages[type] = ++age;
 
 			return ages
-				.Select (a => new Aged<Type>(a.Key, a.Value))
+				.Select(a => new Aged<Type>(a.Key, a.Value))
 				.OrderBy(t => t.Age)
 				.ToArray();
 		}
@@ -103,16 +106,14 @@ namespace Castle.Core.Core.Internal
 		{
 			foreach (var attribute in attributes)
 			{
-				var attributeType  = attribute.GetType();
+				var attributeType = attribute.GetType();
 				var attributeUsage = attributeType.GetAttributeUsage();
 
 				if (IsMostDerivedType || attributeUsage.Inherited)
-				{
 					if (attributeUsage.AllowMultiple)
 						results.Add(attribute);
 					else
 						AddSingleton(attribute, attributeType);
-				}
 			}
 		}
 
@@ -120,15 +121,11 @@ namespace Castle.Core.Core.Internal
 		{
 			Aged<object> singleton;
 			if (singletons.TryGetValue(attributeType, out singleton))
-			{
 				if (singleton.Age == CurrentAge)
-				{
 					if (singleton.Value == ConflictMarker)
 						return; // already in conflict
 					else
 						attribute = ConflictMarker;
-				}
-			}
 
 			singletons[attributeType] = MakeAged(attribute);
 		}
@@ -152,7 +149,7 @@ namespace Castle.Core.Core.Internal
 			(
 				"Cannot determine inherited attributes for interface type {0}.  " +
 				"Conflicting attributes of type {1} exist in the inheritance graph.",
-				CurrentType  .FullName,
+				CurrentType.FullName,
 				attributeType.FullName
 			);
 
@@ -163,7 +160,7 @@ namespace Castle.Core.Core.Internal
 		{
 			var ns = type.Namespace;
 			return ns != "Castle.Components.DictionaryAdapter"
-				&& ns != "System.ComponentModel";
+			       && ns != "System.ComponentModel";
 		}
 
 		private Aged<T> MakeAged<T>(T value)
@@ -174,17 +171,14 @@ namespace Castle.Core.Core.Internal
 		[DebuggerDisplay("{Value}, Age: {Age}")]
 		private sealed class Aged<T>
 		{
-			public readonly T   Value;
 			public readonly int Age;
+			public readonly T Value;
 
 			public Aged(T value, int age)
 			{
 				Value = value;
-				Age   = age;
+				Age = age;
 			}
 		}
-
-		private static readonly object
-			ConflictMarker = new object();
 	}
 }

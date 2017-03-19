@@ -43,11 +43,11 @@ namespace Castle.Core.DynamicProxy.Internal
 				attribute.NamedArguments, out properties, out propertyValues, out fields, out fieldValues);
 
 			return new CustomAttributeInfo(constructor,
-			                               constructorArgs,
-			                               properties,
-			                               propertyValues,
-			                               fields,
-			                               fieldValues);
+				constructorArgs,
+				properties,
+				propertyValues,
+				fields,
+				fieldValues);
 		}
 
 		private static void GetArguments(IList<CustomAttributeTypedArgument> constructorArguments,
@@ -66,9 +66,7 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			var arguments = new object[constructorArguments.Count];
 			for (var i = 0; i < constructorArguments.Count; i++)
-			{
 				arguments[i] = ReadAttributeValue(constructorArguments[i]);
-			}
 
 			return arguments;
 		}
@@ -77,11 +75,9 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			var value = argument.Value;
 			if (argument.ArgumentType.GetTypeInfo().IsArray == false)
-			{
 				return value;
-			}
 			//special case for handling arrays in attributes
-			var arguments = GetArguments((IList<CustomAttributeTypedArgument>)value);
+			var arguments = GetArguments((IList<CustomAttributeTypedArgument>) value);
 			var array = new object[arguments.Length];
 			arguments.CopyTo(array, 0);
 			return array;
@@ -96,7 +92,6 @@ namespace Castle.Core.DynamicProxy.Internal
 			var fieldList = new List<FieldInfo>();
 			var fieldValuesList = new List<object>();
 			foreach (var argument in namedArguments)
-			{
 				if (argument.MemberInfo.MemberType == MemberTypes.Field)
 				{
 					fieldList.Add(argument.MemberInfo as FieldInfo);
@@ -107,8 +102,6 @@ namespace Castle.Core.DynamicProxy.Internal
 					propertyList.Add(argument.MemberInfo as PropertyInfo);
 					propertyValuesList.Add(ReadAttributeValue(argument.TypedValue));
 				}
-				
-			}
 
 			properties = propertyList.ToArray();
 			propertyValues = propertyValuesList.ToArray();
@@ -125,9 +118,7 @@ namespace Castle.Core.DynamicProxy.Internal
 			{
 				var attributeType = attribute.Constructor.DeclaringType;
 				if (ShouldSkipAttributeReplication(attributeType))
-				{
 					continue;
-				}
 
 				CustomAttributeInfo info;
 				try
@@ -142,14 +133,12 @@ namespace Castle.Core.DynamicProxy.Internal
 							"To avoid this error you can chose not to replicate this attribute type by calling '{3}.Add(typeof({0}))'.",
 							attributeType.FullName,
 							member.DeclaringType.FullName,
-							(member is Type) ? "" : ("." + member.Name),
+							member is Type ? "" : "." + member.Name,
 							typeof(AttributesToAvoidReplicating).FullName);
 					throw new ProxyGenerationException(message, e);
 				}
 				if (info != null)
-				{
 					yield return info;
-				}
 			}
 		}
 
@@ -164,35 +153,25 @@ namespace Castle.Core.DynamicProxy.Internal
 				var attributeType = attribute.Constructor.DeclaringType;
 
 				if (ShouldSkipAttributeReplication(attributeType))
-				{
 					continue;
-				}
 
 				var info = CreateInfo(attribute);
 				if (info != null)
-				{
 					yield return info;
-				}
 			}
 		}
 
 		private static bool ShouldSkipAttributeReplication(Type attribute)
 		{
 			if (attribute.GetTypeInfo().IsPublic == false)
-			{
 				return true;
-			}
 
 			if (SpecialCaseAttributeThatShouldNotBeReplicated(attribute))
-			{
 				return true;
-			}
 
 			var attrs = attribute.GetTypeInfo().GetCustomAttributes<AttributeUsageAttribute>(true).ToArray();
 			if (attrs.Length != 0)
-			{
 				return attrs[0].Inherited;
-			}
 
 			return true;
 		}
@@ -226,9 +205,7 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			var types = new Type[objects.Length];
 			for (var i = 0; i < types.Length; i++)
-			{
 				types[i] = objects[i].GetType();
-			}
 			return types;
 		}
 	}

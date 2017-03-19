@@ -25,25 +25,20 @@ namespace Castle.Core.DynamicProxy.Contributors
 	public abstract class MembersCollector
 	{
 		private const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-		private ILogger logger = NullLogger.Instance;
-
-		private ICollection<MethodInfo> checkedMethods = new HashSet<MethodInfo>();
-		private readonly IDictionary<PropertyInfo, MetaProperty> properties = new Dictionary<PropertyInfo, MetaProperty>();
 		private readonly IDictionary<EventInfo, MetaEvent> events = new Dictionary<EventInfo, MetaEvent>();
 		private readonly IDictionary<MethodInfo, MetaMethod> methods = new Dictionary<MethodInfo, MetaMethod>();
+		private readonly IDictionary<PropertyInfo, MetaProperty> properties = new Dictionary<PropertyInfo, MetaProperty>();
 
 		protected readonly Type type;
+
+		private ICollection<MethodInfo> checkedMethods = new HashSet<MethodInfo>();
 
 		protected MembersCollector(Type type)
 		{
 			this.type = type;
 		}
 
-		public ILogger Logger
-		{
-			get { return logger; }
-			set { logger = value; }
-		}
+		public ILogger Logger { get; set; } = NullLogger.Instance;
 
 		public IEnumerable<MetaMethod> Methods
 		{
@@ -63,11 +58,9 @@ namespace Castle.Core.DynamicProxy.Contributors
 		public virtual void CollectMembersToProxy(IProxyGenerationHook hook)
 		{
 			if (checkedMethods == null) // this method was already called!
-			{
 				throw new InvalidOperationException(
 					string.Format("Can't call 'CollectMembersToProxy' method twice. This usually signifies a bug in custom {0}.",
-					              typeof(ITypeContributor)));
-			}
+						typeof(ITypeContributor)));
 			CollectProperties(hook);
 			CollectEvents(hook);
 			// Methods go last, because properties and events have methods too (getters/setters add/remove)
@@ -82,27 +75,21 @@ namespace Castle.Core.DynamicProxy.Contributors
 		{
 			var propertiesFound = type.GetProperties(Flags);
 			foreach (var property in propertiesFound)
-			{
 				AddProperty(property, hook);
-			}
 		}
 
 		private void CollectEvents(IProxyGenerationHook hook)
 		{
 			var eventsFound = type.GetEvents(Flags);
 			foreach (var @event in eventsFound)
-			{
 				AddEvent(@event, hook);
-			}
 		}
 
 		private void CollectMethods(IProxyGenerationHook hook)
 		{
 			var methodsFound = MethodFinder.GetAllInstanceMethods(type, Flags);
 			foreach (var method in methodsFound)
-			{
 				AddMethod(method, hook, true);
-			}
 		}
 
 		private void AddProperty(PropertyInfo property, IProxyGenerationHook hook)
@@ -123,20 +110,18 @@ namespace Castle.Core.DynamicProxy.Contributors
 			}
 
 			if (setter == null && getter == null)
-			{
 				return;
-			}
 
 			var nonInheritableAttributes = property.GetNonInheritableAttributes();
 			var arguments = property.GetIndexParameters();
 
 			properties[property] = new MetaProperty(property.Name,
-			                                        property.PropertyType,
-			                                        property.DeclaringType,
-			                                        getter,
-			                                        setter,
-			                                        nonInheritableAttributes.Select(a => a.Builder),
-			                                        arguments.Select(a => a.ParameterType).ToArray());
+				property.PropertyType,
+				property.DeclaringType,
+				getter,
+				setter,
+				nonInheritableAttributes.Select(a => a.Builder),
+				arguments.Select(a => a.ParameterType).ToArray());
 		}
 
 		private void AddEvent(EventInfo @event, IProxyGenerationHook hook)
@@ -147,41 +132,29 @@ namespace Castle.Core.DynamicProxy.Contributors
 			MetaMethod remover = null;
 
 			if (addMethod != null)
-			{
 				adder = AddMethod(addMethod, hook, false);
-			}
 
 			if (removeMethod != null)
-			{
 				remover = AddMethod(removeMethod, hook, false);
-			}
 
 			if (adder == null && remover == null)
-			{
 				return;
-			}
 
 			events[@event] = new MetaEvent(@event.Name,
-			                               @event.DeclaringType, @event.EventHandlerType, adder, remover, EventAttributes.None);
+				@event.DeclaringType, @event.EventHandlerType, adder, remover, EventAttributes.None);
 		}
 
 		private MetaMethod AddMethod(MethodInfo method, IProxyGenerationHook hook, bool isStandalone)
 		{
 			if (checkedMethods.Contains(method))
-			{
 				return null;
-			}
 			checkedMethods.Add(method);
 
 			if (methods.ContainsKey(method))
-			{
 				return null;
-			}
 			var methodToGenerate = GetMethodToGenerate(method, hook, isStandalone);
 			if (methodToGenerate != null)
-			{
 				methods[method] = methodToGenerate;
-			}
 
 			return methodToGenerate;
 		}
@@ -191,9 +164,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		protected bool AcceptMethod(MethodInfo method, bool onlyVirtuals, IProxyGenerationHook hook)
 		{
 			if (IsInternalAndNotVisibleToDynamicProxy(method))
-			{
 				return false;
-			}
 
 			var isOverridable = method.IsVirtual && !method.IsFinal;
 			if (onlyVirtuals && !isOverridable)
@@ -210,20 +181,16 @@ namespace Castle.Core.DynamicProxy.Contributors
 			if (method.IsFinal)
 			{
 				Logger.DebugFormat("Excluded sealed method {0} on {1} because it cannot be intercepted.", method.Name,
-				                   method.DeclaringType.FullName);
+					method.DeclaringType.FullName);
 				return false;
 			}
 
 			//can only proxy methods that are public or protected (or internals that have already been checked above)
 			if ((method.IsPublic || method.IsFamily || method.IsAssembly || method.IsFamilyOrAssembly) == false)
-			{
 				return false;
-			}
 
 			if (method.IsFinalizer())
-			{
 				return false;
-			}
 
 			return hook.ShouldInterceptMethod(type, method);
 		}

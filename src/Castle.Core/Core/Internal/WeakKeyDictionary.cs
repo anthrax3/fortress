@@ -21,31 +21,41 @@ namespace Castle.Core.Core.Internal
 	public class WeakKeyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 		where TKey : class
 	{
-		private readonly Dictionary<object, TValue> dictionary;
+		private const int AgeThreshold = 128; // Age at which to trim dead objects
 		private readonly WeakKeyComparer<TKey> comparer;
+		private readonly Dictionary<object, TValue> dictionary;
+
+		private int age; // Incremented by operations
 		private KeyCollection keys;
 
-		private       int age;                // Incremented by operations
-		private const int AgeThreshold = 128; // Age at which to trim dead objects
-
 		public WeakKeyDictionary()
-			: this(0, EqualityComparer<TKey>.Default) { }
+			: this(0, EqualityComparer<TKey>.Default)
+		{
+		}
 
 		public WeakKeyDictionary(int capacity)
-			: this(capacity, EqualityComparer<TKey>.Default) { }
+			: this(capacity, EqualityComparer<TKey>.Default)
+		{
+		}
 
 		public WeakKeyDictionary(IEqualityComparer<TKey> comparer)
-			: this(0, comparer) { }
+			: this(0, comparer)
+		{
+		}
 
 		public WeakKeyDictionary(int capacity, IEqualityComparer<TKey> comparer)
 		{
-			this.comparer   = new WeakKeyComparer<TKey>(comparer);
-			this.dictionary = new Dictionary<object, TValue>(capacity, this.comparer);
+			this.comparer = new WeakKeyComparer<TKey>(comparer);
+			dictionary = new Dictionary<object, TValue>(capacity, this.comparer);
 		}
 
 		public int Count
 		{
-			get { Age(1); return dictionary.Count; }
+			get
+			{
+				Age(1);
+				return dictionary.Count;
+			}
 		}
 
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
@@ -65,8 +75,16 @@ namespace Castle.Core.Core.Internal
 
 		public TValue this[TKey key]
 		{
-			get { Age(1); return dictionary[key]; }
-			set { Age(4); dictionary[comparer.Wrap(key)] = value; }
+			get
+			{
+				Age(1);
+				return dictionary[key];
+			}
+			set
+			{
+				Age(4);
+				dictionary[comparer.Wrap(key)] = value;
+			}
 		}
 
 		public bool ContainsKey(TKey key)
@@ -80,7 +98,7 @@ namespace Castle.Core.Core.Internal
 			Age(1);
 			TValue candidate;
 			return dictionary.TryGetValue(item.Key, out candidate)
-				&& EqualityComparer<TValue>.Default.Equals(candidate, item.Value);
+			       && EqualityComparer<TValue>.Default.Equals(candidate, item.Value);
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
@@ -95,7 +113,7 @@ namespace Castle.Core.Core.Internal
 
 			foreach (var wrapped in dictionary)
 			{
-			    var item = new KeyValuePair<TKey, TValue>
+				var item = new KeyValuePair<TKey, TValue>
 				(
 					comparer.Unwrap(wrapped.Key),
 					wrapped.Value
@@ -163,14 +181,12 @@ namespace Castle.Core.Core.Internal
 			var removals = null as List<object>;
 
 			foreach (var key in dictionary.Keys)
-			{
 				if (comparer.Unwrap(key) == null)
 				{
 					if (removals == null)
 						removals = new List<object>();
 					removals.Add(key);
 				}
-			}
 
 			if (removals != null)
 				foreach (var key in removals)

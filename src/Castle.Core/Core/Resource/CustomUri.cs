@@ -20,106 +20,74 @@ namespace Castle.Core.Core.Resource
 	[Serializable]
 	public sealed class CustomUri
 	{
-		public static readonly String SchemeDelimiter = "://";
-		public static readonly String UriSchemeFile = "file";
-		public static readonly String UriSchemeAssembly = "assembly";
+		public static readonly string SchemeDelimiter = "://";
+		public static readonly string UriSchemeFile = "file";
+		public static readonly string UriSchemeAssembly = "assembly";
 
-		private String scheme;
-		private String host;
-		private String path;
-		private bool isUnc;
-		private bool isFile;
-		private bool isAssembly;
-
-		public CustomUri(String resourceIdentifier)
+		public CustomUri(string resourceIdentifier)
 		{
 			if (resourceIdentifier == null)
-			{
 				throw new ArgumentNullException("resourceIdentifier");
-			}
-			if (resourceIdentifier == String.Empty)
-			{
+			if (resourceIdentifier == string.Empty)
 				throw new ArgumentException("Empty resource identifier is not allowed", "resourceIdentifier");
-			}
 
 			ParseIdentifier(resourceIdentifier);
 		}
 
-		public bool IsUnc
-		{
-			get { return isUnc; }
-		}
+		public bool IsUnc { get; private set; }
 
-		public bool IsFile
-		{
-			get { return isFile; }
-		}
+		public bool IsFile { get; private set; }
 
-		public bool IsAssembly
-		{
-			get { return isAssembly; }
-		}
+		public bool IsAssembly { get; private set; }
 
-		public string Scheme
-		{
-			get { return scheme; }
-		}
+		public string Scheme { get; private set; }
 
-		public string Host
-		{
-			get { return host; }
-		}
+		public string Host { get; private set; }
 
-		public String Path
-		{
-			get { return path; }
-		}
+		public string Path { get; private set; }
 
-		private void ParseIdentifier(String identifier)
+		private void ParseIdentifier(string identifier)
 		{
-			int comma = identifier.IndexOf(':');
+			var comma = identifier.IndexOf(':');
 
 			if (comma == -1 && !(identifier[0] == '\\' && identifier[1] == '\\') && identifier[0] != '/')
-			{
 				throw new ArgumentException("Invalid Uri: no scheme delimiter found on " + identifier);
-			}
 
-			bool translateSlashes = true;
+			var translateSlashes = true;
 
 			if (identifier[0] == '\\' && identifier[1] == '\\')
 			{
 				// Unc
 
-				isUnc = true;
-				isFile = true;
-				scheme = UriSchemeFile;
+				IsUnc = true;
+				IsFile = true;
+				Scheme = UriSchemeFile;
 				translateSlashes = false;
 			}
 			else if (identifier[comma + 1] == '/' && identifier[comma + 2] == '/')
 			{
 				// Extract scheme
 
-				scheme = identifier.Substring(0, comma);
+				Scheme = identifier.Substring(0, comma);
 
-				isFile = (scheme == UriSchemeFile);
-				isAssembly = (scheme == UriSchemeAssembly);
+				IsFile = Scheme == UriSchemeFile;
+				IsAssembly = Scheme == UriSchemeAssembly;
 
 				identifier = identifier.Substring(comma + SchemeDelimiter.Length);
 			}
 			else
 			{
-				isFile = true;
-				scheme = UriSchemeFile;
+				IsFile = true;
+				Scheme = UriSchemeFile;
 			}
 
 			var sb = new StringBuilder();
-			foreach(char ch in identifier.ToCharArray())
-			{
+			foreach (var ch in identifier)
 				if (translateSlashes && (ch == '\\' || ch == '/'))
 				{
-					if (host == null && !IsFile)
+					if (Host == null && !IsFile)
 					{
-						host = sb.ToString();
+						Host = sb.ToString();
 						sb.Length = 0;
 					}
 
@@ -129,9 +97,8 @@ namespace Castle.Core.Core.Resource
 				{
 					sb.Append(ch);
 				}
-			}
 
-			path = Environment.ExpandEnvironmentVariables(sb.ToString());
+			Path = Environment.ExpandEnvironmentVariables(sb.ToString());
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		private MethodEmitter setMethod;
 
 		public PropertyEmitter(AbstractTypeEmitter parentTypeEmitter, string name, PropertyAttributes attributes,
-		                       Type propertyType, Type[] arguments)
+			Type propertyType, Type[] arguments)
 		{
 			this.parentTypeEmitter = parentTypeEmitter;
 
@@ -45,57 +45,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			get { return builder.PropertyType; }
 		}
 
-		public MethodEmitter CreateGetMethod(string name, MethodAttributes attrs, MethodInfo methodToOverride,
-		                                     params Type[] parameters)
-		{
-			if (getMethod != null)
-			{
-				throw new InvalidOperationException("A get method exists");
-			}
-
-			getMethod = new MethodEmitter(parentTypeEmitter, name, attrs, methodToOverride);
-			return getMethod;
-		}
-
-		public MethodEmitter CreateGetMethod(string name, MethodAttributes attributes, MethodInfo methodToOverride)
-		{
-			return CreateGetMethod(name, attributes, methodToOverride, Type.EmptyTypes);
-		}
-
-		public MethodEmitter CreateSetMethod(string name, MethodAttributes attrs, MethodInfo methodToOverride,
-		                                     params Type[] parameters)
-		{
-			if (setMethod != null)
-			{
-				throw new InvalidOperationException("A set method exists");
-			}
-
-			setMethod = new MethodEmitter(parentTypeEmitter, name, attrs, methodToOverride);
-			return setMethod;
-		}
-
-		public MethodEmitter CreateSetMethod(string name, MethodAttributes attributes, MethodInfo methodToOverride)
-		{
-			var method = CreateSetMethod(name, attributes, methodToOverride, Type.EmptyTypes);
-			return method;
-		}
-
-		public void DefineCustomAttribute(CustomAttributeBuilder attribute)
-		{
-			builder.SetCustomAttribute(attribute);
-		}
-
 		public void EnsureValidCodeBlock()
 		{
 			if (setMethod != null)
-			{
 				setMethod.EnsureValidCodeBlock();
-			}
 
 			if (getMethod != null)
-			{
 				getMethod.EnsureValidCodeBlock();
-			}
 		}
 
 		public void Generate()
@@ -111,6 +67,42 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 				getMethod.Generate();
 				builder.SetGetMethod(getMethod.MethodBuilder);
 			}
+		}
+
+		public MethodEmitter CreateGetMethod(string name, MethodAttributes attrs, MethodInfo methodToOverride,
+			params Type[] parameters)
+		{
+			if (getMethod != null)
+				throw new InvalidOperationException("A get method exists");
+
+			getMethod = new MethodEmitter(parentTypeEmitter, name, attrs, methodToOverride);
+			return getMethod;
+		}
+
+		public MethodEmitter CreateGetMethod(string name, MethodAttributes attributes, MethodInfo methodToOverride)
+		{
+			return CreateGetMethod(name, attributes, methodToOverride, Type.EmptyTypes);
+		}
+
+		public MethodEmitter CreateSetMethod(string name, MethodAttributes attrs, MethodInfo methodToOverride,
+			params Type[] parameters)
+		{
+			if (setMethod != null)
+				throw new InvalidOperationException("A set method exists");
+
+			setMethod = new MethodEmitter(parentTypeEmitter, name, attrs, methodToOverride);
+			return setMethod;
+		}
+
+		public MethodEmitter CreateSetMethod(string name, MethodAttributes attributes, MethodInfo methodToOverride)
+		{
+			var method = CreateSetMethod(name, attributes, methodToOverride, Type.EmptyTypes);
+			return method;
+		}
+
+		public void DefineCustomAttribute(CustomAttributeBuilder attribute)
+		{
+			builder.SetCustomAttribute(attribute);
 		}
 	}
 }

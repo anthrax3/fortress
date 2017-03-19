@@ -33,24 +33,11 @@ namespace Castle.Core.Core.Internal
 			this.comparer = comparer;
 		}
 
-		public object Wrap(TKey key)
-		{
-			return new WeakKey(key, comparer.GetHashCode(key));
-		}
-
-		public TKey Unwrap(object obj)
-		{
-			var weak = obj as WeakKey;
-			return (weak != null)
-				? (TKey) weak.Target
-				: (TKey) obj;
-		}
-
 		public int GetHashCode(object obj)
 		{
 			var weak = obj as WeakKey;
-			return (weak != null)
-				? weak    .GetHashCode()
+			return weak != null
+				? weak.GetHashCode()
 				: comparer.GetHashCode((TKey) obj);
 		}
 
@@ -59,13 +46,26 @@ namespace Castle.Core.Core.Internal
 			var keyA = Unwrap(objA);
 			var keyB = Unwrap(objB);
 
-			return (keyA != null)
-				? (keyB != null)
+			return keyA != null
+				? keyB != null
 					? comparer.Equals(keyA, keyB)
 					: false // live object cannot equal a collected object
-				: (keyB != null)
+				: keyB != null
 					? false // live object cannot equal a collected object
 					: ReferenceEquals(objA, objB);
+		}
+
+		public object Wrap(TKey key)
+		{
+			return new WeakKey(key, comparer.GetHashCode(key));
+		}
+
+		public TKey Unwrap(object obj)
+		{
+			var weak = obj as WeakKey;
+			return weak != null
+				? (TKey) weak.Target
+				: (TKey) obj;
 		}
 	}
 }

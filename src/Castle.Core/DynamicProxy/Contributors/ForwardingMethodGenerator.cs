@@ -23,23 +23,23 @@ namespace Castle.Core.DynamicProxy.Contributors
 		private readonly GetTargetReferenceDelegate getTargetReference;
 
 		public ForwardingMethodGenerator(MetaMethod method, OverrideMethodDelegate overrideMethod,
-		                                 GetTargetReferenceDelegate getTargetReference)
+			GetTargetReferenceDelegate getTargetReference)
 			: base(method, overrideMethod)
 		{
 			this.getTargetReference = getTargetReference;
 		}
 
 		protected override MethodEmitter BuildProxiedMethodBody(MethodEmitter emitter, ClassEmitter @class,
-		                                                        ProxyGenerationOptions options, INamingScope namingScope)
+			ProxyGenerationOptions options, INamingScope namingScope)
 		{
 			var targetReference = getTargetReference(@class, MethodToOverride);
 			var arguments = ArgumentsUtil.ConvertToArgumentReferenceExpression(MethodToOverride.GetParameters());
 
 			emitter.CodeBuilder.AddStatement(new ReturnStatement(
-			                                 	new MethodInvocationExpression(
-			                                 		targetReference,
-			                                 		MethodToOverride,
-			                                 		arguments) { VirtualCall = true }));
+				new MethodInvocationExpression(
+					targetReference,
+					MethodToOverride,
+					arguments) {VirtualCall = true}));
 			return emitter;
 		}
 	}

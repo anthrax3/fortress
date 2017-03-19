@@ -26,9 +26,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		public override void EnsureValidCodeBlock()
 		{
 			if (CodeBuilder.IsEmpty)
-			{
 				CodeBuilder.AddStatement(new ReturnStatement());
-			}
 		}
 	}
 }

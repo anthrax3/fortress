@@ -20,12 +20,12 @@ namespace Castle.Core.Core.Resource
 {
 	public interface IResource : IDisposable
 	{
-		String FileBasePath { get; }
+		string FileBasePath { get; }
 
 		TextReader GetStreamReader();
 
 		TextReader GetStreamReader(Encoding encoding);
 
-		IResource CreateRelative(String relativePath);
+		IResource CreateRelative(string relativePath);
 	}
 }

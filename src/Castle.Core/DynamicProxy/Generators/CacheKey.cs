@@ -20,9 +20,9 @@ namespace Castle.Core.DynamicProxy.Generators
 	[Serializable]
 	public class CacheKey
 	{
-		private readonly MemberInfo target;
 		private readonly Type[] interfaces;
 		private readonly ProxyGenerationOptions options;
+		private readonly MemberInfo target;
 		private readonly Type type;
 
 		public CacheKey(MemberInfo target, Type type, Type[] interfaces, ProxyGenerationOptions options)
@@ -42,56 +42,34 @@ namespace Castle.Core.DynamicProxy.Generators
 		{
 			var result = target.GetHashCode();
 			foreach (var inter in interfaces)
-			{
 				result += 29 + inter.GetHashCode();
-			}
 			if (options != null)
-			{
-				result = 29*result + options.GetHashCode();
-			}
+				result = 29 * result + options.GetHashCode();
 			if (type != null)
-			{
-				result = 29*result + type.GetHashCode();
-			}
+				result = 29 * result + type.GetHashCode();
 			return result;
 		}
 
 		public override bool Equals(object obj)
 		{
 			if (this == obj)
-			{
 				return true;
-			}
 
 			var cacheKey = obj as CacheKey;
 			if (cacheKey == null)
-			{
 				return false;
-			}
 
 			if (!Equals(type, cacheKey.type))
-			{
 				return false;
-			}
 			if (!Equals(target, cacheKey.target))
-			{
 				return false;
-			}
 			if (interfaces.Length != cacheKey.interfaces.Length)
-			{
 				return false;
-			}
 			for (var i = 0; i < interfaces.Length; i++)
-			{
 				if (!Equals(interfaces[i], cacheKey.interfaces[i]))
-				{
 					return false;
-				}
-			}
 			if (!Equals(options, cacheKey.options))
-			{
 				return false;
-			}
 			return true;
 		}
 	}

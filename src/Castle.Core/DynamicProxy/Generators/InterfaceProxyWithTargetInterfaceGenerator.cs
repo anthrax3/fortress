@@ -47,7 +47,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			var contributor = new InterfaceProxyWithTargetInterfaceTargetContributor(
 				proxyTargetType,
 				AllowChangeTarget,
-				namingScope) { Logger = Logger };
+				namingScope) {Logger = Logger};
 			foreach (var @interface in targetType.GetAllInterfaces())
 			{
 				contributor.AddInterfaceToProxy(@interface);
@@ -61,7 +61,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			INamingScope namingScope)
 		{
 			return new InterfaceProxyWithOptionalTargetContributor(namingScope, GetTargetExpression, GetTarget)
-			{ Logger = Logger };
+				{Logger = Logger};
 		}
 
 		private Reference GetTarget(ClassEmitter @class, MethodInfo method)

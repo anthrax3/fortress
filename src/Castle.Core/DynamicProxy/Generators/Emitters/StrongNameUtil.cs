@@ -41,6 +41,8 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			CanStrongNameAssembly = true;
 		}
 
+		public static bool CanStrongNameAssembly { get; set; }
+
 		public static bool IsAssemblySigned(this Assembly assembly)
 		{
 			lock (lockObject)
@@ -68,13 +70,9 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		public static bool IsAnyTypeFromUnsignedAssembly(Type baseType, IEnumerable<Type> interfaces)
 		{
 			if (baseType != null && baseType.GetTypeInfo().Assembly.IsAssemblySigned() == false)
-			{
 				return true;
-			}
 
 			return IsAnyTypeFromUnsignedAssembly(interfaces);
 		}
-
-		public static bool CanStrongNameAssembly { get; set; }
 	}
 }

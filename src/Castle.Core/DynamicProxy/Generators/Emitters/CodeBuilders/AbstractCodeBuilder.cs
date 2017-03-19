@@ -21,29 +21,21 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
 {
 	public abstract class AbstractCodeBuilder
 	{
-		private readonly ILGenerator generator;
 		private readonly List<Reference> ilmarkers;
 		private readonly List<Statement> stmts;
-		private bool isEmpty;
 
 		protected AbstractCodeBuilder(ILGenerator generator)
 		{
-			this.generator = generator;
+			Generator = generator;
 			stmts = new List<Statement>();
 			ilmarkers = new List<Reference>();
-			isEmpty = true;
+			IsEmpty = true;
 		}
 
 		//NOTE: should we make this obsolete if no one is using it?
-		public /*protected internal*/ ILGenerator Generator
-		{
-			get { return generator; }
-		}
+		public /*protected internal*/ ILGenerator Generator { get; }
 
-		internal bool IsEmpty
-		{
-			get { return isEmpty; }
-		}
+		internal bool IsEmpty { get; private set; }
 
 		public AbstractCodeBuilder AddExpression(Expression expression)
 		{
@@ -66,20 +58,16 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
 
 		public /*protected internal*/ void SetNonEmpty()
 		{
-			isEmpty = false;
+			IsEmpty = false;
 		}
 
 		internal void Generate(IMemberEmitter member, ILGenerator il)
 		{
 			foreach (var local in ilmarkers)
-			{
 				local.Generate(il);
-			}
 
 			foreach (var stmt in stmts)
-			{
 				stmt.Emit(member, il);
-			}
 		}
 	}
 }

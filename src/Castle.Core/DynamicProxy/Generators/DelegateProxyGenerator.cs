@@ -38,12 +38,12 @@ namespace Castle.Core.DynamicProxy.Generators
 		}
 
 		protected virtual IEnumerable<Type> GetTypeImplementerMapping(out IEnumerable<ITypeContributor> contributors,
-		                                                              INamingScope namingScope)
+			INamingScope namingScope)
 		{
 			var methodsToSkip = new List<MethodInfo>();
 			var proxyInstance = new ClassProxyInstanceContributor(targetType, methodsToSkip, Type.EmptyTypes,
-			                                                      ProxyTypeConstants.ClassWithTarget);
-			var proxyTarget = new DelegateProxyTargetContributor(targetType, namingScope) { Logger = Logger };
+				ProxyTypeConstants.ClassWithTarget);
+			var proxyTarget = new DelegateProxyTargetContributor(targetType, namingScope) {Logger = Logger};
 			IDictionary<Type, ITypeContributor> typeImplementerMapping = new Dictionary<Type, ITypeContributor>();
 
 			// Order of interface precedence:
@@ -52,9 +52,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			// 3. then additional interfaces - we support none so we do nothing
 			// 4. plus special interfaces
 			if (targetType.IsSerializable)
-			{
 				AddMappingForISerializable(typeImplementerMapping, proxyInstance);
-			}
 			AddMappingNoCheck(typeof(IProxyTargetAccessor), proxyInstance, typeImplementerMapping);
 
 			contributors = new List<ITypeContributor>
@@ -80,9 +78,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			var model = new MetaType();
 			// Collect methods
 			foreach (var contributor in contributors)
-			{
 				contributor.CollectElementsToProxy(ProxyGenerationOptions.Hook, model);
-			}
 			ProxyGenerationOptions.Hook.MethodsInspected();
 
 			var emitter = BuildClassEmitter(name, typeof(object), implementedInterfaces);
@@ -94,21 +90,17 @@ namespace Castle.Core.DynamicProxy.Generators
 			var cctor = GenerateStaticConstructor(emitter);
 
 			var targetField = CreateTargetField(emitter);
-			var constructorArguments = new List<FieldReference> { targetField };
+			var constructorArguments = new List<FieldReference> {targetField};
 
 			foreach (var contributor in contributors)
-			{
 				contributor.Generate(emitter, ProxyGenerationOptions);
-			}
 
 			// constructor arguments
 			var interceptorsField = emitter.GetField("__interceptors");
 			constructorArguments.Add(interceptorsField);
 			var selector = emitter.GetField("__selector");
 			if (selector != null)
-			{
 				constructorArguments.Add(selector);
-			}
 
 			GenerateConstructor(emitter, null, constructorArguments.ToArray());
 			GenerateParameterlessConstructor(emitter, targetType, interceptorsField);

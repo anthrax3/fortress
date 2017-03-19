@@ -20,10 +20,10 @@ using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
 
 namespace Castle.Core.DynamicProxy.Contributors
 {
-	class ClassProxyWithTargetInstanceContributor : ClassProxyInstanceContributor
+	internal class ClassProxyWithTargetInstanceContributor : ClassProxyInstanceContributor
 	{
 		public ClassProxyWithTargetInstanceContributor(Type targetType, IList<MethodInfo> methodsToSkip,
-		                                               Type[] interfaces, string typeId)
+			Type[] interfaces, string typeId)
 			: base(targetType, methodsToSkip, interfaces, typeId)
 		{
 		}

@@ -27,9 +27,7 @@ namespace Castle.Core.Core.Configuration.Xml
 		public static string GetConfigValue(string value)
 		{
 			if (value == string.Empty)
-			{
 				return null;
-			}
 			return value;
 		}
 
@@ -39,25 +37,15 @@ namespace Castle.Core.Core.Configuration.Xml
 
 			var configValue = new StringBuilder();
 			if (node.HasChildNodes)
-			{
 				foreach (XmlNode child in node.ChildNodes)
-				{
 					if (IsTextNode(child))
-					{
 						configValue.Append(child.Value);
-					}
 					else if (child.NodeType == XmlNodeType.Element)
-					{
 						configChilds.Add(GetDeserializedNode(child));
-					}
-				}
-			}
 
 			var config = new MutableConfiguration(node.Name, GetConfigValue(configValue.ToString()));
 			foreach (XmlAttribute attribute in node.Attributes)
-			{
 				config.Attributes.Add(attribute.Name, attribute.Value);
-			}
 
 			config.Children.AddRange(configChilds);
 

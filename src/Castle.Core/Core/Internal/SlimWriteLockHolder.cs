@@ -20,30 +20,25 @@ namespace Castle.Core.Core.Internal
 	{
 		private readonly ReaderWriterLockSlim locker;
 
-		private bool lockAcquired;
-
 		public SlimWriteLockHolder(ReaderWriterLockSlim locker, bool waitForLock)
 		{
 			this.locker = locker;
-			if(waitForLock)
+			if (waitForLock)
 			{
 				locker.EnterWriteLock();
-				lockAcquired = true;
+				LockAcquired = true;
 				return;
 			}
-			lockAcquired = locker.TryEnterWriteLock(0);
+			LockAcquired = locker.TryEnterWriteLock(0);
 		}
 
 		public void Dispose()
 		{
-			if(!LockAcquired) return;
+			if (!LockAcquired) return;
 			locker.ExitWriteLock();
-			lockAcquired = false;
+			LockAcquired = false;
 		}
 
-		public bool LockAcquired
-		{
-			get { return lockAcquired; }
-		}
+		public bool LockAcquired { get; private set; }
 	}
 }

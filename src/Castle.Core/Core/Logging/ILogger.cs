@@ -28,76 +28,76 @@ namespace Castle.Core.Core.Logging
 
 		bool IsWarnEnabled { get; }
 
-		ILogger CreateChildLogger(String loggerName);
+		ILogger CreateChildLogger(string loggerName);
 
-		void Debug(String message);
+		void Debug(string message);
 
 		void Debug(Func<string> messageFactory);
 
-		void Debug(String message, Exception exception);
+		void Debug(string message, Exception exception);
 
-		void DebugFormat(String format, params Object[] args);
+		void DebugFormat(string format, params object[] args);
 
-		void DebugFormat(Exception exception, String format, params Object[] args);
+		void DebugFormat(Exception exception, string format, params object[] args);
 
-		void DebugFormat(IFormatProvider formatProvider, String format, params Object[] args);
+		void DebugFormat(IFormatProvider formatProvider, string format, params object[] args);
 
-		void DebugFormat(Exception exception, IFormatProvider formatProvider, String format, params Object[] args);
+		void DebugFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
-		void Error(String message);
+		void Error(string message);
 
 		void Error(Func<string> messageFactory);
 
-		void Error(String message, Exception exception);
+		void Error(string message, Exception exception);
 
-		void ErrorFormat(String format, params Object[] args);
+		void ErrorFormat(string format, params object[] args);
 
-		void ErrorFormat(Exception exception, String format, params Object[] args);
+		void ErrorFormat(Exception exception, string format, params object[] args);
 
-		void ErrorFormat(IFormatProvider formatProvider, String format, params Object[] args);
+		void ErrorFormat(IFormatProvider formatProvider, string format, params object[] args);
 
-		void ErrorFormat(Exception exception, IFormatProvider formatProvider, String format, params Object[] args);
+		void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
-		void Fatal(String message);
+		void Fatal(string message);
 
 		void Fatal(Func<string> messageFactory);
 
-		void Fatal(String message, Exception exception);
+		void Fatal(string message, Exception exception);
 
-		void FatalFormat(String format, params Object[] args);
+		void FatalFormat(string format, params object[] args);
 
-		void FatalFormat(Exception exception, String format, params Object[] args);
+		void FatalFormat(Exception exception, string format, params object[] args);
 
-		void FatalFormat(IFormatProvider formatProvider, String format, params Object[] args);
+		void FatalFormat(IFormatProvider formatProvider, string format, params object[] args);
 
-		void FatalFormat(Exception exception, IFormatProvider formatProvider, String format, params Object[] args);
+		void FatalFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
-		void Info(String message);
+		void Info(string message);
 
 		void Info(Func<string> messageFactory);
 
-		void Info(String message, Exception exception);
+		void Info(string message, Exception exception);
 
-		void InfoFormat(String format, params Object[] args);
+		void InfoFormat(string format, params object[] args);
 
-		void InfoFormat(Exception exception, String format, params Object[] args);
+		void InfoFormat(Exception exception, string format, params object[] args);
 
-		void InfoFormat(IFormatProvider formatProvider, String format, params Object[] args);
+		void InfoFormat(IFormatProvider formatProvider, string format, params object[] args);
 
-		void InfoFormat(Exception exception, IFormatProvider formatProvider, String format, params Object[] args);
+		void InfoFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
-		void Warn(String message);
+		void Warn(string message);
 
 		void Warn(Func<string> messageFactory);
 
-		void Warn(String message, Exception exception);
+		void Warn(string message, Exception exception);
 
-		void WarnFormat(String format, params Object[] args);
+		void WarnFormat(string format, params object[] args);
 
-		void WarnFormat(Exception exception, String format, params Object[] args);
+		void WarnFormat(Exception exception, string format, params object[] args);
 
-		void WarnFormat(IFormatProvider formatProvider, String format, params Object[] args);
+		void WarnFormat(IFormatProvider formatProvider, string format, params object[] args);
 
-		void WarnFormat(Exception exception, IFormatProvider formatProvider, String format, params Object[] args);
+		void WarnFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 	}
 }

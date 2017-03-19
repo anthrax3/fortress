@@ -25,36 +25,23 @@ namespace Castle.Core.Core.Smtp
 {
 	public class DefaultSmtpSender : IEmailSender
 	{
-		private bool asyncSend;
-		private readonly string hostname;
-		private int port = 25;
-		private int? timeout;
-		private bool useSsl;
 		private readonly NetworkCredential credentials = new NetworkCredential();
+		private int? timeout;
 
-		public DefaultSmtpSender() { }
+		public DefaultSmtpSender()
+		{
+		}
 
 		public DefaultSmtpSender(string hostname)
 		{
-			this.hostname = hostname;
+			Hostname = hostname;
 		}
 
-		public int Port
-		{
-			get { return port; }
-			set { port = value; }
-		}
+		public int Port { get; set; } = 25;
 
-		public string Hostname
-		{
-			get { return hostname; }
-		}
+		public string Hostname { get; }
 
-		public bool AsyncSend
-		{
-			get { return asyncSend; }
-			set { asyncSend = value; }
-		}
+		public bool AsyncSend { get; set; }
 
 		public int Timeout
 		{
@@ -62,13 +49,32 @@ namespace Castle.Core.Core.Smtp
 			set { timeout = value; }
 		}
 
-		public bool UseSsl
+		public bool UseSsl { get; set; }
+
+		public string Domain
 		{
-			get { return useSsl; }
-			set { useSsl = value; }
+			get { return credentials.Domain; }
+			set { credentials.Domain = value; }
 		}
 
-		public void Send(String from, String to, String subject, String messageText)
+		public string UserName
+		{
+			get { return credentials.UserName; }
+			set { credentials.UserName = value; }
+		}
+
+		public string Password
+		{
+			get { return credentials.Password; }
+			set { credentials.Password = value; }
+		}
+
+		private bool HasCredentials
+		{
+			get { return !string.IsNullOrEmpty(credentials.UserName); }
+		}
+
+		public void Send(string from, string to, string subject, string messageText)
 		{
 			if (from == null) throw new ArgumentNullException("from");
 			if (to == null) throw new ArgumentNullException("to");
@@ -83,11 +89,17 @@ namespace Castle.Core.Core.Smtp
 			InternalSend(message);
 		}
 
+		public void Send(IEnumerable<MailMessage> messages)
+		{
+			foreach (var message in messages)
+				Send(message);
+		}
+
 		private void InternalSend(MailMessage message)
 		{
 			if (message == null) throw new ArgumentNullException("message");
 
-			if (asyncSend)
+			if (AsyncSend)
 			{
 				// The MailMessage must be disposed after sending the email.
 				// The code creates a delegate for deleting the mail and adds
@@ -95,12 +107,12 @@ namespace Castle.Core.Core.Smtp
 				// After the mail is sent, the message is disposed and the
 				// eventHandler removed from the smtpClient.
 
-				SmtpClient smtpClient = CreateSmtpClient();
-				Guid msgGuid = new Guid();
+				var smtpClient = CreateSmtpClient();
+				var msgGuid = new Guid();
 				SendCompletedEventHandler sceh = null;
 				sceh = delegate(object sender, AsyncCompletedEventArgs e)
 				{
-					if (msgGuid == (Guid)e.UserState)
+					if (msgGuid == (Guid) e.UserState)
 						message.Dispose();
 					// The handler itself, cannot be null, test omitted
 					smtpClient.SendCompleted -= sceh;
@@ -112,37 +124,11 @@ namespace Castle.Core.Core.Smtp
 			{
 				using (message)
 				{
-					SmtpClient smtpClient = CreateSmtpClient();
+					var smtpClient = CreateSmtpClient();
 
 					smtpClient.Send(message);
 				}
 			}
-		}
-
-		public void Send(IEnumerable<MailMessage> messages)
-		{
-			foreach (MailMessage message in messages)
-			{
-				Send(message);
-			}
-		}
-
-		public String Domain
-		{
-			get { return credentials.Domain; }
-			set { credentials.Domain = value; }
-		}
-
-		public String UserName
-		{
-			get { return credentials.UserName; }
-			set { credentials.UserName = value; }
-		}
-
-		public String Password
-		{
-			get { return credentials.Password; }
-			set { credentials.Password = value; }
 		}
 
 		protected virtual void Configure(SmtpClient smtpClient)
@@ -150,36 +136,22 @@ namespace Castle.Core.Core.Smtp
 			smtpClient.Credentials = null;
 
 			if (CanAccessCredentials() && HasCredentials)
-			{
 				smtpClient.Credentials = credentials;
-			}
 
 			if (timeout.HasValue)
-			{
 				smtpClient.Timeout = timeout.Value;
-			}
 
-			if (useSsl)
-			{
-				smtpClient.EnableSsl = useSsl;
-			}
-		}
-
-		private bool HasCredentials
-		{
-			get { return !string.IsNullOrEmpty(credentials.UserName); }
+			if (UseSsl)
+				smtpClient.EnableSsl = UseSsl;
 		}
 
 		private SmtpClient CreateSmtpClient()
 		{
-			if (string.IsNullOrEmpty(hostname))
-			{
-				// No hostname configured, use the settings provided in system.net.smtp (SmtpClient default behavior)
+			if (string.IsNullOrEmpty(Hostname))
 				return new SmtpClient();
-			}
 
 			// A hostname is provided - init and configure using configured settings
-			var smtpClient = new SmtpClient(hostname, port);
+			var smtpClient = new SmtpClient(Hostname, Port);
 			Configure(smtpClient);
 			return smtpClient;
 		}
@@ -190,4 +162,3 @@ namespace Castle.Core.Core.Smtp
 		}
 	}
 }
-

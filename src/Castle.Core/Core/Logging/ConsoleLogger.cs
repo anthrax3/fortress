@@ -20,41 +20,37 @@ namespace Castle.Core.Core.Logging
 	[Serializable]
 	public class ConsoleLogger : LevelFilteredLogger
 	{
-		public ConsoleLogger() : this(String.Empty, LoggerLevel.Debug)
+		public ConsoleLogger() : this(string.Empty, LoggerLevel.Debug)
 		{
 		}
 
-		public ConsoleLogger(LoggerLevel logLevel) : this(String.Empty, logLevel)
+		public ConsoleLogger(LoggerLevel logLevel) : this(string.Empty, logLevel)
 		{
 		}
 
-		public ConsoleLogger(String name) : this(name, LoggerLevel.Debug)
+		public ConsoleLogger(string name) : this(name, LoggerLevel.Debug)
 		{
 		}
 
-		public ConsoleLogger(String name, LoggerLevel logLevel) : base(name, logLevel)
+		public ConsoleLogger(string name, LoggerLevel logLevel) : base(name, logLevel)
 		{
 		}
 
-		protected override void Log(LoggerLevel loggerLevel, String loggerName, String message, Exception exception)
+		protected override void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception)
 		{
 			Console.Out.WriteLine("[{0}] '{1}' {2}", loggerLevel, loggerName, message);
 
 			if (exception != null)
-			{
 				Console.Out.WriteLine("[{0}] '{1}' {2}: {3} {4}", loggerLevel, loggerName, exception.GetType().FullName,
-				                      exception.Message, exception.StackTrace);
-			}
+					exception.Message, exception.StackTrace);
 		}
 
 		public override ILogger CreateChildLogger(string loggerName)
 		{
 			if (loggerName == null)
-			{
 				throw new ArgumentNullException("loggerName", "To create a child logger you must supply a non null name");
-			}
 
-			return new ConsoleLogger(String.Format(CultureInfo.CurrentCulture, "{0}.{1}", Name, loggerName), Level);
+			return new ConsoleLogger(string.Format(CultureInfo.CurrentCulture, "{0}.{1}", Name, loggerName), Level);
 		}
 	}
 }

@@ -27,8 +27,8 @@ namespace Castle.Core.DynamicProxy.Internal
 
 		public static bool IsInternal(this MethodBase method)
 		{
-			return method.IsAssembly || (method.IsFamilyAndAssembly
-			                             && !method.IsFamilyOrAssembly);
+			return method.IsAssembly || method.IsFamilyAndAssembly
+			       && !method.IsFamilyOrAssembly;
 		}
 
 		public static bool IsInternalToDynamicProxy(this Assembly asm)
@@ -36,16 +36,12 @@ namespace Castle.Core.DynamicProxy.Internal
 			using (var locker = internalsToDynProxyLock.ForReadingUpgradeable())
 			{
 				if (internalsToDynProxy.ContainsKey(asm))
-				{
 					return internalsToDynProxy[asm];
-				}
 
 				locker.Upgrade();
 
 				if (internalsToDynProxy.ContainsKey(asm))
-				{
 					return internalsToDynProxy[asm];
-				}
 
 				var internalsVisibleTo = asm.GetCustomAttributes<InternalsVisibleToAttribute>();
 				var found = internalsVisibleTo.Any(VisibleToDynamicProxy);
@@ -64,19 +60,13 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			// Accessibility supported by the full framework and CoreCLR
 			if (method.IsPublic || method.IsFamily || method.IsFamilyOrAssembly)
-			{
 				return true;
-			}
 
 			if (method.IsFamilyAndAssembly)
-			{
 				return true;
-			}
 
 			if (method.DeclaringType.GetTypeInfo().Assembly.IsInternalToDynamicProxy() && method.IsAssembly)
-			{
 				return true;
-			}
 			return false;
 		}
 	}

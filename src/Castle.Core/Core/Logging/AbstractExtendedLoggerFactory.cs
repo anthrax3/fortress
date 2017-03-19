@@ -22,9 +22,7 @@ namespace Castle.Core.Core.Logging
 		public virtual IExtendedLogger Create(Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			return Create(type.FullName);
 		}
@@ -34,9 +32,7 @@ namespace Castle.Core.Core.Logging
 		public virtual IExtendedLogger Create(Type type, LoggerLevel level)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			return Create(type.FullName, level);
 		}
@@ -73,7 +69,7 @@ namespace Castle.Core.Core.Logging
 			}
 			else
 			{
-				string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 				result = new FileInfo(Path.Combine(baseDirectory, fileName));
 			}
 

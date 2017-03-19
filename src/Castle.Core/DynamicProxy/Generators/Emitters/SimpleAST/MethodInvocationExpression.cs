@@ -52,18 +52,12 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			ArgumentsUtil.EmitLoadOwnerAndReference(owner, gen);
 
 			foreach (var exp in args)
-			{
 				exp.Emit(member, gen);
-			}
 
 			if (VirtualCall)
-			{
 				gen.Emit(OpCodes.Callvirt, method);
-			}
 			else
-			{
 				gen.Emit(OpCodes.Call, method);
-			}
 		}
 	}
 }

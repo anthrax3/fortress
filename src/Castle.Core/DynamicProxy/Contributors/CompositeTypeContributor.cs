@@ -25,25 +25,19 @@ namespace Castle.Core.DynamicProxy.Contributors
 {
 	public abstract class CompositeTypeContributor : ITypeContributor
 	{
-		protected readonly INamingScope namingScope;
+		private readonly ICollection<MetaEvent> events = new TypeElementCollection<MetaEvent>();
 
 		protected readonly ICollection<Type> interfaces = new HashSet<Type>();
-		
-		private ILogger logger = NullLogger.Instance;
-		private readonly ICollection<MetaProperty> properties = new TypeElementCollection<MetaProperty>();
-		private readonly ICollection<MetaEvent> events = new TypeElementCollection<MetaEvent>();
 		private readonly ICollection<MetaMethod> methods = new TypeElementCollection<MetaMethod>();
+		protected readonly INamingScope namingScope;
+		private readonly ICollection<MetaProperty> properties = new TypeElementCollection<MetaProperty>();
 
 		protected CompositeTypeContributor(INamingScope namingScope)
 		{
 			this.namingScope = namingScope;
 		}
 
-		public ILogger Logger
-		{
-			get { return logger; }
-			set { logger = value; }
-		}
+		public ILogger Logger { get; set; } = NullLogger.Instance;
 
 		public void CollectElementsToProxy(IProxyGenerationHook hook, MetaType model)
 		{
@@ -67,40 +61,34 @@ namespace Castle.Core.DynamicProxy.Contributors
 			}
 		}
 
-		protected abstract IEnumerable<MembersCollector> CollectElementsToProxyInternal(IProxyGenerationHook hook);
-
 		public virtual void Generate(ClassEmitter @class, ProxyGenerationOptions options)
 		{
 			foreach (var method in methods)
 			{
 				if (!method.Standalone)
-				{
 					continue;
-				}
 
 				ImplementMethod(method,
-				                @class,
-				                options,
-				                @class.CreateMethod);
+					@class,
+					options,
+					@class.CreateMethod);
 			}
 
 			foreach (var property in properties)
-			{
 				ImplementProperty(@class, property, options);
-			}
 
 			foreach (var @event in events)
-			{
 				ImplementEvent(@class, @event, options);
-			}
 		}
+
+		protected abstract IEnumerable<MembersCollector> CollectElementsToProxyInternal(IProxyGenerationHook hook);
 
 		public void AddInterfaceToProxy(Type @interface)
 		{
 			Debug.Assert(@interface != null, "@interface == null", "Shouldn't be adding empty interfaces...");
 			Debug.Assert(@interface.GetTypeInfo().IsInterface, "@interface.IsInterface", "Should be adding interfaces only...");
 			Debug.Assert(!interfaces.Contains(@interface), "!interfaces.ContainsKey(@interface)",
-			             "Shouldn't be adding same interface twice...");
+				"Shouldn't be adding same interface twice...");
 
 			interfaces.Add(@interface);
 		}
@@ -116,34 +104,26 @@ namespace Castle.Core.DynamicProxy.Contributors
 		{
 			property.BuildPropertyEmitter(emitter);
 			if (property.CanRead)
-			{
 				ImplementMethod(property.Getter, emitter, options, property.Emitter.CreateGetMethod);
-			}
 
 			if (property.CanWrite)
-			{
 				ImplementMethod(property.Setter, emitter, options, property.Emitter.CreateSetMethod);
-			}
 		}
 
 		protected abstract MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod);
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod);
 
 		private void ImplementMethod(MetaMethod method, ClassEmitter @class, ProxyGenerationOptions options,
-		                             OverrideMethodDelegate overrideMethod)
+			OverrideMethodDelegate overrideMethod)
 		{
 			{
 				var generator = GetMethodGenerator(method, @class, options, overrideMethod);
 				if (generator == null)
-				{
 					return;
-				}
 				var proxyMethod = generator.Generate(@class, options, namingScope);
 				foreach (var attribute in method.Method.GetNonInheritableAttributes())
-				{
 					proxyMethod.DefineCustomAttribute(attribute.Builder);
-				}
 			}
 		}
 	}

@@ -21,28 +21,26 @@ using Castle.Core.DynamicProxy.Internal;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	internal delegate GenericTypeParameterBuilder[] ApplyGenArgs(String[] argumentNames);
-
 	internal class GenericUtil
 	{
 		public static GenericTypeParameterBuilder[] CopyGenericArguments(
 			MethodInfo methodToCopyGenericsFrom,
 			TypeBuilder builder,
-			Dictionary<String, GenericTypeParameterBuilder> name2GenericType)
+			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
 		{
 			return
 				CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType,
-				                     builder.DefineGenericParameters);
+					builder.DefineGenericParameters);
 		}
 
 		public static GenericTypeParameterBuilder[] CopyGenericArguments(
 			MethodInfo methodToCopyGenericsFrom,
 			MethodBuilder builder,
-			Dictionary<String, GenericTypeParameterBuilder> name2GenericType)
+			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
 		{
 			return
 				CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType,
-				                     builder.DefineGenericParameters);
+					builder.DefineGenericParameters);
 		}
 
 		public static Type ExtractCorrectType(Type paramType, Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
@@ -57,20 +55,14 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 				{
 					GenericTypeParameterBuilder genericType;
 					if (name2GenericType.TryGetValue(underlyingType.Name, out genericType) == false)
-					{
 						return paramType;
-					}
 
 					if (rank == 1)
-					{
 						return genericType.MakeArrayType();
-					}
 					return genericType.MakeArrayType(rank);
 				}
 				if (rank == 1)
-				{
 					return underlyingType.MakeArrayType();
-				}
 				return underlyingType.MakeArrayType(rank);
 			}
 
@@ -78,9 +70,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			{
 				GenericTypeParameterBuilder value;
 				if (name2GenericType.TryGetValue(paramType.Name, out value))
-				{
 					return value.AsType();
-				}
 			}
 
 			return paramType;
@@ -88,7 +78,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 
 		public static Type[] ExtractParametersTypes(
 			ParameterInfo[] baseMethodParameters,
-			Dictionary<String, GenericTypeParameterBuilder> name2GenericType)
+			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
 		{
 			var newParameters = new Type[baseMethodParameters.Length];
 
@@ -106,15 +96,11 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		public static Dictionary<string, GenericTypeParameterBuilder> GetGenericArgumentsMap(AbstractTypeEmitter parentEmitter)
 		{
 			if (parentEmitter.GenericTypeParams == null || parentEmitter.GenericTypeParams.Length == 0)
-			{
 				return new Dictionary<string, GenericTypeParameterBuilder>(0);
-			}
 
 			var name2GenericType = new Dictionary<string, GenericTypeParameterBuilder>(parentEmitter.GenericTypeParams.Length);
 			foreach (var genType in parentEmitter.GenericTypeParams)
-			{
 				name2GenericType.Add(genType.Name, genType);
-			}
 			return name2GenericType;
 		}
 
@@ -127,22 +113,18 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 				var genericArgumentsOfConstraint = constraint.GetGenericArguments();
 
 				for (var i = 0; i < genericArgumentsOfConstraint.Length; ++i)
-				{
 					genericArgumentsOfConstraint[i] =
 						AdjustConstraintToNewGenericParameters(genericArgumentsOfConstraint[i], methodToCopyGenericsFrom,
-						                                       originalGenericParameters, newGenericParameters);
-				}
+							originalGenericParameters, newGenericParameters);
 				return constraint.GetGenericTypeDefinition().MakeGenericType(genericArgumentsOfConstraint);
 			}
-			else if (constraint.GetTypeInfo().IsGenericParameter)
-			{
-				// Determine the source of the parameter
+			if (constraint.GetTypeInfo().IsGenericParameter)
 				if (constraint.GetTypeInfo().DeclaringMethod != null)
 				{
 					// constraint comes from the method
 					var index = Array.IndexOf(originalGenericParameters, constraint);
 					Trace.Assert(index != -1,
-					             "When a generic method parameter has a constraint on another method parameter, both parameters must be declared on the same method.");
+						"When a generic method parameter has a constraint on another method parameter, both parameters must be declared on the same method.");
 					return newGenericParameters[index].AsType();
 				}
 				else // parameter from surrounding type
@@ -150,46 +132,38 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 					Trace.Assert(constraint.DeclaringType.GetTypeInfo().IsGenericTypeDefinition);
 					Trace.Assert(methodToCopyGenericsFrom.DeclaringType.GetTypeInfo().IsGenericType
 					             && constraint.DeclaringType == methodToCopyGenericsFrom.DeclaringType.GetGenericTypeDefinition(),
-					             "When a generic method parameter has a constraint on a generic type parameter, the generic type must be the declaring typer of the method.");
+						"When a generic method parameter has a constraint on a generic type parameter, the generic type must be the declaring typer of the method.");
 
 					var index = Array.IndexOf(constraint.DeclaringType.GetGenericArguments(), constraint);
 					Trace.Assert(index != -1, "The generic parameter comes from the given type.");
 					return methodToCopyGenericsFrom.DeclaringType.GetGenericArguments()[index]; // these are the actual, concrete types
 				}
-			}
-			else
-			{
-				return constraint;
-			}
+			return constraint;
 		}
 
 		private static Type[] AdjustGenericConstraints(MethodInfo methodToCopyGenericsFrom,
-		                                               GenericTypeParameterBuilder[] newGenericParameters,
-		                                               Type[] originalGenericArguments,
-		                                               Type[] constraints)
+			GenericTypeParameterBuilder[] newGenericParameters,
+			Type[] originalGenericArguments,
+			Type[] constraints)
 		{
 			// HACK: the mono runtime has a strange bug where assigning to the constraints
 			//       parameter and returning it throws, so we'll create a new array.
 			//       System.ArrayTypeMismatchException : Source array type cannot be assigned to destination array type.
-			Type[] adjustedConstraints = new Type[constraints.Length];
+			var adjustedConstraints = new Type[constraints.Length];
 			for (var i = 0; i < constraints.Length; i++)
-			{
 				adjustedConstraints[i] = AdjustConstraintToNewGenericParameters(constraints[i],
 					methodToCopyGenericsFrom, originalGenericArguments, newGenericParameters);
-			}
 			return adjustedConstraints;
 		}
 
 		private static GenericTypeParameterBuilder[] CopyGenericArguments(
 			MethodInfo methodToCopyGenericsFrom,
-			Dictionary<String, GenericTypeParameterBuilder> name2GenericType,
+			Dictionary<string, GenericTypeParameterBuilder> name2GenericType,
 			ApplyGenArgs genericParameterGenerator)
 		{
 			var originalGenericArguments = methodToCopyGenericsFrom.GetGenericArguments();
 			if (originalGenericArguments.Length == 0)
-			{
 				return null;
-			}
 
 			var argumentNames = GetArgumentNames(originalGenericArguments);
 			var newGenericParameters = genericParameterGenerator(argumentNames);
@@ -219,22 +193,18 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		}
 
 		private static void CopyNonInheritableAttributes(GenericTypeParameterBuilder newGenericParameter,
-		                                                 Type originalGenericArgument)
+			Type originalGenericArgument)
 		{
 			foreach (var attribute in originalGenericArgument.GetTypeInfo().GetNonInheritableAttributes())
-			{
 				newGenericParameter.SetCustomAttribute(attribute.Builder);
-			}
 		}
 
 		private static string[] GetArgumentNames(Type[] originalGenericArguments)
 		{
-			var argumentNames = new String[originalGenericArguments.Length];
+			var argumentNames = new string[originalGenericArguments.Length];
 
 			for (var i = 0; i < argumentNames.Length; i++)
-			{
 				argumentNames[i] = originalGenericArguments[i].Name;
-			}
 			return argumentNames;
 		}
 	}

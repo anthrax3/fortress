@@ -27,6 +27,37 @@ namespace Castle.Core.Core
 			this.dictionary = dictionary;
 		}
 
+		public object this[object key]
+		{
+			get { return dictionary[key]; }
+			set { dictionary[key] = value; }
+		}
+
+		public ICollection Keys
+		{
+			get { return dictionary.Keys; }
+		}
+
+		public ICollection Values
+		{
+			get { return dictionary.Values; }
+		}
+
+		public bool IsFixedSize
+		{
+			get { return dictionary.IsFixedSize; }
+		}
+
+		public object SyncRoot
+		{
+			get { return dictionary.SyncRoot; }
+		}
+
+		public bool IsSynchronized
+		{
+			get { return dictionary.IsSynchronized; }
+		}
+
 		bool IDictionary<string, object>.ContainsKey(string key)
 		{
 			return dictionary.Contains(key);
@@ -50,10 +81,7 @@ namespace Castle.Core.Core
 				value = dictionary[key];
 				return true;
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 
 		object IDictionary<string, object>.this[string key]
@@ -66,7 +94,7 @@ namespace Castle.Core.Core
 		{
 			get
 			{
-				string[] keys = new string[Count];
+				var keys = new string[Count];
 				dictionary.Keys.CopyTo(keys, 0);
 				return keys;
 			}
@@ -76,7 +104,7 @@ namespace Castle.Core.Core
 		{
 			get
 			{
-				object[] values = new object[Count];
+				var values = new object[Count];
 				dictionary.Values.CopyTo(values, 0);
 				return values;
 			}
@@ -107,6 +135,26 @@ namespace Castle.Core.Core
 			return new EnumeratorAdapter(this);
 		}
 
+		public void Clear()
+		{
+			dictionary.Clear();
+		}
+
+		public bool IsReadOnly
+		{
+			get { return dictionary.IsReadOnly; }
+		}
+
+		public int Count
+		{
+			get { return dictionary.Count; }
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return ((IEnumerable) dictionary).GetEnumerator();
+		}
+
 		public bool Contains(object key)
 		{
 			return dictionary.Contains(key);
@@ -117,40 +165,9 @@ namespace Castle.Core.Core
 			dictionary.Add(key, value);
 		}
 
-		public void Clear()
-		{
-			dictionary.Clear();
-		}
-
 		public void Remove(object key)
 		{
 			dictionary.Remove(key);
-		}
-
-		public object this[object key]
-		{
-			get { return dictionary[key]; }
-			set { dictionary[key] = value; }
-		}
-
-		public ICollection Keys
-		{
-			get { return dictionary.Keys; }
-		}
-
-		public ICollection Values
-		{
-			get { return dictionary.Values; }
-		}
-
-		public bool IsReadOnly
-		{
-			get { return dictionary.IsReadOnly; }
-		}
-
-		public bool IsFixedSize
-		{
-			get { return dictionary.IsFixedSize; }
 		}
 
 		public void CopyTo(Array array, int index)
@@ -158,32 +175,12 @@ namespace Castle.Core.Core
 			dictionary.CopyTo(array, index);
 		}
 
-		public int Count
-		{
-			get { return dictionary.Count; }
-		}
-
-		public object SyncRoot
-		{
-			get { return dictionary.SyncRoot; }
-		}
-
-		public bool IsSynchronized
-		{
-			get { return dictionary.IsSynchronized; }
-		}
-
-		public IEnumerator GetEnumerator()
-		{
-			return ((IEnumerable) dictionary).GetEnumerator();
-		}
-
 		internal class EnumeratorAdapter : IEnumerator<KeyValuePair<string, object>>
 		{
 			private readonly StringObjectDictionaryAdapter adapter;
-			private IEnumerator<string> keyEnumerator;
 			private string currentKey;
 			private object currentValue;
+			private readonly IEnumerator<string> keyEnumerator;
 
 			public EnumeratorAdapter(StringObjectDictionaryAdapter adapter)
 			{

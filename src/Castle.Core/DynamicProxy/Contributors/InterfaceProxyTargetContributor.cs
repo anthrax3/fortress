@@ -53,24 +53,22 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		protected override MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod)
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod)
 		{
 			if (!method.Proxyable)
-			{
 				return new ForwardingMethodGenerator(method,
-				                                     overrideMethod,
-				                                     (c, m) => c.GetField("__target"));
-			}
+					overrideMethod,
+					(c, m) => c.GetField("__target"));
 
 			var invocation = GetInvocationType(method, @class, options);
 
 			return new MethodWithInvocationGenerator(method,
-			                                         @class.GetField("__interceptors"),
-			                                         invocation,
-			                                         (c, m) => c.GetField("__target").ToExpression(),
-			                                         overrideMethod,
-			                                         null);
+				@class.GetField("__interceptors"),
+				invocation,
+				(c, m) => c.GetField("__target").ToExpression(),
+				overrideMethod,
+				null);
 		}
 
 		private Type GetInvocationType(MetaMethod method, ClassEmitter @class, ProxyGenerationOptions options)
@@ -79,13 +77,9 @@ namespace Castle.Core.DynamicProxy.Contributors
 
 			Type[] invocationInterfaces;
 			if (canChangeTarget)
-			{
-				invocationInterfaces = new[] { typeof(IInvocation), typeof(IChangeProxyTarget) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation), typeof(IChangeProxyTarget)};
 			else
-			{
-				invocationInterfaces = new[] { typeof(IInvocation) };
-			}
+				invocationInterfaces = new[] {typeof(IInvocation)};
 
 			var key = new CacheKey(method.Method, CompositionInvocationTypeGenerator.BaseType, invocationInterfaces, null);
 
@@ -93,15 +87,13 @@ namespace Castle.Core.DynamicProxy.Contributors
 
 			var invocation = scope.GetFromCache(key);
 			if (invocation != null)
-			{
 				return invocation;
-			}
 
 			invocation = new CompositionInvocationTypeGenerator(method.Method.DeclaringType,
-			                                                    method,
-			                                                    method.Method,
-			                                                    canChangeTarget,
-			                                                    null)
+					method,
+					method.Method,
+					canChangeTarget,
+					null)
 				.Generate(@class, options, namingScope).BuildType();
 
 			scope.RegisterInCache(key, invocation);

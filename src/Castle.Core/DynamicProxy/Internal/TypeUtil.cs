@@ -26,14 +26,10 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static FieldInfo[] GetAllFields(this Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			if (type.GetTypeInfo().IsClass == false)
-			{
 				throw new ArgumentException(string.Format("Type {0} is not a class type. This method supports only classes", type));
-			}
 
 			var fields = new List<FieldInfo>();
 			var currentType = type;
@@ -51,26 +47,18 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static Type[] GetAllInterfaces(params Type[] types)
 		{
 			if (types == null)
-			{
 				return Type.EmptyTypes;
-			}
 
 			var interfaces = new HashSet<Type>();
 			for (var index = 0; index < types.Length; index++)
 			{
 				var type = types[index];
 				if (type == null)
-				{
 					continue;
-				}
 
 				if (type.GetTypeInfo().IsInterface)
-				{
 					if (interfaces.Add(type) == false)
-					{
 						continue;
-					}
-				}
 
 				var innerInterfaces = type.GetInterfaces();
 				for (var i = 0; i < innerInterfaces.Length; i++)
@@ -85,34 +73,28 @@ namespace Castle.Core.DynamicProxy.Internal
 
 		public static Type[] GetAllInterfaces(this Type type)
 		{
-			return GetAllInterfaces(new[] { type });
+			return GetAllInterfaces(new[] {type});
 		}
 
 		public static Type GetClosedParameterType(this AbstractTypeEmitter type, Type parameter)
 		{
 			if (parameter.GetTypeInfo().IsGenericTypeDefinition)
-			{
 				return parameter.GetGenericTypeDefinition().MakeGenericType(type.GetGenericArgumentsFor(parameter));
-			}
 
 			if (parameter.GetTypeInfo().IsGenericType)
 			{
 				var arguments = parameter.GetGenericArguments();
 				if (CloseGenericParametersIfAny(type, arguments))
-				{
 					return parameter.GetGenericTypeDefinition().MakeGenericType(arguments);
-				}
 			}
 
 			if (parameter.GetTypeInfo().IsGenericParameter)
-			{
 				return type.GetGenericArgument(parameter.Name);
-			}
 
 			if (parameter.GetTypeInfo().IsArray)
 			{
 				var elementType = GetClosedParameterType(type, parameter.GetElementType());
-				int rank = parameter.GetArrayRank();
+				var rank = parameter.GetArrayRank();
 				return rank == 1
 					? elementType.MakeArrayType()
 					: elementType.MakeArrayType(rank);
@@ -130,19 +112,15 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static Type GetTypeOrNull(object target)
 		{
 			if (target == null)
-			{
 				return null;
-			}
 			return target.GetType();
 		}
 
 		public static Type[] AsTypeArray(this GenericTypeParameterBuilder[] typeInfos)
 		{
-			Type[] types = new Type[typeInfos.Length];
-			for (int i = 0; i < types.Length; i++)
-			{
+			var types = new Type[typeInfos.Length];
+			for (var i = 0; i < types.Length; i++)
 				types[i] = typeInfos[i].AsType();
-			}
 			return types;
 		}
 
@@ -165,13 +143,11 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			var flags = additionalFlags | BindingFlags.Static;
 
-			FieldInfo field = type.GetField(fieldName, flags);
+			var field = type.GetField(fieldName, flags);
 			if (field == null)
-			{
 				throw new ProxyGenerationException(string.Format(
 					"Could not find field named '{0}' on type {1}. This is likely a bug in DynamicProxy. Please report it.",
 					fieldName, type));
-			}
 
 			try
 			{
@@ -195,10 +171,8 @@ namespace Castle.Core.DynamicProxy.Internal
 			}
 			catch (TargetInvocationException e) // yes, this is not documented in MSDN. Yay for documentation
 			{
-				if ((e.InnerException is TypeInitializationException) == false)
-				{
+				if (e.InnerException is TypeInitializationException == false)
 					throw;
-				}
 				throw new ProxyGenerationException(
 					string.Format(
 						"There was an error in static constructor on type {0}. This is likely a bug in DynamicProxy. Please report it.",

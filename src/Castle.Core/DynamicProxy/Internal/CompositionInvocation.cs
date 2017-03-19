@@ -50,14 +50,10 @@ namespace Castle.Core.DynamicProxy.Internal
 		protected void EnsureValidProxyTarget(object newTarget)
 		{
 			if (newTarget == null)
-			{
 				throw new ArgumentNullException("newTarget");
-			}
 
 			if (!ReferenceEquals(newTarget, proxyObject))
-			{
 				return;
-			}
 
 			var message = "This is a DynamicProxy2 error: target of proxy has been set to the proxy itself. " +
 			              "This would result in recursively calling proxy methods over and over again until stack overflow, which may destabilize your program." +
@@ -68,14 +64,10 @@ namespace Castle.Core.DynamicProxy.Internal
 		protected void EnsureValidTarget()
 		{
 			if (target == null)
-			{
 				ThrowOnNoTarget();
-			}
 
 			if (!ReferenceEquals(target, proxyObject))
-			{
 				return;
-			}
 
 			var message = "This is a DynamicProxy2 error: target of invocation has been set to the proxy itself. " +
 			              "This may result in recursively calling the method over and over again until stack overflow, which may destabilize your program." +

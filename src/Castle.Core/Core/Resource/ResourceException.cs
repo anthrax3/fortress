@@ -31,6 +31,7 @@ namespace Castle.Core.Core.Resource
 		public ResourceException(string message, Exception innerException) : base(message, innerException)
 		{
 		}
+
 		protected ResourceException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

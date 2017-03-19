@@ -31,9 +31,7 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static MethodInfo GetMethodOnObject(object target, MethodInfo proxiedMethod)
 		{
 			if (target == null)
-			{
 				return null;
-			}
 
 			return GetMethodOnType(target.GetType(), proxiedMethod);
 		}
@@ -41,26 +39,20 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static MethodInfo GetMethodOnType(Type type, MethodInfo proxiedMethod)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			Debug.Assert(proxiedMethod.DeclaringType.IsAssignableFrom(type),
-			             "proxiedMethod.DeclaringType.IsAssignableFrom(type)");
+				"proxiedMethod.DeclaringType.IsAssignableFrom(type)");
 			using (var locker = @lock.ForReadingUpgradeable())
 			{
 				var methodOnTarget = GetFromCache(proxiedMethod, type);
 				if (methodOnTarget != null)
-				{
 					return methodOnTarget;
-				}
 				locker.Upgrade();
 
 				methodOnTarget = GetFromCache(proxiedMethod, type);
 				if (methodOnTarget != null)
-				{
 					return methodOnTarget;
-				}
 				methodOnTarget = ObtainMethod(proxiedMethod, type);
 				PutToCache(proxiedMethod, type, methodOnTarget);
 				return methodOnTarget;
@@ -97,25 +89,19 @@ namespace Castle.Core.DynamicProxy.Internal
 				// NOTE: this implementation sucks, feel free to improve it.
 				var methods = MethodFinder.GetAllInstanceMethods(type, BindingFlags.Public | BindingFlags.NonPublic);
 				foreach (var method in methods)
-				{
 					if (MethodSignatureComparer.Instance.Equals(method.GetBaseDefinition(), proxiedMethod))
 					{
 						methodOnTarget = method;
 						break;
 					}
-				}
 			}
 			if (methodOnTarget == null)
-			{
 				throw new ArgumentException(
 					string.Format("Could not find method overriding {0} on type {1}. This is most likely a bug. Please report it.",
-					              proxiedMethod, type));
-			}
+						proxiedMethod, type));
 
 			if (genericArguments == null)
-			{
 				return methodOnTarget;
-			}
 			return methodOnTarget.MakeGenericMethod(genericArguments);
 		}
 

@@ -26,7 +26,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		private readonly Expression owner;
 
 		public BindDelegateExpression(Type @delegate, Expression owner, MethodInfo methodToBindTo,
-		                              GenericTypeParameterBuilder[] genericTypeParams)
+			GenericTypeParameterBuilder[] genericTypeParams)
 		{
 			delegateCtor = @delegate.GetConstructors()[0];
 			this.methodToBindTo = methodToBindTo;
@@ -45,13 +45,9 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			owner.Emit(member, gen);
 			gen.Emit(OpCodes.Dup);
 			if (methodToBindTo.IsFinal)
-			{
 				gen.Emit(OpCodes.Ldftn, methodToBindTo);
-			}
 			else
-			{
 				gen.Emit(OpCodes.Ldvirtftn, methodToBindTo);
-			}
 			gen.Emit(OpCodes.Newobj, delegateCtor);
 		}
 	}

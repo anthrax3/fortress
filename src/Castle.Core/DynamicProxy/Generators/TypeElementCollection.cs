@@ -44,10 +44,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			{
 				item.SwitchToExplicitImplementation();
 				if (Contains(item))
-				{
-					// there is something reaaaly wrong going on here
 					throw new ProxyGenerationException("Duplicate element: " + item);
-				}
 			}
 			items.Add(item);
 		}
@@ -55,12 +52,8 @@ namespace Castle.Core.DynamicProxy.Generators
 		public bool Contains(TElement item)
 		{
 			foreach (var element in items)
-			{
 				if (element.Equals(item))
-				{
 					return true;
-				}
-			}
 
 			return false;
 		}

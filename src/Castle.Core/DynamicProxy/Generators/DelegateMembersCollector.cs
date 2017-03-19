@@ -28,10 +28,7 @@ namespace Castle.Core.DynamicProxy.Generators
 		{
 			var accepted = AcceptMethod(method, true, hook);
 			if (accepted == false)
-			{
-				//we don't need to do anything...
 				return null;
-			}
 
 			return new MetaMethod(method, method, isStandalone, true, !method.IsAbstract);
 		}

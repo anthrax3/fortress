@@ -29,22 +29,13 @@ namespace Castle.Core.DynamicProxy
 	public class ProxyGenerator : IProxyGenerator
 	{
 		private ILogger logger = NullLogger.Instance;
-		private readonly IProxyBuilder proxyBuilder;
 
 		public ProxyGenerator(IProxyBuilder builder)
 		{
-			proxyBuilder = builder;
+			ProxyBuilder = builder;
 
 			if (HasSecurityPermission())
-			{
 				Logger = new TraceLogger("Castle.DynamicProxy", LoggerLevel.Warn);
-			}
-		}
-
-		private bool HasSecurityPermission()
-		{
-			const SecurityPermissionFlag flag = SecurityPermissionFlag.ControlEvidence | SecurityPermissionFlag.ControlPolicy;
-			return new SecurityPermission(flag).IsGranted();
 		}
 
 		public ProxyGenerator() : this(new DefaultProxyBuilder())
@@ -61,14 +52,11 @@ namespace Castle.Core.DynamicProxy
 			set
 			{
 				logger = value;
-				proxyBuilder.Logger = value;
+				ProxyBuilder.Logger = value;
 			}
 		}
 
-		public IProxyBuilder ProxyBuilder
-		{
-			get { return proxyBuilder; }
-		}
+		public IProxyBuilder ProxyBuilder { get; }
 
 		public TInterface CreateInterfaceProxyWithTarget<TInterface>(TInterface target, params IInterceptor[] interceptors)
 			where TInterface : class
@@ -84,10 +72,10 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public TInterface CreateInterfaceProxyWithTarget<TInterface>(TInterface target, ProxyGenerationOptions options,
-		                                                             params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithTarget(typeof(TInterface), target, options, interceptors);
+			return (TInterface) CreateInterfaceProxyWithTarget(typeof(TInterface), target, options, interceptors);
 		}
 
 		public object CreateInterfaceProxyWithTarget(Type interfaceToProxy, object target, params IInterceptor[] interceptors)
@@ -96,135 +84,105 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public object CreateInterfaceProxyWithTarget(Type interfaceToProxy, object target, ProxyGenerationOptions options,
-		                                             params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithTarget(interfaceToProxy, null, target, options, interceptors);
 		}
 
 		public object CreateInterfaceProxyWithTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy, object target,
-		                                             params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithTarget(interfaceToProxy, additionalInterfacesToProxy, target,
-			                                      ProxyGenerationOptions.Default, interceptors);
+				ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public virtual object CreateInterfaceProxyWithTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                     object target,
-		                                                     ProxyGenerationOptions options,
-		                                                     params IInterceptor[] interceptors)
+			object target,
+			ProxyGenerationOptions options,
+			params IInterceptor[] interceptors)
 		{
 			if (interfaceToProxy == null)
-			{
 				throw new ArgumentNullException("interfaceToProxy");
-			}
 			if (target == null)
-			{
 				throw new ArgumentNullException("target");
-			}
 			if (interceptors == null)
-			{
 				throw new ArgumentNullException("interceptors");
-			}
 
 			if (!interfaceToProxy.GetTypeInfo().IsInterface)
-			{
 				throw new ArgumentException("Specified type is not an interface", "interfaceToProxy");
-			}
 
 			var targetType = target.GetType();
 			if (!interfaceToProxy.IsAssignableFrom(targetType))
-			{
 				throw new ArgumentException("Target does not implement interface " + interfaceToProxy.FullName, "target");
-			}
 
 			CheckNotGenericTypeDefinition(interfaceToProxy, "interfaceToProxy");
 			CheckNotGenericTypeDefinitions(additionalInterfacesToProxy, "additionalInterfacesToProxy");
 
 			var generatedType = CreateInterfaceProxyTypeWithTarget(interfaceToProxy, additionalInterfacesToProxy, targetType,
-			                                                       options);
+				options);
 
 			var arguments = GetConstructorArguments(target, interceptors, options);
 			return Activator.CreateInstance(generatedType, arguments.ToArray());
 		}
 
-		protected List<object> GetConstructorArguments(object target, IInterceptor[] interceptors,
-		                                               ProxyGenerationOptions options)
-		{
-			// create constructor arguments (initialized with mixin implementations, interceptors and target type constructor arguments)
-			var arguments = new List<object>(options.MixinData.Mixins) { interceptors, target };
-			if (options.Selector != null)
-			{
-				arguments.Add(options.Selector);
-			}
-			return arguments;
-		}
-
 		public object CreateInterfaceProxyWithTargetInterface(Type interfaceToProxy, object target,
-		                                                      params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithTargetInterface(interfaceToProxy, target, ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public TInterface CreateInterfaceProxyWithTargetInterface<TInterface>(TInterface target,
-		                                                                      params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithTargetInterface(typeof(TInterface),
-			                                                           target,
-			                                                           ProxyGenerationOptions.Default,
-			                                                           interceptors);
+			return (TInterface) CreateInterfaceProxyWithTargetInterface(typeof(TInterface),
+				target,
+				ProxyGenerationOptions.Default,
+				interceptors);
 		}
 
 		public TInterface CreateInterfaceProxyWithTargetInterface<TInterface>(TInterface target,
-		                                                                      ProxyGenerationOptions options,
-		                                                                      params IInterceptor[] interceptors)
+			ProxyGenerationOptions options,
+			params IInterceptor[] interceptors)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithTargetInterface(typeof(TInterface),
-			                                                           target,
-			                                                           options,
-			                                                           interceptors);
+			return (TInterface) CreateInterfaceProxyWithTargetInterface(typeof(TInterface),
+				target,
+				options,
+				interceptors);
 		}
 
 		public object CreateInterfaceProxyWithTargetInterface(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                      object target, params IInterceptor[] interceptors)
+			object target, params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithTargetInterface(interfaceToProxy, additionalInterfacesToProxy, target,
-			                                               ProxyGenerationOptions.Default, interceptors);
+				ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public object CreateInterfaceProxyWithTargetInterface(Type interfaceToProxy, object target,
-		                                                      ProxyGenerationOptions options,
-		                                                      params IInterceptor[] interceptors)
+			ProxyGenerationOptions options,
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithTargetInterface(interfaceToProxy, null, target, options, interceptors);
 		}
 
 		public virtual object CreateInterfaceProxyWithTargetInterface(Type interfaceToProxy,
-		                                                              Type[] additionalInterfacesToProxy,
-		                                                              object target, ProxyGenerationOptions options,
-		                                                              params IInterceptor[] interceptors)
+			Type[] additionalInterfacesToProxy,
+			object target, ProxyGenerationOptions options,
+			params IInterceptor[] interceptors)
 		{
 			//TODO: add <example> to xml comments to show how to use IChangeProxyTarget
 
 			if (interfaceToProxy == null)
-			{
 				throw new ArgumentNullException("interfaceToProxy");
-			}
 			// In the case of a transparent proxy, the call to IsInstanceOfType was executed on the real object.
 			if (target != null && interfaceToProxy.IsInstanceOfType(target) == false)
-			{
 				throw new ArgumentException("Target does not implement interface " + interfaceToProxy.FullName, "target");
-			}
 			if (interceptors == null)
-			{
 				throw new ArgumentNullException("interceptors");
-			}
 
 			if (!interfaceToProxy.GetTypeInfo().IsInterface)
-			{
 				throw new ArgumentException("Specified type is not an interface", "interfaceToProxy");
-			}
 
 			var isRemotingProxy = false;
 			if (target != null)
@@ -244,10 +202,8 @@ namespace Castle.Core.DynamicProxy
 						Marshal.Release(interfacePointer); // Decrement the reference count
 
 						if (result == 0 && isInterfacePointerNull)
-						{
 							throw new ArgumentException("Target COM object does not implement interface " + interfaceToProxy.FullName,
-														"target");
-						}
+								"target");
 					}
 				}
 			}
@@ -256,7 +212,7 @@ namespace Castle.Core.DynamicProxy
 			CheckNotGenericTypeDefinitions(additionalInterfacesToProxy, "additionalInterfacesToProxy");
 
 			var generatedType = CreateInterfaceProxyTypeWithTargetInterface(interfaceToProxy, additionalInterfacesToProxy,
-			                                                                options);
+				options);
 			var arguments = GetConstructorArguments(target, interceptors, options);
 			if (isRemotingProxy)
 			{
@@ -272,64 +228,58 @@ namespace Castle.Core.DynamicProxy
 		public TInterface CreateInterfaceProxyWithoutTarget<TInterface>(IInterceptor interceptor)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithoutTarget(typeof(TInterface), interceptor);
+			return (TInterface) CreateInterfaceProxyWithoutTarget(typeof(TInterface), interceptor);
 		}
 
 		public TInterface CreateInterfaceProxyWithoutTarget<TInterface>(params IInterceptor[] interceptors)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithoutTarget(typeof(TInterface), interceptors);
+			return (TInterface) CreateInterfaceProxyWithoutTarget(typeof(TInterface), interceptors);
 		}
 
 		public TInterface CreateInterfaceProxyWithoutTarget<TInterface>(ProxyGenerationOptions options,
-		                                                                params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 			where TInterface : class
 		{
-			return (TInterface)CreateInterfaceProxyWithoutTarget(typeof(TInterface), Type.EmptyTypes, options, interceptors);
+			return (TInterface) CreateInterfaceProxyWithoutTarget(typeof(TInterface), Type.EmptyTypes, options, interceptors);
 		}
 
 		public object CreateInterfaceProxyWithoutTarget(Type interfaceToProxy, IInterceptor interceptor)
 		{
 			return CreateInterfaceProxyWithoutTarget(interfaceToProxy, Type.EmptyTypes, ProxyGenerationOptions.Default,
-			                                         interceptor);
+				interceptor);
 		}
 
 		public object CreateInterfaceProxyWithoutTarget(Type interfaceToProxy, params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithoutTarget(interfaceToProxy, Type.EmptyTypes, ProxyGenerationOptions.Default,
-			                                         interceptors);
+				interceptors);
 		}
 
 		public object CreateInterfaceProxyWithoutTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithoutTarget(interfaceToProxy, additionalInterfacesToProxy,
-			                                         ProxyGenerationOptions.Default, interceptors);
+				ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public object CreateInterfaceProxyWithoutTarget(Type interfaceToProxy, ProxyGenerationOptions options,
-		                                                params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateInterfaceProxyWithoutTarget(interfaceToProxy, Type.EmptyTypes, options, interceptors);
 		}
 
 		public virtual object CreateInterfaceProxyWithoutTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                        ProxyGenerationOptions options,
-		                                                        params IInterceptor[] interceptors)
+			ProxyGenerationOptions options,
+			params IInterceptor[] interceptors)
 		{
 			if (interfaceToProxy == null)
-			{
 				throw new ArgumentNullException("interfaceToProxy");
-			}
 			if (interceptors == null)
-			{
 				throw new ArgumentNullException("interceptors");
-			}
 
 			if (!interfaceToProxy.GetTypeInfo().IsInterface)
-			{
 				throw new ArgumentException("Specified type is not an interface", "interfaceToProxy");
-			}
 
 			CheckNotGenericTypeDefinition(interfaceToProxy, "interfaceToProxy");
 			CheckNotGenericTypeDefinitions(additionalInterfacesToProxy, "additionalInterfacesToProxy");
@@ -342,106 +292,100 @@ namespace Castle.Core.DynamicProxy
 		public TClass CreateClassProxyWithTarget<TClass>(TClass target, params IInterceptor[] interceptors)
 			where TClass : class
 		{
-			return (TClass)CreateClassProxyWithTarget(typeof(TClass),
-			                                          Type.EmptyTypes,
-			                                          target,
-			                                          ProxyGenerationOptions.Default,
-			                                          new object[0],
-			                                          interceptors);
+			return (TClass) CreateClassProxyWithTarget(typeof(TClass),
+				Type.EmptyTypes,
+				target,
+				ProxyGenerationOptions.Default,
+				new object[0],
+				interceptors);
 		}
 
 		public TClass CreateClassProxyWithTarget<TClass>(TClass target, ProxyGenerationOptions options,
-		                                                 params IInterceptor[] interceptors) where TClass : class
+			params IInterceptor[] interceptors) where TClass : class
 		{
-			return (TClass)CreateClassProxyWithTarget(typeof(TClass),
-			                                          Type.EmptyTypes,
-			                                          target,
-			                                          options,
-			                                          new object[0],
-			                                          interceptors);
+			return (TClass) CreateClassProxyWithTarget(typeof(TClass),
+				Type.EmptyTypes,
+				target,
+				options,
+				new object[0],
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, Type[] additionalInterfacesToProxy, object target,
-		                                         params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  additionalInterfacesToProxy,
-			                                  target,
-			                                  ProxyGenerationOptions.Default,
-			                                  new object[0],
-			                                  interceptors);
+				additionalInterfacesToProxy,
+				target,
+				ProxyGenerationOptions.Default,
+				new object[0],
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, object target, ProxyGenerationOptions options,
-		                                         object[] constructorArguments, params IInterceptor[] interceptors)
+			object[] constructorArguments, params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  Type.EmptyTypes,
-			                                  target,
-			                                  options,
-			                                  constructorArguments,
-			                                  interceptors);
+				Type.EmptyTypes,
+				target,
+				options,
+				constructorArguments,
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, object target, object[] constructorArguments,
-		                                         params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  Type.EmptyTypes,
-			                                  target,
-			                                  ProxyGenerationOptions.Default,
-			                                  constructorArguments,
-			                                  interceptors);
+				Type.EmptyTypes,
+				target,
+				ProxyGenerationOptions.Default,
+				constructorArguments,
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, object target, params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  Type.EmptyTypes,
-			                                  target,
-			                                  ProxyGenerationOptions.Default,
-			                                  new object[0],
-			                                  interceptors);
+				Type.EmptyTypes,
+				target,
+				ProxyGenerationOptions.Default,
+				new object[0],
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, object target, ProxyGenerationOptions options,
-		                                         params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  Type.EmptyTypes,
-			                                  target,
-			                                  options,
-			                                  new object[0],
-			                                  interceptors);
+				Type.EmptyTypes,
+				target,
+				options,
+				new object[0],
+				interceptors);
 		}
 
 		public object CreateClassProxyWithTarget(Type classToProxy, Type[] additionalInterfacesToProxy, object target,
-		                                         ProxyGenerationOptions options, params IInterceptor[] interceptors)
+			ProxyGenerationOptions options, params IInterceptor[] interceptors)
 		{
 			return CreateClassProxyWithTarget(classToProxy,
-			                                  additionalInterfacesToProxy,
-			                                  target,
-			                                  options,
-			                                  new object[0],
-			                                  interceptors);
+				additionalInterfacesToProxy,
+				target,
+				options,
+				new object[0],
+				interceptors);
 		}
 
 		public virtual object CreateClassProxyWithTarget(Type classToProxy, Type[] additionalInterfacesToProxy, object target,
-		                                                 ProxyGenerationOptions options, object[] constructorArguments,
-		                                                 params IInterceptor[] interceptors)
+			ProxyGenerationOptions options, object[] constructorArguments,
+			params IInterceptor[] interceptors)
 		{
 			if (classToProxy == null)
-			{
 				throw new ArgumentNullException("classToProxy");
-			}
 			if (options == null)
-			{
 				throw new ArgumentNullException("options");
-			}
 			if (!classToProxy.GetTypeInfo().IsClass)
-			{
 				throw new ArgumentException("'classToProxy' must be a class", "classToProxy");
-			}
 
 			CheckNotGenericTypeDefinition(classToProxy, "classToProxy");
 			CheckNotGenericTypeDefinitions(additionalInterfacesToProxy, "additionalInterfacesToProxy");
@@ -451,31 +395,29 @@ namespace Castle.Core.DynamicProxy
 			// create constructor arguments (initialized with mixin implementations, interceptors and target type constructor arguments)
 			var arguments = BuildArgumentListForClassProxyWithTarget(target, options, interceptors);
 			if (constructorArguments != null && constructorArguments.Length != 0)
-			{
 				arguments.AddRange(constructorArguments);
-			}
 			return CreateClassProxyInstance(proxyType, arguments, classToProxy, constructorArguments);
 		}
 
 		public TClass CreateClassProxy<TClass>(params IInterceptor[] interceptors) where TClass : class
 		{
-			return (TClass)CreateClassProxy(typeof(TClass), ProxyGenerationOptions.Default, interceptors);
+			return (TClass) CreateClassProxy(typeof(TClass), ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public TClass CreateClassProxy<TClass>(ProxyGenerationOptions options, params IInterceptor[] interceptors)
 			where TClass : class
 		{
-			return (TClass)CreateClassProxy(typeof(TClass), options, interceptors);
+			return (TClass) CreateClassProxy(typeof(TClass), options, interceptors);
 		}
 
 		public object CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy,
-		                               params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxy(classToProxy, additionalInterfacesToProxy, ProxyGenerationOptions.Default, interceptors);
 		}
 
 		public object CreateClassProxy(Type classToProxy, ProxyGenerationOptions options, object[] constructorArguments,
-		                               params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxy(classToProxy, null, options, constructorArguments, interceptors);
 		}
@@ -488,7 +430,7 @@ namespace Castle.Core.DynamicProxy
 		public object CreateClassProxy(Type classToProxy, params IInterceptor[] interceptors)
 		{
 			return CreateClassProxy(classToProxy, null, ProxyGenerationOptions.Default,
-			                        null, interceptors);
+				null, interceptors);
 		}
 
 		public object CreateClassProxy(Type classToProxy, ProxyGenerationOptions options, params IInterceptor[] interceptors)
@@ -497,27 +439,21 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public object CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options,
-		                               params IInterceptor[] interceptors)
+			params IInterceptor[] interceptors)
 		{
 			return CreateClassProxy(classToProxy, additionalInterfacesToProxy, options, null, interceptors);
 		}
 
 		public virtual object CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy,
-		                                       ProxyGenerationOptions options,
-		                                       object[] constructorArguments, params IInterceptor[] interceptors)
+			ProxyGenerationOptions options,
+			object[] constructorArguments, params IInterceptor[] interceptors)
 		{
 			if (classToProxy == null)
-			{
 				throw new ArgumentNullException("classToProxy");
-			}
 			if (options == null)
-			{
 				throw new ArgumentNullException("options");
-			}
 			if (!classToProxy.GetTypeInfo().IsClass)
-			{
 				throw new ArgumentException("'classToProxy' must be a class", "classToProxy");
-			}
 
 			CheckNotGenericTypeDefinition(classToProxy, "classToProxy");
 			CheckNotGenericTypeDefinitions(additionalInterfacesToProxy, "additionalInterfacesToProxy");
@@ -527,14 +463,28 @@ namespace Castle.Core.DynamicProxy
 			// create constructor arguments (initialized with mixin implementations, interceptors and target type constructor arguments)
 			var arguments = BuildArgumentListForClassProxy(options, interceptors);
 			if (constructorArguments != null && constructorArguments.Length != 0)
-			{
 				arguments.AddRange(constructorArguments);
-			}
 			return CreateClassProxyInstance(proxyType, arguments, classToProxy, constructorArguments);
 		}
 
+		private bool HasSecurityPermission()
+		{
+			const SecurityPermissionFlag flag = SecurityPermissionFlag.ControlEvidence | SecurityPermissionFlag.ControlPolicy;
+			return new SecurityPermission(flag).IsGranted();
+		}
+
+		protected List<object> GetConstructorArguments(object target, IInterceptor[] interceptors,
+			ProxyGenerationOptions options)
+		{
+			// create constructor arguments (initialized with mixin implementations, interceptors and target type constructor arguments)
+			var arguments = new List<object>(options.MixinData.Mixins) {interceptors, target};
+			if (options.Selector != null)
+				arguments.Add(options.Selector);
+			return arguments;
+		}
+
 		protected object CreateClassProxyInstance(Type proxyType, List<object> proxyArguments, Type classToProxy,
-		                                          object[] constructorArguments)
+			object[] constructorArguments)
 		{
 			try
 			{
@@ -559,88 +509,78 @@ namespace Castle.Core.DynamicProxy
 					}
 				}
 
-				throw new InvalidProxyConstructorArgumentsException(message.ToString(),proxyType,classToProxy);
+				throw new InvalidProxyConstructorArgumentsException(message.ToString(), proxyType, classToProxy);
 			}
 		}
 
 		protected void CheckNotGenericTypeDefinition(Type type, string argumentName)
 		{
 			if (type != null && type.GetTypeInfo().IsGenericTypeDefinition)
-			{
 				throw new GeneratorException(string.Format("Can not create proxy for type {0} because it is an open generic type.",
-														   type.GetBestName()));
-			}
+					type.GetBestName()));
 		}
 
 		protected void CheckNotGenericTypeDefinitions(IEnumerable<Type> types, string argumentName)
 		{
 			if (types == null)
-			{
 				return;
-			}
 			foreach (var t in types)
-			{
 				CheckNotGenericTypeDefinition(t, argumentName);
-			}
 		}
 
 		protected List<object> BuildArgumentListForClassProxyWithTarget(object target, ProxyGenerationOptions options,
-		                                                                IInterceptor[] interceptors)
+			IInterceptor[] interceptors)
 		{
 			var arguments = new List<object>();
 			arguments.Add(target);
 			arguments.AddRange(options.MixinData.Mixins);
 			arguments.Add(interceptors);
 			if (options.Selector != null)
-			{
 				arguments.Add(options.Selector);
-			}
 			return arguments;
 		}
 
 		protected List<object> BuildArgumentListForClassProxy(ProxyGenerationOptions options, IInterceptor[] interceptors)
 		{
-			var arguments = new List<object>(options.MixinData.Mixins) { interceptors };
+			var arguments = new List<object>(options.MixinData.Mixins) {interceptors};
 			if (options.Selector != null)
-			{
 				arguments.Add(options.Selector);
-			}
 			return arguments;
 		}
 
 		protected Type CreateClassProxyType(Type classToProxy, Type[] additionalInterfacesToProxy,
-		                                    ProxyGenerationOptions options)
+			ProxyGenerationOptions options)
 		{
 			// create proxy
 			return ProxyBuilder.CreateClassProxyType(classToProxy, additionalInterfacesToProxy, options);
 		}
 
 		protected Type CreateInterfaceProxyTypeWithTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                  Type targetType,
-		                                                  ProxyGenerationOptions options)
+			Type targetType,
+			ProxyGenerationOptions options)
 		{
 			// create proxy
 			return ProxyBuilder.CreateInterfaceProxyTypeWithTarget(interfaceToProxy, additionalInterfacesToProxy, targetType,
-			                                                       options);
+				options);
 		}
 
 		protected Type CreateInterfaceProxyTypeWithTargetInterface(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                           ProxyGenerationOptions options)
+			ProxyGenerationOptions options)
 		{
 			// create proxy
 			return ProxyBuilder.CreateInterfaceProxyTypeWithTargetInterface(interfaceToProxy, additionalInterfacesToProxy,
-			                                                                options);
+				options);
 		}
 
 		protected Type CreateInterfaceProxyTypeWithoutTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy,
-		                                                     ProxyGenerationOptions options)
+			ProxyGenerationOptions options)
 		{
 			// create proxy
 			return ProxyBuilder.CreateInterfaceProxyTypeWithoutTarget(interfaceToProxy, additionalInterfacesToProxy, options);
 		}
 
 		protected Type CreateClassProxyTypeWithTarget(Type classToProxy, Type[] additionalInterfacesToProxy,
-		                                              ProxyGenerationOptions options)
+			ProxyGenerationOptions options)
 		{
 			// create proxy
 			return ProxyBuilder.CreateClassProxyTypeWithTarget(classToProxy, additionalInterfacesToProxy, options);

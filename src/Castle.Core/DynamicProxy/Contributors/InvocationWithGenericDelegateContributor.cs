@@ -48,8 +48,8 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		public MethodInvocationExpression GetCallbackMethodInvocation(AbstractTypeEmitter invocation, Expression[] args,
-		                                                              Reference targetField,
-		                                                              MethodEmitter invokeMethodOnTarget)
+			Reference targetField,
+			MethodEmitter invokeMethodOnTarget)
 		{
 			var @delegate = GetDelegate(invocation, invokeMethodOnTarget);
 			return new MethodInvocationExpression(@delegate, GetCallbackMethod(), args);
@@ -73,7 +73,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		private AssignStatement SetDelegate(LocalReference localDelegate, ReferenceExpression localTarget,
-		                                    Type closedDelegateType, MethodInfo closedMethodOnTarget)
+			Type closedDelegateType, MethodInfo closedMethodOnTarget)
 		{
 			var delegateCreateDelegate = new MethodInvocationExpression(
 				null,

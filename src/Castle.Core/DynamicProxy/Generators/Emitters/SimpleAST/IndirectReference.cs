@@ -26,9 +26,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			base(byRefReference, byRefReference.Type.GetElementType())
 		{
 			if (!byRefReference.Type.GetTypeInfo().IsByRef)
-			{
 				throw new ArgumentException("Expected an IsByRef reference", "byRefReference");
-			}
 		}
 
 		public override void LoadAddressOfReference(ILGenerator gen)
@@ -59,9 +57,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 			var result = new TypeReference[references.Length];
 
 			for (var i = 0; i < references.Length; i++)
-			{
 				result[i] = WrapIfByRef(references[i]);
-			}
 
 			return result;
 		}

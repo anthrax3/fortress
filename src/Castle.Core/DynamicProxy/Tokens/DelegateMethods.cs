@@ -20,6 +20,6 @@ namespace Castle.Core.DynamicProxy.Tokens
 	public static class DelegateMethods
 	{
 		public static readonly MethodInfo CreateDelegate =
-			typeof(Delegate).GetMethod("CreateDelegate", new[] { typeof(Type), typeof(object), typeof(MethodInfo) });
+			typeof(Delegate).GetMethod("CreateDelegate", new[] {typeof(Type), typeof(object), typeof(MethodInfo)});
 	}
 }

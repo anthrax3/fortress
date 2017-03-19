@@ -36,10 +36,8 @@ namespace Castle.Core.Core.Resource
 
 			var paths = resource.Path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
 			if (paths.Length != 2)
-			{
 				throw new ResourceException("AssemblyBundleResource does not support paths with more than 2 levels in depth. See " +
 				                            resource.Path);
-			}
 
 			var rm = new ResourceManager(paths[0], assembly);
 
@@ -64,7 +62,7 @@ namespace Castle.Core.Core.Resource
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format(CultureInfo.InvariantCulture, "The assembly {0} could not be loaded", assemblyName);
+				var message = string.Format(CultureInfo.InvariantCulture, "The assembly {0} could not be loaded", assemblyName);
 				throw new ResourceException(message, ex);
 			}
 		}

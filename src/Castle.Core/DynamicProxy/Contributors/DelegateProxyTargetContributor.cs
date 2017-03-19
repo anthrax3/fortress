@@ -32,22 +32,22 @@ namespace Castle.Core.DynamicProxy.Contributors
 		protected override IEnumerable<MembersCollector> CollectElementsToProxyInternal(IProxyGenerationHook hook)
 		{
 			Debug.Assert(hook != null, "hook != null");
-			var targetItem = new DelegateMembersCollector(targetType) { Logger = Logger };
+			var targetItem = new DelegateMembersCollector(targetType) {Logger = Logger};
 			targetItem.CollectMembersToProxy(hook);
 			yield return targetItem;
 		}
 
 		protected override MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod)
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod)
 		{
 			var invocation = GetInvocationType(method, @class, options);
 			return new MethodWithInvocationGenerator(method,
-			                                         @class.GetField("__interceptors"),
-			                                         invocation,
-			                                         (c, m) => c.GetField("__target").ToExpression(),
-			                                         overrideMethod,
-			                                         null);
+				@class.GetField("__interceptors"),
+				invocation,
+				(c, m) => c.GetField("__target").ToExpression(),
+				overrideMethod,
+				null);
 		}
 
 		private Type GetInvocationType(MetaMethod method, ClassEmitter emitter, ProxyGenerationOptions options)
@@ -58,15 +58,13 @@ namespace Castle.Core.DynamicProxy.Contributors
 			// no locking required as we're already within a lock
 			var invocation = scope.GetFromCache(key);
 			if (invocation != null)
-			{
 				return invocation;
-			}
 
 			invocation = new CompositionInvocationTypeGenerator(method.Method.DeclaringType,
-			                                                    method,
-			                                                    method.Method,
-			                                                    false,
-			                                                    null)
+					method,
+					method.Method,
+					false,
+					null)
 				.Generate(emitter, options, namingScope)
 				.BuildType();
 

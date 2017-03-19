@@ -41,19 +41,12 @@ namespace Castle.Core.Core.Internal
 		public static int GetContentsHashCode<T>(IList<T> list)
 		{
 			if (list == null)
-			{
 				return 0;
-			}
 
 			var result = 0;
 			for (var i = 0; i < list.Count; i++)
-			{
 				if (list[i] != null)
-				{
-					// simply add since order does not matter
 					result += list[i].GetHashCode();
-				}
-			}
 
 			return result;
 		}
@@ -61,19 +54,13 @@ namespace Castle.Core.Core.Internal
 		public static bool AreEquivalent<T>(IList<T> listA, IList<T> listB)
 		{
 			if (listA == null && listB == null)
-			{
 				return true;
-			}
 
 			if (listA == null || listB == null)
-			{
 				return false;
-			}
 
 			if (listA.Count != listB.Count)
-			{
 				return false;
-			}
 
 			// copy contents to another list so that contents can be removed as they are found,
 			// in order to consider duplicates
@@ -85,19 +72,15 @@ namespace Castle.Core.Core.Internal
 				var found = false;
 
 				for (var j = 0; j < listBAvailableContents.Count; j++)
-				{
 					if (Equals(listA[i], listBAvailableContents[j]))
 					{
 						found = true;
 						listBAvailableContents.RemoveAt(j);
 						break;
 					}
-				}
 
 				if (!found)
-				{
 					return false;
-				}
 			}
 
 			return true;

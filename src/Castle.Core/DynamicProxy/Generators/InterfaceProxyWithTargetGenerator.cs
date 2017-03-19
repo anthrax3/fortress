@@ -62,12 +62,12 @@ namespace Castle.Core.DynamicProxy.Generators
 		}
 
 		protected virtual ITypeContributor AddMappingForTargetType(IDictionary<Type, ITypeContributor> typeImplementerMapping,
-		                                                           Type proxyTargetType, ICollection<Type> targetInterfaces,
-		                                                           ICollection<Type> additionalInterfaces,
-		                                                           INamingScope namingScope)
+			Type proxyTargetType, ICollection<Type> targetInterfaces,
+			ICollection<Type> additionalInterfaces,
+			INamingScope namingScope)
 		{
 			var contributor = new InterfaceProxyTargetContributor(proxyTargetType, AllowChangeTarget, namingScope)
-			{ Logger = Logger };
+				{Logger = Logger};
 			var proxiedInterfaces = targetType.GetAllInterfaces();
 			foreach (var @interface in proxiedInterfaces)
 			{
@@ -78,9 +78,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			foreach (var @interface in additionalInterfaces)
 			{
 				if (!ImplementedByTarget(targetInterfaces, @interface) || proxiedInterfaces.Contains(@interface))
-				{
 					continue;
-				}
 
 				contributor.AddInterfaceToProxy(@interface);
 				AddMappingNoCheck(@interface, contributor, typeImplementerMapping);
@@ -106,9 +104,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			var model = new MetaType();
 			// Collect methods
 			foreach (var contributor in contributors)
-			{
 				contributor.CollectElementsToProxy(ProxyGenerationOptions.Hook, model);
-			}
 
 			ProxyGenerationOptions.Hook.MethodsInspected();
 
@@ -123,18 +119,14 @@ namespace Castle.Core.DynamicProxy.Generators
 
 				// TODO: redo it
 				if (contributor is MixinContributor)
-				{
 					ctorArguments.AddRange((contributor as MixinContributor).Fields);
-				}
 			}
 
 			ctorArguments.Add(interceptorsField);
 			ctorArguments.Add(targetField);
 			var selector = emitter.GetField("__selector");
 			if (selector != null)
-			{
 				ctorArguments.Add(selector);
-			}
 
 			GenerateConstructors(emitter, baseType, ctorArguments.ToArray());
 
@@ -151,35 +143,30 @@ namespace Castle.Core.DynamicProxy.Generators
 		protected virtual InterfaceProxyWithoutTargetContributor GetContributorForAdditionalInterfaces(
 			INamingScope namingScope)
 		{
-			return new InterfaceProxyWithoutTargetContributor(namingScope, (c, m) => NullExpression.Instance) { Logger = Logger };
+			return new InterfaceProxyWithoutTargetContributor(namingScope, (c, m) => NullExpression.Instance) {Logger = Logger};
 		}
 
 		protected virtual IEnumerable<Type> GetTypeImplementerMapping(Type[] interfaces, Type proxyTargetType,
-		                                                              out IEnumerable<ITypeContributor> contributors,
-		                                                              INamingScope namingScope)
+			out IEnumerable<ITypeContributor> contributors,
+			INamingScope namingScope)
 		{
 			IDictionary<Type, ITypeContributor> typeImplementerMapping = new Dictionary<Type, ITypeContributor>();
-			var mixins = new MixinContributor(namingScope, AllowChangeTarget) { Logger = Logger };
+			var mixins = new MixinContributor(namingScope, AllowChangeTarget) {Logger = Logger};
 			// Order of interface precedence:
 			// 1. first target
 			var targetInterfaces = proxyTargetType.GetAllInterfaces();
 			var additionalInterfaces = TypeUtil.GetAllInterfaces(interfaces);
 			var target = AddMappingForTargetType(typeImplementerMapping, proxyTargetType, targetInterfaces, additionalInterfaces,
-			                                     namingScope);
+				namingScope);
 
 			// 2. then mixins
 			if (ProxyGenerationOptions.HasMixins)
-			{
 				foreach (var mixinInterface in ProxyGenerationOptions.MixinData.MixinInterfaces)
-				{
 					if (targetInterfaces.Contains(mixinInterface))
 					{
 						// OK, so the target implements this interface. We now do one of two things:
 						if (additionalInterfaces.Contains(mixinInterface))
-						{
-							// we intercept the interface, and forward calls to the target type
 							AddMapping(mixinInterface, target, typeImplementerMapping);
-						}
 						// we do not intercept the interface
 						mixins.AddEmptyInterface(mixinInterface);
 					}
@@ -191,21 +178,15 @@ namespace Castle.Core.DynamicProxy.Generators
 							typeImplementerMapping.Add(mixinInterface, mixins);
 						}
 					}
-				}
-			}
 
 			var additionalInterfacesContributor = GetContributorForAdditionalInterfaces(namingScope);
 			// 3. then additional interfaces
 			foreach (var @interface in additionalInterfaces)
 			{
 				if (typeImplementerMapping.ContainsKey(@interface))
-				{
 					continue;
-				}
 				if (ProxyGenerationOptions.MixinData.ContainsMixin(@interface))
-				{
 					continue;
-				}
 
 				additionalInterfacesContributor.AddInterfaceToProxy(@interface);
 				AddMappingNoCheck(@interface, additionalInterfacesContributor, typeImplementerMapping);
@@ -234,7 +215,7 @@ namespace Castle.Core.DynamicProxy.Generators
 		}
 
 		protected virtual Type Init(string typeName, out ClassEmitter emitter, Type proxyTargetType,
-		                            out FieldReference interceptorsField, IEnumerable<Type> interfaces)
+			out FieldReference interceptorsField, IEnumerable<Type> interfaces)
 		{
 			var baseType = ProxyGenerationOptions.BaseTypeForInterfaceProxy;
 
@@ -257,28 +238,20 @@ namespace Castle.Core.DynamicProxy.Generators
 		private void EnsureValidBaseType(Type type)
 		{
 			if (type == null)
-			{
 				throw new ArgumentException(
 					"Base type for proxy is null reference. Please set it to System.Object or some other valid type.");
-			}
 
 			if (!type.GetTypeInfo().IsClass)
-			{
 				ThrowInvalidBaseType(type, "it is not a class type");
-			}
 
 			if (type.GetTypeInfo().IsSealed)
-			{
 				ThrowInvalidBaseType(type, "it is sealed");
-			}
 
 			var constructor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-			                                      null, Type.EmptyTypes, null);
+				null, Type.EmptyTypes, null);
 
 			if (constructor == null || constructor.IsPrivate)
-			{
 				ThrowInvalidBaseType(type, "it does not have accessible parameterless constructor");
-			}
 		}
 
 		private bool ImplementedByTarget(ICollection<Type> targetInterfaces, Type @interface)

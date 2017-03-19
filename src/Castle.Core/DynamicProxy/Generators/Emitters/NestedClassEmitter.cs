@@ -20,16 +20,16 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
 	public class NestedClassEmitter : AbstractTypeEmitter
 	{
-		public NestedClassEmitter(AbstractTypeEmitter maintype, String name, Type baseType, Type[] interfaces)
+		public NestedClassEmitter(AbstractTypeEmitter maintype, string name, Type baseType, Type[] interfaces)
 			: this(
 				maintype,
 				CreateTypeBuilder(maintype, name, TypeAttributes.Sealed | TypeAttributes.NestedPublic | TypeAttributes.Class,
-				                  baseType, interfaces))
+					baseType, interfaces))
 		{
 		}
 
-		public NestedClassEmitter(AbstractTypeEmitter maintype, String name, TypeAttributes attributes, Type baseType,
-		                          Type[] interfaces)
+		public NestedClassEmitter(AbstractTypeEmitter maintype, string name, TypeAttributes attributes, Type baseType,
+			Type[] interfaces)
 			: this(maintype, CreateTypeBuilder(maintype, name, attributes, baseType, interfaces))
 		{
 		}
@@ -41,7 +41,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		}
 
 		private static TypeBuilder CreateTypeBuilder(AbstractTypeEmitter maintype, string name, TypeAttributes attributes,
-		                                             Type baseType, Type[] interfaces)
+			Type baseType, Type[] interfaces)
 		{
 			return maintype.TypeBuilder.DefineNestedType(
 				name,

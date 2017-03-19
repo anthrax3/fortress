@@ -19,12 +19,12 @@ namespace Castle.Core.Core.Logging
 	[Serializable]
 	public class NullLogFactory : AbstractLoggerFactory
 	{
-		public override ILogger Create(String name)
+		public override ILogger Create(string name)
 		{
 			return NullLogger.Instance;
 		}
 
-		public override ILogger Create(String name, LoggerLevel level)
+		public override ILogger Create(string name, LoggerLevel level)
 		{
 			return NullLogger.Instance;
 		}

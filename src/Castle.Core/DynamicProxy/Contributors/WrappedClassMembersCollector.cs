@@ -36,18 +36,13 @@ namespace Castle.Core.DynamicProxy.Contributors
 		protected override MetaMethod GetMethodToGenerate(MethodInfo method, IProxyGenerationHook hook, bool isStandalone)
 		{
 			if (method.IsAccessible() == false)
-			{
 				return null;
-			}
 
 			var accepted = AcceptMethod(method, true, hook);
 			if (!accepted && !method.IsAbstract)
-			{
-				//we don't need to do anything...
 				return null;
-			}
 
-			return new MetaMethod(method, method, isStandalone, accepted, hasTarget: true);
+			return new MetaMethod(method, method, isStandalone, accepted, true);
 		}
 
 		protected bool IsGeneratedByTheCompiler(FieldInfo field)
@@ -67,9 +62,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 			foreach (var field in fields)
 			{
 				if (IsOKToBeOnProxy(field))
-				{
 					continue;
-				}
 
 				hook.NonProxyableMemberNotification(type, field);
 			}

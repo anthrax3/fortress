@@ -20,57 +20,45 @@ namespace Castle.Core.Core.Resource
 {
 	public class FileResource : AbstractStreamResource
 	{
+		private string basePath;
 		private string filePath;
-		private String basePath;
 
 		public FileResource(CustomUri resource)
 		{
-			CreateStream = delegate
-			{
-				return CreateStreamFromUri(resource, DefaultBasePath);
-			};
+			CreateStream = delegate { return CreateStreamFromUri(resource, DefaultBasePath); };
 		}
 
-		public FileResource(CustomUri resource, String basePath)
+		public FileResource(CustomUri resource, string basePath)
 		{
-			CreateStream = delegate
-			{
-				return CreateStreamFromUri(resource, basePath);
-			};
+			CreateStream = delegate { return CreateStreamFromUri(resource, basePath); };
 		}
 
-		public FileResource(String resourceName)
+		public FileResource(string resourceName)
 		{
-			CreateStream = delegate
-			{
-				return CreateStreamFromPath(resourceName, DefaultBasePath);
-			};
+			CreateStream = delegate { return CreateStreamFromPath(resourceName, DefaultBasePath); };
 		}
 
-		public FileResource(String resourceName, String basePath)
+		public FileResource(string resourceName, string basePath)
 		{
-			CreateStream = delegate
-			{
-				return CreateStreamFromPath(resourceName, basePath);
-			};
+			CreateStream = delegate { return CreateStreamFromPath(resourceName, basePath); };
 		}
 
-		public override string ToString()
-		{
-			return String.Format(CultureInfo.CurrentCulture, "FileResource: [{0}] [{1}]", filePath, basePath);
-		}
-
-		public override String FileBasePath
+		public override string FileBasePath
 		{
 			get { return basePath; }
 		}
 
-		public override IResource CreateRelative(String relativePath)
+		public override string ToString()
+		{
+			return string.Format(CultureInfo.CurrentCulture, "FileResource: [{0}] [{1}]", filePath, basePath);
+		}
+
+		public override IResource CreateRelative(string relativePath)
 		{
 			return new FileResource(relativePath, basePath);
 		}
 
-		private Stream CreateStreamFromUri(CustomUri resource, String rootPath)
+		private Stream CreateStreamFromUri(CustomUri resource, string rootPath)
 		{
 			if (resource == null) throw new ArgumentNullException("resource");
 			if (rootPath == null) throw new ArgumentNullException("rootPath");
@@ -81,7 +69,7 @@ namespace Castle.Core.Core.Resource
 			return CreateStreamFromPath(resource.Path, rootPath);
 		}
 
-		private Stream CreateStreamFromPath(String resourcePath, String rootPath)
+		private Stream CreateStreamFromPath(string resourcePath, string rootPath)
 		{
 			if (resourcePath == null)
 				throw new ArgumentNullException("resourcePath");
@@ -89,26 +77,21 @@ namespace Castle.Core.Core.Resource
 				throw new ArgumentNullException("rootPath");
 
 			if (!Path.IsPathRooted(resourcePath) || !File.Exists(resourcePath))
-			{
-				// For a relative path, we use the basePath to
-				// resolve the full path
-
 				resourcePath = Path.Combine(rootPath, resourcePath);
-			}
 
 			CheckFileExists(resourcePath);
 
-			this.filePath = Path.GetFileName(resourcePath);
-			this.basePath = Path.GetDirectoryName(resourcePath);
+			filePath = Path.GetFileName(resourcePath);
+			basePath = Path.GetDirectoryName(resourcePath);
 
 			return File.OpenRead(resourcePath);
 		}
 
-		private static void CheckFileExists(String path)
+		private static void CheckFileExists(string path)
 		{
 			if (!File.Exists(path))
 			{
-				String message = String.Format(CultureInfo.InvariantCulture, "File {0} could not be found", new FileInfo(path).FullName);
+				var message = string.Format(CultureInfo.InvariantCulture, "File {0} could not be found", new FileInfo(path).FullName);
 				throw new ResourceException(message);
 			}
 		}

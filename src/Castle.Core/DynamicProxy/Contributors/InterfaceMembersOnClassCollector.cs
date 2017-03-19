@@ -33,14 +33,10 @@ namespace Castle.Core.DynamicProxy.Contributors
 		protected override MetaMethod GetMethodToGenerate(MethodInfo method, IProxyGenerationHook hook, bool isStandalone)
 		{
 			if (method.IsAccessible() == false)
-			{
 				return null;
-			}
 
 			if (onlyProxyVirtual && IsVirtuallyImplementedInterfaceMethod(method))
-			{
 				return null;
-			}
 
 			var methodOnTarget = GetMethodOnTarget(method);
 
@@ -52,9 +48,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		{
 			var index = Array.IndexOf(map.InterfaceMethods, method);
 			if (index == -1)
-			{
 				return null;
-			}
 
 			return map.TargetMethods[index];
 		}

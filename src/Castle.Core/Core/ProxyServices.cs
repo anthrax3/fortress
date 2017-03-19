@@ -21,10 +21,10 @@ namespace Castle.Core.Core
 	{
 		public static bool IsDynamicProxy(Type type)
 		{
-			string assemblyName = type.GetTypeInfo().Assembly.FullName;
+			var assemblyName = type.GetTypeInfo().Assembly.FullName;
 
-			return (assemblyName.StartsWith("DynamicAssemblyProxyGen", StringComparison.Ordinal) ||
-					assemblyName.StartsWith("DynamicProxyGenAssembly2", StringComparison.Ordinal));
+			return assemblyName.StartsWith("DynamicAssemblyProxyGen", StringComparison.Ordinal) ||
+			       assemblyName.StartsWith("DynamicProxyGenAssembly2", StringComparison.Ordinal);
 		}
 	}
 }

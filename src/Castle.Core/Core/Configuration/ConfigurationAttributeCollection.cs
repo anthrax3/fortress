@@ -13,13 +13,14 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Specialized;
 using System.Runtime.Serialization;
 
 namespace Castle.Core.Core.Configuration
 {
 	[Serializable]
 	public class ConfigurationAttributeCollection
-		: System.Collections.Specialized.NameValueCollection
+		: NameValueCollection
 	{
 		public ConfigurationAttributeCollection()
 		{

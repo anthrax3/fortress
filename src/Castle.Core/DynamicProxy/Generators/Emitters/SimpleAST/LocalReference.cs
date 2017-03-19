@@ -29,7 +29,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 
 		public override void Generate(ILGenerator gen)
 		{
-			localbuilder = gen.DeclareLocal(base.Type);
+			localbuilder = gen.DeclareLocal(Type);
 		}
 
 		public override void LoadAddressOfReference(ILGenerator gen)

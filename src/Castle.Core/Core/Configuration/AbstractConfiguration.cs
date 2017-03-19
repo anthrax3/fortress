@@ -20,18 +20,9 @@ namespace Castle.Core.Core.Configuration
 	[Serializable]
 	public abstract class AbstractConfiguration : IConfiguration
 	{
-		private readonly ConfigurationAttributeCollection attributes = new ConfigurationAttributeCollection();
-		private readonly ConfigurationCollection children = new ConfigurationCollection();
+		public virtual ConfigurationAttributeCollection Attributes { get; } = new ConfigurationAttributeCollection();
 
-		public virtual ConfigurationAttributeCollection Attributes
-		{
-			get { return attributes; }
-		}
-
-		public virtual ConfigurationCollection Children
-		{
-			get { return children; }
-		}
+		public virtual ConfigurationCollection Children { get; } = new ConfigurationCollection();
 
 		public string Name { get; protected set; }
 
@@ -40,9 +31,7 @@ namespace Castle.Core.Core.Configuration
 		public virtual object GetValue(Type type, object defaultValue)
 		{
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 
 			try
 			{

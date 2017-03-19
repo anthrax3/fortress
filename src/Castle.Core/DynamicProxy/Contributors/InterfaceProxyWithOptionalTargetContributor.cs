@@ -22,7 +22,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		private readonly GetTargetReferenceDelegate getTargetReference;
 
 		public InterfaceProxyWithOptionalTargetContributor(INamingScope namingScope, GetTargetExpressionDelegate getTarget,
-		                                                   GetTargetReferenceDelegate getTargetReference)
+			GetTargetReferenceDelegate getTargetReference)
 			: base(namingScope, getTarget)
 		{
 			this.getTargetReference = getTargetReference;
@@ -30,13 +30,11 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		protected override MethodGenerator GetMethodGenerator(MetaMethod method, ClassEmitter @class,
-		                                                      ProxyGenerationOptions options,
-		                                                      OverrideMethodDelegate overrideMethod)
+			ProxyGenerationOptions options,
+			OverrideMethodDelegate overrideMethod)
 		{
 			if (!method.Proxyable)
-			{
 				return new OptionallyForwardingMethodGenerator(method, overrideMethod, getTargetReference);
-			}
 
 			return base.GetMethodGenerator(method, @class, options, overrideMethod);
 		}

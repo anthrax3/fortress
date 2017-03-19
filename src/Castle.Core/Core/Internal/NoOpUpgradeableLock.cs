@@ -20,7 +20,6 @@ namespace Castle.Core.Core.Internal
 
 		public void Dispose()
 		{
-
 		}
 
 		public bool LockAcquired

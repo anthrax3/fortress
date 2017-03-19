@@ -29,17 +29,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			}
 
 			if (type.GetTypeInfo().IsByRef)
-			{
 				throw new NotSupportedException("Cannot load ByRef values");
-			}
-			else if (type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr) && type != typeof(UIntPtr))
+			if (type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr) && type != typeof(UIntPtr))
 			{
 				var opCode = LdindOpCodesDictionary.Instance[type];
 
 				if (opCode == LdindOpCodesDictionary.EmptyOpCode)
-				{
 					throw new ArgumentException("Type " + type + " could not be converted to a OpCode");
-				}
 
 				gen.Emit(opCode);
 			}
@@ -59,14 +55,14 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 
 		public static void EmitLoadOpCodeForConstantValue(ILGenerator gen, object value)
 		{
-			if (value is String)
+			if (value is string)
 			{
 				gen.Emit(OpCodes.Ldstr, value.ToString());
 			}
-			else if (value is Int32)
+			else if (value is int)
 			{
 				var code = LdcOpCodesDictionary.Instance[value.GetType()];
-				gen.Emit(code, (int)value);
+				gen.Emit(code, (int) value);
 			}
 			else if (value is bool)
 			{
@@ -89,10 +85,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 					case StackBehaviour.Pushi:
 						gen.Emit(opCode, 0);
 						if (Is64BitTypeLoadedAsInt32(type))
-						{
-							// we load Int32, and have to convert it to 64bit type
 							gen.Emit(OpCodes.Conv_I8);
-						}
 						break;
 					case StackBehaviour.Pushr8:
 						gen.Emit(opCode, 0D);
@@ -125,14 +118,12 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 			{
 				throw new NotSupportedException("Cannot store ByRef values");
 			}
-			else if (type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr) && type != typeof(UIntPtr))
+			if (type.GetTypeInfo().IsPrimitive && type != typeof(IntPtr) && type != typeof(UIntPtr))
 			{
 				var opCode = StindOpCodesDictionary.Instance[type];
 
 				if (Equals(opCode, StindOpCodesDictionary.EmptyOpCode))
-				{
 					throw new ArgumentException("Type " + type + " could not be converted to a OpCode");
-				}
 
 				gen.Emit(opCode);
 			}
@@ -152,27 +143,27 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 
 		private static Type GetUnderlyingTypeOfEnum(Type enumType)
 		{
-			var baseType = (IConvertible)Activator.CreateInstance(enumType);
+			var baseType = (IConvertible) Activator.CreateInstance(enumType);
 			var code = baseType.GetTypeCode();
 
 			switch (code)
 			{
 				case TypeCode.SByte:
-					return typeof(SByte);
+					return typeof(sbyte);
 				case TypeCode.Byte:
-					return typeof(Byte);
+					return typeof(byte);
 				case TypeCode.Int16:
-					return typeof(Int16);
+					return typeof(short);
 				case TypeCode.Int32:
-					return typeof(Int32);
+					return typeof(int);
 				case TypeCode.Int64:
-					return typeof(Int64);
+					return typeof(long);
 				case TypeCode.UInt16:
-					return typeof(UInt16);
+					return typeof(ushort);
 				case TypeCode.UInt32:
-					return typeof(UInt32);
+					return typeof(uint);
 				case TypeCode.UInt64:
-					return typeof(UInt64);
+					return typeof(ulong);
 				default:
 					throw new NotSupportedException();
 			}

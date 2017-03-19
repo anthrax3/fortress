@@ -23,30 +23,25 @@ using Castle.Core.DynamicProxy.Generators;
 
 namespace Castle.Core.DynamicProxy.Serialization
 {
-	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Assembly)]
 	public class CacheMappingsAttribute : Attribute
 	{
 		private static readonly ConstructorInfo constructor =
-			typeof(CacheMappingsAttribute).GetConstructor(new[] { typeof(byte[]) });
-
-		private readonly byte[] serializedCacheMappings;
+			typeof(CacheMappingsAttribute).GetConstructor(new[] {typeof(byte[])});
 
 		public CacheMappingsAttribute(byte[] serializedCacheMappings)
 		{
-			this.serializedCacheMappings = serializedCacheMappings;
+			SerializedCacheMappings = serializedCacheMappings;
 		}
 
-		public byte[] SerializedCacheMappings
-		{
-			get { return serializedCacheMappings; }
-		}
+		public byte[] SerializedCacheMappings { get; }
 
 		public Dictionary<CacheKey, string> GetDeserializedMappings()
 		{
 			using (var stream = new MemoryStream(SerializedCacheMappings))
 			{
 				var formatter = new BinaryFormatter();
-				return (Dictionary<CacheKey, string>)formatter.Deserialize(stream);
+				return (Dictionary<CacheKey, string>) formatter.Deserialize(stream);
 			}
 		}
 
@@ -57,10 +52,9 @@ namespace Castle.Core.DynamicProxy.Serialization
 				var formatter = new BinaryFormatter();
 				formatter.Serialize(stream, mappings);
 				var bytes = stream.ToArray();
-				var attributeBuilder = new CustomAttributeBuilder(constructor, new object[] { bytes });
+				var attributeBuilder = new CustomAttributeBuilder(constructor, new object[] {bytes});
 				assemblyBuilder.SetCustomAttribute(attributeBuilder);
 			}
 		}
 	}
 }
-

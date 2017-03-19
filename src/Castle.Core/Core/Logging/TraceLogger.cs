@@ -51,13 +51,9 @@ namespace Castle.Core.Core.Logging
 		protected override void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception)
 		{
 			if (exception == null)
-			{
 				traceSource.TraceEvent(MapTraceEventType(loggerLevel), 0, message);
-			}
 			else
-			{
 				traceSource.TraceData(MapTraceEventType(loggerLevel), 0, message, exception);
-			}
 		}
 
 		private void Initialize()
@@ -70,9 +66,7 @@ namespace Castle.Core.Core.Logging
 				// the named TraceSources which have been created
 
 				if (cache.TryGetValue(Name, out traceSource))
-				{
 					return;
-				}
 
 				var defaultLevel = MapSourceLevels(Level);
 				traceSource = new TraceSource(Name, defaultLevel);
@@ -104,9 +98,7 @@ namespace Castle.Core.Core.Logging
 				traceSource.Switch = foundSource.Switch;
 				traceSource.Listeners.Clear();
 				foreach (TraceListener listener in foundSource.Listeners)
-				{
 					traceSource.Listeners.Add(listener);
-				}
 
 				cache.Add(Name, traceSource);
 			}
@@ -116,9 +108,7 @@ namespace Castle.Core.Core.Logging
 		{
 			var lastDot = name.LastIndexOf('.');
 			if (lastDot != -1)
-			{
 				return name.Substring(0, lastDot);
-			}
 			return null;
 		}
 
@@ -127,9 +117,7 @@ namespace Castle.Core.Core.Logging
 			if (source.Listeners.Count == 1 &&
 			    source.Listeners[0] is DefaultTraceListener &&
 			    source.Listeners[0].Name == "Default")
-			{
 				return false;
-			}
 			return true;
 		}
 

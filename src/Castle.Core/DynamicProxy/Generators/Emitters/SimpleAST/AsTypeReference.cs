@@ -27,19 +27,13 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 		public AsTypeReference(Reference reference, Type type)
 		{
 			if (reference == null)
-			{
 				throw new ArgumentNullException("reference");
-			}
 			if (type == null)
-			{
 				throw new ArgumentNullException("type");
-			}
 			this.reference = reference;
 			this.type = type;
 			if (reference == OwnerReference)
-			{
 				OwnerReference = null;
-			}
 		}
 
 		public override void LoadAddressOfReference(ILGenerator gen)

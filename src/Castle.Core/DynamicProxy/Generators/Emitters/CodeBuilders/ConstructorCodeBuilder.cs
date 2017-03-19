@@ -32,10 +32,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
 		{
 			var type = baseType;
 			if (type.GetTypeInfo().ContainsGenericParameters)
-			{
 				type = type.GetGenericTypeDefinition();
-					// need to get generic type definition, otherwise the GetConstructor method might throw NotSupportedException
-			}
 
 			var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 			var baseDefaultCtor = type.GetConstructor(flags, null, new Type[0], null);
@@ -52,7 +49,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
 		{
 			AddStatement(
 				new ConstructorInvocationStatement(constructor,
-				                                   ArgumentsUtil.ConvertArgumentReferenceToExpression(arguments)));
+					ArgumentsUtil.ConvertArgumentReferenceToExpression(arguments)));
 		}
 	}
 }

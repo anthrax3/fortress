@@ -19,20 +19,6 @@ namespace Castle.Core.DynamicProxy.Generators
 {
 	public class DelegateProxyGenerationHook : IProxyGenerationHook
 	{
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
-			return obj.GetType() == typeof(DelegateProxyGenerationHook);
-		}
-
-		public override int GetHashCode()
-		{
-			return GetType().GetHashCode();
-		}
-
 		public void MethodsInspected()
 		{
 		}
@@ -44,6 +30,18 @@ namespace Castle.Core.DynamicProxy.Generators
 		public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
 		{
 			return methodInfo.Name.Equals("Invoke");
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+				return false;
+			return obj.GetType() == typeof(DelegateProxyGenerationHook);
+		}
+
+		public override int GetHashCode()
+		{
+			return GetType().GetHashCode();
 		}
 	}
 }

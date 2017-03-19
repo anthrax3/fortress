@@ -30,7 +30,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 		private readonly Type targetType;
 
 		public InvocationWithDelegateContributor(Type delegateType, Type targetType, MetaMethod method,
-		                                         INamingScope namingScope)
+			INamingScope namingScope)
 		{
 			Debug.Assert(delegateType.GetTypeInfo().IsGenericType == false, "delegateType.IsGenericType == false");
 			this.delegateType = delegateType;
@@ -55,11 +55,11 @@ namespace Castle.Core.DynamicProxy.Contributors
 		}
 
 		public MethodInvocationExpression GetCallbackMethodInvocation(AbstractTypeEmitter invocation, Expression[] args,
-		                                                              Reference targetField,
-		                                                              MethodEmitter invokeMethodOnTarget)
+			Reference targetField,
+			MethodEmitter invokeMethodOnTarget)
 		{
 			var allArgs = GetAllArgs(args, targetField);
-			var @delegate = (Reference)invocation.GetField("delegate");
+			var @delegate = (Reference) invocation.GetField("delegate");
 
 			return new MethodInvocationExpression(@delegate, GetCallbackMethod(), allArgs);
 		}

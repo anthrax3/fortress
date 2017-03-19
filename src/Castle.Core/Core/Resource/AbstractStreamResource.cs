@@ -17,21 +17,13 @@ using System.Text;
 
 namespace Castle.Core.Core.Resource
 {
-	public delegate Stream StreamFactory();
-
 	public abstract class AbstractStreamResource : AbstractResource
 	{
-		private StreamFactory createStream;
+		public StreamFactory CreateStream { get; set; }
 
 		~AbstractStreamResource()
 		{
 			Dispose(false);
-		}
-
-		public StreamFactory CreateStream
-		{
-			get { return createStream; }
-			set { createStream = value; }
 		}
 
 		public override TextReader GetStreamReader()

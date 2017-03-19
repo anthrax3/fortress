@@ -20,6 +20,21 @@ namespace Castle.Core.Core.Internal
 	{
 		private readonly ReaderWriterLockSlim locker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
+		public bool IsReadLockHeld
+		{
+			get { return locker.IsReadLockHeld; }
+		}
+
+		public bool IsUpgradeableReadLockHeld
+		{
+			get { return locker.IsUpgradeableReadLockHeld; }
+		}
+
+		public bool IsWriteLockHeld
+		{
+			get { return locker.IsWriteLockHeld; }
+		}
+
 		public override IUpgradeableLockHolder ForReadingUpgradeable()
 		{
 			return ForReadingUpgradeable(true);
@@ -43,9 +58,7 @@ namespace Castle.Core.Core.Internal
 		public override ILockHolder ForReading(bool waitForLock)
 		{
 			if (locker.IsReadLockHeld || locker.IsUpgradeableReadLockHeld || locker.IsWriteLockHeld)
-			{
 				return NoOpLock.Lock;
-			}
 
 			return new SlimReadLockHolder(locker, waitForLock);
 		}
@@ -53,26 +66,9 @@ namespace Castle.Core.Core.Internal
 		public override ILockHolder ForWriting(bool waitForLock)
 		{
 			if (locker.IsWriteLockHeld)
-			{
 				return NoOpLock.Lock;
-			}
 
 			return new SlimWriteLockHolder(locker, waitForLock);
-		}
-
-		public bool IsReadLockHeld
-		{
-			get { return locker.IsReadLockHeld; }
-		}
-
-		public bool IsUpgradeableReadLockHeld
-		{
-			get { return locker.IsUpgradeableReadLockHeld; }
-		}
-
-		public bool IsWriteLockHeld
-		{
-			get { return locker.IsWriteLockHeld; }
 		}
 	}
 }

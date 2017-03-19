@@ -38,7 +38,7 @@ namespace Castle.Core.DynamicProxy.Generators
 			ICollection<Type> targetInterfaces, ICollection<Type> additionalInterfaces, INamingScope namingScope)
 		{
 			var contributor = new InterfaceProxyWithoutTargetContributor(namingScope, (c, m) => NullExpression.Instance)
-			{ Logger = Logger };
+				{Logger = Logger};
 			foreach (var @interface in targetType.GetAllInterfaces())
 			{
 				contributor.AddInterfaceToProxy(@interface);
@@ -48,16 +48,14 @@ namespace Castle.Core.DynamicProxy.Generators
 		}
 
 		protected override Type GenerateType(string typeName, Type proxyTargetType, Type[] interfaces,
-		                                     INamingScope namingScope)
+			INamingScope namingScope)
 		{
 			IEnumerable<ITypeContributor> contributors;
 			var allInterfaces = GetTypeImplementerMapping(interfaces, targetType, out contributors, namingScope);
 			var model = new MetaType();
 			// collect elements
 			foreach (var contributor in contributors)
-			{
 				contributor.CollectElementsToProxy(ProxyGenerationOptions.Hook, model);
-			}
 
 			ProxyGenerationOptions.Hook.MethodsInspected();
 
@@ -76,17 +74,13 @@ namespace Castle.Core.DynamicProxy.Generators
 
 				// TODO: redo it
 				if (contributor is MixinContributor)
-				{
 					mixinFieldsList.AddRange((contributor as MixinContributor).Fields);
-				}
 			}
 
-			var ctorArguments = new List<FieldReference>(mixinFieldsList) { interceptorsField, targetField };
+			var ctorArguments = new List<FieldReference>(mixinFieldsList) {interceptorsField, targetField};
 			var selector = emitter.GetField("__selector");
 			if (selector != null)
-			{
 				ctorArguments.Add(selector);
-			}
 
 			GenerateConstructors(emitter, baseType, ctorArguments.ToArray());
 

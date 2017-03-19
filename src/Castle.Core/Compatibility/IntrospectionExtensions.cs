@@ -30,4 +30,3 @@ namespace Castle.Core.Compatibility
 	//	}
 	//}
 }
-

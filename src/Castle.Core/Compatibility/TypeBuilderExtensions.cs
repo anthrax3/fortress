@@ -34,4 +34,3 @@ namespace Castle.Core.Compatibility
 		}
 	}
 }
-

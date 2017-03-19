@@ -20,10 +20,10 @@ namespace Castle.Core.Core.Logging
 	{
 		new IExtendedLogger Create(Type type);
 
-		new IExtendedLogger Create(String name);
+		new IExtendedLogger Create(string name);
 
 		new IExtendedLogger Create(Type type, LoggerLevel level);
 
-		new IExtendedLogger Create(String name, LoggerLevel level);
+		new IExtendedLogger Create(string name, LoggerLevel level);
 	}
 }

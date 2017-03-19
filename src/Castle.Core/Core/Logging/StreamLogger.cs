@@ -23,22 +23,23 @@ namespace Castle.Core.Core.Logging
 	{
 		private StreamWriter writer;
 
-		public StreamLogger(String name, Stream stream) : this(name, new StreamWriter(stream))
+		public StreamLogger(string name, Stream stream) : this(name, new StreamWriter(stream))
 		{
 		}
 
-		public StreamLogger(String name, Stream stream, Encoding encoding) : this(name, new StreamWriter(stream, encoding))
+		public StreamLogger(string name, Stream stream, Encoding encoding) : this(name, new StreamWriter(stream, encoding))
 		{
 		}
 
-		public StreamLogger(String name, Stream stream, Encoding encoding, int bufferSize)
+		public StreamLogger(string name, Stream stream, Encoding encoding, int bufferSize)
 			: this(name, new StreamWriter(stream, encoding, bufferSize))
 		{
 		}
 
-		~StreamLogger()
+		protected StreamLogger(string name, StreamWriter writer) : base(name, LoggerLevel.Debug)
 		{
-			Dispose(false);
+			this.writer = writer;
+			writer.AutoFlush = true;
 		}
 
 		#region IDisposable Members
@@ -51,42 +52,35 @@ namespace Castle.Core.Core.Logging
 
 		#endregion
 
+		~StreamLogger()
+		{
+			Dispose(false);
+		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
 				if (writer != null)
 				{
 					writer.Dispose();
 					writer = null;
 				}
-			}
 		}
 
-		protected StreamLogger(String name, StreamWriter writer) : base(name, LoggerLevel.Debug)
-		{
-			this.writer = writer;
-			writer.AutoFlush = true;
-		}
-
-		protected override void Log(LoggerLevel loggerLevel, String loggerName, String message, Exception exception)
+		protected override void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception)
 		{
 			if (writer == null)
-			{
 				return; // just in case it's been disposed
-			}
 
 			writer.WriteLine("[{0}] '{1}' {2}", loggerLevel, loggerName, message);
 
 			if (exception != null)
-			{
 				writer.WriteLine("[{0}] '{1}' {2}: {3} {4}",
-				                 loggerLevel,
-				                 loggerName,
-				                 exception.GetType().FullName,
-				                 exception.Message,
-				                 exception.StackTrace);
-			}
+					loggerLevel,
+					loggerName,
+					exception.GetType().FullName,
+					exception.Message,
+					exception.StackTrace);
 		}
 
 		public override ILogger CreateChildLogger(string loggerName)
