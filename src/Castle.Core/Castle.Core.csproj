@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45;net451;net46;net461;net462</TargetFrameworks>
+		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="CastleKey.snk" />
+    <None Remove="DynamicProxy\DynProxy.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="DynamicProxy\DynProxy.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

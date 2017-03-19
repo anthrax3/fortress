@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_APPDOMAIN;NET45</DefineConstants>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Core.Tests\Resources\file1.txt" />
+    <None Remove="Core.Tests\Resources\MoreRes\file2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Core.Tests\Resources\file1.txt" />
+    <EmbeddedResource Include="Core.Tests\Resources\MoreRes\file2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+	<Reference Include="NUnit">
+      <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+	<Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

@@ -1,0 +1,9 @@
+FRAMEWORK: NET461
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    FAKE (4.56)
+    log4net (2.0.8)
+    NLog (4.4.4)
+    NUnit (3.6.1)
+    NUnit.ConsoleRunner (3.6.1)
+    Serilog (2.4)
