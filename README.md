@@ -1,7 +1,8 @@
 # fortress.windsor
+
 A leaner meaner version of Castle.Windsor
 
-# Castle Windsor
+## Castle Windsor
 
 <img align="right" src="docs/images/windsor-logo.png">
 
