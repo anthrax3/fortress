@@ -1,6 +1,8 @@
 
 version: 1.0.{build}
 
+image: Visual Studio 2017
+
 branches:
 
   except:
@@ -32,15 +34,10 @@ configuration: Release
 cache:
   - packages -> paket.lock
 
-nuget:
+build_script:
   
-  account_feed: true
-  
-  project_feed: true
-
-build:
-  
-  parallel: true
-  
-  project: Castle.Windsor.sln
+  - cmd: build.bat
       
+test_script:
+  
+  - cmd: build test
