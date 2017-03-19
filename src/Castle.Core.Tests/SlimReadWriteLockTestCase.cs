@@ -12,59 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Threading;
 using Castle.Core.Core.Internal;
+using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	using System.Threading;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SlimReadWriteLockTestCase
 	{
-		private SlimReadWriteLock @lock;
-
 		[SetUp]
 		public void SetUp()
 		{
 			@lock = new SlimReadWriteLock();
 		}
 
-		[Test]
-		public void Can_be_used_ForReading_multiple_nested_time()
-		{
-			using (@lock.ForReading())
-			{
-				using (@lock.ForReading())
-				{
-					Assert.IsTrue(@lock.IsReadLockHeld);
-				}
-			}
-		}
-
-		[Test]
-		public void Can_be_used_ForWriting_multiple_nested_time()
-		{
-			using (@lock.ForWriting())
-			{
-				using (@lock.ForWriting())
-				{
-					Assert.IsTrue(@lock.IsWriteLockHeld);
-				}
-			}
-		}
-
-		[Test]
-		public void Can_be_used_ForReadingUpgradeable_multiple_nested_time()
-		{
-			using (@lock.ForReadingUpgradeable())
-			{
-				using (@lock.ForReadingUpgradeable())
-				{
-					Assert.IsTrue(@lock.IsUpgradeableReadLockHeld);
-				}
-			}
-		}
+		private SlimReadWriteLock @lock;
 
 		[Test]
 		public void Can_be_upgraded_from_nested_ForReadingUpgradeable()
@@ -80,14 +43,13 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Can_be_used_ForReading_when_used_ForWriting()
+		public void Can_be_used_ForReading_multiple_nested_time()
 		{
-			using (@lock.ForWriting())
+			using (@lock.ForReading())
 			{
-				using (var holder = @lock.ForReading())
+				using (@lock.ForReading())
 				{
-					Assert.IsTrue(@lock.IsWriteLockHeld);
-					Assert.IsTrue(holder.LockAcquired);
+					Assert.IsTrue(@lock.IsReadLockHeld);
 				}
 			}
 		}
@@ -106,11 +68,27 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Can_NOT_be_used_ForReadingUpgradeable_when_used_ForReading()
+		public void Can_be_used_ForReading_when_used_ForWriting()
 		{
-			using (@lock.ForReading())
+			using (@lock.ForWriting())
 			{
-				Assert.Throws(typeof(LockRecursionException), () => @lock.ForReadingUpgradeable());
+				using (var holder = @lock.ForReading())
+				{
+					Assert.IsTrue(@lock.IsWriteLockHeld);
+					Assert.IsTrue(holder.LockAcquired);
+				}
+			}
+		}
+
+		[Test]
+		public void Can_be_used_ForReadingUpgradeable_multiple_nested_time()
+		{
+			using (@lock.ForReadingUpgradeable())
+			{
+				using (@lock.ForReadingUpgradeable())
+				{
+					Assert.IsTrue(@lock.IsUpgradeableReadLockHeld);
+				}
 			}
 		}
 
@@ -128,11 +106,14 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Can_NOT_be_used_ForWriting_when_used_ForReading()
+		public void Can_be_used_ForWriting_multiple_nested_time()
 		{
-			using (@lock.ForReading())
+			using (@lock.ForWriting())
 			{
-				Assert.Throws(typeof(LockRecursionException), () => @lock.ForWriting());
+				using (@lock.ForWriting())
+				{
+					Assert.IsTrue(@lock.IsWriteLockHeld);
+				}
 			}
 		}
 
@@ -174,6 +155,24 @@ namespace Castle.Core.Tests
 					Assert.IsTrue(@lock.IsUpgradeableReadLockHeld);
 					Assert.IsTrue(holder.LockAcquired);
 				}
+			}
+		}
+
+		[Test]
+		public void Can_NOT_be_used_ForReadingUpgradeable_when_used_ForReading()
+		{
+			using (@lock.ForReading())
+			{
+				Assert.Throws(typeof(LockRecursionException), () => @lock.ForReadingUpgradeable());
+			}
+		}
+
+		[Test]
+		public void Can_NOT_be_used_ForWriting_when_used_ForReading()
+		{
+			using (@lock.ForReading())
+			{
+				Assert.Throws(typeof(LockRecursionException), () => @lock.ForWriting());
 			}
 		}
 	}

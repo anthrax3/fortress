@@ -23,7 +23,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
 	[Serializable]
 	public class MethodFilterHook : IProxyGenerationHook
 	{
-		private string nameFilter;
+		private readonly string nameFilter;
 
 		public MethodFilterHook(string nameFilter)
 		{
@@ -44,4 +44,3 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
 		}
 	}
 }
-

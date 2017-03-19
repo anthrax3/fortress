@@ -19,5 +19,4 @@ namespace Castle.Core.Tests.Interfaces
 		void Do(out int i);
 		void Did(ref int i);
 	}
-
 }

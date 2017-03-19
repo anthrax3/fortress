@@ -26,133 +26,46 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class InterfaceProxyWithTargetInterfaceTestCase : BasePEVerifyTestCase
 	{
-		[Test]
-		public void When_target_does_not_implement_additional_interface_method_should_throw()
+		private Type GetTargetType(object proxy)
 		{
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new[] {typeof(ITwo)},
-			                                                              new One(),
-			                                                              ProxyGenerationOptions.Default,
-			                                                              new StandardInterceptor());
-			Assert.Throws(typeof(NotImplementedException), () => (proxy as ITwo).TwoMethod());
+			return (proxy as IProxyTargetAccessor).DynProxyGetTarget().GetType();
+		}
+
+		private interface PrivateInterface
+		{
+		}
+
+		private class PrivateClass : PrivateInterface
+		{
 		}
 
 		[Test]
-		public void When_target_does_implement_additional_interface_method_should_forward()
+		public void Can_proxy_generic_interface()
 		{
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new[] {typeof(ITwo)},
-			                                                              new OneTwo(),
-			                                                              ProxyGenerationOptions.Default);
-			var result = (proxy as ITwo).TwoMethod();
-			Assert.AreEqual(2, result);
+			generator.CreateInterfaceProxyWithTargetInterface<IList<object>>(new List<object>());
 		}
 
 		[Test]
-		public void TargetInterface_methods_should_be_forwarded_to_target()
+		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
 		{
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new[] {typeof(ITwo)},
-			                                                              new OneTwo(),
-			                                                              ProxyGenerationOptions.Default);
-			var result = (proxy as IOne).OneMethod();
-			Assert.AreEqual(3, result);
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateInterfaceProxyWithTargetInterface<IList<PrivateInterface>>(new List<PrivateInterface>()));
 		}
 
 		[Test]
-		public void Mixin_methods_should_be_forwarded_to_target_if_implements_mixin_interface()
+		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
 		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new Two());
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new OneTwo(),
-			                                                              options);
-			var result = (proxy as ITwo).TwoMethod();
-			Assert.AreEqual(2, result);
+			var ex = Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTargetInterface<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>()));
+
+			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
+				typeof(IList<IList<PrivateInterface>>).FullName, typeof(PrivateInterface).FullName);
 		}
 
 		[Test]
-		public void Invocation_should_be_IChangeInvocationTarget_for_AdditionalInterfaces_methods()
+		public void Cannot_proxy_inaccessible_interface()
 		{
-			var interceptor = new ChangeTargetInterceptor(new Two());
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new[] {typeof(ITwo)},
-			                                                              new OneTwo(),
-			                                                              interceptor);
-
-			var result = (proxy as ITwo).TwoMethod();
-
-			Assert.AreEqual(20, result);
-		}
-
-		[Test]
-		public void Invocation_should_be_IChangeInvocationTarget_for_target_methods()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new Two());
-			var interceptor = new ChangeTargetInterceptor(new OneTwo());
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new One(),
-			                                                              options,
-			                                                              interceptor);
-			var result = (proxy as IOne).OneMethod();
-
-			Assert.AreEqual(3, result);
-		}
-
-		[Test]
-		public void Invocation_should_be_IChangeInvocationTarget_for_Mixin_methods()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new Two());
-			var interceptor = new ChangeTargetInterceptor(new OneTwo());
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new One(),
-			                                                              options,
-			                                                              interceptor);
-
-			var result = (proxy as ITwo).TwoMethod();
-
-			Assert.AreEqual(2, result);
-		}
-
-		[Test]
-		public void Null_target_is_valid()
-		{
-			var interceptor = new ChangeTargetInterceptor(new OneTwo());
-			generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                  default(object),
-			                                                  new ProxyGenerationOptions(),
-			                                                  interceptor);
-		}
-
-		[Test]
-		public void Null_target_can_be_replaced()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new Two());
-			var interceptor = new ChangeTargetInterceptor(new OneTwo());
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              default(object),
-			                                                              options,
-			                                                              interceptor);
-
-			Assert.AreEqual(3, ((IOne) proxy).OneMethod());
-		}
-
-		[Test]
-		public void Should_detect_and_report_setting_null_as_target_for_Mixin_methods()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new Two());
-			var interceptor = new ChangeTargetInterceptor(null);
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
-			                                                              new One(),
-			                                                              options,
-			                                                              interceptor);
-
-			Assert.Throws(typeof(NotImplementedException), () =>
-			                                               (proxy as ITwo).TwoMethod());
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateInterfaceProxyWithTargetInterface<PrivateInterface>(new PrivateClass()));
 		}
 
 		[Test]
@@ -173,8 +86,8 @@ namespace Castle.Core.Tests
 			var first = new ChangeProxyTargetInterceptor(new OneTwo());
 			var second = new KeepDataInterceptor();
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface<IOne>(new One(),
-			                                                                    first,
-			                                                                    second);
+				first,
+				second);
 
 			proxy.OneMethod();
 
@@ -182,41 +95,132 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Cannot_proxy_inaccessible_interface()
+		public void Invocation_should_be_IChangeInvocationTarget_for_AdditionalInterfaces_methods()
 		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateInterfaceProxyWithTargetInterface<PrivateInterface>(new PrivateClass(), new IInterceptor[0]));
+			var interceptor = new ChangeTargetInterceptor(new Two());
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new[] {typeof(ITwo)},
+				new OneTwo(),
+				interceptor);
+
+			var result = (proxy as ITwo).TwoMethod();
+
+			Assert.AreEqual(20, result);
 		}
 
 		[Test]
-		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
+		public void Invocation_should_be_IChangeInvocationTarget_for_Mixin_methods()
 		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateInterfaceProxyWithTargetInterface<IList<PrivateInterface>>(new List<PrivateInterface>(), new IInterceptor[0]));
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new Two());
+			var interceptor = new ChangeTargetInterceptor(new OneTwo());
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new One(),
+				options,
+				interceptor);
+
+			var result = (proxy as ITwo).TwoMethod();
+
+			Assert.AreEqual(2, result);
 		}
 
 		[Test]
-		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
+		public void Invocation_should_be_IChangeInvocationTarget_for_target_methods()
 		{
-			var ex = Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTargetInterface<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>(), new IInterceptor[0]));
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new Two());
+			var interceptor = new ChangeTargetInterceptor(new OneTwo());
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new One(),
+				options,
+				interceptor);
+			var result = (proxy as IOne).OneMethod();
 
-			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
-				typeof(IList<IList<PrivateInterface>>).FullName, typeof(PrivateInterface).FullName);
+			Assert.AreEqual(3, result);
 		}
 
 		[Test]
-		public void Can_proxy_generic_interface()
+		public void Mixin_methods_should_be_forwarded_to_target_if_implements_mixin_interface()
 		{
-			generator.CreateInterfaceProxyWithTargetInterface<IList<object>>(new List<object>(), new IInterceptor[0]);
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new Two());
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new OneTwo(),
+				options);
+			var result = (proxy as ITwo).TwoMethod();
+			Assert.AreEqual(2, result);
 		}
 
-		private Type GetTargetType(object proxy)
+		[Test]
+		public void Null_target_can_be_replaced()
 		{
-			return (proxy as IProxyTargetAccessor).DynProxyGetTarget().GetType();
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new Two());
+			var interceptor = new ChangeTargetInterceptor(new OneTwo());
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				default(object),
+				options,
+				interceptor);
+
+			Assert.AreEqual(3, ((IOne) proxy).OneMethod());
 		}
 
-		private interface PrivateInterface { }
+		[Test]
+		public void Null_target_is_valid()
+		{
+			var interceptor = new ChangeTargetInterceptor(new OneTwo());
+			generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				default(object),
+				new ProxyGenerationOptions(),
+				interceptor);
+		}
 
-		private class PrivateClass : PrivateInterface { }
+		[Test]
+		public void Should_detect_and_report_setting_null_as_target_for_Mixin_methods()
+		{
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new Two());
+			var interceptor = new ChangeTargetInterceptor(null);
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new One(),
+				options,
+				interceptor);
+
+			Assert.Throws(typeof(NotImplementedException), () =>
+				(proxy as ITwo).TwoMethod());
+		}
+
+		[Test]
+		public void TargetInterface_methods_should_be_forwarded_to_target()
+		{
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new[] {typeof(ITwo)},
+				new OneTwo(),
+				ProxyGenerationOptions.Default);
+			var result = (proxy as IOne).OneMethod();
+			Assert.AreEqual(3, result);
+		}
+
+		[Test]
+		public void When_target_does_implement_additional_interface_method_should_forward()
+		{
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new[] {typeof(ITwo)},
+				new OneTwo(),
+				ProxyGenerationOptions.Default);
+			var result = (proxy as ITwo).TwoMethod();
+			Assert.AreEqual(2, result);
+		}
+
+		[Test]
+		public void When_target_does_not_implement_additional_interface_method_should_throw()
+		{
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
+				new[] {typeof(ITwo)},
+				new One(),
+				ProxyGenerationOptions.Default,
+				new StandardInterceptor());
+			Assert.Throws(typeof(NotImplementedException), () => (proxy as ITwo).TwoMethod());
+		}
 	}
 }

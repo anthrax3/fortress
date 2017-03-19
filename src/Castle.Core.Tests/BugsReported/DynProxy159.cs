@@ -57,8 +57,8 @@ namespace Castle.Core.Tests.BugsReported
 			var o = new[]
 			{
 				new MySerialClass(),
-				(MySerialClass)generator.CreateClassProxy(typeof(MySerialClass)),
-				new MySerialClass(),
+				(MySerialClass) generator.CreateClassProxy(typeof(MySerialClass)),
+				new MySerialClass()
 			};
 
 			o[2].yyy = 3.1415;
@@ -70,13 +70,4 @@ namespace Castle.Core.Tests.BugsReported
 			Assert.AreEqual(100, o[2].zzz);
 		}
 	}
-
-	[Serializable]
-	public class MySerialClass
-	{
-		public string xxx { get; set; }
-		public double? yyy { get; set; }
-		public int? zzz { get; set; }
-	}
 }
-

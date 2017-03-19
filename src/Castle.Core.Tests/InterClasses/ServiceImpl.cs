@@ -19,6 +19,10 @@ namespace Castle.Core.Tests.InterClasses
 	[Serializable]
 	public class ServiceImpl : IService, IExtendedService
 	{
+		public void DoSomething()
+		{
+		}
+
 		public int Sum(int b1, int b2)
 		{
 			return b1 + b2;
@@ -49,17 +53,17 @@ namespace Castle.Core.Tests.InterClasses
 			return b1 + b2;
 		}
 
-		public UInt16 Sum(UInt16 b1, UInt16 b2)
+		public ushort Sum(ushort b1, ushort b2)
 		{
-			return (UInt16) (b1 + b2);
+			return (ushort) (b1 + b2);
 		}
 
-		public UInt32 Sum(UInt32 b1, UInt32 b2)
+		public uint Sum(uint b1, uint b2)
 		{
 			return b1 + b2;
 		}
 
-		public UInt64 Sum(UInt64 b1, UInt64 b2)
+		public ulong Sum(ulong b1, ulong b2)
 		{
 			return b1 + b2;
 		}
@@ -67,10 +71,6 @@ namespace Castle.Core.Tests.InterClasses
 		public bool Valid
 		{
 			get { return false; }
-		}
-
-		public void DoSomething()
-		{
 		}
 	}
 }

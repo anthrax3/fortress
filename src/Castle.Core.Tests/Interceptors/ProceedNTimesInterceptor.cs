@@ -28,7 +28,6 @@ namespace Castle.Core.Tests.Interceptors
 		public void Intercept(IInvocation invocation)
 		{
 			for (var i = 0; i < retries; i++)
-			{
 				try
 				{
 					invocation.Proceed();
@@ -37,7 +36,6 @@ namespace Castle.Core.Tests.Interceptors
 				{
 					// gulp
 				}
-			}
 		}
 	}
 }

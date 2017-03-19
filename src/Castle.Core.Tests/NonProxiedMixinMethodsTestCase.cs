@@ -29,30 +29,29 @@ namespace Castle.Core.Tests
 		{
 			var options = new ProxyGenerationOptions(new ProxyNothingHook());
 			foreach (var mixin in mixins)
-			{
 				options.AddMixinInstance(mixin);
-			}
 			switch (kind)
 			{
 				case ProxyKind.Class:
-					return (TType) generator.CreateClassProxy(typeof (object), Type.EmptyTypes, options);
+					return (TType) generator.CreateClassProxy(typeof(object), Type.EmptyTypes, options);
 				case ProxyKind.WithoutTarget:
-					return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof (IEmpty), Type.EmptyTypes, options);
+					return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof(IEmpty), Type.EmptyTypes, options);
 				case ProxyKind.WithTarget:
-					return (TType) generator.CreateInterfaceProxyWithTarget(typeof (IEmpty), Type.EmptyTypes, new Empty(), options);
+					return (TType) generator.CreateInterfaceProxyWithTarget(typeof(IEmpty), Type.EmptyTypes, new Empty(), options);
 				case ProxyKind.WithTargetInterface:
-					return (TType) generator.CreateInterfaceProxyWithTargetInterface(typeof (IEmpty), new Empty(), options);
+					return (TType) generator.CreateInterfaceProxyWithTargetInterface(typeof(IEmpty), new Empty(), options);
 			}
 
 			Assert.Fail("Invalid proxy kind {0}", kind);
 			return default(TType);
 		}
 
-		public static readonly object[] AllKinds = {
-			new object[] { ProxyKind.Class },
-			new object[] { ProxyKind.WithoutTarget },
-			new object[] { ProxyKind.WithTarget },
-			new object[] { ProxyKind.WithTargetInterface }
+		public static readonly object[] AllKinds =
+		{
+			new object[] {ProxyKind.Class},
+			new object[] {ProxyKind.WithoutTarget},
+			new object[] {ProxyKind.WithTarget},
+			new object[] {ProxyKind.WithTargetInterface}
 		};
 
 		[Test]

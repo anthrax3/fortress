@@ -18,15 +18,15 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.Interceptors
 {
 	public class AssertCanChangeTargetInterceptor : IInterceptor
-    {
-        #region IInterceptor Members
+	{
+		#region IInterceptor Members
 
-        public void Intercept(IInvocation invocation)
-        {
-            Assert.IsInstanceOf(typeof (IChangeProxyTarget), invocation);
-            invocation.Proceed();
-        }
+		public void Intercept(IInvocation invocation)
+		{
+			Assert.IsInstanceOf(typeof(IChangeProxyTarget), invocation);
+			invocation.Proceed();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

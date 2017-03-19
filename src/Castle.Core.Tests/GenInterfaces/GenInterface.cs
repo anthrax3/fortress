@@ -18,12 +18,4 @@ namespace Castle.Core.Tests.GenInterfaces
 	{
 		T DoSomething(T t);
 	}
-
-	public class GenInterfaceImpl<T> : GenInterface<T> where T : new()
-	{
-		public T DoSomething(T t)
-		{
-			return t;
-		}
-	}
 }

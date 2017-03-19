@@ -20,27 +20,18 @@ namespace Castle.Core.Tests.Interceptors
 {
 	public class KeepDataInterceptor : IInterceptor
 	{
-		private IInvocation invocation;
-
-		public IInvocation Invocation
-		{
-			get { return invocation; }
-		}
+		public IInvocation Invocation { get; private set; }
 
 		public void Intercept(IInvocation invocation)
 		{
-			this.invocation = invocation;
+			Invocation = invocation;
 			var concreteMethod = invocation.GetConcreteMethod();
 
 			if (invocation.MethodInvocationTarget != null)
-			{
 				invocation.Proceed();
-			}
 			else if (concreteMethod.ReturnType.GetTypeInfo().IsValueType && !concreteMethod.ReturnType.Equals(typeof(void)))
 				// ensure valid return value
-			{
 				invocation.ReturnValue = Activator.CreateInstance(concreteMethod.ReturnType);
-			}
 		}
 	}
 }

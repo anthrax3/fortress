@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Tests.InterClasses
 {
 	public interface IService
 	{
+		bool Valid { get; }
 		int Sum(int b1, int b2);
 
 		byte Sum(byte b1, byte b2);
@@ -30,12 +29,10 @@ namespace Castle.Core.Tests.InterClasses
 
 		double Sum(double b1, double b2);
 
-		UInt16 Sum(UInt16 b1, UInt16 b2);
+		ushort Sum(ushort b1, ushort b2);
 
-		UInt32 Sum(UInt32 b1, UInt32 b2);
+		uint Sum(uint b1, uint b2);
 
-		UInt64 Sum(UInt64 b1, UInt64 b2);
-
-		bool Valid { get; }
+		ulong Sum(ulong b1, ulong b2);
 	}
 }

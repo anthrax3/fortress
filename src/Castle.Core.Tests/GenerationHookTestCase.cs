@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
@@ -26,70 +24,6 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class GenerationHookTestCase : BasePEVerifyTestCase
 	{
-		[Test]
-		public void HookIsUsedForConcreteClassProxy()
-		{
-			var logger = new LogInvocationInterceptor();
-			var hook = new LogHook(typeof(ServiceClass), true);
-
-			var options = new ProxyGenerationOptions(hook);
-
-			var proxy = (ServiceClass)generator.CreateClassProxy(typeof(ServiceClass), options, logger);
-
-			Assert.IsTrue(hook.Completed);
-			Assert.AreEqual(13, hook.AskedMembers.Count, "Asked members");
-			Assert.AreEqual(2, hook.NonVirtualMembers.Count, "Non-virtual members");
-
-			proxy.Sum(1, 2);
-			Assert.IsFalse(proxy.Valid);
-
-			Assert.AreEqual("get_Valid ", logger.LogContents);
-		}
-
-		[Test]
-		public void HookIsUsedForInterfaceProxy()
-		{
-			var logger = new LogInvocationInterceptor();
-			var hook = new LogHook(typeof(IService), false);
-
-			var options = new ProxyGenerationOptions(hook);
-
-			var proxy = (IService)
-			            generator.CreateInterfaceProxyWithTarget(
-			            	typeof(IService), new ServiceImpl(), options, logger);
-
-			Assert.IsTrue(hook.Completed);
-			Assert.AreEqual(10, hook.AskedMembers.Count);
-			Assert.AreEqual(0, hook.NonVirtualMembers.Count);
-
-			Assert.AreEqual(3, proxy.Sum(1, 2));
-			Assert.IsFalse(proxy.Valid);
-
-			Assert.AreEqual("Sum get_Valid ", logger.LogContents);
-		}
-
-		[Test]
-		public void HookDetectsNonVirtualAlthoughInterfaceImplementation()
-		{
-			var logger = new LogInvocationInterceptor();
-			var hook = new LogHook(typeof(ServiceImpl), true);
-
-			var options = new ProxyGenerationOptions(hook);
-
-			// we are creating a class proxy although the creation of an interface proxy is possible too...
-			// since the members of our implementation are not explicitly marked as virtual, the runtime
-			// marks them as virtual but final --> not good for us, but intended by .net :-(
-			//
-			// see: https://msdn.microsoft.com/library/system.reflection.methodbase.isvirtual
-			//
-			// thus, a non virtual notification for this particular situation is appropriate
-			generator.CreateClassProxy(typeof(ServiceImpl), options, logger);
-
-			Assert.IsTrue(hook.Completed);
-			Assert.AreEqual(3, hook.AskedMembers.Count);
-			Assert.AreEqual(11, hook.NonVirtualMembers.Count);
-		}
-
 		[Test]
 		public void Hook_can_NOT_see_GetType_method()
 		{
@@ -146,62 +80,69 @@ namespace Castle.Core.Tests
 			var equals = typeof(EmptyClass).GetMethod("ToString");
 			CollectionAssert.Contains(hook.AskedMembers, equals);
 		}
-	}
 
-	[Serializable]
-	public class LogHook : IProxyGenerationHook
-	{
-		private readonly Type targetTypeToAssert;
-		private readonly bool screeningEnabled;
-		private readonly IList<MemberInfo> nonVirtualMembers = new List<MemberInfo>();
-		private readonly IList<MemberInfo> askedMembers = new List<MemberInfo>();
-		private bool completed;
-
-		public LogHook(Type targetTypeToAssert, bool screeningEnabled = false)
+		[Test]
+		public void HookDetectsNonVirtualAlthoughInterfaceImplementation()
 		{
-			this.targetTypeToAssert = targetTypeToAssert;
-			this.screeningEnabled = screeningEnabled;
+			var logger = new LogInvocationInterceptor();
+			var hook = new LogHook(typeof(ServiceImpl), true);
+
+			var options = new ProxyGenerationOptions(hook);
+
+			// we are creating a class proxy although the creation of an interface proxy is possible too...
+			// since the members of our implementation are not explicitly marked as virtual, the runtime
+			// marks them as virtual but final --> not good for us, but intended by .net :-(
+			//
+			// see: https://msdn.microsoft.com/library/system.reflection.methodbase.isvirtual
+			//
+			// thus, a non virtual notification for this particular situation is appropriate
+			generator.CreateClassProxy(typeof(ServiceImpl), options, logger);
+
+			Assert.IsTrue(hook.Completed);
+			Assert.AreEqual(3, hook.AskedMembers.Count);
+			Assert.AreEqual(11, hook.NonVirtualMembers.Count);
 		}
 
-		public IList<MemberInfo> NonVirtualMembers
+		[Test]
+		public void HookIsUsedForConcreteClassProxy()
 		{
-			get { return nonVirtualMembers; }
+			var logger = new LogInvocationInterceptor();
+			var hook = new LogHook(typeof(ServiceClass), true);
+
+			var options = new ProxyGenerationOptions(hook);
+
+			var proxy = (ServiceClass) generator.CreateClassProxy(typeof(ServiceClass), options, logger);
+
+			Assert.IsTrue(hook.Completed);
+			Assert.AreEqual(13, hook.AskedMembers.Count, "Asked members");
+			Assert.AreEqual(2, hook.NonVirtualMembers.Count, "Non-virtual members");
+
+			proxy.Sum(1, 2);
+			Assert.IsFalse(proxy.Valid);
+
+			Assert.AreEqual("get_Valid ", logger.LogContents);
 		}
 
-		public IList<MemberInfo> AskedMembers
+		[Test]
+		public void HookIsUsedForInterfaceProxy()
 		{
-			get { return askedMembers; }
-		}
+			var logger = new LogInvocationInterceptor();
+			var hook = new LogHook(typeof(IService), false);
 
-		public bool Completed
-		{
-			get { return completed; }
-		}
+			var options = new ProxyGenerationOptions(hook);
 
-		public bool ShouldInterceptMethod(Type type, MethodInfo memberInfo)
-		{
-			Assert.AreEqual(targetTypeToAssert, type);
+			var proxy = (IService)
+				generator.CreateInterfaceProxyWithTarget(
+					typeof(IService), new ServiceImpl(), options, logger);
 
-			askedMembers.Add(memberInfo);
+			Assert.IsTrue(hook.Completed);
+			Assert.AreEqual(10, hook.AskedMembers.Count);
+			Assert.AreEqual(0, hook.NonVirtualMembers.Count);
 
-			if (screeningEnabled && memberInfo.Name.StartsWith("Sum"))
-			{
-				return false;
-			}
+			Assert.AreEqual(3, proxy.Sum(1, 2));
+			Assert.IsFalse(proxy.Valid);
 
-			return true;
-		}
-
-		public void NonProxyableMemberNotification(Type type, MemberInfo memberInfo)
-		{
-			Assert.AreEqual(targetTypeToAssert, type);
-
-			nonVirtualMembers.Add(memberInfo);
-		}
-
-		public void MethodsInspected()
-		{
-			completed = true;
+			Assert.AreEqual("Sum get_Valid ", logger.LogContents);
 		}
 	}
 }

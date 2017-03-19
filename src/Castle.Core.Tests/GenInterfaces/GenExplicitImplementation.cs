@@ -23,9 +23,4 @@ namespace Castle.Core.Tests.GenInterfaces
 			return new List<T>.Enumerator();
 		}
 	}
-
-	public interface InterfaceWithExplicitImpl<T>
-	{
-		IEnumerator<T> GetEnum1();
-	}
 }

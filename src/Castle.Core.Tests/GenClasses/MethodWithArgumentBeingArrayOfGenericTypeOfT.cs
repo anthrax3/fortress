@@ -18,8 +18,7 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class MethodWithArgumentBeingArrayOfGenericTypeOfT
 	{
-
-		public virtual T Method<T>( Action<T>[] actions) where T : class
+		public virtual T Method<T>(Action<T>[] actions) where T : class
 		{
 			return default(T);
 		}

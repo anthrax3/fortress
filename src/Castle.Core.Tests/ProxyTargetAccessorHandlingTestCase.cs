@@ -34,7 +34,7 @@ namespace Castle.Core.Tests
 		public void ClassProxy_AdditionalInterfaces()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateClassProxy(typeof(object), new[] { typeof(IProxyTargetAccessor) }));
+				generator.CreateClassProxy(typeof(object), new[] {typeof(IProxyTargetAccessor)}));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
 
@@ -60,7 +60,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithoutTarget_AdditionalInterfaces()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), new[] { typeof(IProxyTargetAccessor) }));
+				generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), new[] {typeof(IProxyTargetAccessor)}));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
 
@@ -68,7 +68,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithoutTarget_Mixin()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), new[] { typeof(IProxyTargetAccessor) },
+				generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), new[] {typeof(IProxyTargetAccessor)},
 					MixIn(new ImplementsProxyTargetAccessor())));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
@@ -93,7 +93,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithTarget_AdditionalInterfaces()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithTarget(typeof(IOne), new[] { typeof(IProxyTargetAccessor) }, new One()));
+				generator.CreateInterfaceProxyWithTarget(typeof(IOne), new[] {typeof(IProxyTargetAccessor)}, new One()));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
 
@@ -101,7 +101,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithTarget_Mixin()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithTarget(typeof(IOne), new[] { typeof(IProxyTargetAccessor) }, new One(),
+				generator.CreateInterfaceProxyWithTarget(typeof(IOne), new[] {typeof(IProxyTargetAccessor)}, new One(),
 					MixIn(new ImplementsProxyTargetAccessor())));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
@@ -128,7 +128,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithTargetInterface_AdditionalInterfaces()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne), new[] { typeof(IProxyTargetAccessor) }, new One()));
+				generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne), new[] {typeof(IProxyTargetAccessor)}, new One()));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
 
@@ -136,7 +136,7 @@ namespace Castle.Core.Tests
 		public void InterfaceProxyWithTargetInterface_Mixin()
 		{
 			var ex = Assert.Throws(typeof(ProxyGenerationException), () =>
-				generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne), new[] { typeof(IProxyTargetAccessor) }, new One(),
+				generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne), new[] {typeof(IProxyTargetAccessor)}, new One(),
 					MixIn(new ImplementsProxyTargetAccessor())));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
@@ -157,43 +157,5 @@ namespace Castle.Core.Tests
 					new ImplementsProxyTargetAccessorDerived()));
 			StringAssert.Contains("IProxyTargetAccessor", ex.Message);
 		}
-	}
-
-	public class ImplementsProxyTargetAccessor : IProxyTargetAccessor
-	{
-		#region IProxyTargetAccessor Members
-
-		public object DynProxyGetTarget()
-		{
-			throw new NotImplementedException();
-		}
-
-		public IInterceptor[] GetInterceptors()
-		{
-			throw new NotImplementedException();
-		}
-
-		#endregion
-	}
-
-	public interface IProxyTargetAccessorDerived : IProxyTargetAccessor
-	{
-	}
-
-	public class ImplementsProxyTargetAccessorDerived : IProxyTargetAccessorDerived
-	{
-		#region IProxyTargetAccessorDerived Members
-
-		public object DynProxyGetTarget()
-		{
-			throw new NotImplementedException();
-		}
-
-		public IInterceptor[] GetInterceptors()
-		{
-			throw new NotImplementedException();
-		}
-
-		#endregion
 	}
 }

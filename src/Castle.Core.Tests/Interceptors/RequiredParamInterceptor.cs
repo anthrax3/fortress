@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System.Linq;
-using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 
@@ -23,24 +22,20 @@ namespace Castle.Core.Tests.Interceptors
 	{
 		public void Intercept(IInvocation invocation)
 		{
-			ParameterInfo[] parameters = invocation.Method.GetParameters();
+			var parameters = invocation.Method.GetParameters();
 
-			object[] args = invocation.Arguments;
+			var args = invocation.Arguments;
 
-			for (int i = 0; i < parameters.Length; i++)
-			{
+			for (var i = 0; i < parameters.Length; i++)
 				if (parameters[i].IsDefined(typeof(RequiredAttribute), false))
 				{
-					RequiredAttribute required =
+					var required =
 						parameters[i].GetCustomAttributes(typeof(RequiredAttribute), false).First() as RequiredAttribute;
 
-					if ((required.BadValue == null && args[i] == null) ||
-						(required.BadValue != null && required.BadValue.Equals(args[i])))
-					{
+					if (required.BadValue == null && args[i] == null ||
+					    required.BadValue != null && required.BadValue.Equals(args[i]))
 						args[i] = required.DefaultValue;
-					}
 				}
-			}
 
 			invocation.Proceed();
 		}

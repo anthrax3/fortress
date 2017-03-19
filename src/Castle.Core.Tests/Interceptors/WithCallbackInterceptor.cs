@@ -18,6 +18,8 @@ namespace Castle.Core.Tests.Interceptors
 {
 	public class WithCallbackInterceptor : IInterceptor
 	{
+		public delegate void InterceptorCallback(IInvocation invocation);
+
 		private readonly InterceptorCallback callback;
 
 		public WithCallbackInterceptor(InterceptorCallback interceptorCallback)
@@ -29,7 +31,5 @@ namespace Castle.Core.Tests.Interceptors
 		{
 			callback(invocation);
 		}
-
-		public delegate void InterceptorCallback(IInvocation invocation);
 	}
 }

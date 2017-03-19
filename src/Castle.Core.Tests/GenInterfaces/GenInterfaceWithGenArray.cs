@@ -19,11 +19,11 @@ namespace Castle.Core.Tests.GenInterfaces
 	public class GenInterfaceWithGenArray<T> : IGenInterfaceWithGenArray<T>
 		where T : struct
 	{
-		private T[] innerItems;
+		private readonly T[] innerItems;
 
 		public GenInterfaceWithGenArray()
 		{
-			innerItems = new T[] {new T(), new T(), new T()};
+			innerItems = new[] {new T(), new T(), new T()};
 		}
 
 		public void CopyTo(T[] items)
@@ -35,13 +35,5 @@ namespace Castle.Core.Tests.GenInterfaces
 		{
 			return innerItems;
 		}
-	}
-
-	public interface IGenInterfaceWithGenArray<T>
-		where T : struct
-	{
-		void CopyTo(T[] items);
-
-		T[] CreateItems();
 	}
 }

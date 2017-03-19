@@ -18,6 +18,6 @@ namespace Castle.Core.Tests.Interfaces
 {
 	public interface IFooWithIntPtr
 	{
-		IntPtr Buffer(UInt32 index);
+		IntPtr Buffer(uint index);
 	}
 }

@@ -17,9 +17,9 @@ using Castle.Core.DynamicProxy;
 namespace Castle.Core.Tests.Interceptors
 {
 	public class DoNothingInterceptor : IInterceptor
-    {
-        public void Intercept(IInvocation invocation)
-        {
-        }
-    }
+	{
+		public void Intercept(IInvocation invocation)
+		{
+		}
+	}
 }

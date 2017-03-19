@@ -18,16 +18,11 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class GenClassWithConstraints<T> where T : IComparable
 	{
-		private bool invoked;
-
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
+		public bool Invoked { get; private set; }
 
 		public virtual void DoSomething()
 		{
-			invoked = true;
+			Invoked = true;
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace Castle.Core.Tests
 		[Bug("CORE-37")]
 		public void Tab_character_is_not_trimmed_from_config_value()
 		{
-			string result = XmlConfigurationDeserializer.GetConfigValue("\t");
+			var result = XmlConfigurationDeserializer.GetConfigValue("\t");
 			Assert.AreEqual("\t", result);
 		}
 

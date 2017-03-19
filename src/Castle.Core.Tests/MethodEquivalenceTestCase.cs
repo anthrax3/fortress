@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using Castle.Core.DynamicProxy;
 using NUnit.Framework;
 
@@ -24,44 +23,15 @@ namespace Castle.Core.Tests
 		[Test]
 		public void CanProxyTypesWithMethodsOnlyDifferentByGenericArguments()
 		{
-			ProxyGenerator generator = new ProxyGenerator();
+			var generator = new ProxyGenerator();
 
-			IMyService target1 = (IMyService)generator.CreateInterfaceProxyWithTarget(
+			var target1 = (IMyService) generator.CreateInterfaceProxyWithTarget(
 				typeof(IMyService), new MyServiceImpl(), new StandardInterceptor());
 			Assert.IsNotNull(target1.CreateSomething<int>("aa"));
 
-			IMyService target2 = (IMyService)generator.CreateClassProxy(
-                typeof(MyServiceImpl), new StandardInterceptor());
+			var target2 = (IMyService) generator.CreateClassProxy(
+				typeof(MyServiceImpl), new StandardInterceptor());
 			Assert.IsNotNull(target2.CreateSomething<int>("aa"));
-		}
-	}
-
-	public interface IMyService
-	{
-		ISomething CreateSomething<T>(string somethingSpec);
-		ISomething CreateSomething(string somethingKey);
-	}
-
-	public interface ISomething
-	{
-		void Do(Type type, string parameter);
-	}
-
-	public class NoOpSomething : ISomething
-	{
-		public void Do(Type type, string parameter) {}
-	}
-
-	public class MyServiceImpl : IMyService
-	{
-		public ISomething CreateSomething<T>(string somethingSpec)
-		{
-			return new NoOpSomething();
-		}
-
-		public ISomething CreateSomething(string somethingKey)
-		{
-			return new NoOpSomething();
 		}
 	}
 }

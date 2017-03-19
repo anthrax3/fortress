@@ -12,18 +12,9 @@ using System;
 
 namespace Castle.Core.Tests.Mixins
 {
-	public interface IOtherMixin
-	{
-		int Sum(int x, int y);
-	}
-
 	[Serializable]
 	public class OtherMixin : IOtherMixin
 	{
-		public OtherMixin()
-		{
-		}
-
 		#region IOtherMixin Members
 
 		public int Sum(int x, int y)

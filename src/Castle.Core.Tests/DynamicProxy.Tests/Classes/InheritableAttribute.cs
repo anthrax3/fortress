@@ -17,7 +17,7 @@ using System;
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
 	[Serializable]
-	[AttributeUsage(AttributeTargets.All, Inherited = true)]
+	[AttributeUsage(AttributeTargets.All)]
 	public class InheritableAttribute : Attribute
 	{
 	}

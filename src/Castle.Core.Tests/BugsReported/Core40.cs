@@ -12,28 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using Castle.Core.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests.BugsReported
 {
-	public class Core40ClassToProxy
-	{
-		public Core40ClassToProxy(Object arg1, Object arg2)
-		{
-		}
-	}
-
 	[TestFixture]
 	public class Core40 : BasePEVerifyTestCase
 	{
 		[Test]
 		public void ShouldGenerateTypeWithIndexers()
 		{
-			Assert.Throws<InvalidProxyConstructorArgumentsException>(delegate {
-				generator.CreateClassProxy(typeof(Core40ClassToProxy), new object[] { null, null, null });
-			});
+			Assert.Throws<InvalidProxyConstructorArgumentsException>(delegate { generator.CreateClassProxy(typeof(Core40ClassToProxy), new object[] {null, null, null}); });
 		}
 	}
 }

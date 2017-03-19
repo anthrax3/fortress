@@ -16,35 +16,24 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class GenClassWithGenMethods<T> where T : new()
 	{
-		private object savedParam;
-		private bool invoked;
+		public object SavedParam { get; private set; }
 
-		public object SavedParam
-		{
-			get { return savedParam; }
-		}
-
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
+		public bool Invoked { get; private set; }
 
 		public virtual T DoSomething<Z>(Z z)
 		{
-			invoked = true;
+			Invoked = true;
 
-			savedParam = z;
+			SavedParam = z;
 
 			return new T();
 		}
 
 		public virtual void DoSomethingElse<T2>(TestConverter<int, T2> converter, int value)
 		{
-			invoked = true;
+			Invoked = true;
 
-			savedParam = converter(value);
+			SavedParam = converter(value);
 		}
 	}
-
-	public delegate TOutput TestConverter<TInput, TOutput>(TInput input);
 }

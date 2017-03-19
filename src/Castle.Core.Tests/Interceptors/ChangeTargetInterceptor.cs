@@ -18,7 +18,7 @@ namespace Castle.Core.Tests.Interceptors
 {
 	public class ChangeTargetInterceptor : IInterceptor
 	{
-		private object target;
+		private readonly object target;
 
 		public ChangeTargetInterceptor(object target)
 		{
@@ -27,7 +27,7 @@ namespace Castle.Core.Tests.Interceptors
 
 		public void Intercept(IInvocation invocation)
 		{
-			IChangeProxyTarget changeTarget = (IChangeProxyTarget) invocation;
+			var changeTarget = (IChangeProxyTarget) invocation;
 			changeTarget.ChangeInvocationTarget(target);
 			invocation.Proceed();
 		}

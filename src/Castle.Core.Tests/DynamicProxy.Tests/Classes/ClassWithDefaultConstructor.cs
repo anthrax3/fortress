@@ -18,15 +18,9 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 	{
 		public ClassWithDefaultConstructor()
 		{
-			_someString = "Something";
+			SomeString = "Something";
 		}
 
-		private string _someString = string.Empty;
-
-		public string SomeString
-		{
-			get { return _someString; }
-			set { _someString = value; }
-		}
+		public string SomeString { get; set; } = string.Empty;
 	}
 }

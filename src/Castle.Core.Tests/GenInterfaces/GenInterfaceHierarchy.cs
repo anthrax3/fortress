@@ -18,7 +18,7 @@ namespace Castle.Core.Tests.GenInterfaces
 {
 	public class GenInterfaceHierarchy<T> : IGenInterfaceHierarchySpecialization<T>
 	{
-		private List<T> items = new List<T>();
+		private readonly List<T> items = new List<T>();
 
 		public int Count()
 		{
@@ -27,7 +27,7 @@ namespace Castle.Core.Tests.GenInterfaces
 
 		public T[] FetchAll()
 		{
-			T[] copy = new T[Count()];
+			var copy = new T[Count()];
 			items.CopyTo(copy);
 			return copy;
 		}
@@ -50,23 +50,5 @@ namespace Castle.Core.Tests.GenInterfaces
 		{
 			return FetchAll();
 		}
-	}
-
-	public interface IGenInterfaceHierarchySpecialization<T> : IGenInterfaceHierarchyBase<T>
-	{
-		int Count();
-
-		T[] FetchAll();
-	}
-
-	public interface IGenInterfaceHierarchyBase<T>
-	{
-		void Add();
-
-		void Add(T item);
-
-		T Get();
-
-		T[] GetAll();
 	}
 }

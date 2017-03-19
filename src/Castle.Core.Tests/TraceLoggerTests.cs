@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Castle.Core.Core.Configuration.Xml;
 using Castle.Core.Core.Logging;
 using NUnit.Framework;
 
@@ -37,64 +36,11 @@ namespace Castle.Core.Tests
 			Listener.ClearMessages();
 		}
 
-		[Test]
-		public void WritingToLoggerByType()
-		{
-			TraceLoggerFactory factory = new TraceLoggerFactory();
-			ILogger logger = factory.Create(typeof(TraceLoggerTests), LoggerLevel.Debug);
-			logger.Debug("this is a tracing message");
-
-			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
-			Listener.AssertContains("testsrule", "this is a tracing message");
-		}
-
-		[Test]
-		public void TracingErrorInformation()
-		{
-			TraceLoggerFactory factory = new TraceLoggerFactory();
-			ILogger logger = factory.Create(typeof(TraceLoggerTests), LoggerLevel.Debug);
-			try
-			{
-				try
-				{
-					string fakearg = "Thisisavalue";
-					throw new ArgumentOutOfRangeException("fakearg", fakearg, "Thisisamessage" );
-				}
-				catch (Exception ex)
-				{
-					throw new Exception("Inner error is " + ex.Message, ex);
-				}
-			}
-			catch (Exception ex)
-			{
-				logger.Error("Problem handled", ex);
-			}
-
-			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
-			Listener.AssertContains("testsrule", "Problem handled");
-			Listener.AssertContains("testsrule", "Exception");
-			Listener.AssertContains("testsrule", "Inner error is");
-			Listener.AssertContains("testsrule", "ArgumentOutOfRangeException");
-			Listener.AssertContains("testsrule", "fakearg");
-			Listener.AssertContains("testsrule", "Thisisavalue");
-			Listener.AssertContains("testsrule", "Thisisamessage");
-		}
-
-		[Test]
-		public void FallUpToDefaultSource()
-		{
-			TraceLoggerFactory factory = new TraceLoggerFactory();
-			ILogger logger = factory.Create("System.Xml.XmlDocument", LoggerLevel.Debug);
-			logger.Info("Logging to non-configured namespace namespace");
-
-			Listener.AssertContains("defaultrule", "System.Xml.XmlDocument");
-			Listener.AssertContains("defaultrule", "Logging to non-configured namespace namespace");
-		}
-
-		#region in-memory listener class
-
 		public class Listener : TraceListener
 		{
+			private static Dictionary<string, StringBuilder> traces = new Dictionary<string, StringBuilder>();
+			private readonly string traceName;
+
 			public Listener()
 			{
 			}
@@ -104,10 +50,7 @@ namespace Castle.Core.Tests
 				traceName = initializationData;
 			}
 
-			static Dictionary<string, StringBuilder> traces = new Dictionary<string, StringBuilder>();
-			readonly string traceName;
-
-			StringBuilder GetStringBuilder()
+			private StringBuilder GetStringBuilder()
 			{
 				lock (traces)
 				{
@@ -139,6 +82,59 @@ namespace Castle.Core.Tests
 				traces = new Dictionary<string, StringBuilder>();
 			}
 		}
-		#endregion
+
+		[Test]
+		public void FallUpToDefaultSource()
+		{
+			var factory = new TraceLoggerFactory();
+			var logger = factory.Create("System.Xml.XmlDocument", LoggerLevel.Debug);
+			logger.Info("Logging to non-configured namespace namespace");
+
+			Listener.AssertContains("defaultrule", "System.Xml.XmlDocument");
+			Listener.AssertContains("defaultrule", "Logging to non-configured namespace namespace");
+		}
+
+		[Test]
+		public void TracingErrorInformation()
+		{
+			var factory = new TraceLoggerFactory();
+			var logger = factory.Create(typeof(TraceLoggerTests), LoggerLevel.Debug);
+			try
+			{
+				try
+				{
+					var fakearg = "Thisisavalue";
+					throw new ArgumentOutOfRangeException("fakearg", fakearg, "Thisisamessage");
+				}
+				catch (Exception ex)
+				{
+					throw new Exception("Inner error is " + ex.Message, ex);
+				}
+			}
+			catch (Exception ex)
+			{
+				logger.Error("Problem handled", ex);
+			}
+
+			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
+			Listener.AssertContains("testsrule", "Problem handled");
+			Listener.AssertContains("testsrule", "Exception");
+			Listener.AssertContains("testsrule", "Inner error is");
+			Listener.AssertContains("testsrule", "ArgumentOutOfRangeException");
+			Listener.AssertContains("testsrule", "fakearg");
+			Listener.AssertContains("testsrule", "Thisisavalue");
+			Listener.AssertContains("testsrule", "Thisisamessage");
+		}
+
+		[Test]
+		public void WritingToLoggerByType()
+		{
+			var factory = new TraceLoggerFactory();
+			var logger = factory.Create(typeof(TraceLoggerTests), LoggerLevel.Debug);
+			logger.Debug("this is a tracing message");
+
+			Listener.AssertContains("testsrule", "Castle.Core.Tests.TraceLoggerTests");
+			Listener.AssertContains("testsrule", "this is a tracing message");
+		}
 	}
 }

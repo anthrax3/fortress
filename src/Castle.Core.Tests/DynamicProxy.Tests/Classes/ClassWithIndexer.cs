@@ -17,5 +17,6 @@ using Castle.Core.Tests.GenClasses;
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
 	public class ClassWithIndexer : ClassWithIndexer<string, int>
-	{ }
+	{
+	}
 }

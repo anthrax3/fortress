@@ -18,6 +18,8 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public abstract class ClassWithMethodWithArrayOfListOfT
 	{
-		public virtual void GenericMethodWithListArrayArgument<T>(List<T>[] action) { }
+		public virtual void GenericMethodWithListArrayArgument<T>(List<T>[] action)
+		{
+		}
 	}
 }

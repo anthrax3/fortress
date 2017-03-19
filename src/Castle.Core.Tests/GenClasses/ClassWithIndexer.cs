@@ -18,7 +18,7 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class ClassWithIndexer<TKey, TVal>
 	{
-		private Dictionary<TKey, TVal> map = new Dictionary<TKey, TVal>();
+		private readonly Dictionary<TKey, TVal> map = new Dictionary<TKey, TVal>();
 
 		public virtual TVal this[TKey key]
 		{
@@ -31,6 +31,5 @@ namespace Castle.Core.Tests.GenClasses
 					map.Add(key, value);
 			}
 		}
-
 	}
 }

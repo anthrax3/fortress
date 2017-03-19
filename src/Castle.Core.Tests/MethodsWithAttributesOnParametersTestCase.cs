@@ -23,26 +23,26 @@ namespace Castle.Core.Tests
 	public class MethodsWithAttributesOnParametersTestCase : BasePEVerifyTestCase
 	{
 		[Test]
+		public void CanGetParameterAttributeFromProxiedObject()
+		{
+			var requiredObj = (ClassWithAttributesOnMethodParameters)
+				generator.CreateClassProxy(
+					typeof(ClassWithAttributesOnMethodParameters),
+					new RequiredParamInterceptor());
+
+			requiredObj.MethodTwo(null);
+		}
+
+		[Test]
 		public void ParametersAreCopiedToProxiedObject()
 		{
-			var requiredObj = (ClassWithAttributesOnMethodParameters)generator.CreateClassProxy(
-				typeof (ClassWithAttributesOnMethodParameters), new RequiredParamInterceptor());
+			var requiredObj = (ClassWithAttributesOnMethodParameters) generator.CreateClassProxy(
+				typeof(ClassWithAttributesOnMethodParameters), new RequiredParamInterceptor());
 
 			var ex = Assert.Throws<ArgumentException>(() =>
 				requiredObj.MethodOne(-1)
 			);
 			Assert.AreEqual("No default value for argument", ex.Message);
-		}
-
-		[Test]
-		public void CanGetParameterAttributeFromProxiedObject()
-		{
-			var requiredObj = (ClassWithAttributesOnMethodParameters)
-			                                                    generator.CreateClassProxy(
-			                                                    	typeof (ClassWithAttributesOnMethodParameters),
-			                                                    	new RequiredParamInterceptor());
-
-			requiredObj.MethodTwo(null);
 		}
 	}
 }

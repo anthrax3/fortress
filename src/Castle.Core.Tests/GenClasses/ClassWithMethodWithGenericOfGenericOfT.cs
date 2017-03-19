@@ -18,6 +18,8 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public abstract class ClassWithMethodWithGenericOfGenericOfT
 	{
-		public virtual void GenericMethodWithGenericOfGenericArgument<T>(IEnumerable<IComparer<T>> compararers) { }
+		public virtual void GenericMethodWithGenericOfGenericArgument<T>(IEnumerable<IComparer<T>> compararers)
+		{
+		}
 	}
 }

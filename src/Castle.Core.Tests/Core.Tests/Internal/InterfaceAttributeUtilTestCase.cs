@@ -21,164 +21,136 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 	[TestFixture]
 	public class InterfaceAttributeUtilTestCase
 	{
-		[Test]
-		public void Declared_All()
+		[SingletonPrivate(Id = "Original")]
+		[SingletonInherited(Id = "Original")]
+		[AdditivePrivate(Id = "Original")]
+		[AdditiveInherited(Id = "Original")]
+		public interface IDeclaresAll
 		{
-			AssertAttributes(typeof(IDeclaresAll),
-				new SingletonPrivateAttribute   { Id = "Original" },
-				new SingletonInheritedAttribute { Id = "Original" },
-				new AdditivePrivateAttribute    { Id = "Original" },
-				new AdditiveInheritedAttribute  { Id = "Original" }
-			);
 		}
 
-		[Test]
-		public void Inherit_Singleton_Private()
+		[SingletonPrivate(Id = "Original")]
+		public interface IDeclareSingletonPrivate
 		{
-			AssertAttributes(typeof(IInheritSingletonPrivate));
 		}
 
-		[Test]
-		public void Inherit_Singleton_Inherited()
+		[SingletonInherited(Id = "Original")]
+		public interface IDeclareSingletonInherited
 		{
-			AssertAttributes(typeof(IInheritSingletonInherited),
-				new SingletonInheritedAttribute { Id = "Original" }
-			);
 		}
 
-		[Test]
-		public void Inherit_Additive_Private()
+		[AdditivePrivate(Id = "Original")]
+		public interface IDeclareAdditivePrivate
 		{
-			AssertAttributes(typeof(IInheritAdditivePrivate));
 		}
 
-		[Test]
-		public void Inherit_Additive_Inherited()
+		[AdditiveInherited(Id = "Original")]
+		public interface IDeclareAdditiveInherited
 		{
-			AssertAttributes(typeof(IInheritAdditiveInherited),
-				new AdditiveInheritedAttribute { Id = "Original" }
-			);
 		}
 
-		[Test]
-		public void Override_Singleton_Inherited()
+		public interface IInheritSingletonPrivate : IDeclareSingletonPrivate
 		{
-			AssertAttributes(typeof(IOverrideSingletonInherited1),
-				new SingletonInheritedAttribute { Id = "Override1" }
-			);
 		}
 
-		[Test]
-		public void Override_Additive_Inherited()
+		public interface IInheritSingletonInherited : IDeclareSingletonInherited
 		{
-			AssertAttributes(typeof(IOverrideAdditiveInherited1),
-				new AdditiveInheritedAttribute { Id = "Original"  },
-				new AdditiveInheritedAttribute { Id = "Override1" }
-			);
 		}
 
-		[Test]
-		public void Symmetric_Multiple_Singleton_Inherited()
+		public interface IInheritAdditivePrivate : IDeclareAdditivePrivate
 		{
-			AssertInvalid(typeof(ISymmetricSingletonInherited));
 		}
 
-		[Test]
-		public void Symmetric_Multiple_Additive_Inherited()
+		public interface IInheritAdditiveInherited : IDeclareAdditiveInherited
 		{
-			AssertAttributes(typeof(ISymmetricAdditiveInherited),
-				new AdditiveInheritedAttribute { Id = "Original"  },
-				new AdditiveInheritedAttribute { Id = "Override1" },
-				new AdditiveInheritedAttribute { Id = "Override2" }
-			);
 		}
 
-		[Test]
-		public void Asymmetric_Multiple_Singleton_Inherited()
+		[SingletonInherited(Id = "Override1")]
+		public interface IOverrideSingletonInherited1 : IInheritSingletonInherited
 		{
-			AssertAttributes(typeof(IAsymmetricSingletonInherited),
-				new SingletonInheritedAttribute { Id = "Override1" }
-			);
 		}
 
-		[Test]
-		public void Asymmetric_Multiple_Additive_Inherited()
+		[SingletonInherited(Id = "Override2")]
+		public interface IOverrideSingletonInherited2 : IInheritSingletonInherited
 		{
-			AssertAttributes(typeof(IAsymmetricAdditiveInherited),
-				new AdditiveInheritedAttribute { Id = "Original"  },
-				new AdditiveInheritedAttribute { Id = "Override1" }
-			);
 		}
 
-		[SingletonPrivate  (Id="Original")]
-		[SingletonInherited(Id="Original")]
-		[AdditivePrivate   (Id="Original")]
-		[AdditiveInherited (Id="Original")]
-		public interface IDeclaresAll { }
+		[AdditiveInherited(Id = "Override1")]
+		public interface IOverrideAdditiveInherited1 : IInheritAdditiveInherited
+		{
+		}
 
-		[SingletonPrivate  (Id="Original")] public interface IDeclareSingletonPrivate    { }
-		[SingletonInherited(Id="Original")] public interface IDeclareSingletonInherited  { }
-		[AdditivePrivate   (Id="Original")] public interface IDeclareAdditivePrivate     { }
-		[AdditiveInherited (Id="Original")] public interface IDeclareAdditiveInherited   { }
+		[AdditiveInherited(Id = "Override2")]
+		public interface IOverrideAdditiveInherited2 : IInheritAdditiveInherited
+		{
+		}
 
-		public interface IInheritSingletonPrivate   : IDeclareSingletonPrivate   { }
-		public interface IInheritSingletonInherited : IDeclareSingletonInherited { }
-		public interface IInheritAdditivePrivate    : IDeclareAdditivePrivate    { }
-		public interface IInheritAdditiveInherited  : IDeclareAdditiveInherited  { }
+		public interface ISymmetricSingletonInherited : IOverrideSingletonInherited1, IOverrideSingletonInherited2
+		{
+		}
 
-		[SingletonInherited(Id="Override1")] public interface IOverrideSingletonInherited1 : IInheritSingletonInherited { }
-		[SingletonInherited(Id="Override2")] public interface IOverrideSingletonInherited2 : IInheritSingletonInherited { }
-		[AdditiveInherited (Id="Override1")] public interface IOverrideAdditiveInherited1  : IInheritAdditiveInherited  { }
-		[AdditiveInherited (Id="Override2")] public interface IOverrideAdditiveInherited2  : IInheritAdditiveInherited  { }
+		public interface ISymmetricAdditiveInherited : IOverrideAdditiveInherited1, IOverrideAdditiveInherited2
+		{
+		}
 
-		public interface ISymmetricSingletonInherited : IOverrideSingletonInherited1, IOverrideSingletonInherited2 { }
-		public interface ISymmetricAdditiveInherited  : IOverrideAdditiveInherited1,  IOverrideAdditiveInherited2  { }
+		public interface IAsymmetricSingletonInherited : IDeclareSingletonInherited, IOverrideSingletonInherited1
+		{
+		}
 
-		public interface IAsymmetricSingletonInherited : IDeclareSingletonInherited, IOverrideSingletonInherited1 { }
-		public interface IAsymmetricAdditiveInherited  : IDeclareAdditiveInherited,  IOverrideAdditiveInherited1  { }
+		public interface IAsymmetricAdditiveInherited : IDeclareAdditiveInherited, IOverrideAdditiveInherited1
+		{
+		}
 
-		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
-		public sealed class SingletonPrivateAttribute   : MockAttribute { }
+		[AttributeUsage(AttributeTargets.Interface)]
+		public sealed class SingletonPrivateAttribute : MockAttribute
+		{
+		}
 
-		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = true)]
-		public sealed class SingletonInheritedAttribute : MockAttribute { }
+		[AttributeUsage(AttributeTargets.Interface)]
+		public sealed class SingletonInheritedAttribute : MockAttribute
+		{
+		}
 
-		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = true, Inherited = false)]
-		public sealed class AdditivePrivateAttribute    : MockAttribute { }
+		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = true)]
+		public sealed class AdditivePrivateAttribute : MockAttribute
+		{
+		}
 
-		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = true, Inherited = true)]
-		public sealed class AdditiveInheritedAttribute  : MockAttribute { }
+		[AttributeUsage(AttributeTargets.Interface, AllowMultiple = true)]
+		public sealed class AdditiveInheritedAttribute : MockAttribute
+		{
+		}
 
 		public abstract class MockAttribute : Attribute, IEquatable<MockAttribute>
 		{
+			private static readonly StringComparer
+				IdComparer = StringComparer.Ordinal;
+
 			public string Id { get; set; }
+
+			public bool Equals(MockAttribute other)
+			{
+				return null != other
+				       && GetType() == other.GetType()
+				       && IdComparer.Equals(Id, other.Id);
+			}
 
 			public override bool Equals(object obj)
 			{
 				return Equals(obj as MockAttribute);
 			}
 
-			public bool Equals(MockAttribute other)
-			{
-				return null != other
-					&& GetType() == other.GetType()
-					&& IdComparer.Equals(Id, other.Id);
-			}
-
 			public override int GetHashCode()
 			{
 				return 17
-					+ GetType().GetHashCode()
-					+ IdComparer.GetHashCode(Id);
+				       + GetType().GetHashCode()
+				       + IdComparer.GetHashCode(Id);
 			}
 
 			public override string ToString()
 			{
 				return string.Concat(GetType().Name, " [", Id, "]");
 			}
-
-			private static readonly StringComparer
-				IdComparer = StringComparer.Ordinal;
 		}
 
 		private static void AssertAttributes(Type interfaceType, params MockAttribute[] expectedAttributes)
@@ -192,6 +164,95 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 		private static void AssertInvalid(Type interfaceType)
 		{
 			Assert.Throws<InvalidOperationException>(() => InterfaceAttributeUtil.GetAttributes(interfaceType, true));
+		}
+
+		[Test]
+		public void Asymmetric_Multiple_Additive_Inherited()
+		{
+			AssertAttributes(typeof(IAsymmetricAdditiveInherited),
+				new AdditiveInheritedAttribute {Id = "Original"},
+				new AdditiveInheritedAttribute {Id = "Override1"}
+			);
+		}
+
+		[Test]
+		public void Asymmetric_Multiple_Singleton_Inherited()
+		{
+			AssertAttributes(typeof(IAsymmetricSingletonInherited),
+				new SingletonInheritedAttribute {Id = "Override1"}
+			);
+		}
+
+		[Test]
+		public void Declared_All()
+		{
+			AssertAttributes(typeof(IDeclaresAll),
+				new SingletonPrivateAttribute {Id = "Original"},
+				new SingletonInheritedAttribute {Id = "Original"},
+				new AdditivePrivateAttribute {Id = "Original"},
+				new AdditiveInheritedAttribute {Id = "Original"}
+			);
+		}
+
+		[Test]
+		public void Inherit_Additive_Inherited()
+		{
+			AssertAttributes(typeof(IInheritAdditiveInherited),
+				new AdditiveInheritedAttribute {Id = "Original"}
+			);
+		}
+
+		[Test]
+		public void Inherit_Additive_Private()
+		{
+			AssertAttributes(typeof(IInheritAdditivePrivate));
+		}
+
+		[Test]
+		public void Inherit_Singleton_Inherited()
+		{
+			AssertAttributes(typeof(IInheritSingletonInherited),
+				new SingletonInheritedAttribute {Id = "Original"}
+			);
+		}
+
+		[Test]
+		public void Inherit_Singleton_Private()
+		{
+			AssertAttributes(typeof(IInheritSingletonPrivate));
+		}
+
+		[Test]
+		public void Override_Additive_Inherited()
+		{
+			AssertAttributes(typeof(IOverrideAdditiveInherited1),
+				new AdditiveInheritedAttribute {Id = "Original"},
+				new AdditiveInheritedAttribute {Id = "Override1"}
+			);
+		}
+
+		[Test]
+		public void Override_Singleton_Inherited()
+		{
+			AssertAttributes(typeof(IOverrideSingletonInherited1),
+				new SingletonInheritedAttribute {Id = "Override1"}
+			);
+		}
+
+		[Test]
+		public void Symmetric_Multiple_Additive_Inherited()
+		{
+			AssertAttributes(typeof(ISymmetricAdditiveInherited),
+				new AdditiveInheritedAttribute {Id = "Original"},
+				new AdditiveInheritedAttribute {Id = "Override1"},
+				new AdditiveInheritedAttribute {Id = "Override2"}
+			);
+		}
+
+		[Test]
+		public void Symmetric_Multiple_Singleton_Inherited()
+		{
+			AssertInvalid(typeof(ISymmetricSingletonInherited));
 		}
 	}
 }

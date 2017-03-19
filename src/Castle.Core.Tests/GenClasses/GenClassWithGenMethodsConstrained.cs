@@ -18,24 +18,15 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class GenClassWithGenMethodsConstrained<T> where T : new()
 	{
-		private object savedParam;
-		private bool invoked;
+		public object SavedParam { get; private set; }
 
-		public object SavedParam
-		{
-			get { return savedParam; }
-		}
-
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
+		public bool Invoked { get; private set; }
 
 		public virtual T DoSomething<Z>(Z z) where Z : IComparable
 		{
-			invoked = true;
+			Invoked = true;
 
-			savedParam = z;
+			SavedParam = z;
 
 			return new T();
 		}

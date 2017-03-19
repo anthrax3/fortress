@@ -16,58 +16,25 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class ClassWithGenArgs<T>
 	{
-		private bool propVal;
-		private bool invoked;
+		public bool Invoked { get; private set; }
 
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
-
-		public virtual bool AProperty
-		{
-			set { propVal = value; }
-			get { return propVal; }
-		}
+		public virtual bool AProperty { set; get; }
 
 		public virtual void DoSomething()
 		{
-			invoked = true;
+			Invoked = true;
 		}
 	}
 
 	public class ClassWithGenArgs<T, Z>
 	{
-		private bool propVal;
-		private bool invoked;
+		public bool Invoked { get; private set; }
 
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
-
-		public virtual bool AProperty
-		{
-			set { propVal = value; }
-			get { return propVal; }
-		}
+		public virtual bool AProperty { set; get; }
 
 		public virtual void DoSomething()
 		{
-			invoked = true;
-		}
-	}
-
-	public class SubClassWithGenArgs<T, Z, Y> : ClassWithGenArgs<T, Z>
-	{
-		public override void DoSomething()
-		{
-#pragma warning disable 219
-#pragma warning disable 168
-			int x = 1 + 10; // Just something to fool the compiler
-#pragma warning restore 168
-#pragma warning restore 219
-			base.DoSomething();
+			Invoked = true;
 		}
 	}
 }

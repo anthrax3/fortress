@@ -16,16 +16,11 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class OnlyGenMethodsClass
 	{
-		private bool invoked;
-
-		public bool Invoked
-		{
-			get { return invoked; }
-		}
+		public bool Invoked { get; private set; }
 
 		public virtual Z DoSomething<Z>(Z z) where Z : new()
 		{
-			invoked = true;
+			Invoked = true;
 
 			return new Z();
 		}

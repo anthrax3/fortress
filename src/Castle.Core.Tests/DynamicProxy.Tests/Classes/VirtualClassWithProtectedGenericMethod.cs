@@ -29,11 +29,9 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 
 		protected virtual T Method<T>()
 		{
-			if(typeof(T)!=typeof(int))
-			{
+			if (typeof(T) != typeof(int))
 				return default(T);
-			}
-			return (T)(object)result;
+			return (T) (object) result;
 		}
 
 		public virtual T PublicMethod<T>()

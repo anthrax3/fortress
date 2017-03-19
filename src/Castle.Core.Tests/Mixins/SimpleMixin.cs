@@ -16,18 +16,9 @@ using System;
 
 namespace Castle.Core.Tests.Mixins
 {
-	public interface ISimpleMixin
-	{
-		int DoSomething();
-	}
-
 	[Serializable]
 	public class SimpleMixin : ISimpleMixin
 	{
-		public SimpleMixin()
-		{
-		}
-
 		public int DoSomething()
 		{
 			return 1;

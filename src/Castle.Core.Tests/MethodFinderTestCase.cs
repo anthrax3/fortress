@@ -26,8 +26,8 @@ namespace Castle.Core.Tests
 		private static void AssertArraysAreEqualUnsorted(object[] expected, object[] actual)
 		{
 			Assert.AreEqual(expected.Length, actual.Length);
-			List<object> actualAsList = new List<object>(actual);
-			foreach (object expectedElement in expected)
+			var actualAsList = new List<object>(actual);
+			foreach (var expectedElement in expected)
 			{
 				Assert.Contains(expectedElement, actualAsList);
 				actualAsList.Remove(expectedElement);
@@ -39,13 +39,13 @@ namespace Castle.Core.Tests
 		public void AssertArrayAreEqualUnsorted()
 		{
 			AssertArraysAreEqualUnsorted(new object[0], new object[0]);
-			AssertArraysAreEqualUnsorted(new object[] { null }, new object[] { null });
-			AssertArraysAreEqualUnsorted(new object[] { null, "one", null }, new object[] { null, null, "one" });
-			AssertArraysAreEqualUnsorted(new object[] { null, "one", null }, new object[] { "one", null, null });
+			AssertArraysAreEqualUnsorted(new object[] {null}, new object[] {null});
+			AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {null, null, "one"});
+			AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {"one", null, null});
 
 			try
 			{
-				AssertArraysAreEqualUnsorted(new object[] { null, "one", null }, new object[] { "one", "one", null });
+				AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {"one", "one", null});
 				Assert.Fail();
 			}
 			catch (AssertionException)
@@ -54,7 +54,7 @@ namespace Castle.Core.Tests
 			}
 			try
 			{
-				AssertArraysAreEqualUnsorted(new object[] { null, "one" }, new object[] { "one", null, null });
+				AssertArraysAreEqualUnsorted(new object[] {null, "one"}, new object[] {"one", null, null});
 				Assert.Fail();
 			}
 			catch (AssertionException)
@@ -63,51 +63,42 @@ namespace Castle.Core.Tests
 			}
 			try
 			{
-				AssertArraysAreEqualUnsorted(new object[] { null, "one", null }, new object[] { "one", null });
+				AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {"one", null});
 				Assert.Fail();
 			}
 			catch (AssertionException)
 			{
 				// ok
 			}
-		}
-
-		[Test]
-		public void GetMethodsForPublic()
-		{
-			MethodInfo[] methods =
-				MethodFinder.GetAllInstanceMethods(typeof(object), BindingFlags.Instance | BindingFlags.Public);
-			MethodInfo[] realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.Public);
-			AssertArraysAreEqualUnsorted(realMethods, methods);
 		}
 
 		[Test]
 		public void GetMethodsForNonPublic()
 		{
-			MethodInfo[] methods =
+			var methods =
 				MethodFinder.GetAllInstanceMethods(typeof(object), BindingFlags.Instance | BindingFlags.NonPublic);
-			MethodInfo[] realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+			var realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+			AssertArraysAreEqualUnsorted(realMethods, methods);
+		}
+
+		[Test]
+		public void GetMethodsForPublic()
+		{
+			var methods =
+				MethodFinder.GetAllInstanceMethods(typeof(object), BindingFlags.Instance | BindingFlags.Public);
+			var realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.Public);
 			AssertArraysAreEqualUnsorted(realMethods, methods);
 		}
 
 		[Test]
 		public void GetMethodsForPublicAndNonPublic()
 		{
-			MethodInfo[] methods =
+			var methods =
 				MethodFinder.GetAllInstanceMethods(typeof(object),
-												   BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-			MethodInfo[] realMethods =
+					BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+			var realMethods =
 				typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 			AssertArraysAreEqualUnsorted(realMethods, methods);
-		}
-
-		[Test]
-		public void GetMethodsThrowsOnStatic()
-		{
-			Assert.Throws<ArgumentException>(() =>
-				MethodFinder.GetAllInstanceMethods(typeof(object),
-					BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
-			);
 		}
 
 		[Test]
@@ -116,6 +107,15 @@ namespace Castle.Core.Tests
 			Assert.Throws<ArgumentException>(() =>
 				MethodFinder.GetAllInstanceMethods(typeof(object),
 					BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly)
+			);
+		}
+
+		[Test]
+		public void GetMethodsThrowsOnStatic()
+		{
+			Assert.Throws<ArgumentException>(() =>
+				MethodFinder.GetAllInstanceMethods(typeof(object),
+					BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
 			);
 		}
 	}

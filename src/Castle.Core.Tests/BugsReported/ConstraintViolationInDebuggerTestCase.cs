@@ -21,21 +21,6 @@ namespace Castle.Core.Tests.BugsReported
 	[TestFixture]
 	public class ConstraintViolationInDebuggerTestCase : BasePEVerifyTestCase
 	{
-		// This test case yields a TypeLoadException in the debugger, but works perfectly without a debugger attached.
-		// It also produces verifiable code.
-		// In Visual Studio 2010 this test passes just fine with the debugger attached.
-		[Test]
-		public void TestCase()
-		{
-			generator.ProxyBuilder.CreateInterfaceProxyTypeWithTarget(
-				typeof (IPresentationHost), Type.EmptyTypes, typeof (PresentationHost), ProxyGenerationOptions.Default);
-
-			IServiceAgent agent =
-				(IServiceAgent)
-				generator.CreateInterfaceProxyWithTarget<IServiceAgent>(new ServiceAgent(), new StandardInterceptor());
-			agent.GetProxy<string>();
-		}
-
 		public class PresentationHost : IPresentationHost
 		{
 			#region IPresentationHost Members
@@ -84,6 +69,20 @@ namespace Castle.Core.Tests.BugsReported
 
 		public interface IPresentation
 		{
+		}
+
+		// This test case yields a TypeLoadException in the debugger, but works perfectly without a debugger attached.
+		// It also produces verifiable code.
+		// In Visual Studio 2010 this test passes just fine with the debugger attached.
+		[Test]
+		public void TestCase()
+		{
+			generator.ProxyBuilder.CreateInterfaceProxyTypeWithTarget(
+				typeof(IPresentationHost), Type.EmptyTypes, typeof(PresentationHost), ProxyGenerationOptions.Default);
+
+			var agent =
+				generator.CreateInterfaceProxyWithTarget<IServiceAgent>(new ServiceAgent(), new StandardInterceptor());
+			agent.GetProxy<string>();
 		}
 	}
 }

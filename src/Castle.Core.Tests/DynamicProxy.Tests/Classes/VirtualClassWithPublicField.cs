@@ -17,6 +17,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 	public class VirtualClassWithPublicField
 	{
 		public int field;
+
 		public virtual int Method()
 		{
 			return 42;

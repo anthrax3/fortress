@@ -63,9 +63,9 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 
 		public override int GetHashCode()
 		{
-			int hash = 7;
+			var hash = 7;
 
-			hash = 31*hash + Id.GetHashCode();
+			hash = 31 * hash + Id.GetHashCode();
 
 			return hash;
 		}

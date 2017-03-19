@@ -22,14 +22,20 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class GenericInterfaceWithGenericMethod
 	{
-		ProxyGenerator proxyGenerator;
-		ProxyGenerationOptions options;
-
 		[SetUp]
 		public void Setup()
 		{
 			proxyGenerator = new ProxyGenerator();
 			options = new ProxyGenerationOptions();
+		}
+
+		private ProxyGenerator proxyGenerator;
+		private ProxyGenerationOptions options;
+
+		public interface IMinimumFailure<T>
+		{
+			void NormalMethod();
+			IEnumerable<T> FailingMethod<T2>(T2 pred);
 		}
 
 		[Test]
@@ -39,12 +45,6 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var result = proxyGenerator.CreateInterfaceProxyWithoutTarget(type, new Type[0], options);
 
 			Assert.IsNotNull(result as IMinimumFailure<string>);
-		}
-
-		public interface IMinimumFailure<T>
-		{
-			void NormalMethod();
-			IEnumerable<T> FailingMethod<T2>(T2 pred);
 		}
 	}
 }

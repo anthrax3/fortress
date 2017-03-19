@@ -18,7 +18,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class CustomAttributesTestCase:BasePEVerifyTestCase
+	public class CustomAttributesTestCase : BasePEVerifyTestCase
 	{
 		[Test]
 		public void Should_Proxy_type_having_complicated_arguments()

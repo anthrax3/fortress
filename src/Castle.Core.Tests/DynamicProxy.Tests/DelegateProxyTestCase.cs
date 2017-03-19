@@ -26,10 +26,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		private Type GenerateProxyType<TDelegate>()
 		{
 			var scope = generator.ProxyBuilder.ModuleScope;
-			var proxyGenerator = new DelegateProxyGenerator(scope, typeof (TDelegate))
-			                     	{
-			                     		Logger = generator.ProxyBuilder.Logger
-			                     	};
+			var proxyGenerator = new DelegateProxyGenerator(scope, typeof(TDelegate))
+			{
+				Logger = generator.ProxyBuilder.Logger
+			};
 			return proxyGenerator.GetProxyType();
 		}
 
@@ -37,7 +37,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var type = GenerateProxyType<T>();
 			var instance = Activator.CreateInstance(type, func, interceptors);
-			return (T) (object) Delegate.CreateDelegate(typeof (T), instance, "Invoke");
+			return (T) (object) Delegate.CreateDelegate(typeof(T), instance, "Invoke");
 		}
 
 		[Test]
@@ -51,10 +51,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void Can_intercept_call_to_delegate()
 		{
 			var proxy = GetProxyInstance<Func<int>>(() =>
-			                                        	{
-			                                        		Assert.Fail("Shouldn't have gone that far");
-			                                        		return 5;
-			                                        	}, new SetReturnValueInterceptor(3));
+			{
+				Assert.Fail("Shouldn't have gone that far");
+				return 5;
+			}, new SetReturnValueInterceptor(3));
 			var result = proxy.Invoke();
 			Assert.AreEqual(3, result);
 		}

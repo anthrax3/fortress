@@ -17,18 +17,18 @@ using Castle.Core.DynamicProxy;
 namespace Castle.Core.Tests.Interceptors
 {
 	public class SetReturnValueInterceptor : IInterceptor
-    {
-        private object value;
+	{
+		private readonly object value;
 
-        public SetReturnValueInterceptor(object value)
-        {
-            this.value = value;
-        }
+		public SetReturnValueInterceptor(object value)
+		{
+			this.value = value;
+		}
 
 
-        public void Intercept(IInvocation invocation)
-        {
-            invocation.ReturnValue = value;
-        }
-    }
+		public void Intercept(IInvocation invocation)
+		{
+			invocation.ReturnValue = value;
+		}
+	}
 }

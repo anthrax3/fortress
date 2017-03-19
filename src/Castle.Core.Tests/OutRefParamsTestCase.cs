@@ -37,9 +37,7 @@ namespace Castle.Core.Tests
 				outParam = "23";
 
 				if (refParam == 23)
-				{
 					throw new Exception("intentional exception");
-				}
 
 				return 42;
 			}
@@ -85,7 +83,7 @@ namespace Castle.Core.Tests
 
 			public virtual void MyMethodWithStruct(ref MyStruct s)
 			{
-				s.Value = 2*s.Value;
+				s.Value = 2 * s.Value;
 			}
 		}
 
@@ -95,7 +93,7 @@ namespace Castle.Core.Tests
 			int i;
 			var interceptor =
 				new WithCallbackInterceptor(delegate(IInvocation invocation) { invocation.Arguments[0] = 5; });
-			var proxy = (IWithRefOut)generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
+			var proxy = (IWithRefOut) generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
 			proxy.Do(out i);
 			Assert.AreEqual(5, i);
 		}
@@ -105,7 +103,7 @@ namespace Castle.Core.Tests
 		{
 			int i;
 			var interceptor = new WithCallbackInterceptor(delegate { });
-			var proxy = (IWithRefOut)generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
+			var proxy = (IWithRefOut) generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
 			proxy.Do(out i);
 		}
 
@@ -121,7 +119,7 @@ namespace Castle.Core.Tests
 				invocation.Arguments[1] = "aaa";
 				invocation.Arguments[3] = "bbb";
 			});
-			var proxy = (MyClass)generator.CreateClassProxy(typeof(MyClass), interceptor);
+			var proxy = (MyClass) generator.CreateClassProxy(typeof(MyClass), interceptor);
 			proxy.MyMethod(out i, ref s1, 1, out s2);
 			Assert.AreEqual(5, i);
 			Assert.AreEqual(s1, "aaa");
@@ -142,7 +140,7 @@ namespace Castle.Core.Tests
 			var i = 3;
 			var interceptor =
 				new WithCallbackInterceptor(delegate(IInvocation invocation) { invocation.Arguments[0] = 5; });
-			var proxy = (IWithRefOut)generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
+			var proxy = (IWithRefOut) generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
 			proxy.Did(ref i);
 			Assert.AreEqual(5, i);
 		}
@@ -151,7 +149,7 @@ namespace Castle.Core.Tests
 		public void CanCreateProxyWithStructRefParam()
 		{
 			var s = new MyStruct(10);
-			var proxy = (MyClass)generator.CreateClassProxy(typeof(MyClass), new StandardInterceptor());
+			var proxy = (MyClass) generator.CreateClassProxy(typeof(MyClass), new StandardInterceptor());
 			proxy.MyMethodWithStruct(ref s);
 			Assert.AreEqual(20, s.Value);
 		}
@@ -268,7 +266,7 @@ namespace Castle.Core.Tests
 		{
 			var proxy =
 				generator.CreateInterfaceProxyWithTarget<IClassHasMethodThrowException>(new ClassHasMethodThrowException(),
-				                                                                        new ExceptionCatchInterceptor());
+					new ExceptionCatchInterceptor());
 
 			var param1 = 1;
 			var param2 = "1";
@@ -329,7 +327,7 @@ namespace Castle.Core.Tests
 		{
 			var proxy =
 				generator.CreateInterfaceProxyWithTarget<IClassHasMethodThrowException>(new ClassHasMethodThrowException(),
-				                                                                        new StandardInterceptor());
+					new StandardInterceptor());
 
 			var param1 = 1;
 			var param2 = "1";

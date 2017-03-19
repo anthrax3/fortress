@@ -32,4 +32,3 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 		}
 	}
 }
-

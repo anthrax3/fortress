@@ -25,73 +25,13 @@ namespace Castle.Core.Tests
 	public class ClassWithAttributesTestCase : BasePEVerifyTestCase
 	{
 		[Test]
-		public void EnsureProxyHasAttributesOnClassAndMethods()
+		public void Can_proxy_type_with_non_inheritable_attribute_depending_on_array_of_something_via_field()
 		{
-			HasNonInheritableAttribute instance = (HasNonInheritableAttribute)
-										generator.CreateClassProxy(typeof (HasNonInheritableAttribute), new StandardInterceptor());
-
-			object[] attributes = instance.GetType().GetTypeInfo().GetCustomAttributes(typeof (NonInheritableAttribute), false).ToArray();
-			Assert.AreEqual(1, attributes.Length);
-			Assert.IsInstanceOf(typeof (NonInheritableAttribute), attributes[0]);
-
-			attributes = instance.GetType().GetMethod("OnMethod").GetCustomAttributes(typeof (NonInheritableAttribute), false).ToArray();
-			Assert.AreEqual(1, attributes.Length);
-			Assert.IsInstanceOf(typeof (NonInheritableAttribute), attributes[0]);
-		}
-
-		[Test]
-		public void EnsureProxyHasAttributesOnClassAndMethods_ComplexAttributes()
-		{
-			AttributedClass2 instance = (AttributedClass2)
-										generator.CreateClassProxy(typeof (AttributedClass2), new StandardInterceptor());
-
-			object[] attributes = instance.GetType().GetTypeInfo().GetCustomAttributes(typeof (ComplexNonInheritableAttribute), false).ToArray();
-			Assert.AreEqual(1, attributes.Length);
-			Assert.IsInstanceOf(typeof (ComplexNonInheritableAttribute), attributes[0]);
-			ComplexNonInheritableAttribute att = (ComplexNonInheritableAttribute) attributes[0];
-			// (1, 2, true, "class", FileAccess.Write)
-			Assert.AreEqual(1, att.Id);
-			Assert.AreEqual(2, att.Num);
-			Assert.AreEqual(true, att.IsSomething);
-			Assert.AreEqual("class", att.Name);
-			Assert.AreEqual(FileAccess.Write, att.Access);
-
-			attributes = instance.GetType().GetMethod("Do1").GetCustomAttributes(typeof (ComplexNonInheritableAttribute), false).ToArray();
-			Assert.AreEqual(1, attributes.Length);
-			Assert.IsInstanceOf(typeof (ComplexNonInheritableAttribute), attributes[0]);
-			att = (ComplexNonInheritableAttribute) attributes[0];
-			// (2, 3, "Do1", Access = FileAccess.ReadWrite)
-			Assert.AreEqual(2, att.Id);
-			Assert.AreEqual(3, att.Num);
-			Assert.AreEqual(false, att.IsSomething);
-			Assert.AreEqual("Do1", att.Name);
-			Assert.AreEqual(FileAccess.ReadWrite, att.Access);
-
-			attributes = instance.GetType().GetMethod("Do2").GetCustomAttributes(typeof (ComplexNonInheritableAttribute), false).ToArray();
-			Assert.AreEqual(1, attributes.Length);
-			Assert.IsInstanceOf(typeof (ComplexNonInheritableAttribute), attributes[0]);
-			att = (ComplexNonInheritableAttribute) attributes[0];
-			// (3, 4, "Do2", IsSomething=true)
-			Assert.AreEqual(3, att.Id);
-			Assert.AreEqual(4, att.Num);
-			Assert.AreEqual(true, att.IsSomething);
-			Assert.AreEqual("Do2", att.Name);
-		}
-
-		[Test]
-		public void EnsureProxyHasAttributesOnProperties()
-		{
-			var proxy = generator.CreateClassProxy<HasNonInheritableAttribute>();
-			var nameProperty = proxy.GetType().GetProperty("OnProperty");
-			Assert.IsTrue(nameProperty.IsDefined(typeof(NonInheritableAttribute), false));
-		}
-
-		[Test]
-		public void EnsureProxyHasAttributesOnParameter()
-		{
-			var proxy = generator.CreateClassProxy<HasNonInheritableAttribute>();
-			ParameterInfo nameProperty = proxy.GetType().GetMethod("OnParameter").GetParameters().Single();
-			Assert.IsTrue(nameProperty.IsDefined(typeof(NonInheritableAttribute), false));
+			var proxy = generator.CreateInterfaceProxyWithoutTarget<IHasNonInheritableAttributeWithArray2>();
+			var attribute = proxy.GetType().GetTypeInfo()
+				.GetCustomAttributes(typeof(NonInheritableWithArray2Attribute), false)
+				.Cast<NonInheritableWithArray2Attribute>().Single();
+			CollectionAssert.AreEqual(attribute.Values, new[] {"1", "2", "3"});
 		}
 
 		[Test]
@@ -105,13 +45,73 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Can_proxy_type_with_non_inheritable_attribute_depending_on_array_of_something_via_field()
+		public void EnsureProxyHasAttributesOnClassAndMethods()
 		{
-			var proxy = generator.CreateInterfaceProxyWithoutTarget<IHasNonInheritableAttributeWithArray2>();
-			var attribute = proxy.GetType().GetTypeInfo()
-				.GetCustomAttributes(typeof(NonInheritableWithArray2Attribute), false)
-				.Cast<NonInheritableWithArray2Attribute>().Single();
-			CollectionAssert.AreEqual(attribute.Values, new[] { "1", "2", "3" });
+			var instance = (HasNonInheritableAttribute)
+				generator.CreateClassProxy(typeof(HasNonInheritableAttribute), new StandardInterceptor());
+
+			var attributes = instance.GetType().GetTypeInfo().GetCustomAttributes(typeof(NonInheritableAttribute), false).ToArray();
+			Assert.AreEqual(1, attributes.Length);
+			Assert.IsInstanceOf(typeof(NonInheritableAttribute), attributes[0]);
+
+			attributes = instance.GetType().GetMethod("OnMethod").GetCustomAttributes(typeof(NonInheritableAttribute), false).ToArray();
+			Assert.AreEqual(1, attributes.Length);
+			Assert.IsInstanceOf(typeof(NonInheritableAttribute), attributes[0]);
+		}
+
+		[Test]
+		public void EnsureProxyHasAttributesOnClassAndMethods_ComplexAttributes()
+		{
+			var instance = (AttributedClass2)
+				generator.CreateClassProxy(typeof(AttributedClass2), new StandardInterceptor());
+
+			var attributes = instance.GetType().GetTypeInfo().GetCustomAttributes(typeof(ComplexNonInheritableAttribute), false).ToArray();
+			Assert.AreEqual(1, attributes.Length);
+			Assert.IsInstanceOf(typeof(ComplexNonInheritableAttribute), attributes[0]);
+			var att = (ComplexNonInheritableAttribute) attributes[0];
+			// (1, 2, true, "class", FileAccess.Write)
+			Assert.AreEqual(1, att.Id);
+			Assert.AreEqual(2, att.Num);
+			Assert.AreEqual(true, att.IsSomething);
+			Assert.AreEqual("class", att.Name);
+			Assert.AreEqual(FileAccess.Write, att.Access);
+
+			attributes = instance.GetType().GetMethod("Do1").GetCustomAttributes(typeof(ComplexNonInheritableAttribute), false).ToArray();
+			Assert.AreEqual(1, attributes.Length);
+			Assert.IsInstanceOf(typeof(ComplexNonInheritableAttribute), attributes[0]);
+			att = (ComplexNonInheritableAttribute) attributes[0];
+			// (2, 3, "Do1", Access = FileAccess.ReadWrite)
+			Assert.AreEqual(2, att.Id);
+			Assert.AreEqual(3, att.Num);
+			Assert.AreEqual(false, att.IsSomething);
+			Assert.AreEqual("Do1", att.Name);
+			Assert.AreEqual(FileAccess.ReadWrite, att.Access);
+
+			attributes = instance.GetType().GetMethod("Do2").GetCustomAttributes(typeof(ComplexNonInheritableAttribute), false).ToArray();
+			Assert.AreEqual(1, attributes.Length);
+			Assert.IsInstanceOf(typeof(ComplexNonInheritableAttribute), attributes[0]);
+			att = (ComplexNonInheritableAttribute) attributes[0];
+			// (3, 4, "Do2", IsSomething=true)
+			Assert.AreEqual(3, att.Id);
+			Assert.AreEqual(4, att.Num);
+			Assert.AreEqual(true, att.IsSomething);
+			Assert.AreEqual("Do2", att.Name);
+		}
+
+		[Test]
+		public void EnsureProxyHasAttributesOnParameter()
+		{
+			var proxy = generator.CreateClassProxy<HasNonInheritableAttribute>();
+			var nameProperty = proxy.GetType().GetMethod("OnParameter").GetParameters().Single();
+			Assert.IsTrue(nameProperty.IsDefined(typeof(NonInheritableAttribute), false));
+		}
+
+		[Test]
+		public void EnsureProxyHasAttributesOnProperties()
+		{
+			var proxy = generator.CreateClassProxy<HasNonInheritableAttribute>();
+			var nameProperty = proxy.GetType().GetProperty("OnProperty");
+			Assert.IsTrue(nameProperty.IsDefined(typeof(NonInheritableAttribute), false));
 		}
 	}
 }

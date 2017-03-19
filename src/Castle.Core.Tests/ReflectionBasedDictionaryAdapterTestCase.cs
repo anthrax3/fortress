@@ -12,25 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Reflection;
 using Castle.Core.Core;
+using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	using System;
-	using System.Collections;
-	using System.Reflection;
-
-	using Castle.Core;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ReflectionBasedDictionaryAdapterTestCase
 	{
 		public class Customer
 		{
-			private bool writeOnly;
-
 			public Customer(int id, string name)
 				: this(id, name, false)
 			{
@@ -38,9 +32,9 @@ namespace Castle.Core.Tests
 
 			public Customer(int id, string name, bool writeOnly)
 			{
-				this.Id = id;
-				this.Name = name;
-				this.writeOnly = writeOnly;
+				Id = id;
+				Name = name;
+				IsWriteOnly = writeOnly;
 			}
 
 			public int Id { get; set; }
@@ -49,14 +43,11 @@ namespace Castle.Core.Tests
 
 			public bool WriteOnly
 			{
-				set { writeOnly = value; }
+				set { IsWriteOnly = value; }
 			}
 
-			public bool IsWriteOnly
-			{
-				get { return writeOnly; }
-			}
-		
+			public bool IsWriteOnly { get; private set; }
+
 			public string this[int id]
 			{
 				get { return "abcdef"; }
@@ -110,20 +101,6 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void Using_anonymous_types_works_without_exception()
-		{
-			var target = new { foo = 1, name = "john", age = 25 };
-			Assert.IsFalse(target.GetType().GetTypeInfo().IsPublic);
-			var dict = new ReflectionBasedDictionaryAdapter(target);
-
-			Assert.AreEqual(3, dict.Count);
-
-			Assert.AreEqual(1, dict["foo"]);
-			Assert.AreEqual("john", dict["name"]);
-			Assert.AreEqual(25, dict["age"]);
-		}
-
-		[Test]
 		public void InexistingPropertiesReturnsNull()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name"));
@@ -152,6 +129,20 @@ namespace Castle.Core.Tests
 			{
 				Assert.Fail("Attempted to read a write-only property");
 			}
+		}
+
+		[Test]
+		public void Using_anonymous_types_works_without_exception()
+		{
+			var target = new {foo = 1, name = "john", age = 25};
+			Assert.IsFalse(target.GetType().GetTypeInfo().IsPublic);
+			var dict = new ReflectionBasedDictionaryAdapter(target);
+
+			Assert.AreEqual(3, dict.Count);
+
+			Assert.AreEqual(1, dict["foo"]);
+			Assert.AreEqual("john", dict["name"]);
+			Assert.AreEqual(25, dict["age"]);
 		}
 	}
 }

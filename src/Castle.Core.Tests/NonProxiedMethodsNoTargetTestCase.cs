@@ -26,23 +26,23 @@ namespace Castle.Core.Tests
 		private TType CreateProxy<TType>()
 		{
 			var options = new ProxyGenerationOptions(new ProxyNothingHook());
-			return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof (TType), Type.EmptyTypes, options);
+			return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof(TType), Type.EmptyTypes, options);
 		}
 
 		private TType CreateProxyWithAdditionalInterface<TType>(ProxyKind kind)
 		{
 			var options = new ProxyGenerationOptions(new ProxyNothingHook());
-			var interfaces = new[] {typeof (TType)};
+			var interfaces = new[] {typeof(TType)};
 			switch (kind)
 			{
 				case ProxyKind.Class:
-					return (TType) generator.CreateClassProxy(typeof (object), interfaces, options);
+					return (TType) generator.CreateClassProxy(typeof(object), interfaces, options);
 				case ProxyKind.WithoutTarget:
-					return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof (IEmpty), interfaces, options);
+					return (TType) generator.CreateInterfaceProxyWithoutTarget(typeof(IEmpty), interfaces, options);
 				case ProxyKind.WithTarget:
-					return (TType) generator.CreateInterfaceProxyWithTarget(typeof (IEmpty), interfaces, new Empty(), options);
+					return (TType) generator.CreateInterfaceProxyWithTarget(typeof(IEmpty), interfaces, new Empty(), options);
 				case ProxyKind.WithTargetInterface:
-					return (TType) generator.CreateInterfaceProxyWithTargetInterface(typeof (IEmpty), interfaces, new Empty(), options);
+					return (TType) generator.CreateInterfaceProxyWithTargetInterface(typeof(IEmpty), interfaces, new Empty(), options);
 			}
 
 			Assert.Fail("Invalid proxy kind {0}", kind);
@@ -52,21 +52,22 @@ namespace Castle.Core.Tests
 		private T CreateClassProxy<T>()
 		{
 			var options = new ProxyGenerationOptions(new ProxyNothingHook());
-			return (T) generator.CreateClassProxy(typeof (T), Type.EmptyTypes, options);
+			return (T) generator.CreateClassProxy(typeof(T), Type.EmptyTypes, options);
 		}
 
-		public static readonly object[] AllKinds = {
-			new object[] { ProxyKind.Class },
-			new object[] { ProxyKind.WithoutTarget },
-			new object[] { ProxyKind.WithTarget },
-			new object[] { ProxyKind.WithTargetInterface }
+		public static readonly object[] AllKinds =
+		{
+			new object[] {ProxyKind.Class},
+			new object[] {ProxyKind.WithoutTarget},
+			new object[] {ProxyKind.WithTarget},
+			new object[] {ProxyKind.WithTargetInterface}
 		};
 
 		[Test]
 		public void Abstract_method()
 		{
 			var proxy = CreateClassProxy<AbstractClass>();
-			string result = string.Empty;
+			var result = string.Empty;
 			Assert.DoesNotThrow(() => result = proxy.Foo());
 			Assert.IsNull(result);
 		}
@@ -76,7 +77,7 @@ namespace Castle.Core.Tests
 		public void AdditionalInterfaces_method(ProxyKind kind)
 		{
 			var proxy = CreateProxyWithAdditionalInterface<IWithRefOut>(kind);
-			int result = -1;
+			var result = -1;
 			Assert.DoesNotThrow(() => proxy.Do(out result));
 			Assert.AreEqual(0, result);
 
@@ -89,7 +90,7 @@ namespace Castle.Core.Tests
 		public void Target_method()
 		{
 			var proxy = CreateProxy<ISimpleInterface>();
-			int result = -1;
+			var result = -1;
 			Assert.DoesNotThrow(() => result = proxy.Do());
 			Assert.AreEqual(0, result);
 		}
@@ -98,7 +99,7 @@ namespace Castle.Core.Tests
 		public void Target_method_double_parameters()
 		{
 			var proxy = CreateProxy<IService>();
-			double result = -1D;
+			var result = -1D;
 			Assert.DoesNotThrow(() => result = proxy.Sum(1D, 2D));
 			Assert.AreEqual(0D, result);
 		}
@@ -107,9 +108,9 @@ namespace Castle.Core.Tests
 		public void Target_method_generic_int()
 		{
 			var proxy = CreateProxy<IGenericInterface>();
-			int result = -1;
+			var result = -1;
 			Assert.DoesNotThrow(() =>
-			                    result = proxy.GenericMethod<int>());
+				result = proxy.GenericMethod<int>());
 			Assert.AreEqual(0, result);
 		}
 
@@ -117,7 +118,7 @@ namespace Castle.Core.Tests
 		public void Target_method_generic_out_ref_parameters_int()
 		{
 			var proxy = CreateProxy<IGenericWithRefOut>();
-			int result = -1;
+			var result = -1;
 			Assert.DoesNotThrow(() => proxy.Do(out result));
 			Assert.AreEqual(0, result);
 
@@ -130,7 +131,7 @@ namespace Castle.Core.Tests
 		public void Target_method_generic_out_ref_parameters_string()
 		{
 			var proxy = CreateProxy<IGenericWithRefOut>();
-			string result = string.Empty;
+			var result = string.Empty;
 			Assert.DoesNotThrow(() => proxy.Do(out result));
 			Assert.IsNull(result);
 
@@ -143,7 +144,7 @@ namespace Castle.Core.Tests
 		public void Target_method_generic_string()
 		{
 			var proxy = CreateProxy<IGenericInterface>();
-			string result = "";
+			var result = "";
 			Assert.DoesNotThrow(() => result = proxy.GenericMethod<string>());
 			Assert.IsNull(result);
 		}
@@ -165,11 +166,11 @@ namespace Castle.Core.Tests
 			Assert.DoesNotThrow(() => result = proxy.Get());
 			Assert.IsNull(result);
 
-			result = new int?(5);
+			result = 5;
 			Assert.DoesNotThrow(() => proxy.GetOut(out result));
 			Assert.IsNull(result);
 
-			result = new int?(5);
+			result = 5;
 			Assert.DoesNotThrow(() => proxy.Set(result));
 		}
 
@@ -177,7 +178,7 @@ namespace Castle.Core.Tests
 		public void Target_method_out_decimal()
 		{
 			var proxy = CreateProxy<IDecimalOutParam>();
-			decimal result = 12M;
+			var result = 12M;
 			Assert.DoesNotThrow(() => proxy.Dance(out result));
 			Assert.AreEqual(0M, result);
 		}
@@ -195,7 +196,7 @@ namespace Castle.Core.Tests
 		public void Target_method_out_ref_parameters()
 		{
 			var proxy = CreateProxy<IWithRefOut>();
-			int result = -1;
+			var result = -1;
 			Assert.DoesNotThrow(() => proxy.Do(out result));
 			Assert.AreEqual(0, result);
 

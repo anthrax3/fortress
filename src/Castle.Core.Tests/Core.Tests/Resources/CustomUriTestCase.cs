@@ -22,60 +22,9 @@ namespace Castle.Core.Tests.Core.Tests.Resources
 	public class CustomUriTestCase
 	{
 		[Test]
-		public void FileUris()
-		{
-			CustomUri uri1 = new CustomUri("file://c:\\mydir\\properties.config");
-
-			Assert.AreEqual("c:/mydir/properties.config", uri1.Path);
-			Assert.AreEqual(null, uri1.Host);
-			Assert.AreEqual("file", uri1.Scheme);
-			Assert.AreEqual(true, uri1.IsFile);
-			Assert.AreEqual(false, uri1.IsUnc);
-		}
-
-		[Test]
-		public void FileUris2()
-		{
-			CustomUri uri1 = new CustomUri("file://Config/properties.config");
-
-			Assert.AreEqual("Config/properties.config", uri1.Path);
-			Assert.AreEqual(null, uri1.Host);
-			Assert.AreEqual("file", uri1.Scheme);
-			Assert.AreEqual(true, uri1.IsFile);
-			Assert.AreEqual(false, uri1.IsUnc);
-		}
-
-		[Test]
-		public void FileUris3()
-		{
-			CustomUri uri1 = new CustomUri("e:\\somedir\\somefile.extension");
-
-			Assert.AreEqual("e:/somedir/somefile.extension", uri1.Path);
-			Assert.AreEqual(null, uri1.Host);
-			Assert.AreEqual("file", uri1.Scheme);
-			Assert.AreEqual(true, uri1.IsFile);
-			Assert.AreEqual(false, uri1.IsUnc);
-		}
-
-		[Test]
-		public void UriWithEnvironmentVariable()
-		{
-			string path = Environment.GetEnvironmentVariable("PATH");
-			Assert.IsNotEmpty(path);
-
-			CustomUri uri1 = new CustomUri("file://%PATH%");
-
-			Assert.AreEqual(path, uri1.Path);
-			Assert.AreEqual(null, uri1.Host);
-			Assert.AreEqual("file", uri1.Scheme);
-			Assert.AreEqual(true, uri1.IsFile);
-			Assert.AreEqual(false, uri1.IsUnc);
-		}
-
-		[Test]
 		public void AssemblyUri()
 		{
-			CustomUri uri1 = new CustomUri("assembly://Assembly.Name/properties.config");
+			var uri1 = new CustomUri("assembly://Assembly.Name/properties.config");
 
 			Assert.AreEqual("/properties.config", uri1.Path);
 			Assert.AreEqual("Assembly.Name", uri1.Host);
@@ -87,12 +36,63 @@ namespace Castle.Core.Tests.Core.Tests.Resources
 		[Test]
 		public void AssemblyUri2()
 		{
-			CustomUri uri1 = new CustomUri("assembly://Assembly.Name/Some/Namespace/properties.config");
+			var uri1 = new CustomUri("assembly://Assembly.Name/Some/Namespace/properties.config");
 
 			Assert.AreEqual("/Some/Namespace/properties.config", uri1.Path);
 			Assert.AreEqual("Assembly.Name", uri1.Host);
 			Assert.AreEqual("assembly", uri1.Scheme);
 			Assert.AreEqual(false, uri1.IsFile);
+			Assert.AreEqual(false, uri1.IsUnc);
+		}
+
+		[Test]
+		public void FileUris()
+		{
+			var uri1 = new CustomUri("file://c:\\mydir\\properties.config");
+
+			Assert.AreEqual("c:/mydir/properties.config", uri1.Path);
+			Assert.AreEqual(null, uri1.Host);
+			Assert.AreEqual("file", uri1.Scheme);
+			Assert.AreEqual(true, uri1.IsFile);
+			Assert.AreEqual(false, uri1.IsUnc);
+		}
+
+		[Test]
+		public void FileUris2()
+		{
+			var uri1 = new CustomUri("file://Config/properties.config");
+
+			Assert.AreEqual("Config/properties.config", uri1.Path);
+			Assert.AreEqual(null, uri1.Host);
+			Assert.AreEqual("file", uri1.Scheme);
+			Assert.AreEqual(true, uri1.IsFile);
+			Assert.AreEqual(false, uri1.IsUnc);
+		}
+
+		[Test]
+		public void FileUris3()
+		{
+			var uri1 = new CustomUri("e:\\somedir\\somefile.extension");
+
+			Assert.AreEqual("e:/somedir/somefile.extension", uri1.Path);
+			Assert.AreEqual(null, uri1.Host);
+			Assert.AreEqual("file", uri1.Scheme);
+			Assert.AreEqual(true, uri1.IsFile);
+			Assert.AreEqual(false, uri1.IsUnc);
+		}
+
+		[Test]
+		public void UriWithEnvironmentVariable()
+		{
+			var path = Environment.GetEnvironmentVariable("PATH");
+			Assert.IsNotEmpty(path);
+
+			var uri1 = new CustomUri("file://%PATH%");
+
+			Assert.AreEqual(path, uri1.Path);
+			Assert.AreEqual(null, uri1.Host);
+			Assert.AreEqual("file", uri1.Scheme);
+			Assert.AreEqual(true, uri1.IsFile);
 			Assert.AreEqual(false, uri1.IsUnc);
 		}
 	}

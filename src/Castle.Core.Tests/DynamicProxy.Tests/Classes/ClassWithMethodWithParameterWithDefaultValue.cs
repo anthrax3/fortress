@@ -18,7 +18,6 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 	{
 		public virtual void Method(int? value = 3)
 		{
-			
 		}
 	}
 }

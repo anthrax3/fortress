@@ -25,11 +25,11 @@ namespace Castle.Core.Tests
 		[Test]
 		public void InvocationForConcreteClassProxy()
 		{
-			KeepDataInterceptor interceptor = new KeepDataInterceptor();
+			var interceptor = new KeepDataInterceptor();
 
-			object proxy = generator.CreateClassProxy(typeof (ServiceClass), interceptor);
+			var proxy = generator.CreateClassProxy(typeof(ServiceClass), interceptor);
 
-			ServiceClass instance = (ServiceClass) proxy;
+			var instance = (ServiceClass) proxy;
 
 			instance.Sum(20, 25);
 
@@ -44,12 +44,12 @@ namespace Castle.Core.Tests
 			Assert.AreEqual(45, interceptor.Invocation.ReturnValue);
 
 			Assert.IsNotNull(interceptor.Invocation.Proxy);
-			Assert.IsInstanceOf(typeof (ServiceClass), interceptor.Invocation.Proxy);
+			Assert.IsInstanceOf(typeof(ServiceClass), interceptor.Invocation.Proxy);
 
 			Assert.IsNotNull(interceptor.Invocation.InvocationTarget);
-			Assert.IsInstanceOf(typeof (ServiceClass), interceptor.Invocation.InvocationTarget);
+			Assert.IsInstanceOf(typeof(ServiceClass), interceptor.Invocation.InvocationTarget);
 			Assert.IsNotNull(interceptor.Invocation.TargetType);
-			Assert.AreSame(typeof (ServiceClass), interceptor.Invocation.TargetType);
+			Assert.AreSame(typeof(ServiceClass), interceptor.Invocation.TargetType);
 
 			Assert.IsNotNull(interceptor.Invocation.Method);
 			Assert.IsNotNull(interceptor.Invocation.MethodInvocationTarget);
@@ -59,12 +59,12 @@ namespace Castle.Core.Tests
 		[Test]
 		public void InvocationForInterfaceProxyWithTarget()
 		{
-			KeepDataInterceptor interceptor = new KeepDataInterceptor();
+			var interceptor = new KeepDataInterceptor();
 
-			object proxy = generator.CreateInterfaceProxyWithTarget(
-				typeof (IService), new ServiceImpl(), interceptor);
+			var proxy = generator.CreateInterfaceProxyWithTarget(
+				typeof(IService), new ServiceImpl(), interceptor);
 
-			IService instance = (IService) proxy;
+			var instance = (IService) proxy;
 
 			instance.Sum(20, 25);
 

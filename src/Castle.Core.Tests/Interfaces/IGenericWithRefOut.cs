@@ -12,27 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Tests.Interfaces
 {
 	public interface IGenericWithRefOut
 	{
 		void Do<T>(out T i);
 		void Did<T>(ref T i);
-	}
-
-	[Serializable]
-	public class GenericWithRefOut : IGenericWithRefOut
-	{
-		public void Do<T>(out T i)
-		{
-			i = default(T);
-		}
-
-		public void Did<T>(ref T i)
-		{
-			i = default(T);
-		}
 	}
 }

@@ -24,10 +24,9 @@ namespace Castle.Core.Tests
 		[Test]
 		public void PersistentProxyBuilder_NullIfNothingSaved()
 		{
-			PersistentProxyBuilder builder = new PersistentProxyBuilder();
-			string path = builder.SaveAssembly();
+			var builder = new PersistentProxyBuilder();
+			var path = builder.SaveAssembly();
 			Assert.IsNull(path);
 		}
 	}
 }
-

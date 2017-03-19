@@ -20,18 +20,13 @@ namespace Castle.Core.Tests.Interceptors
 	[Serializable]
 	public class CallCountingInterceptor : IInterceptor
 	{
-		private int count;
-
-		public int Count
-		{
-			get { return count; }
-		}
+		public int Count { get; private set; }
 
 		#region IInterceptor Members
 
 		public void Intercept(IInvocation invocation)
 		{
-			count++;
+			Count++;
 			invocation.Proceed();
 		}
 

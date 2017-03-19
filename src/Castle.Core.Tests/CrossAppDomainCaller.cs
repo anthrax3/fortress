@@ -20,11 +20,21 @@ namespace Castle.Core.Tests
 	[Serializable]
 	public class CrossAppDomainCaller
 	{
+		private readonly object[] args;
+
+		private readonly Action<object[]> callback;
+
+		public CrossAppDomainCaller(Action<object[]> callback, object[] args)
+		{
+			this.callback = callback;
+			this.args = args;
+		}
+
 		public static void RunInOtherAppDomain(Action<object[]> callback, params object[] args)
 		{
-			CrossAppDomainCaller callbackObject = new CrossAppDomainCaller(callback, args);
-			AppDomain newDomain = AppDomain.CreateDomain("otherDomain", AppDomain.CurrentDomain.Evidence,
-			                                             AppDomain.CurrentDomain.SetupInformation);
+			var callbackObject = new CrossAppDomainCaller(callback, args);
+			var newDomain = AppDomain.CreateDomain("otherDomain", AppDomain.CurrentDomain.Evidence,
+				AppDomain.CurrentDomain.SetupInformation);
 			try
 			{
 				newDomain.DoCallBack(callbackObject.Run);
@@ -35,19 +45,9 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		private readonly Action<object[]> callback;
-		private readonly object[] args;
-
-		public CrossAppDomainCaller(Action<object[]> callback, object[] args)
-		{
-			this.callback = callback;
-			this.args = args;
-		}
-
 		private void Run()
 		{
 			callback(args);
 		}
 	}
 }
-

@@ -22,78 +22,23 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class OrderOfInterfacePrecedenceTestCase:BasePEVerifyTestCase
+	public class OrderOfInterfacePrecedenceTestCase : BasePEVerifyTestCase
 	{
-		[Test]
-		public void Same_Interface_on_target_and_mixin_should_forward_to_target()
+		private ProxyGenerationOptions MixIn(object mixin)
 		{
-			var target = new ServiceImpl();
-			var mixin = new AlwaysThrowsServiceImpl();
-			var proxy = generator.CreateInterfaceProxyWithTarget(typeof (IService), Type.EmptyTypes, target, MixIn(mixin)) as IService;
-			Assert.DoesNotThrow(() => proxy.Sum(1, 2));
-		}
-
-		[Test]
-		public void Same_Interface_on_proxy_withouth_target_and_mixin_should_forward_to_null_target()
-		{
-			var interceptor = new WithCallbackInterceptor(i =>
-			                                              	{
-			                                              		Assert.IsNull(i.InvocationTarget);
-			                                              		i.ReturnValue = 0;
-			                                              	});
-			var mixin = new AlwaysThrowsServiceImpl();
-			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof (IService), Type.EmptyTypes, MixIn(mixin), interceptor);
-			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
-		}
-
-		[Test]
-		public void Same_Interface_on_proxy_with_target_interface_and_mixin_should_forward_to_target()
-		{
-			var target = new ServiceImpl();
-			var mixin = new AlwaysThrowsServiceImpl();
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof (IService), target, MixIn(mixin));
-			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
-		}
-
-		[Test]
-		public void Same_Interface_on_target_of_proxy_with_target_interface_and_mixin_should_forward_to_target()
-		{
-			var target = new ServiceImpl();
-			var mixin = new ServiceImpl();
-			IInterceptor interceptor = new WithCallbackInterceptor(i=>
-			                                                       	{
-			                                                       		Assert.AreSame(target,i.InvocationTarget);
-			                                                       		i.ReturnValue = 0;
-			                                                       	});
-			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), target, MixIn(mixin),interceptor);
-			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
-		}
-
-		[Test]
-		public void Same_Interface_on_target_and_additionalInterface_should_forward_to_target()
-		{
-			var target = new ServiceImpl();
-			var proxy = generator.CreateInterfaceProxyWithTarget(typeof (IService), new[] {typeof (IService)}, target) as IService;
-			Assert.DoesNotThrow(() => proxy.Sum(1, 2));
-		}
-
-		[Test]
-		public void Mixin_with_derived_target_interface_forwards_base_to_target_derived_to_mixin()
-		{
-			var mixin = new ClassImplementingIDerivedSimpleMixin();
-			object proxy = generator.CreateInterfaceProxyWithTarget(typeof (ISimpleMixin), new SimpleMixin(), MixIn(mixin));
-			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
-			Assert.AreEqual(2, (proxy as IDerivedSimpleMixin).DoSomethingDerived());
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(mixin);
+			return options;
 		}
 
 		[Test]
 		public void Mixin_and_target_implement_additionalInterface_forwards_to_target()
 		{
 			var mixin = new SimpleMixin();
-			object proxy = generator.CreateInterfaceProxyWithTarget(typeof (ISimpleMixin),
-			                                                        new[] {typeof (IDerivedSimpleMixin)},
-			                                                        new ClassImplementingIDerivedSimpleMixin(),
-			                                                        MixIn(mixin));
+			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleMixin),
+				new[] {typeof(IDerivedSimpleMixin)},
+				new ClassImplementingIDerivedSimpleMixin(),
+				MixIn(mixin));
 			Assert.AreEqual(3, (proxy as ISimpleMixin).DoSomething());
 			Assert.AreEqual(2, (proxy as IDerivedSimpleMixin).DoSomethingDerived());
 		}
@@ -102,22 +47,12 @@ namespace Castle.Core.Tests
 		public void Mixin_same_as_additionalInterface_forwards_to_mixin()
 		{
 			var mixin = new ClassImplementingIDerivedSimpleMixin();
-			object proxy = generator.CreateInterfaceProxyWithTarget(typeof (ISimpleMixin),
-			                                                        new[] {typeof (IDerivedSimpleMixin)},
-			                                                        new SimpleMixin(),
-			                                                        MixIn(mixin));
+			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleMixin),
+				new[] {typeof(IDerivedSimpleMixin)},
+				new SimpleMixin(),
+				MixIn(mixin));
 			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
 			Assert.AreEqual(2, (proxy as IDerivedSimpleMixin).DoSomethingDerived());
-		}
-
-		[Test]
-		public void Mixin_same_as_proxied_class_forwards_to_base()
-		{
-			var interceptor = new LogInvocationInterceptor();
-			var mixin = new ClassImplementingISimpleMixin();
-			object proxy = generator.CreateClassProxy(typeof(SimpleMixin), MixIn(mixin), interceptor);
-			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
-			Assert.IsEmpty(interceptor.Invocations);
 		}
 
 		[Test]
@@ -125,10 +60,20 @@ namespace Castle.Core.Tests
 		{
 			var interceptor = new LogInvocationInterceptor();
 			var mixin = new ClassImplementingISimpleMixin();
-			object proxy = generator.CreateClassProxy(typeof(SimpleMixin), new[] { typeof(ISimpleMixin) }, MixIn(mixin),
-													  interceptor);
+			var proxy = generator.CreateClassProxy(typeof(SimpleMixin), new[] {typeof(ISimpleMixin)}, MixIn(mixin),
+				interceptor);
 			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
 			Assert.IsNotEmpty(interceptor.Invocations);
+		}
+
+		[Test]
+		public void Mixin_same_as_proxied_class_forwards_to_base()
+		{
+			var interceptor = new LogInvocationInterceptor();
+			var mixin = new ClassImplementingISimpleMixin();
+			var proxy = generator.CreateClassProxy(typeof(SimpleMixin), MixIn(mixin), interceptor);
+			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
+			Assert.IsEmpty(interceptor.Invocations);
 		}
 
 		[Test]
@@ -136,18 +81,72 @@ namespace Castle.Core.Tests
 		{
 			var interceptor = new LogInvocationInterceptor();
 			var mixin = new ClassImplementingIDerivedSimpleMixin();
-			object proxy = generator.CreateClassProxy(typeof(SimpleMixin), new[] { typeof(IDerivedSimpleMixin) }, MixIn(mixin),
-													  interceptor);
+			var proxy = generator.CreateClassProxy(typeof(SimpleMixin), new[] {typeof(IDerivedSimpleMixin)}, MixIn(mixin),
+				interceptor);
 			Assert.AreEqual(2, (proxy as IDerivedSimpleMixin).DoSomethingDerived());
 			Assert.IsNotEmpty(interceptor.Invocations);
 		}
 
-
-		private ProxyGenerationOptions MixIn(Object mixin)
+		[Test]
+		public void Mixin_with_derived_target_interface_forwards_base_to_target_derived_to_mixin()
 		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(mixin);
-			return options;
+			var mixin = new ClassImplementingIDerivedSimpleMixin();
+			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleMixin), new SimpleMixin(), MixIn(mixin));
+			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
+			Assert.AreEqual(2, (proxy as IDerivedSimpleMixin).DoSomethingDerived());
+		}
+
+		[Test]
+		public void Same_Interface_on_proxy_with_target_interface_and_mixin_should_forward_to_target()
+		{
+			var target = new ServiceImpl();
+			var mixin = new AlwaysThrowsServiceImpl();
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), target, MixIn(mixin));
+			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
+		}
+
+		[Test]
+		public void Same_Interface_on_proxy_withouth_target_and_mixin_should_forward_to_null_target()
+		{
+			var interceptor = new WithCallbackInterceptor(i =>
+			{
+				Assert.IsNull(i.InvocationTarget);
+				i.ReturnValue = 0;
+			});
+			var mixin = new AlwaysThrowsServiceImpl();
+			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof(IService), Type.EmptyTypes, MixIn(mixin), interceptor);
+			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
+		}
+
+		[Test]
+		public void Same_Interface_on_target_and_additionalInterface_should_forward_to_target()
+		{
+			var target = new ServiceImpl();
+			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), new[] {typeof(IService)}, target) as IService;
+			Assert.DoesNotThrow(() => proxy.Sum(1, 2));
+		}
+
+		[Test]
+		public void Same_Interface_on_target_and_mixin_should_forward_to_target()
+		{
+			var target = new ServiceImpl();
+			var mixin = new AlwaysThrowsServiceImpl();
+			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), Type.EmptyTypes, target, MixIn(mixin)) as IService;
+			Assert.DoesNotThrow(() => proxy.Sum(1, 2));
+		}
+
+		[Test]
+		public void Same_Interface_on_target_of_proxy_with_target_interface_and_mixin_should_forward_to_target()
+		{
+			var target = new ServiceImpl();
+			var mixin = new ServiceImpl();
+			IInterceptor interceptor = new WithCallbackInterceptor(i =>
+			{
+				Assert.AreSame(target, i.InvocationTarget);
+				i.ReturnValue = 0;
+			});
+			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), target, MixIn(mixin), interceptor);
+			Assert.DoesNotThrow(() => (proxy as IService).Sum(2, 2));
 		}
 	}
 }

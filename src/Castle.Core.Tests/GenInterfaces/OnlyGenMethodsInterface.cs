@@ -18,12 +18,4 @@ namespace Castle.Core.Tests.GenInterfaces
 	{
 		Z DoSomething<Z>(Z z) where Z : new();
 	}
-
-	public class OnlyGenMethodsInterfaceImpl : OnlyGenMethodsInterface
-	{
-		public Z DoSomething<Z>(Z z) where Z : new()
-		{
-			return z;
-		}
-	}
 }

@@ -23,31 +23,12 @@ namespace Castle.Core.Tests.Interceptors
 {
 	public class LogInvocationInterceptor : StandardInterceptor
 	{
-		private StringBuilder sb = new StringBuilder();
-		private List<string> invocations = new List<string>();
+		private readonly List<string> invocations = new List<string>();
 
 		public bool Proceed = true;
+		private readonly StringBuilder sb = new StringBuilder();
 
-		protected override void PreProceed(IInvocation invocation)
-		{
-			invocations.Add(invocation.Method.Name);
-
-			sb.Append(String.Format("{0} ", invocation.Method.Name));
-		}
-
-		protected override void PerformProceed (IInvocation invocation)
-		{
-			if (Proceed)
-			{
-				base.PerformProceed (invocation);
-			}
-			else if (invocation.Method.ReturnType.GetTypeInfo().IsValueType && invocation.Method.ReturnType != typeof (void))
-			{
-				invocation.ReturnValue = Activator.CreateInstance (invocation.Method.ReturnType); // set default return value
-			}
-		}
-
-		public String LogContents
+		public string LogContents
 		{
 			get { return sb.ToString(); }
 		}
@@ -55,6 +36,21 @@ namespace Castle.Core.Tests.Interceptors
 		public IList Invocations
 		{
 			get { return invocations; }
+		}
+
+		protected override void PreProceed(IInvocation invocation)
+		{
+			invocations.Add(invocation.Method.Name);
+
+			sb.Append(string.Format("{0} ", invocation.Method.Name));
+		}
+
+		protected override void PerformProceed(IInvocation invocation)
+		{
+			if (Proceed)
+				base.PerformProceed(invocation);
+			else if (invocation.Method.ReturnType.GetTypeInfo().IsValueType && invocation.Method.ReturnType != typeof(void))
+				invocation.ReturnValue = Activator.CreateInstance(invocation.Method.ReturnType); // set default return value
 		}
 	}
 }

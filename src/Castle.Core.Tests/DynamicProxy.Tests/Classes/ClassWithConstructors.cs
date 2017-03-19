@@ -12,24 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
 	public class ClassWithConstructors
 	{
-		private readonly string name;
-		private readonly int x;
-
-		public ClassWithConstructors(String name)
+		public ClassWithConstructors(string name)
 		{
-			this.name = name;
+			Name = name;
 		}
 
-		public ClassWithConstructors(String name, int x)
+		public ClassWithConstructors(string name, int x)
 		{
-			this.name = name;
-			this.x = x;
+			Name = name;
+			X = x;
 		}
 
 		protected ClassWithConstructors(double name)
@@ -42,14 +37,8 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 		{
 		}
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 
-		public int X
-		{
-			get { return x; }
-		}
+		public int X { get; }
 	}
 }

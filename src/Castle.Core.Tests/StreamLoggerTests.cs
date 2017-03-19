@@ -23,11 +23,6 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class StreamLoggerTests
 	{
-		private const string Name = "Test";
-
-		private StreamLogger logger;
-		private MemoryStream stream;
-
 		[SetUp]
 		public void SetUp()
 		{
@@ -37,134 +32,19 @@ namespace Castle.Core.Tests
 			logger.Level = LoggerLevel.Debug;
 		}
 
-		[Test]
-		public void Debug()
-		{
-			string message = "Debug message";
-			LoggerLevel level = LoggerLevel.Debug;
-			Exception exception = null;
-			
-			logger.Debug(message);
+		private const string Name = "Test";
 
-			ValidateCall(level, message, exception);
-		}
+		private StreamLogger logger;
+		private MemoryStream stream;
 
-		[Test]
-		public void DebugWithException()
-		{
-			string message = "Debug message 2";
-			LoggerLevel level = LoggerLevel.Debug;
-			Exception exception = new Exception();
-			
-			logger.Debug(message, exception);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void Info()
-		{
-			string message = "Info message";
-			LoggerLevel level = LoggerLevel.Info;
-			Exception exception = null;
-			
-			logger.Info(message);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void InfoWithException()
-		{
-			string message = "Info message 2";
-			LoggerLevel level = LoggerLevel.Info;
-			Exception exception = new Exception();
-			
-			logger.Info(message, exception);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void Warn()
-		{
-			string message = "Warn message";
-			LoggerLevel level = LoggerLevel.Warn;
-			Exception exception = null;
-			
-			logger.Warn(message);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void WarnWithException()
-		{
-			string message = "Warn message 2";
-			LoggerLevel level = LoggerLevel.Warn;
-			Exception exception = new Exception();
-			
-			logger.Warn(message, exception);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void Error()
-		{
-			string message = "Error message";
-			LoggerLevel level = LoggerLevel.Error;
-			Exception exception = null;
-			
-			logger.Error(message);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void ErrorWithException()
-		{
-			string message = "Error message 2";
-			LoggerLevel level = LoggerLevel.Error;
-			Exception exception = new Exception();
-			
-			logger.Error(message, exception);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void FatalError()
-		{
-			string message = "FatalError message";
-			LoggerLevel level = LoggerLevel.Fatal;
-			Exception exception = null;
-			
-			logger.Fatal(message);
-
-			ValidateCall(level, message, exception);
-		}
-
-		[Test]
-		public void FatalErrorWithException()
-		{
-			string message = "FatalError message 2";
-			LoggerLevel level = LoggerLevel.Fatal;
-			Exception exception = new Exception();
-			
-			logger.Fatal(message, exception);
-
-			ValidateCall(level, message, exception);
-		}
-
-		private void ValidateCall(LoggerLevel level, String expectedMessage, Exception expectedException)
+		private void ValidateCall(LoggerLevel level, string expectedMessage, Exception expectedException)
 		{
 			stream.Seek(0, SeekOrigin.Begin);
-			
-			StreamReader reader = new StreamReader(stream);
-			String line = reader.ReadLine();
 
-			Match match = Regex.Match(line, @"^\[(?<level>[^]]+)\] '(?<name>[^']+)' (?<message>.*)$");
+			var reader = new StreamReader(stream);
+			var line = reader.ReadLine();
+
+			var match = Regex.Match(line, @"^\[(?<level>[^]]+)\] '(?<name>[^']+)' (?<message>.*)$");
 
 			Assert.IsTrue(match.Success, "StreamLogger.Log did not match the format");
 			Assert.AreEqual(Name, match.Groups["name"].Value, "StreamLogger.Log did not write the correct Name");
@@ -172,7 +52,7 @@ namespace Castle.Core.Tests
 			Assert.AreEqual(expectedMessage, match.Groups["message"].Value, "StreamLogger.Log did not write the correct Message");
 
 			line = reader.ReadLine();
-			
+
 			if (expectedException == null)
 			{
 				Assert.IsNull(line);
@@ -187,6 +67,126 @@ namespace Castle.Core.Tests
 				Assert.AreEqual(expectedException.GetType().FullName, match.Groups["type"].Value, "StreamLogger.Log did not write the correct Exception Type");
 				// Assert.AreEqual(expectedException.Message, match.Groups["message"].Value, "StreamLogger.Log did not write the correct Exception Message");
 			}
+		}
+
+		[Test]
+		public void Debug()
+		{
+			var message = "Debug message";
+			var level = LoggerLevel.Debug;
+			Exception exception = null;
+
+			logger.Debug(message);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void DebugWithException()
+		{
+			var message = "Debug message 2";
+			var level = LoggerLevel.Debug;
+			var exception = new Exception();
+
+			logger.Debug(message, exception);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void Error()
+		{
+			var message = "Error message";
+			var level = LoggerLevel.Error;
+			Exception exception = null;
+
+			logger.Error(message);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void ErrorWithException()
+		{
+			var message = "Error message 2";
+			var level = LoggerLevel.Error;
+			var exception = new Exception();
+
+			logger.Error(message, exception);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void FatalError()
+		{
+			var message = "FatalError message";
+			var level = LoggerLevel.Fatal;
+			Exception exception = null;
+
+			logger.Fatal(message);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void FatalErrorWithException()
+		{
+			var message = "FatalError message 2";
+			var level = LoggerLevel.Fatal;
+			var exception = new Exception();
+
+			logger.Fatal(message, exception);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void Info()
+		{
+			var message = "Info message";
+			var level = LoggerLevel.Info;
+			Exception exception = null;
+
+			logger.Info(message);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void InfoWithException()
+		{
+			var message = "Info message 2";
+			var level = LoggerLevel.Info;
+			var exception = new Exception();
+
+			logger.Info(message, exception);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void Warn()
+		{
+			var message = "Warn message";
+			var level = LoggerLevel.Warn;
+			Exception exception = null;
+
+			logger.Warn(message);
+
+			ValidateCall(level, message, exception);
+		}
+
+		[Test]
+		public void WarnWithException()
+		{
+			var message = "Warn message 2";
+			var level = LoggerLevel.Warn;
+			var exception = new Exception();
+
+			logger.Warn(message, exception);
+
+			ValidateCall(level, message, exception);
 		}
 	}
 }

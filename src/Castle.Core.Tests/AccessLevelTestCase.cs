@@ -23,13 +23,31 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class AccessLevelTestCase : BasePEVerifyTestCase
 	{
+		internal class InternalClass
+		{
+		}
+
+		[Test]
+		public void InternalConstructorIsNotReplicated()
+		{
+			var proxy = generator.CreateClassProxy(typeof(Dictionary<int, object>), new StandardInterceptor());
+			Assert.IsNull(proxy.GetType().GetConstructor(new[] {typeof(IInterceptor[]), typeof(bool)}));
+		}
+
+		[Test]
+		public void InternalConstructorIsReplicatedWhenInternalsVisibleTo()
+		{
+			var proxy = generator.CreateClassProxy(typeof(InternalClass), new StandardInterceptor());
+			Assert.IsNotNull(proxy.GetType().GetConstructor(new[] {typeof(IInterceptor[])}));
+		}
+
 		[Test]
 		public void ProtectedConstructor()
 		{
-			NonPublicConstructorClass proxy =
+			var proxy =
 				generator.CreateClassProxy(
-					typeof(NonPublicConstructorClass), new StandardInterceptor())
-				as NonPublicConstructorClass;
+						typeof(NonPublicConstructorClass), new StandardInterceptor())
+					as NonPublicConstructorClass;
 
 			Assert.IsNotNull(proxy);
 
@@ -39,10 +57,10 @@ namespace Castle.Core.Tests
 		[Test]
 		public void ProtectedInternalConstructor()
 		{
-			ProtectedInternalConstructorClass proxy =
+			var proxy =
 				generator.CreateClassProxy(
-					typeof(ProtectedInternalConstructorClass), new StandardInterceptor())
-				as ProtectedInternalConstructorClass;
+						typeof(ProtectedInternalConstructorClass), new StandardInterceptor())
+					as ProtectedInternalConstructorClass;
 
 			Assert.IsNotNull(proxy);
 
@@ -52,36 +70,15 @@ namespace Castle.Core.Tests
 		[Test]
 		public void ProtectedMethods()
 		{
-			LogInvocationInterceptor logger = new LogInvocationInterceptor();
+			var logger = new LogInvocationInterceptor();
 
-			NonPublicMethodsClass proxy = (NonPublicMethodsClass)
-										  generator.CreateClassProxy(typeof(NonPublicMethodsClass), logger);
+			var proxy = (NonPublicMethodsClass)
+				generator.CreateClassProxy(typeof(NonPublicMethodsClass), logger);
 
 			proxy.DoSomething();
 			Assert.AreEqual(2, logger.Invocations.Count);
 			Assert.AreEqual("DoSomething", logger.Invocations[0]);
 			Assert.AreEqual("DoOtherThing", logger.Invocations[1]);
-		}
-
-		[Test]
-		public void InternalConstructorIsNotReplicated()
-		{
-			object proxy = generator.CreateClassProxy(typeof(Dictionary<int, object>), new StandardInterceptor());
-			Assert.IsNull(proxy.GetType().GetConstructor(new[] { typeof(IInterceptor[]), typeof(bool) }));
-		}
-
-		internal class InternalClass
-		{
-			internal InternalClass()
-			{
-			}
-		}
-
-		[Test]
-		public void InternalConstructorIsReplicatedWhenInternalsVisibleTo()
-		{
-			object proxy = generator.CreateClassProxy(typeof(InternalClass), new StandardInterceptor());
-			Assert.IsNotNull(proxy.GetType().GetConstructor(new[] { typeof(IInterceptor[]) }));
 		}
 	}
 }

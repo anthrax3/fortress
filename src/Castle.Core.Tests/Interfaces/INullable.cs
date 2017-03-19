@@ -19,6 +19,5 @@ namespace Castle.Core.Tests.Interfaces
 		int? Get();
 		void GetOut(out int? param);
 		void Set(int? param);
-
 	}
 }

@@ -26,89 +26,88 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class DictionarySerializationTestCase
 	{
-		[Test]
-		public void NullReferenceProxyDeserializationTest()
+		public static T SerializeAndDeserialize<T>(T proxy)
 		{
-			ProxyGenerator generator = new ProxyGenerator();
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstances =
-				new Dictionary<ClassOverridingEqualsAndGetHashCode, string>();
-			ClassOverridingEqualsAndGetHashCode c =
-				(ClassOverridingEqualsAndGetHashCode)generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
+			var stream = new MemoryStream();
+			var formatter = new BinaryFormatter();
+			formatter.Serialize(stream, proxy);
+			stream.Position = 0;
+			return (T) formatter.Deserialize(stream);
+		}
+
+		[Test]
+		public void BasicSerializationProxyTest()
+		{
+			var generator = new ProxyGenerator();
+			var c =
+				(ClassOverridingEqualsAndGetHashCode) generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
 			c.Id = Guid.NewGuid();
 			c.Name = DateTime.Now.ToString("yyyyMMddHHmmss");
-			theInstances.Add(c, c.Name);
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstancesBis =
-				SerializeAndDeserialize<Dictionary<ClassOverridingEqualsAndGetHashCode, string>>(theInstances);
 
-			Assert.IsNotNull(theInstancesBis);
-			Assert.AreEqual(theInstances.Count, theInstancesBis.Count);
+			var c2 = SerializeAndDeserialize(c);
+			Assert.IsNotNull(c2);
+			Assert.AreEqual(c.Id, c2.Id);
+			Assert.AreEqual(c.Name, c2.Name);
 		}
 
 		[Test]
 		public void DictionaryDeserializationWithoutProxyTest()
 		{
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstances =
+			var theInstances =
 				new Dictionary<ClassOverridingEqualsAndGetHashCode, string>();
 
-			for (int i = 0; i < 50; i++)
+			for (var i = 0; i < 50; i++)
 			{
-				ClassOverridingEqualsAndGetHashCode c = new ClassOverridingEqualsAndGetHashCode();
+				var c = new ClassOverridingEqualsAndGetHashCode();
 				c.Id = Guid.NewGuid();
 				c.Name = DateTime.Now.ToString("yyyyMMddHHmmss");
 				theInstances.Add(c, c.Name);
 			}
 
 #pragma warning disable 219
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstancesBis =
-				SerializeAndDeserialize<Dictionary<ClassOverridingEqualsAndGetHashCode, string>>(theInstances);
+			var theInstancesBis =
+				SerializeAndDeserialize(theInstances);
 #pragma warning restore 219
 		}
 
 		[Test]
 		public void DictionaryDeserializationWithProxyTest()
 		{
-			ProxyGenerator generator = new ProxyGenerator();
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstances =
+			var generator = new ProxyGenerator();
+			var theInstances =
 				new Dictionary<ClassOverridingEqualsAndGetHashCode, string>();
 
-			for (int i = 0; i < 50; i++)
+			for (var i = 0; i < 50; i++)
 			{
-				ClassOverridingEqualsAndGetHashCode c =
-					(ClassOverridingEqualsAndGetHashCode)generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
+				var c =
+					(ClassOverridingEqualsAndGetHashCode) generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
 				c.Id = Guid.NewGuid();
 				c.Name = DateTime.Now.ToString("yyyyMMddHHmmss");
 				theInstances.Add(c, c.Name);
 			}
 
 #pragma warning disable 219
-			Dictionary<ClassOverridingEqualsAndGetHashCode, string> theInstancesBis =
-				SerializeAndDeserialize<Dictionary<ClassOverridingEqualsAndGetHashCode, string>>(theInstances);
+			var theInstancesBis =
+				SerializeAndDeserialize(theInstances);
 #pragma warning restore 219
 		}
 
 		[Test]
-		public void BasicSerializationProxyTest()
+		public void NullReferenceProxyDeserializationTest()
 		{
-			ProxyGenerator generator = new ProxyGenerator();
-			ClassOverridingEqualsAndGetHashCode c =
-				(ClassOverridingEqualsAndGetHashCode)generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
+			var generator = new ProxyGenerator();
+			var theInstances =
+				new Dictionary<ClassOverridingEqualsAndGetHashCode, string>();
+			var c =
+				(ClassOverridingEqualsAndGetHashCode) generator.CreateClassProxy(typeof(ClassOverridingEqualsAndGetHashCode));
 			c.Id = Guid.NewGuid();
 			c.Name = DateTime.Now.ToString("yyyyMMddHHmmss");
+			theInstances.Add(c, c.Name);
+			var theInstancesBis =
+				SerializeAndDeserialize(theInstances);
 
-			ClassOverridingEqualsAndGetHashCode c2 = SerializeAndDeserialize<ClassOverridingEqualsAndGetHashCode>(c);
-			Assert.IsNotNull(c2);
-			Assert.AreEqual(c.Id, c2.Id);
-			Assert.AreEqual(c.Name, c2.Name);
-		}
-
-		public static T SerializeAndDeserialize<T>(T proxy)
-		{
-			MemoryStream stream = new MemoryStream();
-			BinaryFormatter formatter = new BinaryFormatter();
-			formatter.Serialize(stream, proxy);
-			stream.Position = 0;
-			return (T) formatter.Deserialize(stream);
+			Assert.IsNotNull(theInstancesBis);
+			Assert.AreEqual(theInstances.Count, theInstancesBis.Count);
 		}
 	}
 }
-

@@ -39,7 +39,7 @@ namespace Castle.Core.Tests
 
 			var interceptor = new KeepDataInterceptor();
 			var proxy = (IInterfaceWithGenericMethodWithDependentConstraint)
-			            generator.CreateInterfaceProxyWithoutTarget(type, new Type[] { }, interceptor);
+				generator.CreateInterfaceProxyWithoutTarget(type, new Type[] {}, interceptor);
 
 			proxy.RegisterType<object, string>();
 
@@ -57,7 +57,7 @@ namespace Castle.Core.Tests
 
 			var interceptor = new KeepDataInterceptor();
 			var proxy = (IGenericInterfaceWithGenericMethodWithDependentConstraint<object>)
-			            generator.CreateInterfaceProxyWithoutTarget(type, new Type[] { }, interceptor);
+				generator.CreateInterfaceProxyWithoutTarget(type, new Type[] {}, interceptor);
 
 			proxy.RegisterType<string>();
 
@@ -78,8 +78,8 @@ namespace Castle.Core.Tests
 		[Test]
 		public void ProxyAdditionalInterfaceWithGenericMethods()
 		{
-			var proxy = (IService)generator.CreateInterfaceProxyWithoutTarget(
-				typeof(IService), new[] { typeof(OnlyGenMethodsInterface) },
+			var proxy = (IService) generator.CreateInterfaceProxyWithoutTarget(
+				typeof(IService), new[] {typeof(OnlyGenMethodsInterface)},
 				new StandardInterceptor());
 
 			Assert.IsNotNull(proxy);

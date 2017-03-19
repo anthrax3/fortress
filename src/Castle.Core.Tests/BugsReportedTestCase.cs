@@ -25,33 +25,6 @@ namespace Castle.Core.Tests
 	public class BugsReportedTestCase : BasePEVerifyTestCase
 	{
 		[Test]
-		public void InterfaceInheritance()
-		{
-			ICameraService proxy = (ICameraService)
-			                       generator.CreateInterfaceProxyWithTarget(typeof (ICameraService),
-			                                                                new CameraService(),
-			                                                                new StandardInterceptor());
-
-			Assert.IsNotNull(proxy);
-
-			proxy.Add("", "");
-			proxy.Record(null);
-		}
-
-		[Test]
-		public void ProxyInterfaceWithSetterOnly()
-		{
-			IHaveOnlySetter proxy = (IHaveOnlySetter)
-			                        generator.CreateInterfaceProxyWithTarget(typeof (IHaveOnlySetter),
-			                                                                 new HaveOnlySetter(),
-			                                                                 new DoNothingInterceptor());
-
-			Assert.IsNotNull(proxy);
-
-			proxy.Foo = "bar";
-		}
-
-		[Test]
 		public void CallingProceedWithInterceptorOnAbstractMethodShouldThrowException()
 		{
 			var proxy = generator.CreateClassProxy<AbstractClass>(ProxyGenerationOptions.Default, new StandardInterceptor());
@@ -82,24 +55,25 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void ProxyTypeThatInheritFromGenericType()
-		{
-			var proxy = generator.CreateInterfaceProxyWithoutTarget<IUserRepository>(new DoNothingInterceptor());
-			Assert.IsNotNull(proxy);
-		}
-
-		[Test]
 		public void DYNPROXY_51_GenericMarkerInterface()
 		{
-			WithMixin p =
-				(WithMixin) generator.CreateClassProxy(typeof (WithMixin), new Type[] {typeof (Marker<int>)}, new IInterceptor[0]);
+			var p =
+				(WithMixin) generator.CreateClassProxy(typeof(WithMixin), new[] {typeof(Marker<int>)});
 			p.Method();
 		}
 
 		[Test]
 		public void DYNPROXY_99_ClassProxyHasNamespace()
 		{
-			Type type = generator.CreateClassProxy(typeof(ServiceImpl)).GetType();
+			var type = generator.CreateClassProxy(typeof(ServiceImpl)).GetType();
+			Assert.IsNotNull(type.Namespace);
+			Assert.AreEqual("Castle.Proxies", type.Namespace);
+		}
+
+		[Test]
+		public void DYNPROXY_99_InterfaceProxyWithoutTargetHasNamespace()
+		{
+			var type = generator.CreateInterfaceProxyWithoutTarget(typeof(IService)).GetType();
 			Assert.IsNotNull(type.Namespace);
 			Assert.AreEqual("Castle.Proxies", type.Namespace);
 		}
@@ -107,7 +81,7 @@ namespace Castle.Core.Tests
 		[Test]
 		public void DYNPROXY_99_InterfaceProxyWithTargetHasNamespace()
 		{
-			Type type = generator.CreateInterfaceProxyWithTarget(typeof(IService),new ServiceImpl()).GetType();
+			var type = generator.CreateInterfaceProxyWithTarget(typeof(IService), new ServiceImpl()).GetType();
 			Assert.IsNotNull(type.Namespace);
 			Assert.AreEqual("Castle.Proxies", type.Namespace);
 		}
@@ -115,58 +89,43 @@ namespace Castle.Core.Tests
 		[Test]
 		public void DYNPROXY_99_InterfaceProxyWithTargetInterfaceHasNamespace()
 		{
-			Type type = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), new ServiceImpl()).GetType();
+			var type = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), new ServiceImpl()).GetType();
 			Assert.IsNotNull(type.Namespace);
 			Assert.AreEqual("Castle.Proxies", type.Namespace);
 		}
+
 		[Test]
-		public void DYNPROXY_99_InterfaceProxyWithoutTargetHasNamespace()
+		public void InterfaceInheritance()
 		{
-			Type type = generator.CreateInterfaceProxyWithoutTarget(typeof(IService)).GetType();
-			Assert.IsNotNull(type.Namespace);
-			Assert.AreEqual("Castle.Proxies", type.Namespace);
+			var proxy = (ICameraService)
+				generator.CreateInterfaceProxyWithTarget(typeof(ICameraService),
+					new CameraService(),
+					new StandardInterceptor());
+
+			Assert.IsNotNull(proxy);
+
+			proxy.Add("", "");
+			proxy.Record(null);
 		}
-	}
 
-	public interface IRepository<TEntity, TKey>
-	{
-		TEntity GetById(TKey key);
-	}
-
-	public class User
-	{
-	}
-
-	public interface IUserRepository : IRepository<User, string>
-	{
-	}
-
-	public abstract class AbstractClass
-	{
-		public abstract string Foo();
-	}
-
-	public interface IHaveOnlySetter
-	{
-		string Foo { set; }
-	}
-
-	public class HaveOnlySetter : IHaveOnlySetter
-	{
-		public string Foo
+		[Test]
+		public void ProxyInterfaceWithSetterOnly()
 		{
-			set { throw new Exception("The method or operation is not implemented."); }
+			var proxy = (IHaveOnlySetter)
+				generator.CreateInterfaceProxyWithTarget(typeof(IHaveOnlySetter),
+					new HaveOnlySetter(),
+					new DoNothingInterceptor());
+
+			Assert.IsNotNull(proxy);
+
+			proxy.Foo = "bar";
 		}
-	}
 
-	public interface Marker<T>
-	{
-	}
-
-	public class WithMixin
-	{
-		public virtual void Method()
+		[Test]
+		public void ProxyTypeThatInheritFromGenericType()
 		{
+			var proxy = generator.CreateInterfaceProxyWithoutTarget<IUserRepository>(new DoNothingInterceptor());
+			Assert.IsNotNull(proxy);
 		}
 	}
 }

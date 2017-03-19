@@ -25,12 +25,10 @@ namespace Castle.Core.Tests
 			Assert.IsFalse(method.ContainsGenericParameters);
 			Assert.AreEqual(returnType, method.ReturnType);
 
-			ParameterInfo[] parameters = method.GetParameters();
+			var parameters = method.GetParameters();
 			Assert.AreEqual(parameterTypes.Length, parameters.Length);
-			for (int i = 0; i < parameterTypes.Length; ++i)
-			{
+			for (var i = 0; i < parameterTypes.Length; ++i)
 				Assert.AreEqual(parameterTypes[i], parameters[i].ParameterType);
-			}
 		}
 	}
 }

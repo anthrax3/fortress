@@ -21,9 +21,6 @@ namespace Castle.Core.Tests.Core.Tests.Resources
 	[TestFixture]
 	public class FileResourceFactoryTestCase
 	{
-		private readonly FileResourceFactory resFactory = new FileResourceFactory();
-		private string basePath;
-
 		[SetUp]
 		public void Init()
 		{
@@ -31,18 +28,21 @@ namespace Castle.Core.Tests.Core.Tests.Resources
 			basePath = Path.Combine(currentDirectory, "Core.Tests" + Path.DirectorySeparatorChar + "Resources");
 		}
 
+		private readonly FileResourceFactory resFactory = new FileResourceFactory();
+		private string basePath;
+
 		[Test]
 		public void Accept()
 		{
-			Assert.IsTrue( resFactory.Accept( new CustomUri("file://something") ) );
-			Assert.IsFalse( resFactory.Accept( new CustomUri("http://www.castleproject.org") ) );
+			Assert.IsTrue(resFactory.Accept(new CustomUri("file://something")));
+			Assert.IsFalse(resFactory.Accept(new CustomUri("http://www.castleproject.org")));
 		}
 
 
 		[Test]
 		public void NonExistingResource()
 		{
-			IResource resource = resFactory.Create(new CustomUri(basePath + "/Something/file1.txt"));
+			var resource = resFactory.Create(new CustomUri(basePath + "/Something/file1.txt"));
 
 			Assert.Throws<ResourceException>(() => resource.GetStreamReader());
 		}

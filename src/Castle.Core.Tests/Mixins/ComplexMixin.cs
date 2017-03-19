@@ -16,28 +16,9 @@ using System;
 
 namespace Castle.Core.Tests.Mixins
 {
-	public interface IFirst
-	{
-		void DoFirst();
-	}
-
-	public interface ISecond : IFirst
-	{
-		void DoSecond();
-	}
-
-	public interface IThird : ISecond
-	{
-		void DoThird();
-	}
-
 	[Serializable]
 	public class ComplexMixin : IThird
 	{
-		public ComplexMixin()
-		{
-		}
-
 		public void DoThird()
 		{
 		}

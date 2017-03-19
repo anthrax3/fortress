@@ -14,11 +14,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Xml.Serialization;
 using Castle.Core.DynamicProxy;
 using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Internal;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
@@ -30,6 +27,14 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class InterceptorSelectorTestCase : BasePEVerifyTestCase
 	{
+		private interface PrivateInterface
+		{
+		}
+
+		private class PrivateClass : PrivateInterface
+		{
+		}
+
 		[Test]
 		public void BasicCase()
 		{
@@ -41,14 +46,130 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
+		public void Can_proxy_generic_interface()
+		{
+			generator.CreateInterfaceProxyWithTarget<IList<object>>(new List<object>());
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_ClassProxy()
+		{
+			var someInstanceOfProxyWithoutSelector = (Component2) generator.CreateClassProxy(typeof(Component2), new StandardInterceptor());
+			var someInstanceOfProxyWithSelector = (Component2) generator.CreateClassProxy(typeof(Component2),
+				new ProxyGenerationOptions {Selector = new AllInterceptorSelector()},
+				new StandardInterceptor());
+
+			// This runs fine
+			someInstanceOfProxyWithoutSelector.DoOperation2();
+			// This will throw System.InvalidProgramException
+			someInstanceOfProxyWithSelector.DoOperation2();
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_ClassProxyWithTarget()
+		{
+			var someInstanceOfProxyWithoutSelector = (Component2) generator.CreateClassProxyWithTarget(typeof(Component2), new Component2(), new StandardInterceptor());
+			var someInstanceOfProxyWithSelector = (Component2) generator.CreateClassProxyWithTarget(typeof(Component2), new Component2(),
+				new ProxyGenerationOptions {Selector = new AllInterceptorSelector()},
+				new StandardInterceptor());
+
+			// This runs fine
+			someInstanceOfProxyWithoutSelector.DoOperation2();
+			// This will throw System.InvalidProgramException
+			someInstanceOfProxyWithSelector.DoOperation2();
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithoutTarget()
+		{
+			var someInstanceOfProxyWithoutSelector = (IService2) generator.CreateInterfaceProxyWithoutTarget(typeof(IService2), new DoNothingInterceptor());
+			var someInstanceOfProxyWithSelector = (IService2) generator.CreateInterfaceProxyWithoutTarget(typeof(IService2), new ProxyGenerationOptions
+			{
+				Selector = new AllInterceptorSelector()
+			}, new DoNothingInterceptor());
+
+			// This runs fine
+			someInstanceOfProxyWithoutSelector.DoOperation2();
+			// This will throw System.InvalidProgramException
+			someInstanceOfProxyWithSelector.DoOperation2();
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget()
+		{
+			var someInstanceOfProxyWithoutSelector = (IService2) generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(), new StandardInterceptor());
+			var someInstanceOfProxyWithSelector = (IService2) generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
+				new ProxyGenerationOptions {Selector = new AllInterceptorSelector()},
+				new StandardInterceptor());
+
+			// This runs fine
+			someInstanceOfProxyWithoutSelector.DoOperation2();
+			// This will throw System.InvalidProgramException
+			someInstanceOfProxyWithSelector.DoOperation2();
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget2()
+		{
+			var someInstanceOfProxyWithSelector1 = (IService2) generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
+				new ProxyGenerationOptions {Selector = new SelectorWithState(1)},
+				new StandardInterceptor());
+			var someInstanceOfProxyWithSelector2 = (IService2) generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
+				new ProxyGenerationOptions {Selector = new SelectorWithState(2)},
+				new StandardInterceptor());
+
+			Assert.AreSame(someInstanceOfProxyWithSelector1.GetType(), someInstanceOfProxyWithSelector2.GetType());
+		}
+
+		[Test]
+		[Bug("DYNPROXY-175")]
+		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTargetInterface()
+		{
+			var someInstanceOfProxyWithoutSelector = (IService2) generator.CreateInterfaceProxyWithTargetInterface(typeof(IService2), new Service2(), new StandardInterceptor());
+			var someInstanceOfProxyWithSelector = (IService2) generator.CreateInterfaceProxyWithTargetInterface(typeof(IService2), new Service2(),
+				new ProxyGenerationOptions {Selector = new AllInterceptorSelector()},
+				new StandardInterceptor());
+
+			// This runs fine
+			someInstanceOfProxyWithoutSelector.DoOperation2();
+			// This will throw System.InvalidProgramException
+			someInstanceOfProxyWithSelector.DoOperation2();
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
+		{
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateInterfaceProxyWithTarget<IList<PrivateInterface>>(new List<PrivateInterface>()));
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
+		{
+			Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTarget<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>()));
+		}
+
+		[Test]
+		public void Cannot_proxy_inaccessible_interface()
+		{
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateInterfaceProxyWithTarget<PrivateInterface>(new PrivateClass()));
+		}
+
+		[Test]
 		public void SelectorWorksForGenericMethods()
 		{
 			var options = new ProxyGenerationOptions();
 			var countingInterceptor = new CallCountingInterceptor();
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(IGenericInterface), new GenericClass(), options,
-			                                                      new AddTwoInterceptor(),
-			                                                      countingInterceptor) as IGenericInterface;
+				new AddTwoInterceptor(),
+				countingInterceptor) as IGenericInterface;
 			Assert.IsNotNull(target);
 			var result = target.GenericMethod<int>();
 			Assert.AreEqual(1, countingInterceptor.Count);
@@ -65,7 +186,7 @@ namespace Castle.Core.Tests
 			var countingInterceptor = new CallCountingInterceptor();
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterface), new SimpleClass(), options,
-			                                                      new AddTwoInterceptor(), countingInterceptor) as ISimpleInterface;
+				new AddTwoInterceptor(), countingInterceptor) as ISimpleInterface;
 			Assert.IsNotNull(target);
 			var result = target.Do();
 			Assert.AreEqual(3, result);
@@ -80,9 +201,9 @@ namespace Castle.Core.Tests
 			var countingInterceptor = new CallCountingInterceptor();
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterfaceWithProperty),
-			                                                      new SimpleClassWithProperty(), options,
-			                                                      new AddTwoInterceptor(),
-			                                                      countingInterceptor) as ISimpleInterface;
+				new SimpleClassWithProperty(), options,
+				new AddTwoInterceptor(),
+				countingInterceptor) as ISimpleInterface;
 			Assert.IsNotNull(target);
 			var result = target.Do();
 			Assert.AreEqual(3, result);
@@ -96,9 +217,9 @@ namespace Castle.Core.Tests
 			var countingInterceptor = new CallCountingInterceptor();
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(IMultiGenericInterface), new MultiGenericClass(),
-			                                                      options,
-			                                                      new AddTwoInterceptor(),
-			                                                      countingInterceptor) as IMultiGenericInterface;
+				options,
+				new AddTwoInterceptor(),
+				countingInterceptor) as IMultiGenericInterface;
 			Assert.IsNotNull(target);
 			var result = target.Method<int, string>("ignored");
 			Assert.AreEqual(1, countingInterceptor.Count);
@@ -115,9 +236,9 @@ namespace Castle.Core.Tests
 			var countingInterceptor = new CallCountingInterceptor();
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterfaceWithProperty),
-			                                                      new SimpleClassWithProperty(), options,
-			                                                      new AddTwoInterceptor(),
-			                                                      countingInterceptor) as ISimpleInterfaceWithProperty;
+				new SimpleClassWithProperty(), options,
+				new AddTwoInterceptor(),
+				countingInterceptor) as ISimpleInterfaceWithProperty;
 			Assert.IsNotNull(target);
 			var result = target.Age;
 			Assert.AreEqual(5, result);
@@ -125,60 +246,9 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTargetInterface()
-		{
-			var options1 = new ProxyGenerationOptions { Selector = new AllInterceptorSelector() };
-			var options2 = new ProxyGenerationOptions
-			{
-				Selector = new TypeInterceptorSelector<CallCountingInterceptor>()
-			};
-
-			var proxy1 = generator.CreateInterfaceProxyWithTargetInterface<IOne>(new One(), options1);
-			var proxy2 = generator.CreateInterfaceProxyWithTargetInterface<IOne>(new One(), options2);
-			proxy1.OneMethod();
-			proxy2.OneMethod();
-
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
-		}
-
-		[Test]
-		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTarget()
-		{
-			var options1 = new ProxyGenerationOptions { Selector = new AllInterceptorSelector() };
-			var options2 = new ProxyGenerationOptions
-			{
-				Selector = new TypeInterceptorSelector<CallCountingInterceptor>()
-			};
-
-			var proxy1 = generator.CreateInterfaceProxyWithTarget<IOne>(new One(), options1);
-			var proxy2 = generator.CreateInterfaceProxyWithTarget<IOne>(new One(), options2);
-			proxy1.OneMethod();
-			proxy2.OneMethod();
-
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
-		}
-
-		[Test]
-		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithoutTarget()
-		{
-			var options1 = new ProxyGenerationOptions { Selector = new AllInterceptorSelector() };
-			var options2 = new ProxyGenerationOptions
-			{
-				Selector = new TypeInterceptorSelector<SetReturnValueInterceptor>()
-			};
-
-			var proxy1 = generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), Type.EmptyTypes, options1, new SetReturnValueInterceptor(2));
-			var proxy2 = generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), Type.EmptyTypes, options2, new SetReturnValueInterceptor(2));
-			(proxy1 as IOne).OneMethod();
-			(proxy2 as IOne).OneMethod();
-
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
-		}
-
-		[Test]
 		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_ClassProxy()
 		{
-			var options1 = new ProxyGenerationOptions { Selector = new AllInterceptorSelector() };
+			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
 			var options2 = new ProxyGenerationOptions
 			{
 				Selector = new TypeInterceptorSelector<CallCountingInterceptor>()
@@ -193,320 +263,54 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithoutTarget()
+		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithoutTarget()
 		{
-			var someInstanceOfProxyWithoutSelector = (IService2)generator.CreateInterfaceProxyWithoutTarget(typeof(IService2), new DoNothingInterceptor());
-			var someInstanceOfProxyWithSelector = (IService2)generator.CreateInterfaceProxyWithoutTarget(typeof(IService2), new ProxyGenerationOptions
+			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
+			var options2 = new ProxyGenerationOptions
 			{
-				Selector = new AllInterceptorSelector()
-			}, new DoNothingInterceptor());
+				Selector = new TypeInterceptorSelector<SetReturnValueInterceptor>()
+			};
 
-			// This runs fine
-			someInstanceOfProxyWithoutSelector.DoOperation2();
-			// This will throw System.InvalidProgramException
-			someInstanceOfProxyWithSelector.DoOperation2();
+			var proxy1 = generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), Type.EmptyTypes, options1, new SetReturnValueInterceptor(2));
+			var proxy2 = generator.CreateInterfaceProxyWithoutTarget(typeof(IOne), Type.EmptyTypes, options2, new SetReturnValueInterceptor(2));
+			(proxy1 as IOne).OneMethod();
+			(proxy2 as IOne).OneMethod();
+
+			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
 		}
 
 		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget()
+		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTarget()
 		{
-			var someInstanceOfProxyWithoutSelector = (IService2)generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(), new StandardInterceptor());
-			var someInstanceOfProxyWithSelector = (IService2)generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
-			                                                                                          new ProxyGenerationOptions { Selector = new AllInterceptorSelector() },
-			                                                                                          new StandardInterceptor());
-
-			// This runs fine
-			someInstanceOfProxyWithoutSelector.DoOperation2();
-			// This will throw System.InvalidProgramException
-			someInstanceOfProxyWithSelector.DoOperation2();
-		}
-
-		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTargetInterface()
-		{
-			var someInstanceOfProxyWithoutSelector = (IService2)generator.CreateInterfaceProxyWithTargetInterface(typeof(IService2), new Service2(), new StandardInterceptor());
-			var someInstanceOfProxyWithSelector = (IService2)generator.CreateInterfaceProxyWithTargetInterface(typeof(IService2), new Service2(),
-			                                                                                                   new ProxyGenerationOptions { Selector = new AllInterceptorSelector() },
-			                                                                                                   new StandardInterceptor());
-
-			// This runs fine
-			someInstanceOfProxyWithoutSelector.DoOperation2();
-			// This will throw System.InvalidProgramException
-			someInstanceOfProxyWithSelector.DoOperation2();
-		}
-
-		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_ClassProxy()
-		{
-			var someInstanceOfProxyWithoutSelector = (Component2)generator.CreateClassProxy(typeof(Component2), new StandardInterceptor());
-			var someInstanceOfProxyWithSelector = (Component2)generator.CreateClassProxy(typeof(Component2),
-			                                                                             new ProxyGenerationOptions { Selector = new AllInterceptorSelector() },
-			                                                                             new StandardInterceptor());
-
-			// This runs fine
-			someInstanceOfProxyWithoutSelector.DoOperation2();
-			// This will throw System.InvalidProgramException
-			someInstanceOfProxyWithSelector.DoOperation2();
-		}
-
-		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_ClassProxyWithTarget()
-		{
-			var someInstanceOfProxyWithoutSelector = (Component2)generator.CreateClassProxyWithTarget(typeof(Component2), new Component2(), new StandardInterceptor());
-			var someInstanceOfProxyWithSelector = (Component2)generator.CreateClassProxyWithTarget(typeof(Component2), new Component2(),
-			                                                                                       new ProxyGenerationOptions { Selector = new AllInterceptorSelector() },
-			                                                                                       new StandardInterceptor());
-
-			// This runs fine
-			someInstanceOfProxyWithoutSelector.DoOperation2();
-			// This will throw System.InvalidProgramException
-			someInstanceOfProxyWithSelector.DoOperation2();
-		}
-
-		[Test]
-		[Bug("DYNPROXY-175")]
-		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget2()
-		{
-			var someInstanceOfProxyWithSelector1 = (IService2)generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
-			                                                                                           new ProxyGenerationOptions { Selector = new SelectorWithState(1) },
-			                                                                                           new StandardInterceptor());
-			var someInstanceOfProxyWithSelector2 = (IService2)generator.CreateInterfaceProxyWithTarget(typeof(IService2), new Service2(),
-			                                                                                           new ProxyGenerationOptions { Selector = new SelectorWithState(2) },
-			                                                                                           new StandardInterceptor());
-
-			Assert.AreSame(someInstanceOfProxyWithSelector1.GetType(), someInstanceOfProxyWithSelector2.GetType());
-		}
-
-		[Test]
-		public void Cannot_proxy_inaccessible_interface()
-		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateInterfaceProxyWithTarget<PrivateInterface>(new PrivateClass(), new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
-		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateInterfaceProxyWithTarget<IList<PrivateInterface>>(new List<PrivateInterface>(), new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
-		{
-			Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTarget<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>(), new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Can_proxy_generic_interface()
-		{
-			generator.CreateInterfaceProxyWithTarget<IList<object>>(new List<object>(), new IInterceptor[0]);
-		}
-
-		private interface PrivateInterface { }
-
-		private class PrivateClass : PrivateInterface { }
-	}
-
-	public class MultiGenericClass : IMultiGenericInterface
-	{
-		public T1 Method<T1, T2>(T2 p)
-		{
-			return default(T1);
-		}
-
-		public T2 Method<T1, T2>(T1 p)
-		{
-			return default(T2);
-		}
-	}
-
-	public interface IMultiGenericInterface
-	{
-		T1 Method<T1, T2>(T2 p);
-
-		T2 Method<T1, T2>(T1 p);
-	}
-
-	[Serializable]
-	public class GenericClass : IGenericInterface
-	{
-		#region IGenericInterface Members
-
-		public T GenericMethod<T>()
-		{
-			return default(T);
-		}
-
-		#endregion
-	}
-
-	public interface IGenericInterface
-	{
-		T GenericMethod<T>();
-	}
-
-	public interface ISimpleInterfaceWithProperty
-	{
-		int Age { get; }
-	}
-
-	public class SimpleClassWithProperty : ISimpleInterfaceWithProperty
-	{
-		public int Age
-		{
-			get { return 5; }
-		}
-	}
-
-	[Serializable]
-	internal class TypeInterceptorSelector<TInterceptor> : IInterceptorSelector where TInterceptor : IInterceptor
-	{
-		#region IInterceptorSelector Members
-
-		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
-		{
-			var interceptorsOfT = new List<IInterceptor>();
-			foreach (var interceptor in interceptors)
+			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
+			var options2 = new ProxyGenerationOptions
 			{
-				if (interceptor is TInterceptor)
-				{
-					interceptorsOfT.Add(interceptor);
-				}
-			}
-			return interceptorsOfT.ToArray();
+				Selector = new TypeInterceptorSelector<CallCountingInterceptor>()
+			};
+
+			var proxy1 = generator.CreateInterfaceProxyWithTarget<IOne>(new One(), options1);
+			var proxy2 = generator.CreateInterfaceProxyWithTarget<IOne>(new One(), options2);
+			proxy1.OneMethod();
+			proxy2.OneMethod();
+
+			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
 		}
 
-		#endregion
-	}
-
-	[Serializable]
-	public class AllInterceptorSelector : IInterceptorSelector
-	{
-		#region IInterceptorSelector Members
-
-		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
+		[Test]
+		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTargetInterface()
 		{
-			return interceptors;
-		}
-
-		#endregion
-	}
-
-	[Serializable]
-	public class SelectorWithState : IInterceptorSelector
-	{
-		private readonly int state;
-
-		public SelectorWithState(int state)
-		{
-			this.state = state;
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
+			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
+			var options2 = new ProxyGenerationOptions
 			{
-				return false;
-			}
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
-			if (obj.GetType() != GetType())
-			{
-				return false;
-			}
-			return Equals((SelectorWithState)obj);
-		}
+				Selector = new TypeInterceptorSelector<CallCountingInterceptor>()
+			};
 
-		public override int GetHashCode()
-		{
-			return state;
-		}
+			var proxy1 = generator.CreateInterfaceProxyWithTargetInterface<IOne>(new One(), options1);
+			var proxy2 = generator.CreateInterfaceProxyWithTargetInterface<IOne>(new One(), options2);
+			proxy1.OneMethod();
+			proxy2.OneMethod();
 
-		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
-		{
-			return interceptors;
-		}
-
-		protected bool Equals(SelectorWithState other)
-		{
-			return state == other.state;
-		}
-	}
-
-	[Serializable]
-	public class SimpleClass : ISimpleInterface
-	{
-		#region ISimpleInterface Members
-
-		public int Do()
-		{
-			return 3;
-		}
-
-		#endregion
-	}
-
-	public interface ISimpleInterface
-	{
-		int Do();
-	}
-
-	public class FakeProxy
-	{
-		// Fields
-		public static ProxyGenerationOptions proxyGenerationOptions;
-		public static MethodInfo token_Do;
-
-		[XmlIgnore]
-		public IInterceptor[] __interceptors;
-
-		public IInterceptorSelector __selector;
-
-		[XmlIgnore]
-		public SimpleClass __target;
-
-		[NonSerialized]
-		[XmlIgnore]
-		public IInterceptor[] interceptors_Do;
-
-		public virtual int Do()
-		{
-			// This item is obfuscated and can not be translated.
-			if (interceptors_Do == null)
-			{
-				interceptors_Do = __selector.SelectInterceptors(TypeUtil.GetTypeOrNull(__target), token_Do, __interceptors) ?? new IInterceptor[0];
-			}
-			var objArray = new object[0];
-			var @do = new ISimpleInterface_Do(__target, this, interceptors_Do, token_Do, objArray);
-			@do.Proceed();
-			return (int)@do.ReturnValue;
-		}
-	}
-
-	public class ISimpleInterface_Do
-	{
-		public ISimpleInterface_Do(SimpleClass simpleClass, FakeProxy fakeProxy, IInterceptor[] interceptorsDo, MethodInfo tokenDo, object[] objArray)
-		{
-			throw new NotImplementedException();
-		}
-
-		public object ReturnValue
-		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
-		}
-
-		public void Proceed()
-		{
-			throw new NotImplementedException();
+			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
 		}
 	}
 }

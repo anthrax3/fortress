@@ -18,6 +18,16 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
 	public class ServiceClass
 	{
+		public virtual bool Valid
+		{
+			get { return false; }
+		}
+
+		public bool NonVirtualProp
+		{
+			get { return false; }
+		}
+
 		public virtual int Sum(int b1, int b2)
 		{
 			return b1 + b2;
@@ -48,67 +58,27 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 			return b1 + b2;
 		}
 
-		public virtual UInt16 Sum(UInt16 b1, UInt16 b2)
+		public virtual ushort Sum(ushort b1, ushort b2)
 		{
-			return (UInt16) (b1 + b2);
+			return (ushort) (b1 + b2);
 		}
 
-		public virtual UInt32 Sum(UInt32 b1, UInt32 b2)
+		public virtual uint Sum(uint b1, uint b2)
 		{
 			return b1 + b2;
 		}
 
-		public virtual UInt64 Sum(UInt64 b1, UInt64 b2)
+		public virtual ulong Sum(ulong b1, ulong b2)
 		{
 			return b1 + b2;
-		}
-
-		public virtual bool Valid
-		{
-			get { return false; }
 		}
 
 		public void NonVirtualMethod()
 		{
 		}
 
-		public bool NonVirtualProp
-		{
-			get { return false; }
-		}
-
 		public class InernalClass
 		{
-		}
-	}
-
-	public class ServiceClass2
-	{
-		public void DoSomething()
-		{
-			DoOtherThing();
-		}
-
-		public virtual void DoOtherThing()
-		{
-			DoSomethingElse();
-		}
-
-		public virtual void DoSomethingElse()
-		{
-		}
-	}
-
-	public class ExtendedServiceClass : ServiceClass
-	{
-		public virtual UInt64 Sum2(UInt64 b1, UInt64 b2)
-		{
-			return b1 + b2;
-		}
-
-		public virtual bool Valid2
-		{
-			get { return false; }
 		}
 	}
 }

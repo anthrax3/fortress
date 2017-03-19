@@ -21,16 +21,16 @@ namespace Castle.Core.Tests
 {
 	public abstract class BasePEVerifyTestCase
 	{
-		protected ProxyGenerator generator;
 		protected IProxyBuilder builder;
+		protected ProxyGenerator generator;
 
-		private bool verificationDisabled = true;
+		public bool IsVerificationDisabled { get; private set; } = true;
 
 		[SetUp]
 		public virtual void Init()
 		{
 			ResetGeneratorAndBuilder();
-			verificationDisabled = false;
+			IsVerificationDisabled = false;
 		}
 
 		public void ResetGeneratorAndBuilder()
@@ -41,12 +41,7 @@ namespace Castle.Core.Tests
 
 		public void DisableVerification()
 		{
-			verificationDisabled = true;
-		}
-
-		public bool IsVerificationDisabled
-		{
-			get { return verificationDisabled; }
+			IsVerificationDisabled = true;
 		}
 
 		[TearDown]
@@ -69,14 +64,14 @@ namespace Castle.Core.Tests
 			var process = new Process
 			{
 				StartInfo =
-					{
-						FileName = FindPeVerify.PeVerifyPath,
-						RedirectStandardOutput = true,
-						UseShellExecute = false,
-						WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
-						Arguments = "\"" + assemblyPath + "\" /VERBOSE",
-						CreateNoWindow = true
-					}
+				{
+					FileName = FindPeVerify.PeVerifyPath,
+					RedirectStandardOutput = true,
+					UseShellExecute = false,
+					WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
+					Arguments = "\"" + assemblyPath + "\" /VERBOSE",
+					CreateNoWindow = true
+				}
 			};
 			process.Start();
 			var processOutput = process.StandardOutput.ReadToEnd();
@@ -92,6 +87,5 @@ namespace Castle.Core.Tests
 				Assert.Fail("PeVerify reported error(s): " + Environment.NewLine + processOutput, result);
 			}
 		}
-		
 	}
 }

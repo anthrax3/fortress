@@ -30,34 +30,18 @@ namespace Castle.Core.Tests
 			base.TearDown();
 		}
 
-		[Test]
-		public void TearDown_DoesNotSaveAnything_IfNoProxyGenerated()
-		{
-			string path = ModuleScope.DEFAULT_FILE_NAME;
-			if (File.Exists(path))
-			{
-				File.Delete(path);
-			}
-
-			base.TearDown();
-
-			Assert.IsFalse(File.Exists(path));
-		}
-
 		private void FindVerificationErrors()
 		{
-			ModuleBuilder moduleBuilder = generator.ProxyBuilder.ModuleScope.ObtainDynamicModule(true);
-			TypeBuilder invalidType = moduleBuilder.DefineType("InvalidType");
-			MethodBuilder invalidMethod = invalidType.DefineMethod("InvalidMethod", MethodAttributes.Public);
+			var moduleBuilder = generator.ProxyBuilder.ModuleScope.ObtainDynamicModule(true);
+			var invalidType = moduleBuilder.DefineType("InvalidType");
+			var invalidMethod = invalidType.DefineMethod("InvalidMethod", MethodAttributes.Public);
 			invalidMethod.GetILGenerator().Emit(OpCodes.Ldnull); // missing RET statement
 
 			invalidType.CreateType();
 			invalidType.CreateTypeInfo().AsType();
 
 			if (!IsVerificationDisabled)
-			{
 				Console.WriteLine("This next test case is expected to yield a verification error.");
-			}
 
 			base.TearDown();
 		}
@@ -84,6 +68,18 @@ namespace Castle.Core.Tests
 			Assert.IsFalse(IsVerificationDisabled);
 			DisableVerification();
 			Assert.IsTrue(IsVerificationDisabled);
+		}
+
+		[Test]
+		public void TearDown_DoesNotSaveAnything_IfNoProxyGenerated()
+		{
+			var path = ModuleScope.DEFAULT_FILE_NAME;
+			if (File.Exists(path))
+				File.Delete(path);
+
+			base.TearDown();
+
+			Assert.IsFalse(File.Exists(path));
 		}
 	}
 }

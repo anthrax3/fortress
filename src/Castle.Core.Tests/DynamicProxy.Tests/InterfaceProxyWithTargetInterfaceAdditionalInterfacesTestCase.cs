@@ -22,6 +22,15 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class InterfaceProxyWithTargetInterfaceAdditionalInterfacesTestCase : BasePEVerifyTestCase
 	{
+		private T GetProxy<T>(object target)
+		{
+			return (T) generator.CreateInterfaceProxyWithTargetInterface(
+				typeof(IEmpty),
+				new[] {typeof(T)},
+				target,
+				new ProxyGenerationOptions(new ProxyNothingHook()));
+		}
+
 		[Test]
 		public void Can_call_target__method_with_out_argument()
 		{
@@ -66,15 +75,6 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = proxy.OneMethod();
 			Assert.AreEqual(0, result);
-		}
-
-		private T GetProxy<T>(object target)
-		{
-			return (T)generator.CreateInterfaceProxyWithTargetInterface(
-				typeof(IEmpty),
-				new[] { typeof(T) },
-				target,
-				new ProxyGenerationOptions(new ProxyNothingHook()));
 		}
 	}
 }

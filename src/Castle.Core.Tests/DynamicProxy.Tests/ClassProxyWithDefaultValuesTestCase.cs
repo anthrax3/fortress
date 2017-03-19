@@ -35,7 +35,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void MethodParameterWithDefaultValue_UseNullDefaultValue_interface_proxy()
 		{
 			var proxy = generator.CreateInterfaceProxyWithoutTarget<InterfaceWithMethodWithParameterWithNullDefaultValue>(
-					new SetReturnValueInterceptor(true));
+				new SetReturnValueInterceptor(true));
 			var result = proxy.Method();
 
 			Assert.IsTrue(result);

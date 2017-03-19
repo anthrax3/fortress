@@ -18,14 +18,14 @@ namespace Castle.Core.Tests.GenClasses
 {
 	public class GenClassWithExplicitImpl : IChangeTracking
 	{
-		bool IChangeTracking.IsChanged
-		{
-			get { return IsChanged; }
-		}
-
 		protected virtual bool IsChanged
 		{
 			get { return false; }
+		}
+
+		bool IChangeTracking.IsChanged
+		{
+			get { return IsChanged; }
 		}
 
 		void IChangeTracking.AcceptChanges()
@@ -48,11 +48,5 @@ namespace Castle.Core.Tests.GenClasses
 		protected override void AcceptChanges()
 		{
 		}
-	}
-
-	public interface IChangeTracking{
-		bool IsChanged { get; }
-
-		void AcceptChanges();
 	}
 }

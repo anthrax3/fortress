@@ -23,6 +23,13 @@ namespace Castle.Core.Tests
 			@"C:\Program Files (x86)\Microsoft Visual Studio 8\SDK\v2.0\bin"
 		};
 
+		private static string peVerifyPath;
+
+		public static string PeVerifyPath
+		{
+			get { return peVerifyPath ?? (peVerifyPath = FindPeVerifyPath()); }
+		}
+
 		private static string FindPeVerifyPath()
 		{
 			var peVerifyProbingPaths = PeVerifyProbingPaths;
@@ -30,19 +37,10 @@ namespace Castle.Core.Tests
 			{
 				var file = Path.Combine(path, "peverify.exe");
 				if (File.Exists(file))
-				{
 					return file;
-				}
 			}
 			throw new FileNotFoundException(
 				"Please check the PeVerifyProbingPaths configuration setting and set it to the folder where peverify.exe is located");
-		}
-
-		private static string peVerifyPath;
-
-		public static string PeVerifyPath
-		{
-			get { return peVerifyPath ?? (peVerifyPath = FindPeVerifyPath()); }
 		}
 	}
 }

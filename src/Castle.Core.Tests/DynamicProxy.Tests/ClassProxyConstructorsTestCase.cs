@@ -24,15 +24,68 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class ClassProxyConstructorsTestCase : BasePEVerifyTestCase
 	{
-		[Test]
-		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()
+		private class PrivateClass
 		{
-			generator.CreateClassProxy(
-				typeof(MyOwnClass),
-				new Type[] { },
-				ProxyGenerationOptions.Default,
-				new object[] { },
-				new StandardInterceptor());
+		}
+
+		[Test]
+		public void Can_pass_params_arguments_inline()
+		{
+			generator.CreateClassProxy(typeof(HasCtorWithParamsStrings), new object[] {});
+		}
+
+		[Test]
+		public void Can_pass_params_arguments_inline_implicitly()
+		{
+			generator.CreateClassProxy(typeof(HasCtorWithIntAndParamsArgument), new object[] {5});
+		}
+
+		[Test]
+		public void Can_pass_params_arguments_inline2()
+		{
+			generator.CreateClassProxy(typeof(HasCtorWithParamsArgument), new object[] {});
+		}
+
+		[Test]
+		public void Can_proxy_generic_class()
+		{
+			generator.CreateClassProxy(typeof(List<object>));
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_class_with_inaccessible_type_argument()
+		{
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateClassProxy(typeof(List<PrivateClass>)));
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_class_with_type_argument_that_has_inaccessible_type_argument()
+		{
+			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(List<List<PrivateClass>>)));
+
+			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
+				typeof(List<List<PrivateClass>>).FullName, typeof(PrivateClass).FullName);
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_type_with_open_generic_type_parameter()
+		{
+			var innerType = typeof(List<>);
+			var targetType = innerType.MakeGenericType(typeof(List<>));
+			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(targetType));
+		}
+
+		[Test]
+		public void Cannot_proxy_inaccessible_class()
+		{
+			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(PrivateClass)));
+		}
+
+		[Test]
+		public void Cannot_proxy_open_generic_type()
+		{
+			var exception = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(List<>)));
 		}
 
 		[Test]
@@ -40,7 +93,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var proxy =
 				(ClassWithVariousConstructors)
-				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] { new object[] { null }, "foo" });
+				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] {new object[] {null}, "foo"});
 			Assert.AreEqual(Constructor.ArrayOfObjectsAndSingleString, proxy.ConstructorCalled);
 		}
 
@@ -49,7 +102,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var proxy =
 				(ClassWithVariousConstructors)
-				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] { new string[] { null }, "foo" });
+				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] {new string[] {null}, "foo"});
 			Assert.AreEqual(Constructor.ArrayAndSingleString, proxy.ConstructorCalled);
 		}
 
@@ -58,86 +111,27 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var proxy =
 				(ClassWithVariousConstructors)
-				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] { new string[] { } });
+				generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new object[] {new string[] {}});
 			Assert.AreEqual(Constructor.ArrayOfStrings, proxy.ConstructorCalled);
-		}
-
-		[Test]
-		public void Can_pass_params_arguments_inline()
-		{
-				generator.CreateClassProxy(typeof(HasCtorWithParamsStrings), new object[] { });
-		}
-		[Test]
-		public void Can_pass_params_arguments_inline2()
-		{
-			generator.CreateClassProxy(typeof(HasCtorWithParamsArgument), new object[] { });
-		}
-
-		[Test]
-		public void Can_pass_params_arguments_inline_implicitly()
-		{
-			generator.CreateClassProxy(typeof(HasCtorWithIntAndParamsArgument), new object[] { 5 });
 		}
 
 		[Test]
 		public void Should_properly_interpret_nothing_as_lack_of_ctor_arguments()
 		{
 			var proxy =
-				(ClassWithVariousConstructors)generator.CreateClassProxy(typeof(ClassWithVariousConstructors), new IInterceptor[0]);
+				(ClassWithVariousConstructors) generator.CreateClassProxy(typeof(ClassWithVariousConstructors));
 			Assert.AreEqual(Constructor.Default, proxy.ConstructorCalled);
 		}
 
 		[Test]
-		public void Cannot_proxy_open_generic_type()
+		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()
 		{
-			var exception = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(List<>), new IInterceptor[0]));
+			generator.CreateClassProxy(
+				typeof(MyOwnClass),
+				new Type[] {},
+				ProxyGenerationOptions.Default,
+				new object[] {},
+				new StandardInterceptor());
 		}
-
-		[Test]
-		public void Cannot_proxy_generic_type_with_open_generic_type_parameter()
-		{
-			var innerType = typeof(List<>);
-			var targetType = innerType.MakeGenericType(typeof(List<>));
-			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(targetType, new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Cannot_proxy_inaccessible_class()
-		{
-			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(PrivateClass), new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Cannot_proxy_generic_class_with_inaccessible_type_argument()
-		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateClassProxy(typeof(List<PrivateClass>), new IInterceptor[0]));
-		}
-
-		[Test]
-		public void Cannot_proxy_generic_class_with_type_argument_that_has_inaccessible_type_argument()
-		{
-			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxy(typeof(List<List<PrivateClass>>), new IInterceptor[0]));
-
-			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
-				typeof(List<List<PrivateClass>>).FullName, typeof(PrivateClass).FullName);
-		}
-
-		[Test]
-		public void Can_proxy_generic_class()
-		{
-			generator.CreateClassProxy(typeof(List<object>), new IInterceptor[0]);
-		}
-
-		private class PrivateClass { }
-	}
-
-	public abstract class MyOwnClass
-	{
-		public virtual void Foo<T>(List<T>[] action)
-		{
-		}
-
-		/* ... */
 	}
 }

@@ -16,10 +16,6 @@ using System;
 
 namespace Castle.Core.Tests.InterClasses
 {
-	public interface IMarkerInterface
-	{
-	}
-
 	[Serializable]
 	public class ClassWithMarkerInterface
 	{

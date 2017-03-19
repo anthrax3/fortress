@@ -24,6 +24,12 @@ namespace Castle.Core.Tests
 	public class CanDefineAdditionalCustomAttributes : BasePEVerifyTestCase
 	{
 		[Test]
+		public void Can_clone_attributes_with_array_enums()
+		{
+			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithEnumArray));
+		}
+
+		[Test]
 		[Bug("DYNPROXY-151")]
 		public void Can_clone_attributes_with_array_ints()
 		{
@@ -35,12 +41,6 @@ namespace Castle.Core.Tests
 		public void Can_clone_attributes_with_array_types()
 		{
 			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithTypeArray));
-		}
-
-		[Test]
-		public void Can_clone_attributes_with_array_enums()
-		{
-			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithEnumArray));
 		}
 
 		[Test]
@@ -64,124 +64,5 @@ namespace Castle.Core.Tests
 
 			Assert.IsTrue(proxy.GetType().GetTypeInfo().IsDefined(typeof(__Protect), false));
 		}
-	}
-
-	[AttributeUsage(AttributeTargets.All, Inherited = false)]
-	public sealed class AttributeWithTypeArrayArgument : Attribute
-	{
-		public AttributeWithTypeArrayArgument(params Type[] attributeTypes)
-		{
-		}
-	}
-
-	public enum SomeByteEnumForAttributeWithEnumArrayArgument : byte
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeSbyteEnumForAttributeWithEnumArrayArgument : sbyte
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeShortEnumForAttributeWithEnumArrayArgument : short
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeUshortEnumForAttributeWithEnumArrayArgument : ushort
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeIntEnumForAttributeWithEnumArrayArgument : int
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeUintEnumForAttributeWithEnumArrayArgument : uint
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeLongEnumForAttributeWithEnumArrayArgument : long
-	{
-		Default,
-		Special
-	}
-
-	public enum SomeUlongEnumForAttributeWithEnumArrayArgument : ulong
-	{
-		Default,
-		Special
-	}
-
-	[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
-	public sealed class AttributeWithEnumArrayArgument : Attribute
-	{
-		public AttributeWithEnumArrayArgument(params SomeByteEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeSbyteEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeShortEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeUshortEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeIntEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeUintEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeLongEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-		public AttributeWithEnumArrayArgument(params SomeUlongEnumForAttributeWithEnumArrayArgument[] attributeEnums)
-		{
-		}
-	}
-
-	[AttributeUsage(AttributeTargets.All, Inherited = false)]
-	public sealed class AttributeWithIntArrayArgument : Attribute
-	{
-		public AttributeWithIntArrayArgument(params int[] ints)
-		{
-		}
-	}
-
-	[AttributeWithTypeArrayArgument(typeof(string))]
-	public interface IHasAttributeWithTypeArray
-	{
-	}
-
-	[AttributeWithEnumArrayArgument(SomeByteEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeSbyteEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeShortEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeUshortEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeIntEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeUintEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeLongEnumForAttributeWithEnumArrayArgument.Special)]
-	[AttributeWithEnumArrayArgument(SomeUlongEnumForAttributeWithEnumArrayArgument.Special)]
-	public interface IHasAttributeWithEnumArray
-	{
-	}
-
-	[AttributeWithIntArrayArgument(1, 2, 3)]
-	public interface IHasAttributeWithIntArray
-	{
-	}
-
-	public class __Protect : Attribute
-	{
 	}
 }

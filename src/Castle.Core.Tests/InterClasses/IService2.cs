@@ -18,11 +18,4 @@ namespace Castle.Core.Tests.InterClasses
 	{
 		void DoOperation2();
 	}
-
-	public class Service2 : IService2
-	{
-		public void DoOperation2()
-		{
-		}
-	}
 }

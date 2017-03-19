@@ -31,6 +31,29 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class SerializableClassTestCase : BasePEVerifyTestCase
 	{
+		public override void Init()
+		{
+			base.Init();
+			ProxyObjectReference.ResetScope();
+		}
+
+		public override void TearDown()
+		{
+			base.TearDown();
+			ProxyObjectReference.ResetScope();
+		}
+
+		public static T SerializeAndDeserialize<T>(T proxy)
+		{
+			using (var stream = new MemoryStream())
+			{
+				var formatter = new BinaryFormatter();
+				formatter.Serialize(stream, proxy);
+				stream.Position = 0;
+				return (T) formatter.Deserialize(stream);
+			}
+		}
+
 		[Test]
 		public void BaseTypeForInterfaceProxy_is_honored_after_deserialization()
 		{
@@ -65,7 +88,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void CreateSerializable()
 		{
 			var proxy = (MySerializableClass)
-			            generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
+				generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
 
 			Assert.IsTrue(proxy.GetType().IsSerializable);
 		}
@@ -89,7 +112,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			(proxy as Hashtable).Add("key", "helloooo!");
 
-			var otherProxy = (Hashtable)SerializeAndDeserialize(proxy);
+			var otherProxy = (Hashtable) SerializeAndDeserialize(proxy);
 
 			Assert.IsTrue(otherProxy.ContainsKey("key"));
 			Assert.AreEqual("helloooo!", otherProxy["key"]);
@@ -99,15 +122,9 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void ImplementsISerializable()
 		{
 			var proxy = (MySerializableClass)
-			            generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
+				generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
 
 			Assert.IsTrue(proxy is ISerializable);
-		}
-
-		public override void Init()
-		{
-			base.Init();
-			ProxyObjectReference.ResetScope();
 		}
 
 		[Test]
@@ -116,64 +133,20 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var options = new ProxyGenerationOptions();
 			options.AddMixinInstance(new SerializableMixin());
 
-			var proxy = (MySerializableClass)generator.CreateClassProxy(
+			var proxy = (MySerializableClass) generator.CreateClassProxy(
 				typeof(MySerializableClass),
 				new Type[0],
 				options,
 				new StandardInterceptor());
 
 			Assert.IsTrue(proxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)proxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)proxy).GetExecutingObject() is SerializableMixin);
+			Assert.IsNotNull(((IMixedInterface) proxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) proxy).GetExecutingObject() is SerializableMixin);
 
 			var otherProxy = SerializeAndDeserialize(proxy);
 			Assert.IsTrue(otherProxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)otherProxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)otherProxy).GetExecutingObject() is SerializableMixin);
-		}
-
-		[Test]
-		public void MixinFieldsSetOnDeserialization_InterfaceProxy_WithTarget()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new SerializableMixin());
-
-			var proxy = (IService)generator.CreateInterfaceProxyWithTarget(
-				typeof(IService),
-				new ServiceImpl(),
-				options,
-				new StandardInterceptor());
-
-			Assert.IsTrue(proxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)proxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)proxy).GetExecutingObject() is SerializableMixin);
-
-			var otherProxy = SerializeAndDeserialize(proxy);
-			Assert.IsTrue(otherProxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)otherProxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)otherProxy).GetExecutingObject() is SerializableMixin);
-		}
-
-		[Test]
-		public void MixinFieldsSetOnDeserialization_InterfaceProxy_WithTargetInterface()
-		{
-			var options = new ProxyGenerationOptions();
-			options.AddMixinInstance(new SerializableMixin());
-
-			var proxy = (IService)generator.CreateInterfaceProxyWithTargetInterface(
-				typeof(IService),
-				new ServiceImpl(),
-				options,
-				new StandardInterceptor());
-
-			Assert.IsTrue(proxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)proxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)proxy).GetExecutingObject() is SerializableMixin);
-
-			var otherProxy = SerializeAndDeserialize(proxy);
-			Assert.IsTrue(otherProxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)otherProxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)otherProxy).GetExecutingObject() is SerializableMixin);
+			Assert.IsNotNull(((IMixedInterface) otherProxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) otherProxy).GetExecutingObject() is SerializableMixin);
 		}
 
 		[Test]
@@ -182,20 +155,64 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var options = new ProxyGenerationOptions();
 			options.AddMixinInstance(new SerializableMixin());
 
-			var proxy = (IService)generator.CreateInterfaceProxyWithoutTarget(
+			var proxy = (IService) generator.CreateInterfaceProxyWithoutTarget(
 				typeof(IService),
 				new Type[0],
 				options,
 				new StandardInterceptor());
 
 			Assert.IsTrue(proxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)proxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)proxy).GetExecutingObject() is SerializableMixin);
+			Assert.IsNotNull(((IMixedInterface) proxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) proxy).GetExecutingObject() is SerializableMixin);
 
 			var otherProxy = SerializeAndDeserialize(proxy);
 			Assert.IsTrue(otherProxy is IMixedInterface);
-			Assert.IsNotNull(((IMixedInterface)otherProxy).GetExecutingObject());
-			Assert.IsTrue(((IMixedInterface)otherProxy).GetExecutingObject() is SerializableMixin);
+			Assert.IsNotNull(((IMixedInterface) otherProxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) otherProxy).GetExecutingObject() is SerializableMixin);
+		}
+
+		[Test]
+		public void MixinFieldsSetOnDeserialization_InterfaceProxy_WithTarget()
+		{
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new SerializableMixin());
+
+			var proxy = (IService) generator.CreateInterfaceProxyWithTarget(
+				typeof(IService),
+				new ServiceImpl(),
+				options,
+				new StandardInterceptor());
+
+			Assert.IsTrue(proxy is IMixedInterface);
+			Assert.IsNotNull(((IMixedInterface) proxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) proxy).GetExecutingObject() is SerializableMixin);
+
+			var otherProxy = SerializeAndDeserialize(proxy);
+			Assert.IsTrue(otherProxy is IMixedInterface);
+			Assert.IsNotNull(((IMixedInterface) otherProxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) otherProxy).GetExecutingObject() is SerializableMixin);
+		}
+
+		[Test]
+		public void MixinFieldsSetOnDeserialization_InterfaceProxy_WithTargetInterface()
+		{
+			var options = new ProxyGenerationOptions();
+			options.AddMixinInstance(new SerializableMixin());
+
+			var proxy = (IService) generator.CreateInterfaceProxyWithTargetInterface(
+				typeof(IService),
+				new ServiceImpl(),
+				options,
+				new StandardInterceptor());
+
+			Assert.IsTrue(proxy is IMixedInterface);
+			Assert.IsNotNull(((IMixedInterface) proxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) proxy).GetExecutingObject() is SerializableMixin);
+
+			var otherProxy = SerializeAndDeserialize(proxy);
+			Assert.IsTrue(otherProxy is IMixedInterface);
+			Assert.IsNotNull(((IMixedInterface) otherProxy).GetExecutingObject());
+			Assert.IsTrue(((IMixedInterface) otherProxy).GetExecutingObject() is SerializableMixin);
 		}
 
 		[Test]
@@ -204,7 +221,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var options = new ProxyGenerationOptions();
 			options.AddMixinInstance(new SerializableMixin());
 
-			var proxy = (MySerializableClass)generator.CreateClassProxy(
+			var proxy = (MySerializableClass) generator.CreateClassProxy(
 				typeof(MySerializableClass),
 				new Type[0],
 				options,
@@ -224,7 +241,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			options.AddMixinInstance(new SerializableMixin());
 			options.Selector = new SerializableInterceptorSelector();
 
-			var proxy = (MySerializableClass)generator.CreateClassProxy(
+			var proxy = (MySerializableClass) generator.CreateClassProxy(
 				typeof(MySerializableClass),
 				new Type[0],
 				options,
@@ -234,7 +251,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreNotEqual(proxy.GetType(), proxy.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			Assert.AreEqual(proxy.GetType().BaseType, proxy.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			var options2 =
-				(ProxyGenerationOptions)proxy.GetType().GetField("proxyGenerationOptions").GetValue(null);
+				(ProxyGenerationOptions) proxy.GetType().GetField("proxyGenerationOptions").GetValue(null);
 			Assert.IsNotNull(Array.Find(options2.MixinsAsArray(), delegate(object o) { return o is SerializableMixin; }));
 			Assert.IsNotNull(options2.Selector);
 
@@ -242,8 +259,8 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreEqual(otherProxy.GetType(), otherProxy.GetType().GetMethod("get_Current").DeclaringType);
 			Assert.AreNotEqual(otherProxy.GetType(), otherProxy.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			Assert.AreEqual(otherProxy.GetType().BaseType,
-			                otherProxy.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
-			options2 = (ProxyGenerationOptions)otherProxy.GetType().GetField("proxyGenerationOptions").GetValue(null);
+				otherProxy.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
+			options2 = (ProxyGenerationOptions) otherProxy.GetType().GetField("proxyGenerationOptions").GetValue(null);
 			Assert.IsNotNull(Array.Find(options2.MixinsAsArray(), delegate(object o) { return o is SerializableMixin; }));
 			Assert.IsNotNull(options2.Selector);
 		}
@@ -259,7 +276,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var holder = new ComplexHolder();
 			holder.Type = typeof(MySerializableClass);
 			holder.Element = generator.CreateClassProxy(typeof(MySerializableClass), new Type[0], options,
-			                                            new StandardInterceptor());
+				new StandardInterceptor());
 
 			// check holder elements
 			Assert.AreEqual(typeof(MySerializableClass), holder.Type);
@@ -270,11 +287,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			// check whether options were applied correctly
 			Assert.AreEqual(holder.Element.GetType(), holder.Element.GetType().GetMethod("get_Current").DeclaringType);
 			Assert.AreNotEqual(holder.Element.GetType(),
-			                   holder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
+				holder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			Assert.AreEqual(holder.Element.GetType().BaseType,
-			                holder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
+				holder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			var options2 =
-				(ProxyGenerationOptions)holder.Element.GetType().GetField("proxyGenerationOptions").GetValue(null);
+				(ProxyGenerationOptions) holder.Element.GetType().GetField("proxyGenerationOptions").GetValue(null);
 			Assert.IsNotNull(Array.Find(options2.MixinsAsArray(), delegate(object o) { return o is SerializableMixin; }));
 			Assert.IsNotNull(options2.Selector);
 
@@ -289,10 +306,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			// check whether options were applied correctly
 			Assert.AreEqual(otherHolder.Element.GetType(), otherHolder.Element.GetType().GetMethod("get_Current").DeclaringType);
 			Assert.AreNotEqual(otherHolder.Element.GetType(),
-			                   otherHolder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
+				otherHolder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
 			Assert.AreEqual(otherHolder.Element.GetType().BaseType,
-			                otherHolder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
-			options2 = (ProxyGenerationOptions)otherHolder.Element.GetType().GetField("proxyGenerationOptions").GetValue(null);
+				otherHolder.Element.GetType().GetMethod("CalculateSumDistanceNow").DeclaringType);
+			options2 = (ProxyGenerationOptions) otherHolder.Element.GetType().GetField("proxyGenerationOptions").GetValue(null);
 			Assert.IsNotNull(Array.Find(options2.MixinsAsArray(), delegate(object o) { return o is SerializableMixin; }));
 			Assert.IsNotNull(options2.Selector);
 		}
@@ -323,14 +340,14 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			base.Init();
 
 			proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), new ServiceImpl(), options,
-			                                                 new StandardInterceptor());
+				new StandardInterceptor());
 			field = proxy.GetType().GetField("proxyGenerationOptions");
 			Assert.AreSame(options, field.GetValue(proxy));
 
 			base.Init();
 
 			proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), new ServiceImpl(),
-			                                                          new StandardInterceptor());
+				new StandardInterceptor());
 			field = proxy.GetType().GetField("proxyGenerationOptions");
 			Assert.AreSame(ProxyGenerationOptions.Default, field.GetValue(proxy));
 		}
@@ -350,7 +367,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		[Test]
 		public void SerializatingObjectsWithoutDefaultConstructor()
 		{
-			var proxy = (C)generator.CreateClassProxy(typeof(C), new object[] { 1 }, new StandardInterceptor());
+			var proxy = (C) generator.CreateClassProxy(typeof(C), new object[] {1}, new StandardInterceptor());
 			var otherProxy = SerializeAndDeserialize(proxy);
 
 			Assert.AreEqual(proxy.I, otherProxy.I);
@@ -361,7 +378,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void SerializationDelegate()
 		{
 			var proxy = (MySerializableClass2)
-			            generator.CreateClassProxy(typeof(MySerializableClass2), new StandardInterceptor());
+				generator.CreateClassProxy(typeof(MySerializableClass2), new StandardInterceptor());
 
 			var current = proxy.Current;
 
@@ -376,7 +393,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var proxy =
 				(ClassWithDirectAndIndirectSelfReference)
 				generator.CreateClassProxy(typeof(ClassWithDirectAndIndirectSelfReference),
-				                           new Type[0], new StandardInterceptor());
+					new Type[0], new StandardInterceptor());
 			Assert.AreSame(proxy, proxy.This);
 
 			var otherProxy =
@@ -389,8 +406,8 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void SerializeClassWithIndirectSelfReference()
 		{
 			var proxy =
-				(ClassWithIndirectSelfReference)generator.CreateClassProxy(typeof(ClassWithIndirectSelfReference),
-				                                                           new Type[0], new StandardInterceptor());
+				(ClassWithIndirectSelfReference) generator.CreateClassProxy(typeof(ClassWithIndirectSelfReference),
+					new Type[0], new StandardInterceptor());
 			Assert.AreSame(proxy, proxy.List[0]);
 
 			var otherProxy = SerializeAndDeserialize(proxy);
@@ -402,10 +419,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var eventHandlerInstance = new EventHandlerClass();
 			var proxy =
-				(DelegateHolder)generator.CreateClassProxy(typeof(DelegateHolder), new IInterceptor[] { new StandardInterceptor() });
+				(DelegateHolder) generator.CreateClassProxy(typeof(DelegateHolder), new StandardInterceptor());
 
-			proxy.DelegateMember = new EventHandler(eventHandlerInstance.TestHandler);
-			proxy.ComplexTypeMember = new ArrayList(new[] { 1, 2, 3 });
+			proxy.DelegateMember = eventHandlerInstance.TestHandler;
+			proxy.ComplexTypeMember = new ArrayList(new[] {1, 2, 3});
 			proxy.ComplexTypeMember.Add(eventHandlerInstance);
 
 			Assert.IsNotNull(proxy.DelegateMember);
@@ -418,7 +435,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreEqual(3, proxy.ComplexTypeMember[2]);
 			Assert.AreSame(proxy.ComplexTypeMember[3], proxy.DelegateMember.Target);
 
-			var otherProxy = (SerializeAndDeserialize(proxy));
+			var otherProxy = SerializeAndDeserialize(proxy);
 
 			Assert.IsNotNull(otherProxy.DelegateMember);
 			Assert.IsNotNull(otherProxy.DelegateMember.Target);
@@ -435,10 +452,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void SerializeObjectsWithDelegateToThisObject()
 		{
 			var proxy =
-				(DelegateHolder)generator.CreateClassProxy(typeof(DelegateHolder), new IInterceptor[] { new StandardInterceptor() });
+				(DelegateHolder) generator.CreateClassProxy(typeof(DelegateHolder), new StandardInterceptor());
 
-			proxy.DelegateMember = new EventHandler(proxy.TestHandler);
-			proxy.ComplexTypeMember = new ArrayList(new[] { 1, 2, 3 });
+			proxy.DelegateMember = proxy.TestHandler;
+			proxy.ComplexTypeMember = new ArrayList(new[] {1, 2, 3});
 
 			Assert.IsNotNull(proxy.DelegateMember);
 			Assert.AreSame(proxy, proxy.DelegateMember.Target);
@@ -449,7 +466,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreEqual(2, proxy.ComplexTypeMember[1]);
 			Assert.AreEqual(3, proxy.ComplexTypeMember[2]);
 
-			var otherProxy = (SerializeAndDeserialize(proxy));
+			var otherProxy = SerializeAndDeserialize(proxy);
 
 			Assert.IsNotNull(otherProxy.DelegateMember);
 			Assert.AreSame(otherProxy, otherProxy.DelegateMember.Target);
@@ -464,11 +481,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		[Test]
 		public void SerializeObjectsWithIndirectDelegateToMember()
 		{
-			var proxy = (IndirectDelegateHolder)generator.CreateClassProxy(typeof(IndirectDelegateHolder),
-			                                                               new IInterceptor[] { new StandardInterceptor() });
+			var proxy = (IndirectDelegateHolder) generator.CreateClassProxy(typeof(IndirectDelegateHolder), new StandardInterceptor());
 
-			proxy.DelegateHolder.DelegateMember = new EventHandler(proxy.DelegateHolder.TestHandler);
-			proxy.DelegateHolder.ComplexTypeMember = new ArrayList(new[] { 1, 2, 3 });
+			proxy.DelegateHolder.DelegateMember = proxy.DelegateHolder.TestHandler;
+			proxy.DelegateHolder.ComplexTypeMember = new ArrayList(new[] {1, 2, 3});
 
 			Assert.IsNotNull(proxy.DelegateHolder.DelegateMember);
 			Assert.AreSame(proxy.DelegateHolder, proxy.DelegateHolder.DelegateMember.Target);
@@ -479,7 +495,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreEqual(2, proxy.DelegateHolder.ComplexTypeMember[1]);
 			Assert.AreEqual(3, proxy.DelegateHolder.ComplexTypeMember[2]);
 
-			var otherProxy = (SerializeAndDeserialize(proxy));
+			var otherProxy = SerializeAndDeserialize(proxy);
 
 			Assert.IsNotNull(otherProxy.DelegateHolder.DelegateMember);
 			Assert.AreSame(otherProxy.DelegateHolder, otherProxy.DelegateHolder.DelegateMember.Target);
@@ -494,11 +510,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		[Test]
 		public void SerializeObjectsWithIndirectDelegateToThisObject()
 		{
-			var proxy = (IndirectDelegateHolder)generator.CreateClassProxy(typeof(IndirectDelegateHolder),
-			                                                               new IInterceptor[] { new StandardInterceptor() });
+			var proxy = (IndirectDelegateHolder) generator.CreateClassProxy(typeof(IndirectDelegateHolder), new StandardInterceptor());
 
-			proxy.DelegateHolder.DelegateMember = new EventHandler(proxy.TestHandler);
-			proxy.DelegateHolder.ComplexTypeMember = new ArrayList(new[] { 1, 2, 3 });
+			proxy.DelegateHolder.DelegateMember = proxy.TestHandler;
+			proxy.DelegateHolder.ComplexTypeMember = new ArrayList(new[] {1, 2, 3});
 
 			Assert.IsNotNull(proxy.DelegateHolder.DelegateMember);
 			Assert.AreSame(proxy, proxy.DelegateHolder.DelegateMember.Target);
@@ -509,7 +524,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreEqual(2, proxy.DelegateHolder.ComplexTypeMember[1]);
 			Assert.AreEqual(3, proxy.DelegateHolder.ComplexTypeMember[2]);
 
-			var otherProxy = (SerializeAndDeserialize(proxy));
+			var otherProxy = SerializeAndDeserialize(proxy);
 
 			Assert.IsNotNull(otherProxy.DelegateHolder.DelegateMember);
 			Assert.AreSame(otherProxy, otherProxy.DelegateHolder.DelegateMember.Target);
@@ -529,14 +544,14 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			Assert.IsTrue(proxy.GetType().IsSerializable);
 
-			var inter = (IMyInterface2)proxy;
+			var inter = (IMyInterface2) proxy;
 
 			inter.Name = "opa";
 			Assert.AreEqual("opa", inter.Name);
 			inter.Started = true;
 			Assert.AreEqual(true, inter.Started);
 
-			var otherProxy = (IMyInterface2)SerializeAndDeserialize(proxy);
+			var otherProxy = (IMyInterface2) SerializeAndDeserialize(proxy);
 
 			Assert.AreEqual(inter.Name, otherProxy.Name);
 			Assert.AreEqual(inter.Started, otherProxy.Started);
@@ -546,8 +561,8 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void SimpleInterfaceProxy_WithoutTarget()
 		{
 			var proxy =
-				generator.CreateInterfaceProxyWithoutTarget(typeof(IMyInterface2), new[] { typeof(IMyInterface) },
-				                                            new StandardInterceptor());
+				generator.CreateInterfaceProxyWithoutTarget(typeof(IMyInterface2), new[] {typeof(IMyInterface)},
+					new StandardInterceptor());
 
 			Assert.IsTrue(proxy is IMyInterface2);
 			Assert.IsTrue(proxy is IMyInterface);
@@ -562,7 +577,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		public void SimpleProxySerialization()
 		{
 			var proxy = (MySerializableClass)
-			            generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
+				generator.CreateClassProxy(typeof(MySerializableClass), new StandardInterceptor());
 
 			var current = proxy.Current;
 
@@ -570,23 +585,5 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			Assert.AreEqual(current, otherProxy.Current);
 		}
-
-		public override void TearDown()
-		{
-			base.TearDown();
-			ProxyObjectReference.ResetScope();
-		}
-
-		public static T SerializeAndDeserialize<T>(T proxy)
-		{
-			using (var stream = new MemoryStream())
-			{
-				var formatter = new BinaryFormatter();
-				formatter.Serialize(stream, proxy);
-				stream.Position = 0;
-				return (T)formatter.Deserialize(stream);
-			}
-		}
 	}
 }
-

@@ -18,11 +18,4 @@ namespace Castle.Core.Tests.GenInterfaces
 	{
 		void DoSomething<Z>(Z z, T t);
 	}
-
-	public class GenInterfaceWithGenMethodsImpl<T> : GenInterfaceWithGenMethods<T>
-	{
-		public void DoSomething<Z>(Z z, T t)
-		{
-		}
-	}
 }

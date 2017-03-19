@@ -25,44 +25,6 @@ namespace Castle.Core.Tests
 		void GenericMethod(T toto);
 	}
 
-	public class Class1 : IGenericInterface<IInterface1>
-	{
-		public void GenericMethod(IInterface1 toto)
-		{
-		}
-	}
-
-	public class Class2 : IGenericInterface<IInterface2>
-	{
-		public void GenericMethod(IInterface2 toto)
-		{
-		}
-	}
-
-	public class Class3 : IInterface3, IInterface2
-	{
-	}
-
-	public class Class4 : IInterface3, IInterface1
-	{
-	}
-
-	public interface IInterface1
-	{
-	}
-
-	public interface IInterface2
-	{
-	}
-
-	public interface IInterface3
-	{
-	}
-
-	public class EmptyClass
-	{
-	}
-
 	[TestFixture]
 	public class MultipleSavedAssembliesTestCase
 	{
@@ -76,7 +38,7 @@ namespace Castle.Core.Tests
 			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "5", "ProxyCache5.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "5", "ProxyCache5.dll");
 			var proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			var generator = new ProxyGenerator(proxyBuilder);
-			generator.CreateClassProxy(typeof(EmptyClass), new[] { typeof(IInterface1) }, new DoNothingInterceptor());
+			generator.CreateClassProxy(typeof(EmptyClass), new[] {typeof(IInterface1)}, new DoNothingInterceptor());
 			proxyGeneratorModuleScope.SaveAssembly();
 
 			//
@@ -90,7 +52,7 @@ namespace Castle.Core.Tests
 			var proxyAssembly = Assembly.LoadFrom("ProxyCache5.dll");
 			proxyGeneratorModuleScope.LoadAssemblyIntoCache(proxyAssembly);
 
-			generator.CreateClassProxy(typeof(EmptyClass), new[] { typeof(IInterface2) }, new DoNothingInterceptor());
+			generator.CreateClassProxy(typeof(EmptyClass), new[] {typeof(IInterface2)}, new DoNothingInterceptor());
 			proxyGeneratorModuleScope.SaveAssembly();
 
 			//
@@ -105,11 +67,9 @@ namespace Castle.Core.Tests
 			proxyAssembly = Assembly.LoadFrom("ProxyCache6.dll");
 			proxyGeneratorModuleScope.LoadAssemblyIntoCache(proxyAssembly);
 
-			var invalidProxy = generator.CreateClassProxy(typeof(EmptyClass), new[] { typeof(IInterface1) }, new DoNothingInterceptor());
+			var invalidProxy = generator.CreateClassProxy(typeof(EmptyClass), new[] {typeof(IInterface1)}, new DoNothingInterceptor());
 			if (invalidProxy as IInterface1 == null)
-			{
 				Assert.Fail();
-			}
 		}
 
 		[Test]
@@ -164,7 +124,7 @@ namespace Castle.Core.Tests
 			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "3", "ProxyCache3.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "3", "ProxyCache3.dll");
 			var proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			var generator = new ProxyGenerator(proxyBuilder);
-			generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] { typeof(IInterface2) }, new Class3(), new DoNothingInterceptor());
+			generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] {typeof(IInterface2)}, new Class3(), new DoNothingInterceptor());
 			proxyGeneratorModuleScope.SaveAssembly();
 
 			//
@@ -178,7 +138,7 @@ namespace Castle.Core.Tests
 			var proxyAssembly = Assembly.LoadFrom("ProxyCache3.dll");
 			proxyGeneratorModuleScope.LoadAssemblyIntoCache(proxyAssembly);
 
-			generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] { typeof(IInterface1) }, new Class4(), new DoNothingInterceptor());
+			generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] {typeof(IInterface1)}, new Class4(), new DoNothingInterceptor());
 			proxyGeneratorModuleScope.SaveAssembly();
 
 			//
@@ -193,12 +153,9 @@ namespace Castle.Core.Tests
 			proxyAssembly = Assembly.LoadFrom("ProxyCache4.dll");
 			proxyGeneratorModuleScope.LoadAssemblyIntoCache(proxyAssembly);
 
-			var invalidProxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] { typeof(IInterface2) }, new Class3(), new DoNothingInterceptor());
+			var invalidProxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] {typeof(IInterface2)}, new Class3(), new DoNothingInterceptor());
 			if (invalidProxy as IInterface2 == null)
-			{
 				Assert.Fail();
-			}
 		}
 	}
 }
-

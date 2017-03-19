@@ -23,7 +23,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class CustomAttributeInfoTestCase
 	{
-		class MyAttribute1 : Attribute
+		private class MyAttribute1 : Attribute
 		{
 			public MyAttribute1()
 			{
@@ -44,143 +44,17 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 #pragma warning restore 649
 		}
 
-		class MyAttribute2 : Attribute
+		private class MyAttribute2 : Attribute
 		{
 			public MyAttribute2(int intArgument, string stringArgument, int[] arrayArgument)
 			{
 			}
 		}
 
-		[Test]
-		public void Attributes_Of_Same_Type_With_Same_Constructor_Arguments_Are_Equal()
-		{
-			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }));
-			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }));
-
-			Assert.AreEqual(x, y);
-			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
-		}
-
-		[Test]
-		public void Attributes_Of_Different_Type_With_Same_Constructor_Arguments_Are_Not_Equal()
-		{
-			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }));
-			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute2(42, "foo", new[] { 1, 2, 3 }));
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Constructor_Arguments_Are_Not_Equal()
-		{
-			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }));
-			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(99, "foo", new[] { 1, 2, 3 }));
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Constructor_Array_Arguments_Are_Not_Equal()
-		{
-			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }));
-			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(99, "foo", new[] { 1, 2, 4 }));
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Same_Properties_Are_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } });
-
-			Assert.AreEqual(x, y);
-			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Properties_Are_Not_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 99, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } });
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Array_Properties_Are_Not_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { IntProperty = 99, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 4 } });
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Same_Fields_Are_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 42, stringField = "foo", arrayField = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 42, stringField = "foo", arrayField = new[] { 1, 2, 3 } });
-
-			Assert.AreEqual(x, y);
-			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Fields_Are_Not_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 42, stringField = "foo", arrayField = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 99, stringField = "foo", arrayField = new[] { 1, 2, 3 } });
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		public void Attributes_Of_Same_Type_With_Different_Array_Fields_Are_Not_Equal()
-		{
-			var x =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 42, stringField = "foo", arrayField = new[] { 1, 2, 3 } });
-			var y =
-				CustomAttributeInfo.FromExpression(
-					() => new MyAttribute1 { intField = 99, stringField = "foo", arrayField = new[] { 1, 2, 4 } });
-
-			Assert.AreNotEqual(x, y);
-		}
-
-		[Test]
-		[TestCaseSource("FromExpressionTestCases")]
-		public void FromExpression_Creates_Same_CustomAttributeInfo_As_Calling_The_Constructor(
-			Expression<Func<Attribute>> expr, CustomAttributeInfo expected)
-		{
-			var actual = CustomAttributeInfo.FromExpression(expr);
-			Assert.AreEqual(expected, actual);
-		}
-
 		public static IEnumerable<object[]> FromExpressionTestCases()
 		{
 			var defaultCtor = typeof(MyAttribute1).GetConstructor(Type.EmptyTypes);
-			var ctorWithArgs = typeof(MyAttribute1).GetConstructor(new[] { typeof(int), typeof(string), typeof(int[]) });
+			var ctorWithArgs = typeof(MyAttribute1).GetConstructor(new[] {typeof(int), typeof(string), typeof(int[])});
 			var intProperty = typeof(MyAttribute1).GetProperty("IntProperty");
 			var stringProperty = typeof(MyAttribute1).GetProperty("StringProperty");
 			var arrayProperty = typeof(MyAttribute1).GetProperty("ArrayProperty");
@@ -193,29 +67,155 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 				new CustomAttributeInfo(defaultCtor, new object[0]));
 
 			yield return CreateFromExpressionTestCase(
-				() => new MyAttribute1(42, "foo", new[] { 1, 2, 3 }),
-				new CustomAttributeInfo(ctorWithArgs, new object[] { 42, "foo", new[] { 1, 2, 3 } }));
+				() => new MyAttribute1(42, "foo", new[] {1, 2, 3}),
+				new CustomAttributeInfo(ctorWithArgs, new object[] {42, "foo", new[] {1, 2, 3}}));
 
 			yield return CreateFromExpressionTestCase(
-				() => new MyAttribute1 { IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] { 1, 2, 3 } },
+				() => new MyAttribute1 {IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}},
 				new CustomAttributeInfo(
 					defaultCtor,
 					new object[0],
-					new [] {intProperty, stringProperty, arrayProperty},
-					new object[] { 42, "foo", new[] { 1, 2, 3 } }));
+					new[] {intProperty, stringProperty, arrayProperty},
+					new object[] {42, "foo", new[] {1, 2, 3}}));
 
 			yield return CreateFromExpressionTestCase(
-				() => new MyAttribute1 { intField = 42, stringField = "foo", arrayField = new[] { 1, 2, 3 } },
+				() => new MyAttribute1 {intField = 42, stringField = "foo", arrayField = new[] {1, 2, 3}},
 				new CustomAttributeInfo(
 					defaultCtor,
 					new object[0],
-					new[] { intField, stringField, arrayField },
-					new object[] { 42, "foo", new[] { 1, 2, 3 } }));
+					new[] {intField, stringField, arrayField},
+					new object[] {42, "foo", new[] {1, 2, 3}}));
 		}
 
 		private static object[] CreateFromExpressionTestCase(Expression<Func<Attribute>> expr, CustomAttributeInfo expected)
 		{
-			return new object[] { expr, expected };
+			return new object[] {expr, expected};
+		}
+
+		[Test]
+		public void Attributes_Of_Different_Type_With_Same_Constructor_Arguments_Are_Not_Equal()
+		{
+			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] {1, 2, 3}));
+			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute2(42, "foo", new[] {1, 2, 3}));
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Array_Fields_Are_Not_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 42, stringField = "foo", arrayField = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 99, stringField = "foo", arrayField = new[] {1, 2, 4}});
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Array_Properties_Are_Not_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 99, StringProperty = "foo", ArrayProperty = new[] {1, 2, 4}});
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Constructor_Arguments_Are_Not_Equal()
+		{
+			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] {1, 2, 3}));
+			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(99, "foo", new[] {1, 2, 3}));
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Constructor_Array_Arguments_Are_Not_Equal()
+		{
+			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] {1, 2, 3}));
+			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(99, "foo", new[] {1, 2, 4}));
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Fields_Are_Not_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 42, stringField = "foo", arrayField = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 99, stringField = "foo", arrayField = new[] {1, 2, 3}});
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Different_Properties_Are_Not_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 99, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}});
+
+			Assert.AreNotEqual(x, y);
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Same_Constructor_Arguments_Are_Equal()
+		{
+			var x = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] {1, 2, 3}));
+			var y = CustomAttributeInfo.FromExpression(() => new MyAttribute1(42, "foo", new[] {1, 2, 3}));
+
+			Assert.AreEqual(x, y);
+			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Same_Fields_Are_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 42, stringField = "foo", arrayField = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {intField = 42, stringField = "foo", arrayField = new[] {1, 2, 3}});
+
+			Assert.AreEqual(x, y);
+			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
+		}
+
+		[Test]
+		public void Attributes_Of_Same_Type_With_Same_Properties_Are_Equal()
+		{
+			var x =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}});
+			var y =
+				CustomAttributeInfo.FromExpression(
+					() => new MyAttribute1 {IntProperty = 42, StringProperty = "foo", ArrayProperty = new[] {1, 2, 3}});
+
+			Assert.AreEqual(x, y);
+			Assert.AreEqual(x.GetHashCode(), y.GetHashCode());
+		}
+
+		[Test]
+		[TestCaseSource("FromExpressionTestCases")]
+		public void FromExpression_Creates_Same_CustomAttributeInfo_As_Calling_The_Constructor(
+			Expression<Func<Attribute>> expr, CustomAttributeInfo expected)
+		{
+			var actual = CustomAttributeInfo.FromExpression(expr);
+			Assert.AreEqual(expected, actual);
 		}
 	}
 }

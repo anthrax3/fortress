@@ -37,9 +37,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 			get
 			{
 				if (!hasDefault)
-				{
 					throw new ArgumentException("No default value for argument");
-				}
 				return defaultValue;
 			}
 		}

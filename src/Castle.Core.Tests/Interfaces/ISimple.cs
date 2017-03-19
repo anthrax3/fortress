@@ -18,19 +18,4 @@ namespace Castle.Core.Tests.Interfaces
 	{
 		void Method();
 	}
-
-	public class Simple : ISimple
-	{
-		private int count;
-
-		public int Count
-		{
-			get { return count; }
-		}
-
-		public void Method()
-		{
-			count++;
-		}
-	}
 }

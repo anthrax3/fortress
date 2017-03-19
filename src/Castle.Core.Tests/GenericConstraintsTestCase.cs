@@ -21,10 +21,9 @@ namespace Castle.Core.Tests
 	[TestFixture]
 	public class GenericConstraintsTestCase : BasePEVerifyTestCase
 	{
-		[Test]
-		public void Non_generic_type_generic_method_with_class_struct_and_new_constraints()
+		private T CreateProxyFor<T>(params IInterceptor[] interceptors) where T : class
 		{
-			CreateProxyFor<IHaveGenericMethodWithNewClassStructConstraints>();
+			return generator.CreateInterfaceProxyWithoutTarget<T>(interceptors);
 		}
 
 		[Test]
@@ -33,10 +32,10 @@ namespace Castle.Core.Tests
 			CreateProxyFor<IConstraint_Method1IsTypeStructAndMethod2<object>>();
 		}
 
-
-		private T CreateProxyFor<T>(params IInterceptor[] interceptors) where T : class
+		[Test]
+		public void Non_generic_type_generic_method_with_class_struct_and_new_constraints()
 		{
-			return generator.CreateInterfaceProxyWithoutTarget<T>(interceptors);
+			CreateProxyFor<IHaveGenericMethodWithNewClassStructConstraints>();
 		}
 	}
 }

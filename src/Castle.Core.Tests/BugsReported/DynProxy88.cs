@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests.BugsReported
@@ -22,55 +20,15 @@ namespace Castle.Core.Tests.BugsReported
 	public class DynProxy88 : BasePEVerifyTestCase
 	{
 		[Test]
-		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesInterfaceProxy()
+		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()
 		{
-			generator.CreateInterfaceProxyWithoutTarget(typeof(IBase), new[] { typeof(ISub1), typeof(ISub2) });
+			generator.CreateClassProxy(typeof(Inherited), new[] {typeof(ISub1), typeof(ISub2)});
 		}
 
 		[Test]
-		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()
+		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesInterfaceProxy()
 		{
-			generator.CreateClassProxy(typeof(Inherited), new[] {typeof(ISub1), typeof(ISub2)}, new IInterceptor[0]);
-		}
-	}
-
-	public interface IBase
-	{
-		void Foo();
-	}
-
-	public class Inherited : IBase
-	{
-		public void Foo()
-		{
-			
-		}
-	}
-
-	public interface ISub1 : IBase
-	{
-		void Bar();
-	}
-	public interface ISub2 : IBase
-	{
-		void Baz();
-	}
-
-	public class MyFoo:Inherited,ISub1,ISub2
-	{
-		void ISub1.Bar()
-		{
-			throw new NotImplementedException();
-		}
-
-		public virtual void Baz()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBase.Foo()
-		{
-			throw new NotImplementedException();
+			generator.CreateInterfaceProxyWithoutTarget(typeof(IBase), new[] {typeof(ISub1), typeof(ISub2)});
 		}
 	}
 }

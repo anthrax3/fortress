@@ -27,4 +27,3 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
 		}
 	}
 }
-

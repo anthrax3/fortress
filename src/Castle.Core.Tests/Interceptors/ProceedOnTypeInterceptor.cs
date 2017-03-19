@@ -18,25 +18,23 @@ using Castle.Core.DynamicProxy;
 namespace Castle.Core.Tests.Interceptors
 {
 	public class ProceedOnTypeInterceptor : IInterceptor
-    {
-        private Type type;
+	{
+		private Type type;
 
-        #region IInterceptor Members
+		#region IInterceptor Members
 
-        public ProceedOnTypeInterceptor(Type type)
-        {
-            this.type = type;
-        }
+		public ProceedOnTypeInterceptor(Type type)
+		{
+			this.type = type;
+		}
 
-        public void Intercept(IInvocation invocation)
-        {
-            type = typeof(IBarFoo);
-            if (invocation.Method.DeclaringType != type)
-            {
-                invocation.Proceed();
-            }
-        }
+		public void Intercept(IInvocation invocation)
+		{
+			type = typeof(IBarFoo);
+			if (invocation.Method.DeclaringType != type)
+				invocation.Proceed();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -28,21 +28,17 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	[TestFixture]
 	public class ClassProxyWithTargetTestCase : BasePEVerifyTestCase
 	{
+		private class PrivateClass
+		{
+		}
+
 		[Test]
 		public void Can_proxy_class_with_no_default_ctor()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(typeof(VirtualClassWithNoDefaultCtor),
-			                                                 new VirtualClassWithNoDefaultCtor(42),
-			                                                 new object[] {12});
+				new VirtualClassWithNoDefaultCtor(42),
+				new object[] {12});
 			var result = ((VirtualClassWithNoDefaultCtor) proxy).Method();
-			Assert.AreEqual(42, result);
-		}
-
-		[Test]
-		public void Can_proxy_virtual_class_with_protected_generic_method()
-		{
-			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedGenericMethod(42));
-			var result = proxy.PublicMethod<int>();
 			Assert.AreEqual(42, result);
 		}
 
@@ -52,14 +48,6 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new ClassWithProtectedGenericMethod(42));
 			var result = proxy.PublicMethod<int>();
-			Assert.AreEqual(42, result);
-		}
-
-		[Test]
-		public void Can_proxy_virtual_class_with_protected_method()
-		{
-			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedMethod(42));
-			var result = proxy.PublicMethod();
 			Assert.AreEqual(42, result);
 		}
 
@@ -79,6 +67,12 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		}
 
 		[Test]
+		public void Can_proxy_generic_class()
+		{
+			generator.CreateClassProxyWithTarget(new List<object>());
+		}
+
+		[Test]
 		public void Can_proxy_purely_virtual_class()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithMethod());
@@ -95,32 +89,19 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		}
 
 		[Test]
-		public void Cannot_proxy_inaccessible_class()
+		public void Can_proxy_virtual_class_with_protected_generic_method()
 		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateClassProxyWithTarget<PrivateClass>(new PrivateClass()));
+			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedGenericMethod(42));
+			var result = proxy.PublicMethod<int>();
+			Assert.AreEqual(42, result);
 		}
 
 		[Test]
-		public void Cannot_proxy_generic_class_with_inaccessible_type_argument()
+		public void Can_proxy_virtual_class_with_protected_method()
 		{
-			var ex = Assert.Throws<GeneratorException>(() =>
-				generator.CreateClassProxyWithTarget<List<PrivateClass>>(new List<PrivateClass>()));
-		}
-
-		[Test]
-		public void Cannot_proxy_generic_class_with_type_argument_that_has_inaccessible_type_argument()
-		{
-			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxyWithTarget(new List<List<PrivateClass>>(), new IInterceptor[0]));
-
-			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
-					typeof(List<List<PrivateClass>>).FullName, typeof(PrivateClass).FullName);
-		}
-
-		[Test]
-		public void Can_proxy_generic_class()
-		{
-			generator.CreateClassProxyWithTarget<List<object>>(new List<object>());
+			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedMethod(42));
+			var result = proxy.PublicMethod();
+			Assert.AreEqual(42, result);
 		}
 
 		[Test]
@@ -132,13 +113,36 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		}
 
 		[Test]
+		public void Cannot_proxy_generic_class_with_inaccessible_type_argument()
+		{
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateClassProxyWithTarget(new List<PrivateClass>()));
+		}
+
+		[Test]
+		public void Cannot_proxy_generic_class_with_type_argument_that_has_inaccessible_type_argument()
+		{
+			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxyWithTarget(new List<List<PrivateClass>>()));
+
+			var expected = string.Format("Can not create proxy for type {0} because type {1} is not accessible. Make it public, or internal",
+				typeof(List<List<PrivateClass>>).FullName, typeof(PrivateClass).FullName);
+		}
+
+		[Test]
+		public void Cannot_proxy_inaccessible_class()
+		{
+			var ex = Assert.Throws<GeneratorException>(() =>
+				generator.CreateClassProxyWithTarget(new PrivateClass()));
+		}
+
+		[Test]
 		public void Hook_does_NOT_get_notified_about_autoproperty_field()
 		{
 			var hook = new LogHook(typeof(VirtualClassWithAutoProperty), false);
 
 			generator.CreateClassProxyWithTarget(typeof(VirtualClassWithAutoProperty), Type.EmptyTypes,
-			                                     new VirtualClassWithAutoProperty(), new ProxyGenerationOptions(hook),
-			                                     new object[0]);
+				new VirtualClassWithAutoProperty(), new ProxyGenerationOptions(hook),
+				new object[0]);
 
 			Assert.False(hook.NonVirtualMembers.Any(m => m is FieldInfo));
 		}
@@ -148,8 +152,8 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var hook = new LogHook(typeof(VirtualClassWithPublicField), false);
 			generator.CreateClassProxyWithTarget(typeof(VirtualClassWithPublicField), Type.EmptyTypes,
-			                                     new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
-			                                     new object[0]);
+				new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
+				new object[0]);
 			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
 			Assert.AreEqual("field", memberInfo.Name);
@@ -161,12 +165,22 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 		{
 			var hook = new LogHook(typeof(VirtualClassWithPublicField), false);
 			generator.CreateClassProxyWithTarget(typeof(VirtualClassWithPublicField), Type.EmptyTypes,
-			                                     new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
-			                                     new object[0]);
+				new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
+				new object[0]);
 			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
 			Assert.AreEqual("field", memberInfo.Name);
 			Assert.AreEqual(MemberTypes.Field, memberInfo.MemberType);
+		}
+
+		[Test]
+		[Bug("DYNPROXY-185")]
+		public void Returns_proxy_target_instead_of_self()
+		{
+			var target = new Classes.EmptyClass();
+			var proxy = generator.CreateClassProxyWithTarget(target);
+			var result = (Classes.EmptyClass) ((IProxyTargetAccessor) proxy).DynProxyGetTarget();
+			Assert.AreEqual(target, result);
 		}
 
 		[Test]
@@ -180,17 +194,5 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			Assert.IsInstanceOf(typeof(ISimpleMixin), proxy);
 		}
-
-		[Test]
-		[Bug("DYNPROXY-185")]
-		public void Returns_proxy_target_instead_of_self()
-		{
-			var target = new Classes.EmptyClass();
-			var proxy = generator.CreateClassProxyWithTarget(target);
-			var result = (Classes.EmptyClass)((IProxyTargetAccessor)proxy).DynProxyGetTarget();
-			Assert.AreEqual(target, result);
-		}
-
-		private class PrivateClass { }
 	}
 }

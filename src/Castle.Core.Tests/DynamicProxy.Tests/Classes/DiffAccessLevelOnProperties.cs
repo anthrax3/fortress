@@ -12,15 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
 	public class DiffAccessLevelOnProperties
 	{
-		private int age, age2;
-		private int maxval, maxval2;
-		private String name;
+		private string name;
+
+		public virtual int Age { get; set; }
+
+		public virtual int Age2 { get; protected set; }
+
+		public virtual int Maxval { get; set; }
+
+		public int Maxval2 { get; private set; }
+
+		public virtual string Name
+		{
+			internal get { return name; }
+			set { name = value; }
+		}
 
 		public void SetProperties()
 		{
@@ -31,39 +41,9 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 			name = "name";
 		}
 
-		public virtual int Age
-		{
-			protected get { return age; }
-			set { age = value; }
-		}
-
-		public virtual int Age2
-		{
-			get { return age2; }
-			protected set { age2 = value; }
-		}
-
-		public virtual int Maxval
-		{
-			private get { return maxval; }
-			set { maxval = value; }
-		}
-
-		public int Maxval2
-		{
-			get { return maxval2; }
-			private set { maxval2 = value; }
-		}
-
-		public virtual string Name
-		{
-			internal get { return name; }
-			set { name = value; }
-		}
-
 		public override string ToString()
 		{
-			return String.Format("{0} {1} {2} {3} {4}", Age, Age2, Maxval, Maxval2, Name);
+			return string.Format("{0} {1} {2} {3} {4}", Age, Age2, Maxval, Maxval2, Name);
 		}
 	}
 }

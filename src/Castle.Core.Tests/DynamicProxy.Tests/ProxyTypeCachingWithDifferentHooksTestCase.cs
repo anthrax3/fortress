@@ -24,14 +24,13 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 	public class ProxyTypeCachingWithDifferentHooksTestCase : BasePEVerifyTestCase
 	{
 		[Serializable]
-		public class CustomHook : AllMethodsHook { }
-
-		[Test]
-		public void Proxies_with_same_hook_will_use_cached_proxy_type()
+		public class CustomHook : AllMethodsHook
 		{
-			var first = CreateProxyWithHook<CustomHook>();
-			var second = CreateProxyWithHook<CustomHook>();
-			Assert.AreEqual(first.GetType(), second.GetType());
+		}
+
+		private object CreateProxyWithHook<THook>() where THook : IProxyGenerationHook, new()
+		{
+			return generator.CreateInterfaceProxyWithoutTarget(typeof(IEmpty), new ProxyGenerationOptions(new THook()), new DoNothingInterceptor());
 		}
 
 		[Test]
@@ -42,9 +41,12 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.AreNotEqual(first.GetType(), second.GetType());
 		}
 
-		private object CreateProxyWithHook<THook>() where THook : IProxyGenerationHook, new()
+		[Test]
+		public void Proxies_with_same_hook_will_use_cached_proxy_type()
 		{
-			return generator.CreateInterfaceProxyWithoutTarget(typeof(IEmpty), new ProxyGenerationOptions(new THook()), new DoNothingInterceptor());
+			var first = CreateProxyWithHook<CustomHook>();
+			var second = CreateProxyWithHook<CustomHook>();
+			Assert.AreEqual(first.GetType(), second.GetType());
 		}
 	}
 }
