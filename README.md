@@ -10,7 +10,7 @@ A leaner meaner version of Castle Windsor primarily targetting dotnet core.
 Features supported:
 
  - Castle Core including Dynamic Proxy
- - Castle Windsor including some facilities
+ - Castle Windsor including some Facilities (Event Wiring, Factory Support, Logging)
 
  Features not supported: 
 
