@@ -69,7 +69,7 @@ namespace Castle.Core.Tests
 		protected ProxyGenerator generator;
 		protected IProxyBuilder builder;
 
-		private bool verificationDisabled;
+		private bool verificationDisabled = true;
 
 		[SetUp]
 		public virtual void Init()
