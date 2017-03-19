@@ -1,11 +1,11 @@
-# Fortress Windsor
+# Fortress
 
-A leaner meaner version of Castle Windsor
+A leaner meaner version of Castle Windsor primarily targetting dotnet core.
 
 
 | Build |
 |---------|
-| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress.windsor"><img src="https://ci.appveyor.com/api/projects/status/843yxnhrj4eq5ef5/branch/master?svg=true" /></a> |
+| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress"><img src="https://ci.appveyor.com/api/projects/status/tbi049b1y5fbjnt8/branch/master?svg=true" /></a> |
 
 Features supported:
 
