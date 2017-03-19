@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Util;
 

@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel.SubSystems.Resource;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Configuration

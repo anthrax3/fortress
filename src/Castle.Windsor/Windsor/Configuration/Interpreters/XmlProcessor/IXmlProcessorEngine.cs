@@ -15,6 +15,7 @@
 
 using System;
 using System.Xml;
+using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
 {

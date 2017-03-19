@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {

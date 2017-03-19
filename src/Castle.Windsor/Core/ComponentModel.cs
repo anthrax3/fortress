@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 

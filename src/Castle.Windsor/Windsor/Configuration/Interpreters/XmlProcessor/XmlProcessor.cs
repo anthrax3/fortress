@@ -15,6 +15,7 @@
 
 using System;
 using System.Xml;
+using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel.SubSystems.Resource;
 using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 

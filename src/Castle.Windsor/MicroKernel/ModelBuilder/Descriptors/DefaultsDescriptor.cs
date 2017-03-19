@@ -14,6 +14,7 @@
 
 using System;
 using System.Linq;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Linq;
 using Castle.Windsor.MicroKernel;
 
 namespace Castle.Windsor.Windsor.Diagnostics
@@ -28,8 +29,8 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public IHandler[] Inspect()
 		{
 			var allHandlers = kernel.GetAssignableHandlers(typeof(object));
-			var waitingHandlers = allHandlers.FindAll(IsWaitingForDependencies);
-			return waitingHandlers;
+			var waitingHandlers = allHandlers.Where(IsWaitingForDependencies);
+			return waitingHandlers.ToArray();
 		}
 
 		private bool IsWaitingForDependencies(IHandler handler)

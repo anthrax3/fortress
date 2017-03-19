@@ -14,6 +14,7 @@
 
 using System;
 using System.ComponentModel;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.Facilities.TypedFactory.Internal;
 using Castle.Windsor.MicroKernel;

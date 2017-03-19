@@ -15,6 +15,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using Castle.Core.Core;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using Castle.Core.Core.Internal;
 using Castle.Windsor.Compatibility;
 
 namespace Castle.Windsor.Core.Internal

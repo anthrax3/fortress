@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System;
+using Castle.Core.DynamicProxy;
+using Castle.Core.DynamicProxy.Generators;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;

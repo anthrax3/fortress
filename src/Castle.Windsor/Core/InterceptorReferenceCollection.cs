@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 

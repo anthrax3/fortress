@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
 
 namespace Castle.Windsor.MicroKernel.Registration.Proxy

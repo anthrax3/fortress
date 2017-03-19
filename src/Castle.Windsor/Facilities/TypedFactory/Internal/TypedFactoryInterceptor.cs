@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.MicroKernel;

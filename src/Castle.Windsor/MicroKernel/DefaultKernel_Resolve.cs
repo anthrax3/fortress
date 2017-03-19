@@ -15,6 +15,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Castle.Core.Core;
 using Castle.Windsor.MicroKernel.Handlers;
 
 namespace Castle.Windsor.MicroKernel

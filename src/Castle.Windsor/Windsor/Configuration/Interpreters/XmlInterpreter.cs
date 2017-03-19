@@ -15,6 +15,9 @@
 
 using System;
 using System.Xml;
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Configuration.Xml;
+using Castle.Core.Core.Resource;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;

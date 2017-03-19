@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core.Core.Internal;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.Util;
 

@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {

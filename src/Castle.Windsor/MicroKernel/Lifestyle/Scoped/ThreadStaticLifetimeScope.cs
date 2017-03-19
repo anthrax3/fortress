@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Windsor;
 

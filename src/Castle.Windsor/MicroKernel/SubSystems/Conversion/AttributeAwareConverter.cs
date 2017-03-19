@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion

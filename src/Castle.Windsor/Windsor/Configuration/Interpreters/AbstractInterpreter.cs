@@ -14,6 +14,8 @@
 
 using System;
 using System.Collections.Generic;
+using Castle.Core.Core.Configuration;
+using Castle.Core.Core.Resource;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 

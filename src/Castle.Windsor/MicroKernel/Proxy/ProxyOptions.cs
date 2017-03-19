@@ -15,6 +15,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel.Proxy

@@ -15,6 +15,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using Castle.Core.Core;
 
 namespace Castle.Windsor.MicroKernel.Registration
 {

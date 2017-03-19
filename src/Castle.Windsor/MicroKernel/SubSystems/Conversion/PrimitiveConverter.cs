@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using Castle.Core.Core.Configuration;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 {

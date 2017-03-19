@@ -15,6 +15,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
@@ -65,18 +66,18 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 
 						return true;
 					case LifestyleType.Scoped:
-						var scopeAccessorType = GetTypeFromAttribute(model, "scopeAccessorType");
-						if (scopeAccessorType != null)
+						var scopeAccessorType1 = GetTypeFromAttribute(model, "scopeAccessorType");
+						if (scopeAccessorType1 != null)
 						{
-							ValidateTypeFromAttribute(scopeAccessorType, typeof(IScopeAccessor), "scopeAccessorType");
-							model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType;
+							ValidateTypeFromAttribute(scopeAccessorType1, typeof(IScopeAccessor), "scopeAccessorType");
+							model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType1;
 						}
 						return true;
 					case LifestyleType.Bound:
-						var binderType = GetTypeFromAttribute(model, "scopeRootBinderType");
-						if (binderType != null)
+						var binderType1 = GetTypeFromAttribute(model, "scopeRootBinderType");
+						if (binderType1 != null)
 						{
-							var binder = ExtractBinder(binderType, model.Name);
+							var binder = ExtractBinder(binderType1, model.Name);
 							model.ExtendedProperties[Constants.ScopeRootSelector] = binder;
 						}
 						return true;

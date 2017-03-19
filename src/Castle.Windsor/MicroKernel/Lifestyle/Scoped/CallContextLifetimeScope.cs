@@ -17,6 +17,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Remoting.Messaging;
+using Castle.Core.Core.Internal;
 using Castle.Windsor.Core;
 using Castle.Windsor.Windsor;
 

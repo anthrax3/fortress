@@ -49,11 +49,11 @@ namespace Castle.Facilities.FactorySupport
 			var factoryHandler = Kernel.GetHandler(factoryId);
 			if (factoryHandler == null)
 			{
-				var message = string.Format("You have specified a factory ('{2}') " +
+				var message1 = string.Format("You have specified a factory ('{2}') " +
 				                            "for the component '{0}' {1} but the kernel does not have this " +
 				                            "factory registered",
 					Model.Name, Model.Implementation.FullName, factoryId);
-				throw new FacilityException(message);
+				throw new FacilityException(message1);
 			}
 
 			// Let's find out whether the create method is a static or instance method

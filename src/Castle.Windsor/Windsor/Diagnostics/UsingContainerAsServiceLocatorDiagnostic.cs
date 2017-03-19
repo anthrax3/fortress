@@ -14,6 +14,7 @@
 
 using System;
 using System.Linq;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Internal;
@@ -50,8 +51,8 @@ namespace Castle.Windsor.Windsor.Diagnostics
 		public IHandler[] Inspect()
 		{
 			var allHandlers = kernel.GetAssignableHandlers(typeof(object));
-			var handlersWithContainerDependency = allHandlers.FindAll(HasDependencyOnTheContainer);
-			return handlersWithContainerDependency.FindAll(h => ExceptionsToTheRule.Any(e => e(h)) == false);
+			var handlersWithContainerDependency = allHandlers.Where(HasDependencyOnTheContainer);
+			return handlersWithContainerDependency.Where(h => ExceptionsToTheRule.Any(e => e(h)) == false).ToArray();
 		}
 
 		private bool HasDependencyOnTheContainer(IHandler handler)

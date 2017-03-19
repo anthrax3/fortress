@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using Castle.Core.Core.Resource;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Resource
 {

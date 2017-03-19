@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.Core.Internal
 {

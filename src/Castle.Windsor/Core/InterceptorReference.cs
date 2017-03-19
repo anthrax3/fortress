@@ -15,6 +15,7 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Proxy;

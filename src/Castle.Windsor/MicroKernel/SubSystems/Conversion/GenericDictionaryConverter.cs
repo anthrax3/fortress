@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion

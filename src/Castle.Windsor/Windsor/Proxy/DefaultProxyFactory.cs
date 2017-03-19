@@ -15,6 +15,7 @@
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Interceptor;
 using Castle.Windsor.Core.Internal;
