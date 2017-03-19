@@ -1316,6 +1316,10 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.VS2015.csproj">
+      <Project>{9ba91448-7ebb-4d55-bc62-b055c983253e}</Project>
+      <Name>Castle.Core.DynamicProxy.VS2015</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.Core\Castle.Core.VS2015.csproj">
       <Project>{e4fa5b53-7d36-429e-8e5c-53d5479242ba}</Project>
       <Name>Castle.Core.VS2015</Name>

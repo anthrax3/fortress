@@ -19,7 +19,7 @@ using Castle.Core.DynamicProxy.Generators.Emitters;
 
 namespace Castle.Core.Core.Internal
 {
-	internal static class ExceptionMessageBuilder
+	public static class ExceptionMessageBuilder
 	{
 		public static string CreateMessageForInaccessibleType(Type inaccessibleType, Type typeToProxy)
 		{

@@ -104,14 +104,6 @@ namespace Castle.Windsor.Tests.Proxies
 			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareInterceptorSelector.target.Services.Single());
 		}
 
-		[Test]
-		public void InternalInterfaceIgnoredByProxy()
-		{
-			Container.Install(
-				Configuration.FromXml(Xml.Embedded("proxyBehavior.xml")));
-
-			Assert.DoesNotThrow(() => Container.Resolve<object>("hasInternalInterface"));
-		}
 
 		[Test]
 		public void OnBehalfAware_InterceptorSelector_works_on_dependencies()
@@ -147,32 +139,6 @@ namespace Castle.Windsor.Tests.Proxies
 			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
 			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
 			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareProxyGenerationHook.target.Services.Single());
-		}
-
-		// we do not support xml config on SL
-		[Test]
-		public void Proxy_exposes_only_service_interfaces_from_configuration()
-		{
-			Container.Install(
-				Configuration.FromXml(Xml.Embedded("proxyBehavior.xml")));
-			var calcService = Container.Resolve<ICalcService>("default");
-			Assert.IsNotNull(calcService);
-			Assert.IsNotInstanceOf<IDisposable>(calcService, "Service proxy should NOT expose the IDisposable interface");
-		}
-
-		[Test]
-		public void Proxy_implements_only_service_interfaces()
-		{
-			Container.Register(Component.For<CountingInterceptor>()
-					.Named("a"),
-				Component.For<ICommon>()
-					.ImplementedBy<TwoInterfacesImpl>()
-					.Interceptors("a")
-					.LifeStyle.Transient);
-
-			var common = Container.Resolve<ICommon>();
-
-			Assert.IsNotInstanceOf<ICommon2>(common);
 		}
 
 		[Test]

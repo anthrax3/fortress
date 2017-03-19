@@ -12,9 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="CastleKey.snk" />
+    <None Remove="DynProxy.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="DynProxy.snk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />

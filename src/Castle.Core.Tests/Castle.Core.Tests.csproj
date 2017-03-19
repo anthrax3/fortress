@@ -18,6 +18,7 @@
     <EmbeddedResource Include="Core.Tests\Resources\MoreRes\file2.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
