@@ -202,32 +202,12 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
-		public void Inherit_Additive_Private()
-		{
-			AssertAttributes(typeof(IInheritAdditivePrivate));
-		}
 
 		[Test]
 		public void Inherit_Singleton_Inherited()
 		{
 			AssertAttributes(typeof(IInheritSingletonInherited),
 				new SingletonInheritedAttribute {Id = "Original"}
-			);
-		}
-
-		[Test]
-		public void Inherit_Singleton_Private()
-		{
-			AssertAttributes(typeof(IInheritSingletonPrivate));
-		}
-
-		[Test]
-		public void Override_Additive_Inherited()
-		{
-			AssertAttributes(typeof(IOverrideAdditiveInherited1),
-				new AdditiveInheritedAttribute {Id = "Original"},
-				new AdditiveInheritedAttribute {Id = "Override1"}
 			);
 		}
 
