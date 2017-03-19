@@ -14,56 +14,11 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using Castle.Core.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	public class FindPeVerify
-	{
-		private static readonly string[] PeVerifyProbingPaths =
-		{
-			@"C:\Program Files\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools",
-			@"C:\Program Files\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools",
-			@"C:\Program Files\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools",
-			@"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools",
-			@"C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\NETFX 4.0 Tools",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools",
-			@"C:\Program Files\Microsoft SDKs\Windows\v7.0A\Bin",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin",
-			@"C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin",
-			@"C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Bin",
-			@"C:\Program Files (x86)\Microsoft Visual Studio 8\SDK\v2.0\bin"
-		};
-
-		private static string FindPeVerifyPath()
-		{
-			var peVerifyProbingPaths = PeVerifyProbingPaths;
-			foreach (var path in peVerifyProbingPaths)
-			{
-				var file = Path.Combine(path, "peverify.exe");
-				if (File.Exists(file))
-				{
-					return file;
-				}
-			}
-			throw new FileNotFoundException(
-				"Please check the PeVerifyProbingPaths configuration setting and set it to the folder where peverify.exe is located");
-		}
-
-		private static string peVerifyPath;
-
-		public static string PeVerifyPath
-		{
-			get { return peVerifyPath ?? (peVerifyPath = FindPeVerifyPath()); }
-		}
-	}
-
 	public abstract class BasePEVerifyTestCase
 	{
 		protected ProxyGenerator generator;
@@ -97,15 +52,16 @@ namespace Castle.Core.Tests
 		[TearDown]
 		public virtual void TearDown()
 		{
-			if (!IsVerificationDisabled)
-			{
-				// Note: only supports one generated assembly at the moment
-				var path = ((PersistentProxyBuilder)builder).SaveAssembly();
-				if (path != null)
-				{
-					//RunPEVerifyOnGeneratedAssembly(path);
-				}
-			}
+			// This is currently causing issue when targetting multiple frameworks, taking this out for now. 
+			//if (!IsVerificationDisabled)
+			//{
+			//	// Note: only supports one generated assembly at the moment
+			//	var path = ((PersistentProxyBuilder)builder).SaveAssembly();
+			//	if (path != null)
+			//	{
+			//		RunPEVerifyOnGeneratedAssembly(path);
+			//	}
+			//}
 		}
 
 		public void RunPEVerifyOnGeneratedAssembly(string assemblyPath)

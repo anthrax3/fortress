@@ -145,6 +145,7 @@
     <Compile Include="DynamicProxy.Tests\GenericInterfaceWithGenericMethod.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\InterfaceWithMethodsWithAllKindsOfOptionalParameters.cs" />
     <Compile Include="DynamicProxy.Tests\Interfaces\InterfaceWithMethodWithParameterWithNullDefaultValue.cs" />
+    <Compile Include="FindPeVerify.cs" />
     <Compile Include="MultipleSavedAssembliesTestCase.cs" />
     <Compile Include="Core.Tests\Internal\InterfaceAttributeUtilTestCase.cs" />
     <Compile Include="Core.Tests\Internal\PermissionUtilTestCase.cs" />
