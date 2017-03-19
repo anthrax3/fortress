@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Facilities.Logging.V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Windsor.Tests.VS2015", "src\Castle.Windsor.Tests\Castle.Windsor.Tests.VS2015.csproj", "{CB3A30A6-56D4-4F4F-9AEF-DA55E1FF6D74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.Core.DynamicProxy.VS2015", "src\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.VS2015.csproj", "{9BA91448-7EBB-4D55-BC62-B055C983253E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		NET45-Debug|Any CPU = NET45-Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CB3A30A6-56D4-4F4F-9AEF-DA55E1FF6D74}.NET45-Debug|Any CPU.Build.0 = NET45-Debug|Any CPU
 		{CB3A30A6-56D4-4F4F-9AEF-DA55E1FF6D74}.NET45-Release|Any CPU.ActiveCfg = NET45-Release|Any CPU
 		{CB3A30A6-56D4-4F4F-9AEF-DA55E1FF6D74}.NET45-Release|Any CPU.Build.0 = NET45-Release|Any CPU
+		{9BA91448-7EBB-4D55-BC62-B055C983253E}.NET45-Debug|Any CPU.ActiveCfg = NET45-Debug|Any CPU
+		{9BA91448-7EBB-4D55-BC62-B055C983253E}.NET45-Debug|Any CPU.Build.0 = NET45-Debug|Any CPU
+		{9BA91448-7EBB-4D55-BC62-B055C983253E}.NET45-Release|Any CPU.ActiveCfg = NET45-Release|Any CPU
+		{9BA91448-7EBB-4D55-BC62-B055C983253E}.NET45-Release|Any CPU.Build.0 = NET45-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

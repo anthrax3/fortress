@@ -16,7 +16,7 @@ using System;
 
 namespace Castle.Core.Core.Internal
 {
-	internal static class TypeExtensions
+	public static class TypeExtensions
 	{
 		public static string GetBestName(this Type type)
 		{
