@@ -1,0 +1,46 @@
+
+version: 1.0.{build}
+
+branches:
+
+  except:
+  
+    - gh-pages
+
+skip_tags: true
+
+install:
+
+  - .paket\paket.bootstrapper.exe
+  
+  - .paket\paket.exe restore
+
+assembly_info:
+  
+  patch: true
+  
+  file: SolutionInfo.*
+  
+  assembly_version: "1.0.{build}"
+  
+  assembly_file_version: "{version}"
+  
+  assembly_informational_version: "{version}"
+
+configuration: Release
+
+cache:
+  - packages -> paket.lock
+
+nuget:
+  
+  account_feed: true
+  
+  project_feed: true
+
+build:
+  
+  parallel: true
+  
+  project: Castle.Windsor.sln
+      
