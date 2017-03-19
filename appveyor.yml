@@ -17,7 +17,7 @@ install:
 
 assembly_info:
   
-  patch: true
+  patch: false
   
   file: SolutionInfo.*
   
