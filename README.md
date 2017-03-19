@@ -1,9 +1,9 @@
 # fortress.windsor
 
+=============
+
 A leaner meaner version of Castle.Windsor
 
-&nbsp;FluentWindsor<br /><br />
-=============
 
 | Build |
 |---------|
