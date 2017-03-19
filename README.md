@@ -7,6 +7,18 @@ A leaner meaner version of Castle Windsor
 |---------|
 | <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress.windsor"><img src="https://ci.appveyor.com/api/projects/status/843yxnhrj4eq5ef5/branch/master?svg=true" /></a> |
 
+Features supported:
+
+ - Castle Core including Dynamic Proxy
+ - Castle Windsor including some facilities
+
+ Features not supported: 
+
+ - Core Dictionary Adapter 
+ - Core Logging Services 
+ - Windsor WcfIntegration 
+ - Windsor Remoting
+ - Windsor Synchronise
 
 ## Castle Windsor
 
