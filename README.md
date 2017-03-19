@@ -1,6 +1,6 @@
-# Fortress Windsor
+# Fortress
 
-A leaner meaner version of Castle Windsor
+A leaner meaner version of Castle Windsor primarily targetting dotnet core.
 
 
 | Build |
