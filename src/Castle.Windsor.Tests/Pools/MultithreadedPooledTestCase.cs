@@ -36,7 +36,7 @@ namespace Castle.Windsor.Tests.Pools
 
 				Assert.IsNotNull(instance);
 
-				Thread.Sleep(1*500);
+				Thread.Sleep(1 * 500);
 
 				kernel.ReleaseComponent(instance);
 			}
@@ -60,7 +60,7 @@ namespace Castle.Windsor.Tests.Pools
 
 			startEvent.Set();
 
-			Thread.CurrentThread.Join(3*1000);
+			Thread.CurrentThread.Join(3 * 1000);
 
 			stopEvent.Set();
 		}

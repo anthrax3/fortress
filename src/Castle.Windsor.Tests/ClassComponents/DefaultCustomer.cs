@@ -12,25 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class DefaultCustomer
 	{
-		private String name;
-		private String address;
+		public string Name { get; set; }
 
-		public String Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
-
-		public String Address
-		{
-			get { return address; }
-			set { address = value; }
-		}
+		public string Address { get; set; }
 	}
 }

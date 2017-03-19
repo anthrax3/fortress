@@ -14,10 +14,8 @@
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Components
 {
-	using System;
-
 	public interface IProtocolHandler
 	{
-		void Handle(String content);
+		void Handle(string content);
 	}
 }

@@ -23,17 +23,17 @@ namespace Castle.Windsor.Tests.ClassComponents
 		public bool Initialized { get; private set; }
 		public bool Terminated { get; private set; }
 
+		public void Terminate()
+		{
+			Terminated = true;
+		}
+
 		public void Init(IKernel kernel, IConfiguration facilityConfig)
 		{
 			Assert.IsNotNull(kernel);
 			Assert.IsNotNull(facilityConfig);
 
 			Initialized = true;
-		}
-
-		public void Terminate()
-		{
-			Terminated = true;
 		}
 	}
 }

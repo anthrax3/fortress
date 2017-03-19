@@ -28,9 +28,7 @@ namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 			var length = model.Implementation.GetGenericArguments().Length;
 			var types = new Type[length];
 			for (var i = 0; i < length; i++)
-			{
 				types[i] = first;
-			}
 			return types;
 		}
 	}

@@ -12,29 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
+using System.Collections.Generic;
+using System.Linq;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class HandlerExtensionsTestCase : AbstractContainerTestCase
 	{
 		private ComponentRegistration<A> AddResolveExtensions(ComponentRegistration<A> componentRegistration,
-		                                                      params IResolveExtension[] items)
+			params IResolveExtension[] items)
 		{
 			var resolveExtensions = new List<IResolveExtension>();
 			foreach (var item in items.Distinct())
-			{
 				resolveExtensions.Add(item);
-			}
 			return componentRegistration.ExtendedProperties(Property.ForKey("Castle.ResolveExtensions").Eq(resolveExtensions));
 		}
 
@@ -44,9 +39,7 @@ namespace Castle.Windsor.Tests
 		{
 			var releaseExtensions = new List<IReleaseExtension>();
 			foreach (var item in items.Distinct())
-			{
 				releaseExtensions.Add(item);
-			}
 			return componentRegistration.ExtendedProperties(Property.ForKey("Castle.ReleaseExtensions").Eq(releaseExtensions));
 		}
 
@@ -109,66 +102,9 @@ namespace Castle.Windsor.Tests
 		{
 			var a = new A();
 			var componentRegistration = Component.For<A>();
-			Kernel.Register(AddResolveExtensions(componentRegistration, new ReturnAExtension(a, proceed: true)));
+			Kernel.Register(AddResolveExtensions(componentRegistration, new ReturnAExtension(a, true)));
 			var resolvedA = Kernel.Resolve<A>();
 			Assert.AreSame(a, resolvedA);
-		}
-	}
-
-	public class ReturnAExtension : IResolveExtension
-	{
-		private readonly A a;
-		private readonly bool proceed;
-
-		public ReturnAExtension(A a, bool proceed = false)
-		{
-			this.a = a;
-			this.proceed = proceed;
-		}
-
-		public void Init(IKernel kernel, IHandler handler)
-		{
-		}
-
-		public void Intercept(ResolveInvocation invocation)
-		{
-			if (proceed)
-			{
-				invocation.Proceed();
-			}
-			invocation.ResolvedInstance = a;
-		}
-	}
-
-	public class CollectItemsExtension : IResolveExtension, IReleaseExtension
-	{
-		private readonly IList<object> releasedItems = new List<object>();
-		private readonly IList<object> resolvedItems = new List<object>();
-
-		public IList<object> ReleasedItems
-		{
-			get { return releasedItems; }
-		}
-
-		public IList<object> ResolvedItems
-		{
-			get { return resolvedItems; }
-		}
-
-		public void Intercept(ReleaseInvocation invocation)
-		{
-			invocation.Proceed();
-			releasedItems.Add(invocation.Instance);
-		}
-
-		public void Init(IKernel kernel, IHandler handler)
-		{
-		}
-
-		public void Intercept(ResolveInvocation invocation)
-		{
-			invocation.Proceed();
-			resolvedItems.Add(invocation.ResolvedInstance);
 		}
 	}
 }

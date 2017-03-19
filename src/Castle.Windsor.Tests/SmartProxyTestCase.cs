@@ -12,20 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Runtime.Remoting;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System.Runtime.Remoting;
-	using Castle.Windsor.Tests.Interceptors;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SmartProxyTestCase
 	{
+		[SetUp]
+		public void Init()
+		{
+			container = new WindsorContainer();
+
+			container.AddFacility<MyInterceptorGreedyFacility>();
+		}
+
+		[TearDown]
+		public void Terminate()
+		{
+			container.Dispose();
+		}
+
 		private IWindsorContainer container;
 
 		[Test]
@@ -39,14 +52,6 @@ namespace Castle.Windsor.Tests
 			Assert.IsNotNull(service);
 			Assert.IsFalse(RemotingServices.IsTransparentProxy(service));
 			Assert.AreEqual(5, service.Sum(2, 2));
-		}
-
-		[SetUp]
-		public void Init()
-		{
-			container = new WindsorContainer();
-
-			container.AddFacility<MyInterceptorGreedyFacility>();
 		}
 
 		[Test]
@@ -71,12 +76,6 @@ namespace Castle.Windsor.Tests
 			Assert.IsNotNull(service);
 			Assert.IsFalse(RemotingServices.IsTransparentProxy(service));
 			Assert.AreEqual(5, service.Sum(2, 2));
-		}
-
-		[TearDown]
-		public void Terminate()
-		{
-			container.Dispose();
 		}
 	}
 }

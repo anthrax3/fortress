@@ -16,23 +16,14 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class UseGenericExtended1
 	{
-		private readonly IGeneric<string> generic;
-		private readonly IGenericExtended<string> genericExtended;
-
 		public UseGenericExtended1(IGeneric<string> generic, IGenericExtended<string> genericExtended)
 		{
-			this.generic = generic;
-			this.genericExtended = genericExtended;
+			Generic = generic;
+			GenericExtended = genericExtended;
 		}
 
-		public IGeneric<string> Generic
-		{
-			get { return generic; }
-		}
+		public IGeneric<string> Generic { get; }
 
-		public IGenericExtended<string> GenericExtended
-		{
-			get { return genericExtended; }
-		}
+		public IGenericExtended<string> GenericExtended { get; }
 	}
 }

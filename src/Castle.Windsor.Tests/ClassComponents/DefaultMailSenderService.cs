@@ -18,20 +18,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class DefaultMailSenderService : IDisposable
 	{
-		private bool isDisposed = false;
-
-		public DefaultMailSenderService()
-		{
-		}
-
-		public bool IsDisposed
-		{
-			get { return isDisposed; }
-		}
+		public bool IsDisposed { get; private set; }
 
 		public void Dispose()
 		{
-			isDisposed = true;
+			IsDisposed = true;
 		}
 	}
 }

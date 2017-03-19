@@ -17,22 +17,15 @@ using Castle.Windsor.Core;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using Castle.Core;
-
 	[Singleton]
 	public class CountingInterceptor : IInterceptor
 	{
-		private int interceptedCallsCount;
+		public int InterceptedCallsCount { get; private set; }
 
 		public void Intercept(IInvocation invocation)
 		{
-			interceptedCallsCount++;
+			InterceptedCallsCount++;
 			invocation.Proceed();
-		}
-
-		public int InterceptedCallsCount
-		{
-			get { return interceptedCallsCount; }
 		}
 	}
 }

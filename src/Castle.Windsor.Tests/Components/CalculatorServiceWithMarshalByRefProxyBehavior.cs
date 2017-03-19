@@ -19,7 +19,7 @@ using Castle.Windsor.Core;
 namespace Castle.Windsor.Tests.Components
 {
 	[Interceptor(typeof(StandardInterceptor))]
-	[ComponentProxyBehavior()]
+	[ComponentProxyBehavior]
 	public class CalculatorServiceWithMarshalByRefProxyBehavior : CalculatorService, IDisposable
 	{
 		public void Dispose()

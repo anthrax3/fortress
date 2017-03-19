@@ -32,9 +32,9 @@ namespace Castle.Windsor.Tests
 		public void ConfigureIf_can_be_applied_multiple_times()
 		{
 			Container.Register(Classes.FromThisAssembly()
-			                   	.BasedOn<IEmptyService>()
-			                   	.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A"))
-			                   	.ConfigureIf(r => r.Implementation.Name.EndsWith("B"), r => r.Named("B")));
+				.BasedOn<IEmptyService>()
+				.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A"))
+				.ConfigureIf(r => r.Implementation.Name.EndsWith("B"), r => r.Named("B")));
 
 			var a = Container.Resolve<IEmptyService>("a");
 			var b = Container.Resolve<IEmptyService>("b");
@@ -47,8 +47,8 @@ namespace Castle.Windsor.Tests
 		public void ConfigureIf_configures_all_matching_components()
 		{
 			Container.Register(Classes.FromThisAssembly()
-			                   	.BasedOn<IEmptyService>()
-			                   	.ConfigureIf(r => char.IsUpper(r.Implementation.Name.Last()), r => r.Named(r.Implementation.Name.Last().ToString())));
+				.BasedOn<IEmptyService>()
+				.ConfigureIf(r => char.IsUpper(r.Implementation.Name.Last()), r => r.Named(r.Implementation.Name.Last().ToString())));
 
 			var a = Container.Resolve<IEmptyService>("a");
 			var b = Container.Resolve<IEmptyService>("b");
@@ -61,8 +61,8 @@ namespace Castle.Windsor.Tests
 		public void ConfigureIf_configures_matching_components()
 		{
 			Container.Register(Classes.FromThisAssembly()
-			                   	.BasedOn<IEmptyService>()
-			                   	.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A")));
+				.BasedOn<IEmptyService>()
+				.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A")));
 
 			var a = Container.Resolve<IEmptyService>("a");
 
@@ -74,9 +74,9 @@ namespace Castle.Windsor.Tests
 		{
 			var number = 0;
 			Container.Register(Classes.FromThisAssembly()
-			                   	.BasedOn<IEmptyService>()
-			                   	.WithService.Base()
-			                   	.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A"), r => r.Named((++number).ToString())));
+				.BasedOn<IEmptyService>()
+				.WithService.Base()
+				.ConfigureIf(r => r.Implementation.Name.EndsWith("A"), r => r.Named("A"), r => r.Named((++number).ToString())));
 
 			var a = Container.Resolve<IEmptyService>("a");
 			Assert.IsInstanceOf<EmptyServiceA>(a);

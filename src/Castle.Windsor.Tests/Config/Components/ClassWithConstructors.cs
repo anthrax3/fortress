@@ -12,33 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.Config.Components
 {
 	public class ClassWithConstructors
 	{
-		private readonly String host;
-		private readonly String[] hosts;
-
-		public ClassWithConstructors(String host)
+		public ClassWithConstructors(string host)
 		{
-			this.host = host;
+			Host = host;
 		}
 
-		public ClassWithConstructors(String[] hosts)
+		public ClassWithConstructors(string[] hosts)
 		{
-			this.hosts = hosts;
+			Hosts = hosts;
 		}
 
-		public String Host
-		{
-			get { return host; }
-		}
+		public string Host { get; }
 
-		public String[] Hosts
-		{
-			get { return hosts; }
-		}
+		public string[] Hosts { get; }
 	}
 }

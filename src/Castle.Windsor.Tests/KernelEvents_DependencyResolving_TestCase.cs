@@ -80,9 +80,7 @@ namespace Castle.Windsor.Tests
 			expectedClient = Kernel.GetHandler("spamservice").ComponentModel;
 			expectedModels = new List<DependencyModel>();
 			foreach (var prop in Kernel.GetHandler("spamservice").ComponentModel.Properties)
-			{
 				expectedModels.Add(prop.Dependency);
-			}
 
 			var spamservice = Kernel.Resolve<DefaultSpamService>("spamservice");
 
@@ -108,9 +106,7 @@ namespace Castle.Windsor.Tests
 			expectedClient = Kernel.GetHandler("customer").ComponentModel;
 			expectedModels = new List<DependencyModel>();
 			foreach (var prop in Kernel.GetHandler("customer").ComponentModel.Properties)
-			{
 				expectedModels.Add(prop.Dependency);
-			}
 
 			var customer = Kernel.Resolve<ICustomer>("customer");
 

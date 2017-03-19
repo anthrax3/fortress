@@ -41,7 +41,7 @@ namespace Castle.Windsor.Tests.Registration.Interceptors
 		private void AssertInterceptorReferencesAreEqual(IHandler handler, InterceptorsTestCaseHelper helper)
 		{
 			CollectionAssert.AreEqual(helper.GetExpectedInterceptorsInCorrectOrder(),
-			                          handler.ComponentModel.Interceptors);
+				handler.ComponentModel.Interceptors);
 		}
 
 		[Test]
@@ -81,24 +81,6 @@ namespace Castle.Windsor.Tests.Registration.Interceptors
 		}
 
 		[Test]
-		public void InterceptorReferenceWithPositionMultipleCall1()
-		{
-			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall1>();
-		}
-
-		[Test]
-		public void InterceptorReferenceWithPositionMultipleCall2()
-		{
-			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall2>();
-		}
-
-		[Test]
-		public void InterceptorReferenceWithPositionMultipleCall3()
-		{
-			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall3>();
-		}
-
-		[Test]
 		public void InterceptorReferencesAnywhereInSingleCall()
 		{
 			ExecuteScenario<InterceptorReferencesWithPositionInSingleCall>();
@@ -120,6 +102,24 @@ namespace Castle.Windsor.Tests.Registration.Interceptors
 		public void InterceptorReferencesWithPositionInSingleCall3()
 		{
 			ExecuteScenario<InterceptorReferencesWithPositionInSingleCall3>();
+		}
+
+		[Test]
+		public void InterceptorReferenceWithPositionMultipleCall1()
+		{
+			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall1>();
+		}
+
+		[Test]
+		public void InterceptorReferenceWithPositionMultipleCall2()
+		{
+			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall2>();
+		}
+
+		[Test]
+		public void InterceptorReferenceWithPositionMultipleCall3()
+		{
+			ExecuteScenario<InterceptorReferenceWithPositionMultipleCall3>();
 		}
 
 		[Test]

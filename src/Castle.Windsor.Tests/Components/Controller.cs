@@ -16,17 +16,12 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class Controller : IController
 	{
-		private IView view;
-
 		public Controller(IView view)
 		{
-			this.view = view;
+			View = view;
 		}
 
-		public IView View
-		{
-			get { return view; }
-		}
+		public IView View { get; }
 
 		public void Process()
 		{

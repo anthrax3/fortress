@@ -77,9 +77,7 @@ namespace Castle.Windsor.Tests.Pools
 			CollectionAssert.DoesNotContain(instances, other1);
 
 			foreach (var inst in instances)
-			{
 				Kernel.ReleaseComponent(inst);
-			}
 
 			Kernel.ReleaseComponent(other1);
 

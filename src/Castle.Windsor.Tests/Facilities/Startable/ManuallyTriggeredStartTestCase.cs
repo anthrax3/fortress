@@ -62,7 +62,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			Container.Install(
 				new ActionBasedInstaller(c => c.Register(Component.For<Components.Startable>(),
 					Component.For<ICustomer>().ImplementedBy<CustomerImpl>()))
-				);
+			);
 
 			Assert.IsFalse(Components.Startable.Started);
 
@@ -81,7 +81,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 
 			Assert.Throws<HandlerException>(() =>
 				flag.Signal()
-				);
+			);
 		}
 	}
 }

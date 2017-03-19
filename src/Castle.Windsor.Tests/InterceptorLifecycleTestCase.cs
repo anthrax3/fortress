@@ -27,11 +27,11 @@ namespace Castle.Windsor.Tests
 			DisposableInterceptor.InstancesCreated = 0;
 			DisposableInterceptor.InstancesDisposed = 0;
 			Container.Register(Component.For<DisposableInterceptor>().LifestyleTransient(),
-			                   Component.For<A>().LifestyleTransient().Interceptors<DisposableInterceptor>());
+				Component.For<A>().LifestyleTransient().Interceptors<DisposableInterceptor>());
 
 			var a = Container.Resolve<A>();
 
-			Assert.AreEqual(1,DisposableInterceptor.InstancesCreated);
+			Assert.AreEqual(1, DisposableInterceptor.InstancesCreated);
 
 			Container.Release(a);
 

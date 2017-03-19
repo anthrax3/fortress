@@ -37,7 +37,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			Container.Register(Component.For<IDummyComponent>().ImplementedBy<Component1>());
 			childContainer.Register(Component.For<IDummyComponentFactory>().AsFactory(),
-			                        Component.For<IDummyComponent>().ImplementedBy<Component2>());
+				Component.For<IDummyComponent>().ImplementedBy<Component2>());
 
 			var fromParent = Container.Resolve<IDummyComponent>();
 			var fromFactory = childContainer.Resolve<IDummyComponentFactory>().CreateDummyComponent();
@@ -54,7 +54,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		{
 			Container.AddFacility<TypedFactoryFacility>();
 			Container.Register(Component.For<IGenericFactory<A>>().AsFactory(),
-			                   Component.For<A>());
+				Component.For<A>());
 
 			// uncomment the line below and the test will not fail
 			//container.Resolve<ISomeFactory>();

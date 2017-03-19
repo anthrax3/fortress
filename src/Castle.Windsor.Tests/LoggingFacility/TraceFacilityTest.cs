@@ -29,7 +29,7 @@ namespace Castle.Windsor.Tests.LoggingFacility
 		[SetUp]
 		public void Setup()
 		{
-			container = base.CreateConfiguredContainer(LoggerImplementation.Trace);
+			container = CreateConfiguredContainer(LoggerImplementation.Trace);
 			consoleWriter.GetStringBuilder().Length = 0;
 
 			var source = new TraceSource("Default");
@@ -37,9 +37,7 @@ namespace Castle.Windsor.Tests.LoggingFacility
 			{
 				var consoleListener = listener as ConsoleTraceListener;
 				if (consoleListener != null)
-				{
 					consoleListener.Writer = consoleWriter;
-				}
 			}
 		}
 
@@ -47,9 +45,7 @@ namespace Castle.Windsor.Tests.LoggingFacility
 		public void Teardown()
 		{
 			if (container != null)
-			{
 				container.Dispose();
-			}
 		}
 
 		private IWindsorContainer container;
@@ -61,13 +57,11 @@ namespace Castle.Windsor.Tests.LoggingFacility
 			container.Register(Component.For(typeof(SimpleLoggingComponent)).Named("component"));
 			var test = container.Resolve<SimpleLoggingComponent>("component");
 
-			var expectedLogOutput = String.Format("{0} Information: 0 : Hello world" + Environment.NewLine,
-			                                      typeof(SimpleLoggingComponent).FullName);
+			var expectedLogOutput = string.Format("{0} Information: 0 : Hello world" + Environment.NewLine,
+				typeof(SimpleLoggingComponent).FullName);
 
 			if (test != null)
-			{
 				test.DoSomething();
-			}
 
 			var actualLogOutput = consoleWriter.GetStringBuilder().ToString();
 			Assert.AreEqual(expectedLogOutput, actualLogOutput);

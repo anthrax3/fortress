@@ -18,11 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class DictionaryCache<T> : ICache<T>
 	{
-		private Dictionary<string, object> hash = new Dictionary<string, object>();
+		private readonly Dictionary<string, object> hash = new Dictionary<string, object>();
 
 		public T Get(string key)
 		{
-			return (T)hash[key];
+			return (T) hash[key];
 		}
 
 		public void Put(string key, T item)

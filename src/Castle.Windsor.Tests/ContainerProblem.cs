@@ -12,16 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ContainerProblem
 	{
@@ -38,28 +34,6 @@ namespace Castle.Windsor.Tests
 			// IChild child = (IChild)container["child"];
 			// IParent parent = (IParent) container["parent"];
 			container.Resolve<IParent>("parent");
-		}
-	}
-
-	public interface IParent : IList<IChild>
-	{
-	}
-
-	public interface IChild
-	{
-	}
-
-	public class Child : IChild
-	{
-		public Child(IParent parent)
-		{
-		}
-	}
-
-	public class Parent : List<IChild>,IParent
-	{
-		public Parent(IKernel kernel)
-		{
 		}
 	}
 }

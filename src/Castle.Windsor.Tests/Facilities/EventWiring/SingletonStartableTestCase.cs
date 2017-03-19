@@ -59,4 +59,3 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		}
 	}
 }
-

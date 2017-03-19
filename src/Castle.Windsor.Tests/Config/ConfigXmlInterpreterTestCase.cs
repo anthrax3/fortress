@@ -16,8 +16,8 @@
 // we do not support xml config on SL
 
 using System.Linq;
-using Castle.Core.Core.Configuration;
 using Castle.Core.Core.Resource;
+using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Tests.ClassComponents;
@@ -43,7 +43,7 @@ namespace Castle.Windsor.Tests.Config
 			var container = new WindsorContainer(store);
 
 			var handler = container.Kernel.GetHandler(typeof(ICalcService));
-			Assert.AreEqual(Core.LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
@@ -156,20 +156,4 @@ namespace Castle.Windsor.Tests.Config
 			Assert.AreEqual("<configuration />", config.Value);
 		}
 	}
-
-	public class DummyFacility : IFacility
-	{
-		public void Init(IKernel kernel, IConfiguration facilityConfig)
-		{
-			Assert.IsNotNull(facilityConfig);
-			var childItem = facilityConfig.Children["item"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("value", childItem.Value);
-		}
-
-		public void Terminate()
-		{
-		}
-	}
 }
-

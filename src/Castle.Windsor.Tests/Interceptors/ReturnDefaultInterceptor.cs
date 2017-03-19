@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using System;
-
 	public class ReturnDefaultInterceptor : IInterceptor
 	{
 		public void Intercept(IInvocation invocation)
 		{
 			var returnType = invocation.Method.ReturnType;
 			if (returnType.IsValueType && returnType != typeof(void))
-			{
 				invocation.ReturnValue = Activator.CreateInstance(returnType);
-			}
 		}
 	}
 }

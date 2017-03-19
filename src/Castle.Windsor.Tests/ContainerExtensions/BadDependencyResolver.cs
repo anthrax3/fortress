@@ -29,13 +29,13 @@ namespace Castle.Windsor.Tests.ContainerExtensions
 		}
 
 		public bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                       DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			return dependency.TargetType == typeof(IBookStore);
 		}
 
 		public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                      DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			return kernel.Resolve<IBookStore>();
 		}

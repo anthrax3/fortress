@@ -20,6 +20,7 @@ using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Config.Components;
 using Castle.Windsor.Windsor;
+using Castle.Windsor.Windsor.Installer;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Config
@@ -28,105 +29,9 @@ namespace Castle.Windsor.Tests.Config
 	public class ConfigurationTestCase : AbstractContainerTestCase
 	{
 		[Test]
-		[Bug("IOC-155")]
-		public void Type_not_implementing_service_should_throw()
-		{
-			var exception = Assert.Throws<ComponentRegistrationException>(() =>
-			                                                              Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(
-			                                                              	new StaticContentResource(
-			                                                              		@"<castle>
-<components>
-    <component
-        service=""EmptyServiceA""
-        type=""IEmptyService""/>
-</components>
-</castle>"))));
-
-			var expected = string.Format("Could not set up component '{0}'. Type '{1}' does not implement service '{2}'",
-			                             typeof(IEmptyService).FullName,
-			                             typeof(IEmptyService).AssemblyQualifiedName,
-			                             typeof(EmptyServiceA).AssemblyQualifiedName);
-
-			Assert.AreEqual(expected, exception.Message);
-		}
-
-		[Test]
-		[Bug("IOC-197")]
-		public void DictionaryAsParameterInXml()
-		{
-			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(
-				new StaticContentResource(
-					string.Format(
-						@"<castle>
-<components>
-	<component lifestyle=""singleton""
-		id=""Id.MyClass""
-		type=""{0}"">
-		<parameters>
-			<DictionaryProperty>${{Id.dictionary}}</DictionaryProperty>
-		</parameters>
-	</component>
-
-	<component id=""Id.dictionary"" lifestyle=""singleton""
-						 service=""System.Collections.IDictionary, mscorlib""
-						 type=""System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]]""
-						 >
-		<parameters>
-			<dictionary>
-				<dictionary>
-					<entry key=""string.key.1"">string value 1</entry>
-					<entry key=""string.key.2"">string value 2</entry>
-				</dictionary>
-			</dictionary>
-		</parameters>
-	</component>
-</components>
-</castle>",
-						typeof(HasDictionaryDependency).AssemblyQualifiedName))));
-
-			var myInstance = Container.Resolve<HasDictionaryDependency>();
-			Assert.AreEqual(2, myInstance.DictionaryProperty.Count);
-		}
-
-		[Test]
-		[Bug("IOC-73")]
-		public void ShouldNotThrowCircularDependencyException()
-		{
-			var config =
-				@"
-<configuration>
-    <facilities>
-    </facilities>
-    <components>
-        <component id='MyClass'
-            service='IEmptyService'
-            type='EmptyServiceA'/>
-        <component id='Proxy'
-            service='IEmptyService'
-            type='EmptyServiceDecorator'>
-            <parameters>
-                <other>${MyClass}</other>
-            </parameters>
-        </component>
-        <component id='ClassUser'
-            type='UsesIEmptyService'>
-            <parameters>
-                <emptyService>${Proxy}</emptyService>
-            </parameters>
-        </component>
-    </components>
-</configuration>";
-
-			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXml(new StaticContentResource(config)));
-			var user = Container.Resolve<UsesIEmptyService>();
-			Assert.NotNull(user.EmptyService);
-		}
-
-
-		[Test]
 		public void Can_properly_populate_array_dependency_from_xml_config_when_registering_by_convention()
 		{
-			Container.Install(Castle.Windsor.Windsor.Installer.Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
+			Container.Install(Configuration.FromXmlFile("config\\ComponentWithArrayDependency.config"))
 				.Register(Component.For<IConfig>().ImplementedBy<Components.Config>().Named("componentWithArrayDependency"));
 			Container.Register(
 				Classes.FromThisAssembly().Pick().WithServiceFirstInterface());
@@ -241,8 +146,8 @@ namespace Castle.Windsor.Tests.Config
 			Kernel.ConfigurationStore.AddComponentConfiguration("key", confignode);
 
 			Kernel.Register(Component.For<ClassWithArrayConstructor>().Named("key"),
-			                Component.For<ICommon>().ImplementedBy<CommonImpl1>().Named("commonservice1"),
-			                Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("commonservice2"));
+				Component.For<ICommon>().ImplementedBy<CommonImpl1>().Named("commonservice1"),
+				Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("commonservice2"));
 
 			var instance = Kernel.Resolve<ClassWithArrayConstructor>("key");
 			Assert.IsNotNull(instance.Services);
@@ -270,6 +175,44 @@ namespace Castle.Windsor.Tests.Config
 			Assert.IsNotNull(instance);
 			Assert.IsNotNull(instance.Host);
 			Assert.AreEqual("castleproject.org", instance.Host);
+		}
+
+		[Test]
+		[Bug("IOC-197")]
+		public void DictionaryAsParameterInXml()
+		{
+			Container.Install(Configuration.FromXml(
+				new StaticContentResource(
+					string.Format(
+						@"<castle>
+<components>
+	<component lifestyle=""singleton""
+		id=""Id.MyClass""
+		type=""{0}"">
+		<parameters>
+			<DictionaryProperty>${{Id.dictionary}}</DictionaryProperty>
+		</parameters>
+	</component>
+
+	<component id=""Id.dictionary"" lifestyle=""singleton""
+						 service=""System.Collections.IDictionary, mscorlib""
+						 type=""System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]]""
+						 >
+		<parameters>
+			<dictionary>
+				<dictionary>
+					<entry key=""string.key.1"">string value 1</entry>
+					<entry key=""string.key.2"">string value 2</entry>
+				</dictionary>
+			</dictionary>
+		</parameters>
+	</component>
+</components>
+</castle>",
+						typeof(HasDictionaryDependency).AssemblyQualifiedName))));
+
+			var myInstance = Container.Resolve<HasDictionaryDependency>();
+			Assert.AreEqual(2, myInstance.DictionaryProperty.Count);
 		}
 
 		[Test]
@@ -315,6 +258,63 @@ namespace Castle.Windsor.Tests.Config
 
 			Assert.IsNotNull(instance);
 			Assert.AreEqual(typeof(CommonImpl2), instance.CommonService.GetType());
+		}
+
+		[Test]
+		[Bug("IOC-73")]
+		public void ShouldNotThrowCircularDependencyException()
+		{
+			var config =
+				@"
+<configuration>
+    <facilities>
+    </facilities>
+    <components>
+        <component id='MyClass'
+            service='IEmptyService'
+            type='EmptyServiceA'/>
+        <component id='Proxy'
+            service='IEmptyService'
+            type='EmptyServiceDecorator'>
+            <parameters>
+                <other>${MyClass}</other>
+            </parameters>
+        </component>
+        <component id='ClassUser'
+            type='UsesIEmptyService'>
+            <parameters>
+                <emptyService>${Proxy}</emptyService>
+            </parameters>
+        </component>
+    </components>
+</configuration>";
+
+			Container.Install(Configuration.FromXml(new StaticContentResource(config)));
+			var user = Container.Resolve<UsesIEmptyService>();
+			Assert.NotNull(user.EmptyService);
+		}
+
+		[Test]
+		[Bug("IOC-155")]
+		public void Type_not_implementing_service_should_throw()
+		{
+			var exception = Assert.Throws<ComponentRegistrationException>(() =>
+				Container.Install(Configuration.FromXml(
+					new StaticContentResource(
+						@"<castle>
+<components>
+    <component
+        service=""EmptyServiceA""
+        type=""IEmptyService""/>
+</components>
+</castle>"))));
+
+			var expected = string.Format("Could not set up component '{0}'. Type '{1}' does not implement service '{2}'",
+				typeof(IEmptyService).FullName,
+				typeof(IEmptyService).AssemblyQualifiedName,
+				typeof(EmptyServiceA).AssemblyQualifiedName);
+
+			Assert.AreEqual(expected, exception.Message);
 		}
 	}
 }

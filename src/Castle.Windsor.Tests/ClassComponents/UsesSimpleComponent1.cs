@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class UsesSimpleComponent1
 	{
-		private readonly SimpleComponent1 dependency;
-
 		public UsesSimpleComponent1(SimpleComponent1 dependency)
 		{
-			this.dependency = dependency;
+			Dependency = dependency;
 		}
 
-		public SimpleComponent1 Dependency
-		{
-			get { return dependency; }
-		}
+		public SimpleComponent1 Dependency { get; }
 	}
 }

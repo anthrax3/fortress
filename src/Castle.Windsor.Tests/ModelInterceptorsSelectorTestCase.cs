@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System;
-
-	using Castle.Core;
-	using Castle.Windsor.Tests.Interceptors;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ModelInterceptorsSelectorTestCase
 	{
@@ -34,10 +29,10 @@ namespace Castle.Windsor.Tests
 		{
 			IWindsorContainer container = new WindsorContainer();
 			container.Register(Component.For<WasCalledInterceptor>(),
-			                   Component.For<IWatcher>()
-			                   	.ImplementedBy<BirdWatcher>()
-			                   	.Named("bird.watcher")
-			                   	.LifeStyle.Transient);
+				Component.For<IWatcher>()
+					.ImplementedBy<BirdWatcher>()
+					.Named("bird.watcher")
+					.LifeStyle.Transient);
 
 			var selector = new WatcherInterceptorSelector();
 			container.Kernel.ProxyFactory.AddInterceptorSelector(selector);
@@ -56,14 +51,31 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		public void Interceptor_selected_by_selector_gets_released_properly()
+		{
+			DisposableInterceptor.InstancesDisposed = 0;
+			DisposableInterceptor.InstancesCreated = 0;
+			var container = new WindsorContainer();
+			container.Kernel.ProxyFactory.AddInterceptorSelector(new ByTypeInterceptorSelector(typeof(DisposableInterceptor)));
+			container.Register(Component.For<DisposableInterceptor>(),
+				Component.For<A>().LifeStyle.Transient);
+
+			var a = container.Resolve<A>();
+			Assert.AreEqual(1, DisposableInterceptor.InstancesCreated);
+
+			container.Release(a);
+			Assert.AreEqual(1, DisposableInterceptor.InstancesDisposed);
+		}
+
+		[Test]
 		public void InterceptorSelectors_Are_Cumulative()
 		{
 			IWindsorContainer container = new WindsorContainer();
 			container.Register(Component.For<CountingInterceptor>(),
-			                   Component.For<WasCalledInterceptor>(),
-			                   Component.For<IWatcher>().ImplementedBy<BirdWatcher>().Named("bird.watcher").LifeStyle.Transient);
+				Component.For<WasCalledInterceptor>(),
+				Component.For<IWatcher>().ImplementedBy<BirdWatcher>().Named("bird.watcher").LifeStyle.Transient);
 
-			var selector = new WatcherInterceptorSelector { Interceptors = InterceptorKind.Dummy };
+			var selector = new WatcherInterceptorSelector {Interceptors = InterceptorKind.Dummy};
 			container.Kernel.ProxyFactory.AddInterceptorSelector(selector);
 			container.Kernel.ProxyFactory.AddInterceptorSelector(new AnotherInterceptorSelector());
 
@@ -106,48 +118,5 @@ namespace Castle.Windsor.Tests
 			Assert.IsFalse(container.Resolve<Person>().GetType().Name.Contains("Proxy"));
 			Assert.IsTrue(container.Resolve<Person>().Watcher.GetType().Name.Contains("Proxy"));
 		}
-
-		[Test]
-		public void Interceptor_selected_by_selector_gets_released_properly()
-		{
-			DisposableInterceptor.InstancesDisposed = 0;
-			DisposableInterceptor.InstancesCreated = 0;
-			var container = new WindsorContainer();
-			container.Kernel.ProxyFactory.AddInterceptorSelector(new ByTypeInterceptorSelector(typeof(DisposableInterceptor)));
-			container.Register(Component.For<DisposableInterceptor>(),
-			                   Component.For<A>().LifeStyle.Transient);
-
-			var a = container.Resolve<A>();
-			Assert.AreEqual(1, DisposableInterceptor.InstancesCreated);
-
-			container.Release(a);
-			Assert.AreEqual(1, DisposableInterceptor.InstancesDisposed);
-		}
-	}
-
-	public interface IWatcher
-	{
-		event Action<string> OnSomethingInterestingToWatch;
-	}
-
-	public class BirdWatcher : IWatcher
-	{
-		public event Action<string> OnSomethingInterestingToWatch = delegate { };
-	}
-
-	public class Person
-	{
-		public IWatcher Watcher;
-
-		public Person(IWatcher watcher)
-		{
-			Watcher = watcher;
-		}
-	}
-
-	public enum InterceptorKind
-	{
-		None,
-		Dummy,
 	}
 }

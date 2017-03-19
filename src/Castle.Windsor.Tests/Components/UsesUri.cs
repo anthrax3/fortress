@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class UsesUri
 	{
-		private readonly Uri uri;
-
 		public UsesUri(Uri uri)
 		{
-			this.uri = uri;
+			Uri = uri;
 		}
 
-		public Uri Uri
-		{
-			get { return uri; }
-		}
+		public Uri Uri { get; }
 	}
 }

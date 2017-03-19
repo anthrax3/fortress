@@ -36,34 +36,34 @@ namespace Castle.Windsor.Tests.Facilities.FactorySupport
 					.ImplementedBy<FerrariProvider>()
 					.Attribute("factoryId").Eq("AbstractCarProviderFactory")
 					.Attribute("factoryCreate").Eq("Create")
-				);
+			);
 		}
 
 		[Test]
 		public void Can_register_without_providing_an_implementation()
 		{
-			var user = new User { FiscalStability = FiscalStability.DirtFarmer };
+			var user = new User {FiscalStability = FiscalStability.DirtFarmer};
 			Kernel.Register(
 				Component.For<User>().Named("currentUser").Instance(user),
 				Component.For<AbstractCarProviderFactory>().Named("AbstractCarProviderFactory"),
 				Component.For<ICarProvider>()
 					.Attribute("factoryId").Eq("AbstractCarProviderFactory")
 					.Attribute("factoryCreate").Eq("Create")
-				);
+			);
 			Assert.IsInstanceOf(typeof(HondaProvider), Kernel.Resolve<ICarProvider>());
 		}
 
 		[Test]
 		public void register_ferrari_implementation_get_ferrari_instance()
 		{
-			RegisterComponentsImplemtedByFerrari(new User { FiscalStability = FiscalStability.MrMoneyBags });
+			RegisterComponentsImplemtedByFerrari(new User {FiscalStability = FiscalStability.MrMoneyBags});
 			Assert.IsInstanceOf(typeof(FerrariProvider), Kernel.Resolve<ICarProvider>());
 		}
 
 		[Test]
 		public void register_ferrari_implementation_get_honda_instance()
 		{
-			RegisterComponentsImplemtedByFerrari(new User { FiscalStability = FiscalStability.DirtFarmer });
+			RegisterComponentsImplemtedByFerrari(new User {FiscalStability = FiscalStability.DirtFarmer});
 			Assert.IsInstanceOf(typeof(HondaProvider), Kernel.Resolve<ICarProvider>());
 		}
 	}

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Delegates
 {
-	using System;
-
 	public class UsesDisposableFooDelegate
 	{
 		private readonly Func<int, DisposableFoo> myFooFactory;

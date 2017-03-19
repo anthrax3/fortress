@@ -61,7 +61,7 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 			Container.Register(
 				Component.For<IRepository, IRepository<User>>()
 					.ImplementedBy<MyRepository>()
-				);
+			);
 			var services = Container.ResolveAll<IRepository<User>>();
 
 			Assert.AreEqual(1, services.Length);
@@ -76,7 +76,7 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 					.ImplementedBy<MyRepository2>(),
 				Component.For<ServiceUsingRepository>(),
 				Component.For<User>()
-				);
+			);
 
 			Container.Resolve<ServiceUsingRepository>();
 		}
@@ -87,12 +87,12 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 			Container.Register(
 				Component.For<IUserRepository, IRepository>()
 					.ImplementedBy<MyRepository>()
-				);
+			);
 
 			Assert.AreSame(
 				Container.Resolve<IRepository>(),
 				Container.Resolve<IUserRepository>()
-				);
+			);
 		}
 
 		[Test]
@@ -102,16 +102,16 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 				Component.For<IUserRepository>()
 					.Forward<IRepository, IRepository<User>>()
 					.ImplementedBy<MyRepository>()
-				);
+			);
 
 			Assert.AreSame(
 				Container.Resolve<IRepository<User>>(),
 				Container.Resolve<IUserRepository>()
-				);
+			);
 			Assert.AreSame(
 				Container.Resolve<IRepository>(),
 				Container.Resolve<IUserRepository>()
-				);
+			);
 		}
 
 		[Test]
@@ -147,7 +147,7 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 			Container.Register(
 				Component.For<IUserRepository, IRepository>()
 					.ImplementedBy<MyRepository>()
-				);
+			);
 
 			var repos = Container.ResolveAll<IRepository>();
 			Assert.AreEqual(1, repos.Length);

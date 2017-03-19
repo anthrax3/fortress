@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class AppHost
 	{
-		private readonly IEnumerable<IAppScreen> screens;
-
 		public AppHost(IEnumerable<IAppScreen> screens)
 		{
-			this.screens = screens;
+			Screens = screens;
 		}
 
-		public IEnumerable<IAppScreen> Screens
-		{
-			get { return screens; }
-		}
+		public IEnumerable<IAppScreen> Screens { get; }
 	}
 }

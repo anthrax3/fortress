@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class MySpecification : ISpecification
 	{
-		private readonly IRepository<int> repository;
-
 		public MySpecification(IRepository<int> repository)
 		{
-			this.repository = repository;
+			Repository = repository;
 		}
 
-		public IRepository<int> Repository
-		{
-			get { return repository; }
-		}
+		public IRepository<int> Repository { get; }
 	}
 }

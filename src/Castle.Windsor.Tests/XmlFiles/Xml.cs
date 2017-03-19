@@ -51,4 +51,3 @@ namespace Castle.Windsor.Tests.XmlFiles
 		}
 	}
 }
-

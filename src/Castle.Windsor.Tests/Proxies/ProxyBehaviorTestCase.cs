@@ -30,6 +30,125 @@ namespace Castle.Windsor.Tests.Proxies
 	[TestFixture]
 	public class ProxyBehaviorTestCase : AbstractContainerTestCase
 	{
+		[Test]
+		public void Forwarded_type_proxy_implements_all_service_types_class_and_interface_services()
+		{
+			Container.Register(Component.For<StandardInterceptor>()
+					.Named("a")
+					.LifeStyle.Transient,
+				Component.For<TwoInterfacesImpl, ICommon2, ICommon>()
+					.ImplementedBy<TwoInterfacesImpl>()
+					.Interceptors("a")
+					.LifeStyle.Transient);
+
+			var common = Container.Resolve<ICommon>();
+			var common2 = Container.Resolve<ICommon2>();
+			var impl = Container.Resolve<TwoInterfacesImpl>();
+
+			Assert.AreSame(common.GetType(), common2.GetType());
+			Assert.AreSame(common.GetType(), impl.GetType());
+		}
+
+		[Test]
+		public void Forwarded_type_proxy_implements_all_service_types_interface_and_class_services()
+		{
+			Container.Register(Component.For<StandardInterceptor>()
+					.Named("a")
+					.LifeStyle.Transient,
+				Component.For<ICommon, ICommon2, TwoInterfacesImpl>()
+					.ImplementedBy<TwoInterfacesImpl>()
+					.Interceptors("a")
+					.LifeStyle.Transient);
+
+			var common = Container.Resolve<ICommon>();
+			var common2 = Container.Resolve<ICommon2>();
+			var impl = Container.Resolve<TwoInterfacesImpl>();
+
+			Assert.AreSame(common.GetType(), common2.GetType());
+			Assert.AreSame(common.GetType(), impl.GetType());
+		}
+
+		[Test]
+		public void Forwarded_type_proxy_implements_all_service_types_interface_services_only()
+		{
+			Container.Register(Component.For<StandardInterceptor>()
+					.Named("a")
+					.LifeStyle.Transient,
+				Component.For<ICommon, ICommon2>()
+					.ImplementedBy<TwoInterfacesImpl>()
+					.Interceptors("a")
+					.LifeStyle.Transient);
+
+			var common = Container.Resolve<ICommon>();
+			var common2 = Container.Resolve<ICommon2>();
+
+			Assert.AreSame(common.GetType(), common2.GetType());
+		}
+
+		[Test]
+		public void InterceptorSelector_can_be_OnBehalfAware()
+		{
+			OnBehalfAwareInterceptorSelector.target = null;
+			Container.Register(Component.For<OnBehalfAwareInterceptorSelector>().LifeStyle.Transient,
+				Component.For<StandardInterceptor>().LifeStyle.Transient,
+				Component.For<ISimpleService>()
+					.ImplementedBy<SimpleService>()
+					.LifeStyle.Transient
+					.Interceptors<StandardInterceptor>()
+					.SelectInterceptorsWith(s => s.Service<OnBehalfAwareInterceptorSelector>()));
+
+			var service = Container.Resolve<ISimpleService>();
+
+			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
+			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
+			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareInterceptorSelector.target.Services.Single());
+		}
+
+		[Test]
+		public void InternalInterfaceIgnoredByProxy()
+		{
+			Container.Install(
+				Configuration.FromXml(Xml.Embedded("proxyBehavior.xml")));
+
+			Assert.DoesNotThrow(() => Container.Resolve<object>("hasInternalInterface"));
+		}
+
+		[Test]
+		public void OnBehalfAware_InterceptorSelector_works_on_dependencies()
+		{
+			OnBehalfAwareInterceptorSelector.target = null;
+			Container.Register(Component.For<OnBehalfAwareInterceptorSelector>().LifeStyle.Transient,
+				Component.For<StandardInterceptor>().LifeStyle.Transient,
+				Component.For<UsesSimpleComponent1>().LifeStyle.Transient,
+				Component.For<SimpleComponent1>().LifeStyle.Transient
+					.Interceptors<StandardInterceptor>()
+					.SelectInterceptorsWith(s => s.Service<OnBehalfAwareInterceptorSelector>()));
+
+			var service = Container.Resolve<UsesSimpleComponent1>();
+
+			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
+			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
+			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareInterceptorSelector.target.Services.Single());
+		}
+
+		[Test]
+		public void OnBehalfAware_ProxyGenarationHook_works_on_dependencies()
+		{
+			OnBehalfAwareProxyGenerationHook.target = null;
+			Container.Register(Component.For<OnBehalfAwareProxyGenerationHook>().LifeStyle.Transient,
+				Component.For<StandardInterceptor>().LifeStyle.Transient,
+				Component.For<UsesSimpleComponent1>().LifeStyle.Transient,
+				Component.For<SimpleComponent1>().LifeStyle.Transient
+					.Interceptors<StandardInterceptor>()
+					.Proxy.Hook(h => h.Service<OnBehalfAwareProxyGenerationHook>()));
+
+			var service = Container.Resolve<UsesSimpleComponent1>();
+
+			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
+			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
+			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareProxyGenerationHook.target.Services.Single());
+		}
+
 		// we do not support xml config on SL
 		[Test]
 		public void Proxy_exposes_only_service_interfaces_from_configuration()
@@ -42,143 +161,14 @@ namespace Castle.Windsor.Tests.Proxies
 		}
 
 		[Test]
-		public void ProxyGenarationHook_can_be_OnBehalfAware()
-		{
-			OnBehalfAwareProxyGenerationHook.target = null;
-			Container.Register(Component.For<OnBehalfAwareProxyGenerationHook>().LifeStyle.Transient,
-			                   Component.For<StandardInterceptor>().LifeStyle.Transient,
-			                   Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleService>()
-			                   	.LifeStyle.Transient
-			                   	.Interceptors<StandardInterceptor>()
-			                   	.Proxy.Hook(h => h.Service<OnBehalfAwareProxyGenerationHook>()));
-
-			var service = Container.Resolve<ISimpleService>();
-
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
-			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
-			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareProxyGenerationHook.target.Services.Single());
-		}
-
-		[Test]
-		public void OnBehalfAware_ProxyGenarationHook_works_on_dependencies()
-		{
-			OnBehalfAwareProxyGenerationHook.target = null;
-			Container.Register(Component.For<OnBehalfAwareProxyGenerationHook>().LifeStyle.Transient,
-			                   Component.For<StandardInterceptor>().LifeStyle.Transient,
-			                   Component.For<UsesSimpleComponent1>().LifeStyle.Transient,
-			                   Component.For<SimpleComponent1>().LifeStyle.Transient
-			                   	.Interceptors<StandardInterceptor>()
-			                   	.Proxy.Hook(h => h.Service<OnBehalfAwareProxyGenerationHook>()));
-
-			var service = Container.Resolve<UsesSimpleComponent1>();
-
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
-			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
-			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareProxyGenerationHook.target.Services.Single());
-		}
-
-		[Test]
-		public void InterceptorSelector_can_be_OnBehalfAware()
-		{
-			OnBehalfAwareInterceptorSelector.target = null;
-			Container.Register(Component.For<OnBehalfAwareInterceptorSelector>().LifeStyle.Transient,
-			                   Component.For<StandardInterceptor>().LifeStyle.Transient,
-			                   Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleService>()
-			                   	.LifeStyle.Transient
-			                   	.Interceptors<StandardInterceptor>()
-			                   	.SelectInterceptorsWith(s => s.Service<OnBehalfAwareInterceptorSelector>()));
-
-			var service = Container.Resolve<ISimpleService>();
-
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
-			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
-			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareInterceptorSelector.target.Services.Single());
-		}
-
-		[Test]
-		public void OnBehalfAware_InterceptorSelector_works_on_dependencies()
-		{
-			OnBehalfAwareInterceptorSelector.target = null;
-			Container.Register(Component.For<OnBehalfAwareInterceptorSelector>().LifeStyle.Transient,
-			                   Component.For<StandardInterceptor>().LifeStyle.Transient,
-			                   Component.For<UsesSimpleComponent1>().LifeStyle.Transient,
-			                   Component.For<SimpleComponent1>().LifeStyle.Transient
-			                   	.Interceptors<StandardInterceptor>()
-			                   	.SelectInterceptorsWith(s => s.Service<OnBehalfAwareInterceptorSelector>()));
-
-			var service = Container.Resolve<UsesSimpleComponent1>();
-
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
-			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
-			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareInterceptorSelector.target.Services.Single());
-		}
-
-		[Test]
-		public void Forwarded_type_proxy_implements_all_service_types_interface_services_only()
-		{
-			Container.Register(Component.For<StandardInterceptor>()
-			                   	.Named("a")
-			                   	.LifeStyle.Transient,
-			                   Component.For<ICommon, ICommon2>()
-			                   	.ImplementedBy<TwoInterfacesImpl>()
-			                   	.Interceptors("a")
-			                   	.LifeStyle.Transient);
-
-			var common = Container.Resolve<ICommon>();
-			var common2 = Container.Resolve<ICommon2>();
-
-			Assert.AreSame(common.GetType(), common2.GetType());
-		}
-
-		[Test]
-		public void Forwarded_type_proxy_implements_all_service_types_interface_and_class_services()
-		{
-			Container.Register(Component.For<StandardInterceptor>()
-			                   	.Named("a")
-			                   	.LifeStyle.Transient,
-			                   Component.For<ICommon, ICommon2, TwoInterfacesImpl>()
-			                   	.ImplementedBy<TwoInterfacesImpl>()
-			                   	.Interceptors("a")
-			                   	.LifeStyle.Transient);
-
-			var common = Container.Resolve<ICommon>();
-			var common2 = Container.Resolve<ICommon2>();
-			var impl = Container.Resolve<TwoInterfacesImpl>();
-
-			Assert.AreSame(common.GetType(), common2.GetType());
-			Assert.AreSame(common.GetType(), impl.GetType());
-		}
-
-		[Test]
-		public void Forwarded_type_proxy_implements_all_service_types_class_and_interface_services()
-		{
-			Container.Register(Component.For<StandardInterceptor>()
-			                   	.Named("a")
-			                   	.LifeStyle.Transient,
-			                   Component.For<TwoInterfacesImpl, ICommon2, ICommon>()
-			                   	.ImplementedBy<TwoInterfacesImpl>()
-			                   	.Interceptors("a")
-			                   	.LifeStyle.Transient);
-
-			var common = Container.Resolve<ICommon>();
-			var common2 = Container.Resolve<ICommon2>();
-			var impl = Container.Resolve<TwoInterfacesImpl>();
-
-			Assert.AreSame(common.GetType(), common2.GetType());
-			Assert.AreSame(common.GetType(), impl.GetType());
-		}
-
-		[Test]
 		public void Proxy_implements_only_service_interfaces()
 		{
 			Container.Register(Component.For<CountingInterceptor>()
-			                   	.Named("a"),
-			                   Component.For<ICommon>()
-			                   	.ImplementedBy<TwoInterfacesImpl>()
-			                   	.Interceptors("a")
-			                   	.LifeStyle.Transient);
+					.Named("a"),
+				Component.For<ICommon>()
+					.ImplementedBy<TwoInterfacesImpl>()
+					.Interceptors("a")
+					.LifeStyle.Transient);
 
 			var common = Container.Resolve<ICommon>();
 
@@ -189,12 +179,12 @@ namespace Castle.Windsor.Tests.Proxies
 		public void Proxy_implements_only_service_interfaces_or_explicitly_added_interfaces()
 		{
 			Container.Register(Component.For<CountingInterceptor>()
-			                   	.Named("a"),
-			                   Component.For<ICommon>()
-			                   	.ImplementedBy<TwoInterfacesImpl>()
-			                   	.Interceptors("a")
-			                   	.Proxy.AdditionalInterfaces(typeof(ICommon2))
-			                   	.LifeStyle.Transient);
+					.Named("a"),
+				Component.For<ICommon>()
+					.ImplementedBy<TwoInterfacesImpl>()
+					.Interceptors("a")
+					.Proxy.AdditionalInterfaces(typeof(ICommon2))
+					.LifeStyle.Transient);
 
 			var common = Container.Resolve<ICommon>();
 
@@ -202,12 +192,22 @@ namespace Castle.Windsor.Tests.Proxies
 		}
 
 		[Test]
-		public void InternalInterfaceIgnoredByProxy()
+		public void ProxyGenarationHook_can_be_OnBehalfAware()
 		{
-			Container.Install(
-				Configuration.FromXml(Xml.Embedded("proxyBehavior.xml")));
+			OnBehalfAwareProxyGenerationHook.target = null;
+			Container.Register(Component.For<OnBehalfAwareProxyGenerationHook>().LifeStyle.Transient,
+				Component.For<StandardInterceptor>().LifeStyle.Transient,
+				Component.For<ISimpleService>()
+					.ImplementedBy<SimpleService>()
+					.LifeStyle.Transient
+					.Interceptors<StandardInterceptor>()
+					.Proxy.Hook(h => h.Service<OnBehalfAwareProxyGenerationHook>()));
 
-			Assert.DoesNotThrow(() => Container.Resolve<object>("hasInternalInterface"));
+			var service = Container.Resolve<ISimpleService>();
+
+			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
+			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
+			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareProxyGenerationHook.target.Services.Single());
 		}
 	}
 }

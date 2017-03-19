@@ -20,32 +20,23 @@ namespace Castle.Windsor.Tests.Components
 	[Transient]
 	public class CalculatorServiceWithLifecycle : ICalcService, IInitializable, IDisposable
 	{
-		private bool initialized;
-		private bool disposed;
-
 		public int Sum(int x, int y)
 		{
 			return x + y;
 		}
 
-		public void Initialize()
-		{
-			initialized = true;
-		}
+		public bool Initialized { get; private set; }
+
+		public bool Disposed { get; private set; }
 
 		public void Dispose()
 		{
-			disposed = true;
+			Disposed = true;
 		}
 
-		public bool Initialized
+		public void Initialize()
 		{
-			get { return initialized; }
-		}
-
-		public bool Disposed
-		{
-			get { return disposed; }
+			Initialized = true;
 		}
 	}
 }

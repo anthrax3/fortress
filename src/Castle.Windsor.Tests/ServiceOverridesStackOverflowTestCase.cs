@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Linq;
 using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ServiceOverridesStackOverflowTestCase
 	{
@@ -38,55 +36,6 @@ namespace Castle.Windsor.Tests
 			Assert.AreEqual(2, array.Length);
 			Assert.AreSame(array[0], container.Resolve<IDevice>("device2"));
 			Assert.AreSame(array[1], container.Resolve<IDevice>("device3"));
-		}
-	}
-
-	public class MessageChannel
-	{
-		private readonly IDevice rootDevice;
-
-		public MessageChannel(IDevice root)
-		{
-			rootDevice = root;
-		}
-
-		public IDevice RootDevice
-		{
-			get { return rootDevice; }
-		}
-	}
-
-	public interface IDevice
-	{
-		MessageChannel Channel { get; }
-		IEnumerable<IDevice> Children { get; }
-
-	}
-
-	public abstract class BaseDevice : IDevice
-	{
-		public abstract IEnumerable<IDevice> Children { get; }
-
-		public MessageChannel Channel { get; set; }
-
-	}
-
-	public class TestDevice : BaseDevice
-	{
-		private readonly List<IDevice> children;
-
-		public TestDevice()
-		{
-		}
-
-		public TestDevice(IEnumerable<IDevice> theChildren)
-		{
-			children = new List<IDevice>(theChildren);
-		}
-
-		public override IEnumerable<IDevice> Children
-		{
-			get { return children; }
 		}
 	}
 }

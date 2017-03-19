@@ -39,9 +39,9 @@ namespace Castle.Windsor.Tests.Proxies
 					.ImplementedBy<Use<IComponent>>()
 					.Proxy.MixIns(m => m.Component<TrivialComponent>())
 					.Interceptors<CollectInvocationsInterceptor>()
-				);
+			);
 
-			var outerProxy = (UseChain<IComponent>)Container.Resolve<IUse<IComponent>>();
+			var outerProxy = (UseChain<IComponent>) Container.Resolve<IUse<IComponent>>();
 			var innerProxy = outerProxy.Next;
 
 			var id = (outerProxy as IComponent).ID; // to trigger interception;

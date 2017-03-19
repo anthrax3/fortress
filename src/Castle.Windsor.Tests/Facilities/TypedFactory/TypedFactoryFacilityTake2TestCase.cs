@@ -41,10 +41,10 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		public void Can_Resolve_by_closed_generic_closed_on_arguments_type_with_custom_selector()
 		{
 			Container.Register(Classes.FromAssemblyContaining<TypedFactoryFacilityTake2TestCase>()
-				                   .BasedOn(typeof(GenericComponent<>))
-				                   .WithService.Base().Configure(c => c.LifestyleTransient()),
-			                   Component.For<IObjectFactory>().AsFactory(s => s.SelectedWith<SelectorByClosedArgumentType>()),
-			                   Component.For<SelectorByClosedArgumentType>());
+					.BasedOn(typeof(GenericComponent<>))
+					.WithService.Base().Configure(c => c.LifestyleTransient()),
+				Component.For<IObjectFactory>().AsFactory(s => s.SelectedWith<SelectorByClosedArgumentType>()),
+				Component.For<SelectorByClosedArgumentType>());
 
 			var factory = Container.Resolve<IObjectFactory>();
 
@@ -53,8 +53,8 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			Assert.IsInstanceOf<GenericIntComponent>(one);
 			Assert.IsInstanceOf<GenericStringComponent>(two);
 
-			Assert.AreEqual(3, ((GenericIntComponent)one).Value);
-			Assert.AreEqual("two", ((GenericStringComponent)two).Value);
+			Assert.AreEqual(3, ((GenericIntComponent) one).Value);
+			Assert.AreEqual("two", ((GenericStringComponent) two).Value);
 		}
 
 		[Test]
@@ -76,6 +76,33 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			var two = factory.ComponentNamed("two");
 			Assert.IsInstanceOf<Component1>(one);
 			Assert.IsInstanceOf<Component2>(two);
+		}
+
+		[Test]
+		public void Can_resolve_component()
+		{
+			Container.Register(Component.For<IDummyComponentFactory>().AsFactory());
+			var factory = Container.Resolve<IDummyComponentFactory>();
+
+			var component = factory.CreateDummyComponent();
+			Assert.IsNotNull(component);
+		}
+
+		[Test]
+		public void Can_resolve_component_by_name_with_default_selector()
+		{
+			Container.Register(
+				Component.For<IDummyComponent>()
+					.ImplementedBy<Component2>()
+					.Named("SecondComponent")
+					.LifeStyle.Transient,
+				Component.For<IDummyComponentFactory>()
+					.AsFactory());
+			var factory = Container.Resolve<IDummyComponentFactory>();
+
+			var component = factory.GetSecondComponent();
+			Assert.IsNotNull(component);
+			Assert.IsInstanceOf<Component2>(component);
 		}
 
 		[Test]
@@ -177,33 +204,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		}
 
 		[Test]
-		public void Can_resolve_component()
-		{
-			Container.Register(Component.For<IDummyComponentFactory>().AsFactory());
-			var factory = Container.Resolve<IDummyComponentFactory>();
-
-			var component = factory.CreateDummyComponent();
-			Assert.IsNotNull(component);
-		}
-
-		[Test]
-		public void Can_resolve_component_by_name_with_default_selector()
-		{
-			Container.Register(
-				Component.For<IDummyComponent>()
-					.ImplementedBy<Component2>()
-					.Named("SecondComponent")
-					.LifeStyle.Transient,
-				Component.For<IDummyComponentFactory>()
-					.AsFactory());
-			var factory = Container.Resolve<IDummyComponentFactory>();
-
-			var component = factory.GetSecondComponent();
-			Assert.IsNotNull(component);
-			Assert.IsInstanceOf<Component2>(component);
-		}
-
-		[Test]
 		public void Can_resolve_open_generic_components()
 		{
 			Container.Register(
@@ -257,7 +257,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		public void Can_resolve_via_generic_factory_inherited_semi_closing()
 		{
 			Container.Register(Component.For(typeof(IGenericFactoryDouble<,>)).AsFactory(),
-			                   Component.For<IProtocolHandler>().ImplementedBy<MirandaProtocolHandler>().LifeStyle.Transient);
+				Component.For<IProtocolHandler>().ImplementedBy<MirandaProtocolHandler>().LifeStyle.Transient);
 
 			var factory = Container.Resolve<IGenericFactoryDouble<IDummyComponent, IProtocolHandler>>();
 
@@ -452,7 +452,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 					.Named("SecondComponent")
 					.LifeStyle.Transient,
 				Component.For<IDummyComponentFactory>()
-					.AsFactory(new DefaultTypedFactoryComponentSelector(getMethodsResolveByName: false)));
+					.AsFactory(new DefaultTypedFactoryComponentSelector(false)));
 			var factory = Container.Resolve<IDummyComponentFactory>();
 
 			var component = factory.GetSecondComponent();
@@ -539,22 +539,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			var factory = Container.Resolve<IDummyComponentFactory>();
 
 			Assert.Throws<ComponentNotFoundException>(() => factory.CreateDummyComponent());
-		}
-
-		[Test]
-		public void Selector_WILL_NOT_be_picked_implicitly()
-		{
-			Container.Register(
-				Component.For<IDummyComponent>().ImplementedBy<Component1>().Named("one").LifeStyle.Transient,
-				Component.For<IDummyComponent>().ImplementedBy<Component2>().Named("two").LifeStyle.Transient,
-				Component.For<IDummyComponentFactory>().AsFactory(),
-				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<Component1Selector>(),
-				Component.For<Component2Selector, ITypedFactoryComponentSelector>());
-
-			var factory = Container.Resolve<IDummyComponentFactory>();
-			var component = factory.CreateDummyComponent();
-
-			Assert.IsInstanceOf<Component1>(component);
 		}
 
 		[Test]
@@ -681,6 +665,22 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			var component = factory.CreateDummyComponent();
 
 			Assert.IsInstanceOf<Component2>(component);
+		}
+
+		[Test]
+		public void Selector_WILL_NOT_be_picked_implicitly()
+		{
+			Container.Register(
+				Component.For<IDummyComponent>().ImplementedBy<Component1>().Named("one").LifeStyle.Transient,
+				Component.For<IDummyComponent>().ImplementedBy<Component2>().Named("two").LifeStyle.Transient,
+				Component.For<IDummyComponentFactory>().AsFactory(),
+				Component.For<ITypedFactoryComponentSelector>().ImplementedBy<Component1Selector>(),
+				Component.For<Component2Selector, ITypedFactoryComponentSelector>());
+
+			var factory = Container.Resolve<IDummyComponentFactory>();
+			var component = factory.CreateDummyComponent();
+
+			Assert.IsInstanceOf<Component1>(component);
 		}
 
 		[Test]

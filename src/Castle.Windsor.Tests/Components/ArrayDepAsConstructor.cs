@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class ArrayDepAsConstructor
 	{
-		private readonly IEmptyService[] services;
-
 		public ArrayDepAsConstructor(IEmptyService[] services)
 		{
-			this.services = services;
+			Services = services;
 		}
 
-		public IEmptyService[] Services
-		{
-			get { return services; }
-		}
+		public IEmptyService[] Services { get; }
 	}
 }

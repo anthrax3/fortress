@@ -31,17 +31,12 @@ namespace Castle.Windsor.Tests.Facilities.FactorySupport
 
 		private class SettingsConsumer
 		{
-			private readonly int something;
-
 			public SettingsConsumer(int something)
 			{
-				this.something = something;
+				Something = something;
 			}
 
-			public int Something
-			{
-				get { return something; }
-			}
+			public int Something { get; }
 		}
 
 		[Test]
@@ -53,7 +48,7 @@ namespace Castle.Windsor.Tests.Facilities.FactorySupport
 #pragma warning restore
 
 			var service = Kernel.Resolve(serviceKey,
-			                             typeof(ISomeService)) as ISomeService;
+				typeof(ISomeService)) as ISomeService;
 
 			Assert.IsTrue(ServiceFactory.CreateWasCalled);
 			Assert.IsInstanceOf(typeof(ServiceImplementation), service);

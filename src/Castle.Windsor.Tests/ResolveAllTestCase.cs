@@ -26,7 +26,7 @@ namespace Castle.Windsor.Tests
 		public void Can_resolve_more_than_single_component_for_service()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 			var clocks = Container.ResolveAll<IEmptyService>();
 			Assert.AreEqual(2, clocks.Length);
 		}
@@ -35,7 +35,7 @@ namespace Castle.Windsor.Tests
 		public void Can_use_mutliResolve_with_generic_Specialization()
 		{
 			Container.Register(Component.For(typeof(IRepository<>)).ImplementedBy(typeof(DemoRepository<>)),
-			                   Component.For(typeof(IRepository<>)).ImplementedBy(typeof(TransientRepository<>)));
+				Component.For(typeof(IRepository<>)).ImplementedBy(typeof(TransientRepository<>)));
 
 			Container.Resolve<IRepository<IEmptyService>>();
 			var repositories = Container.ResolveAll<IRepository<EmptyServiceA>>();
@@ -64,8 +64,8 @@ namespace Castle.Windsor.Tests
 		public void ResolveAll_honors_order_and_kinf_of_registration()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsFallback(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceC>().IsDefault());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsFallback(),
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceC>().IsDefault());
 
 			var clocks = Container.ResolveAll<IEmptyService>();
 
@@ -76,8 +76,8 @@ namespace Castle.Windsor.Tests
 			//reversing order
 			ResetContainer();
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceC>().IsDefault());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(),
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceC>().IsDefault());
 
 			clocks = Container.ResolveAll<IEmptyService>();
 
@@ -90,7 +90,7 @@ namespace Castle.Windsor.Tests
 		public void ResolveAll_honors_order_of_registration()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 
 			var clocks = Container.ResolveAll<IEmptyService>();
 
@@ -100,7 +100,7 @@ namespace Castle.Windsor.Tests
 			//reversing order
 			ResetContainer();
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>());
 
 			clocks = Container.ResolveAll<IEmptyService>();
 

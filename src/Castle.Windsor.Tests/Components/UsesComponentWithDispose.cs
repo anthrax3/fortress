@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class UsesComponentWithDispose
 	{
-		private readonly ComponentWithDispose cwd;
-
 		public UsesComponentWithDispose(ComponentWithDispose cwd)
 		{
-			this.cwd = cwd;
+			Disposable = cwd;
 		}
 
-		public ComponentWithDispose Disposable
-		{
-			get { return cwd; }
-		}
+		public ComponentWithDispose Disposable { get; }
 	}
 }

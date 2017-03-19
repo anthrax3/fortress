@@ -33,11 +33,10 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<IDependency>().ImplementedBy<ResolvableDependency>(),
 				Component.For<IDependency>().ImplementedBy<UnresolvalbeDependencyWithPrimitiveConstructor>(),
 				Component.For<IDependOnArray>().ImplementedBy<DependsOnArray>()
-				);
+			);
 
-			var exception = 
-
-			Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
+			var exception =
+				Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
 
 			var message =
 				string.Format(
@@ -57,11 +56,10 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<IDependency>().ImplementedBy<ResolvableDependency>(),
 				Component.For<IDependency>().ImplementedBy<UnresolvalbeDependencyWithAdditionalServiceConstructor>(),
 				Component.For<IDependOnArray>().ImplementedBy<DependsOnArray>()
-				);
+			);
 
 			var exception =
-
-			Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
+				Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
 
 			var message =
 				string.Format(
@@ -82,11 +80,10 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<IDependency>().ImplementedBy<ResolvableDependency>(),
 				Component.For<IDependency>().ImplementedBy<UnresolvalbeDependency>(),
 				Component.For<IDependOnArray>().ImplementedBy<DependsOnArray>()
-				);
+			);
 
 			var exception =
-
-			Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
+				Assert.Throws<HandlerException>(() => Container.Resolve<IDependOnArray>());
 
 			var message =
 				string.Format(
@@ -103,9 +100,9 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 		{
 			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
 			Container.Register(Classes.FromThisAssembly()
-			                   	.BasedOn<IEmptyService>()
-			                   	.WithService.Base()
-			                   	.ConfigureFor<EmptyServiceComposite>(r => r.Forward<EmptyServiceComposite>()));
+				.BasedOn<IEmptyService>()
+				.WithService.Base()
+				.ConfigureFor<EmptyServiceComposite>(r => r.Forward<EmptyServiceComposite>()));
 
 			var composite = Container.Resolve<EmptyServiceComposite>();
 			Assert.AreEqual(5, composite.Inner.Length);
@@ -121,62 +118,10 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
 				Component.For<IEmptyService>().ImplementedBy<EmptyServiceDecorator>(),
 				Component.For<IEmptyService>().ImplementedBy<EmptyServiceDecoratorViaProperty>()
-				);
+			);
 
 			var composite = Container.Resolve<EmptyServiceComposite>();
 			Assert.AreEqual(4, composite.Inner.Length);
-		}
-
-		[Test]
-		public void DependencyOnArrayOfServices_OnConstructor()
-		{
-			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
-			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<ArrayDepAsConstructor>());
-
-			var comp = Container.Resolve<ArrayDepAsConstructor>();
-
-			Assert.IsNotNull(comp);
-			Assert.IsNotNull(comp.Services);
-			Assert.AreEqual(2, comp.Services.Length);
-			foreach (var service in comp.Services)
-			{
-				Assert.IsNotNull(service);
-			}
-		}
-
-		[Test]
-		public void DependencyOnArrayOfServices_OnProperty()
-		{
-			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
-			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<ArrayDepAsProperty>());
-
-			var comp = Container.Resolve<ArrayDepAsProperty>();
-
-			Assert.IsNotNull(comp);
-			Assert.IsNotNull(comp.Services);
-			Assert.AreEqual(2, comp.Services.Length);
-			foreach (var service in comp.Services)
-			{
-				Assert.IsNotNull(service);
-			}
-		}
-
-		[Test]
-		public void DependencyOnArrayWhenEmpty()
-		{
-			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel, true));
-			Container.Register(Component.For<ArrayDepAsConstructor>(),
-			                   Component.For<ArrayDepAsProperty>());
-
-			var proxy = Container.Resolve<ArrayDepAsConstructor>();
-			Assert.IsNotNull(proxy.Services);
-
-			var proxy2 = Container.Resolve<ArrayDepAsProperty>();
-			Assert.IsNotNull(proxy2.Services);
 		}
 
 		[Test]
@@ -184,8 +129,8 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 		{
 			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<ArrayRefDepAsConstructor>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<ArrayRefDepAsConstructor>());
 
 			var comp = Container.Resolve<ArrayRefDepAsConstructor>();
 
@@ -193,9 +138,55 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 			Assert.IsNotNull(comp.Services);
 			Assert.AreEqual(2, comp.Services.Length);
 			foreach (var service in comp.Services)
-			{
 				Assert.IsNotNull(service);
-			}
+		}
+
+		[Test]
+		public void DependencyOnArrayOfServices_OnConstructor()
+		{
+			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
+			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<ArrayDepAsConstructor>());
+
+			var comp = Container.Resolve<ArrayDepAsConstructor>();
+
+			Assert.IsNotNull(comp);
+			Assert.IsNotNull(comp.Services);
+			Assert.AreEqual(2, comp.Services.Length);
+			foreach (var service in comp.Services)
+				Assert.IsNotNull(service);
+		}
+
+		[Test]
+		public void DependencyOnArrayOfServices_OnProperty()
+		{
+			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel));
+			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<ArrayDepAsProperty>());
+
+			var comp = Container.Resolve<ArrayDepAsProperty>();
+
+			Assert.IsNotNull(comp);
+			Assert.IsNotNull(comp.Services);
+			Assert.AreEqual(2, comp.Services.Length);
+			foreach (var service in comp.Services)
+				Assert.IsNotNull(service);
+		}
+
+		[Test]
+		public void DependencyOnArrayWhenEmpty()
+		{
+			Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel, true));
+			Container.Register(Component.For<ArrayDepAsConstructor>(),
+				Component.For<ArrayDepAsProperty>());
+
+			var proxy = Container.Resolve<ArrayDepAsConstructor>();
+			Assert.IsNotNull(proxy.Services);
+
+			var proxy2 = Container.Resolve<ArrayDepAsProperty>();
+			Assert.IsNotNull(proxy2.Services);
 		}
 
 		[Test(Description = "IOC-240")]

@@ -1,4 +1,5 @@
 <?pi instruction will also be removed ?>
+
 <!-- some comments here, this should be removed by the xsl -->
 <configuration>
 	<define flag="debug" />
@@ -15,24 +16,24 @@
 			</component>
 		</if>
 		<if not-defined="DEBUG" att="#{prop1}">
-			<component id="notdebug"/>
+			<component id="notdebug" />
 		</if>
 
 		<if defined="Qa">
-			<component id="qa" att="#{prop1}"/>
+			<component id="qa" att="#{prop1}" />
 		</if>
 		<if not-defined="Qa">
-			<component id="notqa" att="#{prop1}"/>
+			<component id="notqa" att="#{prop1}" />
 		</if>
 
 		<if defined="Prod">
-			<component id="prod" att="#{prop1}"/>
+			<component id="prod" att="#{prop1}" />
 		</if>
 		<if not-defined="Prod">
-			<component id="notprod" att="#{prop1}"/>
+			<component id="notprod" att="#{prop1}" />
 		</if>
 
-		<component id="default" att="#{prop1}"/>
-	</components>		
+		<component id="default" att="#{prop1}" />
+	</components>
 
 </configuration>

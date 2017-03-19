@@ -22,6 +22,6 @@ namespace Castle.Windsor.Tests.Components
 		}
 
 		public IUse<T> Next { get; set; }
-		public T Dependency { get; private set; }
+		public T Dependency { get; }
 	}
 }

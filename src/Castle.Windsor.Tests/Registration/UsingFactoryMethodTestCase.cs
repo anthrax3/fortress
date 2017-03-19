@@ -19,7 +19,6 @@ using Castle.Windsor.MicroKernel.ComponentActivator;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Tests.Config.Components;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Registration
@@ -31,8 +30,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_dispose_component_on_release_disposable_service()
 		{
 			Kernel.Register(Component.For<DisposableComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new DisposableComponent()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new DisposableComponent()));
 			var component = Kernel.Resolve<DisposableComponent>();
 			Assert.IsFalse(component.Disposed);
 
@@ -45,8 +44,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_dispose_component_on_release_non_disposable_service_and_impl()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new ComponentWithDispose()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new ComponentWithDispose()));
 			var component = Kernel.Resolve<IComponent>() as ComponentWithDispose;
 			Assert.IsFalse(component.Disposed);
 
@@ -59,9 +58,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_dispose_component_on_release_non_disposable_service_disposable_impl()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.ImplementedBy<ComponentWithDispose>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new ComponentWithDispose()));
+				.ImplementedBy<ComponentWithDispose>()
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new ComponentWithDispose()));
 			var component = Kernel.Resolve<IComponent>() as ComponentWithDispose;
 			Assert.IsFalse(component.Disposed);
 
@@ -74,8 +73,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_opt_out_of_applying_lifetime_concerns_to_factory_component()
 		{
 			Kernel.Register(Component.For<DisposableComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new DisposableComponent(), managedExternally: true));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new DisposableComponent(), true));
 			var component = Kernel.Resolve<DisposableComponent>();
 			Assert.IsFalse(component.Disposed);
 
@@ -87,13 +86,13 @@ namespace Castle.Windsor.Tests.Registration
 		[Test]
 		public void Can_properly_resolve_component_from_UsingFactory()
 		{
-			var user = new User { FiscalStability = FiscalStability.DirtFarmer };
+			var user = new User {FiscalStability = FiscalStability.DirtFarmer};
 			Kernel.Register(
 				Component.For<User>().Instance(user),
 				Component.For<AbstractCarProviderFactory>(),
 				Component.For<ICarProvider>()
 					.UsingFactory((AbstractCarProviderFactory f) => f.Create(Kernel.Resolve<User>()))
-				);
+			);
 			Assert.IsInstanceOf<HondaProvider>(Kernel.Resolve<ICarProvider>());
 		}
 
@@ -103,8 +102,8 @@ namespace Castle.Windsor.Tests.Registration
 			Kernel.Register(
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(
-						() => new AbstractCarProviderFactory().Create(new User { FiscalStability = FiscalStability.DirtFarmer }))
-				);
+						() => new AbstractCarProviderFactory().Create(new User {FiscalStability = FiscalStability.DirtFarmer}))
+			);
 
 			Assert.IsInstanceOf<HondaProvider>(Kernel.Resolve<ICarProvider>());
 		}
@@ -115,13 +114,13 @@ namespace Castle.Windsor.Tests.Registration
 			Kernel.Register(
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(
-						() => new AbstractCarProviderFactory().Create(new User { FiscalStability = FiscalStability.MrMoneyBags }))
+						() => new AbstractCarProviderFactory().Create(new User {FiscalStability = FiscalStability.MrMoneyBags}))
 					.Named("ferrariProvider"),
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(
-						() => new AbstractCarProviderFactory().Create(new User { FiscalStability = FiscalStability.DirtFarmer }))
+						() => new AbstractCarProviderFactory().Create(new User {FiscalStability = FiscalStability.DirtFarmer}))
 					.Named("hondaProvider")
-				);
+			);
 
 			Assert.IsInstanceOf<HondaProvider>(Kernel.Resolve<ICarProvider>("hondaProvider"));
 			Assert.IsInstanceOf<FerrariProvider>(Kernel.Resolve<ICarProvider>("ferrariProvider"));
@@ -131,10 +130,10 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_properly_resolve_component_from_UsingFactoryMethod_with_kernel()
 		{
 			Kernel.Register(
-				Component.For<User>().Instance(new User { FiscalStability = FiscalStability.MrMoneyBags }),
+				Component.For<User>().Instance(new User {FiscalStability = FiscalStability.MrMoneyBags}),
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(k => new AbstractCarProviderFactory().Create(k.Resolve<User>()))
-				);
+			);
 			Assert.IsInstanceOf<FerrariProvider>(Kernel.Resolve<ICarProvider>());
 		}
 
@@ -144,13 +143,13 @@ namespace Castle.Windsor.Tests.Registration
 			Kernel.Register(
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(
-						k => new AbstractCarProviderFactory().Create(new User { FiscalStability = FiscalStability.MrMoneyBags }))
+						k => new AbstractCarProviderFactory().Create(new User {FiscalStability = FiscalStability.MrMoneyBags}))
 					.Named("ferrariProvider"),
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod(
-						k => new AbstractCarProviderFactory().Create(new User { FiscalStability = FiscalStability.DirtFarmer }))
+						k => new AbstractCarProviderFactory().Create(new User {FiscalStability = FiscalStability.DirtFarmer}))
 					.Named("hondaProvider")
-				);
+			);
 
 			Assert.IsInstanceOf<HondaProvider>(Kernel.Resolve<ICarProvider>("hondaProvider"));
 			Assert.IsInstanceOf<FerrariProvider>(Kernel.Resolve<ICarProvider>("ferrariProvider"));
@@ -164,9 +163,9 @@ namespace Castle.Windsor.Tests.Registration
 				Component.For<AbstractCarProviderFactory>(),
 				Component.For<ICarProvider>()
 					.UsingFactoryMethod((k, ctx) =>
-					                    new AbstractCarProviderFactory()
-					                    	.Create(k.Resolve<User>(ctx.AdditionalArguments)))
-				);
+						new AbstractCarProviderFactory()
+							.Create(k.Resolve<User>(ctx.AdditionalArguments)))
+			);
 			var carProvider = Kernel.Resolve<ICarProvider>(new Arguments().Insert("FiscalStability", FiscalStability.MrMoneyBags));
 			Assert.IsInstanceOf<FerrariProvider>(carProvider);
 		}
@@ -175,9 +174,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_proxy_component_created_via_factory_using_additional_interfaces()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new TrivialComponent())
-			                	.Proxy.AdditionalInterfaces(typeof(IEmptyService)));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new TrivialComponent())
+				.Proxy.AdditionalInterfaces(typeof(IEmptyService)));
 			var component = Kernel.Resolve<IComponent>();
 			Assert.IsInstanceOf<IEmptyService>(component);
 		}
@@ -218,9 +217,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_proxy_component_created_via_factory_using_mixins()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new TrivialComponent())
-			                	.Proxy.MixIns(new CameraService()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new TrivialComponent())
+				.Proxy.MixIns(new CameraService()));
 			var component = Kernel.Resolve<IComponent>();
 			Assert.IsInstanceOf<ICameraService>(component);
 		}
@@ -240,8 +239,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Checks_and_throws_an_exception_when_factory_method_returns_null()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => default(IComponent)));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => default(IComponent)));
 
 			Assert.Throws<ComponentActivatorException>(() => Kernel.Resolve<IComponent>());
 		}
@@ -262,8 +261,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Factory_created_abstract_non_disposable_class_services_are_NOT_tracked()
 		{
 			Kernel.Register(Component.For<TrivialComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new TrivialComponent()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new TrivialComponent()));
 
 			var component = Kernel.Resolve<TrivialComponent>();
 
@@ -274,8 +273,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Factory_created_abstract_non_disposable_interface_services_are_NOT_tracked()
 		{
 			Kernel.Register(Component.For<IComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new SealedComponent()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new SealedComponent()));
 
 			var component = Kernel.Resolve<IComponent>();
 
@@ -314,8 +313,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Factory_created_sealed_disposable_services_are_tracked()
 		{
 			Kernel.Register(Component.For<SealedComponentDisposable>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new SealedComponentDisposable()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new SealedComponentDisposable()));
 
 			var component = Kernel.Resolve<SealedComponentDisposable>();
 
@@ -331,8 +330,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Factory_created_sealed_non_disposable_services_are_not_tracked()
 		{
 			Kernel.Register(Component.For<SealedComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new SealedComponent()));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new SealedComponent()));
 
 			var component = Kernel.Resolve<SealedComponent>();
 
@@ -402,8 +401,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Managed_externally_factory_component_transient_is_not_tracked_by_release_policy()
 		{
 			Kernel.Register(Component.For<DisposableComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new DisposableComponent(), managedExternally: true));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new DisposableComponent(), true));
 
 			var component = Kernel.Resolve<DisposableComponent>();
 
@@ -414,15 +413,13 @@ namespace Castle.Windsor.Tests.Registration
 		public void Managed_externally_factory_component_transient_is_not_tracked_by_the_container()
 		{
 			Kernel.Register(Component.For<DisposableComponent>()
-			                	.LifeStyle.Transient
-			                	.UsingFactoryMethod(() => new DisposableComponent(), managedExternally: true));
+				.LifeStyle.Transient
+				.UsingFactoryMethod(() => new DisposableComponent(), true));
 
 			var weak = new WeakReference(Kernel.Resolve<DisposableComponent>());
 			GC.Collect();
 
 			Assert.IsFalse(weak.IsAlive);
 		}
-
-		
 	}
 }

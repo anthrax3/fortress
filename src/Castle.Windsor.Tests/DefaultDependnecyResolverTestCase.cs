@@ -37,23 +37,23 @@ namespace Castle.Windsor.Tests
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerChain1>());
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerImpl>());
 
-			var customer = (CustomerChain1)Kernel.Resolve<ICustomer>();
+			var customer = (CustomerChain1) Kernel.Resolve<ICustomer>();
 			Assert.IsInstanceOf(typeof(CustomerChain9), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain8), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain7), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain6), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain5), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain4), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain3), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain2), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain1), customer);
 			var lastCustomer = customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerImpl), lastCustomer);
@@ -63,33 +63,33 @@ namespace Castle.Windsor.Tests
 		public void DependencyChain_registered_all_at_once()
 		{
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerChain9>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain8>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain7>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain6>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain5>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain4>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain3>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain2>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerChain1>(),
-			                Component.For<ICustomer>().ImplementedBy<CustomerImpl>());
+				Component.For<ICustomer>().ImplementedBy<CustomerChain8>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain7>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain6>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain5>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain4>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain3>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain2>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerChain1>(),
+				Component.For<ICustomer>().ImplementedBy<CustomerImpl>());
 
-			var customer = (CustomerChain1)Kernel.Resolve<ICustomer>();
+			var customer = (CustomerChain1) Kernel.Resolve<ICustomer>();
 			Assert.IsInstanceOf(typeof(CustomerChain9), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain8), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain7), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain6), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain5), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain4), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain3), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain2), customer);
-			customer = (CustomerChain1)customer.CustomerBase;
+			customer = (CustomerChain1) customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerChain1), customer);
 			var lastCustomer = customer.CustomerBase;
 			Assert.IsInstanceOf(typeof(CustomerImpl), lastCustomer);
@@ -99,16 +99,30 @@ namespace Castle.Windsor.Tests
 		public void FactoryPattern()
 		{
 			Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>().Named("spamservice"),
-			                Component.For<DefaultMailSenderService>().Named("mailsender"),
-			                Component.For<DefaultTemplateEngine>().Named("templateengine"),
-			                Component.For<ComponentFactory>().Named("factory"));
+				Component.For<DefaultMailSenderService>().Named("mailsender"),
+				Component.For<DefaultTemplateEngine>().Named("templateengine"),
+				Component.For<ComponentFactory>().Named("factory"));
 
 			var factory = Kernel.Resolve<ComponentFactory>("factory");
 
 			Assert.IsNotNull(factory);
 
 			var spamservice =
-				(DefaultSpamServiceWithConstructor)factory.Create("spamservice");
+				(DefaultSpamServiceWithConstructor) factory.Create("spamservice");
+
+			Assert.IsNotNull(spamservice);
+			Assert.IsNotNull(spamservice.MailSender);
+			Assert.IsNotNull(spamservice.TemplateEngine);
+		}
+
+		[Test]
+		public void Resolving_by_name_is_case_insensitive()
+		{
+			Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>().Named("spamService"));
+			Kernel.Register(Component.For<DefaultMailSenderService>().Named("mailSender"));
+			Kernel.Register(Component.For<DefaultTemplateEngine>().Named("templateEngine"));
+
+			var spamservice = Kernel.Resolve<DefaultSpamServiceWithConstructor>("spamSERVICE");
 
 			Assert.IsNotNull(spamservice);
 			Assert.IsNotNull(spamservice.MailSender);
@@ -119,8 +133,8 @@ namespace Castle.Windsor.Tests
 		public void ResolvingConcreteClassThroughConstructor()
 		{
 			Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>(),
-			                Component.For<DefaultMailSenderService>(),
-			                Component.For<DefaultTemplateEngine>());
+				Component.For<DefaultMailSenderService>(),
+				Component.For<DefaultTemplateEngine>());
 
 			var spamservice = Kernel.Resolve<DefaultSpamServiceWithConstructor>();
 
@@ -133,8 +147,8 @@ namespace Castle.Windsor.Tests
 		public void ResolvingConcreteClassThroughProperties()
 		{
 			Kernel.Register(Component.For<DefaultSpamService>(),
-			                Component.For<DefaultMailSenderService>(),
-			                Component.For<DefaultTemplateEngine>());
+				Component.For<DefaultMailSenderService>(),
+				Component.For<DefaultTemplateEngine>());
 
 			var spamservice = Kernel.Resolve<DefaultSpamService>();
 
@@ -168,26 +182,12 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
-		public void Resolving_by_name_is_case_insensitive()
-		{
-			Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>().Named("spamService"));
-			Kernel.Register(Component.For<DefaultMailSenderService>().Named("mailSender"));
-			Kernel.Register(Component.For<DefaultTemplateEngine>().Named("templateEngine"));
-
-			var spamservice = Kernel.Resolve<DefaultSpamServiceWithConstructor>("spamSERVICE");
-
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.MailSender);
-			Assert.IsNotNull(spamservice.TemplateEngine);
-		}
-
-		[Test]
 		public void Service_override_by_name_is_case_insensitive()
 		{
 			Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>().Named("spamService"));
 			Kernel.Register(Component.For<DefaultMailSenderService>().Named("someMailSender"));
 			Kernel.Register(Component.For<DefaultTemplateEngine>().Named("templateEngine")
-			                	.DependsOn(ServiceOverride.ForKey("mailSENDER").Eq("SOMEmailSenDeR")));
+				.DependsOn(ServiceOverride.ForKey("mailSENDER").Eq("SOMEmailSenDeR")));
 
 			var spamservice = Kernel.Resolve<DefaultSpamServiceWithConstructor>("spamSERVICE");
 
@@ -202,7 +202,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() =>
 			{
 				Kernel.Register(Component.For<DefaultSpamServiceWithConstructor>(),
-								Component.For<DefaultTemplateEngine>());
+					Component.For<DefaultTemplateEngine>());
 
 				Kernel.Resolve<DefaultSpamServiceWithConstructor>();
 			});

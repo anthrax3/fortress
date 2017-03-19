@@ -15,21 +15,20 @@
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ReportedProblemTestCase
 	{
-		private IWindsorContainer container;
-
 		[SetUp]
 		public void Init()
 		{
 			container = new WindsorContainer();
 		}
+
+		private IWindsorContainer container;
 
 		[Test]
 		public void StackOverflowProblem()

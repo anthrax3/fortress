@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
 using Castle.Core.Core.Resource;
 using Castle.Windsor.Windsor.Installer;
 using NUnit.Framework;
@@ -49,26 +48,6 @@ namespace Castle.Windsor.Tests
 			var item = Container.Resolve<IMyObject>();
 
 			Assert.AreEqual(1, item.Count);
-		}
-	}
-
-	public interface IMyObject
-	{
-		int Count { get; }
-	}
-
-	public class MyObject : IMyObject
-	{
-		protected readonly IDictionary<int, IList<string>> stuff;
-
-		public MyObject(IDictionary<int, IList<string>> stuff)
-		{
-			this.stuff = stuff;
-		}
-
-		public virtual int Count
-		{
-			get { return stuff.Count; }
 		}
 	}
 }

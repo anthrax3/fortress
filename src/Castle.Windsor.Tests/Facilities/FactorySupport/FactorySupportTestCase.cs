@@ -31,26 +31,6 @@ namespace Castle.Windsor.Tests.Facilities.FactorySupport
 			Kernel.AddFacility<FactorySupportFacility>();
 		}
 
-		[Test]
-		public void NullModelConfigurationBug()
-		{
-			Kernel.Register(Component.For<ICustomer>().Named("a").Instance(new CustomerImpl()));
-		}
-
-		[Test]
-		public void Missing_dependencies_are_ignored()
-		{
-			Kernel.Register(Component.For<Factory>().Named("a"));
-
-			AddComponent("stringdictComponent", typeof(StringDictionaryDependentComponent), "CreateWithStringDictionary");
-			AddComponent("hashtableComponent", typeof(HashTableDependentComponent), "CreateWithHashtable");
-			AddComponent("serviceComponent", typeof(ServiceDependentComponent), "CreateWithService");
-
-			Kernel.Resolve("hashtableComponent", typeof(HashTableDependentComponent));
-			Kernel.Resolve("serviceComponent", typeof(ServiceDependentComponent));
-			Kernel.Resolve("stringdictComponent", typeof(StringDictionaryDependentComponent));
-		}
-
 		private ComponentModel AddComponent(string key, Type type, string factoryMethod)
 		{
 			var config = new MutableConfiguration(key);
@@ -108,6 +88,26 @@ namespace Castle.Windsor.Tests.Facilities.FactorySupport
 			public HashTableDependentComponent(Dictionary<object, object> d)
 			{
 			}
+		}
+
+		[Test]
+		public void Missing_dependencies_are_ignored()
+		{
+			Kernel.Register(Component.For<Factory>().Named("a"));
+
+			AddComponent("stringdictComponent", typeof(StringDictionaryDependentComponent), "CreateWithStringDictionary");
+			AddComponent("hashtableComponent", typeof(HashTableDependentComponent), "CreateWithHashtable");
+			AddComponent("serviceComponent", typeof(ServiceDependentComponent), "CreateWithService");
+
+			Kernel.Resolve("hashtableComponent", typeof(HashTableDependentComponent));
+			Kernel.Resolve("serviceComponent", typeof(ServiceDependentComponent));
+			Kernel.Resolve("stringdictComponent", typeof(StringDictionaryDependentComponent));
+		}
+
+		[Test]
+		public void NullModelConfigurationBug()
+		{
+			Kernel.Register(Component.For<ICustomer>().Named("a").Instance(new CustomerImpl()));
 		}
 	}
 }

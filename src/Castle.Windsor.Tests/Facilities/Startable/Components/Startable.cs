@@ -17,8 +17,6 @@ using Castle.Windsor.Tests.ClassComponents;
 
 namespace Castle.Windsor.Tests.Facilities.Startable.Components
 {
-	using Castle.Core;
-
 	public class Startable : IStartable
 	{
 		public static bool Started;

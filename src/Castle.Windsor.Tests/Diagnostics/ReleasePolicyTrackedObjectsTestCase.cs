@@ -44,6 +44,16 @@ namespace Castle.Windsor.Tests.Diagnostics
 		}
 
 		[Test]
+		public void custom_ReleasePolicy_is_not_shown_if_not_implement_the_interface()
+		{
+			Kernel.ReleasePolicy = new MyCustomReleasePolicy();
+			Register<DisposableFoo>();
+			var foo1 = Container.Resolve<DisposableFoo>();
+			var objects = GetTrackedObjects();
+			Assert.IsEmpty((ICollection) objects.Value);
+		}
+
+		[Test]
 		public void List_tracked_alive_instances()
 		{
 			Register<DisposableFoo>();
@@ -51,9 +61,9 @@ namespace Castle.Windsor.Tests.Diagnostics
 			var foo2 = Container.Resolve<DisposableFoo>();
 
 			var objects = GetTrackedObjects();
-			var values = (DebuggerViewItem[])objects.Value;
+			var values = (DebuggerViewItem[]) objects.Value;
 			Assert.AreEqual(1, values.Length);
-			var viewItem = (MasterDetailsDebuggerViewItem)values.Single().Value;
+			var viewItem = (MasterDetailsDebuggerViewItem) values.Single().Value;
 			Assert.AreEqual(2, viewItem.Details.Length);
 		}
 
@@ -67,9 +77,9 @@ namespace Castle.Windsor.Tests.Diagnostics
 			var foo2 = fooFactory.Invoke();
 
 			var objects = GetTrackedObjects();
-			var values = (DebuggerViewItem[])objects.Value;
+			var values = (DebuggerViewItem[]) objects.Value;
 			Assert.AreEqual(3, values.Length);
-			var instances = values.SelectMany(v => ((MasterDetailsDebuggerViewItem)v.Value).Details).ToArray();
+			var instances = values.SelectMany(v => ((MasterDetailsDebuggerViewItem) v.Value).Details).ToArray();
 			Assert.AreEqual(4, instances.Length);
 		}
 
@@ -82,9 +92,9 @@ namespace Castle.Windsor.Tests.Diagnostics
 			Container.Release(foo1);
 
 			var objects = GetTrackedObjects();
-			var values = (DebuggerViewItem[])objects.Value;
+			var values = (DebuggerViewItem[]) objects.Value;
 			Assert.AreEqual(1, values.Length);
-			var viewItem = (MasterDetailsDebuggerViewItem)values.Single().Value;
+			var viewItem = (MasterDetailsDebuggerViewItem) values.Single().Value;
 			Assert.AreEqual(1, viewItem.Details.Length);
 		}
 
@@ -98,7 +108,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			Container.Resolve<DisposableFoo>();
 			var objects = GetTrackedObjects();
-			Assert.IsEmpty((ICollection)objects.Value);
+			Assert.IsEmpty((ICollection) objects.Value);
 		}
 
 		[Test]
@@ -107,16 +117,5 @@ namespace Castle.Windsor.Tests.Diagnostics
 			var objects = GetTrackedObjects();
 			Assert.IsNotNull(objects);
 		}
-
-		[Test]
-		public void custom_ReleasePolicy_is_not_shown_if_not_implement_the_interface()
-		{
-			Kernel.ReleasePolicy = new MyCustomReleasePolicy();
-			Register<DisposableFoo>();
-			var foo1 = Container.Resolve<DisposableFoo>();
-			var objects = GetTrackedObjects();
-			Assert.IsEmpty((ICollection)objects.Value);
-		}
 	}
-
 }

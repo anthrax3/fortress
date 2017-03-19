@@ -17,5 +17,4 @@ namespace Castle.Windsor.Tests.ClassComponents
 	public interface ICommonSub1 : ICommon
 	{
 	}
-
 }

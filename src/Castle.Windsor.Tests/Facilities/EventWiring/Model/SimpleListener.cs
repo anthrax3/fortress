@@ -18,24 +18,15 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 {
 	public class SimpleListener
 	{
-		private bool listened;
-		private object sender;
+		public bool Listened { get; private set; }
 
-		public bool Listened
-		{
-			get { return listened; }
-		}
-
-		public object Sender
-		{
-			get { return sender; }
-		}
+		public object Sender { get; private set; }
 
 		public void OnPublish(object sender, EventArgs e)
 		{
-			this.sender = sender;
+			Sender = sender;
 
-			listened = sender != null;
+			Listened = sender != null;
 		}
 	}
 }

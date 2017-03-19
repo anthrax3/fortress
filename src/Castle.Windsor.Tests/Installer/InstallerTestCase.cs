@@ -26,7 +26,6 @@ namespace Castle.Windsor.Tests.Installer
 	[TestFixture]
 	public class InstallerTestCase : AbstractContainerTestCase
 	{
-
 		[Test]
 		public void InstallCalcService()
 		{
@@ -53,4 +52,3 @@ namespace Castle.Windsor.Tests.Installer
 		}
 	}
 }
-

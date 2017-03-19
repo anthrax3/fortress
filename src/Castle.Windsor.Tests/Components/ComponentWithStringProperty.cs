@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class ComponentWithStringProperty
 	{
-		private readonly string name;
-
 		public ComponentWithStringProperty(string name)
 		{
-			this.name = name;
+			Name = name;
 		}
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 	}
 }

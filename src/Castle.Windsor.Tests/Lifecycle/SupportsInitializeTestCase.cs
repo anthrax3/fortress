@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Lifecycle
 {
-	using System;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class SupportsInitializeTestCase : AbstractContainerTestCase
 	{
@@ -27,8 +26,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void SupportsInitialize_components_are_not_tracked()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceSupportInitialize>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceSupportInitialize>()
+				.LifeStyle.Transient);
 
 			var server = Container.Resolve<ISimpleService>();
 			var weak = new WeakReference(server);
@@ -42,10 +41,10 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void SupportsInitialize_components_for_non_SupportsInitialize_service_get_initialized_when_resolved()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceSupportInitialize>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceSupportInitialize>()
+				.LifeStyle.Transient);
 
-			var server = (SimpleServiceSupportInitialize)Container.Resolve<ISimpleService>();
+			var server = (SimpleServiceSupportInitialize) Container.Resolve<ISimpleService>();
 
 			Assert.IsTrue(server.InitBegun);
 			Assert.IsTrue(server.InitEnded);
@@ -56,10 +55,10 @@ namespace Castle.Windsor.Tests.Lifecycle
 			SupportsInitialize_components_for_non_SupportsInitialize_service_get_initialized_when_resolved_via_factoryMethod()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.UsingFactoryMethod(() => new SimpleServiceSupportInitialize())
-			                   	.LifeStyle.Transient);
+				.UsingFactoryMethod(() => new SimpleServiceSupportInitialize())
+				.LifeStyle.Transient);
 
-			var server = (SimpleServiceSupportInitialize)Container.Resolve<ISimpleService>();
+			var server = (SimpleServiceSupportInitialize) Container.Resolve<ISimpleService>();
 
 			Assert.IsTrue(server.InitBegun);
 			Assert.IsTrue(server.InitEnded);

@@ -16,20 +16,15 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class CommonServiceUser3
 	{
-		private readonly ICommon common;
-
 		public CommonServiceUser3()
 		{
 		}
 
 		public CommonServiceUser3(ICommon common)
 		{
-			this.common = common;
+			CommonService = common;
 		}
 
-		public ICommon CommonService
-		{
-			get { return common; }
-		}
+		public ICommon CommonService { get; }
 	}
 }

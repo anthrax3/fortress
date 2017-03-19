@@ -20,30 +20,17 @@ namespace Castle.Windsor.Tests.Components
 	[Transient]
 	public class ComponentWithConfigs
 	{
-		private readonly IDictionary dict;
-		private readonly string name;
-		private readonly int port;
-
 		public ComponentWithConfigs(string name, int port, IDictionary dict)
 		{
-			this.name = name;
-			this.port = port;
-			this.dict = dict;
+			Name = name;
+			Port = port;
+			Dict = dict;
 		}
 
-		public IDictionary Dict
-		{
-			get { return dict; }
-		}
+		public IDictionary Dict { get; }
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 
-		public int Port
-		{
-			get { return port; }
-		}
+		public int Port { get; }
 	}
 }

@@ -25,6 +25,12 @@ namespace Castle.Windsor.Tests.Installer
 	public class FromAssemblyInstallersTestCase : AbstractContainerTestCase
 	{
 		[Test]
+		public void Can_install_from_assembly_by_application()
+		{
+			Container.Install(FromAssembly.InThisApplication(new FilterAssembliesInstallerFactory(t => t.Assembly != typeof(IWindsorInstaller).Assembly)));
+		}
+
+		[Test]
 		public void Can_install_from_assembly_by_assembly()
 		{
 			Container.Install(FromAssembly.Instance(Assembly.GetExecutingAssembly()));
@@ -52,12 +58,6 @@ namespace Castle.Windsor.Tests.Installer
 		}
 
 		[Test]
-		public void Can_install_from_assembly_by_application()
-		{
-			Container.Install(FromAssembly.InThisApplication(new FilterAssembliesInstallerFactory(t => t.Assembly != typeof(IWindsorInstaller).Assembly)));
-		}
-
-		[Test]
 		public void Can_install_from_assembly_by_type_generic()
 		{
 			Container.Install(FromAssembly.Containing<FromAssemblyInstallersTestCase>());
@@ -69,23 +69,11 @@ namespace Castle.Windsor.Tests.Installer
 			Container.Install(FromAssembly.This());
 		}
 
-
 		[Test]
-		public void Install_from_assembly_by_directory_ignores_non_existing_path()
+		public void Install_from_assembly_by_directory_empty_name_searches_currentDirectory()
 		{
-			var location = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString("N"));
-
-			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location)));
-
-			Assert.AreEqual(0, Container.Kernel.GraphNodes.Length);
-		}
-
-		[Test]
-		public void Install_from_assembly_by_directory_executes_assembly_condition()
-		{
-			var location = AppDomain.CurrentDomain.BaseDirectory;
 			var called = false;
-			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).FilterByAssembly(a =>
+			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(string.Empty).FilterByAssembly(a =>
 			{
 				called = true;
 				return true;
@@ -96,10 +84,11 @@ namespace Castle.Windsor.Tests.Installer
 		}
 
 		[Test]
-		public void Install_from_assembly_by_directory_empty_name_searches_currentDirectory()
+		public void Install_from_assembly_by_directory_executes_assembly_condition()
 		{
+			var location = AppDomain.CurrentDomain.BaseDirectory;
 			var called = false;
-			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(string.Empty).FilterByAssembly(a =>
+			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).FilterByAssembly(a =>
 			{
 				called = true;
 				return true;
@@ -122,6 +111,17 @@ namespace Castle.Windsor.Tests.Installer
 
 			Assert.IsTrue(byNameCalled);
 			Assert.IsTrue(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));
+		}
+
+
+		[Test]
+		public void Install_from_assembly_by_directory_ignores_non_existing_path()
+		{
+			var location = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString("N"));
+
+			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location)));
+
+			Assert.AreEqual(0, Container.Kernel.GraphNodes.Length);
 		}
 
 		[Test]
@@ -163,7 +163,7 @@ namespace Castle.Windsor.Tests.Installer
 			Assert.IsFalse(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));
 		}
 
-		
+
 		[Test]
 		public void Install_from_assembly_by_directory_with_key_installs()
 		{
@@ -171,9 +171,7 @@ namespace Castle.Windsor.Tests.Installer
 
 			var publicKeyToken = GetType().Assembly.GetName().GetPublicKeyToken();
 			if (publicKeyToken == null || publicKeyToken.Length == 0)
-			{
 				return;
-			}
 
 			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).WithKeyToken(GetType())));
 			Assert.IsTrue(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));
@@ -186,9 +184,7 @@ namespace Castle.Windsor.Tests.Installer
 
 			var publicKeyToken = GetType().Assembly.GetName().GetPublicKeyToken();
 			if (publicKeyToken == null || publicKeyToken.Length == 0)
-			{
 				return;
-			}
 
 			Container.Install(FromAssembly.InDirectory(new AssemblyFilter(location).WithKeyToken<object>()));
 			Assert.IsFalse(Container.Kernel.HasComponent("Customer-by-CustomerInstaller"));

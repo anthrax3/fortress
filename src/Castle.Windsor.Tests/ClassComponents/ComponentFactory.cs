@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 
@@ -28,7 +27,7 @@ namespace Castle.Windsor.Tests.ClassComponents
 			this.kernel = kernel;
 		}
 
-		public object Create(String name)
+		public object Create(string name)
 		{
 			return kernel.Resolve<object>(name);
 		}

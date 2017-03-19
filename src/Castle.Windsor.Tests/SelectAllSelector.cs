@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
 using Castle.Core.DynamicProxy;
 
 namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Reflection;
-
 	public class SelectAllSelector : IInterceptorSelector
 	{
 		public static int Instances;

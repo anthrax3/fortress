@@ -41,6 +41,12 @@ namespace Castle.Windsor.Tests.Lifestyle
 		}
 
 		[Test]
+		public void Many_component_bound_to_object()
+		{
+			LifestyleMany(c => c.LifestyleBoundTo<object>(), LifestyleType.Bound);
+		}
+
+		[Test]
 		public void Many_component_custom()
 		{
 			LifestyleMany(c => c.LifestyleCustom(typeof(CustomLifestyleManager)), LifestyleType.Custom);
@@ -77,12 +83,6 @@ namespace Castle.Windsor.Tests.Lifestyle
 		}
 
 		[Test]
-		public void Many_component_bound_to_object()
-		{
-			LifestyleMany(c => c.LifestyleBoundTo<object>(), LifestyleType.Bound);
-		}
-
-		[Test]
 		public void Many_component_singleton()
 		{
 			LifestyleMany(c => c.LifestyleSingleton(), LifestyleType.Singleton);
@@ -92,6 +92,12 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Many_component_transient()
 		{
 			LifestyleMany(c => c.LifestyleTransient(), LifestyleType.Transient);
+		}
+
+		[Test]
+		public void Single_component_bound_to_object()
+		{
+			LifestyleSingle(c => c.LifestyleBoundTo<object>(), LifestyleType.Bound);
 		}
 
 		[Test]
@@ -128,12 +134,6 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Single_component_scoped()
 		{
 			LifestyleSingle(c => c.LifestyleScoped(), LifestyleType.Scoped);
-		}
-
-		[Test]
-		public void Single_component_bound_to_object()
-		{
-			LifestyleSingle(c => c.LifestyleBoundTo<object>(), LifestyleType.Bound);
 		}
 
 		[Test]

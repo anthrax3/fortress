@@ -37,7 +37,7 @@ namespace Castle.Windsor.Tests
 
 			var obj = Container.Resolve<IEmptyService2>();
 			Assert.IsInstanceOf<CompositeEmptyService2>(obj);
-			Assert.AreEqual(5, ((CompositeEmptyService2)obj).Inner.Length);
+			Assert.AreEqual(5, ((CompositeEmptyService2) obj).Inner.Length);
 		}
 	}
 }

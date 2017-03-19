@@ -18,11 +18,9 @@ using Castle.Windsor.Core.Interceptor;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using Castle.Core;
-
 	public class InterceptorWithOnBehalf : IInterceptor, IOnBehalfAware
 	{
-		private static ComponentModel model;
+		public static ComponentModel Model { get; private set; }
 
 		#region IMethodInterceptor Members
 
@@ -35,12 +33,7 @@ namespace Castle.Windsor.Tests.Interceptors
 
 		public void SetInterceptedComponentModel(ComponentModel target)
 		{
-			model = target;
-		}
-
-		public static ComponentModel Model
-		{
-			get { return model; }
+			Model = target;
 		}
 	}
 }

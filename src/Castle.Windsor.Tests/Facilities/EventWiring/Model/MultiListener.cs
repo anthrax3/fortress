@@ -18,35 +18,26 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 {
 	public class MultiListener
 	{
-		private bool listened;
-		private object sender;
+		public bool Listened { get; private set; }
 
-		public bool Listened
-		{
-			get { return listened; }
-		}
-
-		public object Sender
-		{
-			get { return sender; }
-		}
+		public object Sender { get; private set; }
 
 		public void OnPublish(object sender, EventArgs e)
 		{
-			listened = true;
-			this.sender = sender;
+			Listened = true;
+			Sender = sender;
 		}
 
 		public void OnPublish2(object sender, CustomEventArgs e)
 		{
-			listened = true;
-			this.sender = sender;
+			Listened = true;
+			Sender = sender;
 		}
 
 		public void Reset()
 		{
-			listened = false;
-			sender = null;
+			Listened = false;
+			Sender = null;
 		}
 	}
 }

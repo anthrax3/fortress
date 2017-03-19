@@ -29,9 +29,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		{
 			var scope = CustomLifestyle_InstanceScope.Current;
 			if (scope == null)
-			{
 				throw new InvalidOperationException("Scope is null");
-			}
 
 			Burden instance;
 			if (scope.Cache.TryGetValue(Model, out instance) == false)

@@ -51,6 +51,13 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		public void Generic_nested_generic_type_pulls_closed_generics_to_innermost_type()
+		{
+			var name = typeof(GenericHasNested<A2>.NestedGeneric<AProp>).ToCSharpString();
+			Assert.AreEqual("GenericHasNested<�TOuter�>.NestedGeneric<A2, AProp>", name);
+		}
+
+		[Test]
 		public void Generic_nested_generic_typeArray_multi_dimentional_pulls_closed_generics_to_innermost_type()
 		{
 			var name = typeof(GenericHasNested<A2>.NestedGeneric<AProp>[,,]).ToCSharpString();
@@ -62,13 +69,6 @@ namespace Castle.Windsor.Tests
 		{
 			var name = typeof(GenericHasNested<A2>.NestedGeneric<AProp>[]).ToCSharpString();
 			Assert.AreEqual("GenericHasNested<�TOuter�>.NestedGeneric<A2, AProp>[]", name);
-		}
-
-		[Test]
-		public void Generic_nested_generic_type_pulls_closed_generics_to_innermost_type()
-		{
-			var name = typeof(GenericHasNested<A2>.NestedGeneric<AProp>).ToCSharpString();
-			Assert.AreEqual("GenericHasNested<�TOuter�>.NestedGeneric<A2, AProp>", name);
 		}
 
 		[Test]

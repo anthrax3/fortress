@@ -12,24 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.Facilities.Startable;
 using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ModelBuilder;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.ClassComponents;
+using Castle.Windsor.Tests.Facilities.Startable.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using Castle.Windsor.Tests.ClassComponents;
-	using Castle.Windsor.Tests.Facilities.Startable.Components;
-
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class StartableFacilityTestCase
 	{
@@ -77,7 +72,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 				Component.For<ThrowsInCtor>(),
 				Component.For<HasThrowingPropertyDependency>()
 					.StartUsingMethod(x => x.Start)
-				);
+			);
 
 			Assert.AreEqual(1, HasThrowingPropertyDependency.InstancesCreated);
 			Assert.AreEqual(1, HasThrowingPropertyDependency.InstancesStarted);
@@ -98,8 +93,8 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			ClassWithInstanceCount.InstancesCount = 0;
 			kernel.AddFacility<StartableFacility>(f => f.DeferredTryStart());
 			kernel.Register(Classes.FromThisAssembly()
-			                	.Where(t => t == typeof(ClassWithInstanceCount))
-			                	.Configure(c => c.Start()));
+				.Where(t => t == typeof(ClassWithInstanceCount))
+				.Configure(c => c.Start()));
 			Assert.AreEqual(1, ClassWithInstanceCount.InstancesCount);
 		}
 
@@ -160,8 +155,8 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 
 			var ex =
 				Assert.Throws<Exception>(() =>
-				                         kernel.Register(Component.For<StartableWithError>(),
-				                                         Component.For<ICommon>().ImplementedBy<CommonImpl1>()));
+					kernel.Register(Component.For<StartableWithError>(),
+						Component.For<ICommon>().ImplementedBy<CommonImpl1>()));
 
 			// Every additional registration causes Start to be called again and again...
 			Assert.AreEqual("This should go bonk", ex.Message);
@@ -206,8 +201,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 				Component.For<StartableComponentCustomDependencies>()
 					.Named("a")
 					.DependsOn(Property.ForKey("config").Eq(1))
-					
-				);
+			);
 
 			Assert.IsTrue(startableCreatedBeforeResolved, "Component was not properly started");
 
@@ -233,7 +227,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			kernel.Register(
 				Component.For<StartableComponent>()
 					.AddDescriptor(new AddDependency(dependsOnSomething))
-				);
+			);
 
 			Assert.False(startableCreatedBeforeResolved, "Component should not have started");
 
@@ -249,8 +243,9 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 
 			kernel.AddFacility<StartableFacility>();
 
-			var dependencies = new Dictionary<string, object> { { "config", 1 } };
-			kernel.Register(Component.For<StartableComponentCustomDependencies>().DependsOn(dependencies));;
+			var dependencies = new Dictionary<string, object> {{"config", 1}};
+			kernel.Register(Component.For<StartableComponentCustomDependencies>().DependsOn(dependencies));
+			;
 
 			Assert.IsTrue(startableCreatedBeforeResolved, "Component was not properly started");
 
@@ -269,56 +264,12 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 		{
 			kernel.AddFacility<StartableFacility>();
 			kernel.Register(Component.For<WithOverloads>()
-			                	.StartUsingMethod("Start")
-			                	.StopUsingMethod("Stop"));
+				.StartUsingMethod("Start")
+				.StopUsingMethod("Stop"));
 			var c = kernel.Resolve<WithOverloads>();
 			Assert.IsTrue(c.StartCalled);
 			kernel.ReleaseComponent(c);
 			Assert.IsTrue(c.StopCalled);
-		}
-	}
-
-	[Transient]
-	public class WithOverloads
-	{
-		public bool StartCalled { get; set; }
-		public bool StopCalled { get; set; }
-
-		public void Start()
-		{
-			StartCalled = true;
-		}
-
-		public void Start(int fake)
-		{
-		}
-
-		public void Stop()
-		{
-			StopCalled = true;
-		}
-
-		public void Stop(string fake)
-		{
-		}
-	}
-
-	public class AddDependency : IComponentModelDescriptor
-	{
-		private readonly DependencyModel dependency;
-
-		public AddDependency(DependencyModel dependency)
-		{
-			this.dependency = dependency;
-		}
-
-		public void BuildComponentModel(IKernel kernel, ComponentModel model)
-		{
-			model.Dependencies.Add(dependency);
-		}
-
-		public void ConfigureComponentModel(IKernel kernel, ComponentModel model)
-		{
 		}
 	}
 }

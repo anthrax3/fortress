@@ -16,11 +16,10 @@
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigurationEnvTestCase
 	{
@@ -41,20 +40,4 @@ namespace Castle.Windsor.Tests.Configuration2
 			Assert.AreEqual("Hammett", prop.Name);
 		}
 	}
-
-	internal class CustomEnv : IEnvironmentInfo
-	{
-		private readonly bool isDevelopment;
-
-		public CustomEnv(bool isDevelopment)
-		{
-			this.isDevelopment = isDevelopment;
-		}
-
-		public string GetEnvironmentName()
-		{
-			return isDevelopment ? "devel" : "test";
-		}
-	}
 }
-

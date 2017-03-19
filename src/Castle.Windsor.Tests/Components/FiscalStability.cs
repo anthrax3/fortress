@@ -18,5 +18,5 @@ namespace Castle.Windsor.Tests.Components
 	{
 		DirtFarmer,
 		MrMoneyBags
-	};
+	}
 }

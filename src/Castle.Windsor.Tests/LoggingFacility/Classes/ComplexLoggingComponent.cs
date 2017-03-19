@@ -18,7 +18,7 @@ namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
 	public class ComplexLoggingComponent
 	{
-		private IExtendedLogger logger;
+		private readonly IExtendedLogger logger;
 
 		public ComplexLoggingComponent(IExtendedLogger logger)
 		{
@@ -30,14 +30,12 @@ namespace Castle.Windsor.Tests.LoggingFacility.Classes
 			using (logger.ThreadStacks["NDC"].Push("Outside"))
 			{
 				for (var i = 0; i < 3; i++)
-				{
 					using (logger.ThreadStacks["NDC"].Push("Inside" + i))
 					{
 						logger.ThreadProperties["foo"] = "bar";
 						logger.GlobalProperties["flim"] = "flam";
 						logger.Debug("Bim, bam boom.");
 					}
-				}
 			}
 		}
 	}

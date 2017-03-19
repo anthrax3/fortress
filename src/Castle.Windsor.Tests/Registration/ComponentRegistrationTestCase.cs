@@ -34,31 +34,348 @@ namespace Castle.Windsor.Tests.Registration
 	public class ComponentRegistrationTestCase : AbstractContainerTestCase
 	{
 		[Test]
-		public void AddComponent_WhichIsNull_ThrowsNullArgumentException()
+		public void AddComponent_Activator_WorksFine()
 		{
-			Assert.Throws<ArgumentNullException>(() =>
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("customer")
+					.ImplementedBy<CustomerImpl>()
+					.Activator<MyCustomerActivator>()
+			);
+
+			var handler = Kernel.GetHandler("customer");
+			Assert.AreEqual(typeof(MyCustomerActivator), handler.ComponentModel.CustomComponentActivator);
+
+			var customer = Kernel.Resolve<ICustomer>();
+			Assert.AreEqual("James Bond", customer.Name);
+		}
+
+		[Test]
+		public void AddComponent_ArrayConfigurationParameters_WorksFine()
+		{
+			var list = new MutableConfiguration("list");
+			list.Attributes.Add("type", typeof(ICommon).AssemblyQualifiedName);
+			list.Children.Add(new MutableConfiguration("item", "${common1}"));
+			list.Children.Add(new MutableConfiguration("item", "${common2}"));
+
+			Kernel.Register(
+				Component.For<ICommon>()
+					.Named("common1")
+					.ImplementedBy<CommonImpl1>(),
+				Component.For<ICommon>()
+					.Named("common2")
+					.ImplementedBy<CommonImpl2>(),
+				Component.For<ClassWithArrayConstructor>()
+					.DependsOn(
+						Parameter.ForKey("first").Eq("${common2}"),
+						Dependency.OnConfigValue("services", list)
+					)
+			);
+
+			var common1 = Kernel.Resolve<ICommon>("common1");
+			var common2 = Kernel.Resolve<ICommon>("common2");
+			var component = Kernel.Resolve<ClassWithArrayConstructor>();
+			Assert.AreSame(common2, component.First);
+			Assert.AreEqual(2, component.Services.Length);
+			Assert.AreSame(common1, component.Services[0]);
+			Assert.AreSame(common2, component.Services[1]);
+		}
+
+		[Test]
+		public void AddComponent_CustomDependencies_UsingAnonymousType()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.ImplementedBy<CustomerImpl>()
+					.DependsOn(Property.ForKey("Name").Eq("Caption Hook"),
+						Property.ForKey("Address").Eq("Fairyland"),
+						Property.ForKey("Age").Eq(45)));
+
+			var customer = Kernel.Resolve<ICustomer>();
+			Assert.AreEqual(customer.Name, "Caption Hook");
+			Assert.AreEqual(customer.Address, "Fairyland");
+			Assert.AreEqual(customer.Age, 45);
+		}
+
+		[Test]
+		public void AddComponent_CustomDependencies_WorksFine()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.ImplementedBy<CustomerImpl>()
+					.DependsOn(
+						Property.ForKey("Name").Eq("Caption Hook"),
+						Property.ForKey("Address").Eq("Fairyland"),
+						Property.ForKey("Age").Eq(45)
+					)
+			);
+
+			var customer = Kernel.Resolve<ICustomer>();
+			Assert.AreEqual(customer.Name, "Caption Hook");
+			Assert.AreEqual(customer.Address, "Fairyland");
+			Assert.AreEqual(customer.Age, 45);
+		}
+
+		[Test]
+		public void AddComponent_CustomDependenciesDictionary_WorksFine()
+		{
+			var customDependencies = new Dictionary<string, object>();
+			customDependencies["Name"] = "Caption Hook";
+			customDependencies["Address"] = "Fairyland";
+			customDependencies["Age"] = 45;
+
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.ImplementedBy<CustomerImpl>()
+					.DependsOn(customDependencies)
+			);
+
+			var customer = Kernel.Resolve<ICustomer>();
+			Assert.AreEqual(customer.Name, "Caption Hook");
+			Assert.AreEqual(customer.Address, "Fairyland");
+			Assert.AreEqual(customer.Age, 45);
+		}
+
+		[Test]
+		public void AddComponent_ExtendedProperties_UsingAnonymousType()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.ImplementedBy<CustomerImpl>()
+					.ExtendedProperties(
+						Property.ForKey("key1").Eq("value1"),
+						Property.ForKey("key2").Eq("value2")));
+
+			var handler = Kernel.GetHandler(typeof(ICustomer));
+			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
+			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
+		}
+
+		[Test]
+		public void AddComponent_ExtendedProperties_WorksFine()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.ImplementedBy<CustomerImpl>()
+					.ExtendedProperties(
+						Property.ForKey("key1").Eq("value1"),
+						Property.ForKey("key2").Eq("value2")
+					)
+			);
+
+			var handler = Kernel.GetHandler(typeof(ICustomer));
+			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
+			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
+		}
+
+		[Test]
+		public void AddComponent_Instance_UsesInstance()
+		{
+			var customer = new CustomerImpl();
+
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("key")
+					.Instance(customer)
+			);
+			Assert.IsTrue(Kernel.HasComponent("key"));
+			var handler = Kernel.GetHandler("key");
+			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
+
+			var customer2 = Kernel.Resolve<ICustomer>("key");
+			Assert.AreSame(customer, customer2);
+
+			customer2 = Kernel.Resolve<ICustomer>();
+			Assert.AreSame(customer, customer2);
+		}
+
+		[Test]
+		public void AddComponent_Instance_UsesInstanceWithParameters()
+		{
+			var customer = new CustomerImpl2("ernst", "delft", 29);
+
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("key")
+					.Instance(customer)
+			);
+			Assert.IsTrue(Kernel.HasComponent("key"));
+			var handler = Kernel.GetHandler("key");
+			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
+
+			var customer2 = Kernel.Resolve<ICustomer>("key");
+			Assert.AreSame(customer, customer2);
+
+			customer2 = Kernel.Resolve<ICustomer>();
+			Assert.AreSame(customer, customer2);
+		}
+
+		[Test]
+		public void AddComponent_ListConfigurationParameters_WorksFine()
+		{
+			var list = new MutableConfiguration("list");
+			list.Attributes.Add("type", typeof(ICommon).AssemblyQualifiedName);
+			list.Children.Add(new MutableConfiguration("item", "${common1}"));
+			list.Children.Add(new MutableConfiguration("item", "${common2}"));
+
+			Kernel.Register(
+				Component.For<ICommon>()
+					.Named("common1")
+					.ImplementedBy<CommonImpl1>(),
+				Component.For<ICommon>()
+					.Named("common2")
+					.ImplementedBy<CommonImpl2>(),
+				Component.For<ClassWithListConstructor>()
+					.DependsOn(
+						Parameter.ForKey("services").Eq(list)
+					)
+			);
+
+			var common1 = Kernel.Resolve<ICommon>("common1");
+			var common2 = Kernel.Resolve<ICommon>("common2");
+			var component = Kernel.Resolve<ClassWithListConstructor>();
+			Assert.AreEqual(2, component.Services.Count);
+			Assert.AreSame(common1, component.Services[0]);
+			Assert.AreSame(common2, component.Services[1]);
+		}
+
+		[Test]
+		public void AddComponent_NamedAlreadyAssigned_ThrowsException()
+		{
+			Assert.Throws<ComponentRegistrationException>(() =>
 			{
-				Kernel.Register(Component.For(Type.GetType("NonExistentType, WohooAssembly")));
+				Kernel.Register(
+					Component.For<CustomerImpl>()
+						.Named("customer")
+						.Named("customer1")
+				);
 			});
 		}
 
 		[Test]
-		public void AddComponent_WithServiceOnly_RegisteredWithServiceTypeName()
+		public void AddComponent_StartableWithInterface_StartsComponent()
+		{
+			Kernel.AddFacility<StartableFacility>()
+				.Register(Component.For<StartableComponent>());
+
+			var component = Kernel.Resolve<StartableComponent>();
+
+			Assert.IsNotNull(component);
+			Assert.IsTrue(component.Started);
+			Assert.IsFalse(component.Stopped);
+
+			Kernel.ReleaseComponent(component);
+			Assert.IsTrue(component.Stopped);
+		}
+
+		[Test]
+		public void AddComponent_StartableWithoutInterface_StartsComponent()
+		{
+			Kernel.AddFacility<StartableFacility>()
+				.Register(Component.For<NoInterfaceStartableComponent>()
+					.StartUsingMethod("Start")
+					.StopUsingMethod("Stop")
+				);
+
+			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
+
+			Assert.IsNotNull(component);
+			Assert.IsTrue(component.Started);
+			Assert.IsFalse(component.Stopped);
+
+			Kernel.ReleaseComponent(component);
+			Assert.IsTrue(component.Stopped);
+		}
+
+		[Test]
+		public void AddComponent_StartableWithoutInterface_StartsComponent_via_expression()
+		{
+			Kernel.AddFacility<StartableFacility>()
+				.Register(Component.For<NoInterfaceStartableComponent>()
+					.StartUsingMethod(x => x.Start)
+					.StopUsingMethod(x => x.Stop)
+				);
+
+			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
+
+			Assert.IsNotNull(component);
+			Assert.IsTrue(component.Started);
+			Assert.IsFalse(component.Stopped);
+
+			Kernel.ReleaseComponent(component);
+			Assert.IsTrue(component.Stopped);
+		}
+
+		[Test]
+		public void AddComponent_WhichIsNull_ThrowsNullArgumentException()
+		{
+			Assert.Throws<ArgumentNullException>(() => { Kernel.Register(Component.For(Type.GetType("NonExistentType, WohooAssembly"))); });
+		}
+
+		[Test]
+		public void AddComponent_WithComplexConfiguration_WorksFine()
 		{
 			Kernel.Register(
-				Component.For<CustomerImpl>());
+				Component.For<ClassWithComplexParameter>()
+					.Configuration(
+						Castle.Windsor.MicroKernel.Registration.Child.ForName("parameters").Eq(
+							Attrib.ForName("notUsed").Eq(true),
+							Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparam").Eq(
+								Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
+									Castle.Windsor.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
+									Castle.Windsor.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
+								)
+							)
+						)
+					)
+			);
 
-			var handler = Kernel.GetHandler(typeof(CustomerImpl));
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
+			var component = Kernel.Resolve<ClassWithComplexParameter>();
+			Assert.IsNotNull(component);
+			Assert.IsNotNull(component.ComplexParam);
+			Assert.AreEqual("value1", component.ComplexParam.MandatoryValue);
+			Assert.AreEqual("value2", component.ComplexParam.OptionalValue);
+		}
 
-			var customer = Kernel.Resolve<CustomerImpl>();
-			Assert.IsNotNull(customer);
+		[Test]
+		public void AddComponent_WithCustomLifestyle_WorksFine()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("customer")
+					.ImplementedBy<CustomerImpl>()
+					.LifeStyle.Custom<CustomLifestyleManager>()
+			);
 
-			var key = typeof(CustomerImpl).FullName;
-			var customer1 = Kernel.Resolve<object>(key);
-			Assert.IsNotNull(customer1);
-			Assert.AreSame(customer, customer1);
+			var handler = Kernel.GetHandler("customer");
+			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
+		}
+
+		[Test]
+		public void AddComponent_WithExplicitLifestyle_WorksFine()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("customer")
+					.ImplementedBy<CustomerImpl>()
+					.LifeStyle.Is(LifestyleType.Transient)
+			);
+
+			var handler = Kernel.GetHandler("customer");
+			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+		}
+
+		[Test]
+		public void AddComponent_WithImplementationAlreadyAssigned_ThrowsException()
+		{
+			Assert.Throws<ComponentRegistrationException>(() =>
+			{
+				Kernel.Register(
+					Component.For<ICustomer>()
+						.ImplementedBy<CustomerImpl>()
+						.ImplementedBy<CustomerImpl2>()
+				);
+			});
 		}
 
 		[Test]
@@ -66,7 +383,7 @@ namespace Castle.Windsor.Tests.Registration
 		{
 			var selector = new InterceptorTypeSelector(typeof(TestInterceptor1));
 			Kernel.Register(Component.For<ICustomer>().Interceptors(new InterceptorReference(typeof(TestInterceptor1)))
-			                	.SelectedWith(selector).Anywhere);
+				.SelectedWith(selector).Anywhere);
 
 			var handler = Kernel.GetHandler(typeof(ICustomer));
 
@@ -91,33 +408,45 @@ namespace Castle.Windsor.Tests.Registration
 		}
 
 		[Test]
-		public void AddComponent_WithServiceAndName_RegisteredNamed()
+		public void AddComponent_WithPerWebRequestLifestyle_WorksFine()
 		{
 			Kernel.Register(
-				Component.For<CustomerImpl>()
+				Component.For<ICustomer>()
 					.Named("customer")
-				);
+					.ImplementedBy<CustomerImpl>()
+					.LifeStyle.PerWebRequest
+			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual("customer", handler.ComponentModel.Name);
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
-
-			var customer = Kernel.Resolve<CustomerImpl>("customer");
-			Assert.IsNotNull(customer);
+			Assert.AreEqual(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
-		public void AddComponent_NamedAlreadyAssigned_ThrowsException()
+		public void AddComponent_WithPooledLifestyle_WorksFine()
 		{
-			Assert.Throws<ComponentRegistrationException>(() =>
-			{
-				Kernel.Register(
-					Component.For<CustomerImpl>()
-						.Named("customer")
-						.Named("customer1")
-					);
-			});
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("customer")
+					.ImplementedBy<CustomerImpl>()
+					.LifeStyle.Pooled
+			);
+
+			var handler = Kernel.GetHandler("customer");
+			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
+		}
+
+		[Test]
+		public void AddComponent_WithPooledWithSizeLifestyle_WorksFine()
+		{
+			Kernel.Register(
+				Component.For<ICustomer>()
+					.Named("customer")
+					.ImplementedBy<CustomerImpl>()
+					.LifeStyle.PooledWithSize(5, 10)
+			);
+
+			var handler = Kernel.GetHandler("customer");
+			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
@@ -130,7 +459,7 @@ namespace Castle.Windsor.Tests.Registration
 						.Named("customer"),
 					Component.For<CustomerImpl>()
 						.Named("customer")
-					);
+				);
 			});
 		}
 
@@ -150,86 +479,39 @@ namespace Castle.Windsor.Tests.Registration
 		}
 
 		[Test]
-		public void AddComponent_WithImplementationAlreadyAssigned_ThrowsException()
-		{
-			Assert.Throws<ComponentRegistrationException>(() =>
-			{
-				Kernel.Register(
-					Component.For<ICustomer>()
-						.ImplementedBy<CustomerImpl>()
-						.ImplementedBy<CustomerImpl2>()
-					);
-			});
-		}
-
-		[Test]
-		public void AddComponent_Instance_UsesInstance()
-		{
-			var customer = new CustomerImpl();
-
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("key")
-					.Instance(customer)
-				);
-			Assert.IsTrue(Kernel.HasComponent("key"));
-			var handler = Kernel.GetHandler("key");
-			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
-
-			var customer2 = Kernel.Resolve<ICustomer>("key");
-			Assert.AreSame(customer, customer2);
-
-			customer2 = Kernel.Resolve<ICustomer>();
-			Assert.AreSame(customer, customer2);
-		}
-
-		[Test]
-		public void AddComponent_Instance_UsesInstanceWithParameters()
-		{
-			var customer = new CustomerImpl2("ernst", "delft", 29);
-
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("key")
-					.Instance(customer)
-				);
-			Assert.IsTrue(Kernel.HasComponent("key"));
-			var handler = Kernel.GetHandler("key");
-			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
-
-			var customer2 = Kernel.Resolve<ICustomer>("key");
-			Assert.AreSame(customer, customer2);
-
-			customer2 = Kernel.Resolve<ICustomer>();
-			Assert.AreSame(customer, customer2);
-		}
-
-		[Test]
-		public void AddComponent_WithExplicitLifestyle_WorksFine()
+		public void AddComponent_WithServiceAndName_RegisteredNamed()
 		{
 			Kernel.Register(
-				Component.For<ICustomer>()
+				Component.For<CustomerImpl>()
 					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.Is(LifestyleType.Transient)
-				);
+			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.AreEqual("customer", handler.ComponentModel.Name);
+			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
+			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
+
+			var customer = Kernel.Resolve<CustomerImpl>("customer");
+			Assert.IsNotNull(customer);
 		}
 
 		[Test]
-		public void AddComponent_WithTransientLifestyle_WorksFine()
+		public void AddComponent_WithServiceOnly_RegisteredWithServiceTypeName()
 		{
 			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.Transient
-				);
+				Component.For<CustomerImpl>());
 
-			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			var handler = Kernel.GetHandler(typeof(CustomerImpl));
+			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
+			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
+
+			var customer = Kernel.Resolve<CustomerImpl>();
+			Assert.IsNotNull(customer);
+
+			var key = typeof(CustomerImpl).FullName;
+			var customer1 = Kernel.Resolve<object>(key);
+			Assert.IsNotNull(customer1);
+			Assert.AreSame(customer, customer1);
 		}
 
 		[Test]
@@ -240,24 +522,10 @@ namespace Castle.Windsor.Tests.Registration
 					.Named("customer")
 					.ImplementedBy<CustomerImpl>()
 					.LifeStyle.Singleton
-				);
+			);
 
 			var handler = Kernel.GetHandler("customer");
 			Assert.AreEqual(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
-		}
-
-		[Test]
-		public void AddComponent_WithCustomLifestyle_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.Custom<CustomLifestyleManager>()
-				);
-
-			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
@@ -268,307 +536,36 @@ namespace Castle.Windsor.Tests.Registration
 					.Named("customer")
 					.ImplementedBy<CustomerImpl>()
 					.LifeStyle.PerThread
-				);
+			);
 
 			var handler = Kernel.GetHandler("customer");
 			Assert.AreEqual(LifestyleType.Thread, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
-		public void AddComponent_WithPerWebRequestLifestyle_WorksFine()
+		public void AddComponent_WithTransientLifestyle_WorksFine()
 		{
 			Kernel.Register(
 				Component.For<ICustomer>()
 					.Named("customer")
 					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.PerWebRequest
-				);
+					.LifeStyle.Transient
+			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
-		}
-
-		[Test]
-		public void AddComponent_WithPooledLifestyle_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.Pooled
-				);
-
-			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
-		}
-
-		[Test]
-		public void AddComponent_WithPooledWithSizeLifestyle_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.LifeStyle.PooledWithSize(5, 10)
-				);
-
-			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
-		}
-
-		[Test]
-		public void AddComponent_Activator_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.Named("customer")
-					.ImplementedBy<CustomerImpl>()
-					.Activator<MyCustomerActivator>()
-				);
-
-			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(typeof(MyCustomerActivator), handler.ComponentModel.CustomComponentActivator);
-
-			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual("James Bond", customer.Name);
-		}
-
-		[Test]
-		public void AddComponent_ExtendedProperties_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.ImplementedBy<CustomerImpl>()
-					.ExtendedProperties(
-						Property.ForKey("key1").Eq("value1"),
-						Property.ForKey("key2").Eq("value2")
-					)
-				);
-
-			var handler = Kernel.GetHandler(typeof(ICustomer));
-			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
-			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
-		}
-
-		[Test]
-		public void AddComponent_ExtendedProperties_UsingAnonymousType()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.ImplementedBy<CustomerImpl>()
-					.ExtendedProperties(
-						Property.ForKey("key1").Eq("value1"),
-						Property.ForKey("key2").Eq("value2")));
-
-			var handler = Kernel.GetHandler(typeof(ICustomer));
-			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
-			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
-		}
-
-		[Test]
-		public void AddComponent_CustomDependencies_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.ImplementedBy<CustomerImpl>()
-					.DependsOn(
-						Property.ForKey("Name").Eq("Caption Hook"),
-						Property.ForKey("Address").Eq("Fairyland"),
-						Property.ForKey("Age").Eq(45)
-					)
-				);
-
-			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
-		}
-
-		[Test]
-		public void AddComponent_CustomDependencies_UsingAnonymousType()
-		{
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.ImplementedBy<CustomerImpl>()
-					.DependsOn(Property.ForKey("Name").Eq("Caption Hook"),
-					           Property.ForKey("Address").Eq("Fairyland"),
-					           Property.ForKey("Age").Eq(45)));
-
-			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
-		}
-
-		[Test]
-		public void AddComponent_CustomDependenciesDictionary_WorksFine()
-		{
-			var customDependencies = new Dictionary<string, object>();
-			customDependencies["Name"] = "Caption Hook";
-			customDependencies["Address"] = "Fairyland";
-			customDependencies["Age"] = 45;
-
-			Kernel.Register(
-				Component.For<ICustomer>()
-					.ImplementedBy<CustomerImpl>()
-					.DependsOn(customDependencies)
-				);
-
-			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
-		}
-
-		[Test]
-		public void AddComponent_ArrayConfigurationParameters_WorksFine()
-		{
-			var list = new MutableConfiguration("list");
-			list.Attributes.Add("type", typeof(ICommon).AssemblyQualifiedName);
-			list.Children.Add(new MutableConfiguration("item", "${common1}"));
-			list.Children.Add(new MutableConfiguration("item", "${common2}"));
-
-			Kernel.Register(
-				Component.For<ICommon>()
-					.Named("common1")
-					.ImplementedBy<CommonImpl1>(),
-				Component.For<ICommon>()
-					.Named("common2")
-					.ImplementedBy<CommonImpl2>(),
-				Component.For<ClassWithArrayConstructor>()
-					.DependsOn(
-						Parameter.ForKey("first").Eq("${common2}"),
-						Dependency.OnConfigValue("services", list)
-					)
-				);
-
-			var common1 = Kernel.Resolve<ICommon>("common1");
-			var common2 = Kernel.Resolve<ICommon>("common2");
-			var component = Kernel.Resolve<ClassWithArrayConstructor>();
-			Assert.AreSame(common2, component.First);
-			Assert.AreEqual(2, component.Services.Length);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
-		}
-
-		[Test]
-		public void AddComponent_ListConfigurationParameters_WorksFine()
-		{
-			var list = new MutableConfiguration("list");
-			list.Attributes.Add("type", typeof(ICommon).AssemblyQualifiedName);
-			list.Children.Add(new MutableConfiguration("item", "${common1}"));
-			list.Children.Add(new MutableConfiguration("item", "${common2}"));
-
-			Kernel.Register(
-				Component.For<ICommon>()
-					.Named("common1")
-					.ImplementedBy<CommonImpl1>(),
-				Component.For<ICommon>()
-					.Named("common2")
-					.ImplementedBy<CommonImpl2>(),
-				Component.For<ClassWithListConstructor>()
-					.DependsOn(
-						Parameter.ForKey("services").Eq(list)
-					)
-				);
-
-			var common1 = Kernel.Resolve<ICommon>("common1");
-			var common2 = Kernel.Resolve<ICommon>("common2");
-			var component = Kernel.Resolve<ClassWithListConstructor>();
-			Assert.AreEqual(2, component.Services.Count);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
-		}
-
-		[Test]
-		public void AddComponent_WithComplexConfiguration_WorksFine()
-		{
-			Kernel.Register(
-				Component.For<ClassWithComplexParameter>()
-					.Configuration(
-						Castle.Windsor.MicroKernel.Registration.Child.ForName("parameters").Eq(
-							Attrib.ForName("notUsed").Eq(true),
-							Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparam").Eq(
-								Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
-									)
-								)
-							)
-					)
-				);
-
-			var component = Kernel.Resolve<ClassWithComplexParameter>();
-			Assert.IsNotNull(component);
-			Assert.IsNotNull(component.ComplexParam);
-			Assert.AreEqual("value1", component.ComplexParam.MandatoryValue);
-			Assert.AreEqual("value2", component.ComplexParam.OptionalValue);
+			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
 		[Test]
 		public void AddGenericComponent_WithParameters()
 		{
 			Kernel.Register(Component.For(typeof(IGenericClassWithParameter<>))
-			                	.ImplementedBy(typeof(GenericClassWithParameter<>))
-			                	.DependsOn(Parameter.ForKey("name").Eq("NewName"))
-				);
+				.ImplementedBy(typeof(GenericClassWithParameter<>))
+				.DependsOn(Parameter.ForKey("name").Eq("NewName"))
+			);
 
 			var instance = Kernel.Resolve<IGenericClassWithParameter<int>>();
 			Assert.AreEqual("NewName", instance.Name);
-		}
-
-		[Test]
-		public void AddComponent_StartableWithInterface_StartsComponent()
-		{
-			Kernel.AddFacility<StartableFacility>()
-				.Register(Component.For<StartableComponent>());
-
-			var component = Kernel.Resolve<StartableComponent>();
-
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
-
-			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
-		}
-
-		[Test]
-		public void AddComponent_StartableWithoutInterface_StartsComponent()
-		{
-			Kernel.AddFacility<StartableFacility>()
-				.Register(Component.For<NoInterfaceStartableComponent>()
-				          	.StartUsingMethod("Start")
-				          	.StopUsingMethod("Stop")
-				);
-
-			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
-
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
-
-			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
-		}
-
-		[Test]
-		public void AddComponent_StartableWithoutInterface_StartsComponent_via_expression()
-		{
-			Kernel.AddFacility<StartableFacility>()
-				.Register(Component.For<NoInterfaceStartableComponent>()
-				          	.StartUsingMethod(x => x.Start)
-				          	.StopUsingMethod(x => x.Stop)
-				);
-
-			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
-
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
-
-			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
 		}
 	}
 }

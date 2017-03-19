@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Facilities.TypedFactory;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {
-	using System;
-
 	public class DisposableSelector : DefaultTypedFactoryComponentSelector, IDisposable
 	{
 		public static int InstancesDisposed;

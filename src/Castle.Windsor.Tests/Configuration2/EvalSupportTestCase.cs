@@ -13,15 +13,14 @@
 // limitations under the License.
 
 
+using System;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
-	using System;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class EvalSupportTestCase
 	{
@@ -36,4 +35,3 @@ namespace Castle.Windsor.Tests.Configuration2
 		}
 	}
 }
-

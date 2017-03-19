@@ -33,8 +33,8 @@ namespace Castle.Windsor.Tests
 		public void LoadingInSequence()
 		{
 			Container.Register(Component.For<A>(),
-			                   Component.For<B>(),
-			                   Component.For<C>());
+				Component.For<B>(),
+				Component.For<C>());
 
 			Assert.IsNotNull(Container.Resolve<C>());
 			Assert.IsNotNull(Container.Resolve<B>());
@@ -45,8 +45,8 @@ namespace Castle.Windsor.Tests
 		public void LoadingOutOfSequence()
 		{
 			Container.Register(Component.For<C>(),
-			                   Component.For<B>(),
-			                   Component.For<A>());
+				Component.For<B>(),
+				Component.For<A>());
 
 			Assert.IsNotNull(Container.Resolve<C>());
 			Assert.IsNotNull(Container.Resolve<B>());
@@ -57,9 +57,9 @@ namespace Castle.Windsor.Tests
 		public void LoadingOutOfSequenceWithExtraLoad()
 		{
 			Container.Register(Component.For<C>(),
-			                   Component.For<B>(),
-			                   Component.For<A>(),
-			                   Component.For<object>());
+				Component.For<B>(),
+				Component.For<A>(),
+				Component.For<object>());
 
 			Assert.IsNotNull(Container.Resolve<C>());
 			Assert.IsNotNull(Container.Resolve<B>());
@@ -70,8 +70,8 @@ namespace Castle.Windsor.Tests
 		public void LoadingPartiallyInSequence()
 		{
 			Container.Register(Component.For<B>(),
-			                   Component.For<C>(),
-			                   Component.For<A>());
+				Component.For<C>(),
+				Component.For<A>());
 
 			Assert.IsNotNull(Container.Resolve<C>());
 			Assert.IsNotNull(Container.Resolve<B>());

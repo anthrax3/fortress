@@ -18,12 +18,4 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Components
 	{
 		public T Value { get; set; }
 	}
-
-	public class GenericIntComponent : GenericComponent<int>
-	{
-	}
-
-	public class GenericStringComponent : GenericComponent<string>
-	{
-	}
 }

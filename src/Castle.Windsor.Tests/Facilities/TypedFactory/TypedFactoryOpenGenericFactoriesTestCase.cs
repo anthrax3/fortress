@@ -31,8 +31,8 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		public void Can_use_open_generic_service_as_typed_factory()
 		{
 			Container.Register(Component.For(typeof(IGenericFactory<>)).AsFactory(),
-			                   Component.For<A>(),
-			                   Component.For<B>());
+				Component.For<A>(),
+				Component.For<B>());
 
 			var aFactory = Container.Resolve<IGenericFactory<A>>();
 			var bFactory = Container.Resolve<IGenericFactory<B>>();

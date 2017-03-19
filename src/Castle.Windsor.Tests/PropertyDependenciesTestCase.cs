@@ -41,8 +41,8 @@ namespace Castle.Windsor.Tests
 		public void Can_opt_out_of_setting_properties_open_generic_via_enum()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>))
-				                   .DependsOn(Dependency.OnValue(typeof(int), 5))
-				                   .Properties(PropertyFilter.IgnoreAll));
+				.DependsOn(Dependency.OnValue(typeof(int), 5))
+				.Properties(PropertyFilter.IgnoreAll));
 
 			var item = Container.Resolve<GenericImpl2<A>>();
 			Assert.AreEqual(0, item.Value);
@@ -52,8 +52,8 @@ namespace Castle.Windsor.Tests
 		public void Can_opt_out_of_setting_properties_open_generic_via_predicate()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>))
-				                   .DependsOn(Dependency.OnValue(typeof(int), 5))
-				                   .PropertiesIgnore(p => true));
+				.DependsOn(Dependency.OnValue(typeof(int), 5))
+				.PropertiesIgnore(p => true));
 
 			var item = Container.Resolve<GenericImpl2<A>>();
 			Assert.AreEqual(0, item.Value);
@@ -119,7 +119,7 @@ namespace Castle.Windsor.Tests
 		public void First_one_wins()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().Properties(PropertyFilter.IgnoreAll)
-				                   .Properties(PropertyFilter.RequireAll));
+				.Properties(PropertyFilter.RequireAll));
 
 			Container.Resolve<CommonServiceUser2>();
 		}
@@ -128,7 +128,7 @@ namespace Castle.Windsor.Tests
 		public void First_one_wins_2()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().Properties(PropertyFilter.RequireAll)
-				                   .Properties(PropertyFilter.IgnoreAll));
+				.Properties(PropertyFilter.IgnoreAll));
 
 			Assert.Throws<HandlerException>(() => Container.Resolve<CommonServiceUser2>());
 		}

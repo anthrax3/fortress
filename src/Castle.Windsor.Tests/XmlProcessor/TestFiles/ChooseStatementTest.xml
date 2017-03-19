@@ -5,17 +5,17 @@
 		</properties>
 		<choose>
 			<when defined="DEBUG">
-				<component id="debug" att="#{prop1}"/>
+				<component id="debug" att="#{prop1}" />
 			</when>
 			<when defined="Qa">
-				<component id="qa" att="#{prop1}"/>
+				<component id="qa" att="#{prop1}" />
 			</when>
 			<when defined="Prod">
-				<component id="prod" att="#{prop1}"/>
+				<component id="prod" att="#{prop1}" />
 			</when>
 			<otherwise>
-				<component id="default" att="#{prop1}"/>
+				<component id="default" att="#{prop1}" />
 			</otherwise>
 		</choose>
-	</components>		
+	</components>
 </configuration>

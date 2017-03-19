@@ -30,7 +30,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 		protected override void AfterContainerCreated()
 		{
-			var host = (IDiagnosticsHost)Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
+			var host = (IDiagnosticsHost) Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
 			diagnostic = host.GetDiagnostic<IAllServicesDiagnostic>();
 		}
 
@@ -38,8 +38,8 @@ namespace Castle.Windsor.Tests.Diagnostics
 		public void Groups_components_by_exposed_service()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<A>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<A>());
 
 			var services = diagnostic.Inspect();
 			Assert.AreEqual(2, services.Count);
@@ -63,8 +63,8 @@ namespace Castle.Windsor.Tests.Diagnostics
 		public void Works_for_multi_service_components()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<A>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<A>());
 
 			var services = diagnostic.Inspect();
 			Assert.AreEqual(3, services.Count);

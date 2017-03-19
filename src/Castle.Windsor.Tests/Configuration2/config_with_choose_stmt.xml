@@ -2,17 +2,17 @@
 	<components>
 		<choose>
 			<when defined="DEBUG">
-				<component id="debug"/>
+				<component id="debug" />
 			</when>
 			<when defined="Qa">
-				<component id="qa"/>
+				<component id="qa" />
 			</when>
 			<when defined="Prod">
-				<component id="prod"/>
+				<component id="prod" />
 			</when>
 			<otherwise>
-				<component id="default"/>
+				<component id="default" />
 			</otherwise>
 		</choose>
-	</components>		
+	</components>
 </configuration>

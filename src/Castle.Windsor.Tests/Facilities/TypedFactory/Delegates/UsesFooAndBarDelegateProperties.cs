@@ -21,6 +21,5 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Delegates
 		public Func<Bar> BarFactory { get; set; }
 
 		public Func<Foo> FooFactory { get; set; }
-
 	}
 }

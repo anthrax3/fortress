@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Interceptors
 {
 	public class DependsOnTViaCtorInterceptor<T> : StandardInterceptor
 	{
-		private readonly T tee;
-
 		public DependsOnTViaCtorInterceptor(T tee)
 		{
-			this.tee = tee;
+			Tee = tee;
 		}
 
-		public T Tee
-		{
-			get { return tee; }
-		}
+		public T Tee { get; }
 	}
 }

@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class ReadOnlyCollectionDepAsConstructor
 	{
-		private readonly IReadOnlyCollection<IEmptyService> services;
-
 		public ReadOnlyCollectionDepAsConstructor(IReadOnlyCollection<IEmptyService> services)
 		{
-			this.services = services;
+			Services = services;
 		}
 
-		public IReadOnlyCollection<IEmptyService> Services
-		{
-			get { return services; }
-		}
+		public IReadOnlyCollection<IEmptyService> Services { get; }
 	}
 }

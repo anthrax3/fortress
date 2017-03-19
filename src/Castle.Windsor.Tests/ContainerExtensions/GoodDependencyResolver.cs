@@ -22,19 +22,19 @@ namespace Castle.Windsor.Tests.ContainerExtensions
 	public class GoodDependencyResolver : ISubDependencyResolver
 	{
 		public bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                       DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			return dependency.TargetType == typeof(IBookStore) && contextHandlerResolver.CanResolve(context, contextHandlerResolver, model,
-			                                                                                        new DependencyModel(typeof(IBookStore).FullName,
-			                                                                                                            typeof(IBookStore), false));
+				       new DependencyModel(typeof(IBookStore).FullName,
+					       typeof(IBookStore), false));
 		}
 
 		public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                      DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			return contextHandlerResolver.Resolve(context, contextHandlerResolver, model,
-			                                      new DependencyModel(typeof(IBookStore).FullName,
-			                                                          typeof(IBookStore), false));
+				new DependencyModel(typeof(IBookStore).FullName,
+					typeof(IBookStore), false));
 		}
 	}
 }

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
@@ -19,11 +21,6 @@ using Castle.Windsor.MicroKernel.Proxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using System;
-	using System.Linq;
-
-	using Castle.Core;
-
 	public class ByTypeInterceptorSelector : IModelInterceptorsSelector
 	{
 		private readonly Type interceptorType;
@@ -42,7 +39,7 @@ namespace Castle.Windsor.Tests.Interceptors
 		{
 			return new[]
 			{
-				new InterceptorReference(interceptorType),
+				new InterceptorReference(interceptorType)
 			};
 		}
 	}

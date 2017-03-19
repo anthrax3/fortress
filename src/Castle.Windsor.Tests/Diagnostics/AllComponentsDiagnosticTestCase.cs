@@ -29,7 +29,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 		protected override void AfterContainerCreated()
 		{
-			var host = (IDiagnosticsHost)Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
+			var host = (IDiagnosticsHost) Kernel.GetSubSystem(SubSystemConstants.DiagnosticsKey);
 			diagnostic = host.GetDiagnostic<IAllComponentsDiagnostic>();
 		}
 
@@ -50,9 +50,9 @@ namespace Castle.Windsor.Tests.Diagnostics
 		{
 			var parent = new WindsorContainer();
 			parent.Register(Component.For<A>(),
-			                Component.For<B>());
+				Component.For<B>());
 			Container.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)),
-			                   Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
+				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
 
 			parent.AddChildContainer(Container);
 
@@ -83,7 +83,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 		public void Works_with_multi_service_components()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA>()
-			                   	.ImplementedBy<EmptyServiceA>());
+				.ImplementedBy<EmptyServiceA>());
 
 			var handlers = diagnostic.Inspect();
 
@@ -95,7 +95,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 		public void Works_with_multiple_handlers_for_given_type()
 		{
 			Container.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)),
-			                   Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
+				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
 
 			var handlers = diagnostic.Inspect();
 

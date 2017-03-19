@@ -56,7 +56,6 @@ namespace Castle.Windsor.Tests
 		{
 			private readonly Func<IHandler, bool> filter;
 			private readonly Type typeToFilter;
-			private IHandler[] handlersAsked;
 
 			public DelegatingFilter(Type typeToFilter, Func<IHandler, bool> filter = null)
 			{
@@ -64,10 +63,7 @@ namespace Castle.Windsor.Tests
 				this.filter = filter ?? (t => true);
 			}
 
-			public IHandler[] HandlersAsked
-			{
-				get { return handlersAsked; }
-			}
+			public IHandler[] HandlersAsked { get; private set; }
 
 			public bool HasOpinionAbout(Type service)
 			{
@@ -76,7 +72,7 @@ namespace Castle.Windsor.Tests
 
 			public IHandler[] SelectHandlers(Type service, IHandler[] handlers)
 			{
-				handlersAsked = handlers;
+				HandlersAsked = handlers;
 				return handlers.Where(filter).ToArray();
 			}
 		}
@@ -171,10 +167,10 @@ namespace Castle.Windsor.Tests
 		public void Filter_gets_all_assignable_handlers_not_exiplicitly_registered_for_given_service()
 		{
 			Container.Register(Component.For<Task5>(),
-			                   Component.For<Task3>(),
-			                   Component.For<Task2>(),
-			                   Component.For<Task4>(),
-			                   Component.For<Task1>());
+				Component.For<Task3>(),
+				Component.For<Task2>(),
+				Component.For<Task4>(),
+				Component.For<Task1>());
 
 			Container.Kernel.AddHandlersFilter(new ReturnAllHandlersFilter());
 
@@ -187,7 +183,7 @@ namespace Castle.Windsor.Tests
 		public void Filter_gets_open_generic_handlers_when_generic_service_requested()
 		{
 			Container.Register(Component.For<IGeneric<A>>().ImplementedBy<GenericImpl1<A>>(),
-			                   Component.For(typeof(GenericImpl2<>)));
+				Component.For(typeof(GenericImpl2<>)));
 			var filter = new DelegatingFilter(typeof(IGeneric<A>));
 			Kernel.AddHandlersFilter(filter);
 
@@ -200,10 +196,10 @@ namespace Castle.Windsor.Tests
 		public void Filter_returning_empty_collection_respected()
 		{
 			Container.Register(Component.For<ISomeTask>().ImplementedBy<Task5>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task4>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task3>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task2>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task1>());
+				Component.For<ISomeTask>().ImplementedBy<Task4>(),
+				Component.For<ISomeTask>().ImplementedBy<Task3>(),
+				Component.For<ISomeTask>().ImplementedBy<Task2>(),
+				Component.For<ISomeTask>().ImplementedBy<Task1>());
 
 			Container.Kernel.AddHandlersFilter(new DelegatingFilter(typeof(ISomeTask), h => false));
 
@@ -216,8 +212,8 @@ namespace Castle.Windsor.Tests
 		public void HandlerFilterGetsCalledLikeExpected()
 		{
 			Container.Register(Component.For<ISomeService>().ImplementedBy<FirstImplementation>(),
-			                   Component.For<ISomeService>().ImplementedBy<SecondImplementation>(),
-			                   Component.For<ISomeService>().ImplementedBy<ThirdImplementation>());
+				Component.For<ISomeService>().ImplementedBy<SecondImplementation>(),
+				Component.For<ISomeService>().ImplementedBy<ThirdImplementation>());
 
 			var filter = new TestHandlersFilter();
 			Container.Kernel.AddHandlersFilter(filter);
@@ -231,10 +227,10 @@ namespace Castle.Windsor.Tests
 		public void HandlerFiltersPrioritizationAndOrderingIsRespected()
 		{
 			Container.Register(Component.For<ISomeTask>().ImplementedBy<Task5>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task3>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task2>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task4>(),
-			                   Component.For<ISomeTask>().ImplementedBy<Task1>());
+				Component.For<ISomeTask>().ImplementedBy<Task3>(),
+				Component.For<ISomeTask>().ImplementedBy<Task2>(),
+				Component.For<ISomeTask>().ImplementedBy<Task4>(),
+				Component.For<ISomeTask>().ImplementedBy<Task1>());
 
 			Container.Kernel.AddHandlersFilter(new FilterThatRemovedFourthTaskAndOrdersTheRest());
 

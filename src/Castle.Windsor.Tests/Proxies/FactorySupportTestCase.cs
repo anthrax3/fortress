@@ -39,7 +39,7 @@ namespace Castle.Windsor.Tests.Proxies
 		{
 			Container.AddFacility<FactorySupportFacility>();
 			Container.Register(Component.For<StandardInterceptor>(),
-			                   Component.For<CalulcatorFactory>().Named("factory"));
+				Component.For<CalulcatorFactory>().Named("factory"));
 
 			AddComponent("calculator", typeof(ICalcService), typeof(CalculatorService), "Create");
 

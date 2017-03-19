@@ -26,39 +26,25 @@ namespace Castle.Windsor.Tests.Lifecycle
 	{
 		public class Indirection
 		{
-			private readonly NonDisposableRoot fakeRoot;
-
 			public Indirection(NonDisposableRoot fakeRoot)
 			{
-				this.fakeRoot = fakeRoot;
+				FakeRoot = fakeRoot;
 			}
 
-			public NonDisposableRoot FakeRoot
-			{
-				get { return fakeRoot; }
-			}
+			public NonDisposableRoot FakeRoot { get; }
 		}
 
 		public class NonDisposableRoot
 		{
-			private readonly A a;
-			private readonly B b;
-
 			public NonDisposableRoot(A a, B b)
 			{
-				this.a = a;
-				this.b = b;
+				A = a;
+				B = b;
 			}
 
-			public A A
-			{
-				get { return a; }
-			}
+			public A A { get; }
 
-			public B B
-			{
-				get { return b; }
-			}
+			public B B { get; }
 		}
 
 		public class A : DisposableBase
@@ -86,32 +72,23 @@ namespace Castle.Windsor.Tests.Lifecycle
 
 		public class DisposableSpamService : DisposableBase
 		{
-			private readonly PoolableComponent1 pool;
-			private readonly DisposableTemplateEngine templateEngine;
-
 			public DisposableSpamService(DisposableTemplateEngine templateEngine)
 			{
-				this.templateEngine = templateEngine;
+				TemplateEngine = templateEngine;
 			}
 
 			public DisposableSpamService(DisposableTemplateEngine templateEngine,
-			                             PoolableComponent1 pool)
+				PoolableComponent1 pool)
 			{
-				this.templateEngine = templateEngine;
-				this.pool = pool;
+				TemplateEngine = templateEngine;
+				Pool = pool;
 			}
 
 			public DefaultMailSenderService MailSender { get; set; }
 
-			public PoolableComponent1 Pool
-			{
-				get { return pool; }
-			}
+			public PoolableComponent1 Pool { get; }
 
-			public DisposableTemplateEngine TemplateEngine
-			{
-				get { return templateEngine; }
-			}
+			public DisposableTemplateEngine TemplateEngine { get; }
 		}
 
 		public class DisposableTemplateEngine : DisposableBase
@@ -148,6 +125,19 @@ namespace Castle.Windsor.Tests.Lifecycle
 
 			Kernel.ReleaseComponent(instance1);
 			Kernel.ReleaseComponent(instance1.TemplateEngine);
+		}
+
+		[Test]
+		[Bug("IOC-320")]
+		public void Expected_exception_during_creation_doesnt_prevent_from_being_released_properly()
+		{
+			Container.Register(Component.For<GenA<int>>().LifestyleTransient(),
+				Component.For<B>().UsingFactoryMethod<B>(delegate { throw new NotImplementedException("boo hoo!"); }).LifestyleTransient()
+					.OnDestroy(Assert.IsNotNull));
+
+			var a = Container.Resolve<GenA<int>>();
+
+			Container.Release(a);
 		}
 
 		[Test]
@@ -193,7 +183,7 @@ namespace Castle.Windsor.Tests.Lifecycle
 			Kernel.Register(
 				Component.For<DisposableSpamService>().LifeStyle.Transient,
 				Component.For<DisposableTemplateEngine>().LifeStyle.Transient
-				);
+			);
 
 			var service = Kernel.Resolve<DisposableSpamService>();
 			Assert.IsFalse(service.IsDisposed);
@@ -251,22 +241,5 @@ namespace Castle.Windsor.Tests.Lifecycle
 			Assert.IsTrue(instance1.FakeRoot.A.IsDisposed);
 			Assert.IsTrue(instance1.FakeRoot.B.IsDisposed);
 		}
-
-		[Test]
-		[Bug("IOC-320")]
-		public void Expected_exception_during_creation_doesnt_prevent_from_being_released_properly()
-		{
-			Container.Register(Component.For<GenA<int>>().LifestyleTransient(),
-			                   Component.For<B>().UsingFactoryMethod<B>(delegate
-			                   {
-			                   	throw new NotImplementedException("boo hoo!");
-			                   }).LifestyleTransient()
-			                   	.OnDestroy(Assert.IsNotNull));
-
-			var a = Container.Resolve<GenA<int>>();
-
-			Container.Release(a);
-		}
-
 	}
 }

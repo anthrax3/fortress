@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Context;
 
 namespace Castle.Windsor.Tests.MicroKernel
 {
-	using System;
-
 	public class NotImplementedDependencyResolver : IDependencyResolver
 	{
 		public IKernel Kernel { get; set; }
@@ -40,13 +39,13 @@ namespace Castle.Windsor.Tests.MicroKernel
 		}
 
 		public bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                       DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			throw new NotImplementedException();
 		}
 
 		public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model,
-		                      DependencyModel dependency)
+			DependencyModel dependency)
 		{
 			throw new NotImplementedException();
 		}

@@ -33,9 +33,9 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		public void Helpful_exception_is_thrown_when_publishing_to_non_existing_subscribers()
 		{
 			Container.Register(Component.For<SimplePublisher>()
-			                   	.PublishEvent("Event",
-			                   	              x => x.To<SimpleListener>()
-			                   	                   	.To("nonExistingListener")));
+				.PublishEvent("Event",
+					x => x.To<SimpleListener>()
+						.To("nonExistingListener")));
 
 			var exception = Assert.Throws<HandlerException>(() => Container.Resolve<SimplePublisher>());
 
@@ -51,7 +51,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		public void Helpful_exception_is_thrown_when_susbcribing_to_a_non_existing_event()
 		{
 			Container.Register(Component.For<SimplePublisher>().PublishEvent("NonExistingEvent", x => x.To<SimpleListener>("OnPublish")),
-			                   Component.For<SimpleListener>());
+				Component.For<SimpleListener>());
 
 			var exception = Assert.Throws<EventWiringException>(() => Container.Resolve<SimplePublisher>());
 			var message =
@@ -63,7 +63,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		public void Helpful_exception_is_thrown_when_susbcribing_with_a_non_existing_method()
 		{
 			Container.Register(Component.For<SimplePublisher>().PublishEvent("Event", x => x.To<SimpleListener>("NonExistingHandlerMethod")),
-			                   Component.For<SimpleListener>());
+				Component.For<SimpleListener>());
 
 			var exception = Assert.Throws<EventWiringException>(() => Container.Resolve<SimplePublisher>());
 			var message =

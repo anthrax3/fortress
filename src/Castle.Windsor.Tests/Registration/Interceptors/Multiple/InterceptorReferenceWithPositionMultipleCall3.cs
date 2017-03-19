@@ -23,9 +23,9 @@ namespace Castle.Windsor.Tests.Registration.Interceptors.Multiple
 	{
 		public override IRegistration RegisterInterceptors<S>(ComponentRegistration<S> registration)
 		{
-			return registration.Interceptors(new InterceptorReference(typeof (TestInterceptor3))).Last
-				.Interceptors(new InterceptorReference(typeof (TestInterceptor1))).First
-				.Interceptors(new InterceptorReference(typeof (TestInterceptor2))).AtIndex(1);
+			return registration.Interceptors(new InterceptorReference(typeof(TestInterceptor3))).Last
+				.Interceptors(new InterceptorReference(typeof(TestInterceptor1))).First
+				.Interceptors(new InterceptorReference(typeof(TestInterceptor2))).AtIndex(1);
 		}
 
 		public override IEnumerable<InterceptorReference> GetExpectedInterceptorsInCorrectOrder()

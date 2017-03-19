@@ -31,11 +31,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		[Test]
 		public void InvalidConfigured()
 		{
-			Assert.Throws<EventWiringException>(() =>
-			{
-				Container.Resolve<object>("SimplePublisher");
-			});
+			Assert.Throws<EventWiringException>(() => { Container.Resolve<object>("SimplePublisher"); });
 		}
 	}
 }
-

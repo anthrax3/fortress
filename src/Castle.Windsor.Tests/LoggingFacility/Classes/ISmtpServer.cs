@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
 	public interface ISmtpServer
@@ -22,6 +20,6 @@ namespace Castle.Windsor.Tests.LoggingFacility.Classes
 
 		void Stop();
 
-		void InternalSend(String from, String to, String contents);
+		void InternalSend(string from, string to, string contents);
 	}
 }

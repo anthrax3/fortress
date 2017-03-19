@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Core.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using System;
-
 	[Serializable]
 	public class ChangeResultInterceptor : IInterceptor
 	{
@@ -28,9 +27,7 @@ namespace Castle.Windsor.Tests.Interceptors
 			var result = invocation.ReturnValue;
 
 			if (result is int)
-			{
-				result = ((int)result) + 10;
-			}
+				result = (int) result + 10;
 
 			invocation.ReturnValue = result;
 		}

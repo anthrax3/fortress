@@ -26,6 +26,16 @@ namespace Castle.Windsor.Tests.Lifestyle
 {
 	public class ScopedLifestyleTestCase : AbstractContainerTestCase
 	{
+		// method is needed because since 4.6.x under debug configuration local variables are not
+		// considered for garbage collection; hence if method is inlined - test will fail
+		private WeakReference GetWeakReferenceToDisposableFoo()
+		{
+			var udf = Container.Resolve<UsesDisposableFoo>();
+			var weakUdt = new WeakReference(udf);
+			udf = null;
+			return weakUdt;
+		}
+
 		[Test]
 		public void Can_apply_scoped_lifestyle_via_attribute()
 		{
@@ -34,7 +44,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var handler = Kernel.GetHandler(typeof(ScopedComponent));
 			Assert.AreEqual(LifestyleType.Scoped, handler.ComponentModel.LifestyleType);
 		}
-		
+
 		[Test]
 		public void Can_create_scope_without_using_container_or_kernel()
 		{
@@ -58,6 +68,56 @@ namespace Castle.Windsor.Tests.Lifestyle
 			}
 
 			Assert.AreEqual(1, DisposableFoo.DisposedCount);
+		}
+
+		[Test]
+		[Bug("IOC-319")]
+		public void Nested_container_and_scope_used_together_dont_cause_components_to_be_released_twice()
+		{
+			DisposableFoo.ResetDisposedCount();
+			Container.Register(Component.For<IWindsorContainer>().LifeStyle.Scoped()
+				.UsingFactoryMethod(k =>
+				{
+					var container = new WindsorContainer();
+					container.Register(Component.For<DisposableFoo>().LifestyleScoped());
+
+					k.AddChildKernel(container.Kernel);
+					return container;
+				}));
+			using (Container.BeginScope())
+			{
+				var child = Container.Resolve<IWindsorContainer>();
+				child.Resolve<DisposableFoo>();
+			}
+
+			Assert.AreEqual(1, DisposableFoo.DisposedCount);
+		}
+
+		[Test]
+		public void Requiring_scope_within_parent_scope_uses_parent_scope()
+		{
+			Container.Register(Component.For<A>().LifeStyle.Scoped());
+			using (Container.BeginScope())
+			{
+				var a = Container.Resolve<A>();
+				using (var scope = Container.RequireScope())
+				{
+					var aa = Container.Resolve<A>();
+					Assert.AreSame(a, aa);
+					Assert.IsNull(scope);
+				}
+			}
+		}
+
+		[Test]
+		public void Requiring_scope_without_parent_scope_begins_new_scope()
+		{
+			Container.Register(Component.For<A>().LifeStyle.Scoped());
+			using (var scope = Container.RequireScope())
+			{
+				Container.Resolve<A>();
+				Assert.IsNotNull(scope);
+			}
 		}
 
 		[Test]
@@ -86,7 +146,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 			Container.Register(Component.For<A>().LifeStyle.Scoped());
 
 			var exception = Assert.Throws<InvalidOperationException>(() =>
-			                                                         Container.Resolve<A>());
+				Container.Resolve<A>());
 
 			Assert.AreEqual(
 				"Scope was not available. Did you forget to call container.BeginScope()?",
@@ -160,7 +220,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Transient_depending_on_scoped_component_is_not_tracked_by_the_container()
 		{
 			Container.Register(Component.For<DisposableFoo>().LifeStyle.Scoped(),
-			                   Component.For<UsesDisposableFoo>().LifeStyle.Transient);
+				Component.For<UsesDisposableFoo>().LifeStyle.Transient);
 
 			using (Container.BeginScope())
 			{
@@ -170,77 +230,17 @@ namespace Castle.Windsor.Tests.Lifestyle
 			}
 		}
 
-		// method is needed because since 4.6.x under debug configuration local variables are not
-		// considered for garbage collection; hence if method is inlined - test will fail
-		private WeakReference GetWeakReferenceToDisposableFoo()
-		{
-			var udf = Container.Resolve<UsesDisposableFoo>();
-			var weakUdt = new WeakReference(udf);
-			udf = null;
-			return weakUdt;
-		}
-
 		[Test]
 		public void Transient_depending_on_scoped_component_is_not_tracked_by_the_release_policy()
 		{
 			Container.Register(Component.For<DisposableFoo>().LifeStyle.Scoped(),
-			                   Component.For<UsesDisposableFoo>().LifeStyle.Transient);
+				Component.For<UsesDisposableFoo>().LifeStyle.Transient);
 
 			using (Container.BeginScope())
 			{
 				var udf = Container.Resolve<UsesDisposableFoo>();
 				Assert.IsFalse(Kernel.ReleasePolicy.HasTrack(udf));
 			}
-		}
-
-		[Test]
-		public void Requiring_scope_without_parent_scope_begins_new_scope()
-		{
-			Container.Register(Component.For<A>().LifeStyle.Scoped());
-			using (var scope = Container.RequireScope())
-			{
-				Container.Resolve<A>();
-				Assert.IsNotNull(scope);
-			}
-		}
-
-		[Test]
-		public void Requiring_scope_within_parent_scope_uses_parent_scope()
-		{
-			Container.Register(Component.For<A>().LifeStyle.Scoped());
-			using (Container.BeginScope())
-			{
-				var a = Container.Resolve<A>();
-				using (var scope = Container.RequireScope())
-				{
-					var aa = Container.Resolve<A>();
-					Assert.AreSame(a, aa);
-					Assert.IsNull(scope);
-				}
-			}
-		}
-
-		[Test]
-		[Bug("IOC-319")]
-		public void Nested_container_and_scope_used_together_dont_cause_components_to_be_released_twice()
-		{
-			DisposableFoo.ResetDisposedCount();
-			Container.Register(Component.For<IWindsorContainer>().LifeStyle.Scoped()
-			                   	.UsingFactoryMethod(k =>
-			                   	{
-			                   		var container = new WindsorContainer();
-			                   		container.Register(Component.For<DisposableFoo>().LifestyleScoped());
-
-			                   		k.AddChildKernel(container.Kernel);
-			                   		return container;
-			                   	}));
-			using (Container.BeginScope())
-			{
-				var child = Container.Resolve<IWindsorContainer>();
-				child.Resolve<DisposableFoo>();
-			}
-
-			Assert.AreEqual(1, DisposableFoo.DisposedCount);
 		}
 	}
 }

@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Delegates
 {
 	public class Foo
 	{
-		private readonly int number;
-
 		public Foo(int number)
 		{
-			this.number = number;
+			Number = number;
 		}
 
-		public int Number
-		{
-			get { return number; }
-		}
+		public int Number { get; }
 	}
 }

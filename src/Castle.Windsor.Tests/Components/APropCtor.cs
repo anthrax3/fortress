@@ -16,17 +16,12 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class APropCtor
 	{
-		private readonly A2 a;
-
 		public APropCtor(A2 a)
 		{
-			this.a = a;
+			A = a;
 		}
 
-		public A2 A
-		{
-			get { return a; }
-		}
+		public A2 A { get; }
 
 		public A Prop { get; set; }
 	}

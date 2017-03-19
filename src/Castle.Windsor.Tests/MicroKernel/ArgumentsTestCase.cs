@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Registration;
+using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.MicroKernel
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-
-	using Castle.Windsor.Tests.Components;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ArgumentsTestCase : AbstractContainerTestCase
 	{
@@ -50,20 +47,20 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			var dictionaryProperty = new Dictionary<string, string>();
 
-			var obj = container.Resolve<HasDictionaryDependency>(new { dictionaryProperty });
+			var obj = container.Resolve<HasDictionaryDependency>(new {dictionaryProperty});
 			Assert.AreSame(dictionaryProperty, obj.DictionaryProperty);
 		}
 
 		[Test]
-		[Bug("IOC-142")]
-		public void Can_satisfy_nullable_property_dependency()
+		[Bug("IOC-92")]
+		public void Can_mix_hashtable_parameters_and_configuration_parameters()
 		{
-			Container.Register(Component.For<HasNullableIntProperty>());
+			Container.Register(
+				Component.For<HasStringAndIntDependency>()
+					.DependsOn(Parameter.ForKey("x").Eq("abc"))
+			);
 
-			var arguments = new Arguments().Insert("SomeVal", 5);
-			var s = Container.Resolve<HasNullableIntProperty>(arguments);
-
-			Assert.IsNotNull(s.SomeVal);
+			Container.Resolve<HasStringAndIntDependency>(new Arguments().Insert("y", 1));
 		}
 
 		[Test]
@@ -77,15 +74,15 @@ namespace Castle.Windsor.Tests.MicroKernel
 		}
 
 		[Test]
-		[Bug("IOC-92")]
-		public void Can_mix_hashtable_parameters_and_configuration_parameters()
+		[Bug("IOC-142")]
+		public void Can_satisfy_nullable_property_dependency()
 		{
-			Container.Register(
-				Component.For<HasStringAndIntDependency>()
-					.DependsOn(Parameter.ForKey("x").Eq("abc"))
-				);
+			Container.Register(Component.For<HasNullableIntProperty>());
 
-			Container.Resolve<HasStringAndIntDependency>(new Arguments().Insert("y", 1));
+			var arguments = new Arguments().Insert("SomeVal", 5);
+			var s = Container.Resolve<HasNullableIntProperty>(arguments);
+
+			Assert.IsNotNull(s.SomeVal);
 		}
 
 		[Test]
@@ -109,23 +106,9 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			var clone = (IDictionary)((ICloneable)arguments).Clone();
+			var clone = (IDictionary) ((ICloneable) arguments).Clone();
 
 			Assert.AreEqual(value, clone["boo!"]);
-		}
-
-		[Test]
-		public void Handles_Type_as_key()
-		{
-			var arguments = new Arguments();
-			var key = typeof(object);
-			var value = new object();
-
-			arguments.Add(key, value);
-
-			Assert.AreEqual(1, arguments.Count);
-			Assert.IsTrue(arguments.Contains(key));
-			Assert.AreSame(value, arguments[key]);
 		}
 
 		[Test]
@@ -154,30 +137,19 @@ namespace Castle.Windsor.Tests.MicroKernel
 			Assert.IsTrue(arguments.Contains(key.ToLower()));
 			Assert.IsTrue(arguments.Contains(key.ToUpper()));
 		}
-	}
 
-	public class CustomStringComparer : IArgumentsComparer
-	{
-		public bool RunEqualityComparison(object x, object y, out bool areEqual)
+		[Test]
+		public void Handles_Type_as_key()
 		{
-			if (x is string)
-			{
-				areEqual = true;
-				return true;
-			}
-			areEqual = false;
-			return false;
-		}
+			var arguments = new Arguments();
+			var key = typeof(object);
+			var value = new object();
 
-		public bool RunHasCodeCalculation(object o, out int hashCode)
-		{
-			if (o is string)
-			{
-				hashCode = "boo!".GetHashCode();
-				return true;
-			}
-			hashCode = 0;
-			return false;
+			arguments.Add(key, value);
+
+			Assert.AreEqual(1, arguments.Count);
+			Assert.IsTrue(arguments.Contains(key));
+			Assert.AreSame(value, arguments[key]);
 		}
 	}
 }

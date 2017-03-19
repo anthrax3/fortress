@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
@@ -29,12 +28,12 @@ namespace Castle.Windsor.Tests
 			Kernel.Register(
 				Component.For<IRepository>().ImplementedBy<Repository1>(),
 				Component.For<IRepository>().ImplementedBy<DecoratedRepository>()
-				);
-			var repos = (Repository1)Kernel.Resolve<IRepository>();
+			);
+			var repos = (Repository1) Kernel.Resolve<IRepository>();
 			Assert.IsInstanceOf(typeof(DecoratedRepository), repos.InnerRepository);
 		}
 
-		
+
 		[Test]
 		public void Will_give_good_error_message_if_cannot_resolve_service_that_is_likely_decorated_when_there_are_multiple_service()
 		{
@@ -44,7 +43,7 @@ namespace Castle.Windsor.Tests
 					Component.For<IRepository>().ImplementedBy<Repository1>(),
 					Component.For<IRepository>().ImplementedBy<DecoratedRepository2>().Named("foo"),
 					Component.For<IRepository>().ImplementedBy<Repository1>().Named("bar")
-					);
+				);
 				Kernel.Resolve<IRepository>();
 			});
 		}

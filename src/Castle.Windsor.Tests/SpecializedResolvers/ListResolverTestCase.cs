@@ -64,8 +64,8 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 		public void DependencyOnListOfServices_OnConstructor()
 		{
 			Kernel.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                Component.For<ListDepAsConstructor>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<ListDepAsConstructor>());
 
 			var comp = Kernel.Resolve<ListDepAsConstructor>();
 
@@ -73,17 +73,15 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 			Assert.IsNotNull(comp.Services);
 			Assert.AreEqual(2, comp.Services.Count);
 			foreach (var service in comp.Services.AsEnumerable())
-			{
 				Assert.IsNotNull(service);
-			}
 		}
 
 		[Test]
 		public void DependencyOnListOfServices_OnProperty()
 		{
 			Kernel.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                Component.For<ListDepAsProperty>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
+				Component.For<ListDepAsProperty>());
 
 			var comp = Kernel.Resolve<ListDepAsProperty>();
 
@@ -91,9 +89,7 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 			Assert.IsNotNull(comp.Services);
 			Assert.AreEqual(2, comp.Services.Count);
 			foreach (var service in comp.Services.AsEnumerable())
-			{
 				Assert.IsNotNull(service);
-			}
 		}
 
 		[Test]
@@ -101,7 +97,7 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 		{
 			Kernel.Resolver.AddSubResolver(new ListResolver(Kernel, true));
 			Kernel.Register(Component.For<ListDepAsConstructor>(),
-			                Component.For<ListDepAsProperty>());
+				Component.For<ListDepAsProperty>());
 
 			var proxy = Kernel.Resolve<ListDepAsConstructor>();
 			Assert.IsNotNull(proxy.Services);

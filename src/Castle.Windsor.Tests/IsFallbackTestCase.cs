@@ -50,7 +50,7 @@ namespace Castle.Windsor.Tests
 		public void Can_make_first_component_default_with_filter()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA, object>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.IsInterface),
-			                   Component.For<IEmptyService, EmptyServiceB, object>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService, EmptyServiceB, object>().ImplementedBy<EmptyServiceB>());
 
 			var obj = Container.Resolve<IEmptyService>();
 
@@ -64,7 +64,7 @@ namespace Castle.Windsor.Tests
 		public void Can_make_first_component_fallback()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 
 			var obj = Container.Resolve<IEmptyService>();
 
@@ -75,7 +75,7 @@ namespace Castle.Windsor.Tests
 		public void Does_affect_order_when_using_ResolveAll()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.IsInterface),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 
 			var obj = Container.ResolveAll<IEmptyService>();
 
@@ -87,7 +87,7 @@ namespace Castle.Windsor.Tests
 		public void Later_fallback_does_not_override_earlier_one()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsFallback());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsFallback());
 
 			var obj = Container.Resolve<IEmptyService>();
 

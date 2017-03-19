@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections;
+using System.Reflection;
 using Castle.Windsor.Facilities.TypedFactory;
 using Castle.Windsor.MicroKernel;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {
-	using System.Collections;
-	using System.Reflection;
-
 	public class SelectorById : DefaultTypedFactoryComponentSelector
 	{
 		protected override IDictionary GetArguments(MethodInfo method, object[] arguments)
 		{
 			if (method.Name.Equals("ComponentNamed"))
-			{
-				//empty since we don't have any actual parameters
 				return new Arguments();
-			}
 
 			return base.GetArguments(method, arguments);
 		}
@@ -36,9 +32,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 		protected override string GetComponentName(MethodInfo method, object[] arguments)
 		{
 			if (method.Name.Equals("ComponentNamed"))
-			{
-				return (string)arguments[0];
-			}
+				return (string) arguments[0];
 
 			return base.GetComponentName(method, arguments);
 		}

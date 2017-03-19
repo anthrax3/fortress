@@ -31,13 +31,6 @@ namespace Castle.Windsor.Tests
 	public class MicroKernelTestCase : AbstractContainerTestCase
 	{
 		[Test]
-		[Bug("IOC-327")]
-		public void ReleaseComponent_null_silently_ignored_doesnt_throw()
-		{
-			Assert.DoesNotThrow(() => Kernel.ReleaseComponent(null));
-		}
-
-		[Test]
 		public void AddClassComponentWithInterface()
 		{
 			Kernel.Register(Component.For<CustomerImpl>().Named("key"));
@@ -82,6 +75,15 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		public void AddComponentInstance_ByService()
+		{
+			var customer = new CustomerImpl();
+
+			Kernel.Register(Component.For<ICustomer>().Instance(customer));
+			Assert.AreSame(Kernel.Resolve<ICustomer>(), customer);
+		}
+
+		[Test]
 		public void AddComponentInstance2()
 		{
 			var customer = new CustomerImpl();
@@ -97,22 +99,13 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
-		public void AddComponentInstance_ByService()
-		{
-			var customer = new CustomerImpl();
-
-			Kernel.Register(Component.For<ICustomer>().Instance(customer));
-			Assert.AreSame(Kernel.Resolve<ICustomer>(), customer);
-		}
-
-		[Test]
 		public void AdditionalParametersShouldNotBePropagatedInTheDependencyChain()
 		{
 			Kernel.Register(
 				Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("cust").LifeStyle.Transient);
 			Kernel.Register(Component.For<ExtendedCustomer>().Named("custex").LifeStyle.Transient);
 
-			var dictionary = new Dictionary<string, object> { { "Name", "name" }, { "Address", "address" }, { "Age", "18" } };
+			var dictionary = new Dictionary<string, object> {{"Name", "name"}, {"Address", "address"}, {"Age", "18"}};
 			var customer = Kernel.Resolve<ICustomer>("cust", dictionary);
 
 			Assert.AreEqual("name", customer.Name);
@@ -175,10 +168,47 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		[Bug("IOC-327")]
+		public void ReleaseComponent_null_silently_ignored_doesnt_throw()
+		{
+			Assert.DoesNotThrow(() => Kernel.ReleaseComponent(null));
+		}
+
+		[Test]
+		public void Resolve_all_when_dependency_is_missing_throws_DependencyResolverException()
+		{
+			Kernel.Register(
+				Component.For<C>());
+			// the dependency goes C --> B --> A
+
+			Assert.Throws<DependencyResolverException>(() => Kernel.ResolveAll<C>(new Arguments {{"fakeDependency", "Stefan!"}}));
+		}
+
+		[Test]
+		public void Resolve_all_when_dependency_is_unresolvable_throws_HandlerException()
+		{
+			Kernel.Register(
+				Component.For<B>(),
+				Component.For<C>());
+			// the dependency goes C --> B --> A
+
+			Assert.Throws<HandlerException>(() => Kernel.ResolveAll<C>());
+		}
+
+		[Test]
 		public void ResolveAll()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>());
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl1>());
+			var services = Kernel.ResolveAll<ICommon>();
+			Assert.AreEqual(2, services.Length);
+		}
+
+		[Test]
+		public void ResolveAll_does_handle_multi_service_components()
+		{
+			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("test"));
+			Kernel.Register(Component.For<ICommonSub1, ICommon>().ImplementedBy<CommonSub1Impl>().Named("test2"));
 			var services = Kernel.ResolveAll<ICommon>();
 			Assert.AreEqual(2, services.Length);
 		}
@@ -193,21 +223,12 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
-		public void ResolveAll_does_handle_multi_service_components()
-		{
-			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("test"));
-			Kernel.Register(Component.For<ICommonSub1, ICommon>().ImplementedBy<CommonSub1Impl>().Named("test2"));
-			var services = Kernel.ResolveAll<ICommon>();
-			Assert.AreEqual(2, services.Length);
-		}
-
-		[Test]
 		public void ResolveAll_resolves_when_dependency_provideded_dynamically()
 		{
 			Kernel.Register(Component.For<ICommon>()
-			                	.ImplementedBy<CommonImplWithDependency>()
-			                	.DynamicParameters((k, d) => d.Insert(typeof(ICustomer), new CustomerImpl()))
-				);
+				.ImplementedBy<CommonImplWithDependency>()
+				.DynamicParameters((k, d) => d.Insert(typeof(ICustomer), new CustomerImpl()))
+			);
 
 			var services = Kernel.ResolveAll<ICommon>();
 			Assert.AreEqual(1, services.Length);
@@ -233,7 +254,7 @@ namespace Castle.Windsor.Tests
 			Assert.IsNull(customer.Name);
 			Assert.AreEqual(0, customer.Age);
 
-			var dictionary = new Dictionary<string, object> { { "Name", "name" }, { "Address", "address" }, { "Age", "18" } };
+			var dictionary = new Dictionary<string, object> {{"Name", "name"}, {"Address", "address"}, {"Age", "18"}};
 			customer = Kernel.Resolve<ICustomer>("cust", dictionary);
 
 			Assert.AreEqual("name", customer.Name);
@@ -250,9 +271,9 @@ namespace Castle.Windsor.Tests
 
 			var dictionary = new Dictionary<string, object>
 			{
-				{ "name", "customer2Name" },
-				{ "address", "customer2Address" },
-				{ "age", 18 }
+				{"name", "customer2Name"},
+				{"address", "customer2Address"},
+				{"age", 18}
 			};
 			var customer2 = Kernel.Resolve<ICustomer>("cust2", dictionary);
 
@@ -260,28 +281,7 @@ namespace Castle.Windsor.Tests
 			Assert.AreEqual(customer2.GetType(), typeof(CustomerImpl2));
 		}
 
-		[Test]
-		public void Resolve_all_when_dependency_is_missing_throws_DependencyResolverException()
-		{
-			Kernel.Register(
-				Component.For<C>());
-			// the dependency goes C --> B --> A
 
-			Assert.Throws<DependencyResolverException>(() => Kernel.ResolveAll<C>(new Arguments { { "fakeDependency", "Stefan!" } }));
-		}
-
-		[Test]
-		public void Resolve_all_when_dependency_is_unresolvable_throws_HandlerException()
-		{
-			Kernel.Register(
-				Component.For<B>(),
-				Component.For<C>());
-			// the dependency goes C --> B --> A
-
-			Assert.Throws<HandlerException>(() => Kernel.ResolveAll<C>());
-		}
-
-	
 		[Test]
 		public void Subsystems_are_case_insensitive()
 		{
@@ -290,7 +290,7 @@ namespace Castle.Windsor.Tests
 			Assert.IsNotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpper()));
 		}
 
-	
+
 		[Test]
 		public void UnregisteredComponentByService()
 		{

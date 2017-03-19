@@ -12,105 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using Castle.Core;
-	using NUnit.Framework;
-
-	[PerThread]
-	public class R
-	{
-	}
-
-	public interface IC
-	{
-		IN N { get; set; }
-	}
-
-	public class CImpl : IC
-	{
-		private R r = null;
-
-		public R R
-		{
-			set { r = value; }
-		}
-
-		public CImpl()
-		{
-			N = null;
-		}
-
-		public IN N { get; set; }
-	}
-
-	public interface IN
-	{
-		IS CS { get; }
-	}
-
-	[Transient]
-	public class DN : IN
-	{
-		private IWM vm;
-		private ISP sp;
-
-		public IS CS { get; private set; }
-
-		public DN(IWM vm, ISP sp)
-		{
-			this.vm = vm;
-			this.sp = sp;
-			CS = new BS();
-		}
-	}
-
-	public interface IWM
-	{
-		void A(IN n);
-	}
-
-	public class WM : IWM
-	{
-		public void A(IN n)
-		{
-			//...
-		}
-	}
-
-	public interface IS
-	{
-		ISP SP { get; set; }
-	}
-
-	[Transient]
-	public class BS : IS
-	{
-		private ISP _sp = null;
-
-		public ISP SP
-		{
-			get { return _sp; }
-			set { _sp = value; }
-		}
-	}
-
-	public interface ISP
-	{
-		void Save(IS s);
-	}
-
-	public class SP : ISP
-	{
-		public void Save(IS s)
-		{
-		}
-	}
-
 	[TestFixture]
 	public class ContainerProblem2
 	{
@@ -133,7 +40,7 @@ namespace Castle.Windsor.Tests
 			// container.Kernel.AddComponent("R", typeof(R), LifestyleType.Thread);
 			container.Kernel.Register(Component.For(typeof(R)).Named("R"));
 
-			IC c = container.Resolve<IC>("C");
+			var c = container.Resolve<IC>("C");
 			Assert.IsNotNull(c);
 		}
 	}

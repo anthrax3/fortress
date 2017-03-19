@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class Repository3 : IRepository
 	{
-		private readonly IRepository inner;
-
 		public Repository3(IRepository inner)
 		{
-			this.inner = inner;
+			InnerRepository = inner;
 		}
 
-		public IRepository InnerRepository
-		{
-			get { return inner; }
-		}
+		public IRepository InnerRepository { get; }
 	}
 }

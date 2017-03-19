@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
@@ -60,9 +58,7 @@ namespace Castle.Windsor.Tests.Registration
 					{
 						var randomNumber = 2;
 						if (randomNumber == 2)
-						{
 							d["customer"] = k.Resolve<ICustomer>("otherCustomer");
-						}
 					}));
 
 			var component = Kernel.Resolve<CommonImplWithDependency>();
@@ -129,7 +125,7 @@ namespace Castle.Windsor.Tests.Registration
 			Kernel.Register(Component.For<DefaultCustomer>().LifeStyle.Transient.DynamicParameters((k, d) =>
 			{
 				Assert.Throws(typeof(NotSupportedException), () =>
-				                                             d.Add("foo", "It will throw"));
+					d.Add("foo", "It will throw"));
 				wasCalled = true;
 			}));
 
@@ -144,9 +140,9 @@ namespace Castle.Windsor.Tests.Registration
 			var arg1 = "bar";
 			var arg2 = 5;
 			Kernel.Register(Component.For<ClassWithArguments>()
-			                	.LifeStyle.Transient
-			                	.DynamicParameters((k, d) => { d["arg1"] = arg1; })
-			                	.DynamicParameters((k, d) => { d["arg2"] = arg2; }));
+				.LifeStyle.Transient
+				.DynamicParameters((k, d) => { d["arg1"] = arg1; })
+				.DynamicParameters((k, d) => { d["arg2"] = arg2; }));
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
 			Assert.AreEqual(arg1, component.Arg1);
 			Assert.AreEqual(arg2, component.Arg2);
@@ -159,8 +155,8 @@ namespace Castle.Windsor.Tests.Registration
 			var arg2 = 0;
 			Kernel.Register(Component.For<ClassWithArguments>().LifeStyle.Transient.DynamicParameters((k, d) =>
 			{
-				arg1 = (string)d["arg1"];
-				arg2 = (int)d["arg2"];
+				arg1 = (string) d["arg1"];
+				arg2 = (int) d["arg2"];
 			}));
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
 			Assert.AreEqual("foo", arg1);
@@ -201,20 +197,7 @@ namespace Castle.Windsor.Tests.Registration
 			}));
 
 			Assert.DoesNotThrow(() =>
-			                    Kernel.Resolve<ClassWithArguments>());
-		}
-	}
-
-	public class ReadOnlyDictionary : Dictionary<object, object>, IDictionary
-	{
-		public bool IsReadOnly
-		{
-			get { return true; }
-		}
-
-		public new void Add(object key, object value)
-		{
-			throw new NotSupportedException();
+				Kernel.Resolve<ClassWithArguments>());
 		}
 	}
 }

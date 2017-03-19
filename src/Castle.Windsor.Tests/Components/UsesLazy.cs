@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class UsesLazy<T>
 	{
-		private readonly Lazy<T> lazy;
-
 		public UsesLazy(Lazy<T> lazy)
 		{
-			this.lazy = lazy;
+			Lazy = lazy;
 		}
 
-		public Lazy<T> Lazy
-		{
-			get { return lazy; }
-		}
+		public Lazy<T> Lazy { get; }
 	}
 }

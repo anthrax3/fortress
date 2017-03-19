@@ -14,16 +14,25 @@
 
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using Castle.Windsor.Tests.Lifecycle;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class CustomActivatorTestCase
 	{
+		[SetUp]
+		public void SetUp()
+		{
+			kernel = new DefaultKernel();
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			kernel.Dispose();
+		}
+
 		private IKernel kernel;
 
 		[Test]
@@ -64,46 +73,6 @@ namespace Castle.Windsor.Tests
 					.Instance(new ClassWithServiceDependency(null)));
 
 			kernel.Resolve<ClassWithServiceDependency>();
-		}
-
-		[SetUp]
-		public void SetUp()
-		{
-			kernel = new DefaultKernel();
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-			kernel.Dispose();
-		}
-	}
-
-	public class ClassWithPrimitiveDependencyFactory
-	{
-		public ClassWithPrimitiveDependency Create()
-		{
-			return new ClassWithPrimitiveDependency(2);
-		}
-	}
-
-	public class ClassWithPrimitiveDependency
-	{
-		private int dependency;
-
-		public ClassWithPrimitiveDependency(int dependency)
-		{
-			this.dependency = dependency;
-		}
-	}
-
-	public class ClassWithServiceDependency
-	{
-		private IService dependency;
-
-		public ClassWithServiceDependency(IService dependency)
-		{
-			this.dependency = dependency;
 		}
 	}
 }

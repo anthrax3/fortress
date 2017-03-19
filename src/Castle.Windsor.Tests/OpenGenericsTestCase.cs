@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Collections.ObjectModel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
@@ -23,6 +24,24 @@ namespace Castle.Windsor.Tests
 	[TestFixture]
 	public class OpenGenericsTestCase : AbstractContainerTestCase
 	{
+		[Test]
+		public void Can_use_open_generic_with_LateBoundComponent_implementing_partial_closure()
+		{
+			Container.Register(
+				Component.For(typeof(DoubleRepository<,>)).ImplementedBy(typeof(DoubleRepository<,>)),
+				Component.For(typeof(ClassComponents.IRepository<>))
+					.UsingFactoryMethod((k, c) =>
+					{
+						var openType = typeof(DoubleRepository<,>);
+						Type[] genericArgs = {c.GenericArguments[0], typeof(int)};
+						var closedType = openType.MakeGenericType(genericArgs);
+						return k.Resolve(closedType);
+					}));
+			var repo = Container.Resolve<ClassComponents.IRepository<string>>();
+			Assert.AreEqual(repo.Find(), default(string));
+			Assert.IsInstanceOf(typeof(DoubleRepository<string, int>), repo);
+		}
+
 		[Test]
 		public void ExtendedProperties_incl_ProxyOptions_are_honored_for_open_generic_types()
 		{
@@ -39,7 +58,7 @@ namespace Castle.Windsor.Tests
 		public void Open_generic_handlers_get_included_when_generic_service_requested()
 		{
 			Container.Register(Component.For<IGeneric<A>>().ImplementedBy<GenericImpl1<A>>(),
-			                   Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
+				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
 
 			var items = Container.ResolveAll<IGeneric<A>>();
 
@@ -50,7 +69,7 @@ namespace Castle.Windsor.Tests
 		public void Open_generic_multiple_services_favor_closed_service()
 		{
 			Container.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)),
-			                   Component.For<A, IGeneric<A>>().ImplementedBy<GenericImplA>());
+				Component.For<A, IGeneric<A>>().ImplementedBy<GenericImplA>());
 
 			var item = Container.Resolve<IGeneric<A>>();
 
@@ -79,23 +98,6 @@ namespace Castle.Windsor.Tests
 			var valid = Container.ResolveAll<IHasGenericConstraints<EmptySub2WithMarkerInterface, EmptyClass>>();
 
 			Assert.AreEqual(1, valid.Length);
-		}
-		[Test]
-		public void Can_use_open_generic_with_LateBoundComponent_implementing_partial_closure()
-		{
-			Container.Register(
-				Component.For(typeof(DoubleRepository<,>)).ImplementedBy(typeof(DoubleRepository<,>)),
-				Component.For(typeof(ClassComponents.IRepository<>))
-						.UsingFactoryMethod((k, c) =>
-						{
-							System.Type openType = typeof(DoubleRepository<,>);
-							System.Type[] genericArgs = new[] { c.GenericArguments[0], typeof(int) };
-							System.Type closedType = openType.MakeGenericType(genericArgs);
-							return k.Resolve(closedType);
-						}));
-			var repo = Container.Resolve<ClassComponents.IRepository<string>>();
-			Assert.AreEqual(repo.Find(), default(string));
-			Assert.IsInstanceOf(typeof(DoubleRepository<string, int>), repo);
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Can_use_custom_scope_accessor_with_scoped_lifestyle()
 		{
 			StaticScopeAccessor.ResetScope();
-			Container.Register(Component.For<A>().LifestyleScoped(scopeAccessorType: typeof(StaticScopeAccessor)));
+			Container.Register(Component.For<A>().LifestyleScoped(typeof(StaticScopeAccessor)));
 
 			var a1 = Container.Resolve<A>();
 			var a2 = Container.Resolve<A>();
@@ -52,8 +52,8 @@ namespace Castle.Windsor.Tests.Lifestyle
 		{
 			StaticScopeAccessor.ResetScope();
 			Container.Register(Classes.FromThisAssembly()
-			                   	.Where(c => c.Is<A>())
-			                   	.LifestyleScoped<StaticScopeAccessor>());
+				.Where(c => c.Is<A>())
+				.LifestyleScoped<StaticScopeAccessor>());
 
 			var a1 = Container.Resolve<A>();
 			var a2 = Container.Resolve<A>();

@@ -30,20 +30,20 @@ namespace Castle.Windsor.Tests
 			Container.AddFacility<FactorySupportFacility>();
 
 			Container.Register(Component.For<IEnumerable<IEmptyService>>().Named("samples")
-			                   	.UsingFactoryMethod(() => new IEmptyService[]
-			                   	{
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA()
-			                   	}),
-			                   Component.For<EnumerableDepAsConstructor>());
+					.UsingFactoryMethod(() => new IEmptyService[]
+					{
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA()
+					}),
+				Component.For<EnumerableDepAsConstructor>());
 
 			var collection = Container.Resolve<IEnumerable<IEmptyService>>();
 			Assert.AreEqual(10, collection.Count());
@@ -59,23 +59,23 @@ namespace Castle.Windsor.Tests
 			Container.AddFacility<FactorySupportFacility>();
 
 			Container.Register(Component.For<IEnumerable<IEmptyService>>()
-			                   	.UsingFactoryMethod(() => new IEmptyService[]
-			                   	{
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA()
-			                   	}).Named("array"),
-			                   Component.For<EnumerableDepAsConstructor>()
-			                   	.DependsOn(ServiceOverride
-			                   	           	.ForKey<IEnumerable<IEmptyService>>()
-			                   	           	.Eq("array")));
+					.UsingFactoryMethod(() => new IEmptyService[]
+					{
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA()
+					}).Named("array"),
+				Component.For<EnumerableDepAsConstructor>()
+					.DependsOn(ServiceOverride
+						.ForKey<IEnumerable<IEmptyService>>()
+						.Eq("array")));
 
 			var collection = Container.Resolve<IEnumerable<IEmptyService>>();
 			Assert.AreEqual(10, collection.Count());
@@ -91,23 +91,23 @@ namespace Castle.Windsor.Tests
 			Container.AddFacility<FactorySupportFacility>();
 
 			Container.Register(Component.For<IEnumerable<IEmptyService>>().Named("foo")
-			                   	.UsingFactoryMethod(() => new IEmptyService[]
-			                   	{
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA()
-			                   	}),
-			                   Component.For<EnumerableDepAsConstructor>()
-			                   	.DependsOn(ServiceOverride
-			                   	           	.ForKey<IEnumerable<IEmptyService>>()
-			                   	           	.Eq("foo")));
+					.UsingFactoryMethod(() => new IEmptyService[]
+					{
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA()
+					}),
+				Component.For<EnumerableDepAsConstructor>()
+					.DependsOn(ServiceOverride
+						.ForKey<IEnumerable<IEmptyService>>()
+						.Eq("foo")));
 
 			var collection = Container.Resolve<IEnumerable<IEmptyService>>();
 			Assert.AreEqual(10, collection.Count());
@@ -123,20 +123,20 @@ namespace Castle.Windsor.Tests
 			Container.AddFacility<FactorySupportFacility>();
 
 			Container.Register(Component.For<IEnumerable<IEmptyService>>()
-			                   	.UsingFactoryMethod(() => new IEmptyService[]
-			                   	{
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA(),
-			                   		new EmptyServiceA()
-			                   	}),
-			                   Component.For<EnumerableDepAsConstructor>());
+					.UsingFactoryMethod(() => new IEmptyService[]
+					{
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA(),
+						new EmptyServiceA()
+					}),
+				Component.For<EnumerableDepAsConstructor>());
 
 			var collection = Container.Resolve<IEnumerable<IEmptyService>>();
 			Assert.AreEqual(10, collection.Count());

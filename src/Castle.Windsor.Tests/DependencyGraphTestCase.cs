@@ -32,7 +32,7 @@ namespace Castle.Windsor.Tests
 
 			var exception =
 				Assert.Throws<CircularDependencyException>(() =>
-				                                           Kernel.Resolve<CycleA>("a"));
+					Kernel.Resolve<CycleA>("a"));
 			var expectedMessage =
 				string.Format(
 					"Dependency cycle has been detected when trying to resolve component 'a'.{0}The resolution tree that resulted in the cycle is the following:{0}Component 'a' resolved as dependency of{0}	component 'b' resolved as dependency of{0}	component 'a' which is the root component being resolved.{0}",
@@ -75,9 +75,9 @@ namespace Castle.Windsor.Tests
 		public void Same_transient_interceptor_ctor_and_property_dependencies_no_cycle()
 		{
 			Kernel.Register(Component.For<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<APropCtor>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<A2>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
+				Component.For<APropCtor>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<A2>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
 			var item = Kernel.Resolve<APropCtor>();
 		}
 
@@ -85,9 +85,9 @@ namespace Castle.Windsor.Tests
 		public void Same_transient_interceptor_ctor_dependencies()
 		{
 			Kernel.Register(Component.For<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<B>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<C>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
+				Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<B>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<C>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
 			Kernel.Resolve<C>();
 		}
 
@@ -95,8 +95,8 @@ namespace Castle.Windsor.Tests
 		public void Same_transient_interceptor_property_dependencies_cycle()
 		{
 			Kernel.Register(Component.For<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<ACycleProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<BCycleProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
+				Component.For<ACycleProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<BCycleProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
 			Kernel.Resolve<ACycleProp>();
 		}
 
@@ -104,8 +104,8 @@ namespace Castle.Windsor.Tests
 		public void Same_transient_interceptor_property_dependencies_no_cycle()
 		{
 			Kernel.Register(Component.For<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<AProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
-			                Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
+				Component.For<AProp>().Interceptors<CountingInterceptor>().LifeStyle.Transient,
+				Component.For<A>().Interceptors<CountingInterceptor>().LifeStyle.Transient);
 			Kernel.Resolve<AProp>();
 		}
 
@@ -113,8 +113,8 @@ namespace Castle.Windsor.Tests
 		public void ValidSituation()
 		{
 			Kernel.Register(Component.For<A>(),
-			                Component.For<B>(),
-			                Component.For<C>());
+				Component.For<B>(),
+				Component.For<C>());
 
 			Assert.IsNotNull(Kernel.Resolve<A>());
 			Assert.IsNotNull(Kernel.Resolve<B>());

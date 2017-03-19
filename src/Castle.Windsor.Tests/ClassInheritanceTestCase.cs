@@ -76,7 +76,7 @@ namespace Castle.Windsor.Tests
 		{
 			RegisterInterceptor();
 			Container.Register(Component.For<JohnParent, IEmptyService, JohnGrandparent>().ImplementedBy<JohnChild>()
-			                   	.LifeStyle.Transient.Interceptors<CountingInterceptor>());
+				.LifeStyle.Transient.Interceptors<CountingInterceptor>());
 
 			var obj = Container.Resolve<JohnParent>();
 
@@ -90,7 +90,7 @@ namespace Castle.Windsor.Tests
 		{
 			RegisterInterceptor();
 			Container.Register(Component.For<IGeneric<IEmployee>, JohnParent, IEmptyService, JohnGrandparent>().ImplementedBy(typeof(JohnChild))
-			                   	.LifeStyle.Transient.Interceptors<CountingInterceptor>());
+				.LifeStyle.Transient.Interceptors<CountingInterceptor>());
 
 			var obj = Container.Resolve<JohnParent>();
 

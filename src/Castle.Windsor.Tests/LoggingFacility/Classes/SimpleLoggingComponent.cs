@@ -18,21 +18,16 @@ namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
 	public class SimpleLoggingComponent
 	{
-		private ILogger logger;
-
 		public SimpleLoggingComponent(ILogger logger)
 		{
-			this.logger = logger;
+			Logger = logger;
 		}
+
+		public ILogger Logger { get; }
 
 		public void DoSomething()
 		{
 			Logger.Info("Hello world");
-		}
-
-		public ILogger Logger
-		{
-			get { return logger; }
 		}
 	}
 }

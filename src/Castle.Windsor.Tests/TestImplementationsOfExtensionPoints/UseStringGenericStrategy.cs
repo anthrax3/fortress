@@ -9,7 +9,7 @@ namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 	{
 		public Type[] GetGenericArguments(ComponentModel model, CreationContext context)
 		{
-			return new[] { typeof(string) };
+			return new[] {typeof(string)};
 		}
 	}
 }

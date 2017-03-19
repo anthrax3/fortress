@@ -26,7 +26,7 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
 			Container.Register(Component.For<HasCtorDependency>().LifeStyle.Transient,
-			                   Component.For<ISimpleService>().ImplementedBy<SimpleServiceDisposable>());
+				Component.For<ISimpleService>().ImplementedBy<SimpleServiceDisposable>());
 
 			Container.Resolve<HasCtorDependency>();
 			CleanUp();
@@ -40,7 +40,7 @@ namespace Castle.Windsor.Tests.Windsor.Tests
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
 			Container.Register(Component.For<HasCtorDependency>().LifeStyle.Transient,
-			                   Component.For<ISimpleService>().ImplementedBy<SimpleServiceDisposable>());
+				Component.For<ISimpleService>().ImplementedBy<SimpleServiceDisposable>());
 
 			var root = Container.Resolve<HasCtorDependency>();
 

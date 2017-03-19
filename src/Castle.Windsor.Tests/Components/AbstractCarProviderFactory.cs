@@ -19,13 +19,8 @@ namespace Castle.Windsor.Tests.Components
 		public ICarProvider Create(User currentUser)
 		{
 			if (currentUser.FiscalStability == FiscalStability.MrMoneyBags)
-			{
 				return new FerrariProvider();
-			}
-			else
-			{
-				return new HondaProvider();
-			}
+			return new HondaProvider();
 		}
 	}
 }

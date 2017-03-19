@@ -13,8 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Reflection;
-using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
@@ -29,6 +27,18 @@ namespace Castle.Windsor.Tests
 	public class CircularDependencyTestCase : AbstractContainerTestCase
 	{
 		[Test]
+		public void Should_not_try_to_instantiate_singletons_twice_when_circular_dependency()
+		{
+			SingletonComponent.CtorCallsCount = 0;
+			Container.Register(Component.For<SingletonComponent>(),
+				Component.For<SingletonDependency>());
+
+			var component = Container.Resolve<SingletonComponent>();
+			Assert.IsNotNull(component.Dependency);
+			Assert.AreEqual(1, SingletonComponent.CtorCallsCount);
+		}
+
+		[Test]
 		public void ShouldNotGetCircularDepencyExceptionWhenResolvingTypeOnItselfWithDifferentModels()
 		{
 			var container = new WindsorContainer(new XmlInterpreter(Xml.Embedded("IOC-51.xml")));
@@ -39,31 +49,19 @@ namespace Castle.Windsor.Tests
 		public void ShouldNotSetTheViewControllerProperty()
 		{
 			Container.Register(Component.For<IController>().ImplementedBy<Controller>().Named("controller"),
-			                   Component.For<IView>().ImplementedBy<View>().Named("view"));
+				Component.For<IView>().ImplementedBy<View>().Named("view"));
 			var controller = Container.Resolve<Controller>("controller");
 			Assert.IsNotNull(controller.View);
 			Assert.IsNull(controller.View.Controller);
 		}
 
 		[Test]
-		public void Should_not_try_to_instantiate_singletons_twice_when_circular_dependency()
-		{
-			SingletonComponent.CtorCallsCount = 0;
-			Container.Register(Component.For<SingletonComponent>(),
-			                   Component.For<SingletonDependency>());
-
-			var component = Container.Resolve<SingletonComponent>();
-			Assert.IsNotNull(component.Dependency);
-			Assert.AreEqual(1, SingletonComponent.CtorCallsCount);
-		}
-
-		[Test]
 		public void ThrowsACircularDependencyException2()
 		{
 			Container.Register(Component.For<CompA>().Named("compA"),
-			                   Component.For<CompB>().Named("compB"),
-			                   Component.For<CompC>().Named("compC"),
-			                   Component.For<CompD>().Named("compD"));
+				Component.For<CompB>().Named("compB"),
+				Component.For<CompC>().Named("compC"),
+				Component.For<CompD>().Named("compD"));
 
 			var exception =
 				Assert.Throws<CircularDependencyException>(() => Container.Resolve<CompA>("compA"));
@@ -75,78 +73,7 @@ namespace Castle.Windsor.Tests
 		}
 	}
 
-	[Singleton]
-	public class SingletonComponent
-	{
-		public static int CtorCallsCount;
-
-		public SingletonComponent()
-		{
-			CtorCallsCount++;
-		}
-
-		public SingletonDependency Dependency { get; set; }
-	}
-
-	[Singleton]
-	public class SingletonPropertyComponent
-	{
-		public static int CtorCallsCount;
-
-		public SingletonPropertyComponent()
-		{
-			CtorCallsCount++;
-		}
-
-		public SingletonPropertyDependency Dependency { get; set; }
-	}
-
-	[Singleton]
-	public class SingletonDependency
-	{
-		public SingletonDependency(SingletonComponent c)
-		{
-		}
-	}
-
-	[Singleton]
-	public class SingletonPropertyDependency
-	{
-		public SingletonPropertyComponent Component { get; set; }
-	}
-
 	namespace IOC51
 	{
-		public interface IPathProvider
-		{
-			string Path { get; }
-		}
-		
-		public class AssemblyPath : IPathProvider
-		{
-			public string Path
-			{
-				get
-				{
-					var uriPath = new Uri(Assembly.GetExecutingAssembly().GetName(false).CodeBase);
-					return uriPath.LocalPath;
-				}
-			}
-		}
-
-		public class RelativeFilePath : IPathProvider
-		{
-			private readonly string _path;
-
-			public RelativeFilePath(IPathProvider basePathProvider, string extensionsPath)
-			{
-				_path = System.IO.Path.Combine(basePathProvider.Path + "\\", extensionsPath);
-			}
-
-			public string Path
-			{
-				get { return _path; }
-			}
-		}
 	}
 }

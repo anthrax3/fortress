@@ -18,15 +18,67 @@
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2.Properties
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class PropertiesTestCase
 	{
 		private IWindsorContainer container;
+
+		private void AssertConfiguration()
+		{
+			var store = container.Kernel.ConfigurationStore;
+
+			Assert.AreEqual(3, store.GetFacilities().Length, "Diff num of facilities");
+			Assert.AreEqual(2, store.GetComponents().Length, "Diff num of components");
+
+			var config = store.GetFacilityConfiguration(typeof(NoopFacility).FullName);
+			var childItem = config.Children["item"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop1 value", childItem.Value);
+
+			config = store.GetFacilityConfiguration(typeof(Noop2Facility).FullName);
+			Assert.IsNotNull(config);
+			childItem = config.Children["item"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop2 value", childItem.Attributes["value"]);
+			Assert.IsNull(childItem.Value);
+
+			config = store.GetFacilityConfiguration(typeof(HiperFacility).FullName);
+			Assert.IsNotNull(config);
+			Assert.AreEqual(3, config.Children.Count, "facility3 should have 3 children");
+
+			childItem = config.Children["param1"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop2 value", childItem.Value);
+			Assert.AreEqual("prop1 value", childItem.Attributes["attr"]);
+
+			childItem = config.Children["param2"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop1 value", childItem.Value);
+			Assert.AreEqual("prop2 value", childItem.Attributes["attr"]);
+
+			childItem = config.Children["param3"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("param3 attr", childItem.Attributes["attr"]);
+
+			childItem = childItem.Children["value"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("param3 value", childItem.Value);
+			Assert.AreEqual("param3 value attr", childItem.Attributes["attr"]);
+
+			config = store.GetComponentConfiguration("component1");
+			childItem = config.Children["item"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop1 value", childItem.Value);
+
+			config = store.GetComponentConfiguration("component2");
+			childItem = config.Children["item"];
+			Assert.IsNotNull(childItem);
+			Assert.AreEqual("prop2 value", childItem.Attributes["value"]);
+		}
 
 		[Test]
 		public void CorrectEval()
@@ -39,10 +91,7 @@ namespace Castle.Windsor.Tests.Configuration2.Properties
 		[Test]
 		public void MissingProperties()
 		{
-			Assert.Throws<ConfigurationProcessingException>(() =>
-			{
-				container = new WindsorContainer(ConfigHelper.ResolveConfigPath("Configuration2/Properties/config_with_missing_properties.xml"));
-			});
+			Assert.Throws<ConfigurationProcessingException>(() => { container = new WindsorContainer(ConfigHelper.ResolveConfigPath("Configuration2/Properties/config_with_missing_properties.xml")); });
 		}
 
 		[Test]
@@ -99,59 +148,5 @@ namespace Castle.Windsor.Tests.Configuration2.Properties
 			Assert.AreEqual(null, childItem.Value);
 			Assert.AreEqual("prop1 value", childItem.Attributes["attr"]);
 		}
-
-		private void AssertConfiguration()
-		{
-			var store = container.Kernel.ConfigurationStore;
-
-			Assert.AreEqual(3, store.GetFacilities().Length, "Diff num of facilities");
-			Assert.AreEqual(2, store.GetComponents().Length, "Diff num of components");
-
-			var config = store.GetFacilityConfiguration(typeof(NoopFacility).FullName);
-			var childItem = config.Children["item"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop1 value", childItem.Value);
-
-			config = store.GetFacilityConfiguration(typeof(Noop2Facility).FullName);
-			Assert.IsNotNull(config);
-			childItem = config.Children["item"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop2 value", childItem.Attributes["value"]);
-			Assert.IsNull(childItem.Value);
-
-			config = store.GetFacilityConfiguration(typeof(HiperFacility).FullName);
-			Assert.IsNotNull(config);
-			Assert.AreEqual(3, config.Children.Count, "facility3 should have 3 children");
-
-			childItem = config.Children["param1"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop2 value", childItem.Value);
-			Assert.AreEqual("prop1 value", childItem.Attributes["attr"]);
-
-			childItem = config.Children["param2"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop1 value", childItem.Value);
-			Assert.AreEqual("prop2 value", childItem.Attributes["attr"]);
-
-			childItem = config.Children["param3"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("param3 attr", childItem.Attributes["attr"]);
-
-			childItem = childItem.Children["value"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("param3 value", childItem.Value);
-			Assert.AreEqual("param3 value attr", childItem.Attributes["attr"]);
-
-			config = store.GetComponentConfiguration("component1");
-			childItem = config.Children["item"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop1 value", childItem.Value);
-
-			config = store.GetComponentConfiguration("component2");
-			childItem = config.Children["item"];
-			Assert.IsNotNull(childItem);
-			Assert.AreEqual("prop2 value", childItem.Attributes["value"]);
-		}
 	}
 }
-

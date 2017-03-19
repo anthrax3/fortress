@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
+
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Factories
 {
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
-
 	public interface IGenericFactoryWithGenericMethod<T>
 	{
 		T1 Create<T1>() where T1 : IDummyComponent<T>;

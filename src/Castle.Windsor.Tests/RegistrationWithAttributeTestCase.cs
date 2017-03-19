@@ -30,7 +30,7 @@ namespace Castle.Windsor.Tests
 		public void Attribute_key_can_be_overwritten()
 		{
 			Container.Register(Classes.FromThisAssembly().Where(Component.IsCastleComponent)
-			                   	.ConfigureFor<HasKey>(k => k.Named("changedKey")));
+				.ConfigureFor<HasKey>(k => k.Named("changedKey")));
 
 			Assert.IsNull(Container.Kernel.GetHandler("hasKey"));
 			Assert.IsNotNull(Container.Kernel.GetHandler("changedKey"));
@@ -40,8 +40,8 @@ namespace Castle.Windsor.Tests
 		public void Attribute_lifestyle_can_be_overwritten()
 		{
 			Container.Register(Classes.FromThisAssembly()
-			                   	.Where(Component.IsCastleComponent)
-			                   	.LifestylePooled());
+				.Where(Component.IsCastleComponent)
+				.LifestylePooled());
 
 			var handler = Container.Kernel.GetHandler("keyTransient");
 
@@ -97,8 +97,8 @@ namespace Castle.Windsor.Tests
 		public void Attribute_type_can_be_overwritten()
 		{
 			Container.Register(Classes.FromThisAssembly()
-			                   	.Where(Component.IsCastleComponent)
-			                   	.WithService.Self());
+				.Where(Component.IsCastleComponent)
+				.WithService.Self());
 
 			var handler = Container.Kernel.GetAssignableHandlers(typeof(HasType)).Single();
 
@@ -114,9 +114,7 @@ namespace Castle.Windsor.Tests
 
 			Assert.Greater(handlers.Length, 0);
 			foreach (var handler in handlers)
-			{
 				Assert.That(Attribute.IsDefined(handler.ComponentModel.Implementation, typeof(CastleComponentAttribute)));
-			}
 		}
 
 		[Test]

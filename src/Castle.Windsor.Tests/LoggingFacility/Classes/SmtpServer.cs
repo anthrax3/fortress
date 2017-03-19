@@ -12,20 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using Castle.Core.Core.Logging;
 
 namespace Castle.Windsor.Tests.LoggingFacility.Classes
 {
 	public class SmtpServer : ISmtpServer
 	{
-		private IExtendedLogger logger;
-
-		public IExtendedLogger Logger
-		{
-			get { return logger; }
-			set { logger = value; }
-		}
+		public IExtendedLogger Logger { get; set; }
 
 		public void Start()
 		{
@@ -37,7 +30,7 @@ namespace Castle.Windsor.Tests.LoggingFacility.Classes
 			Logger.Debug("Stopped");
 		}
 
-		public void InternalSend(String from, String to, String contents)
+		public void InternalSend(string from, string to, string contents)
 		{
 			Logger.InfoFormat("InternalSend {0} {1} {2}", from, to, contents);
 		}

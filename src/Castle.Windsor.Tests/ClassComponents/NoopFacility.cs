@@ -19,11 +19,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class NoopFacility : IFacility
 	{
-		public void Init(IKernel kernel, IConfiguration facilityConfig)
+		public void Terminate()
 		{
 		}
 
-		public void Terminate()
+		public void Init(IKernel kernel, IConfiguration facilityConfig)
 		{
 		}
 	}

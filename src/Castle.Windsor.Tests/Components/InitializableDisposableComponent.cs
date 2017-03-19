@@ -20,27 +20,18 @@ namespace Castle.Windsor.Tests.Components
 	[Transient]
 	public class InitializableDisposableComponent : IInitializable, IDisposable
 	{
-		private bool isDisposed;
-		private bool isInitialized;
+		public bool IsDisposed { get; private set; }
 
-		public bool IsDisposed
-		{
-			get { return isDisposed; }
-		}
-
-		public bool IsInitialized
-		{
-			get { return isInitialized; }
-		}
+		public bool IsInitialized { get; private set; }
 
 		public void Dispose()
 		{
-			isDisposed = true;
+			IsDisposed = true;
 		}
 
 		public void Initialize()
 		{
-			isInitialized = true;
+			IsInitialized = true;
 		}
 	}
 }

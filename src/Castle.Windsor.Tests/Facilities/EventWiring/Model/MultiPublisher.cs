@@ -21,17 +21,13 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 		public void Trigger1()
 		{
 			if (Event1 != null)
-			{
 				Event1(this, new EventArgs());
-			}
 		}
 
 		public void Trigger2()
 		{
 			if (Event2 != null)
-			{
 				Event2(this, new CustomEventArgs());
-			}
 		}
 
 		public event PublishOneEventHandler Event1;

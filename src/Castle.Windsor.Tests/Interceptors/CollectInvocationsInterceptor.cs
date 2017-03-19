@@ -19,16 +19,11 @@ namespace Castle.Windsor.Tests.Interceptors
 {
 	public class CollectInvocationsInterceptor : IInterceptor
 	{
-		private readonly IList<IInvocation> invocations = new List<IInvocation>();
-
-		public IList<IInvocation> Invocations
-		{
-			get { return invocations; }
-		}
+		public IList<IInvocation> Invocations { get; } = new List<IInvocation>();
 
 		public void Intercept(IInvocation invocation)
 		{
-			invocations.Add(invocation);
+			Invocations.Add(invocation);
 			invocation.Proceed();
 		}
 	}

@@ -31,6 +31,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		}
 
 		private IWindsorContainer container;
+
 		[Test]
 		public void Can_publish_events_via_AllTypes()
 		{
@@ -38,7 +39,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 				Classes.FromAssemblyContaining<SimpleListener>()
 					.BasedOn<SimplePublisher>()
 					.Configure(r => r.PublishEvent<SimplePublisher>(p => p.Event += null,
-					                                                x => x.To("foo"))),
+						x => x.To("foo"))),
 				Component.For<ListenerWithOnEventMethod>().Named("foo"));
 
 			var subscriber = container.Resolve<ListenerWithOnEventMethod>("foo");
@@ -74,25 +75,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("StaticEvent",
-					              x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
-				Component.For<SimpleListener>().Named("bar"));
-
-			var listener = container.Resolve<SimpleListener>("bar");
-			var publisher = container.Resolve<SimplePublisher>();
-
-			publisher.StaticTrigger();
-
-			Assert.IsTrue(listener.Listened);
-			Assert.AreSame(publisher, listener.Sender);
-		}
-
-		[Test]
-		public void Can_specify_strongly_typed_event()
-		{
-			container.Register(
-				Component.For<SimplePublisher>()
-					.PublishEvent(x => SimplePublisher.StaticEvent += null,
-					              x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
+						x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
 				Component.For<SimpleListener>().Named("bar"));
 
 			var listener = container.Resolve<SimpleListener>("bar");
@@ -110,7 +93,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To<SimpleListener>("foo", l => l.OnPublish(null, null))),
+						x => x.To<SimpleListener>("foo", l => l.OnPublish(null, null))),
 				Component.For<SimpleListener>().Named("foo"));
 
 			var subscriber = container.Resolve<SimpleListener>("foo");
@@ -128,7 +111,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To("foo", "OnPublish")),
+						x => x.To("foo", "OnPublish")),
 				Component.For<SimpleListener>().Named("foo"));
 
 			var subscriber = container.Resolve<SimpleListener>("foo");
@@ -146,9 +129,9 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To("foo"))
+						x => x.To("foo"))
 					.PublishEvent("StaticEvent",
-					              x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
+						x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
 				Component.For<ListenerWithOnEventMethod>().Named("foo"),
 				Component.For<SimpleListener>().Named("bar"));
 
@@ -173,8 +156,8 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To("foo")
-					                   	.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
+						x => x.To("foo")
+							.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
 				Component.For<ListenerWithOnEventMethod>().Named("foo"),
 				Component.For<SimpleListener>().Named("bar"));
 
@@ -191,12 +174,30 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 		}
 
 		[Test]
+		public void Can_specify_strongly_typed_event()
+		{
+			container.Register(
+				Component.For<SimplePublisher>()
+					.PublishEvent(x => SimplePublisher.StaticEvent += null,
+						x => x.To<SimpleListener>("bar", l => l.OnPublish(null, null))),
+				Component.For<SimpleListener>().Named("bar"));
+
+			var listener = container.Resolve<SimpleListener>("bar");
+			var publisher = container.Resolve<SimplePublisher>();
+
+			publisher.StaticTrigger();
+
+			Assert.IsTrue(listener.Listened);
+			Assert.AreSame(publisher, listener.Sender);
+		}
+
+		[Test]
 		public void Can_specify_subscriber_as_type_handler_as_expression()
 		{
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To<SimpleListener>(l => l.OnPublish(null, null))),
+						x => x.To<SimpleListener>(l => l.OnPublish(null, null))),
 				Component.For<SimpleListener>());
 
 			var subscriber = container.Resolve<SimpleListener>();
@@ -214,7 +215,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To<SimpleListener>("OnPublish")),
+						x => x.To<SimpleListener>("OnPublish")),
 				Component.For<SimpleListener>());
 
 			var subscriber = container.Resolve<SimpleListener>();
@@ -232,7 +233,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To("foo")),
+						x => x.To("foo")),
 				Component.For<ListenerWithOnEventMethod>().Named("foo"));
 
 			var subscriber = container.Resolve<ListenerWithOnEventMethod>("foo");
@@ -250,7 +251,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To<ListenerWithOnEventMethod>()),
+						x => x.To<ListenerWithOnEventMethod>()),
 				Component.For<ListenerWithOnEventMethod>());
 
 			var subscriber = container.Resolve<ListenerWithOnEventMethod>();
@@ -268,7 +269,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container.Register(
 				Component.For<SimplePublisher>()
 					.PublishEvent("Event",
-					              x => x.To<SimpleListener>("foo", l => l.OnPublish(null, null))),
+						x => x.To<SimpleListener>("foo", l => l.OnPublish(null, null))),
 				Component.For<SimpleListener>().Named("foo"));
 
 			var subscriber = container.Resolve<SimpleListener>("foo");

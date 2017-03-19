@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class CustomerImpl2 : CustomerImpl
 	{
-		public CustomerImpl2(String name, String address, int age)
+		public CustomerImpl2(string name, string address, int age)
 		{
 			Name = name;
 			Address = address;

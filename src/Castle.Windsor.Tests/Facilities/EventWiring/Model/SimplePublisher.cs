@@ -19,28 +19,24 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring.Model
 {
 	public class SimplePublisher : IStartable
 	{
-		public virtual void StaticTrigger()
-		{
-			if (StaticEvent != null)
-			{
-				StaticEvent(this, new EventArgs());
-			}
-		}
-
-		public virtual void Trigger()
-		{
-			if (Event != null)
-			{
-				Event(this, new EventArgs());
-			}
-		}
-
 		public virtual void Start()
 		{
 		}
 
 		public virtual void Stop()
 		{
+		}
+
+		public virtual void StaticTrigger()
+		{
+			if (StaticEvent != null)
+				StaticEvent(this, new EventArgs());
+		}
+
+		public virtual void Trigger()
+		{
+			if (Event != null)
+				Event(this, new EventArgs());
 		}
 
 		public event PublishEventHandler Event;

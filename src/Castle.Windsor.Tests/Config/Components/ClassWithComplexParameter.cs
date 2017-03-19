@@ -18,42 +18,26 @@ namespace Castle.Windsor.Tests.Config.Components
 {
 	public class ClassWithComplexParameter
 	{
-		private ComplexParameterType param1;
+		public ComplexParameterType ComplexParam { get; set; }
 
 		[Convertible]
 		public class ComplexParameterType
 		{
-			private string mandatoryValue;
-			private string optionalValue;
-
 			public ComplexParameterType()
 			{
 				// sets default values
-				mandatoryValue = "default1";
-				optionalValue = "default2";
+				MandatoryValue = "default1";
+				OptionalValue = "default2";
 			}
 
 			public ComplexParameterType(string mandatoryValue)
 			{
-				this.mandatoryValue = mandatoryValue;
+				MandatoryValue = mandatoryValue;
 			}
 
-			public string MandatoryValue
-			{
-				get { return mandatoryValue; }
-			}
+			public string MandatoryValue { get; }
 
-			public string OptionalValue
-			{
-				get { return optionalValue; }
-				set { optionalValue = value; }
-			}
-		}
-
-		public ComplexParameterType ComplexParam
-		{
-			get { return param1; }
-			set { param1 = value; }
+			public string OptionalValue { get; set; }
 		}
 	}
 }

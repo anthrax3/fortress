@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.ClassComponents
 {
 	public interface ICustomer
 	{
-		String Name { get; set; }
+		string Name { get; set; }
 
-		String Address { get; set; }
+		string Address { get; set; }
 
 		int Age { get; set; }
 	}

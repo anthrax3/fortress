@@ -17,23 +17,21 @@ using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using NUnit.Framework;
+	[TestFixture]
+	public class IgnoreSelectTestCase
+	{
+		[Test]
+		public void TestIngoreAttribute()
+		{
+			var container = new WindsorContainer();
+			container.Install(Configuration.FromXml(Xml.Embedded("ignorector.xml")));
 
-    [TestFixture]
-    public class IgnoreSelectTestCase
-    {
-        [Test]
-        public void TestIngoreAttribute()
-        {
-            var container = new WindsorContainer();
-            container.Install(Configuration.FromXml(Xml.Embedded("ignorector.xml")));
-
-            var server = container.Resolve<ClassWithDoNotSelectConstructors>();
-            Assert.Null(server.Dependency);
-        }
-    }
+			var server = container.Resolve<ClassWithDoNotSelectConstructors>();
+			Assert.Null(server.Dependency);
+		}
+	}
 }
-

@@ -23,9 +23,7 @@ namespace Castle.Windsor.Tests.Components
 		public void Dispose()
 		{
 			if (IsDisposed)
-			{
 				throw new Exception("Already disposed");
-			}
 			IsDisposed = true;
 		}
 	}

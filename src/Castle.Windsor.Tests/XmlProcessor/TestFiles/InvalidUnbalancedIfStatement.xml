@@ -1,22 +1,23 @@
 <?pi instruction will also be removed ?>
+
 <!-- some comments here, this should be removed by the xsl -->
 <configuration>
 	<components>
 		<?if DEBUG?>
-			<component id="debug">
-				<item> some value </item>
-				<item2><![CDATA[ some <&> value2 ]]></item2>
-			</component>
+		<component id="debug">
+			<item> some value </item>
+			<item2><![CDATA[ some <&> value2 ]]></item2>
+		</component>
 		<?else?>
-			<?if Qa?>
-				<component id="qa"/>
-			<?else?>
-				<?if Prod?>
-					<component id="prod"/>
-				<?else?>
-					<component id="notprod"/>
-			<?end?>
+		<?if Qa?>
+		<component id="qa" />
+		<?else?>
+		<?if Prod?>
+		<component id="prod" />
+		<?else?>
+		<component id="notprod" />
 		<?end?>
-		<component id="default"/>
-	</components>		
+		<?end?>
+		<component id="default" />
+	</components>
 </configuration>

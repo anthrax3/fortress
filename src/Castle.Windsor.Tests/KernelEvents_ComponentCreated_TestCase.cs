@@ -25,7 +25,7 @@ namespace Castle.Windsor.Tests
 	[TestFixture]
 	public class KernelEvents_ComponentCreated_TestCase : AbstractContainerTestCase
 	{
-		readonly IList<KeyValuePair<ComponentModel, object>> list = new List<KeyValuePair<ComponentModel, object>>();
+		private readonly IList<KeyValuePair<ComponentModel, object>> list = new List<KeyValuePair<ComponentModel, object>>();
 
 		protected override void AfterContainerCreated()
 		{
@@ -33,7 +33,7 @@ namespace Castle.Windsor.Tests
 			Container.Kernel.ComponentCreated += Kernel_ComponentCreated;
 		}
 
-		void Kernel_ComponentCreated(ComponentModel model, object instance)
+		private void Kernel_ComponentCreated(ComponentModel model, object instance)
 		{
 			list.Add(new KeyValuePair<ComponentModel, object>(model, instance));
 		}
@@ -43,7 +43,6 @@ namespace Castle.Windsor.Tests
 		[Description("As reported in http://stackoverflow.com/questions/8923931/castle-windsor-component-created-event-with-interceptor")]
 		public void Event_raised_for_component_with_interceptor()
 		{
-
 			Container.Register(
 				Component.For<IInterceptor>().ImplementedBy<StandardInterceptor>().LifestyleTransient(),
 				Component.For<IService>().ImplementedBy<MyService>().Interceptors<StandardInterceptor>().LifestyleTransient());

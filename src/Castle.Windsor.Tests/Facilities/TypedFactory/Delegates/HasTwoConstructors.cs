@@ -16,28 +16,19 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory.Delegates
 {
 	public class HasTwoConstructors
 	{
-		private readonly Baz baz;
-		private readonly string name;
-
 		public HasTwoConstructors(Baz baz)
 		{
-			this.baz = baz;
+			Baz = baz;
 		}
 
 		public HasTwoConstructors(Baz baz, string name)
 		{
-			this.baz = baz;
-			this.name = name;
+			Baz = baz;
+			Name = name;
 		}
 
-		public Baz Baz
-		{
-			get { return baz; }
-		}
+		public Baz Baz { get; }
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 	}
 }

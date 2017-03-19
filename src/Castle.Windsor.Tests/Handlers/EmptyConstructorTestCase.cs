@@ -17,11 +17,10 @@ using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ModelBuilder;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Handlers
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class EmptyConstructorTestCase : AbstractContainerTestCase
 	{
@@ -53,7 +52,7 @@ namespace Castle.Windsor.Tests.Handlers
 		public void Component_With_Explicit_Required_Dependency_Will_Be_Marked_Waiting()
 		{
 			Container.Register(Component.For<AProp>()
-			                   	.AddDescriptor(new ExplicitRequiredDependencyDescriptor()));
+				.AddDescriptor(new ExplicitRequiredDependencyDescriptor()));
 
 			var handler = Container.Kernel.GetHandler(typeof(AProp));
 			Assert.AreEqual(HandlerState.WaitingDependency, handler.CurrentState);
@@ -63,7 +62,7 @@ namespace Castle.Windsor.Tests.Handlers
 		public void Component_With_Required_Properies_Will_Be_Marked_Waiting()
 		{
 			Container.Register(Component.For<AProp>()
-			                   	.AddDescriptor(new RequirePropertyDescriptor()));
+				.AddDescriptor(new RequirePropertyDescriptor()));
 
 			var handler = Container.Kernel.GetHandler(typeof(AProp));
 			Assert.AreEqual(HandlerState.WaitingDependency, handler.CurrentState);

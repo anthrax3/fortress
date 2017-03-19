@@ -31,9 +31,7 @@ namespace Castle.Windsor.Tests.Components
 		public void Dispose()
 		{
 			if (OnDisposing != null)
-			{
 				OnDisposing();
-			}
 			Disposed = true;
 		}
 	}

@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
 using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
 using Castle.Windsor.Tests.RuntimeParameters;
 using NUnit.Framework;
 
@@ -26,7 +23,7 @@ namespace Castle.Windsor.Tests
 	[TestFixture]
 	public class RuntimeParametersTestCase : AbstractContainerTestCase
 	{
-		private readonly Dictionary<string, object> dependencies = new Dictionary<string, object> { { "cc", new CompC(12) }, { "myArgument", "ernst" } };
+		private readonly Dictionary<string, object> dependencies = new Dictionary<string, object> {{"cc", new CompC(12)}, {"myArgument", "ernst"}};
 
 		private void AssertDependencies(CompB compb)
 		{
@@ -37,7 +34,7 @@ namespace Castle.Windsor.Tests
 
 			Assert.AreSame(dependencies["cc"], compb.Compc, "CompC property should be the same instnace as in the hashtable argument");
 			Assert.IsTrue("ernst".Equals(compb.MyArgument),
-			              string.Format("The MyArgument property of compb should be equal to ernst, found {0}", compb.MyArgument));
+				string.Format("The MyArgument property of compb should be equal to ernst, found {0}", compb.MyArgument));
 		}
 
 		[Test]
@@ -45,7 +42,7 @@ namespace Castle.Windsor.Tests
 		{
 			var kernel = new DefaultKernel();
 			kernel.Register(Component.For<NeedClassWithCustomerDependency>(),
-			                Component.For<HasCustomDependency>().DependsOn(new Dictionary<object, object> { { "name", new CompA() } }));
+				Component.For<HasCustomDependency>().DependsOn(new Dictionary<object, object> {{"name", new CompA()}}));
 
 			Assert.AreEqual(HandlerState.Valid, kernel.GetHandler(typeof(HasCustomDependency)).CurrentState);
 			Assert.IsNotNull(kernel.Resolve(typeof(NeedClassWithCustomerDependency)));
@@ -56,11 +53,11 @@ namespace Castle.Windsor.Tests
 		public void Parameter_takes_precedence_over_registered_service()
 		{
 			Container.Register(Component.For<CompA>(),
-			                   Component.For<CompB>().DependsOn(Dependency.OnValue<string>("some string")),
-			                   Component.For<CompC>().Instance(new CompC(0)));
+				Component.For<CompB>().DependsOn(Dependency.OnValue<string>("some string")),
+				Component.For<CompC>().Instance(new CompC(0)));
 
 			var c2 = new CompC(42);
-			var args = new Arguments(new object[] { c2 });
+			var args = new Arguments(new object[] {c2});
 			var b = Container.Resolve<CompB>(args);
 
 			Assert.AreSame(c2, b.Compc);
@@ -70,12 +67,12 @@ namespace Castle.Windsor.Tests
 		public void ParametersPrecedence()
 		{
 			Container.Register(Component.For<CompA>().Named("compa"),
-			                   Component.For<CompB>().Named("compb").DependsOn(dependencies));
+				Component.For<CompB>().Named("compb").DependsOn(dependencies));
 
 			var instance_with_model = Container.Resolve<CompB>();
 			Assert.AreSame(dependencies["cc"], instance_with_model.Compc, "Model dependency should override kernel dependency");
 
-			var deps2 = new Dictionary<string, object> { { "cc", new CompC(12) }, { "myArgument", "ayende" } };
+			var deps2 = new Dictionary<string, object> {{"cc", new CompC(12)}, {"myArgument", "ayende"}};
 
 			var instance_with_args = Container.Resolve<CompB>(deps2);
 
@@ -87,7 +84,7 @@ namespace Castle.Windsor.Tests
 		public void ResolveUsingParameters()
 		{
 			Container.Register(Component.For<CompA>().Named("compa"),
-			                   Component.For<CompB>().Named("compb"));
+				Component.For<CompB>().Named("compb"));
 			var compb = Container.Resolve<CompB>(dependencies);
 
 			AssertDependencies(compb);
@@ -97,7 +94,7 @@ namespace Castle.Windsor.Tests
 		public void ResolveUsingParametersWithinTheHandler()
 		{
 			Container.Register(Component.For<CompA>().Named("compa"),
-			                   Component.For<CompB>().Named("compb").DependsOn(dependencies));
+				Component.For<CompB>().Named("compb").DependsOn(dependencies));
 
 			var compb = Container.Resolve<CompB>();
 
@@ -108,12 +105,11 @@ namespace Castle.Windsor.Tests
 		public void WillAlwaysResolveCustomParameterFromServiceComponent()
 		{
 			Container.Register(Component.For<CompA>(),
-			                   Component.For<CompB>().DependsOn(new { myArgument = "foo" }),
-			                   Component.For<CompC>().DependsOn(new { test = 15 }));
+				Component.For<CompB>().DependsOn(new {myArgument = "foo"}),
+				Component.For<CompC>().DependsOn(new {test = 15}));
 			var b = Kernel.Resolve<CompB>();
 			Assert.IsNotNull(b);
 			Assert.AreEqual(15, b.Compc.test);
 		}
-
 	}
 }

@@ -100,12 +100,12 @@ namespace Castle.Windsor.Tests
 
 			Assert.IsNotNull(instance);
 			Assert.IsInstanceOf<Repository1>(instance);
-			Assert.IsInstanceOf<Repository2>(((Repository1)instance).InnerRepository);
+			Assert.IsInstanceOf<Repository2>(((Repository1) instance).InnerRepository);
 			Assert.IsInstanceOf<Repository3>(
-				((Repository2)(((Repository1)instance).InnerRepository)).InnerRepository);
+				((Repository2) ((Repository1) instance).InnerRepository).InnerRepository);
 			Assert.IsInstanceOf<DecoratedRepository>(
-				((Repository3)(((Repository2)(((Repository1)instance).InnerRepository)).InnerRepository)).
-					InnerRepository);
+				((Repository3) ((Repository2) ((Repository1) instance).InnerRepository).InnerRepository).
+				InnerRepository);
 		}
 
 		[Test]
@@ -124,7 +124,7 @@ namespace Castle.Windsor.Tests
 
 			var exception =
 				Assert.Throws<HandlerException>(() =>
-				                                Kernel.Resolve<CustomerImpl2>("key"));
+					Kernel.Resolve<CustomerImpl2>("key"));
 			var expectedMessage =
 				string.Format(
 					"Can't create component 'key' as it has dependencies to be satisfied.{0}{0}'key' is waiting for the following dependencies:{0}- Parameter 'name' which was not provided. Did you forget to set the dependency?{0}- Parameter 'address' which was not provided. Did you forget to set the dependency?{0}- Parameter 'age' which was not provided. Did you forget to set the dependency?{0}",

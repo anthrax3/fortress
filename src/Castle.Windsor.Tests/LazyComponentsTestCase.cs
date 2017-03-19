@@ -26,11 +26,22 @@ namespace Castle.Windsor.Tests
 {
 	public class LazyComponentsTestCase : AbstractContainerTestCase
 	{
+		protected override void AfterContainerCreated()
+		{
+			Container.Register(Component.For<ILazyComponentLoader>()
+				.ImplementedBy<LazyOfTComponentLoader>());
+		}
+
+		private LazyThreadSafetyMode GetMode(Lazy<A> lazy)
+		{
+			return (LazyThreadSafetyMode) lazy.GetType().GetProperty("Mode", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(lazy, null);
+		}
+
 		[Test]
 		public void Can_provide_lazy_as_dependency()
 		{
 			Container.Register(Component.For(typeof(UsesLazy<>)).LifeStyle.Transient,
-			                   Component.For<A>());
+				Component.For<A>());
 
 			var value = Container.Resolve<UsesLazy<A>>();
 
@@ -82,6 +93,60 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		public void Can_resolve_lazy_component_requiring_arguments_inline()
+		{
+			Container.Register(Component.For<B>());
+
+			var a = new A();
+			var arguments = new Arguments(new object[] {a});
+			var missingArguments = Container.Resolve<Lazy<B>>();
+			var hasArguments = Container.Resolve<Lazy<B>>(new {arguments});
+
+			B ignore;
+			Assert.Throws<DependencyResolverException>(() => ignore = missingArguments.Value);
+
+			Assert.IsNotNull(hasArguments.Value);
+			Assert.AreSame(a, hasArguments.Value.A);
+		}
+
+		[Test]
+		public void Can_resolve_lazy_component_with_override()
+		{
+			Container.Register(Component.For<A>().Named("1"),
+				Component.For<A>().Named("2"));
+
+			var lazyA = Container.Resolve<Lazy<A>>(new {overrideComponentName = "2"});
+
+			var a2 = Container.Resolve<A>("2");
+			Assert.AreSame(a2, lazyA.Value);
+		}
+
+		[Test]
+		public void Can_resolve_same_component_via_two_lazy()
+		{
+			Container.Register(Component.For<A>(),
+				Component.For<B>());
+
+			var lazy1 = Container.Resolve<Lazy<A>>();
+			var lazy2 = Container.Resolve<Lazy<B>>();
+
+			Assert.IsNotNull(lazy1.Value);
+			Assert.IsNotNull(lazy2.Value);
+		}
+
+		[Test]
+		public void Can_resolve_various_components_via_lazy()
+		{
+			Container.Register(Component.For<A>());
+
+			var lazy1 = Container.Resolve<Lazy<A>>();
+			var lazy2 = Container.Resolve<Lazy<A>>();
+
+			Assert.AreNotSame(lazy1, lazy2);
+			Assert.AreSame(lazy1.Value, lazy2.Value);
+		}
+
+		[Test]
 		public void Implicit_lazy_can_handle_generic_component()
 		{
 			Container.Register(Component.For(typeof(EmptyGenericClassService<>)));
@@ -129,64 +194,10 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
-		public void Can_resolve_same_component_via_two_lazy()
-		{
-			Container.Register(Component.For<A>(),
-			                   Component.For<B>());
-
-			var lazy1 = Container.Resolve<Lazy<A>>();
-			var lazy2 = Container.Resolve<Lazy<B>>();
-
-			Assert.IsNotNull(lazy1.Value);
-			Assert.IsNotNull(lazy2.Value);
-		}
-
-		[Test]
-		public void Can_resolve_lazy_component_requiring_arguments_inline()
-		{
-			Container.Register(Component.For<B>());
-
-			var a = new A();
-			var arguments = new Arguments(new object[] { a });
-			var missingArguments = Container.Resolve<Lazy<B>>();
-			var hasArguments = Container.Resolve<Lazy<B>>(new { arguments });
-
-			B ignore;
-			Assert.Throws<DependencyResolverException>(() => ignore = missingArguments.Value);
-
-			Assert.IsNotNull(hasArguments.Value);
-			Assert.AreSame(a, hasArguments.Value.A);
-		}
-
-		[Test]
-		public void Can_resolve_lazy_component_with_override()
-		{
-			Container.Register(Component.For<A>().Named("1"),
-			                   Component.For<A>().Named("2"));
-
-			var lazyA = Container.Resolve<Lazy<A>>(new { overrideComponentName = "2" });
-
-			var a2 = Container.Resolve<A>("2");
-			Assert.AreSame(a2, lazyA.Value);
-		}
-
-		[Test]
-		public void Can_resolve_various_components_via_lazy()
-		{
-			Container.Register(Component.For<A>());
-
-			var lazy1 = Container.Resolve<Lazy<A>>();
-			var lazy2 = Container.Resolve<Lazy<A>>();
-
-			Assert.AreNotSame(lazy1, lazy2);
-			Assert.AreSame(lazy1.Value, lazy2.Value);
-		}
-
-		[Test]
 		public void Implicit_lazy_resolves_default_component_for_given_service_take_1()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 
 			var lazy = Container.Resolve<Lazy<IEmptyService>>();
 
@@ -197,11 +208,17 @@ namespace Castle.Windsor.Tests
 		public void Implicit_lazy_resolves_default_component_for_given_service_take_2()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>());
 
 			var lazy = Container.Resolve<Lazy<IEmptyService>>();
 
 			Assert.IsInstanceOf<EmptyServiceB>(lazy.Value);
+		}
+
+		[Test]
+		public void Lazy_of_string_is_not_resolvable()
+		{
+			Assert.Throws<ComponentNotFoundException>(() => Container.Resolve<Lazy<string>>());
 		}
 
 		[Test]
@@ -210,15 +227,9 @@ namespace Castle.Windsor.Tests
 			var lazy = Container.Resolve<Lazy<A>>();
 
 			Assert.Throws<ComponentNotFoundException>(() =>
-				{
-					var ignoreMe = lazy.Value;
-				});
-		}
-
-		[Test]
-		public void Lazy_of_string_is_not_resolvable()
-		{
-			Assert.Throws<ComponentNotFoundException>(() => Container.Resolve<Lazy<string>>());
+			{
+				var ignoreMe = lazy.Value;
+			});
 		}
 
 		[Test]
@@ -252,17 +263,6 @@ namespace Castle.Windsor.Tests
 			var value = lazy.Value;
 
 			Assert.AreEqual(1, HasInstanceCount.InstancesCreated);
-		}
-
-		protected override void AfterContainerCreated()
-		{
-			Container.Register(Component.For<ILazyComponentLoader>()
-			                   	.ImplementedBy<LazyOfTComponentLoader>());
-		}
-
-		private LazyThreadSafetyMode GetMode(Lazy<A> lazy)
-		{
-			return (LazyThreadSafetyMode) lazy.GetType().GetProperty("Mode", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(lazy, null);
 		}
 	}
 }

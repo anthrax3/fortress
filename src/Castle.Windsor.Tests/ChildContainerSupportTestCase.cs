@@ -24,21 +24,9 @@ namespace Castle.Windsor.Tests
 	[TestFixture]
 	public class ChildContainerSupportTestCase : AbstractContainerTestCase
 	{
-		[Test]
-		[Bug("IOC-127")]
-		public void AddComponentInstanceAndChildContainers()
+		protected override void AfterContainerCreated()
 		{
-			var child = new WindsorContainer();
-			Container.AddChildContainer(child);
-
-			var clock1 = new EmptyServiceA();
-			var clock2 = new EmptyServiceB();
-
-			Container.Register(Component.For<IEmptyService>().Instance(clock2));
-			child.Register(Component.For<IEmptyService>().Instance(clock1));
-
-			Assert.AreSame(clock2, Container.Resolve<IEmptyService>());
-			Assert.AreSame(clock1, child.Resolve<IEmptyService>());
+			Container.Register(Component.For(typeof(A)).Named("A"));
 		}
 
 		[Test]
@@ -70,6 +58,23 @@ namespace Castle.Windsor.Tests
 		}
 
 		[Test]
+		[Bug("IOC-127")]
+		public void AddComponentInstanceAndChildContainers()
+		{
+			var child = new WindsorContainer();
+			Container.AddChildContainer(child);
+
+			var clock1 = new EmptyServiceA();
+			var clock2 = new EmptyServiceB();
+
+			Container.Register(Component.For<IEmptyService>().Instance(clock2));
+			child.Register(Component.For<IEmptyService>().Instance(clock1));
+
+			Assert.AreSame(clock2, Container.Resolve<IEmptyService>());
+			Assert.AreSame(clock1, child.Resolve<IEmptyService>());
+		}
+
+		[Test]
 		public void AddingToTwoParentContainsThrowsKernelException()
 		{
 			Assert.Throws<KernelException>(() =>
@@ -93,11 +98,6 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		protected override void AfterContainerCreated()
-		{
-			Container.Register(Component.For(typeof(A)).Named("A"));
-		}
-
 		[Test]
 		public void ResolveAgainstParentContainer()
 		{
@@ -114,7 +114,7 @@ namespace Castle.Windsor.Tests
 		[Test]
 		public void ResolveAgainstParentContainerWithProperty()
 		{
-			IWindsorContainer childcontainer = new WindsorContainer { Parent = Container };
+			IWindsorContainer childcontainer = new WindsorContainer {Parent = Container};
 
 			Assert.AreEqual(Container, childcontainer.Parent);
 

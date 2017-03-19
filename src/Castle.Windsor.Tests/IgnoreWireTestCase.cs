@@ -17,11 +17,10 @@ using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.XmlFiles;
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class IgnoreWireTestCase
 	{
@@ -38,4 +37,3 @@ namespace Castle.Windsor.Tests
 		}
 	}
 }
-

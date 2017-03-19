@@ -24,9 +24,7 @@ namespace Castle.Windsor.Tests.Interceptors
 		{
 			invocation.Proceed();
 			if (invocation.Arguments.Length > 0)
-			{
-				InterceptedId = (int)invocation.Arguments[0];
-			}
+				InterceptedId = (int) invocation.Arguments[0];
 		}
 	}
 }

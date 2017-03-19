@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class SimpleServiceInitializable : ISimpleService, IInitializable
 	{
-		private bool isInitialized;
-
-		public bool IsInitialized
-		{
-			get { return isInitialized; }
-		}
+		public bool IsInitialized { get; private set; }
 
 		public void Initialize()
 		{
-			isInitialized = true;
+			IsInitialized = true;
 		}
 
 		public void Operation()

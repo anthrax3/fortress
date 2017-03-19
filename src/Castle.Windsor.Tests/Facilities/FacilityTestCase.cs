@@ -24,6 +24,22 @@ namespace Castle.Windsor.Tests.Facilities
 	[TestFixture]
 	public class FacilityTestCase
 	{
+		[SetUp]
+		public void Init()
+		{
+			kernel = new DefaultKernel();
+
+			IConfiguration confignode = new MutableConfiguration("facility");
+			IConfiguration facilityConf = new MutableConfiguration(facilityKey);
+			confignode.Children.Add(facilityConf);
+			kernel.ConfigurationStore.AddFacilityConfiguration(facilityKey, confignode);
+
+			facility = new HiperFacility();
+
+			Assert.IsFalse(facility.Initialized);
+			kernel.AddFacility(facility);
+		}
+
 		private static readonly string facilityKey = typeof(HiperFacility).FullName;
 		private HiperFacility facility;
 		private IKernel kernel;
@@ -47,22 +63,6 @@ namespace Castle.Windsor.Tests.Facilities
 
 			Assert.IsNotNull(facility);
 			Assert.AreSame(this.facility, facility);
-		}
-
-		[SetUp]
-		public void Init()
-		{
-			kernel = new DefaultKernel();
-
-			IConfiguration confignode = new MutableConfiguration("facility");
-			IConfiguration facilityConf = new MutableConfiguration(facilityKey);
-			confignode.Children.Add(facilityConf);
-			kernel.ConfigurationStore.AddFacilityConfiguration(facilityKey, confignode);
-
-			facility = new HiperFacility();
-
-			Assert.IsFalse(facility.Initialized);
-			kernel.AddFacility(facility);
 		}
 
 		[Test]

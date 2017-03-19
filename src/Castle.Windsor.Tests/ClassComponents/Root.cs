@@ -16,23 +16,14 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class Root
 	{
-		private readonly Branch branch;
-		private readonly Leaf leaf;
-
 		public Root(Branch branch, Leaf leaf)
 		{
-			this.branch = branch;
-			this.leaf = leaf;
+			Branch = branch;
+			Leaf = leaf;
 		}
 
-		public Branch Branch
-		{
-			get { return branch; }
-		}
+		public Branch Branch { get; }
 
-		public Leaf Leaf
-		{
-			get { return leaf; }
-		}
+		public Leaf Leaf { get; }
 	}
 }

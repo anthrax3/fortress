@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests
 			{
 				container.AddFacility<TypedFactoryFacility>();
 				container.Register(Component.For<IFactory>().AsFactory(),
-				                   Component.For(typeof(IInterface)).ImplementedBy(typeof(InterfaceImpl)).LifeStyle.Transient);
+					Component.For(typeof(IInterface)).ImplementedBy(typeof(InterfaceImpl)).LifeStyle.Transient);
 
 				IFactory childFactory;
 				using (var childContainer = new WindsorContainer())
@@ -60,7 +60,7 @@ namespace Castle.Windsor.Tests
 
 		public class InterfaceImpl : IInterface, IDisposable
 		{
-			bool disposed;
+			private bool disposed;
 
 			public void Dispose()
 			{
@@ -71,9 +71,7 @@ namespace Castle.Windsor.Tests
 			public void Do()
 			{
 				if (disposed)
-				{
 					throw new NotSupportedException();
-				}
 			}
 		}
 	}

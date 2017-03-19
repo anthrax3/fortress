@@ -29,7 +29,7 @@ namespace Castle.Windsor.Tests
 		{
 			Container.Register(
 				Component.For<CountingInterceptor>().LifeStyle.Transient,
-				Component.For(new[] { typeof(IGeneric<>), typeof(IGenericExtended<>) })
+				Component.For(typeof(IGeneric<>), typeof(IGenericExtended<>))
 					.ImplementedBy(typeof(GenericExtendedImpl<>))
 					.Interceptors<CountingInterceptor>(),
 				Component.For<UseGenericExtended1>(),

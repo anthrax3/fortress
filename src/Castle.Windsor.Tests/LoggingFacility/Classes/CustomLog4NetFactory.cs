@@ -1,4 +1,3 @@
-
 // GVDM: TODO: Why are we abstracting logging frameworks? Why is this coming from castle.core? Why do we want these dependencies? What is going on? This is mental! 
 
 

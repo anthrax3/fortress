@@ -50,7 +50,7 @@ namespace Castle.Windsor.Tests
 		public void Can_make_non_first_component_default()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault());
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault());
 
 			var obj = Container.Resolve<IEmptyService>();
 
@@ -61,7 +61,7 @@ namespace Castle.Windsor.Tests
 		public void Can_make_non_first_component_default_with_filter()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA, object>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService, EmptyServiceB, object>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
+				Component.For<IEmptyService, EmptyServiceB, object>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
 
 			var obj = Container.Resolve<IEmptyService>();
 
@@ -75,7 +75,7 @@ namespace Castle.Windsor.Tests
 		public void Does_affect_order_when_using_ResolveAll()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
 
 			var obj = Container.ResolveAll<IEmptyService>();
 
@@ -87,7 +87,7 @@ namespace Castle.Windsor.Tests
 		public void Later_default_overrides_earlier_one()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsDefault(t => t.IsInterface),
-			                   Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
+				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>().IsDefault(t => t.IsInterface));
 
 			var obj = Container.Resolve<IEmptyService>();
 

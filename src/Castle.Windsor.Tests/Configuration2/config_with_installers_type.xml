@@ -1,6 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <configuration>
-  <installers>
-    <install type="Castle.Windsor.Tests.Installers.CustomerInstaller"/>
-  </installers>
+	<installers>
+		<install type="Castle.Windsor.Tests.Installers.CustomerInstaller" />
+	</installers>
 </configuration>

@@ -30,8 +30,13 @@ namespace Castle.Windsor.Tests
 
 		private TypeNameConverter converter;
 
-		class TestCaseSensitivity { }
-		class TESTCASESENSITIVITY { }
+		private class TestCaseSensitivity
+		{
+		}
+
+		private class TESTCASESENSITIVITY
+		{
+		}
 
 		[Test]
 		public void Can_resolve_exact_match_if_two_classes_exist_that_differ_only_by_case()

@@ -16,8 +16,7 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class UsesIEmptyService
 	{
-		public static int instancesCreated ;
-
+		public static int instancesCreated;
 
 
 		public UsesIEmptyService(IEmptyService emptyService)

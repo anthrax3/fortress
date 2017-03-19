@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class Branch
 	{
-		private readonly Leaf leaf;
-
 		public Branch(Leaf leaf)
 		{
-			this.leaf = leaf;
+			Leaf = leaf;
 		}
 
-		public Leaf Leaf
-		{
-			get { return leaf; }
-		}
+		public Leaf Leaf { get; }
 	}
 }

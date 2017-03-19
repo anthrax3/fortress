@@ -114,11 +114,11 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			Assert.IsNotNull(factory);
 
-			var comp1 = (IDummyComponent)factory.Construct("comp1");
+			var comp1 = (IDummyComponent) factory.Construct("comp1");
 			Assert.IsTrue(comp1 is Component1);
 			Assert.IsNotNull(comp1);
 
-			var comp2 = (IDummyComponent)factory.Construct("comp2");
+			var comp2 = (IDummyComponent) factory.Construct("comp2");
 			Assert.IsTrue(comp2 is Component2);
 			Assert.IsNotNull(comp2);
 		}

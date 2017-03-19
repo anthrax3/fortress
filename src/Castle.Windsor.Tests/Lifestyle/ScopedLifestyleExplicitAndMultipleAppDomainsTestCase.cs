@@ -40,7 +40,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 				var one = Container.Resolve<A>();
 
 				var anotherDomain = CreateAnotherAppDomain();
-				Activator.CreateInstance(anotherDomain, typeof (Object).Assembly.FullName, typeof (Object).FullName).Unwrap();
+				Activator.CreateInstance(anotherDomain, typeof(object).Assembly.FullName, typeof(object).FullName).Unwrap();
 
 				var two = Container.Resolve<A>();
 				Assert.AreSame(one, two);

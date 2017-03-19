@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.Components
 {
 	public class Employee : IEmployee
@@ -27,7 +25,7 @@ namespace Castle.Windsor.Tests.Components
 
 		public string FullName
 		{
-			get { return String.Format("{0} {1} {2}", FirstName, MiddleName, LastName); }
+			get { return string.Format("{0} {1} {2}", FirstName, MiddleName, LastName); }
 		}
 
 		public bool IsProxy { get; set; }
@@ -43,9 +41,7 @@ namespace Castle.Windsor.Tests.Components
 			get
 			{
 				if (ntLogin.Length > 0)
-				{
 					return ntLogin;
-				}
 				return ntLogin;
 			}
 		}

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Lifecycle
 {
-	using System;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class InitializableTestCase : AbstractContainerTestCase
 	{
@@ -27,8 +26,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void Initializable_components_are_not_tracked()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceInitializable>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceInitializable>()
+				.LifeStyle.Transient);
 
 			var server = Container.Resolve<ISimpleService>();
 			var weak = new WeakReference(server);
@@ -42,10 +41,10 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void Initializable_components_for_non_initializable_service_get_initialized_when_resolved()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceInitializable>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceInitializable>()
+				.LifeStyle.Transient);
 
-			var server = (SimpleServiceInitializable)Container.Resolve<ISimpleService>();
+			var server = (SimpleServiceInitializable) Container.Resolve<ISimpleService>();
 
 			Assert.IsTrue(server.IsInitialized);
 		}
@@ -54,10 +53,10 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void Initializable_components_for_non_initializable_service_get_initialized_when_resolved_via_factoryMethod()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.UsingFactoryMethod(() => new SimpleServiceInitializable())
-			                   	.LifeStyle.Transient);
+				.UsingFactoryMethod(() => new SimpleServiceInitializable())
+				.LifeStyle.Transient);
 
-			var server = (SimpleServiceInitializable)Container.Resolve<ISimpleService>();
+			var server = (SimpleServiceInitializable) Container.Resolve<ISimpleService>();
 
 			Assert.IsTrue(server.IsInitialized);
 		}

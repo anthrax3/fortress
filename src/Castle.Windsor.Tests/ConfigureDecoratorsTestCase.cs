@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigureDecoratorsTestCase
 	{
@@ -48,7 +47,7 @@ namespace Castle.Windsor.Tests
 				Inner = inner;
 			}
 
-			public IDoNothingService Inner { get; set; }
+			public IDoNothingService Inner { get; }
 
 			public void DoNothing()
 			{
@@ -92,7 +91,7 @@ namespace Castle.Windsor.Tests
 			var service = container.Resolve<IDoNothingService>();
 
 			Assert.IsInstanceOf<DoNothingServiceDecorator>(service);
-			Assert.IsInstanceOf<DoNothingService>(((DoNothingServiceDecorator)service).Inner);
+			Assert.IsInstanceOf<DoNothingService>(((DoNothingServiceDecorator) service).Inner);
 		}
 
 		[Test]

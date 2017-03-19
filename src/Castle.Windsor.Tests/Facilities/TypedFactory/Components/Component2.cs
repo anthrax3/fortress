@@ -14,13 +14,11 @@
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Components
 {
-	using System;
-
 	public class Component2 : IDummyComponent
 	{
 		#region IDummyComponent Members
 
-		public String Name
+		public string Name
 		{
 			get
 			{

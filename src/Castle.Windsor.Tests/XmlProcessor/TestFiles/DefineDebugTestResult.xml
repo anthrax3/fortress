@@ -2,7 +2,6 @@
 	<!-- some comment -->
 	<?process instruction?>
 	<components>
-		<component id="debug" att="prop1value"/>
-	</components>		
+		<component id="debug" att="prop1value" />
+	</components>
 </configuration>
-

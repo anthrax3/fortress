@@ -21,6 +21,6 @@ namespace Castle.Windsor.Tests.Components
 			Dependency = dependency;
 		}
 
-		public T Dependency { get; private set; }
+		public T Dependency { get; }
 	}
 }

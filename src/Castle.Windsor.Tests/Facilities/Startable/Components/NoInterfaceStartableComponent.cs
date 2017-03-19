@@ -16,32 +16,21 @@ using Castle.Windsor.Core;
 
 namespace Castle.Windsor.Tests.Facilities.Startable.Components
 {
-	using Castle.Core;
-
 	[Transient]
 	public class NoInterfaceStartableComponent
 	{
-		private bool started;
-		private bool stopped;
+		public bool Started { get; private set; }
 
-		public bool Started
-		{
-			get { return started; }
-		}
-
-		public bool Stopped
-		{
-			get { return stopped; }
-		}
+		public bool Stopped { get; private set; }
 
 		public void Start()
 		{
-			started = true;
+			Started = true;
 		}
 
 		public void Stop()
 		{
-			stopped = true;
+			Stopped = true;
 		}
 	}
 }

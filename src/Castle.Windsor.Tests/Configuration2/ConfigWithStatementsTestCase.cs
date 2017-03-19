@@ -15,11 +15,10 @@
 // we do not support xml config on SL
 
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigWithStatementsTestCase
 	{
@@ -74,4 +73,3 @@ namespace Castle.Windsor.Tests.Configuration2
 		}
 	}
 }
-

@@ -19,18 +19,9 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class SimpleServiceSupportInitialize : ISimpleService, ISupportInitialize
 	{
-		private bool initBegun;
-		private bool initEnded;
+		public bool InitBegun { get; private set; }
 
-		public bool InitBegun
-		{
-			get { return initBegun; }
-		}
-
-		public bool InitEnded
-		{
-			get { return initEnded; }
-		}
+		public bool InitEnded { get; private set; }
 
 		public void Operation()
 		{
@@ -38,20 +29,16 @@ namespace Castle.Windsor.Tests.Components
 
 		public void BeginInit()
 		{
-			if (initEnded)
-			{
+			if (InitEnded)
 				throw new InvalidOperationException("Can't Begin init after it ended");
-			}
-			initBegun = true;
+			InitBegun = true;
 		}
 
 		public void EndInit()
 		{
-			if (initBegun == false)
-			{
+			if (InitBegun == false)
 				throw new InvalidOperationException("Can't End init before it begins");
-			}
-			initEnded = true;
+			InitEnded = true;
 		}
 	}
 }

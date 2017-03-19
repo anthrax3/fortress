@@ -37,7 +37,7 @@ namespace Castle.Windsor.Tests.Interceptors
 				var result = invocation.ReturnValue;
 				if (!returnValue.HasValue)
 				{
-					invocation.ReturnValue = ((int)result) + 1;
+					invocation.ReturnValue = (int) result + 1;
 					return;
 				}
 				invocation.ReturnValue = returnValue.Value;

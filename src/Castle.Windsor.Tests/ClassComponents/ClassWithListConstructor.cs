@@ -18,16 +18,11 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class ClassWithListConstructor
 	{
-		private readonly IList services;
-
 		public ClassWithListConstructor(IList services)
 		{
-			this.services = services;
+			Services = services;
 		}
 
-		public IList Services
-		{
-			get { return services; }
-		}
+		public IList Services { get; }
 	}
 }

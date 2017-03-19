@@ -33,30 +33,26 @@ namespace Castle.Windsor.Tests.SubContainers
 			public const string Added = "added";
 			public const string Removed = "removed";
 
-			private readonly List<string> events;
 			private readonly object expectedSender;
 
 			public EventsCollector(object expectedSender)
 			{
 				this.expectedSender = expectedSender;
-				events = new List<string>();
+				Events = new List<string>();
 			}
 
-			public List<string> Events
-			{
-				get { return events; }
-			}
+			public List<string> Events { get; }
 
 			public void AddedAsChildKernel(object sender, EventArgs e)
 			{
 				Assert.AreEqual(expectedSender, sender);
-				events.Add(Added);
+				Events.Add(Added);
 			}
 
 			public void RemovedAsChildKernel(object sender, EventArgs e)
 			{
 				Assert.AreEqual(expectedSender, sender);
-				events.Add(Removed);
+				Events.Add(Removed);
 			}
 		}
 
@@ -202,6 +198,49 @@ namespace Castle.Windsor.Tests.SubContainers
 		}
 
 		[Test]
+		[Bug("IOC-345")]
+		public void Do_NOT_UseChildComponentsForParentDependenciesWhenRequestedFromChild()
+		{
+			IKernel subkernel = new DefaultKernel();
+
+			Kernel.Register(Component.For(typeof(DefaultSpamService)).Named("spamservice").LifeStyle.Is(LifestyleType.Transient));
+			Kernel.Register(Component.For(typeof(DefaultMailSenderService)).Named("mailsender"));
+			Kernel.Register(Component.For(typeof(DefaultTemplateEngine)).Named("templateengine"));
+
+			Kernel.AddChildKernel(subkernel);
+			subkernel.Register(Component.For(typeof(DefaultTemplateEngine)).Named("templateengine"));
+
+			var templateengine = Kernel.Resolve<DefaultTemplateEngine>("templateengine");
+			var sub_templateengine = subkernel.Resolve<DefaultTemplateEngine>("templateengine");
+
+			var spamservice = subkernel.Resolve<DefaultSpamService>("spamservice");
+			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
+			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
+
+			spamservice = Kernel.Resolve<DefaultSpamService>("spamservice");
+			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
+			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
+		}
+
+		[Test]
+		public void Parent_component_will_NOT_have_dependencies_from_child()
+		{
+			Kernel.Register(Component.For<DefaultTemplateEngine>(),
+				Component.For<DefaultSpamService>());
+
+			var child = new DefaultKernel();
+			Kernel.AddChildKernel(child);
+
+			child.Register(Component.For<DefaultMailSenderService>());
+
+			var spamservice = child.Resolve<DefaultSpamService>();
+
+			Assert.IsNotNull(spamservice);
+			Assert.IsNotNull(spamservice.TemplateEngine);
+			Assert.IsNull(spamservice.MailSender);
+		}
+
+		[Test]
 		public void ParentKernelFindsAndCreateChildComponent()
 		{
 			Assert.Throws<ComponentNotFoundException>(() =>
@@ -258,24 +297,6 @@ namespace Castle.Windsor.Tests.SubContainers
 		}
 
 		[Test]
-		public void Parent_component_will_NOT_have_dependencies_from_child()
-		{
-			Kernel.Register(Component.For<DefaultTemplateEngine>(),
-			                Component.For<DefaultSpamService>());
-
-			var child = new DefaultKernel();
-			Kernel.AddChildKernel(child);
-
-			child.Register(Component.For<DefaultMailSenderService>());
-
-			var spamservice = child.Resolve<DefaultSpamService>();
-
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.TemplateEngine);
-			Assert.IsNull(spamservice.MailSender);
-		}
-
-		[Test]
 		public void Singleton_withNonSingletonDependencies_doesNotReResolveDependencies()
 		{
 			Kernel.Register(Component.For(typeof(DefaultSpamService)).Named("spamservice"));
@@ -287,7 +308,7 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			var subkernel2 = new DefaultKernel();
 			subkernel2.Register(Component.For(typeof(DefaultTemplateEngine)).Named("templateengine")
-				                    .LifeStyle.Is(LifestyleType.Transient));
+				.LifeStyle.Is(LifestyleType.Transient));
 			Kernel.AddChildKernel(subkernel2);
 
 			var templateengine1 = subkernel1.Resolve<DefaultTemplateEngine>("templateengine");
@@ -299,31 +320,6 @@ namespace Castle.Windsor.Tests.SubContainers
 			var spamservice2 = subkernel2.Resolve<DefaultSpamService>("spamservice");
 
 			Assert.AreSame(spamservice1, spamservice2);
-		}
-
-		[Test]
-		[Bug("IOC-345")]
-		public void Do_NOT_UseChildComponentsForParentDependenciesWhenRequestedFromChild()
-		{
-			IKernel subkernel = new DefaultKernel();
-
-			Kernel.Register(Component.For(typeof(DefaultSpamService)).Named("spamservice").LifeStyle.Is(LifestyleType.Transient));
-			Kernel.Register(Component.For(typeof(DefaultMailSenderService)).Named("mailsender"));
-			Kernel.Register(Component.For(typeof(DefaultTemplateEngine)).Named("templateengine"));
-
-			Kernel.AddChildKernel(subkernel);
-			subkernel.Register(Component.For(typeof(DefaultTemplateEngine)).Named("templateengine"));
-
-			var templateengine = Kernel.Resolve<DefaultTemplateEngine>("templateengine");
-			var sub_templateengine = subkernel.Resolve<DefaultTemplateEngine>("templateengine");
-
-			var spamservice = subkernel.Resolve<DefaultSpamService>("spamservice");
-			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
-			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
-
-			spamservice = Kernel.Resolve<DefaultSpamService>("spamservice");
-			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
-			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
 		}
 
 		[Test]

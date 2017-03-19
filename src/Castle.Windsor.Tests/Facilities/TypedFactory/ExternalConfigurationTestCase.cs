@@ -38,7 +38,6 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		}
 
 		[Test]
-
 		public void Factory1()
 		{
 			var factory = Container.Resolve<IProtocolHandlerFactory1>("protocolFac1");
@@ -85,11 +84,11 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		{
 			var factory = Container.Resolve<IComponentFactory2>("compFactory2");
 
-			var comp1 = (IDummyComponent)factory.Construct("comp1");
+			var comp1 = (IDummyComponent) factory.Construct("comp1");
 			Assert.IsInstanceOf<Component1>(comp1);
 			Assert.IsNotNull(comp1);
 
-			var comp2 = (IDummyComponent)factory.Construct("comp2");
+			var comp2 = (IDummyComponent) factory.Construct("comp2");
 			Assert.IsInstanceOf<Component2>(comp2);
 			Assert.IsNotNull(comp2);
 		}
@@ -120,4 +119,3 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 		}
 	}
 }
-

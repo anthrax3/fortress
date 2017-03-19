@@ -14,23 +14,13 @@
 
 namespace Castle.Windsor.Tests.ClassComponents
 {
-	public interface IGenericClassWithParameter<T>
-	{
-		string Name { get; }
-	}
-
 	public class GenericClassWithParameter<T> : IGenericClassWithParameter<T>
 	{
-		private readonly string name;
-
 		public GenericClassWithParameter(string name)
 		{
-			this.name = name;
+			Name = name;
 		}
 
-		public string Name
-		{
-			get { return name; }
-		}
+		public string Name { get; }
 	}
 }

@@ -23,28 +23,26 @@ namespace Castle.Windsor.Tests.LoggingFacility
 	[TestFixture]
 	public class NullFacilityTest : BaseTest
 	{
-		private IWindsorContainer container;
-
 		[SetUp]
 		public void Setup()
 		{
-			container = base.CreateConfiguredContainer(LoggerImplementation.Null);
+			container = CreateConfiguredContainer(LoggerImplementation.Null);
 		}
 
 		[TearDown]
 		public void Teardown()
 		{
 			if (container != null)
-			{
 				container.Dispose();
-			}
 		}
+
+		private IWindsorContainer container;
 
 		[Test]
 		public void SimpleTest()
 		{
 			container.Register(Component.For(typeof(SimpleLoggingComponent)).Named("component"));
-			SimpleLoggingComponent test = container.Resolve<SimpleLoggingComponent>("component");
+			var test = container.Resolve<SimpleLoggingComponent>("component");
 
 			test.DoSomething();
 		}

@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
+using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Lifecycle
 {
-	using System;
-	using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DisposeTestCase : AbstractContainerTestCase
 	{
@@ -29,8 +28,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
 			Container.Register(Component.For<ISimpleService>()
-			                   	.UsingFactoryMethod(() => new SimpleServiceDisposable())
-			                   	.LifeStyle.Transient);
+				.UsingFactoryMethod(() => new SimpleServiceDisposable())
+				.LifeStyle.Transient);
 
 			var service = Container.Resolve<ISimpleService>();
 
@@ -45,8 +44,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void Disposable_component_for_nondisposable_service_is_tracked()
 		{
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceDisposable>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceDisposable>()
+				.LifeStyle.Transient);
 
 			var service = Container.Resolve<ISimpleService>();
 
@@ -58,8 +57,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
 			Container.Register(Component.For<ISimpleService>()
-			                   	.ImplementedBy<SimpleServiceDisposable>()
-			                   	.LifeStyle.Transient);
+				.ImplementedBy<SimpleServiceDisposable>()
+				.LifeStyle.Transient);
 
 			var service = Container.Resolve<ISimpleService>();
 			Container.Release(service);
@@ -96,7 +95,7 @@ namespace Castle.Windsor.Tests.Lifecycle
 			Container.Register(
 				Component.For(typeof(GenericComponent<>)).LifeStyle.Transient,
 				Component.For<DisposableFoo>().LifeStyle.Singleton
-				);
+			);
 
 			var depender = Container.Resolve<GenericComponent<DisposableFoo>>();
 			var weak = new WeakReference(depender.Value);

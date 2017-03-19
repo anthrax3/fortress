@@ -22,9 +22,7 @@ namespace Castle.Windsor.Tests.Components
 		{
 			var result = new StringBuilder();
 			foreach (var instance in instances)
-			{
 				result.Append(instance.Length.ToString());
-			}
 			return result.ToString();
 		}
 	}

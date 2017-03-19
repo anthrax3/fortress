@@ -32,7 +32,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 				Component.For<CBA>().LifeStyle.Transient);
 
 			var cba = Container.Resolve<CBA>();
-			var inner = ((CBADecorator)cba).Inner;
+			var inner = ((CBADecorator) cba).Inner;
 
 			Assert.AreSame(cba.A, inner.A);
 		}
@@ -100,9 +100,9 @@ namespace Castle.Windsor.Tests.Lifestyle
 
 			var cba = Container.Resolve<CBA>();
 
-			var b = (BDisposable)cba.B;
+			var b = (BDisposable) cba.B;
 			var wasADisposedAtTheTimeWhenDisposingB = false;
-			b.OnDisposing = () => wasADisposedAtTheTimeWhenDisposingB = ((ADisposable)b.A).Disposed;
+			b.OnDisposing = () => wasADisposedAtTheTimeWhenDisposingB = ((ADisposable) b.A).Disposed;
 
 			Container.Release(cba);
 
@@ -120,9 +120,9 @@ namespace Castle.Windsor.Tests.Lifestyle
 
 			var cba = Container.Resolve<CBA>();
 
-			var b = (BDisposable)cba.B;
+			var b = (BDisposable) cba.B;
 			var wasADisposedAtTheTimeWhenDisposingB = false;
-			b.OnDisposing = () => wasADisposedAtTheTimeWhenDisposingB = ((ADisposable)b.A).Disposed;
+			b.OnDisposing = () => wasADisposedAtTheTimeWhenDisposingB = ((ADisposable) b.A).Disposed;
 
 			Container.Release(cba);
 			Assert.True(b.Disposed);
@@ -196,7 +196,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 				Component.For<CBA>().LifeStyle.Transient);
 
 			var cba = Container.Resolve<CBA>();
-			var a = (ADisposable)cba.A;
+			var a = (ADisposable) cba.A;
 
 			Container.Release(cba);
 
@@ -226,7 +226,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 				Component.For<CBA>().LifeStyle.Transient);
 
 			var cba = Container.Resolve<CBA>();
-			var inner = ((CBADecorator)cba).Inner;
+			var inner = ((CBADecorator) cba).Inner;
 
 			Assert.AreNotSame(cba.A, inner.A);
 		}

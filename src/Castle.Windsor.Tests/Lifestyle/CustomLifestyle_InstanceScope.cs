@@ -21,40 +21,30 @@ namespace Castle.Windsor.Tests.Lifestyle
 {
 	public class CustomLifestyle_InstanceScope : IDisposable
 	{
-		[ThreadStatic]
-		private static Stack<CustomLifestyle_InstanceScope> localScopes;
-
-		private readonly IDictionary<ComponentModel, Burden> cache = new Dictionary<ComponentModel, Burden>();
+		[ThreadStatic] private static Stack<CustomLifestyle_InstanceScope> localScopes;
 
 		public CustomLifestyle_InstanceScope()
 		{
 			if (localScopes == null)
-			{
 				localScopes = new Stack<CustomLifestyle_InstanceScope>();
-			}
 			localScopes.Push(this);
 		}
 
-		public IDictionary<ComponentModel, Burden> Cache
-		{
-			get { return cache; }
-		}
-
-		public void Dispose()
-		{
-			localScopes.Pop();
-		}
+		public IDictionary<ComponentModel, Burden> Cache { get; } = new Dictionary<ComponentModel, Burden>();
 
 		public static CustomLifestyle_InstanceScope Current
 		{
 			get
 			{
 				if (localScopes == null || localScopes.Count == 0)
-				{
 					return null;
-				}
 				return localScopes.Peek();
 			}
+		}
+
+		public void Dispose()
+		{
+			localScopes.Pop();
 		}
 	}
 }

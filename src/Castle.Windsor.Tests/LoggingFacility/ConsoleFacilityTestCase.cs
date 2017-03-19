@@ -25,14 +25,10 @@ namespace Castle.Windsor.Tests.LoggingFacility
 	[TestFixture]
 	public class ConsoleFacilityTestCase : BaseTest
 	{
-		private IWindsorContainer container;
-		private StringWriter outWriter = new StringWriter();
-		private StringWriter errorWriter = new StringWriter();
-
 		[SetUp]
 		public void Setup()
 		{
-			container = base.CreateConfiguredContainer(LoggerImplementation.Console);
+			container = CreateConfiguredContainer(LoggerImplementation.Console);
 
 			outWriter.GetStringBuilder().Length = 0;
 			errorWriter.GetStringBuilder().Length = 0;
@@ -45,19 +41,21 @@ namespace Castle.Windsor.Tests.LoggingFacility
 		public void Teardown()
 		{
 			if (container != null)
-			{
 				container.Dispose();
-			}
 		}
+
+		private IWindsorContainer container;
+		private readonly StringWriter outWriter = new StringWriter();
+		private readonly StringWriter errorWriter = new StringWriter();
 
 		[Test]
 		public void SimpleTest()
 		{
 			container.Register(Component.For(typeof(SimpleLoggingComponent)).Named("component"));
-			SimpleLoggingComponent test = container.Resolve<SimpleLoggingComponent>("component");
+			var test = container.Resolve<SimpleLoggingComponent>("component");
 
-			String expectedLogOutput = String.Format("[Info] '{0}' Hello world" + Environment.NewLine, typeof(SimpleLoggingComponent).FullName);
-			String actualLogOutput = "";
+			var expectedLogOutput = string.Format("[Info] '{0}' Hello world" + Environment.NewLine, typeof(SimpleLoggingComponent).FullName);
+			var actualLogOutput = "";
 
 			test.DoSomething();
 

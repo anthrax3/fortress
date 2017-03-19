@@ -38,7 +38,7 @@ namespace Castle.Windsor.Tests.Registration
 						ServiceOverride.ForKey("first").Eq("common2"),
 						ServiceOverride.ForKey("services").Eq("common1", "common2")
 					)
-				);
+			);
 
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
@@ -63,7 +63,7 @@ namespace Castle.Windsor.Tests.Registration
 					.DependsOn(
 						ServiceOverride.ForKey("services").Eq<ICommon>("common1", "common2")
 					)
-				);
+			);
 
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
@@ -76,7 +76,7 @@ namespace Castle.Windsor.Tests.Registration
 		[Test]
 		public void AddComponent_ServiceOverridesDictionary_WorksFine()
 		{
-			var serviceOverrides = new Dictionary<string, string> { { "customer", "customer1" } };
+			var serviceOverrides = new Dictionary<string, string> {{"customer", "customer1"}};
 
 #pragma warning disable 0618 //call to obsolete method
 			Kernel.Register(
@@ -96,7 +96,7 @@ namespace Castle.Windsor.Tests.Registration
 						Property.ForKey("Age").Eq(100)
 					)
 					.ServiceOverrides(serviceOverrides)
-				);
+			);
 #pragma warning restore
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
 			Assert.IsNotNull(customer.CustomerBase);
@@ -126,7 +126,7 @@ namespace Castle.Windsor.Tests.Registration
 					)
 					.DependsOn(
 						ServiceOverride.ForKey("customer").Eq("customer1"))
-				);
+			);
 
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
 			Assert.IsNotNull(customer.CustomerBase);
@@ -157,7 +157,7 @@ namespace Castle.Windsor.Tests.Registration
 					.DependsOn(
 						ServiceOverride.ForKey("customer").Eq("customer1")
 					)
-				);
+			);
 
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
 			Assert.IsNotNull(customer.CustomerBase);
@@ -178,7 +178,7 @@ namespace Castle.Windsor.Tests.Registration
 					.ImplementedBy<EmptyServiceB>(),
 				Component.For<UsesIEmptyService>()
 					.DependsOn(Property.ForKey("emptyService").Is("customer2"))
-				);
+			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
 			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
@@ -194,7 +194,7 @@ namespace Castle.Windsor.Tests.Registration
 					.ImplementedBy<EmptyServiceB>(),
 				Component.For<UsesIEmptyService>()
 					.DependsOn(Property.ForKey("emptyService").Is<EmptyServiceB>())
-				);
+			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
 			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
@@ -210,7 +210,7 @@ namespace Castle.Windsor.Tests.Registration
 					.ImplementedBy<EmptyServiceB>(),
 				Component.For<UsesIEmptyService>()
 					.DependsOn(Property.ForKey("emptyService").Is(typeof(EmptyServiceB)))
-				);
+			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
 			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
@@ -228,7 +228,7 @@ namespace Castle.Windsor.Tests.Registration
 					.ImplementedBy<EmptyServiceB>(),
 				Component.For<UsesIEmptyService>()
 					.DependsOn(Property.ForKey<IEmptyService>().Is("customer2"))
-				);
+			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
 			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
@@ -242,7 +242,7 @@ namespace Castle.Windsor.Tests.Registration
 				Component.For<IEmptyService>().UsingFactoryMethod(() => new EmptyServiceB()).Named("b"),
 				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl3<>)).DependsOn(Property.ForKey<IEmptyService>().Is("B")));
 
-			var root = (GenericImpl3<int>)Kernel.Resolve<IGeneric<int>>();
+			var root = (GenericImpl3<int>) Kernel.Resolve<IGeneric<int>>();
 
 			Assert.IsInstanceOf<EmptyServiceB>(root.Value);
 		}

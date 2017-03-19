@@ -15,12 +15,9 @@
 
 // we do not support xml config on SL
 
-using System;
 using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.XmlFiles;
-using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
 using NUnit.Framework;
 
@@ -55,7 +52,7 @@ namespace Castle.Windsor.Tests.Installer
 				Configuration.FromAppConfig(),
 				Configuration.FromXml(Xml.Embedded("ignoreprop.xml")),
 				Configuration.FromXml(Xml.Embedded("robotwireconfig.xml"))
-				);
+			);
 
 			Assert.IsTrue(Container.Kernel.HasComponent(typeof(ICalcService)));
 			Assert.IsTrue(Container.Kernel.HasComponent("calcservice"));
@@ -63,20 +60,6 @@ namespace Castle.Windsor.Tests.Installer
 			Assert.IsTrue(Container.Kernel.HasComponent("server"));
 			Assert.IsTrue(Container.Kernel.HasComponent(typeof(Robot)));
 			Assert.IsTrue(Container.Kernel.HasComponent("robot"));
-		}
-
-		[Test]
-		public void InstallComponents_FromXmlFileWithEnvironment_ComponentsInstalled()
-		{
-			Container.Install(
-				Configuration.FromXmlFile(
-					ConfigHelper.ResolveConfigPath("Configuration2/env_config.xml"))
-					.Environment("devel")
-				);
-
-			var prop = Container.Resolve<ComponentWithStringProperty>("component");
-
-			Assert.AreEqual("John Doe", prop.Name);
 		}
 
 		[Test]
@@ -95,27 +78,25 @@ namespace Castle.Windsor.Tests.Installer
 			Container.Install(
 				Configuration.FromXml(Xml.Embedded("justConfiguration.xml")),
 				new Installer(c => c.Register(Component.For<ICamera>()
-				                              	.ImplementedBy<Camera>()
-				                              	.Named("camera"))));
+					.ImplementedBy<Camera>()
+					.Named("camera"))));
 
 			var camera = Container.Resolve<ICamera>();
 			Assert.AreEqual("from configuration", camera.Name);
 		}
-	}
 
-	internal class Installer : IWindsorInstaller
-	{
-		private readonly Action<IWindsorContainer> install;
-
-		public Installer(Action<IWindsorContainer> install)
+		[Test]
+		public void InstallComponents_FromXmlFileWithEnvironment_ComponentsInstalled()
 		{
-			this.install = install;
-		}
+			Container.Install(
+				Configuration.FromXmlFile(
+						ConfigHelper.ResolveConfigPath("Configuration2/env_config.xml"))
+					.Environment("devel")
+			);
 
-		public void Install(IWindsorContainer container, IConfigurationStore store)
-		{
-			install(container);
+			var prop = Container.Resolve<ComponentWithStringProperty>("component");
+
+			Assert.AreEqual("John Doe", prop.Name);
 		}
 	}
 }
-

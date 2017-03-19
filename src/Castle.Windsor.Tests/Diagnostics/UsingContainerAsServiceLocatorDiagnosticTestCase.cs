@@ -44,7 +44,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 		{
 			var generic = typeof(GenericWithCtor<>).MakeGenericType(type);
 			Container.Register(Component.For(generic),
-			                   Component.For<A>());
+				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
 			Assert.AreEqual(1, serviceLocators.Length);
@@ -60,7 +60,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 		{
 			var generic = typeof(GenericWithProperty<>).MakeGenericType(type);
 			Container.Register(Component.For(generic),
-			                   Component.For<A>());
+				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
 			Assert.AreEqual(1, serviceLocators.Length);
@@ -78,14 +78,14 @@ namespace Castle.Windsor.Tests.Diagnostics
 			var serviceLocators = diagnostic.Inspect();
 			Assert.IsEmpty(serviceLocators);
 		}
-		
+
 		[Test]
 		public void Ignores_lazy()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>()
-			                   	.ImplementedBy<LazyOfTComponentLoader>());
+				.ImplementedBy<LazyOfTComponentLoader>());
 			Container.Register(Component.For<B>(),
-			                   Component.For<A>());
+				Component.For<A>());
 
 			Container.Resolve<Lazy<B>>(); // to trigger lazy registration of lazy
 
@@ -97,7 +97,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 		public void Successfully_handles_cases_with_no_SL_usages()
 		{
 			Container.Register(Component.For<B>(),
-			                   Component.For<A>());
+				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
 			Assert.IsEmpty(serviceLocators);

@@ -29,14 +29,14 @@ namespace Castle.Windsor.Tests.Components
 			get { throw new NotImplementedException(); }
 		}
 
-		public int Sum(params int[] args)
-		{
-			return args.Sum();
-		}
-
 		public int Sum(int x, int y)
 		{
 			return x + y;
+		}
+
+		public int Sum(params int[] args)
+		{
+			return args.Sum();
 		}
 	}
 }

@@ -12,19 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml;
 using Castle.Windsor.Windsor.Configuration.Interpreters;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.XmlProcessor
 {
-	using System;
-	using System.IO;
-	using System.Text.RegularExpressions;
-	using System.Xml;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class XmlProcessorTestCase
 	{
+		public XmlDocument GetXmlDocument(string fileName)
+		{
+			var doc = new XmlDocument();
+
+			doc.Load(fileName);
+
+			return doc;
+		}
+
+		private string StripSpaces(string xml)
+		{
+			return Regex.Replace(xml, "\\s+", "", RegexOptions.Compiled);
+		}
+
+		private string GetFullPath()
+		{
+			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigHelper.ResolveConfigPath("XmlProcessor/TestFiles/"));
+		}
+
 		[Test]
 		public void InvalidFiles()
 		{
@@ -38,7 +56,6 @@ namespace Castle.Windsor.Tests.XmlProcessor
 
 				Assert.Throws(typeof(ConfigurationProcessingException), () =>
 					processor.Process(doc.DocumentElement));
-
 			}
 		}
 
@@ -48,13 +65,10 @@ namespace Castle.Windsor.Tests.XmlProcessor
 			var files = Directory.GetFiles(GetFullPath(), "*Test.xml");
 			Assert.IsNotEmpty(files);
 
-			foreach(var fileName in files)
+			foreach (var fileName in files)
 			{
-
 				if (fileName.EndsWith("PropertiesWithAttributesTest.xml"))
-				{
 					continue;
-				}
 
 				var doc = GetXmlDocument(fileName);
 
@@ -76,34 +90,11 @@ namespace Castle.Windsor.Tests.XmlProcessor
 
 					Assert.AreEqual(resultDocStr, resultStr);
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					throw new Exception("Error processing " + fileName, e);
 				}
 			}
 		}
-
-		#region Helpers
-
-		public XmlDocument GetXmlDocument(string fileName)
-		{
-			XmlDocument doc = new XmlDocument();
-
-			doc.Load(fileName);
-
-			return doc;
-		}
-
-		private string StripSpaces(String xml)
-		{
-			return Regex.Replace(xml, "\\s+", "", RegexOptions.Compiled);
-		}
-
-		private string GetFullPath()
-		{
-			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigHelper.ResolveConfigPath("XmlProcessor/TestFiles/"));
-		}
-
-		#endregion
 	}
 }

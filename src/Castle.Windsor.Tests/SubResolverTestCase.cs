@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
 using Castle.Windsor.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;
@@ -42,31 +40,6 @@ namespace Castle.Windsor.Tests
 			kernel.Register(Component.For<A>());
 
 			Assert.AreEqual(HandlerState.Valid, handler.CurrentState);
-		}
-	}
-
-	public class Foo
-	{
-		private int bar;
-
-		public Foo(int bar)
-		{
-			this.bar = bar;
-		}
-	}
-
-	public class FooBarResolver : ISubDependencyResolver
-	{
-		public int? Result;
-
-		public bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
-		{
-			return Result != null;
-		}
-
-		public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
-		{
-			return Result.Value;
 		}
 	}
 }

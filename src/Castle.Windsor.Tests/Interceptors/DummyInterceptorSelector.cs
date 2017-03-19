@@ -12,25 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Windsor.Core.Internal;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	using System;
-	using System.Reflection;
-
 	public class DummyInterceptorSelector : IInterceptorSelector
 	{
 		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
 		{
 			if (type.Is<ICatalog>())
-			{
 				if (method.Name == "AddItem")
-				{
 					return interceptors;
-				}
-			}
 			return null;
 		}
 	}

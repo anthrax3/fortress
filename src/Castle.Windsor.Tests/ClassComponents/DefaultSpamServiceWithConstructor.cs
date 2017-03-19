@@ -16,23 +16,14 @@ namespace Castle.Windsor.Tests.ClassComponents
 {
 	public class DefaultSpamServiceWithConstructor
 	{
-		private readonly DefaultMailSenderService mailSender;
-		private readonly DefaultTemplateEngine templateEngine;
-
 		public DefaultSpamServiceWithConstructor(DefaultMailSenderService mailsender, DefaultTemplateEngine templateEngine)
 		{
-			mailSender = mailsender;
-			this.templateEngine = templateEngine;
+			MailSender = mailsender;
+			TemplateEngine = templateEngine;
 		}
 
-		public DefaultMailSenderService MailSender
-		{
-			get { return mailSender; }
-		}
+		public DefaultMailSenderService MailSender { get; }
 
-		public DefaultTemplateEngine TemplateEngine
-		{
-			get { return templateEngine; }
-		}
+		public DefaultTemplateEngine TemplateEngine { get; }
 	}
 }

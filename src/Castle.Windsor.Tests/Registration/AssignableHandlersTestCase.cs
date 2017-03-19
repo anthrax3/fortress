@@ -25,7 +25,7 @@ namespace Castle.Windsor.Tests.Registration
 		public void Ignores_generic_components_where_generic_constrants_are_violated()
 		{
 			Kernel.Register(Component.For<CustomerValidator>(),
-			                Component.For(typeof(CustomerChainValidator<>)));
+				Component.For(typeof(CustomerChainValidator<>)));
 
 			var handlers = Kernel.GetAssignableHandlers(typeof(IValidator<CustomerImpl>));
 

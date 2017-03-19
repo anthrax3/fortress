@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 namespace Castle.Windsor.Tests.Components
 {
 	public class CameraService : ICameraService
@@ -22,7 +20,7 @@ namespace Castle.Windsor.Tests.Components
 		{
 		}
 
-		public ICamera Add(String name, String ipNumber)
+		public ICamera Add(string name, string ipNumber)
 		{
 			return new Camera();
 		}

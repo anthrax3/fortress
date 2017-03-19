@@ -81,8 +81,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_cumulate_services()
 		{
 			Kernel.Register(Classes.FromThisAssembly().Where(t => t == typeof(TwoInterfacesImpl))
-			                	.WithService.AllInterfaces()
-			                	.WithService.Self());
+				.WithService.AllInterfaces()
+				.WithService.Self());
 			var services = Kernel.GetAssignableHandlers(typeof(object)).Single().ComponentModel.Services.ToArray();
 			Assert.AreEqual(3, services.Length);
 			Assert.True(services.Any(s => s == typeof(ICommon)));
@@ -94,8 +94,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_cumulate_services_without_duplication()
 		{
 			Kernel.Register(Classes.FromThisAssembly().Where(t => t == typeof(TwoInterfacesImpl))
-			                	.WithService.AllInterfaces()
-			                	.WithService.FirstInterface());
+				.WithService.AllInterfaces()
+				.WithService.FirstInterface());
 			var handlers = Kernel.GetAssignableHandlers(typeof(object));
 			Assert.AreEqual(1, handlers.Length);
 			var handler = handlers.Single();

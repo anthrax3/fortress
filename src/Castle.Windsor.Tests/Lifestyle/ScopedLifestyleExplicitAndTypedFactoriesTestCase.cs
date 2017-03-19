@@ -33,7 +33,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Can_obtain_scoped_component_via_factory()
 		{
 			Container.Register(Component.For<UsesDisposableFooDelegate>().LifestyleTransient(),
-			                   Component.For<DisposableFoo>().LifestyleScoped());
+				Component.For<DisposableFoo>().LifestyleScoped());
 
 			var instance = Container.Resolve<UsesDisposableFooDelegate>();
 			using (Container.BeginScope())
@@ -46,8 +46,8 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Scoped_component_via_factory_and_outsideinstances_reused_properly()
 		{
 			Container.Register(Component.For<UsesFooAndDelegate>().LifeStyle.Transient,
-			                   Component.For<Facilities.TypedFactory.Delegates.Foo>().LifeStyle.Scoped()
-			                   	.DependsOn(Parameter.ForKey("number").Eq("1")));
+				Component.For<Facilities.TypedFactory.Delegates.Foo>().LifeStyle.Scoped()
+					.DependsOn(Parameter.ForKey("number").Eq("1")));
 			using (Container.BeginScope())
 			{
 				var instance = Container.Resolve<UsesFooAndDelegate>();
@@ -62,7 +62,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Scoped_component_via_factory_instances_reused_properly()
 		{
 			Container.Register(Component.For<UsesDisposableFooDelegate>().LifeStyle.Transient,
-			                   Component.For<DisposableFoo>().LifestyleScoped());
+				Component.For<DisposableFoo>().LifestyleScoped());
 			using (Container.BeginScope())
 			{
 				var instance = Container.Resolve<UsesDisposableFooDelegate>();
@@ -78,7 +78,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Scoped_component_via_factory_reused_properly_across_factories()
 		{
 			Container.Register(Component.For<UsesTwoFooDelegates>().LifeStyle.Transient,
-			                   Component.For<Facilities.TypedFactory.Delegates.Foo>().LifestyleScoped());
+				Component.For<Facilities.TypedFactory.Delegates.Foo>().LifestyleScoped());
 
 			var instance = Container.Resolve<UsesTwoFooDelegates>();
 			using (Container.BeginScope())

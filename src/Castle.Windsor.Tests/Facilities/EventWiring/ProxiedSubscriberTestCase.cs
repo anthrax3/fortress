@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests.Facilities.EventWiring
 			container = new WindsorContainer();
 
 			store = (IConfigurationStore)
-			        container.Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey);
+				container.Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey);
 		}
 
 		protected WindsorContainer container;

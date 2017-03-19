@@ -14,15 +14,13 @@
 
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Windsor;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class ConfigurationForwardedTypesTestCase
 	{
-
 		[SetUp]
 		public void SetUp()
 		{

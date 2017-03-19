@@ -16,16 +16,11 @@ namespace Castle.Windsor.Tests.Components
 {
 	public class AlarmGenerator
 	{
-		private readonly IAlarmSender sender;
-
 		public AlarmGenerator(IAlarmSender sender)
 		{
-			this.sender = sender;
+			Sender = sender;
 		}
 
-		public IAlarmSender Sender
-		{
-			get { return sender; }
-		}
+		public IAlarmSender Sender { get; }
 	}
 }

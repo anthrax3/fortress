@@ -15,11 +15,11 @@
 
 using Castle.Windsor.Windsor;
 using Castle.Windsor.Windsor.Installer;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Configuration2
 {
 	using Config = Configuration;
-	using NUnit.Framework;
 
 	[TestFixture(Description = "Based on http://theburningmonk.com/2010/08/castle-windsor-tips-say-no-to-private-setter/")]
 	public class PrivateSettersTestCase
@@ -34,23 +34,6 @@ namespace Castle.Windsor.Tests.Configuration2
 
 			var item = container.Resolve<IMyConfiguration>();
 			Assert.AreEqual(1234, item.Port);
-
 		}
-	}
-
-	public interface IMyConfiguration
-	{
-		int Port { get; }
-	}
-
-	public class MyConfiguration : IMyConfiguration
-	{
-		public MyConfiguration(int port)
-		{
-			Port = port;
-		}
-
-		public int Port { get; private set; }
 	}
 }
-

@@ -12,52 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using Castle.Windsor.Core;
+using NUnit.Framework;
 
 namespace Castle.Windsor.Tests
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Castle.Core;
-	using NUnit.Framework;
-
 	[TestFixture]
 	public class DisposeOrderTestFixture
 	{
-		[Test]
-		public void Dictionary_enumerates_from_oldest_to_latest()
-		{
-			var expected1 = new[] { 1, 2, 4, 3 };
-
-			var dictionary1 = new Dictionary<int, object>();
-			foreach (var key in expected1)
-			{
-				dictionary1[key] = new object();
-			}
-			var index = 0;
-			foreach (var keyValuePair in dictionary1)
-			{
-				Assert.AreEqual(expected1[index], keyValuePair.Key);
-				index++;
-			}
-
-			var expected2 = new[] { 4, 1, 2, 3 };
-
-			var dictionary2 = new Dictionary<int, object>();
-			foreach (var key in expected2)
-			{
-				dictionary2[key] = new object();
-			}
-
-			index = 0;
-			foreach (var keyValuePair in dictionary2)
-			{
-				Assert.AreEqual(expected2[index], keyValuePair.Key);
-				index++;
-			}
-		}
-
 		private interface IMyComponent : IInitializable, IDisposable
 		{
 			bool IsInitialized { get; }
@@ -102,17 +66,13 @@ namespace Castle.Windsor.Tests
 				get
 				{
 					if (IsInitialized == false)
-					{
 						throw new Exception("Service must be initialized !!!");
-					}
 					return inUse;
 				}
 				set
 				{
 					if (IsInitialized == false)
-					{
 						throw new Exception("Service must be initialized !!!");
-					}
 					inUse = value;
 				}
 			}
@@ -122,15 +82,42 @@ namespace Castle.Windsor.Tests
 			public void Dispose()
 			{
 				if (IsInUse)
-				{
 					throw new Exception("Cannot dispose : service is still in use !!!");
-				}
 				IsInitialized = false;
 			}
 
 			public void Initialize()
 			{
 				IsInitialized = true;
+			}
+		}
+
+		[Test]
+		public void Dictionary_enumerates_from_oldest_to_latest()
+		{
+			var expected1 = new[] {1, 2, 4, 3};
+
+			var dictionary1 = new Dictionary<int, object>();
+			foreach (var key in expected1)
+				dictionary1[key] = new object();
+			var index = 0;
+			foreach (var keyValuePair in dictionary1)
+			{
+				Assert.AreEqual(expected1[index], keyValuePair.Key);
+				index++;
+			}
+
+			var expected2 = new[] {4, 1, 2, 3};
+
+			var dictionary2 = new Dictionary<int, object>();
+			foreach (var key in expected2)
+				dictionary2[key] = new object();
+
+			index = 0;
+			foreach (var keyValuePair in dictionary2)
+			{
+				Assert.AreEqual(expected2[index], keyValuePair.Key);
+				index++;
 			}
 		}
 	}

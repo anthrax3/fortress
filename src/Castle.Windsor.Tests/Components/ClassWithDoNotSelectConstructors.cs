@@ -17,15 +17,17 @@ using Castle.Windsor.Core;
 namespace Castle.Windsor.Tests.Components
 {
 	public class ClassWithDoNotSelectConstructors
-    {
-        public ClassWithDoNotSelectConstructors() { }
-        
-        [DoNotSelect]
-        public ClassWithDoNotSelectConstructors(string dependency)
-        {
-            Dependency = dependency;
-        }
+	{
+		public ClassWithDoNotSelectConstructors()
+		{
+		}
 
-        public string Dependency { get; private set; }
-    }
+		[DoNotSelect]
+		public ClassWithDoNotSelectConstructors(string dependency)
+		{
+			Dependency = dependency;
+		}
+
+		public string Dependency { get; private set; }
+	}
 }

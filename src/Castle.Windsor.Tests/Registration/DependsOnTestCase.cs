@@ -26,9 +26,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_configuration_parameters_from_appSettings_inline()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(
-					                   Dependency.OnAppSettingsValue("arg1"),
-					                   Dependency.OnAppSettingsValue("arg2", "number")));
+				.DependsOn(
+					Dependency.OnAppSettingsValue("arg1"),
+					Dependency.OnAppSettingsValue("arg2", "number")));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 
@@ -63,7 +63,7 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_configuration_parameters_from_dynamic_parameters_inline()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn((k, d) => d.InsertAnonymous(new { arg1 = "a string", arg2 = 42 })));
+				.DependsOn((k, d) => d.InsertAnonymous(new {arg1 = "a string", arg2 = 42})));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 
@@ -75,9 +75,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_configuration_parameters_inline()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(
-					                   Dependency.OnConfigValue("arg1", "a string"),
-					                   Dependency.OnConfigValue("arg2", "42")));
+				.DependsOn(
+					Dependency.OnConfigValue("arg1", "a string"),
+					Dependency.OnConfigValue("arg2", "42")));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 
@@ -89,9 +89,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_named_inline_dependency()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(
-					                   Dependency.OnValue("arg1", "a string"),
-					                   Dependency.OnValue("arg2", 42)));
+				.DependsOn(
+					Dependency.OnValue("arg1", "a string"),
+					Dependency.OnValue("arg2", 42)));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 
@@ -269,9 +269,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_typed_inline_dependency()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(
-					                   Dependency.OnValue(typeof(string), "a string"),
-					                   Dependency.OnValue(typeof(int), 42)));
+				.DependsOn(
+					Dependency.OnValue(typeof(string), "a string"),
+					Dependency.OnValue(typeof(int), 42)));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 
@@ -283,9 +283,9 @@ namespace Castle.Windsor.Tests.Registration
 		public void Can_register_typed_inline_dependency_generic()
 		{
 			Container.Register(Component.For<ClassWithArguments>()
-				                   .DependsOn(
-					                   Dependency.OnValue<string>("a string"),
-					                   Dependency.OnValue<int>(42)));
+				.DependsOn(
+					Dependency.OnValue<string>("a string"),
+					Dependency.OnValue<int>(42)));
 
 			var obj = Container.Resolve<ClassWithArguments>();
 

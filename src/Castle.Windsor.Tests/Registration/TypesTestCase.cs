@@ -27,8 +27,8 @@ namespace Castle.Windsor.Tests.Registration
 		public void Based_on_interface_types_registered()
 		{
 			Container.Register(Types.FromThisAssembly()
-			                   	.BasedOn(typeof(ICommon))
-				);
+				.BasedOn(typeof(ICommon))
+			);
 
 			var handlers = Kernel.GetHandlers(typeof(ICommon));
 			Assert.AreEqual(1, handlers.Length);
@@ -46,7 +46,7 @@ namespace Castle.Windsor.Tests.Registration
 					.BasedOn(typeof(ISimpleService))
 					.If(t => t.IsInterface)
 					.Configure(t => t.Interceptors<ReturnDefaultInterceptor>())
-				);
+			);
 
 			var common = Container.Resolve<ISimpleService>();
 			common.Operation();

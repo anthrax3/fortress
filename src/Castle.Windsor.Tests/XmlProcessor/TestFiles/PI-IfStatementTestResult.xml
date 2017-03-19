@@ -4,8 +4,8 @@
 			<item> some value </item>
 			<item2><![CDATA[ some <&> value2 ]]></item2>
 		</component>
-		<component id="qa"/>
-		<component id="notprod"/>
-		<component id="default"/>
-	</components>		
+		<component id="qa" />
+		<component id="notprod" />
+		<component id="default" />
+	</components>
 </configuration>
