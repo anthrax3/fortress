@@ -5,7 +5,7 @@ A leaner meaner version of Castle Windsor
 
 | Build |
 |---------|
-| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress.windsor"><img src="https://ci.appveyor.com/api/projects/status/843yxnhrj4eq5ef5/branch/master?svg=true" /></a> |
+| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress.windsor"><img src="https://ci.appveyor.com/api/projects/status/tbi049b1y5fbjnt8/branch/master?svg=true" /></a> |
 
 
 ## Castle Windsor
