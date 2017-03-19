@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
 using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Facilities.EventWiring
 {
-	using System;
-	using System.Reflection;
-
 	public static class EventWiringRegistrationExtensions
 	{
 		public static ComponentRegistration<TPublisher> PublishEvent<TPublisher>(this ComponentRegistration<TPublisher> registration,
-		                                                                         Action<TPublisher> eventSubscribtion,
-		                                                                         Action<EventSubscribers> toSubscribers)
+			Action<TPublisher> eventSubscribtion,
+			Action<EventSubscribers> toSubscribers)
 			where TPublisher : class
 		{
 			var eventName = GetEventName(eventSubscribtion);
@@ -35,7 +34,7 @@ namespace Castle.Facilities.EventWiring
 		}
 
 		public static ComponentRegistration PublishEvent<TPublisher>(this ComponentRegistration registration, Action<TPublisher> eventSubscribtion,
-		                                                             Action<EventSubscribers> toSubscribers)
+			Action<EventSubscribers> toSubscribers)
 		{
 			var eventName = GetEventName(eventSubscribtion);
 
@@ -47,7 +46,7 @@ namespace Castle.Facilities.EventWiring
 		}
 
 		public static ComponentRegistration<TPublisher> PublishEvent<TPublisher>(this ComponentRegistration<TPublisher> registration, string eventName,
-		                                                                         Action<EventSubscribers> toSubscribers)
+			Action<EventSubscribers> toSubscribers)
 			where TPublisher : class
 		{
 			var subscribers = new EventSubscribers();
@@ -72,9 +71,7 @@ namespace Castle.Facilities.EventWiring
 			{
 				var calledMethod = new NaiveMethodNameExtractor(eventSubscribtion).CalledMethod;
 				if (calledMethod == null || (eventName = ExtractEventName(calledMethod)) == null)
-				{
 					throw new InvalidOperationException();
-				}
 			}
 			catch (Exception)
 			{
@@ -89,13 +86,9 @@ namespace Castle.Facilities.EventWiring
 		{
 			var methodName = calledMethod.Name;
 			if (methodName.StartsWith("add_"))
-			{
 				return methodName.Substring("add_".Length);
-			}
 			if (methodName.StartsWith("remove_"))
-			{
 				return methodName.Substring("remove_".Length);
-			}
 			return null;
 		}
 	}

@@ -20,8 +20,6 @@ using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Facilities.EventWiring
 {
-	using Castle.Core;
-
 	public class EventWiringDescriptor : IComponentModelDescriptor
 	{
 		private readonly string eventName;
@@ -52,7 +50,7 @@ namespace Castle.Facilities.EventWiring
 
 		private string EventHandlerMethodName(EventSubscriber eventSubscriber)
 		{
-			return eventSubscriber.EventHandler ?? ("On" + eventName);
+			return eventSubscriber.EventHandler ?? "On" + eventName;
 		}
 
 		private IConfiguration GetSubscribersNode(IConfiguration configuration)

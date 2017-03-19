@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.ComponentModel;
 using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.Facilities;
-using Castle.Windsor.MicroKernel.Registration;
+using Component = Castle.Windsor.MicroKernel.Registration.Component;
 
 namespace Castle.Facilities.FactorySupport
 {
-	using System;
-	using System.ComponentModel;
-
-	using Castle.Core;
-	using Component = Component;
-
 	public class FactorySupportFacility : AbstractFacility
 	{
 		[Obsolete("Use 'UsingFactoryMethod' method in fluent registration API")]
@@ -73,37 +69,33 @@ namespace Castle.Facilities.FactorySupport
 
 			EnsureFactoryIsRegistered(factoryId, factoryType);
 
-			var serviceModel = Kernel.ComponentModelBuilder.BuildModel(new ComponentName(serviceKey, true), new[] { serviceType }, factoryType, null);
+			var serviceModel = Kernel.ComponentModelBuilder.BuildModel(new ComponentName(serviceKey, true), new[] {serviceType}, factoryType, null);
 			cfg.Attributes["factoryId"] = factoryId;
 			serviceModel.Configuration = cfg;
-			((IKernelInternal)Kernel).AddCustomComponent(serviceModel);
+			((IKernelInternal) Kernel).AddCustomComponent(serviceModel);
 		}
 
 		private void EnsureFactoryIsRegistered(string factoryId, Type factoryType)
 		{
 			if (!Kernel.HasComponent(factoryType))
-			{
 				Kernel.Register(Component.For(factoryType).Named(factoryId));
-			}
 		}
 
 		private void Kernel_ComponentModelCreated(ComponentModel model)
 		{
 			if (model.Configuration == null)
-			{
 				return;
-			}
 
 			var instanceAccessor = model.Configuration.Attributes["instance-accessor"];
 			var factoryId = model.Configuration.Attributes["factoryId"];
 			var factoryCreate = model.Configuration.Attributes["factoryCreate"];
 
-			if ((factoryId != null && factoryCreate == null) ||
-			    (factoryId == null && factoryCreate != null))
+			if (factoryId != null && factoryCreate == null ||
+			    factoryId == null && factoryCreate != null)
 			{
-				var message = String.Format("When a factoryId is specified, you must specify " +
+				var message = string.Format("When a factoryId is specified, you must specify " +
 				                            "the factoryCreate (which is the method to be called) as well - component {0}",
-				                            model.Name);
+					model.Name);
 
 				throw new FacilityException(message);
 			}

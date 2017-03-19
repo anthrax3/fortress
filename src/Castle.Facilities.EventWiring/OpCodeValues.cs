@@ -22,6 +22,6 @@ namespace Castle.Facilities.EventWiring
 		Ldnull = 0x0014,
 		Call = 0x0028,
 		Ret = 0x002A,
-		Callvirt = 0x006F,
+		Callvirt = 0x006F
 	}
 }

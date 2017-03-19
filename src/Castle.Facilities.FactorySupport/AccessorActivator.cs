@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Reflection;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
 using Castle.Windsor.MicroKernel.ComponentActivator;
@@ -20,11 +22,6 @@ using Castle.Windsor.MicroKernel.Facilities;
 
 namespace Castle.Facilities.FactorySupport
 {
-	using System;
-	using System.Reflection;
-
-	using Castle.Core;
-
 	public class AccessorActivator : DefaultComponentActivator, IDependencyAwareActivator
 	{
 		public AccessorActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)
@@ -44,14 +41,14 @@ namespace Castle.Facilities.FactorySupport
 
 		protected override object Instantiate(CreationContext context)
 		{
-			var accessor = (String)Model.ExtendedProperties["instance.accessor"];
+			var accessor = (string) Model.ExtendedProperties["instance.accessor"];
 
 			var pi = Model.Implementation.GetProperty(
 				accessor, BindingFlags.Public | BindingFlags.Static);
 
 			if (pi == null)
 			{
-				var message = String.Format("You have specified an instance accessor " +
+				var message = string.Format("You have specified an instance accessor " +
 				                            "for the component '{0}' {1} which could not be found (no public " +
 				                            "static property has this name)", Model.Name, Model.Implementation.FullName);
 				throw new FacilityException(message);
@@ -59,9 +56,9 @@ namespace Castle.Facilities.FactorySupport
 
 			if (!pi.CanRead)
 			{
-				var message = String.Format("You have specified an instance accessor " +
+				var message = string.Format("You have specified an instance accessor " +
 				                            "for the component '{0}' {1} which is write-only",
-				                            Model.Name, Model.Implementation.FullName);
+					Model.Name, Model.Implementation.FullName);
 				throw new FacilityException(message);
 			}
 
@@ -71,9 +68,9 @@ namespace Castle.Facilities.FactorySupport
 			}
 			catch (Exception ex)
 			{
-				var message = String.Format("The instance accessor " +
+				var message = string.Format("The instance accessor " +
 				                            "invocation failed for '{0}' {1}",
-				                            Model.Name, Model.Implementation.FullName);
+					Model.Name, Model.Implementation.FullName);
 				throw new FacilityException(message, ex);
 			}
 		}

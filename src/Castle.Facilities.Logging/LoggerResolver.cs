@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Diagnostics;
 using Castle.Core.Core.Logging;
 using Castle.Windsor.Core;
 using Castle.Windsor.MicroKernel;
@@ -19,11 +21,6 @@ using Castle.Windsor.MicroKernel.Context;
 
 namespace Castle.Facilities.Logging
 {
-	using System;
-	using System.Diagnostics;
-
-	using Castle.Core;
-
 	public class LoggerResolver : ISubDependencyResolver
 	{
 		private readonly IExtendedLoggerFactory extendedLoggerFactory;
@@ -33,9 +30,7 @@ namespace Castle.Facilities.Logging
 		public LoggerResolver(ILoggerFactory loggerFactory)
 		{
 			if (loggerFactory == null)
-			{
 				throw new ArgumentNullException("loggerFactory");
-			}
 
 			this.loggerFactory = loggerFactory;
 		}
@@ -43,9 +38,7 @@ namespace Castle.Facilities.Logging
 		public LoggerResolver(IExtendedLoggerFactory extendedLoggerFactory)
 		{
 			if (extendedLoggerFactory == null)
-			{
 				throw new ArgumentNullException("extendedLoggerFactory");
-			}
 
 			this.extendedLoggerFactory = extendedLoggerFactory;
 		}
@@ -55,7 +48,7 @@ namespace Castle.Facilities.Logging
 			logName = name;
 		}
 
-		public LoggerResolver(IExtendedLoggerFactory extendedLoggerFactory, string name) : this (extendedLoggerFactory)
+		public LoggerResolver(IExtendedLoggerFactory extendedLoggerFactory, string name) : this(extendedLoggerFactory)
 		{
 			logName = name;
 		}
@@ -69,14 +62,12 @@ namespace Castle.Facilities.Logging
 		{
 			Debug.Assert(CanResolve(context, parentResolver, model, dependency));
 			if (extendedLoggerFactory != null)
-			{
-				return string.IsNullOrEmpty(logName) 
-					? extendedLoggerFactory.Create(model.Implementation) 
+				return string.IsNullOrEmpty(logName)
+					? extendedLoggerFactory.Create(model.Implementation)
 					: extendedLoggerFactory.Create(logName).CreateChildLogger(model.Implementation.FullName);
-			}
 
 			Debug.Assert(loggerFactory != null);
-			return string.IsNullOrEmpty(logName) 
+			return string.IsNullOrEmpty(logName)
 				? loggerFactory.Create(model.Implementation)
 				: loggerFactory.Create(logName).CreateChildLogger(model.Implementation.FullName);
 		}

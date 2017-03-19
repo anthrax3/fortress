@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Castle.Windsor.Core;
 
 namespace Castle.Facilities.EventWiring
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-
-	using Castle.Core;
-
 	public class EventSubscribers
 	{
 		private readonly List<EventSubscriber> subscribers = new List<EventSubscriber>(3);

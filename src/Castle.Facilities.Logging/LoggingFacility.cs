@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Diagnostics;
+using System.Reflection;
 using Castle.Core.Core.Logging;
 using Castle.Windsor.Core.Internal;
 using Castle.Windsor.MicroKernel;
@@ -21,42 +24,39 @@ using Castle.Windsor.MicroKernel.SubSystems.Conversion;
 
 namespace Castle.Facilities.Logging
 {
-	using System;
-	using System.Diagnostics;
-	using System.Reflection;
-
 	public class LoggingFacility : AbstractFacility
 	{
-		private static readonly String ExtendedLog4NetLoggerFactoryTypeName =
+		private static readonly string ExtendedLog4NetLoggerFactoryTypeName =
 			"Castle.Services.Logging.Log4netIntegration.ExtendedLog4netFactory," +
 			"Castle.Services.Logging.Log4netIntegration,Version=3.3.0.0, Culture=neutral," +
 			"PublicKeyToken=407dd0808d44fbdc";
 
-		private static readonly String ExtendedNLogLoggerFactoryTypeName =
+		private static readonly string ExtendedNLogLoggerFactoryTypeName =
 			"Castle.Services.Logging.NLogIntegration.ExtendedNLogFactory," +
 			"Castle.Services.Logging.NLogIntegration,Version=3.3.0.0, Culture=neutral," +
 			"PublicKeyToken=407dd0808d44fbdc";
 
-		private static readonly String Log4NetLoggerFactoryTypeName =
+		private static readonly string Log4NetLoggerFactoryTypeName =
 			"Castle.Services.Logging.Log4netIntegration.Log4netFactory," +
 			"Castle.Services.Logging.Log4netIntegration,Version=3.3.0.0, Culture=neutral," +
 			"PublicKeyToken=407dd0808d44fbdc";
 
-		private static readonly String NLogLoggerFactoryTypeName =
+		private static readonly string NLogLoggerFactoryTypeName =
 			"Castle.Services.Logging.NLogIntegration.NLogFactory," +
 			"Castle.Services.Logging.NLogIntegration,Version=3.3.0.0, Culture=neutral," +
 			"PublicKeyToken=407dd0808d44fbdc";
+
 		private readonly string customLoggerFactoryTypeName;
 		private string configFileName;
+		private bool configuredExternally;
 
 		private ITypeConverter converter;
+		private ILoggerFactory loggerFactory;
 
 		private LoggerImplementation? loggerImplementation;
-		private Type loggingFactoryType;
 		private LoggerLevel? loggerLevel;
-		private ILoggerFactory loggerFactory;
+		private Type loggingFactoryType;
 		private string logName;
-		private bool configuredExternally;
 
 		public LoggingFacility()
 		{
@@ -85,9 +85,7 @@ namespace Castle.Facilities.Logging
 		public LoggingFacility LogUsing(LoggerImplementation loggingApi)
 		{
 			if (loggingApi == LoggerImplementation.Custom)
-			{
 				throw new FacilityException("To use custom logger use LogUsing<TCUstomLoggerFactory>() method.");
-			}
 			loggerImplementation = loggingApi;
 			return this;
 		}
@@ -116,9 +114,7 @@ namespace Castle.Facilities.Logging
 		public LoggingFacility WithConfig(string configFile)
 		{
 			if (configFile == null)
-			{
 				throw new ArgumentNullException("configFile");
-			}
 
 			configFileName = configFile;
 			return this;
@@ -166,9 +162,7 @@ namespace Castle.Facilities.Logging
 		{
 			SetUpTypeConverter();
 			if (loggerFactory == null)
-			{
 				loggerFactory = ReadConfigurationAndCreateLoggerFactory();
-			}
 			RegisterLoggerFactory(loggerFactory);
 			RegisterDefaultILogger(loggerFactory);
 			RegisterSubResolver(loggerFactory);
@@ -186,9 +180,7 @@ namespace Castle.Facilities.Logging
 		private Type EnsureIsValidLoggerFactoryType(Type loggerFactoryType)
 		{
 			if (loggerFactoryType.Is<ILoggerFactory>() || loggerFactoryType.Is<IExtendedLoggerFactory>())
-			{
 				return loggerFactoryType;
-			}
 			throw new FacilityException("The specified type '" + loggerFactoryType +
 			                            "' does not implement either ILoggerFactory or IExtendedLoggerFactory.");
 		}
@@ -196,14 +188,10 @@ namespace Castle.Facilities.Logging
 		private string GetConfigFile()
 		{
 			if (configFileName != null)
-			{
 				return configFileName;
-			}
 
 			if (FacilityConfig != null)
-			{
 				return FacilityConfig.Attributes["configFile"];
-			}
 			return null;
 		}
 
@@ -219,52 +207,40 @@ namespace Castle.Facilities.Logging
 			ConstructorInfo ctor;
 			if (IsConfiguredExternally())
 			{
-				ctor = loggerFactoryType.GetConstructor(flags, null, new[] { typeof(bool) }, null);
+				ctor = loggerFactoryType.GetConstructor(flags, null, new[] {typeof(bool)}, null);
 				if (ctor != null)
-				{
-					return new object[] { true };
-				}
+					return new object[] {true};
 			}
 			var configFile = GetConfigFile();
 			if (configFile != null)
 			{
-				ctor = loggerFactoryType.GetConstructor(flags, null, new[] { typeof(string) }, null);
+				ctor = loggerFactoryType.GetConstructor(flags, null, new[] {typeof(string)}, null);
 				if (ctor != null)
-				{
-					return new object[] { configFile };
-				}
+					return new object[] {configFile};
 			}
 
 			var level = GetLoggingLevel();
 			if (level != null)
 			{
-				ctor = loggerFactoryType.GetConstructor(flags, null, new[] { typeof(LoggerLevel) }, null);
+				ctor = loggerFactoryType.GetConstructor(flags, null, new[] {typeof(LoggerLevel)}, null);
 				if (ctor != null)
-				{
-					return new object[] { level.Value };
-				}
+					return new object[] {level.Value};
 			}
 			ctor = loggerFactoryType.GetConstructor(flags, null, Type.EmptyTypes, null);
 			if (ctor != null)
-			{
 				return new object[0];
-			}
 			throw new FacilityException("No support constructor found for logging type " + loggerFactoryType);
 		}
 
 		private bool IsConfiguredExternally()
 		{
 			if (configuredExternally)
-			{
 				return true;
-			}
 			if (FacilityConfig != null)
 			{
 				var value = FacilityConfig.Attributes["configuredExternally"];
 				if (value != null)
-				{
 					return converter.PerformConversion<bool>(value);
-				}
 			}
 			return false;
 		}
@@ -272,16 +248,12 @@ namespace Castle.Facilities.Logging
 		private LoggerLevel? GetLoggingLevel()
 		{
 			if (loggerLevel.HasValue)
-			{
 				return loggerLevel;
-			}
 			if (FacilityConfig != null)
 			{
 				var level = FacilityConfig.Attributes["loggerLevel"];
 				if (level != null)
-				{
 					return converter.PerformConversion<LoggerLevel>(level);
-				}
 			}
 			return null;
 		}
@@ -309,9 +281,9 @@ namespace Castle.Facilities.Logging
 				case LoggerImplementation.ExtendedNLog:
 					return converter.PerformConversion<Type>(ExtendedNLogLoggerFactoryTypeName);
 				default:
-					{
-						throw new FacilityException("An invalid loggingApi was specified: " + loggerApi);
-					}
+				{
+					throw new FacilityException("An invalid loggingApi was specified: " + loggerApi);
+				}
 			}
 		}
 
@@ -328,18 +300,12 @@ namespace Castle.Facilities.Logging
 			{
 				var customLoggerType = FacilityConfig.Attributes["customLoggerFactory"];
 				if (string.IsNullOrEmpty(customLoggerType) == false)
-				{
 					return converter.PerformConversion<Type>(customLoggerType);
-				}
 			}
 			if (customLoggerFactoryTypeName != null)
-			{
 				return converter.PerformConversion<Type>(customLoggerFactoryTypeName);
-			}
 			if (loggingFactoryType != null)
-			{
 				return loggingFactoryType;
-			}
 			var message = "If you specify loggingApi='custom' " +
 			              "then you must use the attribute customLoggerFactory to inform the " +
 			              "type name of the custom logger factory";
@@ -353,9 +319,7 @@ namespace Castle.Facilities.Logging
 			{
 				var configLoggingApi = FacilityConfig.Attributes["loggingApi"];
 				if (string.IsNullOrEmpty(configLoggingApi) == false)
-				{
 					return converter.PerformConversion<LoggerImplementation>(configLoggingApi);
-				}
 			}
 			return loggerImplementation.GetValueOrDefault(LoggerImplementation.Console);
 		}
@@ -366,7 +330,7 @@ namespace Castle.Facilities.Logging
 			{
 				var defaultLogger = ((IExtendedLoggerFactory) factory).Create(logName ?? "Default");
 				Kernel.Register(Component.For<IExtendedLogger>().NamedAutomatically("ilogger.default").Instance(defaultLogger),
-				                Component.For<ILogger>().NamedAutomatically("ilogger.default.base").Instance(defaultLogger));
+					Component.For<ILogger>().NamedAutomatically("ilogger.default.base").Instance(defaultLogger));
 			}
 			else
 			{
@@ -377,15 +341,11 @@ namespace Castle.Facilities.Logging
 		private void RegisterLoggerFactory(ILoggerFactory factory)
 		{
 			if (factory is IExtendedLoggerFactory)
-			{
 				Kernel.Register(
 					Component.For<IExtendedLoggerFactory>().NamedAutomatically("iloggerfactory").Instance((IExtendedLoggerFactory) factory),
 					Component.For<ILoggerFactory>().NamedAutomatically("iloggerfactory.base").Instance(factory));
-			}
 			else
-			{
 				Kernel.Register(Component.For<ILoggerFactory>().NamedAutomatically("iloggerfactory").Instance(factory));
-			}
 		}
 
 		private void RegisterSubResolver(ILoggerFactory loggerFactory)

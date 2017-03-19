@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+
 namespace Castle.Facilities.EventWiring
 {
-	using System;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Reflection;
-
 	internal class NaiveMethodNameExtractor
 	{
 		private readonly MethodBody body;
 		private readonly MethodBase delegateMethod;
 		private readonly Module module;
 		private readonly MemoryStream stream;
-
-		private MethodBase calledMethod;
 
 		public NaiveMethodNameExtractor(Delegate @delegate)
 		{
@@ -38,23 +36,16 @@ namespace Castle.Facilities.EventWiring
 			Read();
 		}
 
-		public MethodBase CalledMethod
-		{
-			get { return calledMethod; }
-		}
+		public MethodBase CalledMethod { get; private set; }
 
 		private MethodBase GetCalledMethod(byte[] rawOperand)
 		{
 			Type[] genericTypeArguments = null;
 			Type[] genericMethodArguments = null;
 			if (delegateMethod.DeclaringType.IsGenericType)
-			{
 				genericTypeArguments = delegateMethod.DeclaringType.GetGenericArguments();
-			}
 			if (delegateMethod.IsGenericMethod)
-			{
 				genericMethodArguments = delegateMethod.GetGenericArguments();
-			}
 			var methodBase = module.ResolveMethod(OperandValueAsInt32(rawOperand), genericTypeArguments, genericMethodArguments);
 			return methodBase;
 		}
@@ -65,13 +56,11 @@ namespace Castle.Facilities.EventWiring
 			while (ReadOpCode(out currentOpCode))
 			{
 				if (IsSupportedOpCode(currentOpCode) == false)
-				{
 					return;
-				}
 
 				if (currentOpCode == OpCodeValues.Callvirt || currentOpCode == OpCodeValues.Call)
 				{
-					calledMethod = GetCalledMethod(ReadOperand(32));
+					CalledMethod = GetCalledMethod(ReadOperand(32));
 					return;
 				}
 			}
@@ -85,7 +74,7 @@ namespace Castle.Facilities.EventWiring
 				opCodeValue = 0;
 				return false;
 			}
-			var xByteValue = (byte)valueInt;
+			var xByteValue = (byte) valueInt;
 			if (xByteValue == 0xFE)
 			{
 				valueInt = stream.ReadByte();
@@ -94,23 +83,21 @@ namespace Castle.Facilities.EventWiring
 					opCodeValue = 0;
 					return false;
 				}
-				opCodeValue = (OpCodeValues)(xByteValue << 8 | valueInt);
+				opCodeValue = (OpCodeValues) ((xByteValue << 8) | valueInt);
 			}
 			else
 			{
-				opCodeValue = (OpCodeValues)xByteValue;
+				opCodeValue = (OpCodeValues) xByteValue;
 			}
 			return true;
 		}
 
 		private byte[] ReadOperand(byte operandSize)
 		{
-			var bytes = new byte[operandSize/8];
+			var bytes = new byte[operandSize / 8];
 			var actualSize = stream.Read(bytes, 0, bytes.Length);
 			if (actualSize < bytes.Length)
-			{
 				throw new NotSupportedException();
-			}
 			return bytes;
 		}
 

@@ -12,40 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Linq.Expressions;
+
 namespace Castle.Facilities.EventWiring
 {
-	using System;
-	using System.Linq.Expressions;
-
 	public class EventSubscriber
 	{
-		private readonly string subscriberComponentName;
-		private string eventHandler;
-
 		private EventSubscriber(string subscriberComponentName)
 		{
-			this.subscriberComponentName = subscriberComponentName;
+			SubscriberComponentName = subscriberComponentName;
 		}
 
-		public string EventHandler
-		{
-			get { return eventHandler; }
-		}
+		public string EventHandler { get; private set; }
 
-		public string SubscriberComponentName
-		{
-			get { return subscriberComponentName; }
-		}
+		public string SubscriberComponentName { get; }
 
 		public EventSubscriber HandledBy(string eventHandlerMethodName)
 		{
-			eventHandler = eventHandlerMethodName;
+			EventHandler = eventHandlerMethodName;
 			return this;
 		}
 
 		public EventSubscriber HandledBy<THandler>(Expression<Action<THandler>> methodHandler)
 		{
-			eventHandler = ExtractMethodName(methodHandler);
+			EventHandler = ExtractMethodName(methodHandler);
 			return this;
 		}
 
@@ -53,9 +44,7 @@ namespace Castle.Facilities.EventWiring
 		{
 			var expression = methodHandler.Body as MethodCallExpression;
 			if (expression != null)
-			{
 				return expression.Method.Name;
-			}
 			throw new ArgumentException(
 				"Couldn't extract method to handle the event from given expression. Expression should point to method that ought to handle subscribed event, something like: 's => s.HandleClick(null, null)'.");
 		}
