@@ -43,6 +43,8 @@ namespace Castle.Core.DynamicProxy
 
 		private readonly string weakModulePath;
 
+		private ModuleBuilder _strongNamedModule;
+
 		public ModuleScope() : this(false, false)
 		{
 		}
@@ -53,26 +55,30 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule)
-			: this(savePhysicalAssembly, disableSignedModule, new NamingScope(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName())
-		{
-		}
-
-		private ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
 		{
 			this.savePhysicalAssembly = savePhysicalAssembly;
 			this.disableSignedModule = disableSignedModule;
-			NamingScope = namingScope;
-			this.strongAssemblyName = strongAssemblyName;
-			this.strongModulePath = strongModulePath;
-			this.weakAssemblyName = weakAssemblyName;
-			this.weakModulePath = weakModulePath;
+			NamingScope = new NamingScope();
+			this.strongAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+			this.strongModulePath = ModuleScopeAssemblyNaming.GetFileName();
+			this.weakAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+			this.weakModulePath = ModuleScopeAssemblyNaming.GetFileName();
 		}
 
 		public INamingScope NamingScope { get; }
 
 		public Lock Lock { get; } = Lock.Create();
 
-		public ModuleBuilder StrongNamedModule { get; private set; }
+		public ModuleBuilder StrongNamedModule
+		{
+			get { return _strongNamedModule; }
+			private set
+			{
+				if (value.Name.Contains("CastleDynProxy2.dll"))
+					Debugger.Launch();
+				_strongNamedModule = value;
+			}
+		}
 
 		public string StrongNamedModuleName
 		{

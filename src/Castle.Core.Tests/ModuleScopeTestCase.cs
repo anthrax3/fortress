@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -91,6 +92,11 @@ namespace Castle.Core.Tests
 			var classProxy = builder.CreateClassProxyType(typeof(object), Type.EmptyTypes, ProxyGenerationOptions.Default);
 
 			var savedPath = scope.SaveAssembly();
+
+			if (savedPath.Contains("CastleDynProxy2.dll"))
+				Debugger.Launch();
+
+			Console.WriteLine($"Bepe - {savedPath}");
 
 			CrossAppDomainCaller.RunInOtherAppDomain(delegate(object[] args)
 				{
@@ -170,17 +176,6 @@ namespace Castle.Core.Tests
 
 			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), strong.Assembly.GetName().Name);
 			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), weak.Assembly.GetName().Name);
-		}
-
-		[Test]
-		public void GeneratedAssembliesWithCustomName()
-		{
-			var scope = new ModuleScope(false, false);
-			var strong = scope.ObtainDynamicModuleWithStrongName();
-			var weak = scope.ObtainDynamicModuleWithWeakName();
-
-			Assert.AreEqual("Strong", strong.Assembly.GetName().Name);
-			Assert.AreEqual("Weak", weak.Assembly.GetName().Name);
 		}
 
 		[Test]
