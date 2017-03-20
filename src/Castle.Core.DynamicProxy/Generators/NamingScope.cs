@@ -34,8 +34,7 @@ namespace Castle.Core.DynamicProxy.Generators
 
 		public string GetUniqueName(string suggestedName)
 		{
-			Debug.Assert(string.IsNullOrEmpty(suggestedName) == false,
-				"string.IsNullOrEmpty(suggestedName) == false");
+			Debug.Assert(string.IsNullOrEmpty(suggestedName) == false, "string.IsNullOrEmpty(suggestedName) == false");
 
 			int counter;
 			if (!names.TryGetValue(suggestedName, out counter))

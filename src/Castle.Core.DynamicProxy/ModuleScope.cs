@@ -24,28 +24,76 @@ using Castle.Core.DynamicProxy.Serialization;
 
 namespace Castle.Core.DynamicProxy
 {
-	public class ModuleScope
+	public class ModuleScopeAssemblyNamingOptions
+	{
+		public static bool UseAutoNamingConventions = false;
+	}
+
+	public class ModuleScopeAssemblyNaming
 	{
 		public static readonly string DEFAULT_FILE_NAME = "CastleDynProxy2.dll";
 
 		public static readonly string DEFAULT_ASSEMBLY_NAME = "DynamicProxyGenAssembly2";
 
-		// Users of ModuleScope should use this lock when accessing the cache
+		private static string _currentFileName = DEFAULT_FILE_NAME;
+
+		private static string _currentAssemblyName = DEFAULT_ASSEMBLY_NAME;
+
+		public static string GetFileName()
+		{
+			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
+			{
+				_currentFileName = $"CastleDynProxy2_{Guid.NewGuid():N}.dll";
+				return _currentFileName;
+			}
+			return DEFAULT_FILE_NAME;
+		}
+
+		public static string GetCurrentFileName()
+		{
+			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
+			{
+				return _currentFileName;
+			}
+			return DEFAULT_FILE_NAME;
+		}
+
+		public static string GetAssemblyName()
+		{
+			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
+			{
+				_currentAssemblyName = $"DynamicProxyGenAssembly2_{Guid.NewGuid():N}";
+				return _currentAssemblyName;
+			}
+			return DEFAULT_ASSEMBLY_NAME;
+		}
+
+		public static string GetCurrentAssemblyName()
+		{
+			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
+			{
+				return _currentAssemblyName;
+			}
+			return DEFAULT_ASSEMBLY_NAME;
+		}
+	}
+
+	public class ModuleScope
+	{
 		private readonly bool disableSignedModule;
 
-		// Used to lock the module builder creation
 		private readonly object moduleLocker = new object();
 
-		// Specified whether the generated assemblies are intended to be saved
 		private readonly bool savePhysicalAssembly;
 
-		// The names to use for the generated assemblies and the paths (including the names) of their manifest modules
 		private readonly string strongAssemblyName;
+
 		private readonly string strongModulePath;
 
-		// Keeps track of generated types
 		private readonly Dictionary<CacheKey, Type> typeCache = new Dictionary<CacheKey, Type>();
+
 		private readonly string weakAssemblyName;
+
 		private readonly string weakModulePath;
 
 		public ModuleScope() : this(false, false)
@@ -58,24 +106,16 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule)
-			: this(
-				savePhysicalAssembly, disableSignedModule, DEFAULT_ASSEMBLY_NAME, DEFAULT_FILE_NAME, DEFAULT_ASSEMBLY_NAME,
-				DEFAULT_FILE_NAME)
+			: this(savePhysicalAssembly, disableSignedModule, ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName())
 		{
 		}
 
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, string strongAssemblyName,
-			string strongModulePath,
-			string weakAssemblyName, string weakModulePath)
-			: this(
-				savePhysicalAssembly, disableSignedModule, new NamingScope(), strongAssemblyName, strongModulePath, weakAssemblyName,
-				weakModulePath)
+		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
+			: this(savePhysicalAssembly, disableSignedModule, new NamingScope(), strongAssemblyName, strongModulePath, weakAssemblyName, weakModulePath)
 		{
 		}
 
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope,
-			string strongAssemblyName, string strongModulePath,
-			string weakAssemblyName, string weakModulePath)
+		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
 		{
 			this.savePhysicalAssembly = savePhysicalAssembly;
 			this.disableSignedModule = disableSignedModule;
@@ -164,8 +204,8 @@ namespace Castle.Core.DynamicProxy
 		public ModuleBuilder ObtainDynamicModuleWithStrongName()
 		{
 			if (disableSignedModule)
-				throw new InvalidOperationException(
-					"Usage of signed module has been disabled. Use unsigned module or enable signed module.");
+				throw new InvalidOperationException("Usage of signed module has been disabled. Use unsigned module or enable signed module.");
+
 			lock (moduleLocker)
 			{
 				if (StrongNamedModule == null)
@@ -200,11 +240,7 @@ namespace Castle.Core.DynamicProxy
 				{
 					if (signStrongName == false && e.StackTrace.Contains("ComputePublicKey") == false)
 						throw;
-					var message = string.Format(
-						"There was an error creating dynamic assembly for your proxies - you don't have permissions " +
-						"required to sign the assembly. To workaround it you can enforce generating non-signed assembly " +
-						"only when creating {0}. Alternatively ensure that your account has all the required permissions.",
-						GetType());
+					var message = $"There was an error creating dynamic assembly for your proxies - you don\'t have permissions required to sign the assembly. To workaround it you can enforce generating non-signed assembly only when creating {GetType()}. Alternatively ensure that your account has all the required permissions.";
 					throw new ArgumentException(message, e);
 				}
 				var module = assemblyBuilder.DefineDynamicModule(moduleName, moduleName, false);
@@ -307,7 +343,7 @@ namespace Castle.Core.DynamicProxy
 		public void LoadAssemblyIntoCache(Assembly assembly)
 		{
 			if (assembly == null)
-				throw new ArgumentNullException("assembly");
+				throw new ArgumentNullException(nameof(assembly));
 
 			var cacheMappings =
 				(CacheMappingsAttribute[]) assembly.GetCustomAttributes(typeof(CacheMappingsAttribute), false);
@@ -317,7 +353,7 @@ namespace Castle.Core.DynamicProxy
 				var message = string.Format(
 					"The given assembly '{0}' does not contain any cache information for generated types.",
 					assembly.FullName);
-				throw new ArgumentException(message, "assembly");
+				throw new ArgumentException(message, nameof(assembly));
 			}
 
 			foreach (var mapping in cacheMappings[0].GetDeserializedMappings())

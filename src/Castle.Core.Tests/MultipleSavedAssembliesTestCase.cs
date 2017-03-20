@@ -35,7 +35,7 @@ namespace Castle.Core.Tests
 			//
 			// Step 1 - Save an assembly with 1 class proxy
 			//
-			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "5", "ProxyCache5.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "5", "ProxyCache5.dll");
+			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "5", "ProxyCache5.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "5", "ProxyCache5.dll");
 			var proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			var generator = new ProxyGenerator(proxyBuilder);
 			generator.CreateClassProxy(typeof(EmptyClass), new[] {typeof(IInterface1)}, new DoNothingInterceptor());
@@ -45,7 +45,7 @@ namespace Castle.Core.Tests
 			// Step 2 - Save another assembly with 1 class proxy
 			// note : to reproduce the problem, must load previously saved assembly (in cache) before saving this assembly.
 			//
-			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "6", "ProxyCache6.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "6", "ProxyCache6.dll");
+			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "6", "ProxyCache6.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "6", "ProxyCache6.dll");
 			proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			generator = new ProxyGenerator(proxyBuilder);
 
@@ -79,7 +79,7 @@ namespace Castle.Core.Tests
 			//
 			// Step 1 - Save an assembly with 1 generic proxy
 			//
-			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "1", "ProxyCache1.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "1", "ProxyCache1.dll");
+			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "1", "ProxyCache1.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "1", "ProxyCache1.dll");
 			var proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			var generator = new ProxyGenerator(proxyBuilder);
 			generator.CreateInterfaceProxyWithTargetInterface(typeof(IGenericInterface<IInterface1>), new Class1(), new DoNothingInterceptor());
@@ -89,7 +89,7 @@ namespace Castle.Core.Tests
 			// Step 2 - Save another assembly with 1 generic proxy
 			// note : to reproduce the problem, must load previously saved assembly (in cache) before saving this assembly.
 			//
-			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "2", "ProxyCache2.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "2", "ProxyCache2.dll");
+			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "2", "ProxyCache2.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "2", "ProxyCache2.dll");
 			proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			generator = new ProxyGenerator(proxyBuilder);
 
@@ -121,7 +121,7 @@ namespace Castle.Core.Tests
 			//
 			// Step 1 - Save an assembly with 1 interface proxy
 			//
-			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "3", "ProxyCache3.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "3", "ProxyCache3.dll");
+			var proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "3", "ProxyCache3.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "3", "ProxyCache3.dll");
 			var proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			var generator = new ProxyGenerator(proxyBuilder);
 			generator.CreateInterfaceProxyWithTargetInterface(typeof(IInterface3), new[] {typeof(IInterface2)}, new Class3(), new DoNothingInterceptor());
@@ -131,7 +131,7 @@ namespace Castle.Core.Tests
 			// Step 2 - Save another assembly with 1 interface proxy
 			// note : to reproduce the problem, must load previously saved assembly (in cache) before saving this assembly.
 			//
-			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScope.DEFAULT_ASSEMBLY_NAME + "4", "ProxyCache4.dll", ModuleScope.DEFAULT_ASSEMBLY_NAME + "4", "ProxyCache4.dll");
+			proxyGeneratorModuleScope = new ModuleScope(true, true, ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "4", "ProxyCache4.dll", ModuleScopeAssemblyNaming.GetCurrentAssemblyName() + "4", "ProxyCache4.dll");
 			proxyBuilder = new DefaultProxyBuilder(proxyGeneratorModuleScope);
 			generator = new ProxyGenerator(proxyBuilder);
 

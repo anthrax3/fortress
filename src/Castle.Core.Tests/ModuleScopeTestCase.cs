@@ -31,7 +31,7 @@ namespace Castle.Core.Tests
 			Assert.IsTrue(File.Exists(path));
 
 			var assemblyName = AssemblyName.GetAssemblyName(path);
-			Assert.AreEqual(ModuleScope.DEFAULT_ASSEMBLY_NAME, assemblyName.Name);
+			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), assemblyName.Name);
 
 			var keyPairBytes = ModuleScope.GetKeyPair();
 			var keyPair = new StrongNameKeyPair(keyPairBytes);
@@ -47,7 +47,7 @@ namespace Castle.Core.Tests
 			Assert.IsTrue(File.Exists(path));
 
 			var assemblyName = AssemblyName.GetAssemblyName(path);
-			Assert.AreEqual(ModuleScope.DEFAULT_ASSEMBLY_NAME, assemblyName.Name);
+			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), assemblyName.Name);
 
 			var loadedPublicKey = assemblyName.GetPublicKey();
 			Assert.IsNull(loadedPublicKey);
@@ -143,12 +143,12 @@ namespace Castle.Core.Tests
 			scope.ObtainDynamicModuleWithWeakName();
 
 			scope.SaveAssembly(true);
-			CheckSignedSavedAssembly(ModuleScope.DEFAULT_FILE_NAME);
+			CheckSignedSavedAssembly(ModuleScopeAssemblyNaming.GetCurrentFileName());
 
 			scope.SaveAssembly(false);
-			CheckUnsignedSavedAssembly(ModuleScope.DEFAULT_FILE_NAME);
+			CheckUnsignedSavedAssembly(ModuleScopeAssemblyNaming.GetCurrentFileName());
 
-			File.Delete(ModuleScope.DEFAULT_FILE_NAME);
+			File.Delete(ModuleScopeAssemblyNaming.GetCurrentFileName());
 		}
 
 		[Test]
@@ -158,8 +158,8 @@ namespace Castle.Core.Tests
 			var strong = scope.ObtainDynamicModuleWithStrongName();
 			var weak = scope.ObtainDynamicModuleWithWeakName();
 
-			Assert.AreEqual(ModuleScope.DEFAULT_ASSEMBLY_NAME, strong.Assembly.GetName().Name);
-			Assert.AreEqual(ModuleScope.DEFAULT_ASSEMBLY_NAME, weak.Assembly.GetName().Name);
+			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), strong.Assembly.GetName().Name);
+			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), weak.Assembly.GetName().Name);
 		}
 
 		[Test]

@@ -73,7 +73,8 @@ namespace Castle.Core.Tests
 		[Test]
 		public void TearDown_DoesNotSaveAnything_IfNoProxyGenerated()
 		{
-			var path = ModuleScope.DEFAULT_FILE_NAME;
+			var path = ModuleScopeAssemblyNaming.GetCurrentFileName();
+
 			if (File.Exists(path))
 				File.Delete(path);
 
