@@ -184,6 +184,8 @@
     <Compile Include="IInterceptor.cs" />
     <Compile Include="IInterceptorSelector.cs" />
     <Compile Include="IInvocation.cs" />
+    <Compile Include="Internal\InternalsVisible.cs" />
+    <Compile Include="InternalsVisibleToTests.cs" />
     <Compile Include="Internal\AttributeUtil.cs" />
     <Compile Include="Internal\CompositionInvocation.cs" />
     <Compile Include="Internal\InheritanceInvocation.cs" />
@@ -198,6 +200,8 @@
     <Compile Include="IProxyTargetAccessor.cs" />
     <Compile Include="MixinData.cs" />
     <Compile Include="ModuleScope.cs" />
+    <Compile Include="ModuleScopeAssemblyNaming.cs" />
+    <Compile Include="ModuleScopeAssemblyNamingOptions.cs" />
     <Compile Include="PersistentProxyBuilder.cs" />
     <Compile Include="ProxyGenerationException.cs" />
     <Compile Include="ProxyGenerationOptions.cs" />

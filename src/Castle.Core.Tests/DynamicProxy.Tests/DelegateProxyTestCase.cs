@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class DelegateProxyTestCasE : BasePEVerifyTestCase
+	public class DelegateProxyTestCasE : CoreBaseTestCase
 	{
 		private Type GenerateProxyType<TDelegate>()
 		{

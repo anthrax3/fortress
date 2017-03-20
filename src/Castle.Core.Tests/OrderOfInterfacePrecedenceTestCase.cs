@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class OrderOfInterfacePrecedenceTestCase : BasePEVerifyTestCase
+	public class OrderOfInterfacePrecedenceTestCase : CoreBaseTestCase
 	{
 		private ProxyGenerationOptions MixIn(object mixin)
 		{

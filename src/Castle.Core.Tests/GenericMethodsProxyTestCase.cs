@@ -23,7 +23,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class GenericMethodsProxyTestCase : BasePEVerifyTestCase
+	public class GenericMethodsProxyTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void GenericMethod_WithArrayOfGenericOfGenericArgument()

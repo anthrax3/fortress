@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Diagnostics;
 using Castle.Core.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests
 {
-	public abstract class BasePEVerifyTestCase
+	public abstract class CoreBaseTestCase
 	{
 		protected IProxyBuilder builder;
 		protected ProxyGenerator generator;
@@ -47,45 +45,6 @@ namespace Castle.Core.Tests
 		[TearDown]
 		public virtual void TearDown()
 		{
-			// This is currently causing issue when targetting multiple frameworks, taking this out for now. 
-			//if (!IsVerificationDisabled)
-			//{
-			//	// Note: only supports one generated assembly at the moment
-			//	var path = ((PersistentProxyBuilder)builder).SaveAssembly();
-			//	if (path != null)
-			//	{
-			//		RunPEVerifyOnGeneratedAssembly(path);
-			//	}
-			//}
-		}
-
-		public void RunPEVerifyOnGeneratedAssembly(string assemblyPath)
-		{
-			var process = new Process
-			{
-				StartInfo =
-				{
-					FileName = FindPeVerify.PeVerifyPath,
-					RedirectStandardOutput = true,
-					UseShellExecute = false,
-					WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
-					Arguments = "\"" + assemblyPath + "\" /VERBOSE",
-					CreateNoWindow = true
-				}
-			};
-			process.Start();
-			var processOutput = process.StandardOutput.ReadToEnd();
-			process.WaitForExit();
-
-			var result = process.ExitCode + " code ";
-
-			Console.WriteLine(GetType().FullName + ": " + result);
-
-			if (process.ExitCode != 0)
-			{
-				Console.WriteLine(processOutput);
-				Assert.Fail("PeVerify reported error(s): " + Environment.NewLine + processOutput, result);
-			}
 		}
 	}
 }

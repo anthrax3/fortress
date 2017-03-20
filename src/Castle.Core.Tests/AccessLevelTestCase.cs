@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class AccessLevelTestCase : BasePEVerifyTestCase
+	public class AccessLevelTestCase : CoreBaseTestCase
 	{
 		internal class InternalClass
 		{
@@ -37,33 +37,32 @@ namespace Castle.Core.Tests
 		[Test]
 		public void InternalConstructorIsReplicatedWhenInternalsVisibleTo()
 		{
-			var proxy = generator.CreateClassProxy(typeof(InternalClass), new StandardInterceptor());
-			Assert.IsNotNull(proxy.GetType().GetConstructor(new[] {typeof(IInterceptor[])}));
+			ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport = false;
+			ResetGeneratorAndBuilder();
+			try
+			{
+				var proxy = generator.CreateClassProxy(typeof(InternalClass), new StandardInterceptor());
+				Assert.IsNotNull(proxy.GetType().GetConstructor(new[] {typeof(IInterceptor[])}));
+			}
+			finally
+			{
+				ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport = false;
+			}
 		}
 
 		[Test]
 		public void ProtectedConstructor()
 		{
-			var proxy =
-				generator.CreateClassProxy(
-						typeof(NonPublicConstructorClass), new StandardInterceptor())
-					as NonPublicConstructorClass;
-
+			var proxy = generator.CreateClassProxy(typeof(NonPublicConstructorClass), new StandardInterceptor()) as NonPublicConstructorClass;
 			Assert.IsNotNull(proxy);
-
 			proxy.DoSomething();
 		}
 
 		[Test]
 		public void ProtectedInternalConstructor()
 		{
-			var proxy =
-				generator.CreateClassProxy(
-						typeof(ProtectedInternalConstructorClass), new StandardInterceptor())
-					as ProtectedInternalConstructorClass;
-
+			var proxy = generator.CreateClassProxy(typeof(ProtectedInternalConstructorClass), new StandardInterceptor()) as ProtectedInternalConstructorClass;
 			Assert.IsNotNull(proxy);
-
 			proxy.DoSomething();
 		}
 
@@ -71,10 +70,7 @@ namespace Castle.Core.Tests
 		public void ProtectedMethods()
 		{
 			var logger = new LogInvocationInterceptor();
-
-			var proxy = (NonPublicMethodsClass)
-				generator.CreateClassProxy(typeof(NonPublicMethodsClass), logger);
-
+			var proxy = (NonPublicMethodsClass) generator.CreateClassProxy(typeof(NonPublicMethodsClass), logger);
 			proxy.DoSomething();
 			Assert.AreEqual(2, logger.Invocations.Count);
 			Assert.AreEqual("DoSomething", logger.Invocations[0]);

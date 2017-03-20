@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class ClassEmitterTestCase : BasePEVerifyTestCase
+	public class ClassEmitterTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void AutomaticDefaultConstructorGeneration()

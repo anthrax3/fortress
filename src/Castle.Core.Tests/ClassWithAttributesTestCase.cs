@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class ClassWithAttributesTestCase : BasePEVerifyTestCase
+	public class ClassWithAttributesTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void Can_proxy_type_with_non_inheritable_attribute_depending_on_array_of_something_via_field()

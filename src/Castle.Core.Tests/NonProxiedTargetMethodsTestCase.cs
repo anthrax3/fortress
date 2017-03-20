@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class NonProxiedTargetMethodsTestCase : BasePEVerifyTestCase
+	public class NonProxiedTargetMethodsTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void Target_method_explicit_WithTarget()

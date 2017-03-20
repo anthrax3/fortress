@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class BaseTestCaseTestCase : BasePEVerifyTestCase
+	public class BaseTestCaseTestCase : CoreBaseTestCase
 	{
 		public override void TearDown()
 		{

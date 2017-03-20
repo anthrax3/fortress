@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.BugsReported
 {
 	[TestFixture]
-	public class ConstraintViolationInDebuggerTestCase : BasePEVerifyTestCase
+	public class ConstraintViolationInDebuggerTestCase : CoreBaseTestCase
 	{
 		public class PresentationHost : IPresentationHost
 		{

@@ -23,7 +23,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.BugsReported
 {
 	[TestFixture]
-	public class DynProxy159 : BasePEVerifyTestCase
+	public class DynProxy159 : CoreBaseTestCase
 	{
 		// this test will only fail the first time it is run in a given VM
 

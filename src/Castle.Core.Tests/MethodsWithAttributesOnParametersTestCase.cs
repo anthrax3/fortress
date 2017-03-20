@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class MethodsWithAttributesOnParametersTestCase : BasePEVerifyTestCase
+	public class MethodsWithAttributesOnParametersTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void CanGetParameterAttributeFromProxiedObject()

@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class InterfaceProxyWithTargetInterfaceAdditionalInterfacesTestCase : BasePEVerifyTestCase
+	public class InterfaceProxyWithTargetInterfaceAdditionalInterfacesTestCase : CoreBaseTestCase
 	{
 		private T GetProxy<T>(object target)
 		{

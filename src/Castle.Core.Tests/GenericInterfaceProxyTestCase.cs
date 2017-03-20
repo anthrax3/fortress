@@ -25,7 +25,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class GenericInterfaceProxyTestCase : BasePEVerifyTestCase
+	public class GenericInterfaceProxyTestCase : CoreBaseTestCase
 	{
 		public override void Init()
 		{

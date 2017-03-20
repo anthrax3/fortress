@@ -29,7 +29,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class SerializableClassTestCase : BasePEVerifyTestCase
+	public class SerializableClassTestCase : CoreBaseTestCase
 	{
 		public override void Init()
 		{

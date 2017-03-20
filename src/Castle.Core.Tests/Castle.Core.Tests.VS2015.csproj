@@ -134,7 +134,7 @@
     <Compile Include="AttributeWithEnumArrayArgument.cs" />
     <Compile Include="AttributeWithIntArrayArgument.cs" />
     <Compile Include="AttributeWithTypeArrayArgument.cs" />
-    <Compile Include="BasePEVerifyTestCase.cs" />
+    <Compile Include="CoreBaseTestCase.cs" />
     <Compile Include="BasicInterfaceProxyTestCase.cs" />
     <Compile Include="BugAttribute.cs" />
     <Compile Include="BugsReported\Core40.cs" />
@@ -485,7 +485,7 @@
     <Compile Include="ProxyKind.cs" />
     <Compile Include="ProxyNothingHook.cs" />
     <Compile Include="ProxyTargetAccessorHandlingTestCase.cs" />
-    <Compile Include="InternalsVisibleTo.cs" />
+    <Compile Include="Internals\InternalsVisibleTo.cs" />
     <Compile Include="Interceptors\SetReturnValueInterceptor.cs" />
     <Compile Include="Interceptors\WithCallbackInterceptor.cs" />
     <Compile Include="DynamicProxy.Tests\Classes\VirtuallyImplementsInterfaceWithProperty.cs" />

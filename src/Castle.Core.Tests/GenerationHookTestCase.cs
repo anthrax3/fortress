@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class GenerationHookTestCase : BasePEVerifyTestCase
+	public class GenerationHookTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void Hook_can_NOT_see_GetType_method()

@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class ClassProxyWithDefaultValuesTestCase : BasePEVerifyTestCase
+	public class ClassProxyWithDefaultValuesTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void MethodParameterWithDefaultValue_UseNullDefaultValue_class_proxy()

@@ -24,7 +24,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InvocationMethodInvocationTargetTestCase : BasePEVerifyTestCase
+	public class InvocationMethodInvocationTargetTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void ClassProxy_MethodInvocationTarget_should_be_base_Method()

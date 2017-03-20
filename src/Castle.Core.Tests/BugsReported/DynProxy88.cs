@@ -17,7 +17,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.BugsReported
 {
 	[TestFixture]
-	public class DynProxy88 : BasePEVerifyTestCase
+	public class DynProxy88 : CoreBaseTestCase
 	{
 		[Test]
 		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()

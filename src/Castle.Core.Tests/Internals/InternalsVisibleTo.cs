@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Runtime.CompilerServices;
-using Castle.Core.Core.Internal;
 
-[assembly: InternalsVisibleTo(InternalsVisible.ToDynamicProxyGenAssembly2)]
+[assembly: InternalsVisibleTo(Castle.Core.Core.Internal.InternalsVisible.ToCastleCore)]
+[assembly: InternalsVisibleTo(Castle.Core.Core.Internal.InternalsVisible.ToDynamicProxyGenAssembly2)]
+[assembly: InternalsVisibleTo(Castle.Core.DynamicProxy.Internal.InternalsVisible.ToCastleCoreDynamicProxy)]
+[assembly: InternalsVisibleTo(Castle.Core.DynamicProxy.Internal.InternalsVisible.ToDynamicProxyGenAssembly2)]

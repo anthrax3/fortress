@@ -24,60 +24,6 @@ using Castle.Core.DynamicProxy.Serialization;
 
 namespace Castle.Core.DynamicProxy
 {
-	public class ModuleScopeAssemblyNamingOptions
-	{
-		public static bool UseAutoNamingConventions = false;
-	}
-
-	public class ModuleScopeAssemblyNaming
-	{
-		public static readonly string DEFAULT_FILE_NAME = "CastleDynProxy2.dll";
-
-		public static readonly string DEFAULT_ASSEMBLY_NAME = "DynamicProxyGenAssembly2";
-
-		private static string _currentFileName = DEFAULT_FILE_NAME;
-
-		private static string _currentAssemblyName = DEFAULT_ASSEMBLY_NAME;
-
-		public static string GetFileName()
-		{
-			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
-			{
-				_currentFileName = $"CastleDynProxy2_{Guid.NewGuid():N}.dll";
-				return _currentFileName;
-			}
-			return DEFAULT_FILE_NAME;
-		}
-
-		public static string GetCurrentFileName()
-		{
-			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
-			{
-				return _currentFileName;
-			}
-			return DEFAULT_FILE_NAME;
-		}
-
-		public static string GetAssemblyName()
-		{
-			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
-			{
-				_currentAssemblyName = $"DynamicProxyGenAssembly2_{Guid.NewGuid():N}";
-				return _currentAssemblyName;
-			}
-			return DEFAULT_ASSEMBLY_NAME;
-		}
-
-		public static string GetCurrentAssemblyName()
-		{
-			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventions)
-			{
-				return _currentAssemblyName;
-			}
-			return DEFAULT_ASSEMBLY_NAME;
-		}
-	}
-
 	public class ModuleScope
 	{
 		private readonly bool disableSignedModule;
