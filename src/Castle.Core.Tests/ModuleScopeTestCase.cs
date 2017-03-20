@@ -13,8 +13,10 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Castle.Core.DynamicProxy;
 using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.DynamicProxy.Serialization;
@@ -86,27 +88,35 @@ namespace Castle.Core.Tests
 		{
 			var scope = new ModuleScope(true);
 			var builder = new DefaultProxyBuilder(scope);
-			var cp = builder.CreateClassProxyType(typeof(object), Type.EmptyTypes, ProxyGenerationOptions.Default);
+			var classProxy = builder.CreateClassProxyType(typeof(object), Type.EmptyTypes, ProxyGenerationOptions.Default);
 
 			var savedPath = scope.SaveAssembly();
 
 			CrossAppDomainCaller.RunInOtherAppDomain(delegate(object[] args)
 				{
 					var assembly = Assembly.LoadFrom((string) args[0]);
-					var attribute =
-						(CacheMappingsAttribute)
-						assembly.GetCustomAttributes(typeof(CacheMappingsAttribute), false)[0];
+					var attribute = (CacheMappingsAttribute) assembly.GetCustomAttributes(typeof(CacheMappingsAttribute), false)[0];
 					var entries = attribute.GetDeserializedMappings();
 					Assert.AreEqual(1, entries.Count);
-
-					var key = new CacheKey(typeof(object), new Type[0],
-						ProxyGenerationOptions.Default);
+					var key = new CacheKey(typeof(object), new Type[0], ProxyGenerationOptions.Default);
 					Assert.IsTrue(entries.ContainsKey(key));
 					Assert.AreEqual(args[1], entries[key]);
 				},
-				savedPath, cp.FullName);
+				savedPath, classProxy.FullName);
 
 			File.Delete(savedPath);
+		}
+
+		[Test]
+		public void CacheMappingsHoldTypesShouldSurviveAThreadBashing()
+		{
+			var tasks = new List<Task>();
+			for (int i = 0; i < 4; i++)
+			{
+				var task = Task.Factory.StartNew(CacheMappingsHoldTypes);
+				tasks.Add(task);
+			}
+			Task.WaitAll(tasks.ToArray());
 		}
 
 		[Test]
