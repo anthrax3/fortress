@@ -111,7 +111,7 @@ namespace Castle.Core.Tests
 		public void CacheMappingsHoldTypesShouldSurviveAThreadBashing()
 		{
 			var tasks = new List<Task>();
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				var task = Task.Factory.StartNew(CacheMappingsHoldTypes);
 				tasks.Add(task);
