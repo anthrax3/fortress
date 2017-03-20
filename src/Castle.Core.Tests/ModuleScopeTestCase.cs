@@ -175,7 +175,7 @@ namespace Castle.Core.Tests
 		[Test]
 		public void GeneratedAssembliesWithCustomName()
 		{
-			var scope = new ModuleScope(false, false, "Strong", "Module1.dll", "Weak", "Module2,dll");
+			var scope = new ModuleScope(false, false, new NamingScope(), "Strong", "Module1.dll", "Weak", "Module2,dll");
 			var strong = scope.ObtainDynamicModuleWithStrongName();
 			var weak = scope.ObtainDynamicModuleWithWeakName();
 
@@ -315,7 +315,7 @@ namespace Castle.Core.Tests
 			var weakModulePath = Path.Combine(moduleDirectory, "Weak.dll");
 
 			Directory.CreateDirectory(moduleDirectory);
-			var scope = new ModuleScope(true, false, "Strong", strongModulePath, "Weak", weakModulePath);
+			var scope = new ModuleScope(true, false, new NamingScope(), "Strong", strongModulePath, "Weak", weakModulePath);
 
 			using (File.Create(Path.Combine(Directory.GetCurrentDirectory(), "Strong.dll")))
 			{
@@ -403,7 +403,7 @@ namespace Castle.Core.Tests
 			Assert.IsFalse(File.Exists(strongModulePath));
 			Assert.IsFalse(File.Exists(weakModulePath));
 
-			var scope = new ModuleScope(true, false, "Strong", strongModulePath, "Weak", weakModulePath);
+			var scope = new ModuleScope(true, false, new NamingScope(), "Strong", strongModulePath, "Weak", weakModulePath);
 			scope.ObtainDynamicModuleWithStrongName();
 			scope.ObtainDynamicModuleWithWeakName();
 

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -52,12 +53,7 @@ namespace Castle.Core.DynamicProxy
 		}
 
 		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule)
-			: this(savePhysicalAssembly, disableSignedModule, ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName())
-		{
-		}
-
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
-			: this(savePhysicalAssembly, disableSignedModule, new NamingScope(), strongAssemblyName, strongModulePath, weakAssemblyName, weakModulePath)
+			: this(savePhysicalAssembly, disableSignedModule, new NamingScope(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName(), ModuleScopeAssemblyNaming.GetAssemblyName(), ModuleScopeAssemblyNaming.GetFileName())
 		{
 		}
 
@@ -261,6 +257,9 @@ namespace Castle.Core.DynamicProxy
 				assemblyFileName = WeakNamedModuleName;
 				assemblyFilePath = WeakNamedModule.FullyQualifiedName;
 			}
+
+			if (assemblyFilePath.Contains("CastleDynProxy2.dll"))
+				Debugger.Launch();
 
 			if (File.Exists(assemblyFilePath))
 				File.Delete(assemblyFilePath);
