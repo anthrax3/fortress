@@ -1,9 +1,10 @@
 namespace Castle.Core.Tests
 {
-	public class Class1 : IGenericInterface<IInterface1>
+	public class Class1 : IGenericInterface
 	{
-		public void GenericMethod(IInterface1 toto)
+		public T GenericMethod<T>()
 		{
+			return default(T);
 		}
 	}
 }

@@ -248,7 +248,6 @@
     <Compile Include="Mixins\ISimpleMixin.cs" />
     <Compile Include="Mixins\IThird.cs" />
     <Compile Include="MultiGenericClass.cs" />
-    <Compile Include="MultipleSavedAssembliesTestCase.cs" />
     <Compile Include="Core.Tests\Internal\InterfaceAttributeUtilTestCase.cs" />
     <Compile Include="Core.Tests\Internal\PermissionUtilTestCase.cs" />
     <Compile Include="Core.Tests\Internal\WeakKeyDictionaryTestCase.cs" />

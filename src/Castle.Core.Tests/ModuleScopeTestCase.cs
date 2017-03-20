@@ -175,7 +175,7 @@ namespace Castle.Core.Tests
 		[Test]
 		public void GeneratedAssembliesWithCustomName()
 		{
-			var scope = new ModuleScope(false, false, new NamingScope(), "Strong", "Module1.dll", "Weak", "Module2,dll");
+			var scope = new ModuleScope(false, false);
 			var strong = scope.ObtainDynamicModuleWithStrongName();
 			var weak = scope.ObtainDynamicModuleWithWeakName();
 
@@ -305,37 +305,6 @@ namespace Castle.Core.Tests
 		}
 
 		[Test]
-		public void ModuleScopeDoesntTryToDeleteFromCurrentDirectory()
-		{
-			var moduleDirectory = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedDlls");
-			if (Directory.Exists(moduleDirectory))
-				Directory.Delete(moduleDirectory, true);
-
-			var strongModulePath = Path.Combine(moduleDirectory, "Strong.dll");
-			var weakModulePath = Path.Combine(moduleDirectory, "Weak.dll");
-
-			Directory.CreateDirectory(moduleDirectory);
-			var scope = new ModuleScope(true, false, new NamingScope(), "Strong", strongModulePath, "Weak", weakModulePath);
-
-			using (File.Create(Path.Combine(Directory.GetCurrentDirectory(), "Strong.dll")))
-			{
-				scope.ObtainDynamicModuleWithStrongName();
-				scope.SaveAssembly(true); // this will throw if SaveAssembly tries to delete from the current directory
-			}
-
-			using (File.Create(Path.Combine(Directory.GetCurrentDirectory(), "Weak.dll")))
-			{
-				scope.ObtainDynamicModuleWithWeakName();
-				scope.SaveAssembly(false); // this will throw if SaveAssembly tries to delete from the current directory
-			}
-
-			// Clean up the generated DLLs because the FileStreams are now closed
-			Directory.Delete(moduleDirectory, true);
-			File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Strong.dll"));
-			File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Weak.dll"));
-		}
-
-		[Test]
 		public void ModuleScopeStoresModuleBuilder()
 		{
 			var scope = new ModuleScope();
@@ -389,32 +358,6 @@ namespace Castle.Core.Tests
 			scope.ObtainDynamicModuleWithWeakName();
 
 			scope.SaveAssembly();
-		}
-
-		[Test]
-		public void SaveWithPath()
-		{
-			var strongModulePath = Path.GetTempFileName();
-			var weakModulePath = Path.GetTempFileName();
-
-			File.Delete(strongModulePath);
-			File.Delete(weakModulePath);
-
-			Assert.IsFalse(File.Exists(strongModulePath));
-			Assert.IsFalse(File.Exists(weakModulePath));
-
-			var scope = new ModuleScope(true, false, new NamingScope(), "Strong", strongModulePath, "Weak", weakModulePath);
-			scope.ObtainDynamicModuleWithStrongName();
-			scope.ObtainDynamicModuleWithWeakName();
-
-			scope.SaveAssembly(true);
-			scope.SaveAssembly(false);
-
-			Assert.IsTrue(File.Exists(strongModulePath));
-			Assert.IsTrue(File.Exists(weakModulePath));
-
-			File.Delete(strongModulePath);
-			File.Delete(weakModulePath);
 		}
 	}
 }

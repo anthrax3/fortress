@@ -57,7 +57,7 @@ namespace Castle.Core.DynamicProxy
 		{
 		}
 
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
+		private ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope, string strongAssemblyName, string strongModulePath, string weakAssemblyName, string weakModulePath)
 		{
 			this.savePhysicalAssembly = savePhysicalAssembly;
 			this.disableSignedModule = disableSignedModule;
@@ -257,9 +257,6 @@ namespace Castle.Core.DynamicProxy
 				assemblyFileName = WeakNamedModuleName;
 				assemblyFilePath = WeakNamedModule.FullyQualifiedName;
 			}
-
-			if (assemblyFilePath.Contains("CastleDynProxy2.dll"))
-				Debugger.Launch();
 
 			if (File.Exists(assemblyFilePath))
 				File.Delete(assemblyFilePath);
