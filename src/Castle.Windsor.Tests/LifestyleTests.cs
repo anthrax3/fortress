@@ -65,7 +65,6 @@ namespace Castle.Windsor.Tests
 			public void Dispose()
 			{
 				disposed = true;
-				Console.WriteLine(new StackTrace(true));
 			}
 
 			public void Do()
