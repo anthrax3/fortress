@@ -128,8 +128,6 @@
     <Compile Include="Resource\StreamFactory.cs" />
     <Compile Include="Resource\UncResource.cs" />
     <Compile Include="Resource\UncResourceFactory.cs" />
-    <Compile Include="Smtp\DefaultSmtpSender.cs" />
-    <Compile Include="Smtp\IEmailSender.cs" />
     <Compile Include="StringObjectDictionaryAdapter.cs" />
     <Compile Include="StrongNameUtil.cs" />
     <Compile Include="InternalsVisibleToTests.cs" />
