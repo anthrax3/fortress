@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class ClassProxyConstructorsTestCase : BasePEVerifyTestCase
+	public class ClassProxyConstructorsTestCase : CoreBaseTestCase
 	{
 		private class PrivateClass
 		{

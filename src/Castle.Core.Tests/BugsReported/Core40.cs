@@ -18,7 +18,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.BugsReported
 {
 	[TestFixture]
-	public class Core40 : BasePEVerifyTestCase
+	public class Core40 : CoreBaseTestCase
 	{
 		[Test]
 		public void ShouldGenerateTypeWithIndexers()

@@ -24,7 +24,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InterfaceProxyWithTargetInterfaceTestCase : BasePEVerifyTestCase
+	public class InterfaceProxyWithTargetInterfaceTestCase : CoreBaseTestCase
 	{
 		private Type GetTargetType(object proxy)
 		{

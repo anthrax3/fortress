@@ -53,7 +53,7 @@ namespace Castle.Core.DynamicProxy.Internal
 
 		private static bool VisibleToDynamicProxy(InternalsVisibleToAttribute attribute)
 		{
-			return attribute.AssemblyName.Contains(ModuleScope.DEFAULT_ASSEMBLY_NAME);
+			return attribute.AssemblyName.Contains(ModuleScopeAssemblyNaming.GetAssemblyName());
 		}
 
 		public static bool IsAccessible(this MethodBase method)

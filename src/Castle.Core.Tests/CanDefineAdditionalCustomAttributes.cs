@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class CanDefineAdditionalCustomAttributes : BasePEVerifyTestCase
+	public class CanDefineAdditionalCustomAttributes : CoreBaseTestCase
 	{
 		[Test]
 		public void Can_clone_attributes_with_array_enums()

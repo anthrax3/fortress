@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class BaseTestCaseTestCase : BasePEVerifyTestCase
+	public class BaseTestCaseTestCase : CoreBaseTestCase
 	{
 		public override void TearDown()
 		{
@@ -73,7 +73,8 @@ namespace Castle.Core.Tests
 		[Test]
 		public void TearDown_DoesNotSaveAnything_IfNoProxyGenerated()
 		{
-			var path = ModuleScope.DEFAULT_FILE_NAME;
+			var path = ModuleScopeAssemblyNaming.GetCurrentFileName();
+
 			if (File.Exists(path))
 				File.Delete(path);
 

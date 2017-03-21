@@ -23,7 +23,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class NonProxiedMixinMethodsTestCase : BasePEVerifyTestCase
+	public class NonProxiedMixinMethodsTestCase : CoreBaseTestCase
 	{
 		private TType CreateProxyWithMixin<TType>(ProxyKind kind, params object[] mixins)
 		{

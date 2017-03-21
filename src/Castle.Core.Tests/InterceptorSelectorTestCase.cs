@@ -25,7 +25,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InterceptorSelectorTestCase : BasePEVerifyTestCase
+	public class InterceptorSelectorTestCase : CoreBaseTestCase
 	{
 		private interface PrivateInterface
 		{

@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class MixinTestCase : BasePEVerifyTestCase
+	public class MixinTestCase : CoreBaseTestCase
 	{
 		private class AssertInvocationInterceptor : StandardInterceptor
 		{

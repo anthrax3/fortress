@@ -18,7 +18,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.BugsReported
 {
 	[TestFixture]
-	public class DynProxy132 : BasePEVerifyTestCase
+	public class DynProxy132 : CoreBaseTestCase
 	{
 		[Test]
 		public void ShouldGenerateTypeWithIndexers()

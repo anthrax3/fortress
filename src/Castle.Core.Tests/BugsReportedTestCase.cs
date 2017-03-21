@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class BugsReportedTestCase : BasePEVerifyTestCase
+	public class BugsReportedTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void CallingProceedWithInterceptorOnAbstractMethodShouldThrowException()

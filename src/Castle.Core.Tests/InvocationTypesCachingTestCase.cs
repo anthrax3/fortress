@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InvocationTypesCachingTestCase : BasePEVerifyTestCase
+	public class InvocationTypesCachingTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void Should_not_share_invocations_for_interface_methods_when_one_is_IChangeProxyTarget()

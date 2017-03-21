@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2009 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,26 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
+using System.Runtime.CompilerServices;
 
-namespace Castle.Windsor.Tests.Components
-{
-	public class LoggingRepositoryDecorator<T> : IRepository<T>
-	{
-		public IRepository<T> inner;
+[assembly: InternalsVisibleTo("Castle.Core.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010077f5e87030dadccce6902c6adab7a987bd69cb5819991531f560785eacfc89b6fcddf6bb2a00743a7194e454c0273447fc6eec36474ba8e5a3823147d214298e4f9a631b1afee1a51ffeae4672d498f14b000e3d321453cdd8ac064de7e1cf4d222b7e81f54d4fd46725370d702a05b48738cc29d09228f1aa722ae1a9ca02fb")]
 
-		public LoggingRepositoryDecorator()
-		{
-		}
-
-		public LoggingRepositoryDecorator(IRepository<T> inner)
-		{
-			this.inner = inner;
-		}
-
-		public T Get(int id)
-		{
-			return inner.Get(id);
-		}
-	}
-}

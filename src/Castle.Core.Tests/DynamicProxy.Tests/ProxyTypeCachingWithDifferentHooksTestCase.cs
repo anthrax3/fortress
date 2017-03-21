@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class ProxyTypeCachingWithDifferentHooksTestCase : BasePEVerifyTestCase
+	public class ProxyTypeCachingWithDifferentHooksTestCase : CoreBaseTestCase
 	{
 		[Serializable]
 		public class CustomHook : AllMethodsHook

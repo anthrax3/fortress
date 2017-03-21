@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class BasicInterfaceProxyWithoutTargetTestCase : BasePEVerifyTestCase
+	public class BasicInterfaceProxyWithoutTargetTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void BasicInterfaceProxyWithValidTarget_ThrowsIfInterceptorCallsProceed()

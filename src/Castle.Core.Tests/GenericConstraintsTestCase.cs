@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class GenericConstraintsTestCase : BasePEVerifyTestCase
+	public class GenericConstraintsTestCase : CoreBaseTestCase
 	{
 		private T CreateProxyFor<T>(params IInterceptor[] interceptors) where T : class
 		{

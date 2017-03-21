@@ -26,7 +26,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class BasicInterfaceProxyTestCase : BasePEVerifyTestCase
+	public class BasicInterfaceProxyTestCase : CoreBaseTestCase
 	{
 		private ParameterInfo[] GetMyTestMethodParams(Type type)
 		{

@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class InterceptionRetryTestCase : BasePEVerifyTestCase
+	public class InterceptionRetryTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void Interceptor_can_proceed_multiple_times()

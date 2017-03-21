@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InheritedInterfacesTestCase : BasePEVerifyTestCase
+	public class InheritedInterfacesTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void InheritedInterfaceWithTarget()

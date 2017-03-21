@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
 	[TestFixture]
-	public class AttributesToAvoidReplicatingTestCase : BasePEVerifyTestCase
+	public class AttributesToAvoidReplicatingTestCase : CoreBaseTestCase
 	{
 		[NonInheritable]
 		public class AttributedClass_NonInheritable

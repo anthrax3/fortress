@@ -83,21 +83,22 @@ namespace Castle.Core.DynamicProxy
 		public void Initialize()
 		{
 			if (mixinData == null)
+			{
 				try
 				{
 					mixinData = new MixinData(mixins);
 				}
 				catch (ArgumentException ex)
 				{
-					throw new InvalidMixinConfigurationException(
-						"There is a problem with the mixins added to this ProxyGenerationOptions: " + ex.Message, ex);
+					throw new InvalidMixinConfigurationException("There is a problem with the mixins added to this ProxyGenerationOptions: " + ex.Message, ex);
 				}
+			}
 		}
 
 		public void AddMixinInstance(object instance)
 		{
 			if (instance == null)
-				throw new ArgumentNullException("instance");
+				throw new ArgumentNullException(nameof(instance));
 
 			if (mixins == null)
 				mixins = new List<object>();

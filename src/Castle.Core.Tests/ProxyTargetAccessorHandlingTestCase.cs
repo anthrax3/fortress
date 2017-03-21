@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class ProxyTargetAccessorHandlingTestCase : BasePEVerifyTestCase
+	public class ProxyTargetAccessorHandlingTestCase : CoreBaseTestCase
 	{
 		private ProxyGenerationOptions MixIn(object mixin)
 		{

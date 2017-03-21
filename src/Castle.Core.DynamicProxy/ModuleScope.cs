@@ -26,78 +26,60 @@ namespace Castle.Core.DynamicProxy
 {
 	public class ModuleScope
 	{
-		public static readonly string DEFAULT_FILE_NAME = "CastleDynProxy2.dll";
+        private readonly object synchronise = new object();
 
-		public static readonly string DEFAULT_ASSEMBLY_NAME = "DynamicProxyGenAssembly2";
+        private readonly bool disableSignedModule;
 
-		// Users of ModuleScope should use this lock when accessing the cache
-		private readonly bool disableSignedModule;
-
-		// Used to lock the module builder creation
-		private readonly object moduleLocker = new object();
-
-		// Specified whether the generated assemblies are intended to be saved
 		private readonly bool savePhysicalAssembly;
 
-		// The names to use for the generated assemblies and the paths (including the names) of their manifest modules
 		private readonly string strongAssemblyName;
+
 		private readonly string strongModulePath;
 
-		// Keeps track of generated types
-		private readonly Dictionary<CacheKey, Type> typeCache = new Dictionary<CacheKey, Type>();
 		private readonly string weakAssemblyName;
+
 		private readonly string weakModulePath;
 
-		public ModuleScope() : this(false, false)
+	    private readonly Dictionary<CacheKey, Type> typeCache = new Dictionary<CacheKey, Type>();
+
+        public ModuleScope() : this(false, false)
 		{
 		}
 
-		public ModuleScope(bool savePhysicalAssembly)
-			: this(savePhysicalAssembly, false)
+		public ModuleScope(bool savePhysicalAssembly) : this(savePhysicalAssembly, false)
 		{
 		}
 
 		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule)
-			: this(
-				savePhysicalAssembly, disableSignedModule, DEFAULT_ASSEMBLY_NAME, DEFAULT_FILE_NAME, DEFAULT_ASSEMBLY_NAME,
-				DEFAULT_FILE_NAME)
-		{
-		}
-
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, string strongAssemblyName,
-			string strongModulePath,
-			string weakAssemblyName, string weakModulePath)
-			: this(
-				savePhysicalAssembly, disableSignedModule, new NamingScope(), strongAssemblyName, strongModulePath, weakAssemblyName,
-				weakModulePath)
-		{
-		}
-
-		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule, INamingScope namingScope,
-			string strongAssemblyName, string strongModulePath,
-			string weakAssemblyName, string weakModulePath)
 		{
 			this.savePhysicalAssembly = savePhysicalAssembly;
-			this.disableSignedModule = disableSignedModule;
-			NamingScope = namingScope;
-			this.strongAssemblyName = strongAssemblyName;
-			this.strongModulePath = strongModulePath;
-			this.weakAssemblyName = weakAssemblyName;
-			this.weakModulePath = weakModulePath;
-		}
 
-		public INamingScope NamingScope { get; }
+            this.disableSignedModule = disableSignedModule;
+
+            NamingScope = new NamingScope();
+
+            this.strongAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+
+            this.strongModulePath = ModuleScopeAssemblyNaming.GetFileName();
+
+            this.weakAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+
+            this.weakModulePath = ModuleScopeAssemblyNaming.GetFileName();
+        }
+
+        public INamingScope NamingScope { get; }
 
 		public Lock Lock { get; } = Lock.Create();
 
 		public ModuleBuilder StrongNamedModule { get; private set; }
 
-		public string StrongNamedModuleName
-		{
-			get { return Path.GetFileName(strongModulePath); }
-		}
+	    public string StrongNamedModuleName => Path.GetFileName(strongModulePath);
 
-		public string StrongNamedModuleDirectory
+        public string StrongNamedModulePath => strongModulePath;
+
+	    public string StrongAssemblyName => strongAssemblyName;
+
+        public string StrongNamedModuleDirectory
 		{
 			get
 			{
@@ -110,12 +92,13 @@ namespace Castle.Core.DynamicProxy
 
 		public ModuleBuilder WeakNamedModule { get; private set; }
 
-		public string WeakNamedModuleName
-		{
-			get { return Path.GetFileName(weakModulePath); }
-		}
+		public string WeakNamedModuleName => Path.GetFileName(weakModulePath);
 
-		public string WeakNamedModuleDirectory
+        public string WeakNamedModulePath => weakModulePath;
+
+        public string WeakAssemblyName => weakAssemblyName;
+
+        public string WeakNamedModuleDirectory
 		{
 			get
 			{
@@ -143,9 +126,7 @@ namespace Castle.Core.DynamicProxy
 			using (var stream = typeof(ModuleScope).GetTypeInfo().Assembly.GetManifestResourceStream("Castle.Core.DynamicProxy.DynProxy.snk"))
 			{
 				if (stream == null)
-					throw new MissingManifestResourceException(
-						"Should have a Castle.Core.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
-
+					throw new MissingManifestResourceException("Should have a Castle.Core.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
 				var length = (int) stream.Length;
 				var keyPair = new byte[length];
 				stream.Read(keyPair, 0, length);
@@ -164,60 +145,57 @@ namespace Castle.Core.DynamicProxy
 		public ModuleBuilder ObtainDynamicModuleWithStrongName()
 		{
 			if (disableSignedModule)
-				throw new InvalidOperationException(
-					"Usage of signed module has been disabled. Use unsigned module or enable signed module.");
-			lock (moduleLocker)
-			{
-				if (StrongNamedModule == null)
-					StrongNamedModule = CreateModule(true);
-				return StrongNamedModule;
-			}
+				throw new InvalidOperationException("Usage of signed module has been disabled. Use unsigned module or enable signed module.");
+
+			if (StrongNamedModule == null)
+				StrongNamedModule = CreateModule(true);
+
+			return StrongNamedModule;
 		}
 
 		public ModuleBuilder ObtainDynamicModuleWithWeakName()
 		{
-			lock (moduleLocker)
-			{
-				if (WeakNamedModule == null)
-					WeakNamedModule = CreateModule(false);
-				return WeakNamedModule;
-			}
+			if (WeakNamedModule == null)
+				WeakNamedModule = CreateModule(false);
+			return WeakNamedModule;
 		}
 
 		private ModuleBuilder CreateModule(bool signStrongName)
 		{
-			var assemblyName = GetAssemblyName(signStrongName);
-			var moduleName = signStrongName ? StrongNamedModuleName : WeakNamedModuleName;
-			if (savePhysicalAssembly)
-			{
-				AssemblyBuilder assemblyBuilder;
-				try
-				{
-					assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-						assemblyName, AssemblyBuilderAccess.RunAndSave, signStrongName ? StrongNamedModuleDirectory : WeakNamedModuleDirectory);
-				}
-				catch (ArgumentException e)
-				{
-					if (signStrongName == false && e.StackTrace.Contains("ComputePublicKey") == false)
-						throw;
-					var message = string.Format(
-						"There was an error creating dynamic assembly for your proxies - you don't have permissions " +
-						"required to sign the assembly. To workaround it you can enforce generating non-signed assembly " +
-						"only when creating {0}. Alternatively ensure that your account has all the required permissions.",
-						GetType());
-					throw new ArgumentException(message, e);
-				}
-				var module = assemblyBuilder.DefineDynamicModule(moduleName, moduleName, false);
-				return module;
-			}
-			else
-			{
-				var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-					assemblyName, AssemblyBuilderAccess.Run);
+		    lock (synchronise)
+		    {
+		        var assemblyName = GetAssemblyName(signStrongName);
 
-				var module = assemblyBuilder.DefineDynamicModule(moduleName);
-				return module;
-			}
+		        var moduleName = signStrongName ? StrongNamedModuleName : WeakNamedModuleName;
+
+		        if (savePhysicalAssembly)
+		        {
+		            AssemblyBuilder assemblyBuilder;
+
+		            try
+		            {
+		                assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, signStrongName ? StrongNamedModuleDirectory : WeakNamedModuleDirectory);
+		            }
+		            catch (ArgumentException e)
+		            {
+		                if (signStrongName == false && e.StackTrace.Contains("ComputePublicKey") == false) throw;
+		                var message = $"There was an error creating dynamic assembly for your proxies - you don\'t have permissions required to sign the assembly. To workaround it you can enforce generating non-signed assembly only when creating {GetType()}. Alternatively ensure that your account has all the required permissions.";
+		                throw new ArgumentException(message, e);
+		            }
+
+		            var module = assemblyBuilder.DefineDynamicModule(moduleName, moduleName, false);
+
+		            return module;
+		        }
+		        else
+		        {
+		            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+
+		            var module = assemblyBuilder.DefineDynamicModule(moduleName);
+
+		            return module;
+		        }
+		    }
 		}
 
 		private AssemblyName GetAssemblyName(bool signStrongName)
@@ -259,34 +237,40 @@ namespace Castle.Core.DynamicProxy
 			if (!savePhysicalAssembly)
 				return null;
 
-			AssemblyBuilder assemblyBuilder;
-			string assemblyFileName;
-			string assemblyFilePath;
+		    lock (synchronise)
+		    {
+		        AssemblyBuilder assemblyBuilder;
+		        string assemblyFileName;
+		        string assemblyFilePath;
 
-			if (strongNamed)
-			{
-				if (StrongNamedModule == null)
-					throw new InvalidOperationException("No strong-named assembly has been generated.");
-				assemblyBuilder = (AssemblyBuilder) StrongNamedModule.Assembly;
-				assemblyFileName = StrongNamedModuleName;
-				assemblyFilePath = StrongNamedModule.FullyQualifiedName;
-			}
-			else
-			{
-				if (WeakNamedModule == null)
-					throw new InvalidOperationException("No weak-named assembly has been generated.");
-				assemblyBuilder = (AssemblyBuilder) WeakNamedModule.Assembly;
-				assemblyFileName = WeakNamedModuleName;
-				assemblyFilePath = WeakNamedModule.FullyQualifiedName;
-			}
+		        if (strongNamed)
+		        {
+		            if (StrongNamedModule == null)
+		                throw new InvalidOperationException("No strong-named assembly has been generated.");
 
-			if (File.Exists(assemblyFilePath))
-				File.Delete(assemblyFilePath);
+		            assemblyBuilder = (AssemblyBuilder) StrongNamedModule.Assembly;
+		            assemblyFileName = StrongNamedModuleName;
+		            assemblyFilePath = StrongNamedModule.FullyQualifiedName;
+		        }
+		        else
+		        {
+		            if (WeakNamedModule == null)
+		                throw new InvalidOperationException("No weak-named assembly has been generated.");
 
-			AddCacheMappings(assemblyBuilder);
+		            assemblyBuilder = (AssemblyBuilder) WeakNamedModule.Assembly;
+		            assemblyFileName = WeakNamedModuleName;
+		            assemblyFilePath = WeakNamedModule.FullyQualifiedName;
+		        }
 
-			assemblyBuilder.Save(assemblyFileName);
-			return assemblyFilePath;
+		        if (File.Exists(assemblyFilePath))
+		            File.Delete(assemblyFilePath);
+
+		        AddCacheMappings(assemblyBuilder);
+
+		        assemblyBuilder.Save(assemblyFileName);
+
+		        return assemblyFilePath;
+		    }
 		}
 
 		private void AddCacheMappings(AssemblyBuilder builder)
@@ -307,7 +291,7 @@ namespace Castle.Core.DynamicProxy
 		public void LoadAssemblyIntoCache(Assembly assembly)
 		{
 			if (assembly == null)
-				throw new ArgumentNullException("assembly");
+				throw new ArgumentNullException(nameof(assembly));
 
 			var cacheMappings =
 				(CacheMappingsAttribute[]) assembly.GetCustomAttributes(typeof(CacheMappingsAttribute), false);
@@ -317,7 +301,7 @@ namespace Castle.Core.DynamicProxy
 				var message = string.Format(
 					"The given assembly '{0}' does not contain any cache information for generated types.",
 					assembly.FullName);
-				throw new ArgumentException(message, "assembly");
+				throw new ArgumentException(message, nameof(assembly));
 			}
 
 			foreach (var mapping in cacheMappings[0].GetDeserializedMappings())

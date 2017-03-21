@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class OutRefParamsTestCase : BasePEVerifyTestCase
+	public class OutRefParamsTestCase : CoreBaseTestCase
 	{
 		public interface IClassHasMethodThrowException
 		{

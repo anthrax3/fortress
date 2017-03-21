@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Castle.Core.Tests
 {
 	[TestFixture]
-	public class InvocationTestCase : BasePEVerifyTestCase
+	public class InvocationTestCase : CoreBaseTestCase
 	{
 		[Test]
 		public void InvocationForConcreteClassProxy()
