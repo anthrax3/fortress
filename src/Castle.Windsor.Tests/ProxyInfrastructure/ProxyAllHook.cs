@@ -22,6 +22,8 @@ namespace Castle.Windsor.Tests.ProxyInfrastructure
 	{
 		public static int Instances;
 
+		private Guid instanceId = Guid.NewGuid();
+
 		public ProxyAllHook()
 		{
 			Instances++;
@@ -38,6 +40,34 @@ namespace Castle.Windsor.Tests.ProxyInfrastructure
 		public bool ShouldInterceptMethod(Type type, MethodInfo memberInfo)
 		{
 			return true;
+		}
+
+		protected bool Equals(ProxyAllHook other)
+		{
+			return instanceId.Equals(other.instanceId);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((ProxyAllHook) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return instanceId.GetHashCode();
+		}
+
+		public static bool operator ==(ProxyAllHook left, ProxyAllHook right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(ProxyAllHook left, ProxyAllHook right)
+		{
+			return !Equals(left, right);
 		}
 	}
 }
