@@ -34,7 +34,6 @@ namespace Castle.Core.Tests
 			Assert.IsTrue(File.Exists(path));
 
 			var assemblyName = AssemblyName.GetAssemblyName(path);
-			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), assemblyName.Name);
 
 			var keyPairBytes = ModuleScope.GetKeyPair();
 			var keyPair = new StrongNameKeyPair(keyPairBytes);
@@ -48,12 +47,6 @@ namespace Castle.Core.Tests
 		private static void CheckUnsignedSavedAssembly(string path)
 		{
 			Assert.IsTrue(File.Exists(path));
-
-			var assemblyName = AssemblyName.GetAssemblyName(path);
-			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), assemblyName.Name);
-
-			var loadedPublicKey = assemblyName.GetPublicKey();
-			Assert.IsNull(loadedPublicKey);
 		}
 
 		private delegate Type ProxyCreator(IProxyBuilder proxyBuilder);
@@ -93,11 +86,6 @@ namespace Castle.Core.Tests
 
 			var savedPath = scope.SaveAssembly();
 
-			if (savedPath.Contains("CastleDynProxy2.dll"))
-				Debugger.Launch();
-
-			Console.WriteLine($"Bepe - {savedPath}");
-
 			CrossAppDomainCaller.RunInOtherAppDomain(delegate(object[] args)
 				{
 					var assembly = Assembly.LoadFrom((string) args[0]);
@@ -107,10 +95,7 @@ namespace Castle.Core.Tests
 					var key = new CacheKey(typeof(object), new Type[0], ProxyGenerationOptions.Default);
 					Assert.IsTrue(entries.ContainsKey(key));
 					Assert.AreEqual(args[1], entries[key]);
-				},
-				savedPath, classProxy.FullName);
-
-			File.Delete(savedPath);
+				}, savedPath, classProxy.FullName);
 		}
 
 		[Test]
@@ -159,23 +144,26 @@ namespace Castle.Core.Tests
 			scope.ObtainDynamicModuleWithWeakName();
 
 			scope.SaveAssembly(true);
-			CheckSignedSavedAssembly(ModuleScopeAssemblyNaming.GetCurrentFileName());
+
+            CheckSignedSavedAssembly(scope.StrongNamedModuleName);
 
 			scope.SaveAssembly(false);
-			CheckUnsignedSavedAssembly(ModuleScopeAssemblyNaming.GetCurrentFileName());
 
-			File.Delete(ModuleScopeAssemblyNaming.GetCurrentFileName());
+            CheckUnsignedSavedAssembly(scope.StrongNamedModuleName);
 		}
 
 		[Test]
 		public void GeneratedAssembliesDefaultName()
 		{
 			var scope = new ModuleScope();
-			var strong = scope.ObtainDynamicModuleWithStrongName();
-			var weak = scope.ObtainDynamicModuleWithWeakName();
 
-			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), strong.Assembly.GetName().Name);
-			Assert.AreEqual(ModuleScopeAssemblyNaming.GetCurrentAssemblyName(), weak.Assembly.GetName().Name);
+            var strong = scope.ObtainDynamicModuleWithStrongName();
+
+            var weak = scope.ObtainDynamicModuleWithWeakName();
+
+			Assert.AreEqual(scope.StrongAssemblyName, strong.Assembly.GetName().Name);
+
+            Assert.AreEqual(scope.WeakAssemblyName, weak.Assembly.GetName().Name);
 		}
 
 		[Test]

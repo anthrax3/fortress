@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -27,9 +26,9 @@ namespace Castle.Core.DynamicProxy
 {
 	public class ModuleScope
 	{
-		private readonly bool disableSignedModule;
+        private readonly object synchronise = new object();
 
-		private readonly object moduleLocker = new object();
+        private readonly bool disableSignedModule;
 
 		private readonly bool savePhysicalAssembly;
 
@@ -37,55 +36,50 @@ namespace Castle.Core.DynamicProxy
 
 		private readonly string strongModulePath;
 
-		private readonly Dictionary<CacheKey, Type> typeCache = new Dictionary<CacheKey, Type>();
-
 		private readonly string weakAssemblyName;
 
 		private readonly string weakModulePath;
 
-		private ModuleBuilder _strongNamedModule;
+	    private readonly Dictionary<CacheKey, Type> typeCache = new Dictionary<CacheKey, Type>();
 
-		public ModuleScope() : this(false, false)
+        public ModuleScope() : this(false, false)
 		{
 		}
 
-		public ModuleScope(bool savePhysicalAssembly)
-			: this(savePhysicalAssembly, false)
+		public ModuleScope(bool savePhysicalAssembly) : this(savePhysicalAssembly, false)
 		{
 		}
 
 		public ModuleScope(bool savePhysicalAssembly, bool disableSignedModule)
 		{
 			this.savePhysicalAssembly = savePhysicalAssembly;
-			this.disableSignedModule = disableSignedModule;
-			NamingScope = new NamingScope();
-			this.strongAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
-			this.strongModulePath = ModuleScopeAssemblyNaming.GetFileName();
-			this.weakAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
-			this.weakModulePath = ModuleScopeAssemblyNaming.GetFileName();
-		}
 
-		public INamingScope NamingScope { get; }
+            this.disableSignedModule = disableSignedModule;
+
+            NamingScope = new NamingScope();
+
+            this.strongAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+
+            this.strongModulePath = ModuleScopeAssemblyNaming.GetFileName();
+
+            this.weakAssemblyName = ModuleScopeAssemblyNaming.GetAssemblyName();
+
+            this.weakModulePath = ModuleScopeAssemblyNaming.GetFileName();
+        }
+
+        public INamingScope NamingScope { get; }
 
 		public Lock Lock { get; } = Lock.Create();
 
-		public ModuleBuilder StrongNamedModule
-		{
-			get { return _strongNamedModule; }
-			private set
-			{
-				if (value.Name.Contains("CastleDynProxy2.dll"))
-					Debugger.Launch();
-				_strongNamedModule = value;
-			}
-		}
+		public ModuleBuilder StrongNamedModule { get; private set; }
 
-		public string StrongNamedModuleName
-		{
-			get { return Path.GetFileName(strongModulePath); }
-		}
+	    public string StrongNamedModuleName => Path.GetFileName(strongModulePath);
 
-		public string StrongNamedModuleDirectory
+        public string StrongNamedModulePath => strongModulePath;
+
+	    public string StrongAssemblyName => strongAssemblyName;
+
+        public string StrongNamedModuleDirectory
 		{
 			get
 			{
@@ -98,12 +92,13 @@ namespace Castle.Core.DynamicProxy
 
 		public ModuleBuilder WeakNamedModule { get; private set; }
 
-		public string WeakNamedModuleName
-		{
-			get { return Path.GetFileName(weakModulePath); }
-		}
+		public string WeakNamedModuleName => Path.GetFileName(weakModulePath);
 
-		public string WeakNamedModuleDirectory
+        public string WeakNamedModulePath => weakModulePath;
+
+        public string WeakAssemblyName => weakAssemblyName;
+
+        public string WeakNamedModuleDirectory
 		{
 			get
 			{
@@ -131,9 +126,7 @@ namespace Castle.Core.DynamicProxy
 			using (var stream = typeof(ModuleScope).GetTypeInfo().Assembly.GetManifestResourceStream("Castle.Core.DynamicProxy.DynProxy.snk"))
 			{
 				if (stream == null)
-					throw new MissingManifestResourceException(
-						"Should have a Castle.Core.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
-
+					throw new MissingManifestResourceException("Should have a Castle.Core.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
 				var length = (int) stream.Length;
 				var keyPair = new byte[length];
 				stream.Read(keyPair, 0, length);
@@ -154,54 +147,55 @@ namespace Castle.Core.DynamicProxy
 			if (disableSignedModule)
 				throw new InvalidOperationException("Usage of signed module has been disabled. Use unsigned module or enable signed module.");
 
-			lock (moduleLocker)
-			{
-				if (StrongNamedModule == null)
-					StrongNamedModule = CreateModule(true);
-				return StrongNamedModule;
-			}
+			if (StrongNamedModule == null)
+				StrongNamedModule = CreateModule(true);
+
+			return StrongNamedModule;
 		}
 
 		public ModuleBuilder ObtainDynamicModuleWithWeakName()
 		{
-			lock (moduleLocker)
-			{
-				if (WeakNamedModule == null)
-					WeakNamedModule = CreateModule(false);
-				return WeakNamedModule;
-			}
+			if (WeakNamedModule == null)
+				WeakNamedModule = CreateModule(false);
+			return WeakNamedModule;
 		}
 
 		private ModuleBuilder CreateModule(bool signStrongName)
 		{
-			var assemblyName = GetAssemblyName(signStrongName);
-			var moduleName = signStrongName ? StrongNamedModuleName : WeakNamedModuleName;
-			if (savePhysicalAssembly)
-			{
-				AssemblyBuilder assemblyBuilder;
-				try
-				{
-					assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-						assemblyName, AssemblyBuilderAccess.RunAndSave, signStrongName ? StrongNamedModuleDirectory : WeakNamedModuleDirectory);
-				}
-				catch (ArgumentException e)
-				{
-					if (signStrongName == false && e.StackTrace.Contains("ComputePublicKey") == false)
-						throw;
-					var message = $"There was an error creating dynamic assembly for your proxies - you don\'t have permissions required to sign the assembly. To workaround it you can enforce generating non-signed assembly only when creating {GetType()}. Alternatively ensure that your account has all the required permissions.";
-					throw new ArgumentException(message, e);
-				}
-				var module = assemblyBuilder.DefineDynamicModule(moduleName, moduleName, false);
-				return module;
-			}
-			else
-			{
-				var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-					assemblyName, AssemblyBuilderAccess.Run);
+		    lock (synchronise)
+		    {
+		        var assemblyName = GetAssemblyName(signStrongName);
 
-				var module = assemblyBuilder.DefineDynamicModule(moduleName);
-				return module;
-			}
+		        var moduleName = signStrongName ? StrongNamedModuleName : WeakNamedModuleName;
+
+		        if (savePhysicalAssembly)
+		        {
+		            AssemblyBuilder assemblyBuilder;
+
+		            try
+		            {
+		                assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, signStrongName ? StrongNamedModuleDirectory : WeakNamedModuleDirectory);
+		            }
+		            catch (ArgumentException e)
+		            {
+		                if (signStrongName == false && e.StackTrace.Contains("ComputePublicKey") == false) throw;
+		                var message = $"There was an error creating dynamic assembly for your proxies - you don\'t have permissions required to sign the assembly. To workaround it you can enforce generating non-signed assembly only when creating {GetType()}. Alternatively ensure that your account has all the required permissions.";
+		                throw new ArgumentException(message, e);
+		            }
+
+		            var module = assemblyBuilder.DefineDynamicModule(moduleName, moduleName, false);
+
+		            return module;
+		        }
+		        else
+		        {
+		            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+
+		            var module = assemblyBuilder.DefineDynamicModule(moduleName);
+
+		            return module;
+		        }
+		    }
 		}
 
 		private AssemblyName GetAssemblyName(bool signStrongName)
@@ -243,34 +237,40 @@ namespace Castle.Core.DynamicProxy
 			if (!savePhysicalAssembly)
 				return null;
 
-			AssemblyBuilder assemblyBuilder;
-			string assemblyFileName;
-			string assemblyFilePath;
+		    lock (synchronise)
+		    {
+		        AssemblyBuilder assemblyBuilder;
+		        string assemblyFileName;
+		        string assemblyFilePath;
 
-			if (strongNamed)
-			{
-				if (StrongNamedModule == null)
-					throw new InvalidOperationException("No strong-named assembly has been generated.");
-				assemblyBuilder = (AssemblyBuilder) StrongNamedModule.Assembly;
-				assemblyFileName = StrongNamedModuleName;
-				assemblyFilePath = StrongNamedModule.FullyQualifiedName;
-			}
-			else
-			{
-				if (WeakNamedModule == null)
-					throw new InvalidOperationException("No weak-named assembly has been generated.");
-				assemblyBuilder = (AssemblyBuilder) WeakNamedModule.Assembly;
-				assemblyFileName = WeakNamedModuleName;
-				assemblyFilePath = WeakNamedModule.FullyQualifiedName;
-			}
+		        if (strongNamed)
+		        {
+		            if (StrongNamedModule == null)
+		                throw new InvalidOperationException("No strong-named assembly has been generated.");
 
-			if (File.Exists(assemblyFilePath))
-				File.Delete(assemblyFilePath);
+		            assemblyBuilder = (AssemblyBuilder) StrongNamedModule.Assembly;
+		            assemblyFileName = StrongNamedModuleName;
+		            assemblyFilePath = StrongNamedModule.FullyQualifiedName;
+		        }
+		        else
+		        {
+		            if (WeakNamedModule == null)
+		                throw new InvalidOperationException("No weak-named assembly has been generated.");
 
-			AddCacheMappings(assemblyBuilder);
+		            assemblyBuilder = (AssemblyBuilder) WeakNamedModule.Assembly;
+		            assemblyFileName = WeakNamedModuleName;
+		            assemblyFilePath = WeakNamedModule.FullyQualifiedName;
+		        }
 
-			assemblyBuilder.Save(assemblyFileName);
-			return assemblyFilePath;
+		        if (File.Exists(assemblyFilePath))
+		            File.Delete(assemblyFilePath);
+
+		        AddCacheMappings(assemblyBuilder);
+
+		        assemblyBuilder.Save(assemblyFileName);
+
+		        return assemblyFilePath;
+		    }
 		}
 
 		private void AddCacheMappings(AssemblyBuilder builder)

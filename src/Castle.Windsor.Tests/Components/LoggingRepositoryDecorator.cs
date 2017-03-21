@@ -31,7 +31,6 @@ namespace Castle.Windsor.Tests.Components
 
 		public T Get(int id)
 		{
-			Console.WriteLine("Getting {0}", id);
 			return inner.Get(id);
 		}
 	}

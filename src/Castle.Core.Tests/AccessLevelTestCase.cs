@@ -46,7 +46,7 @@ namespace Castle.Core.Tests
 			}
 			finally
 			{
-				ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport = false;
+				ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport = true;
 			}
 		}
 

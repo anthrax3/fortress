@@ -24,7 +24,7 @@ namespace Castle.Core.DynamicProxy
 
 		public static string GetCurrentFileName()
 		{
-			if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport)
+            if (ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport)
 			{
 				return _currentFileName;
 			}
