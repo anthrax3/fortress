@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..</RootPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">NET45-Debug</Configuration>
@@ -44,6 +45,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);$(BuildConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
@@ -441,7 +448,6 @@
     <Compile Include="LoggingFacility\Facilities77.cs" />
     <Compile Include="LoggingFacility\NullFacilityTest.cs" />
     <Compile Include="LoggingFacility\OverrideLoggerTest.cs" />
-    <Compile Include="LoggingFacility\TraceFacilityTest.cs" />
     <Compile Include="IsDefaultTestCase.cs" />
     <Compile Include="MessageChannel.cs" />
     <Compile Include="MicroKernel\CustomStringComparer.cs" />

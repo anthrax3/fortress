@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..</RootPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
@@ -95,6 +95,12 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
@@ -230,6 +236,7 @@
     <Compile Include="ISomething.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="LevelFilteredLoggerInstance.cs" />
+    <Compile Include="Listener.cs" />
     <Compile Include="LoggingTests.cs" />
     <Compile Include="LogHook.cs" />
     <Compile Include="Marker.cs" />
@@ -491,7 +498,6 @@
       <DependentUpon>TestRes.resx</DependentUpon>
     </Compile>
     <Compile Include="StreamLoggerTests.cs" />
-    <Compile Include="TraceLoggerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core.Tests\Resources\file1.txt">
