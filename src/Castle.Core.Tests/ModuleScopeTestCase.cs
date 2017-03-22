@@ -169,8 +169,7 @@ namespace Castle.Core.Tests
 		[Test]
 		public void LoadAssemblyIntoCache_CreateClassProxy()
 		{
-			CheckLoadAssemblyIntoCache(
-				builder => builder.CreateClassProxyType(typeof(object), null, ProxyGenerationOptions.Default));
+			CheckLoadAssemblyIntoCache(builder => builder.CreateClassProxyType(typeof(object), null, ProxyGenerationOptions.Default));
 		}
 
 		[Test]
