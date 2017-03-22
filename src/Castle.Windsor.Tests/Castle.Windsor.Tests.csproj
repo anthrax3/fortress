@@ -536,20 +536,8 @@
 		<ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="PresentationCore" />
-		<Reference Include="PresentationFramework" />
-		<Reference Include="System.Windows" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="System.Xaml" />
-		<Reference Include="WindowsBase" />
 		<Reference Include="NUnit">
 			<HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
-		</Reference>
-		<Reference Include="log4net">
-			<HintPath>..\..\packages\log4net\lib\net45-full\log4net.dll</HintPath>
-		</Reference>
-		<Reference Include="NLog">
-			<HintPath>..\..\packages\NLog\lib\net45\NLog.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<Import Project="..\..\.paket\Paket.Restore.targets" />
