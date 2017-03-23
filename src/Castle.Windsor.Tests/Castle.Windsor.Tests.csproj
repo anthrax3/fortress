@@ -539,5 +539,4 @@
 			<HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-	<Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
