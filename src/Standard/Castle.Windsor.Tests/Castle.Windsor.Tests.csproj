@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;netstandard1.6</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
+    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
+    <ProjectReference Include="..\Castle.Facilities.EventWiring\Castle.Facilities.EventWiring.csproj" />
+    <ProjectReference Include="..\Castle.Facilities.FactorySupport\Castle.Facilities.FactorySupport.csproj" />
+    <ProjectReference Include="..\Castle.Facilities.Logging\Castle.Facilities.Logging.csproj" />
+    <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="NUnit">
+      <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

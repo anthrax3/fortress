@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;netstandard1.6</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
+    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="NUnit">
+      <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
