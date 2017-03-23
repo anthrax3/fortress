@@ -1,4 +1,4 @@
-framework: net461
+framework: net462
 
 source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 source https://dotnet.myget.org/F/cli-deps/api/v3/index.json

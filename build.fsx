@@ -1,10 +1,39 @@
 ﻿#r "packages/fake/tools/FakeLib.dll"
+#r "System.Management.Automation"
 
 open Fake
 open Fake.Testing.NUnit3
+open System
+open System.Management.Automation
+
+let logo = "Fortress: "
+let solution = "Castle.Windsor.sln"
+let projectFiles = "src/**/*.csproj"
+let testAssemblies = "src/**/bin/Debug/**/Castle.*.Tests.dll"
+let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
+let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
+
+Target "Install" ignore
+
+Target "InstallDotNetCli" <| fun _ -> 
+    PowerShell.Create()
+        .AddScript(". { iwr -useb https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1 } | iex; install")
+        .Invoke()
+        |> Seq.iter (printfn "%O")
+    setEnvironVar "DOTNET_CLI_TELEMETRY_OPTOUT" "1"
+    printf "%sdotnet cli is now available at '%s'" logo dotNetCli
+
+Target "InstallDotNetPackages" <| fun _ -> 
+    !! projectFiles
+    |> Seq.iter (fun p ->
+        let result = directExec (fun info ->
+                info.FileName <- dotNetCli
+                info.Arguments <- (sprintf "restore %s" p))
+        if result <> true then 
+            failwithf "%sdotnet restore failed\r\n" logo)
 
 Target "Build" <| fun _ ->
-    tracef "Castle.Windsor: C# Build\r\n"
+    tracef "%sC# Build\r\n" logo
     let setParams defaults =
             { defaults with
                 Verbosity = Some(Quiet)
@@ -16,19 +45,23 @@ Target "Build" <| fun _ ->
                         "Configuration", "Debug"
                     ]
              }
-    build setParams "Castle.Windsor.sln"
+    build setParams solution
           |> DoNothing
 
 Target "Test" <| fun _ ->
-    tracef "Castle.Windsor: Running Unit Tests\r\n"
-    !! ("src/**/bin/Debug/**/Castle.*.Tests.dll")
+    tracef "%sRunning Unit Tests\r\n" logo
+    !! testAssemblies
     |> NUnit3 (fun p ->
         {p with
             ShadowCopy = false
-            ToolPath = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe" })
-    trace "##teamcity[importData type='nunit' path='.\TestResults.xml']"
+            ToolPath = testRunnerCli })
 
-"Build"
+"InstallDotNetCli"
+    ==> "InstallDotNetPackages"
+    ==> "Install"
+
+"Install"
+    ==> "Build"
     ==> "Test"
 
 RunTargetOrDefault "Build"

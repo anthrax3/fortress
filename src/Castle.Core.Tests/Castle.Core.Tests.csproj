@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<TargetFrameworks>net462</TargetFrameworks>
-		<SignAssembly>True</SignAssembly>
-		<AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworks>net462</TargetFrameworks>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_APPDOMAIN;NET45</DefineConstants>
@@ -24,10 +24,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
-	<Reference Include="NUnit">
+    <Reference Include="NUnit">
       <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-	<Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
