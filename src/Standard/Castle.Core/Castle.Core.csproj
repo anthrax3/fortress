@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net462;netstandard1.6;netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
 </Project>
