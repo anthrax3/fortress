@@ -9,7 +9,7 @@ open System.Management.Automation
 let logo = "Fortress: "
 let solution = "Castle.Windsor.sln"
 let projectFiles = "src/**/*.csproj"
-let testAssemblies = "src/Desktop/bin/**/Castle.*.Tests.dll"
+let testAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
