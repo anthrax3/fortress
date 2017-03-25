@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
   </PropertyGroup>
@@ -14,4 +14,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
+  
 </Project>
