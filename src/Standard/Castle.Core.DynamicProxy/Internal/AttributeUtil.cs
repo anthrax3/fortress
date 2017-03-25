@@ -39,7 +39,7 @@ namespace Castle.Core.DynamicProxy.Internal
 			FieldInfo[] fields;
 			object[] fieldValues;
 			GetSettersAndFields(
-				null,
+                attribute.AttributeType,
 				attribute.NamedArguments, out properties, out propertyValues, out fields, out fieldValues);
 
 			return new CustomAttributeInfo(constructor,

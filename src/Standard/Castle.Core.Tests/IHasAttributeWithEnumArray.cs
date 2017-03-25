@@ -1,0 +1,14 @@
+namespace Castle.Core.Tests
+{
+	[AttributeWithEnumArrayArgument(SomeByteEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeSbyteEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeShortEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeUshortEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeIntEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeUintEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeLongEnumForAttributeWithEnumArrayArgument.Special)]
+	[AttributeWithEnumArrayArgument(SomeUlongEnumForAttributeWithEnumArrayArgument.Special)]
+	public interface IHasAttributeWithEnumArray
+	{
+	}
+}

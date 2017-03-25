@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
   </PropertyGroup>
@@ -6,4 +6,5 @@
     <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
+  
 </Project>
