@@ -9,7 +9,8 @@ open System.Management.Automation
 let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
-let testAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
+let desktopTestAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
+let standardTestAssemblies = "src/Standard/Castle.*.Tests/*.csproj"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
@@ -48,18 +49,32 @@ Target "Build" <| fun _ ->
     build setParams solution
           |> DoNothing
 
-Target "Test" <| fun _ ->
+Target "Test" ignore
+
+Target "TestDesktop" <| fun _ ->
     tracef "%sRunning Unit Tests\r\n" logo
-    !! testAssemblies
+    !! desktopTestAssemblies
     |> NUnit3 (fun p ->
         {p with
             ShadowCopy = false
             ToolPath = testRunnerCli })
 
+Target "TestStandard" <| fun _ -> 
+    !! standardTestAssemblies
+    |> Seq.iter (fun p ->
+        let result = directExec (fun info ->
+                info.FileName <- dotNetCli
+                info.Arguments <- (sprintf "test %s" p))
+        if result <> true then 
+            failwithf "%sdotnet test failed\r\n" logo)
+
 "InstallDotNetCli"
     ==> "InstallDotNetPackages"
     ==> "Install"
 
+"TestDesktop"
+    ==> "Test"
+ 
 "Install"
     ==> "Build"
     ==> "Test"

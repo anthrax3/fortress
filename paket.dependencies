@@ -6,4 +6,4 @@ source https://api.nuget.org/v3/index.json
 
 nuget FAKE
 nuget NUnit
-nuget NUnit.ConsoleRunner
+nuget NUnit.Console
