@@ -72,11 +72,11 @@ Target "TestStandard" <| fun _ ->
     ==> "InstallDotNetPackages"
     ==> "Install"
 
-"TestDesktop"
-    ==> "Test"
- 
 "Install"
     ==> "Build"
     ==> "Test"
 
+"TestDesktop"
+    ==> "Test"
+ 
 RunTargetOrDefault "Build"
