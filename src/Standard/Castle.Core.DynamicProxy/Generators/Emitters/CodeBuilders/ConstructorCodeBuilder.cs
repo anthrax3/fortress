@@ -15,6 +15,7 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
+using Castle.Core.DynamicProxy.Extensions;
 using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders

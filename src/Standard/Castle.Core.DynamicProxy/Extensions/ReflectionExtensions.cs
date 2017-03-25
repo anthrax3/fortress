@@ -11,8 +11,10 @@ namespace Castle.Core.DynamicProxy.Extensions
             if (binder != null) throw new NotSupportedException("Parameter binder must be null.");
             if (modifiers != null) throw new NotSupportedException("Parameter modifiers must be null.");
 
-            return type.GetTypeInfo().GetConstructors(bindingAttr)
-                .SingleOrDefault(ctor => ctor.GetParameters().Select(p => p.ParameterType).SequenceEqual(types));
+            return type.GetTypeInfo()
+                .GetConstructors(bindingAttr)
+                .SingleOrDefault(ctor => ctor.GetParameters().Select(p => p.ParameterType)
+                .SequenceEqual(types));
         }
     }
 }

@@ -14,198 +14,182 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Castle.Core.DynamicProxy.Internal;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters
 {
-	internal class GenericUtil
-	{
-		public static GenericTypeParameterBuilder[] CopyGenericArguments(
-			MethodInfo methodToCopyGenericsFrom,
-			TypeBuilder builder,
-			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
-		{
-			return
-				CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType,
-					builder.DefineGenericParameters);
-		}
+    internal class GenericUtil
+    {
+        public static GenericTypeParameterBuilder[] CopyGenericArguments(
+            MethodInfo methodToCopyGenericsFrom,
+            TypeBuilder builder,
+            Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
+        {
+            return CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType, builder.DefineGenericParameters);
+        }
 
-		public static GenericTypeParameterBuilder[] CopyGenericArguments(
-			MethodInfo methodToCopyGenericsFrom,
-			MethodBuilder builder,
-			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
-		{
-			return
-				CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType,
-					builder.DefineGenericParameters);
-		}
+        public static GenericTypeParameterBuilder[] CopyGenericArguments(
+            MethodInfo methodToCopyGenericsFrom,
+            MethodBuilder builder,
+            Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
+        {
+            return CopyGenericArguments(methodToCopyGenericsFrom, name2GenericType, builder.DefineGenericParameters);
+        }
 
-		public static Type ExtractCorrectType(Type paramType, Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
-		{
-			if (paramType.GetTypeInfo().IsArray)
-			{
-				var rank = paramType.GetArrayRank();
+        public static Type ExtractCorrectType(Type paramType, Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
+        {
+            if (paramType.GetTypeInfo().IsArray)
+            {
+                var rank = paramType.GetArrayRank();
 
-				var underlyingType = paramType.GetElementType();
+                var underlyingType = paramType.GetElementType();
 
-				if (underlyingType.GetTypeInfo().IsGenericParameter)
-				{
-					GenericTypeParameterBuilder genericType;
-					if (name2GenericType.TryGetValue(underlyingType.Name, out genericType) == false)
-						return paramType;
+                if (underlyingType.GetTypeInfo().IsGenericParameter)
+                {
+                    GenericTypeParameterBuilder genericType;
+                    if (name2GenericType.TryGetValue(underlyingType.Name, out genericType) == false)
+                        return paramType;
 
-					if (rank == 1)
-						return genericType.MakeArrayType();
-					return genericType.MakeArrayType(rank);
-				}
-				if (rank == 1)
-					return underlyingType.MakeArrayType();
-				return underlyingType.MakeArrayType(rank);
-			}
+                    if (rank == 1)
+                        return genericType.MakeArrayType();
+                    return genericType.MakeArrayType(rank);
+                }
+                if (rank == 1)
+                    return underlyingType.MakeArrayType();
+                return underlyingType.MakeArrayType(rank);
+            }
 
-			if (paramType.GetTypeInfo().IsGenericParameter)
-			{
-				GenericTypeParameterBuilder value;
-				if (name2GenericType.TryGetValue(paramType.Name, out value))
-					return value.AsType();
-			}
+            if (paramType.GetTypeInfo().IsGenericParameter)
+            {
+                GenericTypeParameterBuilder value;
+                if (name2GenericType.TryGetValue(paramType.Name, out value))
+                    return value.AsType();
+            }
 
-			return paramType;
-		}
+            return paramType;
+        }
 
-		public static Type[] ExtractParametersTypes(
-			ParameterInfo[] baseMethodParameters,
-			Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
-		{
-			var newParameters = new Type[baseMethodParameters.Length];
+        public static Type[] ExtractParametersTypes(
+            ParameterInfo[] baseMethodParameters,
+            Dictionary<string, GenericTypeParameterBuilder> name2GenericType)
+        {
+            var newParameters = new Type[baseMethodParameters.Length];
 
-			for (var i = 0; i < baseMethodParameters.Length; i++)
-			{
-				var param = baseMethodParameters[i];
-				var paramType = param.ParameterType;
+            for (var i = 0; i < baseMethodParameters.Length; i++)
+            {
+                var param = baseMethodParameters[i];
+                var paramType = param.ParameterType;
 
-				newParameters[i] = ExtractCorrectType(paramType, name2GenericType);
-			}
+                newParameters[i] = ExtractCorrectType(paramType, name2GenericType);
+            }
 
-			return newParameters;
-		}
+            return newParameters;
+        }
 
-		public static Dictionary<string, GenericTypeParameterBuilder> GetGenericArgumentsMap(AbstractTypeEmitter parentEmitter)
-		{
-			if (parentEmitter.GenericTypeParams == null || parentEmitter.GenericTypeParams.Length == 0)
-				return new Dictionary<string, GenericTypeParameterBuilder>(0);
+        public static Dictionary<string, GenericTypeParameterBuilder> GetGenericArgumentsMap(AbstractTypeEmitter parentEmitter)
+        {
+            if (parentEmitter.GenericTypeParams == null || parentEmitter.GenericTypeParams.Length == 0)
+                return new Dictionary<string, GenericTypeParameterBuilder>(0);
 
-			var name2GenericType = new Dictionary<string, GenericTypeParameterBuilder>(parentEmitter.GenericTypeParams.Length);
-			foreach (var genType in parentEmitter.GenericTypeParams)
-				name2GenericType.Add(genType.Name, genType);
-			return name2GenericType;
-		}
+            var name2GenericType = new Dictionary<string, GenericTypeParameterBuilder>(parentEmitter.GenericTypeParams.Length);
+            foreach (var genType in parentEmitter.GenericTypeParams)
+                name2GenericType.Add(genType.Name, genType);
+            return name2GenericType;
+        }
 
-		private static Type AdjustConstraintToNewGenericParameters(
-			Type constraint, MethodInfo methodToCopyGenericsFrom, Type[] originalGenericParameters,
-			GenericTypeParameterBuilder[] newGenericParameters)
-		{
-			if (constraint.GetTypeInfo().IsGenericType)
-			{
-				var genericArgumentsOfConstraint = constraint.GetGenericArguments();
+        private static Type AdjustConstraintToNewGenericParameters(
+            Type constraint, MethodInfo methodToCopyGenericsFrom, Type[] originalGenericParameters,
+            GenericTypeParameterBuilder[] newGenericParameters)
+        {
+            if (constraint.GetTypeInfo().IsGenericType)
+            {
+                var genericArgumentsOfConstraint = constraint.GetTypeInfo().GetGenericArguments();
 
-				for (var i = 0; i < genericArgumentsOfConstraint.Length; ++i)
-					genericArgumentsOfConstraint[i] =
-						AdjustConstraintToNewGenericParameters(genericArgumentsOfConstraint[i], methodToCopyGenericsFrom,
-							originalGenericParameters, newGenericParameters);
-				return constraint.GetGenericTypeDefinition().MakeGenericType(genericArgumentsOfConstraint);
-			}
-			if (constraint.GetTypeInfo().IsGenericParameter)
-				if (constraint.GetTypeInfo().DeclaringMethod != null)
-				{
-					// constraint comes from the method
-					var index = Array.IndexOf(originalGenericParameters, constraint);
-					Trace.Assert(index != -1,
-						"When a generic method parameter has a constraint on another method parameter, both parameters must be declared on the same method.");
-					return newGenericParameters[index].AsType();
-				}
-				else // parameter from surrounding type
-				{
-					Trace.Assert(constraint.DeclaringType.GetTypeInfo().IsGenericTypeDefinition);
-					Trace.Assert(methodToCopyGenericsFrom.DeclaringType.GetTypeInfo().IsGenericType
-					             && constraint.DeclaringType == methodToCopyGenericsFrom.DeclaringType.GetGenericTypeDefinition(),
-						"When a generic method parameter has a constraint on a generic type parameter, the generic type must be the declaring typer of the method.");
+                for (var i = 0; i < genericArgumentsOfConstraint.Length; ++i)
+                    genericArgumentsOfConstraint[i] =
+                        AdjustConstraintToNewGenericParameters(genericArgumentsOfConstraint[i], methodToCopyGenericsFrom,
+                            originalGenericParameters, newGenericParameters);
+                return constraint.GetGenericTypeDefinition().MakeGenericType(genericArgumentsOfConstraint);
+            }
+            if (constraint.GetTypeInfo().IsGenericParameter)
+                if (constraint.GetTypeInfo().DeclaringMethod != null)
+                {
+                    // constraint comes from the method
+                    var index = Array.IndexOf(originalGenericParameters, constraint);
+                    //Trace.Assert(index != -1, "When a generic method parameter has a constraint on another method parameter, both parameters must be declared on the same method.");
+                    return newGenericParameters[index].AsType();
+                }
+                else // parameter from surrounding type
+                {
+                    // Trace.Assert(constraint.DeclaringType.GetTypeInfo().IsGenericTypeDefinition);
+                    // Trace.Assert(methodToCopyGenericsFrom.DeclaringType.GetTypeInfo().IsGenericType && constraint.DeclaringType == methodToCopyGenericsFrom.DeclaringType.GetGenericTypeDefinition(), "When a generic method parameter has a constraint on a generic type parameter, the generic type must be the declaring typer of the method.");
+                    var index = Array.IndexOf(constraint.DeclaringType.GetTypeInfo().GetGenericArguments(), constraint);
+                    //Trace.Assert(index != -1, "The generic parameter comes from the given type.");
+                    return methodToCopyGenericsFrom.DeclaringType.GetTypeInfo().GetGenericArguments()[index]; // these are the actual, concrete types
+                }
+            return constraint;
+        }
 
-					var index = Array.IndexOf(constraint.DeclaringType.GetGenericArguments(), constraint);
-					Trace.Assert(index != -1, "The generic parameter comes from the given type.");
-					return methodToCopyGenericsFrom.DeclaringType.GetGenericArguments()[index]; // these are the actual, concrete types
-				}
-			return constraint;
-		}
+        private static Type[] AdjustGenericConstraints(MethodInfo methodToCopyGenericsFrom, GenericTypeParameterBuilder[] newGenericParameters, Type[] originalGenericArguments, Type[] constraints)
+        {
+            // HACK: the mono runtime has a strange bug where assigning to the constraints
+            //       parameter and returning it throws, so we'll create a new array.
+            //       System.ArrayTypeMismatchException : Source array type cannot be assigned to destination array type.
+            var adjustedConstraints = new Type[constraints.Length];
+            for (var i = 0; i < constraints.Length; i++)
+                adjustedConstraints[i] = AdjustConstraintToNewGenericParameters(constraints[i],
+                    methodToCopyGenericsFrom, originalGenericArguments, newGenericParameters);
+            return adjustedConstraints;
+        }
 
-		private static Type[] AdjustGenericConstraints(MethodInfo methodToCopyGenericsFrom,
-			GenericTypeParameterBuilder[] newGenericParameters,
-			Type[] originalGenericArguments,
-			Type[] constraints)
-		{
-			// HACK: the mono runtime has a strange bug where assigning to the constraints
-			//       parameter and returning it throws, so we'll create a new array.
-			//       System.ArrayTypeMismatchException : Source array type cannot be assigned to destination array type.
-			var adjustedConstraints = new Type[constraints.Length];
-			for (var i = 0; i < constraints.Length; i++)
-				adjustedConstraints[i] = AdjustConstraintToNewGenericParameters(constraints[i],
-					methodToCopyGenericsFrom, originalGenericArguments, newGenericParameters);
-			return adjustedConstraints;
-		}
+        private static GenericTypeParameterBuilder[] CopyGenericArguments(MethodInfo methodToCopyGenericsFrom, Dictionary<string, GenericTypeParameterBuilder> name2GenericType, ApplyGenArgs genericParameterGenerator)
+        {
+            var originalGenericArguments = methodToCopyGenericsFrom.GetGenericArguments();
+            if (originalGenericArguments.Length == 0)
+                return null;
 
-		private static GenericTypeParameterBuilder[] CopyGenericArguments(
-			MethodInfo methodToCopyGenericsFrom,
-			Dictionary<string, GenericTypeParameterBuilder> name2GenericType,
-			ApplyGenArgs genericParameterGenerator)
-		{
-			var originalGenericArguments = methodToCopyGenericsFrom.GetGenericArguments();
-			if (originalGenericArguments.Length == 0)
-				return null;
+            var argumentNames = GetArgumentNames(originalGenericArguments);
+            var newGenericParameters = genericParameterGenerator(argumentNames);
 
-			var argumentNames = GetArgumentNames(originalGenericArguments);
-			var newGenericParameters = genericParameterGenerator(argumentNames);
+            for (var i = 0; i < newGenericParameters.Length; i++)
+            {
+                try
+                {
+                    var attributes = originalGenericArguments[i].GetTypeInfo().GenericParameterAttributes;
+                    newGenericParameters[i].SetGenericParameterAttributes(attributes);
+                    var constraints = AdjustGenericConstraints(methodToCopyGenericsFrom, newGenericParameters, originalGenericArguments, originalGenericArguments[i].GetTypeInfo().GetGenericParameterConstraints());
 
-			for (var i = 0; i < newGenericParameters.Length; i++)
-			{
-				try
-				{
-					var attributes = originalGenericArguments[i].GetTypeInfo().GenericParameterAttributes;
-					newGenericParameters[i].SetGenericParameterAttributes(attributes);
-					var constraints = AdjustGenericConstraints(methodToCopyGenericsFrom, newGenericParameters, originalGenericArguments, originalGenericArguments[i].GetTypeInfo().GetGenericParameterConstraints());
+                    newGenericParameters[i].SetInterfaceConstraints(constraints);
+                    CopyNonInheritableAttributes(newGenericParameters[i], originalGenericArguments[i]);
+                }
+                catch (NotSupportedException)
+                {
+                    // Doesnt matter
 
-					newGenericParameters[i].SetInterfaceConstraints(constraints);
-					CopyNonInheritableAttributes(newGenericParameters[i], originalGenericArguments[i]);
-				}
-				catch (NotSupportedException)
-				{
-					// Doesnt matter
+                    newGenericParameters[i].SetGenericParameterAttributes(GenericParameterAttributes.None);
+                }
 
-					newGenericParameters[i].SetGenericParameterAttributes(GenericParameterAttributes.None);
-				}
+                name2GenericType[argumentNames[i]] = newGenericParameters[i];
+            }
 
-				name2GenericType[argumentNames[i]] = newGenericParameters[i];
-			}
+            return newGenericParameters;
+        }
 
-			return newGenericParameters;
-		}
+        private static void CopyNonInheritableAttributes(GenericTypeParameterBuilder newGenericParameter, Type originalGenericArgument)
+        {
+            foreach (var attribute in originalGenericArgument.GetTypeInfo().GetNonInheritableAttributes())
+                newGenericParameter.SetCustomAttribute(attribute.Builder);
+        }
 
-		private static void CopyNonInheritableAttributes(GenericTypeParameterBuilder newGenericParameter,
-			Type originalGenericArgument)
-		{
-			foreach (var attribute in originalGenericArgument.GetTypeInfo().GetNonInheritableAttributes())
-				newGenericParameter.SetCustomAttribute(attribute.Builder);
-		}
+        private static string[] GetArgumentNames(Type[] originalGenericArguments)
+        {
+            var argumentNames = new string[originalGenericArguments.Length];
 
-		private static string[] GetArgumentNames(Type[] originalGenericArguments)
-		{
-			var argumentNames = new string[originalGenericArguments.Length];
-
-			for (var i = 0; i < argumentNames.Length; i++)
-				argumentNames[i] = originalGenericArguments[i].Name;
-			return argumentNames;
-		}
-	}
+            for (var i = 0; i < argumentNames.Length; i++)
+                argumentNames[i] = originalGenericArguments[i].Name;
+            return argumentNames;
+        }
+    }
 }

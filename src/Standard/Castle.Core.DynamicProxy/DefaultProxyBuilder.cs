@@ -100,7 +100,7 @@ namespace Castle.Core.DynamicProxy
 					target.GetBestName(), type.GetBestName()));
 			if (IsPublic(type) == false && IsAccessible(type) == false)
 				throw new GeneratorException(ExceptionMessageBuilder.CreateMessageForInaccessibleType(type, target));
-			foreach (var typeArgument in type.GetGenericArguments())
+			foreach (var typeArgument in type.GetTypeInfo().GetGenericArguments())
 				AssertValidTypeForTarget(typeArgument, target);
 		}
 

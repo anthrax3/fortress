@@ -26,20 +26,17 @@ namespace Castle.Core.DynamicProxy.Generators
 		public static MethodInfo[] GetAllInstanceMethods(Type type, BindingFlags flags)
 		{
 			if ((flags & ~(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) != 0)
-				throw new ArgumentException("MethodFinder only supports the Public, NonPublic, and Instance binding flags.", "flags");
+				throw new ArgumentException("MethodFinder only supports the Public, NonPublic, and Instance binding flags.", nameof(flags));
 
 			MethodInfo[] methodsInCache;
 
 			lock (lockObject)
 			{
 				if (!cachedMethodInfosByType.ContainsKey(type))
-					cachedMethodInfosByType.Add(
-						type,
-						RemoveDuplicates(type.GetMethods(
-							BindingFlags.Public | BindingFlags.NonPublic
-							| BindingFlags.Instance)));
+					cachedMethodInfosByType.Add(type,RemoveDuplicates(type.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)));
 				methodsInCache = (MethodInfo[]) cachedMethodInfosByType[type];
 			}
+
 			return MakeFilteredCopy(methodsInCache, flags & (BindingFlags.Public | BindingFlags.NonPublic));
 		}
 

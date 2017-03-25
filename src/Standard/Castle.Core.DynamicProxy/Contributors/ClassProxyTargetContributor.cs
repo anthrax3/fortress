@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.DynamicProxy.Generators.Emitters;
 using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.Core.DynamicProxy.Internal;
 using Castle.Core.DynamicProxy.Tokens;
 
 namespace Castle.Core.DynamicProxy.Contributors

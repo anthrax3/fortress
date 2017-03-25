@@ -63,8 +63,6 @@ namespace Castle.Core.DynamicProxy.Generators
 
 			ImplemementInvokeMethodOnTarget(invocation, methodInfo.GetParameters(), targetField, callback);
 
-			invocation.DefineCustomAttribute<SerializableAttribute>();
-
 			return invocation;
 		}
 

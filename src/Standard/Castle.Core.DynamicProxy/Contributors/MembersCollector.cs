@@ -73,14 +73,14 @@ namespace Castle.Core.DynamicProxy.Contributors
 
 		private void CollectProperties(IProxyGenerationHook hook)
 		{
-			var propertiesFound = type.GetProperties(Flags);
+			var propertiesFound = type.GetTypeInfo().GetProperties(Flags);
 			foreach (var property in propertiesFound)
 				AddProperty(property, hook);
 		}
 
 		private void CollectEvents(IProxyGenerationHook hook)
 		{
-			var eventsFound = type.GetEvents(Flags);
+			var eventsFound = type.GetTypeInfo().GetEvents(Flags);
 			foreach (var @event in eventsFound)
 				AddEvent(@event, hook);
 		}

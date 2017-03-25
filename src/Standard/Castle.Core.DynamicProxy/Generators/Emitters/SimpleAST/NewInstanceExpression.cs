@@ -44,7 +44,7 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 				exp.Emit(member, gen);
 
 			if (constructor == null)
-				constructor = type.GetConstructor(constructorArgs);
+				constructor = type.GetTypeInfo().GetConstructor(constructorArgs);
 
 			if (constructor == null)
 				throw new ProxyGenerationException("Could not find constructor matching specified arguments");

@@ -41,7 +41,7 @@ namespace Castle.Core.DynamicProxy.Internal
 			if (type == null)
 				throw new ArgumentNullException("type");
 
-			Debug.Assert(proxiedMethod.DeclaringType.IsAssignableFrom(type),
+			Debug.Assert(proxiedMethod.DeclaringType.GetTypeInfo().IsAssignableFrom(type),
 				"proxiedMethod.DeclaringType.IsAssignableFrom(type)");
 			using (var locker = @lock.ForReadingUpgradeable())
 			{

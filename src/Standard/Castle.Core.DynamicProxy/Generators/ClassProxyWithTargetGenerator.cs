@@ -108,8 +108,6 @@ namespace Castle.Core.DynamicProxy.Generators
 					AddMapping(@interface, additionalInterfacesContributor, typeImplementerMapping);
 				}
 			// 4. plus special interfaces
-			if (targetType.IsSerializable)
-				AddMappingForISerializable(typeImplementerMapping, proxyInstance);
 			try
 			{
 				AddMappingNoCheck(typeof(IProxyTargetAccessor), proxyInstance, typeImplementerMapping);
@@ -132,13 +130,12 @@ namespace Castle.Core.DynamicProxy.Generators
 		private FieldReference CreateTargetField(ClassEmitter emitter)
 		{
 			var targetField = emitter.CreateField("__target", targetType);
-			emitter.DefineCustomAttributeFor<XmlIgnoreAttribute>(targetField);
 			return targetField;
 		}
 
 		private void EnsureDoesNotImplementIProxyTargetAccessor(Type type, string name)
 		{
-			if (!typeof(IProxyTargetAccessor).IsAssignableFrom(type))
+			if (!typeof(IProxyTargetAccessor).GetTypeInfo().IsAssignableFrom(type))
 				return;
 			var message =
 				string.Format(

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Castle.Core.DynamicProxy
 {
@@ -31,7 +32,7 @@ namespace Castle.Core.DynamicProxy
 
 				foreach (var mixin in mixinInstances)
 				{
-					var mixinInterfaces = mixin.GetType().GetInterfaces();
+					var mixinInterfaces = mixin.GetType().GetTypeInfo().GetInterfaces();
 
 					foreach (var inter in mixinInterfaces)
 					{
@@ -44,6 +45,7 @@ namespace Castle.Core.DynamicProxy
 								inter.FullName,
 								interface2Mixin[inter].GetType().Name,
 								mixin.GetType().Name);
+
 							throw new ArgumentException(message, "mixinInstances");
 						}
 

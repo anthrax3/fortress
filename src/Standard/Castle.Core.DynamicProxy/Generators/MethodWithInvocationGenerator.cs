@@ -49,7 +49,6 @@ namespace Castle.Core.DynamicProxy.Generators
 				namingScope.GetUniqueName(string.Format("interceptors_{0}", method.Name)),
 				typeof(IInterceptor[]),
 				false);
-			@class.DefineCustomAttributeFor<XmlIgnoreAttribute>(methodInterceptors);
 			return methodInterceptors;
 		}
 
@@ -57,10 +56,10 @@ namespace Castle.Core.DynamicProxy.Generators
 		{
 			var invocationType = invocation;
 
-			Trace.Assert(MethodToOverride.IsGenericMethod == invocationType.GetTypeInfo().IsGenericTypeDefinition);
+			//Trace.Assert(MethodToOverride.IsGenericMethod == invocationType.GetTypeInfo().IsGenericTypeDefinition);
 			var genericArguments = Type.EmptyTypes;
 
-			var constructor = invocation.GetConstructors()[0];
+			var constructor = invocation.GetTypeInfo().GetConstructors()[0];
 
 			Expression proxiedMethodTokenExpression;
 			if (MethodToOverride.IsGenericMethod)

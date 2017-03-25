@@ -14,57 +14,48 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.Remoting;
 
 namespace Castle.Core.DynamicProxy
 {
-	public class ProxyUtil
-	{
-		public static object GetUnproxiedInstance(object instance)
-		{
-			if (!RemotingServices.IsTransparentProxy(instance))
-			{
-				var accessor = instance as IProxyTargetAccessor;
-				if (accessor != null)
-					instance = accessor.DynProxyGetTarget();
-			}
+    public class ProxyUtil
+    {
+        public static object GetUnproxiedInstance(object instance)
+        {
+            var accessor = instance as IProxyTargetAccessor;
+            if (accessor != null)
+                instance = accessor.DynProxyGetTarget();
 
-			return instance;
-		}
+            return instance;
+        }
 
-		public static Type GetUnproxiedType(object instance)
-		{
-			if (!RemotingServices.IsTransparentProxy(instance))
-			{
-				var accessor = instance as IProxyTargetAccessor;
+        public static Type GetUnproxiedType(object instance)
+        {
+            var accessor = instance as IProxyTargetAccessor;
 
-				if (accessor != null)
-				{
-					var target = accessor.DynProxyGetTarget();
+            if (accessor != null)
+            {
+                var target = accessor.DynProxyGetTarget();
 
-					if (target != null)
-					{
-						if (ReferenceEquals(target, instance))
-							return instance.GetType().GetTypeInfo().BaseType;
+                if (target != null)
+                {
+                    if (ReferenceEquals(target, instance))
+                        return instance.GetType().GetTypeInfo().BaseType;
 
-						instance = target;
-					}
-				}
-			}
+                    instance = target;
+                }
+            }
 
-			return instance.GetType();
-		}
+            return instance.GetType();
+        }
 
-		public static bool IsProxy(object instance)
-		{
-			if (RemotingServices.IsTransparentProxy(instance))
-				return true;
-			return instance is IProxyTargetAccessor;
-		}
+        public static bool IsProxy(object instance)
+        {
+            return instance is IProxyTargetAccessor;
+        }
 
-		public static bool IsProxyType(Type type)
-		{
-			return typeof(IProxyTargetAccessor).IsAssignableFrom(type);
-		}
-	}
+        public static bool IsProxyType(Type type)
+        {
+            return typeof(IProxyTargetAccessor).GetTypeInfo().IsAssignableFrom(type);
+        }
+    }
 }

@@ -44,7 +44,7 @@ namespace Castle.Core.DynamicProxy.Contributors
 
 		public MethodInfo GetCallbackMethod()
 		{
-			return delegateType.GetMethod("Invoke");
+			return delegateType.GetTypeInfo().GetMethod("Invoke");
 		}
 
 		public MethodInvocationExpression GetCallbackMethodInvocation(AbstractTypeEmitter invocation, Expression[] args,

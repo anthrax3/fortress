@@ -32,9 +32,9 @@ namespace Castle.Core.DynamicProxy.Internal
 			Type[] constructorArgTypes;
 			object[] constructorArgs;
 			GetArguments(attribute.ConstructorArguments, out constructorArgTypes, out constructorArgs);
-			var constructor = attribute.Constructor;
+            var constructor = attribute.AttributeType.GetTypeInfo().GetConstructor(constructorArgTypes);
 
-			PropertyInfo[] properties;
+            PropertyInfo[] properties;
 			object[] propertyValues;
 			FieldInfo[] fields;
 			object[] fieldValues;
@@ -91,19 +91,21 @@ namespace Castle.Core.DynamicProxy.Internal
 			var propertyValuesList = new List<object>();
 			var fieldList = new List<FieldInfo>();
 			var fieldValuesList = new List<object>();
-			foreach (var argument in namedArguments)
-				if (argument.MemberInfo.MemberType == MemberTypes.Field)
-				{
-					fieldList.Add(argument.MemberInfo as FieldInfo);
-					fieldValuesList.Add(ReadAttributeValue(argument.TypedValue));
-				}
-				else
-				{
-					propertyList.Add(argument.MemberInfo as PropertyInfo);
-					propertyValuesList.Add(ReadAttributeValue(argument.TypedValue));
-				}
+		    foreach (var argument in namedArguments)
+		    {
+                if (argument.IsField)
+                {
+                    fieldList.Add(attributeType.GetTypeInfo().GetField(argument.MemberName));
+                    fieldValuesList.Add(ReadAttributeValue(argument.TypedValue));
+                }
+                else
+                {
+                    propertyList.Add(attributeType.GetTypeInfo().GetProperty(argument.MemberName));
+                    propertyValuesList.Add(ReadAttributeValue(argument.TypedValue));
+                }
+            }
 
-			properties = propertyList.ToArray();
+		    properties = propertyList.ToArray();
 			propertyValues = propertyValuesList.ToArray();
 			fields = fieldList.ToArray();
 			fieldValues = fieldValuesList.ToArray();
@@ -183,7 +185,7 @@ namespace Castle.Core.DynamicProxy.Internal
 
 		public static CustomAttributeInfo CreateInfo<TAttribute>() where TAttribute : Attribute, new()
 		{
-			var constructor = typeof(TAttribute).GetConstructor(Type.EmptyTypes);
+			var constructor = typeof(TAttribute).GetTypeInfo().GetConstructor(Type.EmptyTypes);
 			Debug.Assert(constructor != null, "constructor != null");
 
 			return new CustomAttributeInfo(constructor, new object[0]);
@@ -192,10 +194,10 @@ namespace Castle.Core.DynamicProxy.Internal
 		public static CustomAttributeInfo CreateInfo(Type attribute, object[] constructorArguments)
 		{
 			Debug.Assert(attribute != null, "attribute != null");
-			Debug.Assert(typeof(Attribute).IsAssignableFrom(attribute), "typeof(Attribute).IsAssignableFrom(attribute)");
+			Debug.Assert(typeof(Attribute).GetTypeInfo().IsAssignableFrom(attribute), "typeof(Attribute).IsAssignableFrom(attribute)");
 			Debug.Assert(constructorArguments != null, "constructorArguments != null");
 
-			var constructor = attribute.GetConstructor(GetTypes(constructorArguments));
+			var constructor = attribute.GetTypeInfo().GetConstructor(GetTypes(constructorArguments));
 			Debug.Assert(constructor != null, "constructor != null");
 
 			return new CustomAttributeInfo(constructor, constructorArguments);

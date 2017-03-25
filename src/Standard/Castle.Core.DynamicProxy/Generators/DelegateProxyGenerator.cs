@@ -51,8 +51,6 @@ namespace Castle.Core.DynamicProxy.Generators
 			// 2. then mixins - we support none so we do nothing
 			// 3. then additional interfaces - we support none so we do nothing
 			// 4. plus special interfaces
-			if (targetType.IsSerializable)
-				AddMappingForISerializable(typeImplementerMapping, proxyInstance);
 			AddMappingNoCheck(typeof(IProxyTargetAccessor), proxyInstance, typeImplementerMapping);
 
 			contributors = new List<ITypeContributor>
@@ -66,7 +64,6 @@ namespace Castle.Core.DynamicProxy.Generators
 		private FieldReference CreateTargetField(ClassEmitter emitter)
 		{
 			var targetField = emitter.CreateField("__target", targetType);
-			emitter.DefineCustomAttributeFor<XmlIgnoreAttribute>(targetField);
 			return targetField;
 		}
 

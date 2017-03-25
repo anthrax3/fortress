@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
@@ -30,8 +31,9 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
 
 		public override void Emit(IMemberEmitter member, ILGenerator gen)
 		{
-			var ci = exceptionType.GetConstructor(new[] {typeof(string)});
-			var constRef = new ConstReference(errorMessage);
+			var ci = exceptionType.GetTypeInfo().GetConstructor(new[] {typeof(string)});
+
+            var constRef = new ConstReference(errorMessage);
 
 			var creationStmt = new NewInstanceExpression(ci, constRef.ToExpression());
 

@@ -36,7 +36,7 @@ namespace Castle.Core.DynamicProxy.Internal
 			while (currentType != typeof(object))
 			{
 				Debug.Assert(currentType != null);
-				var currentFields = currentType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				var currentFields = currentType.GetTypeInfo().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 				fields.AddRange(currentFields);
 				currentType = currentType.GetTypeInfo().BaseType;
 			}
@@ -60,7 +60,7 @@ namespace Castle.Core.DynamicProxy.Internal
 					if (interfaces.Add(type) == false)
 						continue;
 
-				var innerInterfaces = type.GetInterfaces();
+				var innerInterfaces = type.GetTypeInfo().GetInterfaces();
 				for (var i = 0; i < innerInterfaces.Length; i++)
 				{
 					var @interface = innerInterfaces[i];
@@ -83,7 +83,7 @@ namespace Castle.Core.DynamicProxy.Internal
 
 			if (parameter.GetTypeInfo().IsGenericType)
 			{
-				var arguments = parameter.GetGenericArguments();
+				var arguments = parameter.GetTypeInfo().GetGenericArguments();
 				if (CloseGenericParametersIfAny(type, arguments))
 					return parameter.GetGenericTypeDefinition().MakeGenericType(arguments);
 			}
@@ -143,7 +143,7 @@ namespace Castle.Core.DynamicProxy.Internal
 		{
 			var flags = additionalFlags | BindingFlags.Static;
 
-			var field = type.GetField(fieldName, flags);
+			var field = type.GetTypeInfo().GetField(fieldName, flags);
 			if (field == null)
 				throw new ProxyGenerationException(string.Format(
 					"Could not find field named '{0}' on type {1}. This is likely a bug in DynamicProxy. Please report it.",

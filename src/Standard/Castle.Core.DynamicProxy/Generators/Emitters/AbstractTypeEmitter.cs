@@ -274,8 +274,8 @@ namespace Castle.Core.DynamicProxy.Generators.Emitters
 		{
 			try
 			{
-				return type.CreateType();
-			}
+                return type.CreateTypeInfo().AsType();
+            }
 			catch (BadImageFormatException ex)
 			{
 				if (Debugger.IsAttached == false)
