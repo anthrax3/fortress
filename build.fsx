@@ -7,7 +7,7 @@ open System
 open System.Management.Automation
 
 let logo = "Fortress: "
-let solution = "Castle.Windsor.sln"
+let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
 let testAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"

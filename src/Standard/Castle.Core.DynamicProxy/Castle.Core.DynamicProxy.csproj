@@ -3,6 +3,15 @@
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="DynProxy.snk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
 </Project>
