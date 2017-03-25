@@ -14,6 +14,8 @@
 
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Castle.Core")] 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 [assembly: InternalsVisibleTo(Castle.Core.Core.Internal.InternalsVisible.ToCastleCore)]
 [assembly: InternalsVisibleTo(Castle.Core.Core.Internal.InternalsVisible.ToDynamicProxyGenAssembly2)]
 [assembly: InternalsVisibleTo(Castle.Core.DynamicProxy.Internal.InternalsVisible.ToCastleCoreDynamicProxy)]

@@ -74,9 +74,9 @@ namespace Castle.Core.Tests
 
         // Not sure how to deal with this 
 		[Fact]
-		public void AdditionalInterfaces_method(ProxyKind kind)
+		public void AdditionalInterfaces_method()
 		{
-			var proxy = CreateProxyWithAdditionalInterface<IWithRefOut>(kind);
+			var proxy = CreateProxyWithAdditionalInterface<IWithRefOut>(ProxyKind.WithTargetInterface);
 			var result = -1;
 			proxy.Do(out result);
 			Assert.Equal(0, result);

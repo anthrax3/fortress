@@ -35,8 +35,7 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void ClassWithGenMethodOnly()
 		{
-			var proxy =
-				generator.CreateClassProxy<OnlyGenMethodsClass>(logger);
+			var proxy = generator.CreateClassProxy<OnlyGenMethodsClass>(logger);
 
 			Assert.NotNull(proxy);
 
@@ -49,8 +48,7 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void GenericMethodArgumentsAndTypeGenericArgumentsWithSameName()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassNameClash<List<object>, List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassNameClash<List<object>, List<object>>>(logger);
 
 			Assert.NotNull(proxy);
 
@@ -110,8 +108,7 @@ namespace Castle.Core.Tests
 		public void MethodInfoClosedInGenTypeNongenMethodRefTypeRefType()
 		{
 			var interceptor = new KeepDataInterceptor();
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(interceptor);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(interceptor);
 
 			proxy.DoSomethingT();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(List<object>));
@@ -124,8 +121,7 @@ namespace Castle.Core.Tests
 		public void MethodInfoClosedInGenTypeNongenMethodValueTypeRefType()
 		{
 			var interceptor = new KeepDataInterceptor();
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<int, List<object>>>(interceptor);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<int, List<object>>>(interceptor);
 
 			proxy.DoSomethingT();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(int));
@@ -220,8 +216,7 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArguments()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
 
 			Assert.NotNull(proxy);
 
@@ -235,8 +230,7 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArgumentsWithConstraints()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethodsConstrained<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethodsConstrained<List<object>>>(logger);
 
 			Assert.NotNull(proxy);
 
@@ -250,8 +244,7 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArgumentsWithOneNotDefinedOnType()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
 
 			Assert.NotNull(proxy);
 
@@ -267,24 +260,22 @@ namespace Castle.Core.Tests
 		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericReturn()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(logger);
 
 			Assert.NotNull(proxy);
 
 			object ret1 = proxy.DoSomethingT();
 			object ret2 = proxy.DoSomethingZ();
 
-			Assert.Equal(typeof(List<object>), ret1);
-			Assert.Equal(typeof(List<object>), ret2);
+			Assert.IsType<List<object>>(ret1);
+			Assert.IsType<List<object>>(ret2);
 			Assert.Equal("DoSomethingT DoSomethingZ ", logger.LogContents);
 		}
 
 		[Fact]
 		public void ProxyWithGenericArgumentsWithBaseGenericClass()
 		{
-			var proxy =
-				generator.CreateClassProxy<SubClassWithGenArgs<int, string, int>>(logger);
+			var proxy = generator.CreateClassProxy<SubClassWithGenArgs<int, string, int>>(logger);
 
 			Assert.NotNull(proxy);
 

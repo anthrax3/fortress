@@ -95,7 +95,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Found cached proxy type Castle.Proxies.IEmptyInterfaceProxy " +
-			                                                      "for target type Castle.Core.Tests.LoggingTestCase+IEmptyInterface."));
+			                                                      "for target type Castle.Core.Tests.Logging1TestCase+IEmptyInterface."));
 		}
 
 		[Fact]
@@ -125,9 +125,9 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Excluded non-overridable method ClassMethod on " +
-			                                                      "Castle.Core.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
+			                                                      "Castle.Core.Tests.Logging1TestCase+NonVirtualMethodClass because it cannot be intercepted."));
 			Assert.True(logger.RecordedMessage(LoggerLevel.Debug, "Excluded non-overridable method InterfaceMethod on " +
-			                                                      "Castle.Core.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
+			                                                      "Castle.Core.Tests.Logging1TestCase+NonVirtualMethodClass because it cannot be intercepted."));
 		}
 
 		[Fact]
@@ -146,7 +146,7 @@ namespace Castle.Core.Tests
 
 			// Assert
 			Assert.True(logger.RecordedMessage(LoggerLevel.Warn, "The IProxyGenerationHook type " +
-			                                                     "Castle.Core.Tests.LoggingTestCase+EmptyHook does not override both Equals and GetHashCode. " +
+			                                                     "Castle.Core.Tests.Logging1TestCase+EmptyHook does not override both Equals and GetHashCode. " +
 			                                                     "If these are not correctly overridden caching will fail to work causing performance problems."));
 		}
 	}

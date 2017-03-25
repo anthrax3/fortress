@@ -224,9 +224,9 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 		{
 			AssertAttributes(typeof(ISymmetricAdditiveInherited),
 				new AdditiveInheritedAttribute {Id = "Original"},
-				new AdditiveInheritedAttribute {Id = "Override1"},
-				new AdditiveInheritedAttribute {Id = "Override2"}
-			);
+				new AdditiveInheritedAttribute {Id = "Override2"},
+                new AdditiveInheritedAttribute { Id = "Override1" }
+            );
 		}
 
 		[Fact]
