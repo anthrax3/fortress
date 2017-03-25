@@ -1,14 +1,13 @@
 using System;
 using Castle.Core.Core.Logging;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class Logging2TestCase
 	{
-		[SetUp]
-		public void SetUp()
+		public Logging2TestCase()
 		{
 			logger = new LevelFilteredLoggerInstance(this);
 
@@ -37,19 +36,19 @@ namespace Castle.Core.Tests
 
 		private void ValidateCall(LoggerLevel expectedLevel, string expectedMessage, Exception expectedException)
 		{
-			Assert.AreEqual(1, calls, "LevelFilteredLogger.Log was not called the right number of times");
-			Assert.AreEqual(expectedLevel, level, "LevelFilteredLogger.Log was not called with the right level");
-			Assert.AreEqual(expectedMessage, message, "LevelFilteredLogger.Log was not called with the right message");
-			Assert.AreSame(expectedException, exception, "LevelFilteredLogger.Log was not called with the right exception");
-			Assert.AreEqual("unnamed", name, "LevelFilteredLogger.Log was not called with the right name");
+			Assert.Equal(1, calls);
+			Assert.Equal(expectedLevel, level);
+			Assert.Equal(expectedMessage, message);
+			Assert.Same(expectedException, exception);
+			Assert.Equal("unnamed", name);
 		}
 
 		private void ValidateNoCalls()
 		{
-			Assert.AreEqual(0, calls, "LevelFilteredLogger.Log was called with logging " + logger.Level);
+			Assert.Equal(0, calls);
 		}
 
-		[Test]
+		[Fact]
 		public void Debug()
 		{
 			var message = "Debug message";
@@ -61,7 +60,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -72,7 +71,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void DebugLevelDebugWithArgs()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -83,7 +82,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void DebugLevelDebugWithException()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -94,7 +93,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Debug, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelError()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -104,7 +103,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelErrorWithArgs()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -114,7 +113,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelErrorWithException()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -125,7 +124,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -135,7 +134,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelFatalWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -145,7 +144,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelFatalWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -156,7 +155,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -166,7 +165,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelInfoWithArgs()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -176,7 +175,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelInfoWithException()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -187,7 +186,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -197,7 +196,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelOffWithArgs()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -207,7 +206,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelOffWithException()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -218,7 +217,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -228,7 +227,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelWarnWithArgs()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -238,7 +237,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugLevelWarnWithException()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -249,7 +248,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void DebugWithArgs()
 		{
 			var message = "Debug message 3";
@@ -261,7 +260,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void DebugWithException()
 		{
 			var message = "Debug message 2";
@@ -273,7 +272,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Error()
 		{
 			var message = "Error message";
@@ -286,7 +285,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void ErrorLevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -296,7 +295,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelDebugWithArgs()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -307,7 +306,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void ErrorLevelDebugWithException()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -318,7 +317,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelError()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -328,7 +327,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelErrorWithArgs()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -338,7 +337,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelErrorWithException()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -349,7 +348,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -359,7 +358,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelFatalWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -369,7 +368,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelFatalWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -380,7 +379,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -390,7 +389,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelInfoWithArgs()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -400,7 +399,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelInfoWithException()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -411,7 +410,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -421,7 +420,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelOffWithArgs()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -431,7 +430,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelOffWithException()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -442,7 +441,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -452,7 +451,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelWarnWithArgs()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -462,7 +461,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorLevelWarnWithException()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -473,7 +472,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Error, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorWithArgs()
 		{
 			var message = "Error message 3";
@@ -485,7 +484,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorWithException()
 		{
 			var message = "Error message 2";
@@ -497,7 +496,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalError()
 		{
 			var message = "FatalError message";
@@ -510,7 +509,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -521,7 +520,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelDebugWithArgs()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -532,7 +531,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelDebugWithException()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -543,7 +542,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelError()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -553,7 +552,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelErrorWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -563,7 +562,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelErrorWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -574,7 +573,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -584,7 +583,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelFatalWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -594,7 +593,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelFatalWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -605,7 +604,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -615,7 +614,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelInfoWithArgs()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -625,7 +624,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelInfoWithException()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -636,7 +635,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -646,7 +645,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelOffWithArgs()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -656,7 +655,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelOffWithException()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -667,7 +666,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -677,7 +676,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelWarnWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -687,7 +686,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorLevelWarnWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -698,7 +697,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Fatal, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorWithArgs()
 		{
 			var message = "FatalError message 3";
@@ -710,7 +709,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorWithException()
 		{
 			var message = "FatalError message 2";
@@ -722,7 +721,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Info()
 		{
 			var message = "Info message";
@@ -735,7 +734,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void InfoLevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -746,7 +745,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void InfoLevelDebugWithArgs()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -757,7 +756,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void InfoLevelDebugWithException()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -768,7 +767,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Info, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelError()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -778,7 +777,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelErrorWithArgs()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -788,7 +787,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelErrorWithException()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -799,7 +798,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -809,7 +808,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelFatalWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -819,7 +818,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelFatalWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -830,7 +829,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -840,7 +839,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Info, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelInfoWithArgs()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -850,7 +849,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Info, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelInfoWithException()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -861,7 +860,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Info, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -871,7 +870,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelOffWithArgs()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -881,7 +880,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelOffWithException()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -892,7 +891,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -902,7 +901,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelWarnWithArgs()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -912,7 +911,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLevelWarnWithException()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -923,7 +922,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void InfoWithArgs()
 		{
 			var message = "Info message 3";
@@ -935,7 +934,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoWithException()
 		{
 			var message = "Info message 2";
@@ -947,7 +946,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Warn()
 		{
 			var message = "Warn message";
@@ -960,7 +959,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void WarnLevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -971,7 +970,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void WarnLevelDebugWithArgs()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -982,7 +981,7 @@ namespace Castle.Core.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void WarnLevelDebugWithException()
 		{
 			logger.Level = LoggerLevel.Debug;
@@ -993,7 +992,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelError()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -1003,7 +1002,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelErrorWithArgs()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -1013,7 +1012,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelErrorWithException()
 		{
 			logger.Level = LoggerLevel.Error;
@@ -1024,7 +1023,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -1034,7 +1033,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelFatalWithArgs()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -1044,7 +1043,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelFatalWithException()
 		{
 			logger.Level = LoggerLevel.Fatal;
@@ -1055,7 +1054,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -1065,7 +1064,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelInfoWithArgs()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -1075,7 +1074,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelInfoWithException()
 		{
 			logger.Level = LoggerLevel.Info;
@@ -1086,7 +1085,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -1096,7 +1095,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelOffWithArgs()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -1106,7 +1105,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelOffWithException()
 		{
 			logger.Level = LoggerLevel.Off;
@@ -1117,7 +1116,7 @@ namespace Castle.Core.Tests
 			ValidateNoCalls();
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -1127,7 +1126,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelWarnWithArgs()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -1137,7 +1136,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", null);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLevelWarnWithException()
 		{
 			logger.Level = LoggerLevel.Warn;
@@ -1148,7 +1147,7 @@ namespace Castle.Core.Tests
 			ValidateCall(LoggerLevel.Warn, "Test", exception);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnWithArgs()
 		{
 			var message = "Warn message 3";
@@ -1160,7 +1159,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnWithException()
 		{
 			var message = "Warn message 2";

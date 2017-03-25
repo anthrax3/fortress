@@ -14,14 +14,14 @@
 
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class InterceptionRetryTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void Interceptor_can_proceed_multiple_times()
 		{
 			var interceptor = new ProceedNTimesInterceptor(3);
@@ -30,10 +30,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			proxy.Method();
 
-			Assert.AreEqual(3, target.Count);
+			Assert.Equal(3, target.Count);
 		}
 
-		[Test]
+		[Fact]
 		public void Interceptor_can_proceed_multiple_times_after_exception_from_within()
 		{
 			var interceptor = new ProceedNTimesInterceptor(5);

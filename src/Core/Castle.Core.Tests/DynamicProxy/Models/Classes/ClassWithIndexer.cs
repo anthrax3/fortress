@@ -12,11 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
 using Castle.Core.Tests.GenClasses;
+using Castle.Core.Tests.InterClasses;
 
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
-	public class ClassWithIndexer : ClassWithIndexer<string, int>
+    public class ClassWithIndexer : InterfaceWithIndexer
+    {
+        public object this[int index]
+        {
+            get { return index; }
+            set { }
+        }
+    }
+
+    public class ClassWithIndexer<TKey, TVal>
+    {
+        private Dictionary<TKey, TVal> map = new Dictionary<TKey, TVal>();
+
+        public virtual TVal this[TKey key]
+        {
+            get { return map[key]; }
+            set
+            {
+                if (map.ContainsKey(key))
+                    map[key] = value;
+                else
+                    map.Add(key, value);
+            }
+        }
+
+    }
+
+    public class ClassWithIndexerInheritsGeneric : ClassWithIndexer<string, int>
 	{
 	}
 }

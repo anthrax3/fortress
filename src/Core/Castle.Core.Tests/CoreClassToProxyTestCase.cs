@@ -13,14 +13,14 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.BugsReported
 {
-	[TestFixture]
 	public class CoreClassToProxyTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void ShouldGenerateTypeWithIndexers()
 		{
 			Assert.Throws<InvalidProxyConstructorArgumentsException>(delegate { generator.CreateClassProxy(typeof(Core40ClassToProxy), new object[] {null, null, null}); });

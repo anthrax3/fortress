@@ -21,90 +21,90 @@ using Castle.Core.DynamicProxy;
 using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Mixins;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class ClassProxyWithTargetTestCase : CoreBaseTestCase
 	{
 		private class PrivateClass
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_class_with_no_default_ctor()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(typeof(VirtualClassWithNoDefaultCtor),
 				new VirtualClassWithNoDefaultCtor(42),
 				new object[] {12});
 			var result = ((VirtualClassWithNoDefaultCtor) proxy).Method();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-170")]
 		public void Can_proxy_class_with_protected_generic_method()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new ClassWithProtectedGenericMethod(42));
 			var result = proxy.PublicMethod<int>();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-170")]
 		public void Can_proxy_class_with_protected_method()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new ClassWithProtectedMethod(42));
 			var result = proxy.PublicMethod();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_class_with_two_protected_methods_differing_by_return_type()
 		{
 			generator.CreateClassProxyWithTarget(new HasTwoProtectedMethods());
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_generic_class()
 		{
 			generator.CreateClassProxyWithTarget(new List<object>());
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_purely_virtual_class()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithMethod());
 			var result = proxy.Method();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_purely_virtual_inherited_abstract_class()
 		{
 			var proxy = generator.CreateClassProxyWithTarget<AbstractClassWithMethod>(new InheritsAbstractClassWithMethod());
 			var result = proxy.Method();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_virtual_class_with_protected_generic_method()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedGenericMethod(42));
 			var result = proxy.PublicMethod<int>();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_virtual_class_with_protected_method()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new VirtualClassWithProtectedMethod(42));
 			var result = proxy.PublicMethod();
-			Assert.AreEqual(42, result);
+			Assert.Equal(42, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_with_target_after_proxy_without_target_for_the_same_type()
 		{
 			generator.CreateClassProxy<SimpleClass>();
@@ -112,14 +112,14 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			generator.CreateClassProxyWithTarget(new SimpleClass());
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_class_with_inaccessible_type_argument()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateClassProxyWithTarget(new List<PrivateClass>()));
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_class_with_type_argument_that_has_inaccessible_type_argument()
 		{
 			var ex = Assert.Throws<GeneratorException>(() => generator.CreateClassProxyWithTarget(new List<List<PrivateClass>>()));
@@ -128,14 +128,14 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 				typeof(List<List<PrivateClass>>).FullName, typeof(PrivateClass).FullName);
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_inaccessible_class()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateClassProxyWithTarget(new PrivateClass()));
 		}
 
-		[Test]
+		[Fact]
 		public void Hook_does_NOT_get_notified_about_autoproperty_field()
 		{
 			var hook = new LogHook(typeof(VirtualClassWithAutoProperty), false);
@@ -147,43 +147,43 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			Assert.False(hook.NonVirtualMembers.Any(m => m is FieldInfo));
 		}
 
-		[Test]
+		[Fact]
 		public void Hook_gets_notified_about_public_field()
 		{
 			var hook = new LogHook(typeof(VirtualClassWithPublicField), false);
 			generator.CreateClassProxyWithTarget(typeof(VirtualClassWithPublicField), Type.EmptyTypes,
 				new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
 				new object[0]);
-			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
+			Assert.NotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
-			Assert.AreEqual("field", memberInfo.Name);
-			Assert.AreEqual(MemberTypes.Field, memberInfo.MemberType);
+			Assert.Equal("field", memberInfo.Name);
+			Assert.Equal(MemberTypes.Field, memberInfo.MemberType);
 		}
 
-		[Test]
+		[Fact]
 		public void Hook_gets_notified_about_static_methods()
 		{
 			var hook = new LogHook(typeof(VirtualClassWithPublicField), false);
 			generator.CreateClassProxyWithTarget(typeof(VirtualClassWithPublicField), Type.EmptyTypes,
 				new VirtualClassWithPublicField(), new ProxyGenerationOptions(hook),
 				new object[0]);
-			Assert.IsNotEmpty((ICollection) hook.NonVirtualMembers);
+			Assert.NotEmpty((ICollection) hook.NonVirtualMembers);
 			var memberInfo = hook.NonVirtualMembers.Single(m => m is FieldInfo);
-			Assert.AreEqual("field", memberInfo.Name);
-			Assert.AreEqual(MemberTypes.Field, memberInfo.MemberType);
+			Assert.Equal("field", memberInfo.Name);
+			Assert.Equal(MemberTypes.Field, memberInfo.MemberType);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-185")]
 		public void Returns_proxy_target_instead_of_self()
 		{
 			var target = new Classes.EmptyClass();
 			var proxy = generator.CreateClassProxyWithTarget(target);
 			var result = (Classes.EmptyClass) ((IProxyTargetAccessor) proxy).DynProxyGetTarget();
-			Assert.AreEqual(target, result);
+			Assert.Equal(target, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Uses_The_Provided_Options()
 		{
 			var options = new ProxyGenerationOptions();
@@ -192,7 +192,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var target = new SimpleClassWithProperty();
 			var proxy = generator.CreateClassProxyWithTarget(target, options);
 
-			Assert.IsInstanceOf(typeof(ISimpleMixin), proxy);
+			Assert.IsAssignableFrom(typeof(ISimpleMixin), proxy);
 		}
 	}
 }

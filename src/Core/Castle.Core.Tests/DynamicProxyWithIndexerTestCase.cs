@@ -13,14 +13,14 @@
 // limitations under the License.
 
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.BugsReported
 {
-	[TestFixture]
 	public class DynamicProxyWithIndexerTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void ShouldGenerateTypeWithIndexers()
 		{
 			generator.CreateInterfaceProxyWithoutTarget<IHaveIndexers>();

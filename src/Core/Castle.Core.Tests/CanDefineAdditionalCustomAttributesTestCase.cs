@@ -16,34 +16,34 @@ using System;
 using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.DynamicProxy.Internal;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class CanDefineAdditionalCustomAttributesTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_clone_attributes_with_array_enums()
 		{
 			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithEnumArray));
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-151")]
 		public void Can_clone_attributes_with_array_ints()
 		{
 			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithIntArray));
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-151")]
 		public void Can_clone_attributes_with_array_types()
 		{
 			generator.CreateInterfaceProxyWithoutTarget(typeof(IHasAttributeWithTypeArray));
 		}
 
-		[Test]
+		[Fact]
 		public void On_class()
 		{
 			var options = new ProxyGenerationOptions();
@@ -51,10 +51,10 @@ namespace Castle.Core.Tests
 
 			var proxy = generator.CreateClassProxy(typeof(CanDefineAdditionalCustomAttributesTestCase), options);
 
-			Assert.IsTrue(proxy.GetType().GetTypeInfo().IsDefined(typeof(__Protect), false));
+			Assert.True(proxy.GetType().GetTypeInfo().IsDefined(typeof(__Protect), false));
 		}
 
-		[Test]
+		[Fact]
 		public void On_interfaces()
 		{
 			var options = new ProxyGenerationOptions();
@@ -62,7 +62,7 @@ namespace Castle.Core.Tests
 
 			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof(IDisposable), new Type[0], options);
 
-			Assert.IsTrue(proxy.GetType().GetTypeInfo().IsDefined(typeof(__Protect), false));
+			Assert.True(proxy.GetType().GetTypeInfo().IsDefined(typeof(__Protect), false));
 		}
 	}
 }

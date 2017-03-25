@@ -13,7 +13,8 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.Interceptors
 {
@@ -23,7 +24,7 @@ namespace Castle.Core.Tests.Interceptors
 
 		public void Intercept(IInvocation invocation)
 		{
-			Assert.IsInstanceOf(typeof(IChangeProxyTarget), invocation);
+			Assert.IsAssignableFrom(typeof(IChangeProxyTarget), invocation);
 			invocation.Proceed();
 		}
 

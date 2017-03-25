@@ -17,17 +17,17 @@ using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class BaseTestCaseTestCase : CoreBaseTestCase
 	{
-		public override void TearDown()
+		public override void Dispose()
 		{
 			ResetGeneratorAndBuilder(); // we call TearDown ourselves in these test cases
-			base.TearDown();
+			base.Dispose();
 		}
 
 		private void FindVerificationErrors()
@@ -42,10 +42,10 @@ namespace Castle.Core.Tests
 			if (!IsVerificationDisabled)
 				Console.WriteLine("This next test case is expected to yield a verification error.");
 
-			base.TearDown();
+			base.Dispose();
 		}
 
-		[Test]
+		[Fact]
 		public void DisableVerification_DisablesVerificationForTestCase()
 		{
 			DisableVerification();
@@ -53,23 +53,23 @@ namespace Castle.Core.Tests
 			FindVerificationErrors();
 		}
 
-		[Test]
+		[Fact]
 		public void DisableVerification_ResetInNextTestCase1()
 		{
-			Assert.IsFalse(IsVerificationDisabled);
+			Assert.False(IsVerificationDisabled);
 			DisableVerification();
-			Assert.IsTrue(IsVerificationDisabled);
+			Assert.True(IsVerificationDisabled);
 		}
 
-		[Test]
+		[Fact]
 		public void DisableVerification_ResetInNextTestCase2()
 		{
-			Assert.IsFalse(IsVerificationDisabled);
+			Assert.False(IsVerificationDisabled);
 			DisableVerification();
-			Assert.IsTrue(IsVerificationDisabled);
+			Assert.True(IsVerificationDisabled);
 		}
 
-		[Test]
+		[Fact]
 		public void TearDown_DoesNotSaveAnything_IfNoProxyGenerated()
 		{
 			var path = ModuleScopeAssemblyNaming.GetCurrentFileName();
@@ -77,9 +77,9 @@ namespace Castle.Core.Tests
 			if (File.Exists(path))
 				File.Delete(path);
 
-			base.TearDown();
+			base.Dispose();
 
-			Assert.IsFalse(File.Exists(path));
+			Assert.False(File.Exists(path));
 		}
 	}
 }

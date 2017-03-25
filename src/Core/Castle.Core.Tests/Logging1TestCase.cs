@@ -16,11 +16,11 @@ using System;
 using System.Reflection;
 using Castle.Core.Core.Logging;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class Logging1TestCase
 	{
 		public interface IEmptyInterface
@@ -66,7 +66,7 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CacheHitClassProxy()
 		{
 			// Arrange
@@ -82,7 +82,7 @@ namespace Castle.Core.Tests
 			                                                      "for target type Castle.Core.Tests.DynamicProxy.Tests.Classes.EmptyClass."));
 		}
 
-		[Test]
+		[Fact]
 		public void CacheHitInterfaceProxy()
 		{
 			// Arrange
@@ -98,7 +98,7 @@ namespace Castle.Core.Tests
 			                                                      "for target type Castle.Core.Tests.LoggingTestCase+IEmptyInterface."));
 		}
 
-		[Test]
+		[Fact]
 		public void CacheMiss()
 		{
 			// Arrange
@@ -113,7 +113,7 @@ namespace Castle.Core.Tests
 			                                                      "Castle.Core.Tests.DynamicProxy.Tests.Classes.EmptyClass."));
 		}
 
-		[Test]
+		[Fact]
 		public void ExcludedNonVirtualMethods()
 		{
 			// Arrange
@@ -130,7 +130,7 @@ namespace Castle.Core.Tests
 			                                                      "Castle.Core.Tests.LoggingTestCase+NonVirtualMethodClass because it cannot be intercepted."));
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyGenerationOptionsEqualsAndGetHashCodeNotOverriden()
 		{
 			// Arrange

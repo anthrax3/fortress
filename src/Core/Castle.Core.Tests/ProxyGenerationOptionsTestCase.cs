@@ -17,15 +17,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Mixins;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class ProxyGenerationOptionsTestCase
 	{
-		[SetUp]
-		public void Init()
+		public ProxyGenerationOptionsTestCase()
 		{
 			_options1 = new ProxyGenerationOptions();
 			_options2 = new ProxyGenerationOptions();
@@ -34,31 +33,31 @@ namespace Castle.Core.Tests
 		private ProxyGenerationOptions _options1;
 		private ProxyGenerationOptions _options2;
 
-		[Test]
+		[Fact]
 		public void Equals_Compares_selectors_existence()
 		{
 			_options1.Selector = new AllInterceptorSelector();
 			_options2.Selector = new TypeInterceptorSelector<StandardInterceptor>();
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 
 			_options2.Selector = null;
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 
 			_options1.Selector = null;
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_ComparesMixinTypesNotInstances()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
 			_options2.AddMixinInstance(new SimpleMixin());
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_ComparesSortedMixinTypes()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
@@ -67,10 +66,10 @@ namespace Castle.Core.Tests
 			_options2.AddMixinInstance(new ComplexMixin());
 			_options2.AddMixinInstance(new SimpleMixin());
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentAdditionalAttributes()
 		{
 			var info1 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -79,10 +78,10 @@ namespace Castle.Core.Tests
 			_options1.AdditionalAttributes.Add(info1);
 			_options2.AdditionalAttributes.Add(info2);
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentAdditionalAttributesDuplicateEntries()
 		{
 			var info11 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -96,51 +95,51 @@ namespace Castle.Core.Tests
 			_options2.AdditionalAttributes.Add(info13);
 			_options2.AdditionalAttributes.Add(info2);
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentOptions_AddMixinInstance()
 		{
 			var mixin = new SimpleMixin();
 			_options1.AddMixinInstance(mixin);
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentOptions_BaseTypeForInterfaceProxy()
 		{
 			_options1.BaseTypeForInterfaceProxy = typeof(IConvertible);
 			_options2.BaseTypeForInterfaceProxy = typeof(object);
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentOptions_Hook()
 		{
 			IProxyGenerationHook hook = new LogHook(typeof(object), true);
 			_options1.Hook = hook;
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_DifferentOptions_Selector()
 		{
 			_options1.Selector = new AllInterceptorSelector();
 
-			Assert.AreNotEqual(_options1, _options2);
+			Assert.NotEqual(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_EmptyOptions()
 		{
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_EqualNonEmptyOptions()
 		{
 			_options1 = new ProxyGenerationOptions();
@@ -161,10 +160,10 @@ namespace Castle.Core.Tests
 			_options1.Selector = selector;
 			_options2.Selector = selector;
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_SameAdditionalAttributes()
 		{
 			var info1 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test"});
@@ -173,10 +172,10 @@ namespace Castle.Core.Tests
 			_options1.AdditionalAttributes.Add(info1);
 			_options2.AdditionalAttributes.Add(info2);
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_SameAdditionalAttributesDifferentOrder()
 		{
 			var info11 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -190,28 +189,28 @@ namespace Castle.Core.Tests
 			_options2.AdditionalAttributes.Add(info22);
 			_options2.AdditionalAttributes.Add(info12);
 
-			Assert.AreEqual(_options1, _options2);
+			Assert.Equal(_options1, _options2);
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_AddMixinInstance()
 		{
 			var mixin = new SimpleMixin();
 			_options1.AddMixinInstance(mixin);
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_BaseTypeForInterfaceProxy()
 		{
 			_options1.BaseTypeForInterfaceProxy = typeof(IConvertible);
 			_options2.BaseTypeForInterfaceProxy = typeof(object);
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_DifferentAdditionalAttributes()
 		{
 			var info1 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -220,19 +219,19 @@ namespace Castle.Core.Tests
 			_options1.AdditionalAttributes.Add(info1);
 			_options2.AdditionalAttributes.Add(info2);
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_Hook()
 		{
 			IProxyGenerationHook hook = new LogHook(typeof(object), true);
 			_options1.Hook = hook;
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_SameAdditionalAttributesButDuplicateEntries()
 		{
 			var info1 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -246,24 +245,24 @@ namespace Castle.Core.Tests
 			_options2.AdditionalAttributes.Add(info3);
 			_options2.AdditionalAttributes.Add(info4);
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_DifferentOptions_Selector()
 		{
 			_options1.Selector = new AllInterceptorSelector();
 
-			Assert.AreNotEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.NotEqual(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_EmptyOptions()
 		{
-			Assert.AreEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.Equal(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_EqualNonEmptyOptions()
 		{
 			_options1 = new ProxyGenerationOptions();
@@ -285,19 +284,19 @@ namespace Castle.Core.Tests
 			_options1.Selector = selector;
 			_options2.Selector = selector;
 
-			Assert.AreEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.Equal(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_EqualOptions_DifferentMixinInstances()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
 			_options2.AddMixinInstance(new SimpleMixin());
 
-			Assert.AreEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.Equal(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_EqualOptions_SameAdditionalAttributes()
 		{
 			var info1 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test"});
@@ -305,10 +304,10 @@ namespace Castle.Core.Tests
 			_options1.AdditionalAttributes.Add(info1);
 			_options2.AdditionalAttributes.Add(info2);
 
-			Assert.AreEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.Equal(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_EqualOptions_SameAdditionalAttributesDifferentOrder()
 		{
 			var info11 = new CustomAttributeInfo(typeof(DescriptionAttribute).GetTypeInfo().GetConstructor(new[] {typeof(string)}), new object[] {"Test1"});
@@ -323,18 +322,18 @@ namespace Castle.Core.Tests
 			_options2.AdditionalAttributes.Add(info22);
 			_options2.AdditionalAttributes.Add(info12);
 
-			Assert.AreEqual(_options1.GetHashCode(), _options2.GetHashCode());
+			Assert.Equal(_options1.GetHashCode(), _options2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void MixinData()
 		{
 			_options1.Initialize();
 			var data = _options1.MixinData;
-			Assert.AreEqual(0, new List<object>(data.Mixins).Count);
+			Assert.Equal(0, new List<object>(data.Mixins).Count);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinData_NeedsInitialize()
 		{
 			Assert.Throws<InvalidOperationException>(delegate
@@ -345,7 +344,7 @@ namespace Castle.Core.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void MixinData_NoReInitializeWhenNothingChanged()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
@@ -354,10 +353,10 @@ namespace Castle.Core.Tests
 			var data1 = _options1.MixinData;
 			_options1.Initialize();
 			var data2 = _options1.MixinData;
-			Assert.AreSame(data1, data2);
+			Assert.Same(data1, data2);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinData_ReInitializeWhenMixinsChanged()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
@@ -368,19 +367,19 @@ namespace Castle.Core.Tests
 			_options1.AddMixinInstance(new OtherMixin());
 			_options1.Initialize();
 			var data2 = _options1.MixinData;
-			Assert.AreNotSame(data1, data2);
+			Assert.NotSame(data1, data2);
 
-			Assert.AreEqual(1, new List<object>(data1.Mixins).Count);
-			Assert.AreEqual(2, new List<object>(data2.Mixins).Count);
+			Assert.Equal(1, new List<object>(data1.Mixins).Count);
+			Assert.Equal(2, new List<object>(data2.Mixins).Count);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinData_WithMixins()
 		{
 			_options1.AddMixinInstance(new SimpleMixin());
 			_options1.Initialize();
 			var data = _options1.MixinData;
-			Assert.AreEqual(1, new List<object>(data.Mixins).Count);
+			Assert.Equal(1, new List<object>(data.Mixins).Count);
 		}
 	}
 }

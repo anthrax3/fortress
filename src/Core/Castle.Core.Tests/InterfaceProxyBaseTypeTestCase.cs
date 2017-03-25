@@ -15,11 +15,11 @@
 using System;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class InterfaceProxyBaseTypeTestCase : CoreBaseTestCase
 	{
 		private ProxyGenerationOptions WithBase<T>()
@@ -27,14 +27,14 @@ namespace Castle.Core.Tests
 			return new ProxyGenerationOptions {BaseTypeForInterfaceProxy = typeof(T)};
 		}
 
-		[Test]
+		[Fact]
 		public void Class_with_no_default_ctor_as_base_type()
 		{
 			var exception = Assert.Throws(typeof(ArgumentException), () =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(ISimpleInterface),
 					Type.EmptyTypes,
 					WithBase<NoDefaultCtor>()));
-			Assert.AreEqual(
+			Assert.Equal(
 				string.Format(
 					"Type {0} is not valid base type for interface proxy, because it does not have accessible parameterless constructor. " +
 					"Only a non-sealed class with non-private default constructor can be used as base type for interface proxy. " +
@@ -42,14 +42,14 @@ namespace Castle.Core.Tests
 					typeof(NoDefaultCtor)), exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Class_with_private_default_ctor_as_base_type()
 		{
 			var exception = Assert.Throws(typeof(ArgumentException), () =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(ISimpleInterface),
 					Type.EmptyTypes,
 					WithBase<DefaultPrivateCtor>()));
-			Assert.AreEqual(
+			Assert.Equal(
 				string.Format(
 					"Type {0} is not valid base type for interface proxy, because it does not have accessible parameterless constructor. " +
 					"Only a non-sealed class with non-private default constructor can be used as base type for interface proxy. " +
@@ -57,7 +57,7 @@ namespace Castle.Core.Tests
 					typeof(DefaultPrivateCtor)), exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Class_with_protected_default_ctor_as_base_type_is_fine()
 		{
 			var @interface = generator.CreateInterfaceProxyWithTargetInterface(typeof(ISimpleInterface),
@@ -66,14 +66,14 @@ namespace Castle.Core.Tests
 			@interface.Do();
 		}
 
-		[Test]
+		[Fact]
 		public void Interface_as_base_type()
 		{
 			var exception = Assert.Throws(typeof(ArgumentException), () =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(ISimpleInterface),
 					Type.EmptyTypes,
 					WithBase<ISomething>()));
-			Assert.AreEqual(
+			Assert.Equal(
 				string.Format(
 					"Type {0} is not valid base type for interface proxy, because it is not a class type. " +
 					"Only a non-sealed class with non-private default constructor can be used as base type for interface proxy. " +
@@ -81,7 +81,7 @@ namespace Castle.Core.Tests
 					typeof(ISomething)), exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Same_Class_as_base_and_target_works_fine()
 		{
 			var @interface = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterface),
@@ -90,14 +90,14 @@ namespace Castle.Core.Tests
 			@interface.Do();
 		}
 
-		[Test]
+		[Fact]
 		public void Sealed_class_as_base_type()
 		{
 			var exception = Assert.Throws(typeof(ArgumentException), () =>
 				generator.CreateInterfaceProxyWithoutTarget(typeof(ISimpleInterface),
 					Type.EmptyTypes,
 					WithBase<Sealed>()));
-			Assert.AreEqual(
+			Assert.Equal(
 				string.Format(
 					"Type {0} is not valid base type for interface proxy, because it is sealed. " +
 					"Only a non-sealed class with non-private default constructor can be used as base type for interface proxy. " +

@@ -15,15 +15,14 @@
 using System;
 using System.Collections.Generic;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class GenericInterfaceWithGenericMethod
 	{
-		[SetUp]
-		public void Setup()
+		public GenericInterfaceWithGenericMethod()
 		{
 			proxyGenerator = new ProxyGenerator();
 			options = new ProxyGenerationOptions();
@@ -38,13 +37,13 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			IEnumerable<T> FailingMethod<T2>(T2 pred);
 		}
 
-		[Test]
+		[Fact]
 		public void FailingCastleProxyCase()
 		{
 			var type = typeof(IMinimumFailure<string>);
 			var result = proxyGenerator.CreateInterfaceProxyWithoutTarget(type, new Type[0], options);
 
-			Assert.IsNotNull(result as IMinimumFailure<string>);
+			Assert.NotNull(result as IMinimumFailure<string>);
 		}
 	}
 }

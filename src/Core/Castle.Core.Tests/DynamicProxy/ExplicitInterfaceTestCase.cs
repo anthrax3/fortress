@@ -18,29 +18,28 @@ using Castle.Core.Tests.DynamicProxy.Tests.Explicit;
 using Castle.Core.Tests.GenInterfaces;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class ExplicitInterfaceTestCase : CoreBaseTestCase
 	{
-		public override void Init()
+		public ExplicitInterfaceTestCase() : base()
 		{
-			base.Init();
 			interceptor = new LogInvocationInterceptor();
 		}
 
 		private LogInvocationInterceptor interceptor;
 
-		[Test]
+		[Fact]
 		public void Can_proxy_class_with_two_explicit_methods_differing_only_by_return_type()
 		{
 			generator.CreateClassProxy(typeof(TwoInterfacesExplicit), new[] {typeof(ISimpleInterface), typeof(IDisposable)},
 				interceptor);
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitGenericInterface()
 		{
 			var proxy = (GenInterface<int>) generator.CreateClassProxy(typeof(GenInterfaceExplicit),
@@ -49,11 +48,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = proxy.DoSomething(4);
 
-			Assert.AreEqual(5, result);
-			Assert.AreEqual("DoSomething ", interceptor.LogContents);
+			Assert.Equal(5, result);
+			Assert.Equal("DoSomething ", interceptor.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitGenericMethod_with_base_call()
 		{
 			var proxy = (IGenericInterface) generator.CreateClassProxy(typeof(GenericMethodExplicit),
@@ -62,11 +61,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = proxy.GenericMethod<int>();
 
-			Assert.AreEqual(7, result);
-			Assert.AreEqual("GenericMethod ", interceptor.LogContents);
+			Assert.Equal(7, result);
+			Assert.Equal("GenericMethod ", interceptor.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitGenericMethod_without_base_call()
 		{
 			var proxy = (IGenericInterface) generator.CreateClassProxy(typeof(GenericMethodExplicit),
@@ -76,11 +75,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = proxy.GenericMethod<int>();
 
-			Assert.AreEqual(5, result);
-			Assert.AreEqual("GenericMethod ", interceptor.LogContents);
+			Assert.Equal(5, result);
+			Assert.Equal("GenericMethod ", interceptor.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitInterface_AsAdditionalInterfaceToProxy_OnClassProxy_WithBaseCalls()
 		{
 			var proxy = (ISimpleInterface) generator.CreateClassProxy(typeof(SimpleInterfaceExplicit),
@@ -89,12 +88,12 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = proxy.Do();
 
-			Assert.AreEqual(1, interceptor.Invocations.Count);
-			Assert.AreEqual("Do", interceptor.Invocations[0]);
-			Assert.AreEqual(5, result); // indicates that original method was called
+			Assert.Equal(1, interceptor.Invocations.Count);
+			Assert.Equal("Do", interceptor.Invocations[0]);
+			Assert.Equal(5, result); // indicates that original method was called
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitInterface_AsAdditionalInterfaceToProxy_OnClassProxy_WithoutBaseCalls()
 		{
 			interceptor.Proceed = false;
@@ -107,31 +106,31 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var result = ((ISimpleInterface) proxy).Do();
 			proxy.DoVirtual();
 
-			Assert.AreEqual(3, interceptor.Invocations.Count);
-			Assert.AreEqual("DoVirtual", interceptor.Invocations[0]);
-			Assert.AreEqual("Do", interceptor.Invocations[1]);
-			Assert.AreEqual("DoVirtual", interceptor.Invocations[2]);
+			Assert.Equal(3, interceptor.Invocations.Count);
+			Assert.Equal("DoVirtual", interceptor.Invocations[0]);
+			Assert.Equal("Do", interceptor.Invocations[1]);
+			Assert.Equal("DoVirtual", interceptor.Invocations[2]);
 
-			Assert.AreEqual(0, result); // indicates that original method was not called
+			Assert.Equal(0, result); // indicates that original method was not called
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitInterface_properties_should_be_public_class()
 		{
 			var proxy = generator.CreateClassProxy(typeof(ExplicitInterfaceWithPropertyImplementation),
 				new[] {typeof(ISimpleInterfaceWithProperty)},
 				interceptor);
-			Assert.IsNotEmpty(proxy.GetType().GetTypeInfo().GetProperties());
+			Assert.NotEmpty(proxy.GetType().GetTypeInfo().GetProperties());
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitInterface_properties_should_be_public_interface()
 		{
 			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof(ISimpleInterfaceWithProperty), interceptor);
-			Assert.IsNotEmpty(proxy.GetType().GetTypeInfo().GetProperties());
+			Assert.NotEmpty(proxy.GetType().GetTypeInfo().GetProperties());
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitMethodOutArguments()
 		{
 			var proxy = (IWithRefOut) generator.CreateClassProxy(typeof(WithRefOutExplicit),
@@ -141,11 +140,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			int result;
 			proxy.Do(out result);
 
-			Assert.AreEqual(5, result);
-			Assert.AreEqual("Do ", interceptor.LogContents);
+			Assert.Equal(5, result);
+			Assert.Equal("Do ", interceptor.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ExplicitMethodRefArguments()
 		{
 			var proxy = (IWithRefOut) generator.CreateClassProxy(typeof(WithRefOutExplicit),
@@ -155,11 +154,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var result = 0;
 			proxy.Did(ref result);
 
-			Assert.AreEqual(5, result);
-			Assert.AreEqual("Did ", interceptor.LogContents);
+			Assert.Equal(5, result);
+			Assert.Equal("Did ", interceptor.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void NonVirtualExplicitInterfaceMethods_AreIgnored_OnClassProxy()
 		{
 			var instance = generator.CreateClassProxy<SimpleInterfaceExplicit>(interceptor);
@@ -168,11 +167,11 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var result = ((ISimpleInterface) instance).Do();
 			instance.DoVirtual();
 
-			Assert.AreEqual(2, interceptor.Invocations.Count);
-			Assert.AreEqual("DoVirtual", interceptor.Invocations[0]);
-			Assert.AreEqual("DoVirtual", interceptor.Invocations[1]);
+			Assert.Equal(2, interceptor.Invocations.Count);
+			Assert.Equal("DoVirtual", interceptor.Invocations[0]);
+			Assert.Equal("DoVirtual", interceptor.Invocations[1]);
 
-			Assert.AreEqual(5, result);
+			Assert.Equal(5, result);
 		}
 	}
 }

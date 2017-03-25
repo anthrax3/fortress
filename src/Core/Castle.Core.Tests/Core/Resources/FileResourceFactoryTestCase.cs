@@ -14,15 +14,14 @@
 
 using System.IO;
 using Castle.Core.Core.Resource;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.Core.Tests.Resources
 {
-	[TestFixture]
 	public class FileResourceFactoryTestCase
 	{
-		[SetUp]
-		public void Init()
+		public FileResourceFactoryTestCase()
 		{
 			var currentDirectory = Directory.GetCurrentDirectory();
 			basePath = Path.Combine(currentDirectory, "Core.Tests" + Path.DirectorySeparatorChar + "Resources");
@@ -31,15 +30,15 @@ namespace Castle.Core.Tests.Core.Tests.Resources
 		private readonly FileResourceFactory resFactory = new FileResourceFactory();
 		private string basePath;
 
-		[Test]
+		[Fact]
 		public void Accept()
 		{
-			Assert.IsTrue(resFactory.Accept(new CustomUri("file://something")));
-			Assert.IsFalse(resFactory.Accept(new CustomUri("http://www.castleproject.org")));
+			Assert.True(resFactory.Accept(new CustomUri("file://something")));
+			Assert.False(resFactory.Accept(new CustomUri("http://www.castleproject.org")));
 		}
 
 
-		[Test]
+		[Fact]
 		public void NonExistingResource()
 		{
 			var resource = resFactory.Create(new CustomUri(basePath + "/Something/file1.txt"));

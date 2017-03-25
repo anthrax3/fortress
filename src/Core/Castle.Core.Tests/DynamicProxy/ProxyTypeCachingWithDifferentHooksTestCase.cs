@@ -16,11 +16,11 @@ using System;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class ProxyTypeCachingWithDifferentHooksTestCase : CoreBaseTestCase
 	{
 		public class CustomHook : AllMethodsHook
@@ -32,20 +32,20 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			return generator.CreateInterfaceProxyWithoutTarget(typeof(IEmpty), new ProxyGenerationOptions(new THook()), new DoNothingInterceptor());
 		}
 
-		[Test]
+		[Fact]
 		public void Proxies_with_different_hooks_will_use_different_proxy_types()
 		{
 			var first = CreateProxyWithHook<AllMethodsHook>();
 			var second = CreateProxyWithHook<CustomHook>();
-			Assert.AreNotEqual(first.GetType(), second.GetType());
+			Assert.NotEqual(first.GetType(), second.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void Proxies_with_same_hook_will_use_cached_proxy_type()
 		{
 			var first = CreateProxyWithHook<CustomHook>();
 			var second = CreateProxyWithHook<CustomHook>();
-			Assert.AreEqual(first.GetType(), second.GetType());
+			Assert.Equal(first.GetType(), second.GetType());
 		}
 	}
 }

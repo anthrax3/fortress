@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.BugsReported
 {
-	[TestFixture]
 	public class DynamicProxyWithDuplicatedInterfaceTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesClassProxy()
 		{
 			generator.CreateClassProxy(typeof(Inherited), new[] {typeof(ISub1), typeof(ISub2)});
 		}
 
-		[Test]
+		[Fact]
 		public void ShouldGenerateTypeWithDuplicatedBaseInterfacesInterfaceProxy()
 		{
 			generator.CreateInterfaceProxyWithoutTarget(typeof(IBase), new[] {typeof(ISub1), typeof(ISub2)});

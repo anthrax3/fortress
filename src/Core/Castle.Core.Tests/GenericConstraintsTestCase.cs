@@ -14,11 +14,11 @@
 
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.GenInterfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class GenericConstraintsTestCase : CoreBaseTestCase
 	{
 		private T CreateProxyFor<T>(params IInterceptor[] interceptors) where T : class
@@ -26,13 +26,13 @@ namespace Castle.Core.Tests
 			return generator.CreateInterfaceProxyWithoutTarget<T>(interceptors);
 		}
 
-		[Test]
+		[Fact]
 		public void Generic_type_generic_method_with_struct_base_Method_base_Type_constraints()
 		{
 			CreateProxyFor<IConstraint_Method1IsTypeStructAndMethod2<object>>();
 		}
 
-		[Test]
+		[Fact]
 		public void Non_generic_type_generic_method_with_class_struct_and_new_constraints()
 		{
 			CreateProxyFor<IHaveGenericMethodWithNewClassStructConstraints>();

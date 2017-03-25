@@ -17,25 +17,24 @@ using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class AccessLevelTestCase : CoreBaseTestCase
 	{
 		internal class InternalClass
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void InternalConstructorIsNotReplicated()
 		{
 			var proxy = generator.CreateClassProxy(typeof(Dictionary<int, object>), new StandardInterceptor());
-			Assert.IsNull(proxy.GetType().GetTypeInfo().GetConstructor(new[] {typeof(IInterceptor[]), typeof(bool)}));
+			Assert.Null(proxy.GetType().GetTypeInfo().GetConstructor(new[] {typeof(IInterceptor[]), typeof(bool)}));
 		}
 
-		[Test]
+		[Fact]
 		public void InternalConstructorIsReplicatedWhenInternalsVisibleTo()
 		{
 			ModuleScopeAssemblyNamingOptions.UseAutoNamingConventionsAndDisableFriendAssemblySupport = false;
@@ -43,7 +42,7 @@ namespace Castle.Core.Tests
 			try
 			{
 				var proxy = generator.CreateClassProxy(typeof(InternalClass), new StandardInterceptor());
-				Assert.IsNotNull(proxy.GetType().GetTypeInfo().GetConstructor(new[] {typeof(IInterceptor[])}));
+				Assert.NotNull(proxy.GetType().GetTypeInfo().GetConstructor(new[] {typeof(IInterceptor[])}));
 			}
 			finally
 			{
@@ -51,31 +50,31 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void ProtectedConstructor()
 		{
 			var proxy = generator.CreateClassProxy(typeof(NonPublicConstructorClass), new StandardInterceptor()) as NonPublicConstructorClass;
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 			proxy.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void ProtectedInternalConstructor()
 		{
 			var proxy = generator.CreateClassProxy(typeof(ProtectedInternalConstructorClass), new StandardInterceptor()) as ProtectedInternalConstructorClass;
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 			proxy.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void ProtectedMethods()
 		{
 			var logger = new LogInvocationInterceptor();
 			var proxy = (NonPublicMethodsClass) generator.CreateClassProxy(typeof(NonPublicMethodsClass), logger);
 			proxy.DoSomething();
-			Assert.AreEqual(2, logger.Invocations.Count);
-			Assert.AreEqual("DoSomething", logger.Invocations[0]);
-			Assert.AreEqual("DoOtherThing", logger.Invocations[1]);
+			Assert.Equal(2, logger.Invocations.Count);
+			Assert.Equal("DoSomething", logger.Invocations[0]);
+			Assert.Equal("DoOtherThing", logger.Invocations[1]);
 		}
 	}
 }

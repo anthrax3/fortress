@@ -16,11 +16,11 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class AttributesToAvoidReplicatingTestCase : CoreBaseTestCase
 	{
 		[NonInheritable]
@@ -47,18 +47,18 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			return proxy.GetType().GetTypeInfo().GetCustomAttributes(typeof(TAttribute), false).Count();
 		}
 
-		[Test]
+		[Fact]
 		public void InheritableAttribute_should_not_be_replicated_as_it_is_inherited_by_the_runtime()
 		{
 			var proxy = generator.CreateClassProxy<AttributedClass_Inheritable>();
-			Assert.AreEqual(0, AttributeCount<InheritableAttribute>(proxy));
+			Assert.Equal(0, AttributeCount<InheritableAttribute>(proxy));
 		}
 
-		[Test]
+		[Fact]
 		public void NonInheritableAttribute_should_be_replicated_as_it_is_not_inherited()
 		{
 			var proxy = generator.CreateClassProxy<AttributedClass_NonInheritable>();
-			Assert.AreEqual(1, AttributeCount<NonInheritableAttribute>(proxy));
+			Assert.Equal(1, AttributeCount<NonInheritableAttribute>(proxy));
 		}
 	}
 }

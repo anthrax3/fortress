@@ -13,22 +13,22 @@
 // limitations under the License.
 
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class ModuleScopeTestCase
 	{
-		[Test]
+		[Fact]
 		public void DefaultProxyBuilderWithSpecificScope()
 		{
 			var scope = new ModuleScope(false);
 			var builder = new DefaultProxyBuilder(scope);
-			Assert.AreSame(scope, builder.ModuleScope);
+			Assert.Same(scope, builder.ModuleScope);
 		}
 
-		[Test]
+		[Fact]
 		public void GeneratedAssembliesDefaultName()
 		{
 			var scope = new ModuleScope();
@@ -37,48 +37,48 @@ namespace Castle.Core.Tests
 
             var weak = scope.ObtainDynamicModuleWithWeakName();
 
-			Assert.AreEqual(scope.StrongAssemblyName, strong.Assembly.GetName().Name);
+			Assert.Equal(scope.StrongAssemblyName, strong.Assembly.GetName().Name);
 
-            Assert.AreEqual(scope.WeakAssemblyName, weak.Assembly.GetName().Name);
+            Assert.Equal(scope.WeakAssemblyName, weak.Assembly.GetName().Name);
 		}
 
 
-		[Test]
+		[Fact]
 		public void ModuleScopeCanHandleSignedAndUnsignedInParallel()
 		{
 			var scope = new ModuleScope();
-			Assert.IsNull(scope.StrongNamedModule);
-			Assert.IsNull(scope.WeakNamedModule);
+			Assert.Null(scope.StrongNamedModule);
+			Assert.Null(scope.WeakNamedModule);
 
 			var one = scope.ObtainDynamicModuleWithStrongName();
-			Assert.IsNotNull(scope.StrongNamedModule);
-			Assert.IsNull(scope.WeakNamedModule);
-			Assert.AreSame(one, scope.StrongNamedModule);
+			Assert.NotNull(scope.StrongNamedModule);
+			Assert.Null(scope.WeakNamedModule);
+			Assert.Same(one, scope.StrongNamedModule);
 
 			var two = scope.ObtainDynamicModuleWithWeakName();
-			Assert.IsNotNull(scope.StrongNamedModule);
-			Assert.IsNotNull(scope.WeakNamedModule);
-			Assert.AreSame(two, scope.WeakNamedModule);
+			Assert.NotNull(scope.StrongNamedModule);
+			Assert.NotNull(scope.WeakNamedModule);
+			Assert.Same(two, scope.WeakNamedModule);
 
-			Assert.AreNotSame(one, two);
-			Assert.AreNotSame(one.Assembly, two.Assembly);
+			Assert.NotSame(one, two);
+			Assert.NotSame(one.Assembly, two.Assembly);
 
 			var three = scope.ObtainDynamicModuleWithStrongName();
 			var four = scope.ObtainDynamicModuleWithWeakName();
 
-			Assert.AreSame(one, three);
-			Assert.AreSame(two, four);
+			Assert.Same(one, three);
+			Assert.Same(two, four);
 		}
 
-		[Test]
+		[Fact]
 		public void ModuleScopeStoresModuleBuilder()
 		{
 			var scope = new ModuleScope();
 			var one = scope.ObtainDynamicModuleWithStrongName();
 			var two = scope.ObtainDynamicModuleWithStrongName();
 
-			Assert.AreSame(one, two);
-			Assert.AreSame(one.Assembly, two.Assembly);
+			Assert.Same(one, two);
+			Assert.Same(one.Assembly, two.Assembly);
 		}
 	}
 }

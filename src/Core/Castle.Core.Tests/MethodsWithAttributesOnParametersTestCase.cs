@@ -15,14 +15,14 @@
 using System;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MethodsWithAttributesOnParametersTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void CanGetParameterAttributeFromProxiedObject()
 		{
 			var requiredObj = (ClassWithAttributesOnMethodParameters)
@@ -33,7 +33,7 @@ namespace Castle.Core.Tests
 			requiredObj.MethodTwo(null);
 		}
 
-		[Test]
+		[Fact]
 		public void ParametersAreCopiedToProxiedObject()
 		{
 			var requiredObj = (ClassWithAttributesOnMethodParameters) generator.CreateClassProxy(
@@ -42,7 +42,7 @@ namespace Castle.Core.Tests
 			var ex = Assert.Throws<ArgumentException>(() =>
 				requiredObj.MethodOne(-1)
 			);
-			Assert.AreEqual("No default value for argument", ex.Message);
+			Assert.Equal("No default value for argument", ex.Message);
 		}
 	}
 }

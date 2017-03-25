@@ -19,53 +19,53 @@ using Castle.Core.Tests.GenClasses;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class InvocationMethodInvocationTargetTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void ClassProxy_MethodInvocationTarget_should_be_base_Method()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = generator.CreateClassProxy<ServiceClass>(interceptor);
 			proxy.Sum(2, 2);
 			var methodOnClass = typeof(ServiceClass).GetTypeInfo().GetMethod("Sum", new[] {typeof(int), typeof(int)});
-			Assert.AreSame(methodOnClass, interceptor.Invocation.MethodInvocationTarget);
+			Assert.Same(methodOnClass, interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void ClassProxy_MethodInvocationTarget_should_be_base_Method_for_interface_methods_implemented_non_virtually()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = generator.CreateClassProxy(typeof(One), new[] {typeof(IOne)}, interceptor) as IOne;
 			proxy.OneMethod();
 			var methodOnInterface = typeof(One).GetTypeInfo().GetMethod("OneMethod", Type.EmptyTypes);
-			Assert.AreSame(methodOnInterface, interceptor.Invocation.MethodInvocationTarget);
+			Assert.Same(methodOnInterface, interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void ClassProxy_MethodInvocationTarget_should_be_base_Method_for_interface_methods_implemented_virtually()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = generator.CreateClassProxy(typeof(ClassWithVirtualInterface), new[] {typeof(ISimpleInterface)}, interceptor) as ISimpleInterface;
 			proxy.Do();
 			var methodOnClass = typeof(ClassWithVirtualInterface).GetTypeInfo().GetMethod("Do", Type.EmptyTypes);
-			Assert.AreSame(methodOnClass, interceptor.Invocation.MethodInvocationTarget);
+			Assert.Same(methodOnClass, interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void ClassProxyForGeneric_MethodInvocationTarget_should_be_proxyMethod()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = (IChangeTracking) generator.CreateClassProxy<GenClassWithExplicitImpl<int>>(interceptor);
-			Assert.IsTrue(proxy.IsChanged);
-			Assert.IsNotNull(interceptor.Invocation.MethodInvocationTarget);
+			Assert.True(proxy.IsChanged);
+			Assert.NotNull(interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void InterfaceProxyWithTarget_MethodInvocationTarget_should_be_methodOnTargetType()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -73,19 +73,19 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithTarget<IService>(target, interceptor);
 			proxy.Sum(2, 2);
 			var methodOnTarget = target.GetType().GetTypeInfo().GetMethod("Sum", new[] {typeof(int), typeof(int)});
-			Assert.AreSame(methodOnTarget, interceptor.Invocation.MethodInvocationTarget);
+			Assert.Same(methodOnTarget, interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void InterfaceProxyWithTarget_MethodInvocationTarget_should_be_null()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = generator.CreateInterfaceProxyWithoutTarget<IService>(interceptor);
 			proxy.Sum(2, 2);
-			Assert.IsNull(interceptor.Invocation.MethodInvocationTarget);
+			Assert.Null(interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void InterfaceProxyWithTargetInterface_MethodInvocationTarget_should_be_methodOnTargetType()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -93,10 +93,10 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), target, interceptor) as IService;
 			proxy.Sum(2, 2);
 			var methodOnTarget = target.GetType().GetTypeInfo().GetMethod("Sum", new[] {typeof(int), typeof(int)});
-			Assert.AreSame(methodOnTarget, interceptor.Invocation.MethodInvocationTarget);
+			Assert.Same(methodOnTarget, interceptor.Invocation.MethodInvocationTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void InterfaceProxyWithTargetInterface_MethodInvocationTarget_should_be_updated_when_target_changes()
 		{
 			MethodInfo invocationTarget1 = null;
@@ -122,9 +122,9 @@ namespace Castle.Core.Tests
 
 			proxy.Sum(2, 2);
 
-			Assert.AreNotEqual(invocationTarget1, invocationTarget2);
-			Assert.AreSame(methodOnTarget1, invocationTarget1);
-			Assert.AreSame(methodOnTarget2, invocationTarget2);
+			Assert.NotEqual(invocationTarget1, invocationTarget2);
+			Assert.Same(methodOnTarget1, invocationTarget1);
+			Assert.Same(methodOnTarget2, invocationTarget2);
 		}
 	}
 }

@@ -20,11 +20,11 @@ using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class InterceptorSelectorTestCase : CoreBaseTestCase
 	{
 		private interface PrivateInterface
@@ -35,23 +35,23 @@ namespace Castle.Core.Tests
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void BasicCase()
 		{
 			var options = new ProxyGenerationOptions();
 			options.Selector = new AllInterceptorSelector();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterface), new SimpleClass(), options, new StandardInterceptor()) as ISimpleInterface;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			target.Do();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_generic_interface()
 		{
 			generator.CreateInterfaceProxyWithTarget<IList<object>>(new List<object>());
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_ClassProxy()
 		{
@@ -66,7 +66,7 @@ namespace Castle.Core.Tests
 			someInstanceOfProxyWithSelector.DoOperation2();
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_ClassProxyWithTarget()
 		{
@@ -81,7 +81,7 @@ namespace Castle.Core.Tests
 			someInstanceOfProxyWithSelector.DoOperation2();
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithoutTarget()
 		{
@@ -97,7 +97,7 @@ namespace Castle.Core.Tests
 			someInstanceOfProxyWithSelector.DoOperation2();
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget()
 		{
@@ -112,7 +112,7 @@ namespace Castle.Core.Tests
 			someInstanceOfProxyWithSelector.DoOperation2();
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTarget2()
 		{
@@ -123,10 +123,10 @@ namespace Castle.Core.Tests
 				new ProxyGenerationOptions {Selector = new SelectorWithState(2)},
 				new StandardInterceptor());
 
-			Assert.AreSame(someInstanceOfProxyWithSelector1.GetType(), someInstanceOfProxyWithSelector2.GetType());
+			Assert.Same(someInstanceOfProxyWithSelector1.GetType(), someInstanceOfProxyWithSelector2.GetType());
 		}
 
-		[Test]
+		[Fact]
 		[Bug("DYNPROXY-175")]
 		public void Can_proxy_same_type_with_and_without_selector_InterfaceProxyWithTargetInterface()
 		{
@@ -141,27 +141,27 @@ namespace Castle.Core.Tests
 			someInstanceOfProxyWithSelector.DoOperation2();
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithTarget<IList<PrivateInterface>>(new List<PrivateInterface>()));
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
 		{
 			Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTarget<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>()));
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_inaccessible_interface()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithTarget<PrivateInterface>(new PrivateClass()));
 		}
 
-		[Test]
+		[Fact]
 		public void SelectorWorksForGenericMethods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -170,16 +170,16 @@ namespace Castle.Core.Tests
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(IGenericInterface), new GenericClass(), options,
 				new AddTwoInterceptor(),
 				countingInterceptor) as IGenericInterface;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			var result = target.GenericMethod<int>();
-			Assert.AreEqual(1, countingInterceptor.Count);
-			Assert.AreEqual(0, result);
+			Assert.Equal(1, countingInterceptor.Count);
+			Assert.Equal(0, result);
 			var result2 = target.GenericMethod<string>();
-			Assert.AreEqual(2, countingInterceptor.Count);
-			Assert.AreEqual(default(string), result2);
+			Assert.Equal(2, countingInterceptor.Count);
+			Assert.Equal(default(string), result2);
 		}
 
-		[Test]
+		[Fact]
 		public void SelectorWorksForMethods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -187,13 +187,13 @@ namespace Castle.Core.Tests
 			options.Selector = new TypeInterceptorSelector<CallCountingInterceptor>();
 			var target = generator.CreateInterfaceProxyWithTarget(typeof(ISimpleInterface), new SimpleClass(), options,
 				new AddTwoInterceptor(), countingInterceptor) as ISimpleInterface;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			var result = target.Do();
-			Assert.AreEqual(3, result);
-			Assert.AreEqual(1, countingInterceptor.Count);
+			Assert.Equal(3, result);
+			Assert.Equal(1, countingInterceptor.Count);
 		}
 
-		[Test]
+		[Fact]
 		public void SelectorWorksForMixins()
 		{
 			var options = new ProxyGenerationOptions();
@@ -204,13 +204,13 @@ namespace Castle.Core.Tests
 				new SimpleClassWithProperty(), options,
 				new AddTwoInterceptor(),
 				countingInterceptor) as ISimpleInterface;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			var result = target.Do();
-			Assert.AreEqual(3, result);
-			Assert.AreEqual(1, countingInterceptor.Count);
+			Assert.Equal(3, result);
+			Assert.Equal(1, countingInterceptor.Count);
 		}
 
-		[Test]
+		[Fact]
 		public void SelectorWorksForMultipleGenericMethods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -220,16 +220,16 @@ namespace Castle.Core.Tests
 				options,
 				new AddTwoInterceptor(),
 				countingInterceptor) as IMultiGenericInterface;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			var result = target.Method<int, string>("ignored");
-			Assert.AreEqual(1, countingInterceptor.Count);
-			Assert.AreEqual(0, result);
+			Assert.Equal(1, countingInterceptor.Count);
+			Assert.Equal(0, result);
 			var result2 = target.Method<string, int>(0);
-			Assert.AreEqual(2, countingInterceptor.Count);
-			Assert.AreEqual(default(string), result2);
+			Assert.Equal(2, countingInterceptor.Count);
+			Assert.Equal(default(string), result2);
 		}
 
-		[Test]
+		[Fact]
 		public void SelectorWorksForProperties()
 		{
 			var options = new ProxyGenerationOptions();
@@ -239,13 +239,13 @@ namespace Castle.Core.Tests
 				new SimpleClassWithProperty(), options,
 				new AddTwoInterceptor(),
 				countingInterceptor) as ISimpleInterfaceWithProperty;
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			var result = target.Age;
-			Assert.AreEqual(5, result);
-			Assert.AreEqual(1, countingInterceptor.Count);
+			Assert.Equal(5, result);
+			Assert.Equal(1, countingInterceptor.Count);
 		}
 
-		[Test]
+		[Fact]
 		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_ClassProxy()
 		{
 			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
@@ -259,10 +259,10 @@ namespace Castle.Core.Tests
 			(proxy1 as ServiceClass).Sum(2, 2);
 			(proxy2 as ServiceClass).Sum(2, 2);
 
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
+			Assert.Same(proxy1.GetType(), proxy2.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithoutTarget()
 		{
 			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
@@ -276,10 +276,10 @@ namespace Castle.Core.Tests
 			(proxy1 as IOne).OneMethod();
 			(proxy2 as IOne).OneMethod();
 
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
+			Assert.Same(proxy1.GetType(), proxy2.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTarget()
 		{
 			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
@@ -293,10 +293,10 @@ namespace Castle.Core.Tests
 			proxy1.OneMethod();
 			proxy2.OneMethod();
 
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
+			Assert.Same(proxy1.GetType(), proxy2.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void When_two_selectors_present_and_not_equal_should_cache_type_anyway_InterfaceProxyWithTargetInterface()
 		{
 			var options1 = new ProxyGenerationOptions {Selector = new AllInterceptorSelector()};
@@ -310,7 +310,7 @@ namespace Castle.Core.Tests
 			proxy1.OneMethod();
 			proxy2.OneMethod();
 
-			Assert.AreSame(proxy1.GetType(), proxy2.GetType());
+			Assert.Same(proxy1.GetType(), proxy2.GetType());
 		}
 	}
 }

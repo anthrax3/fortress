@@ -15,11 +15,11 @@
 using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class InterfaceProxyWithTargetInterfaceAdditionalInterfacesTestCase : CoreBaseTestCase
 	{
 		private T GetProxy<T>(object target)
@@ -31,7 +31,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 				new ProxyGenerationOptions(new ProxyNothingHook()));
 		}
 
-		[Test]
+		[Fact]
 		public void Can_call_target__method_with_out_argument()
 		{
 			var target = new WithRefOutAndEmpty();
@@ -40,10 +40,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			int result;
 			proxy.Do(out result);
-			Assert.AreEqual(5, result);
+			Assert.Equal(5, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_call_target__method_with_ref_argument()
 		{
 			var target = new WithRefOutAndEmpty();
@@ -52,10 +52,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 
 			var result = 2;
 			proxy.Did(ref result);
-			Assert.AreEqual(5, result);
+			Assert.Equal(5, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_call_target__method_with_return_type()
 		{
 			var target = new OneAndEmpty();
@@ -63,10 +63,10 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var proxy = GetProxy<IOne>(target);
 
 			var result = proxy.OneMethod();
-			Assert.AreEqual(1, result);
+			Assert.Equal(1, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_omit_target__method_with_return_type()
 		{
 			var target = new Empty();
@@ -74,7 +74,7 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
 			var proxy = GetProxy<IOne>(target);
 
 			var result = proxy.OneMethod();
-			Assert.AreEqual(0, result);
+			Assert.Equal(0, result);
 		}
 	}
 }

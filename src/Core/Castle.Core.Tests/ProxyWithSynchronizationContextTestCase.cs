@@ -14,14 +14,13 @@
 
 using System.Threading;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Core.Tests.BugsReported
 {
-	[TestFixture]
 	public class ProxyWithSynchronizationContextTestCase
 	{
-		[Test]
+		[Fact]
 		public void ProxySynchronizationContext()
 		{
 			var proxyGenerator = new ProxyGenerator();

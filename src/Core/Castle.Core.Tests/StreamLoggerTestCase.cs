@@ -16,15 +16,14 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Castle.Core.Core.Logging;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class StreamLoggerTestCase
 	{
-		[SetUp]
-		public void SetUp()
+		public StreamLoggerTestCase()
 		{
 			stream = new MemoryStream();
 
@@ -46,30 +45,29 @@ namespace Castle.Core.Tests
 
 			var match = Regex.Match(line, @"^\[(?<level>[^]]+)\] '(?<name>[^']+)' (?<message>.*)$");
 
-			Assert.IsTrue(match.Success, "StreamLogger.Log did not match the format");
-			Assert.AreEqual(Name, match.Groups["name"].Value, "StreamLogger.Log did not write the correct Name");
-			Assert.AreEqual(level.ToString(), match.Groups["level"].Value, "StreamLogger.Log did not write the correct Level");
-			Assert.AreEqual(expectedMessage, match.Groups["message"].Value, "StreamLogger.Log did not write the correct Message");
+			Assert.True(match.Success, "StreamLogger.Log did not match the format");
+			Assert.Equal(Name, match.Groups["name"].Value);
+			Assert.Equal(level.ToString(), match.Groups["level"].Value);
+			Assert.Equal(expectedMessage, match.Groups["message"].Value);
 
 			line = reader.ReadLine();
 
 			if (expectedException == null)
 			{
-				Assert.IsNull(line);
+				Assert.Null(line);
 			}
 			else
 			{
 				match = Regex.Match(line, @"^\[(?<level>[^]]+)\] '(?<name>[^']+)' (?<type>[^:]+): (?<message>.*)$");
 
-				Assert.IsTrue(match.Success, "StreamLogger.Log did not match the format");
-				Assert.AreEqual(Name, match.Groups["name"].Value, "StreamLogger.Log did not write the correct Name");
-				Assert.AreEqual(level.ToString(), match.Groups["level"].Value, "StreamLogger.Log did not write the correct Level");
-				Assert.AreEqual(expectedException.GetType().FullName, match.Groups["type"].Value, "StreamLogger.Log did not write the correct Exception Type");
-				// Assert.AreEqual(expectedException.Message, match.Groups["message"].Value, "StreamLogger.Log did not write the correct Exception Message");
+				Assert.True(match.Success, "StreamLogger.Log did not match the format");
+				Assert.Equal(Name, match.Groups["name"].Value);
+				Assert.Equal(level.ToString(), match.Groups["level"].Value);
+				Assert.Equal(expectedException.GetType().FullName, match.Groups["type"].Value);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Debug()
 		{
 			var message = "Debug message";
@@ -81,7 +79,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void DebugWithException()
 		{
 			var message = "Debug message 2";
@@ -93,7 +91,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Error()
 		{
 			var message = "Error message";
@@ -105,7 +103,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void ErrorWithException()
 		{
 			var message = "Error message 2";
@@ -117,7 +115,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalError()
 		{
 			var message = "FatalError message";
@@ -129,7 +127,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void FatalErrorWithException()
 		{
 			var message = "FatalError message 2";
@@ -141,7 +139,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Info()
 		{
 			var message = "Info message";
@@ -153,7 +151,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoWithException()
 		{
 			var message = "Info message 2";
@@ -165,7 +163,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void Warn()
 		{
 			var message = "Warn message";
@@ -177,7 +175,7 @@ namespace Castle.Core.Tests
 			ValidateCall(level, message, exception);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnWithException()
 		{
 			var message = "Warn message 2";

@@ -17,11 +17,11 @@ using System.Reflection;
 using Castle.Core.DynamicProxy;
 using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class DelegateProxyTestCasE : CoreBaseTestCase
 	{
 		private Type GenerateProxyType<TDelegate>()
@@ -42,39 +42,39 @@ namespace Castle.Core.Tests.DynamicProxy.Tests
             return (T)(object)methodInfo.CreateDelegate(typeof(T), instance);
         }
 
-		[Test]
+		[Fact]
 		public void Can_create_Delegate_type_proxy()
 		{
 			var type = GenerateProxyType<Func<int>>();
-			Assert.IsNotNull(type);
+			Assert.NotNull(type);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_intercept_call_to_delegate()
 		{
 			var proxy = GetProxyInstance<Func<int>>(() =>
 			{
-				Assert.Fail("Shouldn't have gone that far");
+				Assert.True(false, "Shouldn't have gone that far");
 				return 5;
 			}, new SetReturnValueInterceptor(3));
 			var result = proxy.Invoke();
-			Assert.AreEqual(3, result);
+			Assert.Equal(3, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_intercept_call_to_delegate_no_target()
 		{
 			var proxy = GetProxyInstance<Func<int>>(null, new SetReturnValueInterceptor(3));
 			var result = proxy.Invoke();
-			Assert.AreEqual(3, result);
+			Assert.Equal(3, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_delegate_with_no_target()
 		{
 			var proxy = GetProxyInstance<Func<int>>(() => 5);
 			var result = proxy.Invoke();
-			Assert.AreEqual(5, result);
+			Assert.Equal(5, result);
 		}
 	}
 }

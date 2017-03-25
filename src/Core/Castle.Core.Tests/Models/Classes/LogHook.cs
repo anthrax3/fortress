@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
@@ -25,7 +26,7 @@ namespace Castle.Core.Tests
 
 		public bool ShouldInterceptMethod(Type type, MethodInfo memberInfo)
 		{
-			Assert.AreEqual(targetTypeToAssert, type);
+			Assert.Equal(targetTypeToAssert, type);
 
 			AskedMembers.Add(memberInfo);
 
@@ -37,7 +38,7 @@ namespace Castle.Core.Tests
 
 		public void NonProxyableMemberNotification(Type type, MemberInfo memberInfo)
 		{
-			Assert.AreEqual(targetTypeToAssert, type);
+			Assert.Equal(targetTypeToAssert, type);
 
 			NonVirtualMembers.Add(memberInfo);
 		}

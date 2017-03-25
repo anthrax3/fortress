@@ -14,7 +14,8 @@
 
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
@@ -22,13 +23,13 @@ namespace Castle.Core.Tests
 	{
 		public static void CheckMethodInfoIsClosed(MethodInfo method, Type returnType, params Type[] parameterTypes)
 		{
-			Assert.IsFalse(method.ContainsGenericParameters);
-			Assert.AreEqual(returnType, method.ReturnType);
+			Assert.False(method.ContainsGenericParameters);
+			Assert.Equal(returnType, method.ReturnType);
 
 			var parameters = method.GetParameters();
-			Assert.AreEqual(parameterTypes.Length, parameters.Length);
+			Assert.Equal(parameterTypes.Length, parameters.Length);
 			for (var i = 0; i < parameterTypes.Length; ++i)
-				Assert.AreEqual(parameterTypes[i], parameters[i].ParameterType);
+				Assert.Equal(parameterTypes[i], parameters[i].ParameterType);
 		}
 	}
 }

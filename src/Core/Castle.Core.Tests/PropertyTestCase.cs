@@ -14,128 +14,125 @@
 
 using System;
 using Castle.Core.Core.Logging;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class PropertyTestCase
 	{
-		[SetUp]
-		public void SetUp()
+		public PropertyTestCase()
 		{
 			logger = new LevelFilteredLoggerInstance(null);
 		}
 
 		private LevelFilteredLogger logger;
 
-		[Test]
+		[Fact]
 		public void DefaultLevel()
 		{
-			Assert.AreEqual(LoggerLevel.Off, logger.Level, "Default LevelFilteredLogger.Level is not Off");
+			Assert.Equal(LoggerLevel.Off, logger.Level);
 		}
 
-		[Test]
+		[Fact]
 		public void DefaultName()
 		{
-			Assert.AreEqual("unnamed", logger.Name, "Default LevelFilteredLogger.Name is not String.Empty");
+			Assert.Equal("unnamed", logger.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void Level()
 		{
-			// Set the level to all available levels,
-			// and then check that it was properly set
 			foreach (LoggerLevel level in Enum.GetValues(typeof(LoggerLevel)))
 			{
 				logger.Level = level;
-				Assert.AreEqual(level, logger.Level, "LevelFilteredLogger.Level did not change");
+				Assert.Equal(level, logger.Level);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void LevelDebug()
 		{
 			logger.Level = LoggerLevel.Debug;
 
-			Assert.IsTrue(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning true when the level is Debug");
-			Assert.IsTrue(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning true when the level is Debug");
-			Assert.IsTrue(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Debug");
-			Assert.IsTrue(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Debug");
-			Assert.IsTrue(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Debug");
+			Assert.True(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning true when the level is Debug");
+			Assert.True(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning true when the level is Debug");
+			Assert.True(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Debug");
+			Assert.True(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Debug");
+			Assert.True(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Debug");
 		}
 
-		[Test]
+		[Fact]
 		public void LevelError()
 		{
 			logger.Level = LoggerLevel.Error;
 
-			Assert.IsFalse(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Error");
-			Assert.IsFalse(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Error");
-			Assert.IsFalse(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Error");
-			Assert.IsTrue(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Error");
-			Assert.IsTrue(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Error");
+			Assert.False(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Error");
+			Assert.False(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Error");
+			Assert.False(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Error");
+			Assert.True(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Error");
+			Assert.True(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Error");
 		}
 
-		[Test]
+		[Fact]
 		public void LevelFatal()
 		{
 			logger.Level = LoggerLevel.Fatal;
 
-			Assert.IsFalse(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Fatal");
-			Assert.IsFalse(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Fatal");
-			Assert.IsFalse(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Fatal");
-			Assert.IsFalse(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning false when the level is Fatal");
-			Assert.IsTrue(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Fatal");
+			Assert.False(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Fatal");
+			Assert.False(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Fatal");
+			Assert.False(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Fatal");
+			Assert.False(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning false when the level is Fatal");
+			Assert.True(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Fatal");
 		}
 
-		[Test]
+		[Fact]
 		public void LevelInfo()
 		{
 			logger.Level = LoggerLevel.Info;
 
-			Assert.IsFalse(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Info");
-			Assert.IsTrue(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Info");
-			Assert.IsTrue(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning true when the level is Info");
-			Assert.IsTrue(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Info");
-			Assert.IsTrue(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Info");
+			Assert.False(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Info");
+			Assert.True(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Info");
+			Assert.True(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning true when the level is Info");
+			Assert.True(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Info");
+			Assert.True(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Info");
 		}
 
-		[Test]
+		[Fact]
 		public void LevelOff()
 		{
 			logger.Level = LoggerLevel.Off;
 
-			Assert.IsFalse(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Off");
-			Assert.IsFalse(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Off");
-			Assert.IsFalse(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Off");
-			Assert.IsFalse(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning false when the level is Off");
-			Assert.IsFalse(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning false when the level is Off");
+			Assert.False(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Off");
+			Assert.False(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Off");
+			Assert.False(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning false when the level is Off");
+			Assert.False(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning false when the level is Off");
+			Assert.False(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning false when the level is Off");
 		}
 
-		[Test]
+		[Fact]
 		public void LevelWarn()
 		{
 			logger.Level = LoggerLevel.Warn;
 
-			Assert.IsFalse(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Warn");
-			Assert.IsFalse(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Warn");
-			Assert.IsTrue(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Warn");
-			Assert.IsTrue(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Warn");
-			Assert.IsTrue(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Warn");
+			Assert.False(logger.IsDebugEnabled, "LevelFilteredLogger.IsDebugEnabled is not returning false when the level is Warn");
+			Assert.False(logger.IsInfoEnabled, "LevelFilteredLogger.IsInfoEnabled is not returning false when the level is Warn");
+			Assert.True(logger.IsWarnEnabled, "LevelFilteredLogger.IsWarnEnabled is not returning true when the level is Warn");
+			Assert.True(logger.IsErrorEnabled, "LevelFilteredLogger.IsErrorEnabled is not returning true when the level is Warn");
+			Assert.True(logger.IsFatalEnabled, "LevelFilteredLogger.IsFatalErrorEnabled is not returning true when the level is Warn");
 		}
 
-		[Test]
+		[Fact]
 		public void Name()
 		{
 			((LevelFilteredLoggerInstance) logger).ChangeName("Main");
-			Assert.AreEqual("Main", logger.Name, "LevelFilteredLogger.Name did not change");
+			Assert.Equal("Main", logger.Name);
 
 			((LevelFilteredLoggerInstance) logger).ChangeName("GUI");
-			Assert.AreEqual("GUI", logger.Name, "LevelFilteredLogger.Name did not change");
+			Assert.Equal("GUI", logger.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void SettingNameToNull()
 		{
 			Assert.Throws<ArgumentNullException>(() =>

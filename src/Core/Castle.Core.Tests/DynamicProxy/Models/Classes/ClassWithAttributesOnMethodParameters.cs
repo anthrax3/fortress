@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 {
@@ -20,12 +21,12 @@ namespace Castle.Core.Tests.DynamicProxy.Tests.Classes
 	{
 		public virtual void MethodOne([Required(BadValue = -1)] int val)
 		{
-			Assert.IsFalse(val == -1);
+			Assert.False(val == -1);
 		}
 
 		public virtual void MethodTwo([Required("")] string name)
 		{
-			Assert.IsNotNull(name);
+			Assert.NotNull(name);
 		}
 	}
 }

@@ -14,11 +14,11 @@
 
 using System;
 using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.BugsReported
 {
-	[TestFixture]
 	public class ConstraintViolationInDebuggerTestCase : CoreBaseTestCase
 	{
 		public class PresentationHost : IPresentationHost
@@ -74,7 +74,7 @@ namespace Castle.Core.Tests.BugsReported
 		// This test case yields a TypeLoadException in the debugger, but works perfectly without a debugger attached.
 		// It also produces verifiable code.
 		// In Visual Studio 2010 this test passes just fine with the debugger attached.
-		[Test]
+		[Fact]
 		public void TestCase()
 		{
 			generator.ProxyBuilder.CreateInterfaceProxyTypeWithTarget(

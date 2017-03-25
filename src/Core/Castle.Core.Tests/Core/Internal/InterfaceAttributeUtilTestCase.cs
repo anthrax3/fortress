@@ -14,11 +14,11 @@
 
 using System;
 using Castle.Core.Core.Internal;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.Core.Tests.Internal
 {
-	[TestFixture]
 	public class InterfaceAttributeUtilTestCase
 	{
 		[SingletonPrivate(Id = "Original")]
@@ -157,8 +157,8 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 		{
 			var attributes = InterfaceAttributeUtil.GetAttributes(interfaceType, true);
 
-			Assert.IsNotNull(attributes);
-			CollectionAssert.AreEquivalent(expectedAttributes, attributes);
+			Assert.NotNull(attributes);
+			Assert.Equal(expectedAttributes, attributes);
 		}
 
 		private static void AssertInvalid(Type interfaceType)
@@ -166,7 +166,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			Assert.Throws<InvalidOperationException>(() => InterfaceAttributeUtil.GetAttributes(interfaceType, true));
 		}
 
-		[Test]
+		[Fact]
 		public void Asymmetric_Multiple_Additive_Inherited()
 		{
 			AssertAttributes(typeof(IAsymmetricAdditiveInherited),
@@ -175,7 +175,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Asymmetric_Multiple_Singleton_Inherited()
 		{
 			AssertAttributes(typeof(IAsymmetricSingletonInherited),
@@ -183,7 +183,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Declared_All()
 		{
 			AssertAttributes(typeof(IDeclaresAll),
@@ -194,7 +194,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Inherit_Additive_Inherited()
 		{
 			AssertAttributes(typeof(IInheritAdditiveInherited),
@@ -203,7 +203,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 		}
 
 
-		[Test]
+		[Fact]
 		public void Inherit_Singleton_Inherited()
 		{
 			AssertAttributes(typeof(IInheritSingletonInherited),
@@ -211,7 +211,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Override_Singleton_Inherited()
 		{
 			AssertAttributes(typeof(IOverrideSingletonInherited1),
@@ -219,7 +219,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Symmetric_Multiple_Additive_Inherited()
 		{
 			AssertAttributes(typeof(ISymmetricAdditiveInherited),
@@ -229,7 +229,7 @@ namespace Castle.Core.Tests.Core.Tests.Internal
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void Symmetric_Multiple_Singleton_Inherited()
 		{
 			AssertInvalid(typeof(ISymmetricSingletonInherited));

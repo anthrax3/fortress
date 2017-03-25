@@ -15,30 +15,30 @@
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.DynamicProxy.Tests.Interfaces;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace Castle.Core.Tests.DynamicProxy.Tests
 {
-	[TestFixture]
 	public class ClassProxyWithDefaultValuesTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void MethodParameterWithDefaultValue_UseNullDefaultValue_class_proxy()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithMethodWithParameterWithNullDefaultValue>();
 			var result = proxy.Method();
 
-			Assert.IsTrue(result);
+			Assert.True(result);
 		}
 
-		[Test]
+		[Fact]
 		public void MethodParameterWithDefaultValue_UseNullDefaultValue_interface_proxy()
 		{
 			var proxy = generator.CreateInterfaceProxyWithoutTarget<InterfaceWithMethodWithParameterWithNullDefaultValue>(
 				new SetReturnValueInterceptor(true));
 			var result = proxy.Method();
 
-			Assert.IsTrue(result);
+			Assert.True(result);
 		}
 	}
 }
