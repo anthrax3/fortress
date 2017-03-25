@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\Resources\file1.txt" />
