@@ -10,7 +10,7 @@ let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
 let desktopTestAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
-let standardTestAssemblies = "src/Standard/Castle.*.Tests/*.csproj"
+let standardTestAssemblies = "src/Core/Castle.Core.Tests/*.csproj"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
@@ -77,6 +77,7 @@ Target "TestStandard" <| fun _ ->
     ==> "Test"
 
 "TestDesktop"
+    ==> "TestStandard"
     ==> "Test"
  
 RunTargetOrDefault "Build"
