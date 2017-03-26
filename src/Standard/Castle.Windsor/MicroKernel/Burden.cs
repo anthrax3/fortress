@@ -1,0 +1,127 @@
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Castle.Windsor.Core;
+using Castle.Windsor.Core.Internal;
+using Castle.Windsor.MicroKernel.LifecycleConcerns;
+
+namespace Castle.Windsor.MicroKernel
+{
+	public class Burden
+	{
+		private Decommission decommission = Decommission.No;
+
+		private List<Burden> dependencies;
+
+		internal Burden(IHandler handler, bool requiresDecommission, bool trackedExternally)
+		{
+			Handler = handler;
+			TrackedExternally = trackedExternally;
+			if (requiresDecommission)
+				decommission = Decommission.Yes;
+			else if (Model.Lifecycle.HasDecommissionConcerns)
+				if (Model.Implementation == typeof(LateBoundComponent) && Model.Lifecycle.DecommissionConcerns.All(IsLateBound))
+					decommission = Decommission.LateBound;
+				else
+					decommission = Decommission.Yes;
+		}
+
+		public IHandler Handler { get; }
+
+		public object Instance { get; private set; }
+
+		public ComponentModel Model
+		{
+			get { return Handler.ComponentModel; }
+		}
+
+		public bool RequiresDecommission
+		{
+			get { return decommission != Decommission.No; }
+			set
+			{
+				if (value)
+					decommission = Decommission.Yes;
+				else
+					decommission = Decommission.No;
+			}
+		}
+
+		public bool RequiresPolicyRelease
+		{
+			get { return TrackedExternally == false && RequiresDecommission; }
+		}
+
+		public bool TrackedExternally { get; set; }
+
+		public void AddChild(Burden child)
+		{
+			if (dependencies == null)
+				dependencies = new List<Burden>(Model.Dependents.Length);
+			dependencies.Add(child);
+
+			if (child.RequiresDecommission)
+				decommission = Decommission.Yes;
+		}
+
+		public bool Release()
+		{
+			var releasing = Releasing;
+			if (releasing != null)
+				releasing(this);
+
+			if (Handler.Release(this) == false)
+				return false;
+
+			var released = Released;
+			if (released != null)
+				released(this);
+
+			if (dependencies != null)
+				dependencies.ForEach(c => c.Release());
+			var graphReleased = GraphReleased;
+			if (graphReleased != null)
+				graphReleased(this);
+			return true;
+		}
+
+		public void SetRootInstance(object instance)
+		{
+			if (instance == null)
+				throw new ArgumentNullException("instance");
+			Instance = instance;
+			if (decommission == Decommission.LateBound)
+				RequiresDecommission = instance is IDisposable;
+		}
+
+		private bool IsLateBound(IDecommissionConcern arg)
+		{
+			return arg is LateBoundConcerns<IDecommissionConcern>;
+		}
+
+		public event BurdenReleaseDelegate Released;
+		public event BurdenReleaseDelegate Releasing;
+		public event BurdenReleaseDelegate GraphReleased;
+
+		private enum Decommission : byte
+		{
+			No,
+			Yes,
+			LateBound
+		}
+	}
+}

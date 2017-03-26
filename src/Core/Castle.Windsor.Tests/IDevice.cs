@@ -1,0 +1,10 @@
+using System.Collections.Generic;
+
+namespace Castle.Windsor.Tests
+{
+	public interface IDevice
+	{
+		MessageChannel Channel { get; }
+		IEnumerable<IDevice> Children { get; }
+	}
+}

@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.6.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
-    <ProjectReference Include="..\Castle.Facilities.EventWiring\Castle.Facilities.EventWiring.csproj" />
-    <ProjectReference Include="..\Castle.Facilities.FactorySupport\Castle.Facilities.FactorySupport.csproj" />
-    <ProjectReference Include="..\Castle.Facilities.Logging\Castle.Facilities.Logging.csproj" />
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
   </ItemGroup>
   
