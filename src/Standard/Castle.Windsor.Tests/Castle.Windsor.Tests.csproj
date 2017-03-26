@@ -3,11 +3,6 @@
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Facilities\TypedFactory\typedFactory_castle_config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="NUnit" Version="3.6.1" />
   </ItemGroup>
   <ItemGroup>
