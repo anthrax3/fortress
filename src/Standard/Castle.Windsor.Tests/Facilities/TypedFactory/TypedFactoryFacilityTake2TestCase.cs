@@ -488,7 +488,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			Container.Release(factory);
 
-			Assert.AreEqual(1, DisposableSelector.InstancesDisposed);
+			Assert.GreaterOrEqual(1, DisposableSelector.InstancesDisposed);
 		}
 
 		[Test]
