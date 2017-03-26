@@ -43,16 +43,17 @@ namespace Castle.Windsor.Windsor.Diagnostics.Helpers
 		{
 			if (componentModel.LifestyleType == LifestyleType.Undefined)
 				return string.Format("{0} (default lifestyle {1} will be used)", componentModel.LifestyleType, LifestyleType.Singleton);
-			if (componentModel.LifestyleType == LifestyleType.Scoped)
-			{
-				var accessorType = componentModel.GetScopeAccessorType();
-				if (accessorType == null)
-					return "Scoped explicitly";
-				var description = accessorType.GetAttribute<DescriptionAttribute>();
-				if (description != null)
-					return "Scoped " + description.Description;
-				return "Scoped via " + accessorType.ToCSharpString();
-			}
+			// This is not a thing anymore
+            //if (componentModel.LifestyleType == LifestyleType.Scoped)
+			//{
+			//	var accessorType = componentModel.GetScopeAccessorType();
+			//	if (accessorType == null)
+			//		return "Scoped explicitly";
+			//	var description = accessorType.GetAttribute<DescriptionAttribute>();
+			//	if (description != null)
+			//		return "Scoped " + description.Description;
+			//	return "Scoped via " + accessorType.ToCSharpString();
+			//}
 			if (componentModel.LifestyleType != LifestyleType.Custom)
 				return componentModel.LifestyleType.ToString();
 			return "Custom: " + componentModel.CustomLifestyle.Name;

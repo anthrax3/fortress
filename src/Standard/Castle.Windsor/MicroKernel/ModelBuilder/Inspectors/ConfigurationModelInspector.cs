@@ -20,6 +20,8 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 	{
 		public virtual void ProcessModel(IKernel kernel, ComponentModel model)
 		{
-		}
-	}
+            var config = kernel.ConfigurationStore.GetComponentConfiguration(model.Name);
+            model.Configuration = config;
+        }
+    }
 }

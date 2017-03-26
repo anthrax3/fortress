@@ -56,17 +56,17 @@ namespace Castle.Windsor.Windsor.Installer
 			partial.AddInstallerConfiguration(config);
 		}
 
-		//public IConfiguration GetChildContainerConfiguration(string key)
-		//{
-		//	return partial.GetChildContainerConfiguration(key);
-		//}
+        //public IConfiguration GetChildContainerConfiguration(string key)
+        //{
+        //	return partial.GetChildContainerConfiguration(key);
+        //}
 
-		//public IConfiguration GetComponentConfiguration(string key)
-		//{
-		//	return partial.GetComponentConfiguration(key);
-		//}
+        public IConfiguration GetComponentConfiguration(string key)
+        {
+            return partial.GetComponentConfiguration(key);
+        }
 
-		public IConfiguration[] GetComponents()
+        public IConfiguration[] GetComponents()
 		{
 			return partial.GetComponents();
 		}
@@ -81,12 +81,12 @@ namespace Castle.Windsor.Windsor.Installer
 			return partial.GetFacilities();
 		}
 
-		//public IConfiguration GetFacilityConfiguration(string key)
-		//{
-		//	return partial.GetFacilityConfiguration(key);
-		//}
+        public IConfiguration GetFacilityConfiguration(string key)
+        {
+            return partial.GetFacilityConfiguration(key);
+        }
 
-		public IConfiguration[] GetInstallers()
+        public IConfiguration[] GetInstallers()
 		{
 			return partial.GetInstallers();
 		}

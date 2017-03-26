@@ -64,14 +64,15 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 						model.CustomLifestyle = lifestyle;
 
 						return true;
-					case LifestyleType.Scoped:
-						var scopeAccessorType1 = GetTypeFromAttribute(model, "scopeAccessorType");
-						if (scopeAccessorType1 != null)
-						{
-							ValidateTypeFromAttribute(scopeAccessorType1, typeof(IScopeAccessor), "scopeAccessorType");
-							model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType1;
-						}
-						return true;
+                    // This is not a thing anymore
+					//case LifestyleType.Scoped:
+					//	var scopeAccessorType1 = GetTypeFromAttribute(model, "scopeAccessorType");
+					//	if (scopeAccessorType1 != null)
+					//	{
+					//		ValidateTypeFromAttribute(scopeAccessorType1, typeof(IScopeAccessor), "scopeAccessorType");
+					//		model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType1;
+					//	}
+					//	return true;
 					case LifestyleType.Bound:
 						var binderType1 = GetTypeFromAttribute(model, "scopeRootBinderType");
 						if (binderType1 != null)
@@ -93,14 +94,15 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 				model.LifestyleType = LifestyleType.Bound;
 				return true;
 			}
-			var scopeAccessorType = GetTypeFromAttribute(model, "scopeAccessorType");
-			if (scopeAccessorType != null)
-			{
-				ValidateTypeFromAttribute(scopeAccessorType, typeof(IScopeAccessor), "scopeAccessorType");
-				model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType;
-				model.LifestyleType = LifestyleType.Scoped;
-				return true;
-			}
+            // This is not a thing anymore
+			//var scopeAccessorType = GetTypeFromAttribute(model, "scopeAccessorType");
+			//if (scopeAccessorType != null)
+			//{
+			//	ValidateTypeFromAttribute(scopeAccessorType, typeof(IScopeAccessor), "scopeAccessorType");
+			//	model.ExtendedProperties[Constants.ScopeAccessorType] = scopeAccessorType;
+			//	model.LifestyleType = LifestyleType.Scoped;
+			//	return true;
+			//}
 			var customLifestyleType = GetTypeFromAttribute(model, "customLifestyleType");
 			if (customLifestyleType != null)
 			{
@@ -137,15 +139,16 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
 				var binder = ExtractBinder(((BoundToAttribute) attribute).ScopeRootBinderType, model.Name);
 				model.ExtendedProperties[Constants.ScopeRootSelector] = binder;
 			}
-			else if (model.LifestyleType == LifestyleType.Scoped)
-			{
-				var scoped = (ScopedAttribute) attribute;
-				if (scoped.ScopeAccessorType != null)
-				{
-					ValidateTypeFromAttribute(scoped.ScopeAccessorType, typeof(IScopeAccessor), "ScopeAccessorType");
-					model.ExtendedProperties[Constants.ScopeAccessorType] = scoped.ScopeAccessorType;
-				}
-			}
+            // This is not a thing anymore
+			//else if (model.LifestyleType == LifestyleType.Scoped)
+			//{
+			//	var scoped = (ScopedAttribute) attribute;
+			//	if (scoped.ScopeAccessorType != null)
+			//	{
+			//		ValidateTypeFromAttribute(scoped.ScopeAccessorType, typeof(IScopeAccessor), "ScopeAccessorType");
+			//		model.ExtendedProperties[Constants.ScopeAccessorType] = scoped.ScopeAccessorType;
+			//	}
+			//}
 		}
 
 		protected virtual void ValidateTypeFromAttribute(Type typeFromAttribute, Type expectedInterface, string attribute)

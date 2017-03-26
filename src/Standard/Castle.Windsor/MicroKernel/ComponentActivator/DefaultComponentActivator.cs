@@ -23,12 +23,9 @@ namespace Castle.Windsor.MicroKernel.ComponentActivator
 {
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{
-		private readonly bool useFastCreateInstance;
-
 		public DefaultComponentActivator(ComponentModel model, IKernelInternal kernel, ComponentInstanceDelegate onCreation, ComponentInstanceDelegate onDestruction)
 			: base(model, kernel, onCreation, onDestruction)
 		{
-			useFastCreateInstance = false;
 		}
 
 		protected override object InternalCreate(CreationContext context)

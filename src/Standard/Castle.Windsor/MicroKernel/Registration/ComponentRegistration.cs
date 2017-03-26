@@ -376,15 +376,17 @@ namespace Castle.Windsor.MicroKernel.Registration
 			return LifeStyle.PerThread;
 		}
 
-		public ComponentRegistration<TService> LifestyleScoped(Type scopeAccessorType = null)
-		{
-			return LifeStyle.Scoped(scopeAccessorType);
-		}
+        // This is not a thing anymore
+		//public ComponentRegistration<TService> LifestyleScoped(Type scopeAccessorType = null)
+		//{
+		//	return LifeStyle.Scoped(scopeAccessorType);
+		//}
 
-		public ComponentRegistration<TService> LifestyleScoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
-		{
-			return LifestyleScoped(typeof(TScopeAccessor));
-		}
+        // This neither
+		//public ComponentRegistration<TService> LifestyleScoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
+		//{
+		//	return LifestyleScoped(typeof(TScopeAccessor));
+		//}
 
 		public ComponentRegistration<TService> LifestyleBoundTo<TBaseForRoot>() where TBaseForRoot : class
 		{

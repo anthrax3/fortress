@@ -14,16 +14,14 @@
 
 
 using System.Threading.Tasks;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
 using Microsoft.AspNetCore.Http;
 
 namespace Castle.Windsor.MicroKernel.Lifestyle
 {
+    // This is not yet complete
     public class PerWebRequestLifestyleMiddleware
     {
-        private const string key = "castle.per-web-request-lifestyle-cache";
         private readonly RequestDelegate _next;
-        private HttpContext _context = null;
 
         public PerWebRequestLifestyleMiddleware(RequestDelegate next)
         {
@@ -32,24 +30,8 @@ namespace Castle.Windsor.MicroKernel.Lifestyle
 
         public async Task Invoke(HttpContext context)
         {
-            GetScope(context, true);
-
             await _next.Invoke(context);
-
-            var scope = GetScope(context, false);
-            if (scope != null)
-                scope.Dispose();
-        }
-
-        private ILifetimeScope GetScope(HttpContext context, bool createIfNotPresent)
-        {
-            var candidates = (ILifetimeScope)context.Items[key];
-            if (candidates == null && createIfNotPresent)
-            {
-                candidates = new DefaultLifetimeScope(new ScopeCache());
-                context.Items[key] = candidates;
-            }
-            return candidates;
+            // Thinking right now is release policies can be implemented directly on the container
         }
     }
 }

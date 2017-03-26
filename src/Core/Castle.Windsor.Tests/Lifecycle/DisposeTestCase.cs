@@ -56,7 +56,8 @@ namespace Castle.Windsor.Tests.Lifecycle
 		public void Disposable_component_for_nondisposable_service_should_be_disposed_when_released()
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
-			Container.Register(Component.For<ISimpleService>()
+
+            Container.Register(Component.For<ISimpleService>()
 				.ImplementedBy<SimpleServiceDisposable>()
 				.LifeStyle.Transient);
 

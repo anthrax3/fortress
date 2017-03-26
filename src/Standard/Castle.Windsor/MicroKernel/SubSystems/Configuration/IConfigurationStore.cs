@@ -29,7 +29,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 
 		//IConfiguration GetChildContainerConfiguration(string key);
 
-		//IConfiguration GetComponentConfiguration(string key);
+		IConfiguration GetComponentConfiguration(string key);
 
 		IConfiguration[] GetComponents();
 
@@ -37,7 +37,7 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Configuration
 
 		IConfiguration[] GetFacilities();
 
-		//IConfiguration GetFacilityConfiguration(string key);
+		IConfiguration GetFacilityConfiguration(string key);
 
 		IConfiguration[] GetInstallers();
 

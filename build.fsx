@@ -10,7 +10,7 @@ let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
 let desktopTestAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
-let standardTestAssemblies = "src/Core/Castle.Core.Tests/*.csproj"
+let standardTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 

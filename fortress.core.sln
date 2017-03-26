@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{0871C31C-37E1-4BEF-8934-60E875DB0456}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E70FAB7D-FD6B-4777-A32F-F219C51248CD}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		build.bat = build.bat
+		build.fsx = build.fsx
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Standard", "Standard", "{B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core", "src\Standard\Castle.Core\Castle.Core.csproj", "{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core.DynamicProxy", "src\Standard\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj", "{976420E0-7D9A-4AE3-8503-71E48E7F3923}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core.Tests", "src\Standard\Castle.Core.Tests\Castle.Core.Tests.csproj", "{B8CC02BB-BDEA-4668-AA0A-589E9049A525}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor", "src\Standard\Castle.Windsor\Castle.Windsor.csproj", "{AE4687E0-3CB5-4B78-958F-9332F430CDC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8C6A0A6B-0CEB-4223-BDA9-E16CAEA7C4C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core.Tests", "src\Core\Castle.Core.Tests\Castle.Core.Tests.csproj", "{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor.Tests", "src\Core\Castle.Windsor.Tests\Castle.Windsor.Tests.csproj", "{8AA02726-48B5-489A-8721-EC576E1D66BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor.Tests", "src\Standard\Castle.Windsor.Tests\Castle.Windsor.Tests.csproj", "{ACE76205-8D8A-4DDE-9AA1-519B99D948C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976420E0-7D9A-4AE3-8503-71E48E7F3923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976420E0-7D9A-4AE3-8503-71E48E7F3923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976420E0-7D9A-4AE3-8503-71E48E7F3923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976420E0-7D9A-4AE3-8503-71E48E7F3923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CC02BB-BDEA-4668-AA0A-589E9049A525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CC02BB-BDEA-4668-AA0A-589E9049A525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CC02BB-BDEA-4668-AA0A-589E9049A525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CC02BB-BDEA-4668-AA0A-589E9049A525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4687E0-3CB5-4B78-958F-9332F430CDC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4687E0-3CB5-4B78-958F-9332F430CDC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4687E0-3CB5-4B78-958F-9332F430CDC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4687E0-3CB5-4B78-958F-9332F430CDC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA02726-48B5-489A-8721-EC576E1D66BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA02726-48B5-489A-8721-EC576E1D66BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA02726-48B5-489A-8721-EC576E1D66BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA02726-48B5-489A-8721-EC576E1D66BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACE76205-8D8A-4DDE-9AA1-519B99D948C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACE76205-8D8A-4DDE-9AA1-519B99D948C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACE76205-8D8A-4DDE-9AA1-519B99D948C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACE76205-8D8A-4DDE-9AA1-519B99D948C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E} = {B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}
+		{976420E0-7D9A-4AE3-8503-71E48E7F3923} = {B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}
+		{B8CC02BB-BDEA-4668-AA0A-589E9049A525} = {B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}
+		{AE4687E0-3CB5-4B78-958F-9332F430CDC8} = {B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}
+		{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45} = {8C6A0A6B-0CEB-4223-BDA9-E16CAEA7C4C1}
+		{8AA02726-48B5-489A-8721-EC576E1D66BE} = {8C6A0A6B-0CEB-4223-BDA9-E16CAEA7C4C1}
+		{ACE76205-8D8A-4DDE-9AA1-519B99D948C2} = {B7E4E0EA-4588-4225-8D0B-C1CDE64E4BF0}
+	EndGlobalSection
+EndGlobal

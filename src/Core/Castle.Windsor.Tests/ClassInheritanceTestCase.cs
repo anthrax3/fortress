@@ -23,7 +23,6 @@ using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	
 	public class ClassInheritanceTestCase : AbstractContainerTestCase
 	{
 		// TODO: add tests for generics in the hierarchy (open as well?)
@@ -68,7 +67,7 @@ namespace Castle.Windsor.Tests
 			var obj = Container.Resolve<JohnParent>();
 
 			Assert.True(IsProxy(obj));
-			Assert.IsType<JohnChild>(obj);
+			Assert.IsAssignableFrom<JohnChild>(obj);
 		}
 
 		[Fact]
@@ -81,8 +80,8 @@ namespace Castle.Windsor.Tests
 			var obj = Container.Resolve<JohnParent>();
 
 			Assert.True(IsProxy(obj));
-			Assert.IsType<JohnChild>(obj);
-			Assert.IsType<IEmptyService>(obj);
+			Assert.IsAssignableFrom<JohnChild>(obj);
+			Assert.IsAssignableFrom<IEmptyService>(obj);
 		}
 
 		[Fact]
@@ -95,9 +94,9 @@ namespace Castle.Windsor.Tests
 			var obj = Container.Resolve<JohnParent>();
 
 			Assert.True(IsProxy(obj));
-			Assert.IsType<JohnChild>(obj);
-			Assert.IsType<IEmptyService>(obj);
-			Assert.IsType<IGeneric<IEmployee>>(obj);
+			Assert.IsAssignableFrom<JohnChild>(obj);
+			Assert.IsAssignableFrom<IEmptyService>(obj);
+			Assert.IsAssignableFrom<IGeneric<IEmployee>>(obj);
 		}
 
 		[Fact]
@@ -109,7 +108,7 @@ namespace Castle.Windsor.Tests
 			var obj = Container.Resolve<JohnParent>();
 
 			Assert.True(IsProxy(obj));
-			Assert.IsType<JohnChild>(obj);
+			Assert.IsAssignableFrom<JohnChild>(obj);
 		}
 
 		[Fact]
@@ -121,7 +120,7 @@ namespace Castle.Windsor.Tests
 			var parent = Container.Resolve<JohnParent>();
 
 			Assert.Same(grandparent, parent);
-			Assert.IsType<JohnChild>(grandparent);
+			Assert.IsAssignableFrom<JohnChild>(grandparent);
 		}
 
 		[Fact]
@@ -131,7 +130,7 @@ namespace Castle.Windsor.Tests
 
 			var grandparent = Container.Resolve<JohnGrandparent>();
 
-			Assert.IsType<JohnChild>(grandparent);
+			Assert.IsAssignableFrom<JohnChild>(grandparent);
 		}
 
 		[Fact]
@@ -156,7 +155,7 @@ namespace Castle.Windsor.Tests
 			var parent = Container.Resolve<JohnParent>();
 
 			Assert.Same(grandparent, parent);
-			Assert.IsType<JohnChild>(grandparent);
+			Assert.IsAssignableFrom<JohnChild>(grandparent);
 		}
 
 		[Fact]
@@ -166,7 +165,7 @@ namespace Castle.Windsor.Tests
 
 			var parent = Container.Resolve<JohnParent>();
 
-			Assert.IsType<JohnChild>(parent);
+			Assert.IsAssignableFrom<JohnChild>(parent);
 		}
 
 		[Fact]

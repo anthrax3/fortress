@@ -279,6 +279,7 @@ namespace Castle.Windsor.MicroKernel.Context
 
 			if (!(dictionary is ReflectionBasedDictionaryAdapter))
 				return dictionary;
+
 			return new Arguments(dictionary);
 		}
 

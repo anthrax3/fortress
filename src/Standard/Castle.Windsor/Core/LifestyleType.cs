@@ -30,7 +30,8 @@ namespace Castle.Windsor.Core
 
 		Custom,
 
-		Scoped,
+        // This is not a thing anymore, it was based on remoting
+        //Scoped,
 
 		Bound
 	}

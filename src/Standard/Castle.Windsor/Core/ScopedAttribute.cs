@@ -16,14 +16,15 @@ using System;
 
 namespace Castle.Windsor.Core
 {
-	[AttributeUsage(AttributeTargets.Class)]
-	public sealed class ScopedAttribute : LifestyleAttribute
-	{
-		public ScopedAttribute()
-			: base(LifestyleType.Scoped)
-		{
-		}
+    // Taking this out for now, it was based on remoting
+	//[AttributeUsage(AttributeTargets.Class)]
+	//public sealed class ScopedAttribute : LifestyleAttribute
+	//{
+	//	public ScopedAttribute()
+	//		: base(LifestyleType.Scoped)
+	//	{
+	//	}
 
-		public Type ScopeAccessorType { get; set; }
-	}
+	//	public Type ScopeAccessorType { get; set; }
+	//}
 }

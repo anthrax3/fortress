@@ -51,7 +51,7 @@ namespace Castle.Windsor.Tests
 
 			var proxy = Container.Resolve<Collection<int>>();
 
-			Assert.IsType<ISimpleService>(proxy);
+			Assert.IsAssignableFrom<ISimpleService>(proxy);
 		}
 
 		[Fact]

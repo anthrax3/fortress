@@ -58,7 +58,8 @@ namespace Castle.Windsor.Windsor
 		{
 			if (interpreter == null)
 				throw new ArgumentNullException("interpreter");
-			interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
+
+            interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
 
 			RunInstaller();
 		}

@@ -77,12 +77,6 @@ namespace Castle.Windsor.Tests.Lifestyle
 		}
 
 		[Test]
-		public void Many_component_scoped()
-		{
-			LifestyleMany(c => c.LifestyleScoped(), LifestyleType.Scoped);
-		}
-
-		[Test]
 		public void Many_component_singleton()
 		{
 			LifestyleMany(c => c.LifestyleSingleton(), LifestyleType.Singleton);
@@ -128,12 +122,6 @@ namespace Castle.Windsor.Tests.Lifestyle
 		public void Single_component_pooled()
 		{
 			LifestyleSingle(c => c.LifestylePooled(), LifestyleType.Pooled);
-		}
-
-		[Test]
-		public void Single_component_scoped()
-		{
-			LifestyleSingle(c => c.LifestyleScoped(), LifestyleType.Scoped);
 		}
 
 		[Test]

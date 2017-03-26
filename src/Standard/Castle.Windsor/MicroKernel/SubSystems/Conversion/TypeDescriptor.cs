@@ -15,6 +15,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using Castle.Core.Core.Internal;
 
 namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
@@ -34,16 +36,27 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 					return converter;
 
 				holder.Upgrade();
-				if (convertersByType.TryGetValue(type, out converter))
+
+                if (convertersByType.TryGetValue(type, out converter))
 					return converter;
 
-			    var converterAttribute = type.GetAttribute<TypeConverterAttribute>();
-				if (converterAttribute == null)
+			    Type converterType = null;
+
+                var converterAttribute = type.GetTypeInfo().GetCustomAttribute<TypeConverterAttribute>();
+
+			    if (converterAttribute == null)
+                    converterType = ManuallyMapConverterWhileNetStandardImproves(type);
+
+                if (converterAttribute == null && converterType == null)
 					return null;
-				var converterType = Type.GetType(converterAttribute.ConverterTypeName, false);
-				if (converterType == null)
+
+                if (converterType == null)
+                    converterType = Type.GetType(converterAttribute.ConverterTypeName, false);
+
+                if (converterType == null)
 					return null;
-				try
+
+                try
 				{
 					converter = (TypeConverter) Activator.CreateInstance(converterType);
 				}
@@ -57,5 +70,13 @@ namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
 				return converter;
 			}
 		}
+
+	    private static Type ManuallyMapConverterWhileNetStandardImproves(Type type)
+	    {
+	        if (type.FullName == "System.Uri")
+	            return typeof(UriTypeConverter);
+
+	        return null;
+	    }
 	}
 }

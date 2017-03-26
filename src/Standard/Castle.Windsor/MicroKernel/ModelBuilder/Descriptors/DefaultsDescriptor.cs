@@ -14,6 +14,7 @@
 
 using System;
 using System.Linq;
+using Castle.Core.Core.Configuration;
 using Castle.Windsor.Core;
 using Castle.Windsor.Core.Internal;
 
@@ -45,7 +46,15 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
 
 		private void EnsureComponentConfiguration(IKernel kernel, ComponentModel model)
 		{
-		}
+            var configuration = kernel.ConfigurationStore.GetComponentConfiguration(model.Name);
+            if (configuration == null)
+            {
+                configuration = new MutableConfiguration("component");
+                kernel.ConfigurationStore.AddComponentConfiguration(model.Name, configuration);
+            }
+            if (model.Configuration == null)
+                model.Configuration = configuration;
+        }
 
 		private void EnsureComponentName(ComponentModel model)
 		{

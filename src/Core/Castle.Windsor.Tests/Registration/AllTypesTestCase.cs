@@ -332,7 +332,7 @@ namespace Castle.Windsor.Tests.Registration
                 .BasedOn<CustomerChain1>());
 
 			var handlers = Kernel.GetAssignableHandlers(typeof(CustomerChain1));
-			Assert.Equal(2, handlers.Length);
+			Assert.Equal(9, handlers.Length);
 		}
 
 		[Fact]

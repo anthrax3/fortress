@@ -178,7 +178,7 @@ namespace Castle.Windsor.Tests.Registration
 				.UsingFactoryMethod(() => new TrivialComponent())
 				.Proxy.AdditionalInterfaces(typeof(IEmptyService)));
 			var component = Kernel.Resolve<IComponent>();
-			Assert.IsType<IEmptyService>(component);
+			Assert.IsAssignableFrom<IEmptyService>(component);
 		}
 
 		[Fact]
@@ -194,7 +194,7 @@ namespace Castle.Windsor.Tests.Registration
 
 			var id = component.ID;
 
-			Assert.IsType<IProxyTargetAccessor>(component);
+			Assert.IsAssignableFrom<IProxyTargetAccessor>(component);
 		}
 
 		[Fact]
@@ -210,7 +210,7 @@ namespace Castle.Windsor.Tests.Registration
 
 			var id = component.ID;
 
-			Assert.IsType<IProxyTargetAccessor>(component);
+			Assert.IsAssignableFrom<IProxyTargetAccessor>(component);
 		}
 
 		[Fact]
@@ -221,7 +221,7 @@ namespace Castle.Windsor.Tests.Registration
 				.UsingFactoryMethod(() => new TrivialComponent())
 				.Proxy.MixIns(new CameraService()));
 			var component = Kernel.Resolve<IComponent>();
-			Assert.IsType<ICameraService>(component);
+			Assert.NotNull(component as ICameraService);
 		}
 
 		[Fact]

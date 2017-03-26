@@ -224,7 +224,8 @@ namespace Castle.Windsor.Core.Internal
 		private static AssemblyName GetAssemblyName(string filePath)
 		{
 			AssemblyName assemblyName;
-			assemblyName = new AssemblyName(filePath);
+		    var assemblyNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+			assemblyName = new AssemblyName(assemblyNameWithoutExtension);
 			return assemblyName;
 		}
 

@@ -45,7 +45,8 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder
 		public ComponentModel BuildModel(ComponentName name, Type[] services, Type classType, IDictionary extendedProperties)
 		{
 			var model = new ComponentModel(name, services, classType, extendedProperties);
-			contributors.ForEach(c => c.ProcessModel(kernel, model));
+
+            contributors.ForEach(c => c.ProcessModel(kernel, model));
 
 			return model;
 		}
@@ -53,7 +54,8 @@ namespace Castle.Windsor.MicroKernel.ModelBuilder
 		public ComponentModel BuildModel(IComponentModelDescriptor[] customContributors)
 		{
 			var model = new ComponentModel();
-            foreach(var c in customContributors)
+
+            foreach (var c in customContributors)
                 c.BuildComponentModel(kernel, model);
 
 			contributors.ForEach(c => c.ProcessModel(kernel, model));

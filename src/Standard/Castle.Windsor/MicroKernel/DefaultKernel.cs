@@ -179,7 +179,7 @@ namespace Castle.Windsor.MicroKernel
 
             facilities.Add(facility);
 
-            facility.Init(this, ZeroConfiguration.Instance);
+            facility.Init(this, ConfigurationStore.GetFacilityConfiguration(facility != null ? facility.GetType().FullName : null));
 
             return this;
         }
@@ -391,9 +391,10 @@ namespace Castle.Windsor.MicroKernel
 
 			switch (type)
 			{
-				case LifestyleType.Scoped:
-					manager = new ScopedLifestyleManager(CreateScopeAccessor(model));
-					break;
+                // This is not a thing anymore
+				//case LifestyleType.Scoped:
+				//	manager = new ScopedLifestyleManager(CreateScopeAccessor(model));
+				//	break;
 				case LifestyleType.Bound:
 					manager = new ScopedLifestyleManager(CreateScopeAccessorForBoundLifestyle(model));
 					break;

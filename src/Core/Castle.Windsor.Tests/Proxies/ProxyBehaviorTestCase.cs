@@ -151,7 +151,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var common = Container.Resolve<ICommon>();
 
-			Assert.IsType<ICommon2>(common);
+			Assert.IsAssignableFrom<ICommon2>(common);
 		}
 
 		[Fact]

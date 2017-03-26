@@ -20,49 +20,49 @@ using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
 
 namespace Castle.Windsor.MicroKernel.Lifestyle
 {
-	public class ScopedLifestyleManager : AbstractLifestyleManager
-	{
-		private IScopeAccessor accessor;
+    public class ScopedLifestyleManager : AbstractLifestyleManager
+    {
+        private IScopeAccessor accessor;
 
-		public ScopedLifestyleManager(IScopeAccessor accessor)
-		{
-			this.accessor = accessor;
-		}
+        public ScopedLifestyleManager(IScopeAccessor accessor)
+        {
+            this.accessor = accessor;
+        }
 
-		public override void Dispose()
-		{
-			var scope = Interlocked.Exchange(ref accessor, null);
-			if (scope != null)
-				scope.Dispose();
-		}
+        public override void Dispose()
+        {
+            var scope = Interlocked.Exchange(ref accessor, null);
+            if (scope != null)
+                scope.Dispose();
+        }
 
-		public override object Resolve(CreationContext context, IReleasePolicy releasePolicy)
-		{
-			var scope = GetScope(context);
-			var burden = scope.GetCachedInstance(Model, afterCreated =>
-			{
-				var localBurden = CreateInstance(context, true);
-				afterCreated(localBurden);
-				Track(localBurden, releasePolicy);
-				return localBurden;
-			});
-			return burden.Instance;
-		}
+        public override object Resolve(CreationContext context, IReleasePolicy releasePolicy)
+        {
+            var scope = GetScope(context);
+            var burden = scope.GetCachedInstance(Model, afterCreated =>
+            {
+                var localBurden = CreateInstance(context, true);
+                afterCreated(localBurden);
+                Track(localBurden, releasePolicy);
+                return localBurden;
+            });
+            return burden.Instance;
+        }
 
-		private ILifetimeScope GetScope(CreationContext context)
-		{
-			var localScope = accessor;
-			if (localScope == null)
-				throw new ObjectDisposedException("Scope was already disposed. This is most likely a bug in the calling code.");
-			var scope = localScope.GetScope(context);
-			if (scope == null)
-				throw new ComponentResolutionException(
-					string.Format(
-						"Could not obtain scope for component {0}. This is most likely either a bug in custom {1} or you're trying to access scoped component outside of the scope (like a per-web-request component outside of web request etc)",
-						Model.Name,
-						typeof(IScopeAccessor).ToCSharpString()),
-					Model);
-			return scope;
-		}
-	}
+        private ILifetimeScope GetScope(CreationContext context)
+        {
+            var localScope = accessor;
+            if (localScope == null)
+                throw new ObjectDisposedException("Scope was already disposed. This is most likely a bug in the calling code.");
+            var scope = localScope.GetScope(context);
+            if (scope == null)
+                throw new ComponentResolutionException(
+                    string.Format(
+                        "Could not obtain scope for component {0}. This is most likely either a bug in custom {1} or you're trying to access scoped component outside of the scope (like a per-web-request component outside of web request etc)",
+                        Model.Name,
+                        typeof(IScopeAccessor).ToCSharpString()),
+                    Model);
+            return scope;
+        }
+    }
 }

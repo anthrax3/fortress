@@ -78,24 +78,24 @@ namespace Castle.Windsor.MicroKernel.Registration.Lifestyle
 			return pooledWithSize;
 		}
 
-		public ComponentRegistration<TService> Scoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
-		{
-			return Scoped(typeof(TScopeAccessor));
-		}
+		//public ComponentRegistration<TService> Scoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
+		//{
+		//	return Scoped(typeof(TScopeAccessor));
+		//}
 
-		public ComponentRegistration<TService> Scoped(Type scopeAccessorType)
-		{
-			var registration = AddDescriptor(new LifestyleDescriptor<TService>(LifestyleType.Scoped));
-			if (scopeAccessorType == null)
-				return registration;
-			var scopeAccessor = new ExtendedPropertiesDescriptor(new Property(Constants.ScopeAccessorType, scopeAccessorType));
-			return registration.AddDescriptor(scopeAccessor);
-		}
+		//public ComponentRegistration<TService> Scoped(Type scopeAccessorType)
+		//{
+		//	var registration = AddDescriptor(new LifestyleDescriptor<TService>(LifestyleType.Scoped));
+		//	if (scopeAccessorType == null)
+		//		return registration;
+		//	var scopeAccessor = new ExtendedPropertiesDescriptor(new Property(Constants.ScopeAccessorType, scopeAccessorType));
+		//	return registration.AddDescriptor(scopeAccessor);
+		//}
 
-		public ComponentRegistration<TService> Scoped()
-		{
-			return Scoped(null);
-		}
+		//public ComponentRegistration<TService> Scoped()
+		//{
+		//	return Scoped(null);
+		//}
 
 		public ComponentRegistration<TService> BoundTo<TBaseForRoot>() where TBaseForRoot : class
 		{

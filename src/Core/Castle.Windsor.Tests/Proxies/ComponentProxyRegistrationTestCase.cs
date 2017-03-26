@@ -29,7 +29,7 @@ namespace Castle.Windsor.Tests.Proxies
 	{
 		private void AssertIsProxy(object o)
 		{
-			Assert.IsType<IProxyTargetAccessor>(o);
+			Assert.IsAssignableFrom<IProxyTargetAccessor>(o);
 		}
 
 		[Fact]
@@ -42,7 +42,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsType(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
@@ -57,7 +57,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsType(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
@@ -72,7 +72,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsType(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
@@ -88,7 +88,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsType(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
@@ -244,7 +244,7 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsType<ISimpleService>(calculator);
+			Assert.IsAssignableFrom<ISimpleService>(calculator);
 
 			var mixin = (ISimpleService) calculator;
 			mixin.Operation();

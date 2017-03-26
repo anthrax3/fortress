@@ -181,20 +181,21 @@ namespace Castle.Windsor.MicroKernel.Registration
 			return Configure(c => c.LifestylePerThread());
 		}
 
-		public BasedOnDescriptor LifestyleScoped()
-		{
-			return Configure(c => c.LifestyleScoped());
-		}
+        // This is not a thing anymore
+		//public BasedOnDescriptor LifestyleScoped()
+		//{
+		//	return Configure(c => c.LifestyleScoped());
+		//}
 
-		public BasedOnDescriptor LifestyleScoped(Type scopeAccessorType)
-		{
-			return Configure(c => c.LifestyleScoped(scopeAccessorType));
-		}
+		//public BasedOnDescriptor LifestyleScoped(Type scopeAccessorType)
+		//{
+		//	return Configure(c => c.LifestyleScoped(scopeAccessorType));
+		//}
 
-		public BasedOnDescriptor LifestyleScoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
-		{
-			return Configure(c => c.LifestyleScoped<TScopeAccessor>());
-		}
+		//public BasedOnDescriptor LifestyleScoped<TScopeAccessor>() where TScopeAccessor : IScopeAccessor, new()
+		//{
+		//	return Configure(c => c.LifestyleScoped<TScopeAccessor>());
+		//}
 
 		public BasedOnDescriptor LifestyleBoundTo<TBaseForRoot>() where TBaseForRoot : class
 		{
