@@ -106,16 +106,12 @@ namespace Castle.Windsor.Windsor
 			Installer = new DefaultComponentInstaller();
 		}
 
-		public WindsorContainer(IWindsorContainer parent, IConfigurationInterpreter interpreter) : this()
+		public WindsorContainer(IWindsorContainer parent) : this()
 		{
 			if (parent == null)
 				throw new ArgumentNullException("parent");
-			if (interpreter == null)
-				throw new ArgumentNullException("interpreter");
 
 			parent.AddChildContainer(this);
-
-			interpreter.ProcessResource(interpreter.Source, kernel.ConfigurationStore, kernel);
 
 			RunInstaller();
 		}

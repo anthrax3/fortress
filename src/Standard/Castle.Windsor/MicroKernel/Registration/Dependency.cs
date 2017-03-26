@@ -120,31 +120,5 @@ namespace Castle.Windsor.MicroKernel.Registration
 			}
 			return false;
 		}
-
-		//{
-
-		//public static Property OnResource(string dependencyName, ResourceManager resourceManager, string resourceName)
-		//}
-		//	return OnResource(dependencyName, resourceManager, resourceName);
-		//	}
-		//		throw new ArgumentException(string.Format("Could not read property {1} on type {0}", typeof(TResources), resourceManagerProperty), e);
-		//	{
-		//	catch (Exception e)
-		//	}
-		//		resourceManager = (ResourceManager)resourceManagerProperty.GetValue(null, null);
-		//	{
-		//	try
-		//	ResourceManager resourceManager;
-		//	}
-		//		throw new ArgumentException(string.Format("Type {0} does not appear to be a correct 'resources' type. It doesn't have 'ResourceManager' property.", typeof(TResources)));
-		//	{
-		//	if (resourceManagerProperty == null)
-		//	                                                             null);
-		//	var resourceManagerProperty = typeof(TResources).GetProperty("ResourceManager", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, typeof(ResourceManager), Type.EmptyTypes,
-		//{
-
-		//public static Property OnResource<TResources>(string dependencyName, string resourceName)
-		//	return Property.ForKey(dependencyName).Eq(resourceManager.GetObject(resourceName));
-		//}
 	}
 }

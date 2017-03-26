@@ -19,7 +19,7 @@ using Castle.Windsor.MicroKernel.Registration;
 
 namespace Castle.Windsor.Windsor
 {
-	public partial interface IWindsorContainer : IDisposable
+	public interface IWindsorContainer : IDisposable
 	{
 		IKernel Kernel { get; }
 

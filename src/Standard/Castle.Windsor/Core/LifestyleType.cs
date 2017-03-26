@@ -25,7 +25,8 @@ namespace Castle.Windsor.Core
 		Transient,
 
 		Pooled,
-		PerWebRequest,
+
+        PerWebRequest,
 
 		Custom,
 
