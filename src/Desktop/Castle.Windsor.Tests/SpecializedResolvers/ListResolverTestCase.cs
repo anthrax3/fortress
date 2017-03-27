@@ -13,16 +13,15 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.SpecializedResolvers
 {
-	[TestFixture]
+	
 	public class ListResolverTestCase : AbstractContainerTestCase
 	{
 		protected override WindsorContainer BuildContainer()
@@ -32,7 +31,7 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 			return container;
 		}
 
-		[Test]
+		[Fact]
 		public void DependencyOnListOfInterceptedServices()
 		{
 			Kernel.Register(
@@ -44,23 +43,23 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<ListDepAsProperty>());
 
 			var proxy = Kernel.Resolve<ListDepAsConstructor>().Services[0] as IProxyTargetAccessor;
-			Assert.IsNotNull(proxy);
-			Assert.AreSame(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("a"));
+			Assert.NotNull(proxy);
+			Assert.Same(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("a"));
 
 			proxy = Kernel.Resolve<ListDepAsConstructor>().Services[1] as IProxyTargetAccessor;
-			Assert.IsNotNull(proxy);
-			Assert.AreSame(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("b"));
+			Assert.NotNull(proxy);
+			Assert.Same(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("b"));
 
 			proxy = Kernel.Resolve<ListDepAsProperty>().Services[0] as IProxyTargetAccessor;
-			Assert.IsNotNull(proxy);
-			Assert.AreSame(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("a"));
+			Assert.NotNull(proxy);
+			Assert.Same(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("a"));
 
 			proxy = Kernel.Resolve<ListDepAsProperty>().Services[1] as IProxyTargetAccessor;
-			Assert.IsNotNull(proxy);
-			Assert.AreSame(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("b"));
+			Assert.NotNull(proxy);
+			Assert.Same(proxy.GetInterceptors()[0], Kernel.Resolve<StandardInterceptor>("b"));
 		}
 
-		[Test]
+		[Fact]
 		public void DependencyOnListOfServices_OnConstructor()
 		{
 			Kernel.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
@@ -69,14 +68,14 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 
 			var comp = Kernel.Resolve<ListDepAsConstructor>();
 
-			Assert.IsNotNull(comp);
-			Assert.IsNotNull(comp.Services);
-			Assert.AreEqual(2, comp.Services.Count);
+			Assert.NotNull(comp);
+			Assert.NotNull(comp.Services);
+			Assert.Equal(2, comp.Services.Count);
 			foreach (var service in comp.Services.AsEnumerable())
-				Assert.IsNotNull(service);
+				Assert.NotNull(service);
 		}
 
-		[Test]
+		[Fact]
 		public void DependencyOnListOfServices_OnProperty()
 		{
 			Kernel.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
@@ -85,14 +84,14 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 
 			var comp = Kernel.Resolve<ListDepAsProperty>();
 
-			Assert.IsNotNull(comp);
-			Assert.IsNotNull(comp.Services);
-			Assert.AreEqual(2, comp.Services.Count);
+			Assert.NotNull(comp);
+			Assert.NotNull(comp.Services);
+			Assert.Equal(2, comp.Services.Count);
 			foreach (var service in comp.Services.AsEnumerable())
-				Assert.IsNotNull(service);
+				Assert.NotNull(service);
 		}
 
-		[Test]
+		[Fact]
 		public void DependencyOnListWhenEmpty()
 		{
 			Kernel.Resolver.AddSubResolver(new ListResolver(Kernel, true));
@@ -100,66 +99,66 @@ namespace Castle.Windsor.Tests.SpecializedResolvers
 				Component.For<ListDepAsProperty>());
 
 			var proxy = Kernel.Resolve<ListDepAsConstructor>();
-			Assert.IsNotNull(proxy.Services);
+			Assert.NotNull(proxy.Services);
 
 			var proxy2 = Kernel.Resolve<ListDepAsProperty>();
-			Assert.IsNotNull(proxy2.Services);
+			Assert.NotNull(proxy2.Services);
 		}
 
-		[Test(Description = "IOC-240")]
+		[Fact]
 		public void Honors_collection_override_all_components_in()
 		{
 			Container.Install(new CollectionServiceOverridesInstaller());
 			var fooItemTest = Container.Resolve<ListDepAsConstructor>("InjectAllList");
 			var dependencies = fooItemTest.Services.Select(d => d.GetType()).ToList();
-			Assert.That(dependencies, Has.Count.EqualTo(3));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceA)));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceB)));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceDecoratorViaProperty)));
+			Assert.True(dependencies.Count == 3);
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceA)));
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceB)));
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceDecoratorViaProperty)));
 		}
 
-		[Test(Description = "IOC-240")]
+		[Fact]
 		public void Honors_collection_override_one_components_in()
 		{
 			Container.Install(new CollectionServiceOverridesInstaller());
 			var fooItemTest = Container.Resolve<ListDepAsConstructor>("InjectFooOnlyList");
 			var dependencies = fooItemTest.Services.Select(d => d.GetType()).ToList();
-			Assert.That(dependencies, Has.Count.EqualTo(1));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceA)));
+			Assert.True(dependencies.Count == 1);
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceA)));
 		}
 
-		[Test(Description = "IOC-240")]
+		[Fact]
 		public void Honors_collection_override_one_components_in_no_resolver()
 		{
 			var container = new WindsorContainer();
 			container.Install(new CollectionServiceOverridesInstaller());
 			var fooItemTest = container.Resolve<ListDepAsConstructor>("InjectFooOnlyList");
 			var dependencies = fooItemTest.Services.Select(d => d.GetType()).ToList();
-			Assert.That(dependencies, Has.Count.EqualTo(1));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceA)));
+			Assert.True(dependencies.Count == 1);
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceA)));
 		}
 
-		[Test(Description = "IOC-240")]
+		[Fact]
 		public void Honors_collection_override_some_components_in()
 		{
 			Container.Install(new CollectionServiceOverridesInstaller());
 			var fooItemTest = Container.Resolve<ListDepAsConstructor>("InjectFooAndBarOnlyList");
 			var dependencies = fooItemTest.Services.Select(d => d.GetType()).ToList();
-			Assert.That(dependencies, Has.Count.EqualTo(2));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceA)));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceB)));
+            Assert.True(dependencies.Count == 2);
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceA)));
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceB)));
 		}
 
-		[Test(Description = "IOC-240")]
+		[Fact]
 		public void Honors_collection_override_some_components_in_no_resolver()
 		{
 			var container = new WindsorContainer();
 			container.Install(new CollectionServiceOverridesInstaller());
 			var fooItemTest = container.Resolve<ListDepAsConstructor>("InjectFooAndBarOnlyList");
 			var dependencies = fooItemTest.Services.Select(d => d.GetType()).ToList();
-			Assert.That(dependencies, Has.Count.EqualTo(2));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceA)));
-			Assert.That(dependencies, Has.Member(typeof(EmptyServiceB)));
-		}
-	}
+            Assert.True(dependencies.Count == 2);
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceA)));
+            Assert.True(dependencies.Any(x => x == typeof(EmptyServiceB)));
+        }
+    }
 }

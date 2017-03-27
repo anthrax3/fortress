@@ -15,25 +15,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Configuration;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.DynamicProxy;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Config.Components;
 using Castle.Windsor.Tests.Facilities.Startable.Components;
 using Castle.Windsor.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Registration
 {
 	public class ComponentRegistrationTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void AddComponent_Activator_WorksFine()
 		{
 			Kernel.Register(
@@ -44,13 +44,13 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(typeof(MyCustomerActivator), handler.ComponentModel.CustomComponentActivator);
+			Assert.Equal(typeof(MyCustomerActivator), handler.ComponentModel.CustomComponentActivator);
 
 			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual("James Bond", customer.Name);
+			Assert.Equal("James Bond", customer.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ArrayConfigurationParameters_WorksFine()
 		{
 			var list = new MutableConfiguration("list");
@@ -75,13 +75,13 @@ namespace Castle.Windsor.Tests.Registration
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
 			var component = Kernel.Resolve<ClassWithArrayConstructor>();
-			Assert.AreSame(common2, component.First);
-			Assert.AreEqual(2, component.Services.Length);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
+			Assert.Same(common2, component.First);
+			Assert.Equal(2, component.Services.Length);
+			Assert.Same(common1, component.Services[0]);
+			Assert.Same(common2, component.Services[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_CustomDependencies_UsingAnonymousType()
 		{
 			Kernel.Register(
@@ -92,12 +92,12 @@ namespace Castle.Windsor.Tests.Registration
 						Property.ForKey("Age").Eq(45)));
 
 			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
+			Assert.Equal(customer.Name, "Caption Hook");
+			Assert.Equal(customer.Address, "Fairyland");
+			Assert.Equal(customer.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_CustomDependencies_WorksFine()
 		{
 			Kernel.Register(
@@ -111,12 +111,12 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
+			Assert.Equal(customer.Name, "Caption Hook");
+			Assert.Equal(customer.Address, "Fairyland");
+			Assert.Equal(customer.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_CustomDependenciesDictionary_WorksFine()
 		{
 			var customDependencies = new Dictionary<string, object>();
@@ -131,12 +131,12 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var customer = Kernel.Resolve<ICustomer>();
-			Assert.AreEqual(customer.Name, "Caption Hook");
-			Assert.AreEqual(customer.Address, "Fairyland");
-			Assert.AreEqual(customer.Age, 45);
+			Assert.Equal(customer.Name, "Caption Hook");
+			Assert.Equal(customer.Address, "Fairyland");
+			Assert.Equal(customer.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ExtendedProperties_UsingAnonymousType()
 		{
 			Kernel.Register(
@@ -147,11 +147,11 @@ namespace Castle.Windsor.Tests.Registration
 						Property.ForKey("key2").Eq("value2")));
 
 			var handler = Kernel.GetHandler(typeof(ICustomer));
-			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
-			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
+			Assert.Equal("value1", handler.ComponentModel.ExtendedProperties["key1"]);
+			Assert.Equal("value2", handler.ComponentModel.ExtendedProperties["key2"]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ExtendedProperties_WorksFine()
 		{
 			Kernel.Register(
@@ -164,11 +164,11 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler(typeof(ICustomer));
-			Assert.AreEqual("value1", handler.ComponentModel.ExtendedProperties["key1"]);
-			Assert.AreEqual("value2", handler.ComponentModel.ExtendedProperties["key2"]);
+			Assert.Equal("value1", handler.ComponentModel.ExtendedProperties["key1"]);
+			Assert.Equal("value2", handler.ComponentModel.ExtendedProperties["key2"]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_Instance_UsesInstance()
 		{
 			var customer = new CustomerImpl();
@@ -178,18 +178,18 @@ namespace Castle.Windsor.Tests.Registration
 					.Named("key")
 					.Instance(customer)
 			);
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 			var handler = Kernel.GetHandler("key");
-			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
+			Assert.Equal(customer.GetType(), handler.ComponentModel.Implementation);
 
 			var customer2 = Kernel.Resolve<ICustomer>("key");
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 
 			customer2 = Kernel.Resolve<ICustomer>();
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_Instance_UsesInstanceWithParameters()
 		{
 			var customer = new CustomerImpl2("ernst", "delft", 29);
@@ -199,18 +199,18 @@ namespace Castle.Windsor.Tests.Registration
 					.Named("key")
 					.Instance(customer)
 			);
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 			var handler = Kernel.GetHandler("key");
-			Assert.AreEqual(customer.GetType(), handler.ComponentModel.Implementation);
+			Assert.Equal(customer.GetType(), handler.ComponentModel.Implementation);
 
 			var customer2 = Kernel.Resolve<ICustomer>("key");
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 
 			customer2 = Kernel.Resolve<ICustomer>();
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ListConfigurationParameters_WorksFine()
 		{
 			var list = new MutableConfiguration("list");
@@ -234,12 +234,12 @@ namespace Castle.Windsor.Tests.Registration
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
 			var component = Kernel.Resolve<ClassWithListConstructor>();
-			Assert.AreEqual(2, component.Services.Count);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
+			Assert.Equal(2, component.Services.Count);
+			Assert.Same(common1, component.Services[0]);
+			Assert.Same(common2, component.Services[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_NamedAlreadyAssigned_ThrowsException()
 		{
 			Assert.Throws<ComponentRegistrationException>(() =>
@@ -252,7 +252,7 @@ namespace Castle.Windsor.Tests.Registration
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_StartableWithInterface_StartsComponent()
 		{
 			Kernel.AddFacility<StartableFacility>()
@@ -260,15 +260,15 @@ namespace Castle.Windsor.Tests.Registration
 
 			var component = Kernel.Resolve<StartableComponent>();
 
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
+			Assert.NotNull(component);
+			Assert.True(component.Started);
+			Assert.False(component.Stopped);
 
 			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
+			Assert.True(component.Stopped);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_StartableWithoutInterface_StartsComponent()
 		{
 			Kernel.AddFacility<StartableFacility>()
@@ -279,15 +279,15 @@ namespace Castle.Windsor.Tests.Registration
 
 			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
 
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
+			Assert.NotNull(component);
+			Assert.True(component.Started);
+			Assert.False(component.Stopped);
 
 			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
+			Assert.True(component.Stopped);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_StartableWithoutInterface_StartsComponent_via_expression()
 		{
 			Kernel.AddFacility<StartableFacility>()
@@ -298,32 +298,32 @@ namespace Castle.Windsor.Tests.Registration
 
 			var component = Kernel.Resolve<NoInterfaceStartableComponent>();
 
-			Assert.IsNotNull(component);
-			Assert.IsTrue(component.Started);
-			Assert.IsFalse(component.Stopped);
+			Assert.NotNull(component);
+			Assert.True(component.Started);
+			Assert.False(component.Stopped);
 
 			Kernel.ReleaseComponent(component);
-			Assert.IsTrue(component.Stopped);
+			Assert.True(component.Stopped);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WhichIsNull_ThrowsNullArgumentException()
 		{
 			Assert.Throws<ArgumentNullException>(() => { Kernel.Register(Component.For(Type.GetType("NonExistentType, WohooAssembly"))); });
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithComplexConfiguration_WorksFine()
 		{
 			Kernel.Register(
 				Component.For<ClassWithComplexParameter>()
 					.Configuration(
-						Castle.Windsor.MicroKernel.Registration.Child.ForName("parameters").Eq(
+						Castle.MicroKernel.Registration.Child.ForName("parameters").Eq(
 							Attrib.ForName("notUsed").Eq(true),
-							Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparam").Eq(
-								Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
+							Castle.MicroKernel.Registration.Child.ForName("complexparam").Eq(
+								Castle.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
+									Castle.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
+									Castle.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
 								)
 							)
 						)
@@ -331,13 +331,13 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var component = Kernel.Resolve<ClassWithComplexParameter>();
-			Assert.IsNotNull(component);
-			Assert.IsNotNull(component.ComplexParam);
-			Assert.AreEqual("value1", component.ComplexParam.MandatoryValue);
-			Assert.AreEqual("value2", component.ComplexParam.OptionalValue);
+			Assert.NotNull(component);
+			Assert.NotNull(component.ComplexParam);
+			Assert.Equal("value1", component.ComplexParam.MandatoryValue);
+			Assert.Equal("value2", component.ComplexParam.OptionalValue);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithCustomLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -348,10 +348,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithExplicitLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -362,10 +362,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithImplementationAlreadyAssigned_ThrowsException()
 		{
 			Assert.Throws<ComponentRegistrationException>(() =>
@@ -378,7 +378,7 @@ namespace Castle.Windsor.Tests.Registration
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithInterceptorSelector_ComponentModelShouldHaveInterceptorSelector()
 		{
 			var selector = new InterceptorTypeSelector(typeof(TestInterceptor1));
@@ -389,11 +389,11 @@ namespace Castle.Windsor.Tests.Registration
 
 			var proxyOptions = handler.ComponentModel.ObtainProxyOptions(false);
 
-			Assert.IsNotNull(proxyOptions);
-			Assert.AreEqual(selector, proxyOptions.Selector.Resolve(null, null));
+			Assert.NotNull(proxyOptions);
+			Assert.Equal(selector, proxyOptions.Selector.Resolve(null, null));
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithInterfaceServiceOnly_And_Interceptors_ProxyOptionsShouldNotHaveATarget()
 		{
 			Kernel.Register(
@@ -403,11 +403,11 @@ namespace Castle.Windsor.Tests.Registration
 
 			var proxyOptions = handler.ComponentModel.ObtainProxyOptions(false);
 
-			Assert.IsNotNull(proxyOptions);
-			Assert.IsTrue(proxyOptions.OmitTarget);
+			Assert.NotNull(proxyOptions);
+			Assert.True(proxyOptions.OmitTarget);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithPerWebRequestLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -418,10 +418,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithPooledLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -432,10 +432,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithPooledWithSizeLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -446,10 +446,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Pooled, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithSameName_ThrowsException()
 		{
 			Assert.Throws<ComponentRegistrationException>(() =>
@@ -463,7 +463,7 @@ namespace Castle.Windsor.Tests.Registration
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithServiceAndClass_RegisteredWithClassTypeName()
 		{
 			Kernel.Register(
@@ -471,14 +471,14 @@ namespace Castle.Windsor.Tests.Registration
 					.ImplementedBy<CustomerImpl>());
 
 			var customer = Kernel.Resolve<ICustomer>();
-			Assert.IsNotNull(customer);
+			Assert.NotNull(customer);
 
 			var key = typeof(CustomerImpl).FullName;
 			var customer1 = Kernel.Resolve<object>(key);
-			Assert.IsNotNull(customer1);
+			Assert.NotNull(customer1);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithServiceAndName_RegisteredNamed()
 		{
 			Kernel.Register(
@@ -487,34 +487,34 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual("customer", handler.ComponentModel.Name);
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
+			Assert.Equal("customer", handler.ComponentModel.Name);
+			Assert.Equal(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
+			Assert.Equal(typeof(CustomerImpl), handler.ComponentModel.Implementation);
 
 			var customer = Kernel.Resolve<CustomerImpl>("customer");
-			Assert.IsNotNull(customer);
+			Assert.NotNull(customer);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithServiceOnly_RegisteredWithServiceTypeName()
 		{
 			Kernel.Register(
 				Component.For<CustomerImpl>());
 
 			var handler = Kernel.GetHandler(typeof(CustomerImpl));
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
-			Assert.AreEqual(typeof(CustomerImpl), handler.ComponentModel.Implementation);
+			Assert.Equal(typeof(CustomerImpl), handler.ComponentModel.Services.Single());
+			Assert.Equal(typeof(CustomerImpl), handler.ComponentModel.Implementation);
 
 			var customer = Kernel.Resolve<CustomerImpl>();
-			Assert.IsNotNull(customer);
+			Assert.NotNull(customer);
 
 			var key = typeof(CustomerImpl).FullName;
 			var customer1 = Kernel.Resolve<object>(key);
-			Assert.IsNotNull(customer1);
-			Assert.AreSame(customer, customer1);
+			Assert.NotNull(customer1);
+			Assert.Same(customer, customer1);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithSingletonLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -525,10 +525,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithThreadLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -539,10 +539,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Thread, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Thread, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithTransientLifestyle_WorksFine()
 		{
 			Kernel.Register(
@@ -553,10 +553,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var handler = Kernel.GetHandler("customer");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void AddGenericComponent_WithParameters()
 		{
 			Kernel.Register(Component.For(typeof(IGenericClassWithParameter<>))
@@ -565,7 +565,7 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var instance = Kernel.Resolve<IGenericClassWithParameter<int>>();
-			Assert.AreEqual("NewName", instance.Name);
+			Assert.Equal("NewName", instance.Name);
 		}
 	}
 }

@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class DecoratorsTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Should_ignore_reference_to_itself()
 		{
 			Kernel.Register(
@@ -30,11 +30,11 @@ namespace Castle.Windsor.Tests
 				Component.For<IRepository>().ImplementedBy<DecoratedRepository>()
 			);
 			var repos = (Repository1) Kernel.Resolve<IRepository>();
-			Assert.IsInstanceOf(typeof(DecoratedRepository), repos.InnerRepository);
+			Assert.IsType(typeof(DecoratedRepository), repos.InnerRepository);
 		}
 
 
-		[Test]
+		[Fact]
 		public void Will_give_good_error_message_if_cannot_resolve_service_that_is_likely_decorated_when_there_are_multiple_service()
 		{
 			Assert.Throws<HandlerException>(() =>

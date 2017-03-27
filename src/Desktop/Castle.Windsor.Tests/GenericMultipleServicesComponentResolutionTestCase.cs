@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
 using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Tests.TestImplementationsOfExtensionPoints;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class GenericMultipleServicesComponentResolutionTestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()
@@ -37,7 +37,7 @@ namespace Castle.Windsor.Tests
 		}
 
 
-		[Test]
+		[Fact]
 		public void Can_resolve_generic_component_exposing_interface_and_class_service()
 		{
 			Container.Register(
@@ -48,11 +48,11 @@ namespace Castle.Windsor.Tests
 			var dummy = Container.Resolve<IDummyComponent<string>>();
 			var @class = Container.Resolve<GenericDummyComponentImpl<string>>();
 
-			Assert.AreSame(generic, dummy);
-			Assert.AreSame(@class, dummy);
+			Assert.Same(generic, dummy);
+			Assert.Same(@class, dummy);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_generic_component_exposing_interface_and_class_service_with_non_generic_base()
 		{
 			Container.Register(
@@ -63,13 +63,13 @@ namespace Castle.Windsor.Tests
 			var generic = Container.Resolve<IGeneric<string>>();
 			var dummy = Container.Resolve<IDummyComponent<string>>();
 
-			Assert.AreSame(generic, dummy);
+			Assert.Same(generic, dummy);
 			var handler = Kernel.GetHandler(typeof(IGeneric<string>));
-			Assert.IsTrue(handler.Supports(typeof(A)));
-			Assert.IsTrue(handler.Supports(typeof(IMarkerInterface)));
+			Assert.True(handler.Supports(typeof(A)));
+			Assert.True(handler.Supports(typeof(IMarkerInterface)));
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_generic_component_exposing_two_unrelated_implemented_services()
 		{
 			Container.Register(
@@ -79,10 +79,10 @@ namespace Castle.Windsor.Tests
 			var generic = Container.Resolve<IGeneric<string>>();
 			var dummy = Container.Resolve<IDummyComponent<string>>();
 
-			Assert.AreSame(generic, dummy);
+			Assert.Same(generic, dummy);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_generic_component_exposing_two_unrelated_implemented_services_each_closed_over_different_generic_argument()
 		{
 			Container.Register(
@@ -92,21 +92,21 @@ namespace Castle.Windsor.Tests
 			var generic = Container.Resolve<IGeneric<string>>();
 			var dummy = Container.Resolve<IDummyComponent<string>>();
 
-			Assert.AreSame(generic, dummy);
+			Assert.Same(generic, dummy);
 		}
 
-		[Test]
+		[Fact]
 		public void Dependency_resolution_generic_proxy_should_implement_all_services()
 		{
 			var comp = Container.Resolve<UseGenericExtended1>();
-			Assert.AreSame(comp.Generic, comp.GenericExtended);
+			Assert.Same(comp.Generic, comp.GenericExtended);
 		}
 
-		[Test]
+		[Fact]
 		public void Generic_handler_caching_should_not_affect_resolution()
 		{
 			var comp = Container.Resolve<UseGenericExtended2>();
-			Assert.AreSame(comp.Generic, comp.GenericExtended);
+			Assert.Same(comp.Generic, comp.GenericExtended);
 		}
 	}
 }

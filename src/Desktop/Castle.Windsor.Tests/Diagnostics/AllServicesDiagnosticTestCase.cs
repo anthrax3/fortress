@@ -13,12 +13,12 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor.Diagnostics;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor.Diagnostics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics
 {
@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 			diagnostic = host.GetDiagnostic<IAllServicesDiagnostic>();
 		}
 
-		[Test]
+		[Fact]
 		public void Groups_components_by_exposed_service()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>(),
@@ -42,12 +42,12 @@ namespace Castle.Windsor.Tests.Diagnostics
 				Component.For<A>());
 
 			var services = diagnostic.Inspect();
-			Assert.AreEqual(2, services.Count);
-			Assert.AreEqual(2, services[typeof(IEmptyService)].Count());
-			Assert.AreEqual(1, services[typeof(A)].Count());
+			Assert.Equal(2, services.Count);
+			Assert.Equal(2, services[typeof(IEmptyService)].Count());
+			Assert.Equal(1, services[typeof(A)].Count());
 		}
 
-		[Test]
+		[Fact]
 		public void Open_generic_handlers_appear_once()
 		{
 			Container.Register(Component.For(typeof(GenericImpl1<>)));
@@ -55,11 +55,11 @@ namespace Castle.Windsor.Tests.Diagnostics
 			Container.Resolve<GenericImpl1<B>>();
 
 			var services = diagnostic.Inspect();
-			Assert.AreEqual(1, services.Count);
-			Assert.IsTrue(services.Contains(typeof(GenericImpl1<>)));
+			Assert.Equal(1, services.Count);
+			Assert.True(services.Contains(typeof(GenericImpl1<>)));
 		}
 
-		[Test]
+		[Fact]
 		public void Works_for_multi_service_components()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA>().ImplementedBy<EmptyServiceA>(),
@@ -67,7 +67,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 				Component.For<A>());
 
 			var services = diagnostic.Inspect();
-			Assert.AreEqual(3, services.Count);
+			Assert.Equal(3, services.Count);
 		}
 	}
 }

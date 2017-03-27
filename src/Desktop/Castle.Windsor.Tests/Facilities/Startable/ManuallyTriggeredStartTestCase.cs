@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
 	public class ManuallyTriggeredStartTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_manually_trigger_start()
 		{
 			var flag = new StartFlag();
@@ -31,14 +31,14 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			Container.Register(Component.For<Components.Startable>(),
 				Component.For<ICustomer>().ImplementedBy<CustomerImpl>());
 
-			Assert.IsFalse(Components.Startable.Started);
+			Assert.False(Components.Startable.Started);
 
 			flag.Signal();
 
-			Assert.IsTrue(Components.Startable.Started);
+			Assert.True(Components.Startable.Started);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_manually_trigger_start_only_once()
 		{
 			var flag = new StartFlag();
@@ -50,10 +50,10 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			flag.Signal();
 			Components.Startable.Started = false;
 			flag.Signal();
-			Assert.IsFalse(Components.Startable.Started);
+			Assert.False(Components.Startable.Started);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_manually_trigger_start_when_using_Install()
 		{
 			var flag = new StartFlag();
@@ -64,14 +64,14 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 					Component.For<ICustomer>().ImplementedBy<CustomerImpl>()))
 			);
 
-			Assert.IsFalse(Components.Startable.Started);
+			Assert.False(Components.Startable.Started);
 
 			flag.Signal();
 
-			Assert.IsTrue(Components.Startable.Started);
+			Assert.True(Components.Startable.Started);
 		}
 
-		[Test]
+		[Fact]
 		public void Manually_triggered_start_throws_on_missing_dependencies()
 		{
 			var flag = new StartFlag();

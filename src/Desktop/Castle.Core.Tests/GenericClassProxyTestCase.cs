@@ -14,70 +14,68 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.GenClasses;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Castle.DynamicProxy.Generators;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class GenericClassProxyTestCase : CoreBaseTestCase
 	{
-		public override void Init()
+		public  GenericClassProxyTestCase() : base()
 		{
-			base.Init();
 			logger = new LogInvocationInterceptor();
 		}
 
 		private LogInvocationInterceptor logger;
 
-		[Test]
+		[Fact]
 		public void ClassWithGenMethodOnly()
 		{
-			var proxy =
-				generator.CreateClassProxy<OnlyGenMethodsClass>(logger);
+			var proxy = generator.CreateClassProxy<OnlyGenMethodsClass>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething(new List<object>());
 
-			Assert.IsTrue(proxy.Invoked);
-			Assert.AreEqual("DoSomething ", logger.LogContents);
+			Assert.True(proxy.Invoked);
+			Assert.Equal("DoSomething ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void GenericMethodArgumentsAndTypeGenericArgumentsWithSameName()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassNameClash<List<object>, List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassNameClash<List<object>, List<object>>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomethingT(1);
 			proxy.DoSomethingZ(1L);
 			proxy.DoSomethingTX(1, "a");
 			proxy.DoSomethingZX(1L, "b");
 
-			Assert.AreEqual("DoSomethingT DoSomethingZ DoSomethingTX DoSomethingZX ", logger.LogContents);
+			Assert.Equal("DoSomethingT DoSomethingZ DoSomethingTX DoSomethingZX ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void GenericProxyWithIndexer()
 		{
 			object proxy = generator.CreateClassProxy<ClassWithIndexer<string, int>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			var type = (ClassWithIndexer<string, int>) proxy;
 
 			type["name"] = 10;
-			Assert.AreEqual(10, type["name"]);
+			Assert.Equal(10, type["name"]);
 
-			Assert.AreEqual("set_Item get_Item ", logger.LogContents);
+			Assert.Equal("set_Item get_Item ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInGenTypeGenMethodRefType()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -92,7 +90,7 @@ namespace Castle.Core.Tests
 				typeof(List<object>));
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInGenTypeGenMethodValueType()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -106,12 +104,11 @@ namespace Castle.Core.Tests
 				typeof(List<object>));
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInGenTypeNongenMethodRefTypeRefType()
 		{
 			var interceptor = new KeepDataInterceptor();
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(interceptor);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(interceptor);
 
 			proxy.DoSomethingT();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(List<object>));
@@ -120,25 +117,24 @@ namespace Castle.Core.Tests
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(List<object>));
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInGenTypeNongenMethodValueTypeRefType()
 		{
 			var interceptor = new KeepDataInterceptor();
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<int, List<object>>>(interceptor);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<int, List<object>>>(interceptor);
 
 			proxy.DoSomethingT();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(int));
-			Assert.AreEqual(interceptor.Invocation.GetConcreteMethod(),
+			Assert.Equal(interceptor.Invocation.GetConcreteMethod(),
 				interceptor.Invocation.GetConcreteMethodInvocationTarget().GetBaseDefinition());
 
 			proxy.DoSomethingZ();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(List<object>));
-			Assert.AreEqual(interceptor.Invocation.GetConcreteMethod(),
+			Assert.Equal(interceptor.Invocation.GetConcreteMethod(),
 				interceptor.Invocation.GetConcreteMethodInvocationTarget().GetBaseDefinition());
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInGenTypeNongenMethodValueTypeValueType()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -146,16 +142,16 @@ namespace Castle.Core.Tests
 
 			proxy.DoSomethingT();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(int));
-			Assert.AreEqual(interceptor.Invocation.GetConcreteMethod(),
+			Assert.Equal(interceptor.Invocation.GetConcreteMethod(),
 				interceptor.Invocation.GetConcreteMethodInvocationTarget().GetBaseDefinition());
 
 			proxy.DoSomethingZ();
 			GenericTestUtility.CheckMethodInfoIsClosed(interceptor.Invocation.GetConcreteMethod(), typeof(int));
-			Assert.AreEqual(interceptor.Invocation.GetConcreteMethod(),
+			Assert.Equal(interceptor.Invocation.GetConcreteMethod(),
 				interceptor.Invocation.GetConcreteMethodInvocationTarget().GetBaseDefinition());
 		}
 
-		[Test]
+		[Fact]
 		public void MethodInfoClosedInNongenTypeGenMethod()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -169,136 +165,131 @@ namespace Castle.Core.Tests
 				typeof(List<object>));
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgument()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithGenArgs<int>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething();
 
-			Assert.IsTrue(proxy.Invoked);
+			Assert.True(proxy.Invoked);
 
 			proxy.AProperty = true;
-			Assert.IsTrue(proxy.AProperty);
+			Assert.True(proxy.AProperty);
 
-			Assert.AreEqual("DoSomething set_AProperty get_AProperty ", logger.LogContents);
+			Assert.Equal("DoSomething set_AProperty get_AProperty ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArguments()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithGenArgs<int, string>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething();
 
-			Assert.IsTrue(proxy.Invoked);
+			Assert.True(proxy.Invoked);
 
 			proxy.AProperty = true;
-			Assert.IsTrue(proxy.AProperty);
+			Assert.True(proxy.AProperty);
 
-			Assert.AreEqual("DoSomething set_AProperty get_AProperty ", logger.LogContents);
+			Assert.Equal("DoSomething set_AProperty get_AProperty ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsAndArgumentConstraints()
 		{
 			var proxy = generator.CreateClassProxy<GenClassWithConstraints<int>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething();
 
-			Assert.IsTrue(proxy.Invoked);
+			Assert.True(proxy.Invoked);
 
-			Assert.AreEqual("DoSomething ", logger.LogContents);
+			Assert.Equal("DoSomething ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArguments()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething("z param");
 
-			Assert.IsTrue(proxy.Invoked);
-			Assert.AreEqual("z param", proxy.SavedParam);
-			Assert.AreEqual("DoSomething ", logger.LogContents);
+			Assert.True(proxy.Invoked);
+			Assert.Equal("z param", proxy.SavedParam);
+			Assert.Equal("DoSomething ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArgumentsWithConstraints()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethodsConstrained<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethodsConstrained<List<object>>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething("z param");
 
-			Assert.IsTrue(proxy.Invoked);
-			Assert.AreEqual("z param", proxy.SavedParam);
-			Assert.AreEqual("DoSomething ", logger.LogContents);
+			Assert.True(proxy.Invoked);
+			Assert.Equal("z param", proxy.SavedParam);
+			Assert.Equal("DoSomething ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericArgumentsWithOneNotDefinedOnType()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenMethods<List<object>>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			var value1 = 10;
 
 			proxy.DoSomethingElse(delegate(int param1) { return param1.ToString(); }, value1);
 
-			Assert.IsTrue(proxy.Invoked);
-			Assert.AreEqual("10", proxy.SavedParam);
-			Assert.AreEqual("DoSomethingElse ", logger.LogContents);
+			Assert.True(proxy.Invoked);
+			Assert.Equal("10", proxy.SavedParam);
+			Assert.Equal("DoSomethingElse ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsAndMethodGenericReturn()
 		{
-			var proxy =
-				generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(logger);
+			var proxy = generator.CreateClassProxy<GenClassWithGenReturn<List<object>, List<object>>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			object ret1 = proxy.DoSomethingT();
 			object ret2 = proxy.DoSomethingZ();
 
-			Assert.IsInstanceOf(typeof(List<object>), ret1);
-			Assert.IsInstanceOf(typeof(List<object>), ret2);
-			Assert.AreEqual("DoSomethingT DoSomethingZ ", logger.LogContents);
+			Assert.IsType<List<object>>(ret1);
+			Assert.IsType<List<object>>(ret2);
+			Assert.Equal("DoSomethingT DoSomethingZ ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyWithGenericArgumentsWithBaseGenericClass()
 		{
-			var proxy =
-				generator.CreateClassProxy<SubClassWithGenArgs<int, string, int>>(logger);
+			var proxy = generator.CreateClassProxy<SubClassWithGenArgs<int, string, int>>(logger);
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 
 			proxy.DoSomething();
 
-			Assert.IsTrue(proxy.Invoked);
+			Assert.True(proxy.Invoked);
 
 			proxy.AProperty = true;
-			Assert.IsTrue(proxy.AProperty);
+			Assert.True(proxy.AProperty);
 
-			Assert.AreEqual("DoSomething set_AProperty get_AProperty ", logger.LogContents);
+			Assert.Equal("DoSomething set_AProperty get_AProperty ", logger.LogContents);
 		}
 
-		[Test]
+		[Fact]
 		public void ThrowsWhenProxyingGenericTypeDefNoTarget()
 		{
 			var interceptor = new KeepDataInterceptor();
@@ -306,11 +297,11 @@ namespace Castle.Core.Tests
 			Assert.Throws<GeneratorException>(delegate { generator.CreateClassProxy(typeof(GenClassWithGenReturn<,>), interceptor); });
 		}
 
-		[Test]
+		[Fact]
 		public void TypeWithGenericMethodHavingArgumentBeingGenericArrayOfT()
 		{
 			var proxy = generator.CreateClassProxy<MethodWithArgumentBeingArrayOfGenericTypeOfT>();
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 			proxy.Method(new Action<string>[0]);
 		}
 	}

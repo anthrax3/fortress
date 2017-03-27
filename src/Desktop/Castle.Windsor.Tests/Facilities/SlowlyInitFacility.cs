@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System.Threading;
-using Castle.Windsor.MicroKernel.Facilities;
+using Castle.MicroKernel.Facilities;
 
 namespace Castle.Windsor.Tests.Facilities
 {

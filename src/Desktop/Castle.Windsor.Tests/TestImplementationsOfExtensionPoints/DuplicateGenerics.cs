@@ -14,9 +14,10 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
+using System.Reflection;
+using Castle.Core;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
 
 namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 {
@@ -24,7 +25,7 @@ namespace Castle.Windsor.Tests.TestImplementationsOfExtensionPoints
 	{
 		public Type[] GetGenericArguments(ComponentModel model, CreationContext context)
 		{
-			var first = context.RequestedType.GetGenericArguments().First();
+			var first = context.RequestedType.GetTypeInfo().GetGenericArguments().First();
 			var length = model.Implementation.GetGenericArguments().Length;
 			var types = new Type[length];
 			for (var i = 0; i < length; i++)

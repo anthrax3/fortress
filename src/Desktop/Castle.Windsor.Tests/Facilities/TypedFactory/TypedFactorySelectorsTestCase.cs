@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Selectors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	[TestFixture]
+	
 	public class TypedFactorySelectorsTestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()
@@ -30,7 +30,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			Container.AddFacility<TypedFactoryFacility>();
 		}
 
-		[Test]
+		[Fact]
 		public void Explicitly_specified_name_fails_if_not_present()
 		{
 			Container.Register(Component.For<A>(),
@@ -42,7 +42,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			Assert.Throws<ComponentNotFoundException>(() => factory.Create());
 		}
 
-		[Test]
+		[Fact]
 		public void Implicitly_specified_name_falls_back_if_not_present()
 		{
 			Container.Register(Component.For<A>(),

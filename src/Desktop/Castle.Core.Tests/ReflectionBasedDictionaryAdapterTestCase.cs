@@ -15,12 +15,10 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using Castle.Core.Core;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class ReflectionBasedDictionaryAdapterTestCase
 	{
 		public class Customer
@@ -54,29 +52,29 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CanAccessExistingPropertiesInACaseInsensitiveFashion()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name"));
 
-			Assert.IsTrue(dict.Contains("id"));
-			Assert.IsTrue(dict.Contains("ID"));
-			Assert.IsTrue(dict.Contains("Id"));
-			Assert.IsTrue(dict.Contains("name"));
-			Assert.IsTrue(dict.Contains("Name"));
-			Assert.IsTrue(dict.Contains("NAME"));
+			Assert.True(dict.Contains("id"));
+			Assert.True(dict.Contains("ID"));
+			Assert.True(dict.Contains("Id"));
+			Assert.True(dict.Contains("name"));
+			Assert.True(dict.Contains("Name"));
+			Assert.True(dict.Contains("NAME"));
 		}
 
-		[Test]
+		[Fact]
 		public void CanAccessPropertiesValues()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name"));
 
-			Assert.AreEqual(1, dict["id"]);
-			Assert.AreEqual("name", dict["name"]);
+			Assert.Equal(1, dict["id"]);
+			Assert.Equal("name", dict["name"]);
 		}
 
-		[Test]
+		[Fact]
 		public void CannotCreateWithNullArgument()
 		{
 			Assert.Throws<ArgumentNullException>(() =>
@@ -84,65 +82,65 @@ namespace Castle.Core.Tests
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void EnumeratorIteration()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new {foo = 1, name = "jonh", age = 25});
 
-			Assert.AreEqual(3, dict.Count);
+			Assert.Equal(3, dict.Count);
 
 			var enumerator = (IDictionaryEnumerator) dict.GetEnumerator();
 
 			while (enumerator.MoveNext())
 			{
-				Assert.IsNotNull(enumerator.Key);
-				Assert.IsNotNull(enumerator.Value);
+				Assert.NotNull(enumerator.Key);
+				Assert.NotNull(enumerator.Value);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void InexistingPropertiesReturnsNull()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name"));
 
-			Assert.IsNull(dict["age"]);
+			Assert.Null(dict["age"]);
 		}
 
-		[Test]
+		[Fact]
 		public void ShouldNotAccessInexistingProperties()
 		{
 			var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name"));
 
-			Assert.IsFalse(dict.Contains("Age"), "Age property found when it should not be");
-			Assert.IsFalse(dict.Contains("Address"), "Address property found when it should not be");
+			Assert.False(dict.Contains("Age"), "Age property found when it should not be");
+			Assert.False(dict.Contains("Address"), "Address property found when it should not be");
 		}
 
-		[Test /*(Description = "Test case for patch supplied on the mailing list by Jan Limpens")*/]
+		[Fact]
 		public void ShouldNotAccessWriteOnlyProperties()
 		{
 			try
 			{
 				var dict = new ReflectionBasedDictionaryAdapter(new Customer(1, "name", true));
-				Assert.IsTrue((bool) dict["IsWriteOnly"]);
+				Assert.True((bool) dict["IsWriteOnly"]);
 			}
 			catch (ArgumentException)
 			{
-				Assert.Fail("Attempted to read a write-only property");
+				Assert.False(true, "Attempted to read a write-only property");
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Using_anonymous_types_works_without_exception()
 		{
 			var target = new {foo = 1, name = "john", age = 25};
-			Assert.IsFalse(target.GetType().GetTypeInfo().IsPublic);
+			Assert.False(target.GetType().GetTypeInfo().IsPublic);
 			var dict = new ReflectionBasedDictionaryAdapter(target);
 
-			Assert.AreEqual(3, dict.Count);
+			Assert.Equal(3, dict.Count);
 
-			Assert.AreEqual(1, dict["foo"]);
-			Assert.AreEqual("john", dict["name"]);
-			Assert.AreEqual(25, dict["age"]);
+			Assert.Equal(1, dict["foo"]);
+			Assert.Equal("john", dict["name"]);
+			Assert.Equal(25, dict["age"]);
 		}
 	}
 }

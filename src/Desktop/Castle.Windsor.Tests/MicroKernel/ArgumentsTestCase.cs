@@ -15,18 +15,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.MicroKernel
 {
-	[TestFixture]
+	
 	public class ArgumentsTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void By_default_any_type_as_key_is_supported()
 		{
 			var arguments = new Arguments(new CustomStringComparer());
@@ -35,10 +34,10 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			Assert.AreEqual("foo", arguments[key]);
+			Assert.Equal("foo", arguments[key]);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-147")]
 		public void Can_have_dictionary_as_inline_dependency()
 		{
@@ -48,10 +47,10 @@ namespace Castle.Windsor.Tests.MicroKernel
 			var dictionaryProperty = new Dictionary<string, string>();
 
 			var obj = container.Resolve<HasDictionaryDependency>(new {dictionaryProperty});
-			Assert.AreSame(dictionaryProperty, obj.DictionaryProperty);
+			Assert.Same(dictionaryProperty, obj.DictionaryProperty);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-92")]
 		public void Can_mix_hashtable_parameters_and_configuration_parameters()
 		{
@@ -63,17 +62,17 @@ namespace Castle.Windsor.Tests.MicroKernel
 			Container.Resolve<HasStringAndIntDependency>(new Arguments().Insert("y", 1));
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-142")]
 		public void Can_satisfy_nullable_ctor_dependency()
 		{
 			Container.Register(Component.For<HasNullableDoubleConstructor>());
 
 			var s = Container.Resolve<HasNullableDoubleConstructor>(new Arguments().Insert("foo", 5d));
-			Assert.IsNotNull(s);
+			Assert.NotNull(s);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-142")]
 		public void Can_satisfy_nullable_property_dependency()
 		{
@@ -82,10 +81,10 @@ namespace Castle.Windsor.Tests.MicroKernel
 			var arguments = new Arguments().Insert("SomeVal", 5);
 			var s = Container.Resolve<HasNullableIntProperty>(arguments);
 
-			Assert.IsNotNull(s.SomeVal);
+			Assert.NotNull(s.SomeVal);
 		}
 
-		[Test]
+		[Fact]
 		public void Custom_stores_get_picked_over_default_ones()
 		{
 			var arguments = new Arguments(new CustomStringComparer());
@@ -94,24 +93,10 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			Assert.AreEqual(value, arguments["boo!"]);
+			Assert.Equal(value, arguments["boo!"]);
 		}
 
-		[Test]
-		public void Custom_stores_get_picked_over_default_ones_in_clone()
-		{
-			var arguments = new Arguments(new CustomStringComparer());
-			var key = "foo";
-			var value = new object();
-
-			arguments.Add(key, value);
-
-			var clone = (IDictionary) ((ICloneable) arguments).Clone();
-
-			Assert.AreEqual(value, clone["boo!"]);
-		}
-
-		[Test]
+		[Fact]
 		public void Handles_string_as_key()
 		{
 			var arguments = new Arguments();
@@ -120,12 +105,12 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			Assert.AreEqual(1, arguments.Count);
-			Assert.IsTrue(arguments.Contains(key));
-			Assert.AreSame(value, arguments[key]);
+			Assert.Equal(1, arguments.Count);
+			Assert.True(arguments.Contains(key));
+			Assert.Same(value, arguments[key]);
 		}
 
-		[Test]
+		[Fact]
 		public void Handles_string_as_key_case_insensitive()
 		{
 			var arguments = new Arguments();
@@ -134,11 +119,11 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			Assert.IsTrue(arguments.Contains(key.ToLower()));
-			Assert.IsTrue(arguments.Contains(key.ToUpper()));
+			Assert.True(arguments.Contains(key.ToLower()));
+			Assert.True(arguments.Contains(key.ToUpper()));
 		}
 
-		[Test]
+		[Fact]
 		public void Handles_Type_as_key()
 		{
 			var arguments = new Arguments();
@@ -147,9 +132,9 @@ namespace Castle.Windsor.Tests.MicroKernel
 
 			arguments.Add(key, value);
 
-			Assert.AreEqual(1, arguments.Count);
-			Assert.IsTrue(arguments.Contains(key));
-			Assert.AreSame(value, arguments[key]);
+			Assert.Equal(1, arguments.Count);
+			Assert.True(arguments.Contains(key));
+			Assert.Same(value, arguments[key]);
 		}
 	}
 }

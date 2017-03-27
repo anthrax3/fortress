@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor.Diagnostics;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor.Diagnostics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics
 {
@@ -30,24 +30,24 @@ namespace Castle.Windsor.Tests.Diagnostics
 			diagnostic = host.GetDiagnostic<IPotentiallyMisconfiguredComponentsDiagnostic>();
 		}
 
-		[Test]
+		[Fact]
 		public void Empty_when_all_components_healthy()
 		{
 			Container.Register(Component.For<A>(), Component.For<B>(), Component.For<C>());
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.IsEmpty(handlers);
+			Assert.Empty(handlers);
 		}
 
-		[Test]
+		[Fact]
 		public void Has_all_components_with_missing_or_waiting_dependencies()
 		{
 			Container.Register(Component.For<B>(), Component.For<C>());
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(2, handlers.Length);
+			Assert.Equal(2, handlers.Length);
 		}
 	}
 }

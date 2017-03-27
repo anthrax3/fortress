@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
-	[Serializable]
 	public class ChangeResultInterceptor : IInterceptor
 	{
 		public void Intercept(IInvocation invocation)

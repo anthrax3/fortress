@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using System;
+using Castle.DynamicProxy;
 
 namespace Castle.Core.Tests
 {
-	public abstract class CoreBaseTestCase
+	public abstract class CoreBaseTestCase : IDisposable
 	{
 		protected IProxyBuilder builder;
 		protected ProxyGenerator generator;
 
 		public bool IsVerificationDisabled { get; private set; } = true;
 
-		[SetUp]
-		public virtual void Init()
+		public CoreBaseTestCase()
 		{
 			ResetGeneratorAndBuilder();
 			IsVerificationDisabled = false;
@@ -33,7 +32,7 @@ namespace Castle.Core.Tests
 
 		public void ResetGeneratorAndBuilder()
 		{
-			builder = new PersistentProxyBuilder();
+			builder = new DefaultProxyBuilder();
 			generator = new ProxyGenerator(builder);
 		}
 
@@ -42,8 +41,7 @@ namespace Castle.Core.Tests
 			IsVerificationDisabled = true;
 		}
 
-		[TearDown]
-		public virtual void TearDown()
+		public virtual void Dispose()
 		{
 		}
 	}

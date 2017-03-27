@@ -13,13 +13,13 @@
 // limitations under the License.
 
 using System.Threading;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using NUnit.Framework;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Pools
 {
-	[TestFixture]
+	
 	public class MultithreadedPooledTestCase
 	{
 		private readonly ManualResetEvent startEvent = new ManualResetEvent(false);
@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests.Pools
 			{
 				var instance = kernel.Resolve<PoolableComponent1>("a");
 
-				Assert.IsNotNull(instance);
+				Assert.NotNull(instance);
 
 				Thread.Sleep(1 * 500);
 
@@ -42,7 +42,7 @@ namespace Castle.Windsor.Tests.Pools
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Multithreaded()
 		{
 			kernel = new DefaultKernel();

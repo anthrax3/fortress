@@ -14,12 +14,12 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using NUnit.Framework;
+using Castle.Core;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class DisposeOrderTestFixture
 	{
 		private interface IMyComponent : IInitializable, IDisposable
@@ -92,7 +92,7 @@ namespace Castle.Windsor.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Dictionary_enumerates_from_oldest_to_latest()
 		{
 			var expected1 = new[] {1, 2, 4, 3};
@@ -103,7 +103,7 @@ namespace Castle.Windsor.Tests
 			var index = 0;
 			foreach (var keyValuePair in dictionary1)
 			{
-				Assert.AreEqual(expected1[index], keyValuePair.Key);
+				Assert.Equal(expected1[index], keyValuePair.Key);
 				index++;
 			}
 
@@ -116,7 +116,7 @@ namespace Castle.Windsor.Tests
 			index = 0;
 			foreach (var keyValuePair in dictionary2)
 			{
-				Assert.AreEqual(expected2[index], keyValuePair.Key);
+				Assert.Equal(expected2[index], keyValuePair.Key);
 				index++;
 			}
 		}

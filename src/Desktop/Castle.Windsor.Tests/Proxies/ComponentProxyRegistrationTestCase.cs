@@ -13,26 +13,26 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.DynamicProxy;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Tests.ProxyInfrastructure;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Proxies
 {
-	[TestFixture]
+	
 	public class ComponentProxyRegistrationTestCase : AbstractContainerTestCase
 	{
 		private void AssertIsProxy(object o)
 		{
-			Assert.IsInstanceOf<IProxyTargetAccessor>(o);
+			Assert.IsAssignableFrom<IProxyTargetAccessor>(o);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_With_instance_given_MixIn()
 		{
 			Container.Register(
@@ -42,13 +42,13 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsInstanceOf(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_With_named_component_MixIn()
 		{
 			Container.Register(
@@ -57,13 +57,13 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsInstanceOf(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_With_typed_component_MixIn()
 		{
 			Container.Register(
@@ -72,13 +72,13 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsInstanceOf(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_WithMixIn_AddsMixin()
 		{
 			Container.Register(Component.For<ICalcService>()
@@ -88,13 +88,13 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsInstanceOf(typeof(ISimpleMixIn), calculator);
+			Assert.IsAssignableFrom(typeof(ISimpleMixIn), calculator);
 
 			var mixin = (ISimpleMixIn) calculator;
 			mixin.DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void can_atach_hook_as_instance_simple()
 		{
 			var interceptor = new ResultModifierInterceptor(5);
@@ -107,10 +107,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.AreEqual(4, calculator.Sum(2, 2));
+			Assert.Equal(4, calculator.Sum(2, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void can_atach_hook_as_instance_simple_via_nested_closure()
 		{
 			var interceptor = new ResultModifierInterceptor(5);
@@ -123,10 +123,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.AreEqual(4, calculator.Sum(2, 2));
+			Assert.Equal(4, calculator.Sum(2, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void can_atach_hook_as_named_service()
 		{
 			var interceptor = new ResultModifierInterceptor(5);
@@ -139,10 +139,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.AreEqual(4, calculator.Sum(2, 2));
+			Assert.Equal(4, calculator.Sum(2, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void can_atach_hook_as_typed_service()
 		{
 			var interceptor = new ResultModifierInterceptor(5);
@@ -155,10 +155,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.AreEqual(4, calculator.Sum(2, 2));
+			Assert.Equal(4, calculator.Sum(2, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void can_proxy_interfaces_with_no_impl_given_just_a_hook()
 		{
 			Container.Register(Component.For<ICalcService>()
@@ -168,7 +168,7 @@ namespace Castle.Windsor.Tests.Proxies
 			AssertIsProxy(calculator);
 		}
 
-		[Test]
+		[Fact]
 		public void hook_gets_disposed_after_proxy_is_created()
 		{
 			DisposableHook.InstancesCreated = 0;
@@ -184,12 +184,12 @@ namespace Castle.Windsor.Tests.Proxies
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
 
-			Assert.AreEqual(1, DisposableHook.InstancesCreated);
-			Assert.AreEqual(1, DisposableHook.InstancesDisposed);
+			Assert.Equal(1, DisposableHook.InstancesCreated);
+			Assert.Equal(1, DisposableHook.InstancesDisposed);
 		}
 
 
-		[Test]
+		[Fact]
 		public void Missing_dependency_on_mixin_statically_detected()
 		{
 			Container.Register(Component.For<ICalcService>()
@@ -197,7 +197,7 @@ namespace Castle.Windsor.Tests.Proxies
 				.Proxy.MixIns(m => m.Component<A>()));
 
 			var calc = Container.Kernel.GetHandler(typeof(ICalcService));
-			Assert.AreEqual(HandlerState.WaitingDependency, calc.CurrentState);
+			Assert.Equal(HandlerState.WaitingDependency, calc.CurrentState);
 
 			var exception =
 				Assert.Throws<HandlerException>(() =>
@@ -207,10 +207,10 @@ namespace Castle.Windsor.Tests.Proxies
 				Environment.NewLine,
 				typeof(CalculatorService).FullName,
 				typeof(A).FullName);
-			Assert.AreEqual(message, exception.Message);
+			Assert.Equal(message, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Missing_dependency_on_selector_statically_detected()
 		{
 			Container.Register(Component.For<ICalcService>()
@@ -218,7 +218,7 @@ namespace Castle.Windsor.Tests.Proxies
 				.SelectInterceptorsWith(s => s.Service<DummyInterceptorSelector>()));
 
 			var calc = Container.Kernel.GetHandler(typeof(ICalcService));
-			Assert.AreEqual(HandlerState.WaitingDependency, calc.CurrentState);
+			Assert.Equal(HandlerState.WaitingDependency, calc.CurrentState);
 
 			var exception =
 				Assert.Throws<HandlerException>(() =>
@@ -228,10 +228,10 @@ namespace Castle.Windsor.Tests.Proxies
 				Environment.NewLine,
 				typeof(CalculatorService).FullName);
 
-			Assert.AreEqual(message, exception.Message);
+			Assert.Equal(message, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Releasing_MixIn_releases_all_parts()
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
@@ -244,12 +244,12 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var calculator = Container.Resolve<ICalcService>();
 			AssertIsProxy(calculator);
-			Assert.IsInstanceOf<ISimpleService>(calculator);
+			Assert.IsAssignableFrom<ISimpleService>(calculator);
 
 			var mixin = (ISimpleService) calculator;
 			mixin.Operation();
 			Container.Release(mixin);
-			Assert.AreEqual(1, SimpleServiceDisposable.DisposedCount);
+			Assert.Equal(1, SimpleServiceDisposable.DisposedCount);
 		}
 	}
 }

@@ -9,8 +9,8 @@ open System.Management.Automation
 let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
-let desktopTestAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
-let standardTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
+let coreTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
+let desktopTestAssemblies = "src/Desktop/**/Castle.*.Tests/*.csproj"
 let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
@@ -59,14 +59,13 @@ Target "TestDesktop" <| fun _ ->
             ShadowCopy = false
             ToolPath = testRunnerCli })
 
-Target "TestStandard" <| fun _ -> 
-    !! standardTestAssemblies
-    |> Seq.iter (fun p ->
-        let result = directExec (fun info ->
-                info.FileName <- dotNetCli
-                info.Arguments <- (sprintf "test %s" p))
-        if result <> true then 
-            failwithf "%sdotnet test failed\r\n" logo)
+Target "TestCore" <| fun _ -> 
+    tracef "%sRunning Unit Tests\r\n" logo
+    !! coreTestAssemblies
+    |> NUnit3 (fun p ->
+        {p with
+            ShadowCopy = false
+            ToolPath = testRunnerCli })
 
 "InstallDotNetCli"
     ==> "InstallDotNetPackages"
@@ -77,7 +76,7 @@ Target "TestStandard" <| fun _ ->
     ==> "Test"
 
 "TestDesktop"
-    ==> "TestStandard"
+    ==> "TestCore"
     ==> "Test"
  
 RunTargetOrDefault "Build"

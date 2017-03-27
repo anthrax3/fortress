@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
 	public class TypedServiceOverridesAndDependenciesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Mixin_picks_component_implemented_by_that_type()
 		{
 			Container.Register(Component.For<A>()
@@ -34,10 +34,10 @@ namespace Castle.Windsor.Tests
 			var item = Container.Resolve<A>();
 			var two = (ISimpleService2) item;
 
-			Assert.AreEqual("b", two.Method());
+			Assert.Equal("b", two.Method());
 		}
 
-		[Test]
+		[Fact]
 		public void Picks_component_implemented_by_that_type()
 		{
 			Container.Register(Component.For<CommonServiceUser>()
@@ -46,10 +46,10 @@ namespace Castle.Windsor.Tests
 				Component.For<ICommon>().ImplementedBy<CommonImpl2>());
 
 			var item = Container.Resolve<CommonServiceUser>();
-			Assert.IsInstanceOf<CommonImpl2>(item.CommonService);
+			Assert.IsType<CommonImpl2>(item.CommonService);
 		}
 
-		[Test]
+		[Fact]
 		public void Picks_component_implemented_by_that_type_open_generic()
 		{
 			Container.Register(Component.For(typeof(UsesIGeneric<>))
@@ -58,10 +58,10 @@ namespace Castle.Windsor.Tests
 				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
 
 			var item = Container.Resolve<UsesIGeneric<A>>();
-			Assert.IsInstanceOf<GenericImpl2<A>>(item.Dependency);
+			Assert.IsType<GenericImpl2<A>>(item.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Picks_component_implemented_by_that_type_open_generic_if_matching_closed_registered()
 		{
 			Container.Register(Component.For(typeof(UsesIGeneric<>))
@@ -71,13 +71,10 @@ namespace Castle.Windsor.Tests
 				Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl2<>)));
 
 			var item = Container.Resolve<UsesIGeneric<A>>();
-			Assert.IsInstanceOf<GenericImpl2<A>>(item.Dependency);
+			Assert.IsType<GenericImpl2<A>>(item.Dependency);
 		}
 
-		[Test(
-			Description =
-				"This is not exactly perfect. IMO we should throw here, but making it work like that would require some serious changes and I don't think it's a common scenario."
-		)]
+		[Fact]
 		public void Picks_component_implemented_by_that_type_with_default_name_if_multiple()
 		{
 			Container.Register(Component.For<CommonServiceUser>()
@@ -87,14 +84,14 @@ namespace Castle.Windsor.Tests
 				Component.For<ICommon>().ImplementedBy<CommonImpl2>());
 
 			var item = Container.Resolve<CommonServiceUser>();
-			Assert.IsInstanceOf<CommonImpl2>(item.CommonService);
+			Assert.IsType<CommonImpl2>(item.CommonService);
 
 			var default2 = Container.Resolve<ICommon>(ComponentName.DefaultNameFor(typeof(CommonImpl2)));
 
-			Assert.AreSame(default2, item.CommonService);
+			Assert.Same(default2, item.CommonService);
 		}
 
-		[Test]
+		[Fact]
 		public void Throws_if_component_implemented_by_that_type_non_default_name()
 		{
 			Container.Register(Component.For<CommonServiceUser>()

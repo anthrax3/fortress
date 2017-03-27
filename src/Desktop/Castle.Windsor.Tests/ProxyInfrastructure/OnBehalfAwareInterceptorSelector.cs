@@ -14,10 +14,10 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Interceptor;
-using NUnit.Framework;
+using Castle.Core;
+using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
+using Xunit;
 
 namespace Castle.Windsor.Tests.ProxyInfrastructure
 {
@@ -27,7 +27,7 @@ namespace Castle.Windsor.Tests.ProxyInfrastructure
 
 		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
 		{
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			return interceptors;
 		}
 

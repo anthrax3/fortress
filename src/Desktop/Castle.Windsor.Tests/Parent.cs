@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
 namespace Castle.Windsor.Tests
 {

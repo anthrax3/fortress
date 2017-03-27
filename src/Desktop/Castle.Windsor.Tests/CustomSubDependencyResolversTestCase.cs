@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.ContainerExtensions;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class CustomSubDependencyResolversTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_detect_dependency_cycle_introduced_by_poorly_implemented_subresolver()
 		{
 			Assert.Throws<CircularDependencyException>(() =>
@@ -38,7 +38,7 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void Can_detect_waiting_dependency_pointed_to_by_sub_resolver()
 		{
 			Assert.Throws<CircularDependencyException>(() =>

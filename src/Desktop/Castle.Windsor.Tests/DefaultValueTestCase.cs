@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class DefaultValueTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_default_ctor_value()
 		{
 			Container.Register(Component.For<CtorWithDefaultValue>());
@@ -29,64 +29,64 @@ namespace Castle.Windsor.Tests
 			Container.Resolve<CtorWithDefaultValue>();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_default_ctor_value_null_for_service_dependency()
 		{
 			Container.Register(Component.For<HasNullDefaultForServiceDependency>());
 
 			var service = Container.Resolve<HasNullDefaultForServiceDependency>();
 
-			Assert.IsNull(service.Dependency);
+			Assert.Null(service.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Null_is_a_valid_default_value()
 		{
 			Container.Register(Component.For<CtorWithNullDefaultValueAndDefault>());
 
 			var value = Container.Resolve<CtorWithNullDefaultValueAndDefault>();
 
-			Assert.IsNull(value.Name);
+			Assert.Null(value.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void Uses_ctor_with_defaults_when_greediest()
 		{
 			Container.Register(Component.For<CtorWithDefaultValueAndDefault>());
 
 			var value = Container.Resolve<CtorWithDefaultValueAndDefault>();
 
-			Assert.That(value.Name, Is.EqualTo("Stefan Mucha"));
+			Assert.True(value.Name == "Stefan Mucha");
 		}
 
-		[Test]
+		[Fact]
 		public void Uses_ctor_with_explicit_dependency_when_equally_greedy_as_default_1()
 		{
 			Container.Register(Component.For<TwoCtorsWithDefaultValue>().DependsOn(Property.ForKey("name").Eq("Adam Mickiewicz")));
 
 			var value = Container.Resolve<TwoCtorsWithDefaultValue>();
 
-			Assert.AreEqual("Adam Mickiewicz", value.Name);
+			Assert.Equal("Adam Mickiewicz", value.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void Uses_ctor_with_explicit_dependency_when_equally_greedy_as_default_2()
 		{
 			Container.Register(Component.For<TwoCtorsWithDefaultValue>().DependsOn(Property.ForKey("age").Eq(123)));
 
 			var value = Container.Resolve<TwoCtorsWithDefaultValue>();
 
-			Assert.AreEqual(123, value.Age);
+			Assert.Equal(123, value.Age);
 		}
 
-		[Test]
+		[Fact]
 		public void Uses_explicit_value_over_default()
 		{
 			Container.Register(Component.For<CtorWithDefaultValue>().DependsOn(Property.ForKey("name").Eq("Adam Mickiewicz")));
 
 			var value = Container.Resolve<CtorWithDefaultValue>();
 
-			Assert.AreEqual("Adam Mickiewicz", value.Name);
+			Assert.Equal("Adam Mickiewicz", value.Name);
 		}
 	}
 }

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
 	public class InterceptorLifecycleTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Disposable_interceptor_gets_properly_released_when_the_component_gets_released()
 		{
 			DisposableInterceptor.InstancesCreated = 0;
@@ -31,11 +31,11 @@ namespace Castle.Windsor.Tests
 
 			var a = Container.Resolve<A>();
 
-			Assert.AreEqual(1, DisposableInterceptor.InstancesCreated);
+			Assert.Equal(1, DisposableInterceptor.InstancesCreated);
 
 			Container.Release(a);
 
-			Assert.AreEqual(1, DisposableInterceptor.InstancesDisposed);
+			Assert.Equal(1, DisposableInterceptor.InstancesDisposed);
 		}
 	}
 }

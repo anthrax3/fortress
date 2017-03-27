@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
-	[TestFixture]
+	
 	public class StartableAndDecoratorsTestCase
 	{
 		private class AllInstaller : IWindsorInstaller
@@ -55,7 +54,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void No_startable_explicit_Resolve_resolves_with_no_issues()
 		{
 			using (var container = new WindsorContainer())
@@ -70,7 +69,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_separate_Install_Resolve_Startable_last_works()
 		{
 			using (var container = new WindsorContainer())
@@ -81,7 +80,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_separate_Install_Startable_first_throws()
 		{
 			using (var container = new WindsorContainer())
@@ -96,7 +95,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_separate_Install_Startable_last_works()
 		{
 			using (var container = new WindsorContainer())
@@ -107,7 +106,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_single_Install_works()
 		{
 			using (var container = new WindsorContainer())
@@ -118,7 +117,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_single_Installer_works()
 		{
 			using (var container = new WindsorContainer())
@@ -128,7 +127,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_in_single_Register_works()
 		{
 			using (var container = new WindsorContainer())
@@ -142,7 +141,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_separate_Register_Startable_first_throws()
 		{
 			using (var container = new WindsorContainer())
@@ -158,7 +157,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Startable_and_components_separate_Register_Startable_last_works()
 		{
 			using (var container = new WindsorContainer())

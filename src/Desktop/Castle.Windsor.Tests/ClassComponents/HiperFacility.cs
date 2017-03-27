@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.MicroKernel;
-using NUnit.Framework;
+using Castle.Core.Configuration;
+using Castle.MicroKernel;
+using Xunit;
 
 namespace Castle.Windsor.Tests.ClassComponents
 {
@@ -30,8 +30,8 @@ namespace Castle.Windsor.Tests.ClassComponents
 
 		public void Init(IKernel kernel, IConfiguration facilityConfig)
 		{
-			Assert.IsNotNull(kernel);
-			Assert.IsNotNull(facilityConfig);
+			Assert.NotNull(kernel);
+			Assert.NotNull(facilityConfig);
 
 			Initialized = true;
 		}

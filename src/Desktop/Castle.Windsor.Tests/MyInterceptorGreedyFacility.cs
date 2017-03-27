@@ -1,6 +1,6 @@
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel;
 
 namespace Castle.Windsor.Tests
 {

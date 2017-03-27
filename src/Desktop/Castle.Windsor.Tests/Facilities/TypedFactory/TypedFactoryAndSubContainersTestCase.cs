@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	[TestFixture]
+	
 	public class TypedFactoryAndSubContainersTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Facility_When_added_to_a_child_container_wher_parent_has_facility_pulls_from_child()
 		{
 			var childContainer = new WindsorContainer();
@@ -43,12 +42,12 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			var fromFactory = childContainer.Resolve<IDummyComponentFactory>().CreateDummyComponent();
 			var fromChild = childContainer.Resolve<IDummyComponent>();
 
-			Assert.AreSame(fromFactory, fromChild);
-			Assert.AreNotSame(fromChild, fromParent);
-			Assert.AreNotSame(fromFactory, fromParent);
+			Assert.Same(fromFactory, fromChild);
+			Assert.NotSame(fromChild, fromParent);
+			Assert.NotSame(fromFactory, fromParent);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-345")]
 		public void Resolve_SingletonAndDisposeChildContainer_ShouldNotDisposeSingleton()
 		{

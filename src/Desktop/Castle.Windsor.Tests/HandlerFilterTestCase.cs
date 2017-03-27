@@ -14,15 +14,15 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class HandlerFilterTestCase : AbstractContainerTestCase
 	{
 		private class FailIfCalled : IHandlersFilter
@@ -34,7 +34,7 @@ namespace Castle.Windsor.Tests
 
 			public IHandler[] SelectHandlers(Type service, IHandler[] handlers)
 			{
-				Assert.Fail("SelectHandlers was called with {0}", service);
+				Assert.True(false, $"SelectHandlers was called with {service}");
 				return null; //< could not compile without returning anything
 			}
 		}
@@ -139,10 +139,10 @@ namespace Castle.Windsor.Tests
 
 			public bool HasOpinionAbout(Type service)
 			{
-				Assert.That(OpinionWasChecked, Is.False, "Opinion should not be checked more than once");
+				Assert.False(OpinionWasChecked);
 
 				var wasExpectedService = service == typeof(ISomeService);
-				Assert.That(wasExpectedService, Is.True, "Did not expect {0} to be checked with this handler filter");
+				Assert.True(wasExpectedService);
 
 				OpinionWasChecked = true;
 
@@ -163,7 +163,7 @@ namespace Castle.Windsor.Tests
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void Filter_gets_all_assignable_handlers_not_exiplicitly_registered_for_given_service()
 		{
 			Container.Register(Component.For<Task5>(),
@@ -176,10 +176,10 @@ namespace Castle.Windsor.Tests
 
 			var instances = Container.ResolveAll<ISomeTask>();
 
-			Assert.AreEqual(5, instances.Length);
+			Assert.Equal(5, instances.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Filter_gets_open_generic_handlers_when_generic_service_requested()
 		{
 			Container.Register(Component.For<IGeneric<A>>().ImplementedBy<GenericImpl1<A>>(),
@@ -189,10 +189,10 @@ namespace Castle.Windsor.Tests
 
 			Container.ResolveAll<IGeneric<A>>();
 
-			Assert.AreEqual(2, filter.HandlersAsked.Length);
+			Assert.Equal(2, filter.HandlersAsked.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Filter_returning_empty_collection_respected()
 		{
 			Container.Register(Component.For<ISomeTask>().ImplementedBy<Task5>(),
@@ -205,10 +205,10 @@ namespace Castle.Windsor.Tests
 
 			var instances = Container.ResolveAll(typeof(ISomeTask));
 
-			Assert.IsEmpty(instances);
+			Assert.Empty(instances);
 		}
 
-		[Test]
+		[Fact]
 		public void HandlerFilterGetsCalledLikeExpected()
 		{
 			Container.Register(Component.For<ISomeService>().ImplementedBy<FirstImplementation>(),
@@ -220,10 +220,10 @@ namespace Castle.Windsor.Tests
 
 			Container.ResolveAll<ISomeService>();
 
-			Assert.IsTrue(filter.OpinionWasChecked, "Filter's opinion should have been checked once for each handler");
+			Assert.True(filter.OpinionWasChecked, "Filter's opinion should have been checked once for each handler");
 		}
 
-		[Test]
+		[Fact]
 		public void HandlerFiltersPrioritizationAndOrderingIsRespected()
 		{
 			Container.Register(Component.For<ISomeTask>().ImplementedBy<Task5>(),
@@ -236,10 +236,10 @@ namespace Castle.Windsor.Tests
 
 			var instances = Container.ResolveAll(typeof(ISomeTask));
 
-			Assert.That(instances, Has.Length.EqualTo(4));
+			Assert.True(instances.Length == 4);
 		}
 
-		[Test]
+		[Fact]
 		public void SelectionMethodIsNeverCalledOnFilterWhenItDoesNotHaveAnOpinionForThatService()
 		{
 			Container.Register(Component.For<IUnimportantService>().ImplementedBy<UnimportantImpl>());

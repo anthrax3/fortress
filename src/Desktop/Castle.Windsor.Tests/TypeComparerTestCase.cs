@@ -14,34 +14,33 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class TypeComparerTestCase
 	{
-		[SetUp]
-		public void Init()
+		public TypeComparerTestCase()
 		{
 			comparer = new TypeByInheritanceDepthMostSpecificFirstComparer();
 		}
 
 		private TypeByInheritanceDepthMostSpecificFirstComparer comparer;
 
-		[Test]
+		[Fact]
 		public void More_specific_type_goes_first()
 		{
 			var set1 = new SimpleSortedSet<Type>(comparer) {typeof(JohnChild), typeof(JohnParent)};
 			var set2 = new SimpleSortedSet<Type>(comparer) {typeof(JohnParent), typeof(JohnChild)};
 
-			Assert.AreEqual(typeof(JohnChild), set1.First());
-			Assert.AreEqual(typeof(JohnChild), set2.First());
+			Assert.Equal(typeof(JohnChild), set1.First());
+			Assert.Equal(typeof(JohnChild), set2.First());
 		}
 
-		[Test]
+		[Fact]
 		public void More_specific_type_goes_first_three_classes()
 		{
 			var set1 = new SimpleSortedSet<Type>(comparer) {typeof(JohnChild), typeof(JohnParent), typeof(JohnGrandparent)};
@@ -51,19 +50,19 @@ namespace Castle.Windsor.Tests
 			var set5 = new SimpleSortedSet<Type>(comparer) {typeof(JohnGrandparent), typeof(JohnParent), typeof(JohnChild)};
 			var set6 = new SimpleSortedSet<Type>(comparer) {typeof(JohnGrandparent), typeof(JohnChild), typeof(JohnParent)};
 
-			Assert.AreEqual(typeof(JohnChild), set1.First());
-			Assert.AreEqual(typeof(JohnChild), set2.First());
-			Assert.AreEqual(typeof(JohnChild), set3.First());
-			Assert.AreEqual(typeof(JohnChild), set4.First());
-			Assert.AreEqual(typeof(JohnChild), set5.First());
-			Assert.AreEqual(typeof(JohnChild), set6.First());
+			Assert.Equal(typeof(JohnChild), set1.First());
+			Assert.Equal(typeof(JohnChild), set2.First());
+			Assert.Equal(typeof(JohnChild), set3.First());
+			Assert.Equal(typeof(JohnChild), set4.First());
+			Assert.Equal(typeof(JohnChild), set5.First());
+			Assert.Equal(typeof(JohnChild), set6.First());
 
-			Assert.AreEqual(typeof(JohnGrandparent), set1.Last());
-			Assert.AreEqual(typeof(JohnGrandparent), set2.Last());
-			Assert.AreEqual(typeof(JohnGrandparent), set3.Last());
-			Assert.AreEqual(typeof(JohnGrandparent), set4.Last());
-			Assert.AreEqual(typeof(JohnGrandparent), set5.Last());
-			Assert.AreEqual(typeof(JohnGrandparent), set6.Last());
+			Assert.Equal(typeof(JohnGrandparent), set1.Last());
+			Assert.Equal(typeof(JohnGrandparent), set2.Last());
+			Assert.Equal(typeof(JohnGrandparent), set3.Last());
+			Assert.Equal(typeof(JohnGrandparent), set4.Last());
+			Assert.Equal(typeof(JohnGrandparent), set5.Last());
+			Assert.Equal(typeof(JohnGrandparent), set6.Last());
 		}
 	}
 }

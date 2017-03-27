@@ -14,15 +14,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class KernelEvents_DependencyResolving_TestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()
@@ -35,12 +35,12 @@ namespace Castle.Windsor.Tests
 
 		private void AssertEvent(ComponentModel client, DependencyModel model, object dependency)
 		{
-			Assert.AreEqual(expectedClient, client);
-			Assert.IsTrue(expectedModels.Contains(model));
-			Assert.IsNotNull(dependency);
+			Assert.Equal(expectedClient, client);
+			Assert.True(expectedModels.Contains(model));
+			Assert.NotNull(dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolvingConcreteClassThroughConstructor()
 		{
 			Kernel.Register(Component.For(typeof(DefaultSpamServiceWithConstructor)).Named("spamservice"));
@@ -50,8 +50,8 @@ namespace Castle.Windsor.Tests
 			var mailservice = Kernel.Resolve<DefaultMailSenderService>("mailsender");
 			var templateengine = Kernel.Resolve<DefaultTemplateEngine>("templateengine");
 
-			Assert.IsNotNull(mailservice);
-			Assert.IsNotNull(templateengine);
+			Assert.NotNull(mailservice);
+			Assert.NotNull(templateengine);
 
 			expectedClient = Kernel.GetHandler("spamservice").ComponentModel;
 			expectedModels =
@@ -61,10 +61,10 @@ namespace Castle.Windsor.Tests
 			var spamservice =
 				Kernel.Resolve<DefaultSpamServiceWithConstructor>("spamservice");
 
-			Assert.IsNotNull(spamservice);
+			Assert.NotNull(spamservice);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolvingConcreteClassThroughProperties()
 		{
 			Kernel.Register(Component.For<DefaultSpamService>().Named("spamservice"));
@@ -74,8 +74,8 @@ namespace Castle.Windsor.Tests
 			var mailservice = Kernel.Resolve<DefaultMailSenderService>("mailsender");
 			var templateengine = Kernel.Resolve<DefaultTemplateEngine>("templateengine");
 
-			Assert.IsNotNull(mailservice);
-			Assert.IsNotNull(templateengine);
+			Assert.NotNull(mailservice);
+			Assert.NotNull(templateengine);
 
 			expectedClient = Kernel.GetHandler("spamservice").ComponentModel;
 			expectedModels = new List<DependencyModel>();
@@ -84,10 +84,10 @@ namespace Castle.Windsor.Tests
 
 			var spamservice = Kernel.Resolve<DefaultSpamService>("spamservice");
 
-			Assert.IsNotNull(spamservice);
+			Assert.NotNull(spamservice);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolvingPrimitivesThroughProperties()
 		{
 			var config = new MutableConfiguration("component");
@@ -110,7 +110,7 @@ namespace Castle.Windsor.Tests
 
 			var customer = Kernel.Resolve<ICustomer>("customer");
 
-			Assert.IsNotNull(customer);
+			Assert.NotNull(customer);
 		}
 	}
 }

@@ -12,33 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Generics;
 using Castle.Windsor.Tests.TestImplementationsOfExtensionPoints;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class GenericImplementationWithGreaterArityThanServiceTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_create_component_with_generic_impl_for_non_generic_services()
 		{
 			Container.Register(Component.For<IService>().ImplementedBy(typeof(ServiceImplGeneric<>), new UseStringGenericStrategy()));
 
 			var item = Container.Resolve<IService>();
 
-			Assert.IsInstanceOf<ServiceImplGeneric<string>>(item);
+			Assert.IsType<ServiceImplGeneric<string>>(item);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_create_component_with_simple_double_generic_impl_for_multi_class_registration()
 		{
 			Container.Register(
-				Classes.FromThisAssembly().BasedOn(typeof(Generics.IRepository<>))
+				Classes.FromAssembly(ThisAssembly).BasedOn(typeof(Generics.IRepository<>))
 					.If(t => t == typeof(DoubleGenericRepository<,>))
 					.WithServiceBase()
 					.Configure(
@@ -48,10 +48,10 @@ namespace Castle.Windsor.Tests
 
 			var repository = Container.Resolve<Generics.IRepository<A>>();
 
-			Assert.IsInstanceOf<DoubleGenericRepository<A, A>>(repository);
+			Assert.IsType<DoubleGenericRepository<A, A>>(repository);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_create_component_with_simple_double_generic_impl_for_single_generic_service()
 		{
 			Container.Register(Component.For(typeof(Generics.IRepository<>)).ImplementedBy(typeof(DoubleGenericRepository<,>))
@@ -59,17 +59,17 @@ namespace Castle.Windsor.Tests
 
 			var repository = Container.Resolve<Generics.IRepository<A>>();
 
-			Assert.IsInstanceOf<DoubleGenericRepository<A, A>>(repository);
+			Assert.IsType<DoubleGenericRepository<A, A>>(repository);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_create_component_with_simple_double_generic_impl_for_single_generic_service_via_ImplementedBy()
 		{
 			Container.Register(Component.For(typeof(Generics.IRepository<>)).ImplementedBy(typeof(DoubleGenericRepository<,>), new DuplicateGenerics()));
 
 			var repository = Container.Resolve<Generics.IRepository<A>>();
 
-			Assert.IsInstanceOf<DoubleGenericRepository<A, A>>(repository);
+			Assert.IsType<DoubleGenericRepository<A, A>>(repository);
 		}
 	}
 }

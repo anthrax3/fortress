@@ -14,16 +14,16 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using NUnit.Framework;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class TransientMultiConstructorTestCase
 	{
-		[Test]
+		[Fact]
 		public void TransientMultiConstructorTest()
 		{
 			var container = new DefaultKernel();
@@ -38,10 +38,10 @@ namespace Castle.Windsor.Tests
 			var a = container.Resolve(typeof(FooBar), arguments1);
 			var b = container.Resolve(typeof(FooBar), arguments2);
 
-			Assert.AreNotSame(a, b, "A should not be B");
+			Assert.NotSame(a, b);
 		}
 
-		[Test]
+		[Fact]
 		public void TransientMultipleConstructorNonValueTypeTest()
 		{
 			var container = new DefaultKernel();
@@ -58,14 +58,14 @@ namespace Castle.Windsor.Tests
 			var a = container.Resolve(typeof(FooBarNonValue), arguments1);
 			var b = container.Resolve(typeof(FooBarNonValue), arguments2);
 
-			Assert.AreNotSame(a, b, "A should not be B");
+			Assert.NotSame(a, b);
 
 			// multi resolve test
 
 			a = container.Resolve(typeof(FooBarNonValue), arguments1);
 			b = container.Resolve(typeof(FooBarNonValue), arguments2);
 
-			Assert.AreNotSame(a, b, "A should not be B");
+			Assert.NotSame(a, b);
 		}
 	}
 }

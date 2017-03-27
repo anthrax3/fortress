@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class RegisteringTwoServicesForSameType
 	{
 		public interface IService
@@ -33,24 +32,24 @@ namespace Castle.Windsor.Tests
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void ResolvingComponentIsDoneOnFirstComeBasis()
 		{
 			IWindsorContainer windsor = new WindsorContainer();
 			windsor.Register(Component.For<IService>().ImplementedBy<Srv1>().Named("1"));
 			windsor.Register(Component.For<IService>().ImplementedBy<Srv1>().Named("2"));
 
-			Assert.IsInstanceOf<Srv1>(windsor.Resolve<IService>());
+			Assert.IsType<Srv1>(windsor.Resolve<IService>());
 		}
 
-		[Test]
+		[Fact]
 		public void ResolvingComponentIsDoneOnFirstComeBasisWhenNamesAreNotOrdered()
 		{
 			IWindsorContainer windsor = new WindsorContainer();
 			windsor.Register(Component.For<IService>().ImplementedBy<Srv1>().Named("3"));
 			windsor.Register(Component.For<IService>().ImplementedBy<Srv1>().Named("2"));
 
-			Assert.IsInstanceOf<Srv1>(windsor.Resolve<IService>());
+			Assert.IsType<Srv1>(windsor.Resolve<IService>());
 		}
 	}
 }

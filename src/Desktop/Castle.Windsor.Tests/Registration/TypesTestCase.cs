@@ -12,39 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using System.Reflection;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Registration
 {
-	[TestFixture]
+	
 	public class TypesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Based_on_interface_types_registered()
 		{
-			Container.Register(Types.FromThisAssembly()
+			Container.Register(Types.FromAssembly(ThisAssembly)
 				.BasedOn(typeof(ICommon))
 			);
 
 			var handlers = Kernel.GetHandlers(typeof(ICommon));
-			Assert.AreEqual(1, handlers.Length);
+			Assert.Equal(1, handlers.Length);
 
 			handlers = Kernel.GetAssignableHandlers(typeof(ICommon));
-			Assert.Greater(handlers.Length, 1);
+			Assert.True(handlers.Length > 1);
 		}
 
-		[Test]
+		[Fact]
 		public void Interface_registered_with_no_implementation_with_interceptor_can_be_used()
 		{
 			Container.Register(
 				Component.For<ReturnDefaultInterceptor>(),
-				Types.FromThisAssembly()
+				Types.FromAssembly(ThisAssembly)
 					.BasedOn(typeof(ISimpleService))
-					.If(t => t.IsInterface)
+					.If(t => t.GetTypeInfo().IsInterface)
 					.Configure(t => t.Interceptors<ReturnDefaultInterceptor>())
 			);
 

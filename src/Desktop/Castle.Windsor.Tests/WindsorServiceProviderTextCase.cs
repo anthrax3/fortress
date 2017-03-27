@@ -12,32 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class WindsorServiceProviderTextCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_windsor_service_provider_resolve_services()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>());
 			var provider = new WindsorServiceProvider(Container);
 			var service = provider.GetService<IEmptyService>();
-			Assert.IsNotNull(service);
+			Assert.NotNull(service);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-323")]
 		public void Can_windsor_service_provider_return_null_when_service_not_found()
 		{
 			var provider = new WindsorServiceProvider(Container);
 			var service = provider.GetService<IEmptyService>();
-			Assert.IsNull(service);
+			Assert.Null(service);
 		}
 	}
 }

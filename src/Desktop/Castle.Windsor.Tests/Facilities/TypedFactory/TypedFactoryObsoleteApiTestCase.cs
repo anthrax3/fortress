@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	[TestFixture]
+	
 	public class TypedFactoryObsoleteApiTestCase : AbstractContainerTestCase
 	{
 		private TypedFactoryFacility facility;
 
-		[Test]
+		[Fact]
 		public void Factory1()
 		{
 #pragma warning disable 0618 //call to obsolete method
@@ -40,16 +40,16 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			var factory = Container.Resolve<IProtocolHandlerFactory1>("protocolHandlerFactory");
 
-			Assert.IsNotNull(factory);
+			Assert.NotNull(factory);
 
 			var handler = factory.Create();
 
-			Assert.IsNotNull(handler);
+			Assert.NotNull(handler);
 
 			factory.Release(handler);
 		}
 
-		[Test]
+		[Fact]
 		public void Factory2()
 		{
 #pragma warning disable 0618 //call to obsolete method
@@ -64,20 +64,20 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			var factory = Container.Resolve<IProtocolHandlerFactory2>("protocolHandlerFactory");
 
-			Assert.IsNotNull(factory);
+			Assert.NotNull(factory);
 
 			var handler = factory.Create("miranda");
-			Assert.IsNotNull(handler);
-			Assert.IsTrue(handler is MirandaProtocolHandler);
+			Assert.NotNull(handler);
+			Assert.True(handler is MirandaProtocolHandler);
 			factory.Release(handler);
 
 			handler = factory.Create("messenger");
-			Assert.IsNotNull(handler);
-			Assert.IsTrue(handler is MessengerProtocolHandler);
+			Assert.NotNull(handler);
+			Assert.True(handler is MessengerProtocolHandler);
 			factory.Release(handler);
 		}
 
-		[Test]
+		[Fact]
 		public void Factory3()
 		{
 #pragma warning disable 0618 //call to obsolete method
@@ -89,16 +89,16 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			Container.Register(Component.For(typeof(IDummyComponent)).ImplementedBy(typeof(Component2)).Named("comp2"));
 
 			var factory = Container.Resolve<IComponentFactory1>("compFactory");
-			Assert.IsNotNull(factory);
+			Assert.NotNull(factory);
 
 			var comp1 = factory.Construct();
-			Assert.IsNotNull(comp1);
+			Assert.NotNull(comp1);
 
 			var comp2 = factory.Construct();
-			Assert.IsNotNull(comp2);
+			Assert.NotNull(comp2);
 		}
 
-		[Test]
+		[Fact]
 		public void Factory4()
 		{
 #pragma warning disable 0618 //call to obsolete method
@@ -112,15 +112,15 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 
 			var factory = Container.Resolve<IComponentFactory2>("compFactory");
 
-			Assert.IsNotNull(factory);
+			Assert.NotNull(factory);
 
 			var comp1 = (IDummyComponent) factory.Construct("comp1");
-			Assert.IsTrue(comp1 is Component1);
-			Assert.IsNotNull(comp1);
+			Assert.True(comp1 is Component1);
+			Assert.NotNull(comp1);
 
 			var comp2 = (IDummyComponent) factory.Construct("comp2");
-			Assert.IsTrue(comp2 is Component2);
-			Assert.IsNotNull(comp2);
+			Assert.True(comp2 is Component2);
+			Assert.NotNull(comp2);
 		}
 
 		protected override void AfterContainerCreated()

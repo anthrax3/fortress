@@ -13,18 +13,18 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Proxies
 {
-	[TestFixture]
+	
 	public class InterceptorDependenciesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_depend_on_the_same_interceptor_multiple_times_named()
 		{
 			Container.Register(
@@ -38,10 +38,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			calc.Sum(24, 42);
 
-			Assert.AreEqual(4, interceptor.InterceptedCallsCount);
+			Assert.Equal(4, interceptor.InterceptedCallsCount);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_depend_on_the_same_interceptor_multiple_times_typed()
 		{
 			Container.Register(
@@ -55,10 +55,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			calc.Sum(24, 42);
 
-			Assert.AreEqual(4, interceptor.InterceptedCallsCount);
+			Assert.Equal(4, interceptor.InterceptedCallsCount);
 		}
 
-		[Test]
+		[Fact]
 		public void Missing_interceptor_by_name_throws_corrent_exception()
 		{
 			Container.Register(Component.For<A>().Interceptors("fooInterceptor"));
@@ -71,10 +71,10 @@ namespace Castle.Windsor.Tests.Proxies
 					Environment.NewLine,
 					typeof(A).FullName);
 
-			Assert.AreEqual(message, exception.Message);
+			Assert.Equal(message, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void Missing_interceptor_by_type_throws_corrent_exception()
 		{
 			Container.Register(Component.For<A>().Interceptors<ReturnDefaultInterceptor>());
@@ -88,7 +88,7 @@ namespace Castle.Windsor.Tests.Proxies
 					typeof(A).FullName,
 					typeof(ReturnDefaultInterceptor).FullName);
 
-			Assert.AreEqual(message, exception.Message);
+			Assert.Equal(message, exception.Message);
 		}
 	}
 }

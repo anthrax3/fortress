@@ -13,18 +13,17 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {
-	[TestFixture]
+	
 	public class StartableAndExceptionThrowingInstallersTestCase
 	{
-		[Test]
+		[Fact]
 		[Bug("IOC-311")]
 		public void InstallShouldThrowExceptionFromFailedInstaller()
 		{
@@ -52,7 +51,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 			}
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-311")]
 		public void StartableComponentShouldNotStartIfExceptionThrownByInstaller()
 		{
@@ -76,7 +75,7 @@ namespace Castle.Windsor.Tests.Facilities.Startable
 				// being implemented by a using() block or something similar
 				// via OptimizeDependencyResolutionDisposable.Dispose()
 
-				Assert.AreEqual(0, UsesIEmptyService.instancesCreated);
+				Assert.Equal(0, UsesIEmptyService.instancesCreated);
 			}
 		}
 	}

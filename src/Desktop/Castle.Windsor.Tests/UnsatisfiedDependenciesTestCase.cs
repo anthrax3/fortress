@@ -13,18 +13,18 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class UnsatisfiedDependenciesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void OverrideIsForcedDependency()
 		{
 			var config = new MutableConfiguration("component");
@@ -44,10 +44,10 @@ namespace Castle.Windsor.Tests
 				string.Format(
 					"Can't create component 'key' as it has dependencies to be satisfied.{0}{0}'key' is waiting for the following dependencies:{0}- Component 'common2' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}",
 					Environment.NewLine);
-			Assert.AreEqual(expectedMessage, exception.Message);
+			Assert.Equal(expectedMessage, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void SatisfiedOverride()
 		{
 			var config = new MutableConfiguration("component");
@@ -64,12 +64,12 @@ namespace Castle.Windsor.Tests
 			Kernel.Register(Component.For(typeof(CommonServiceUser)).Named("key"));
 			var instance = Kernel.Resolve<CommonServiceUser>("key");
 
-			Assert.IsNotNull(instance);
-			Assert.IsNotNull(instance.CommonService);
-			Assert.AreEqual("CommonImpl2", instance.CommonService.GetType().Name);
+			Assert.NotNull(instance);
+			Assert.NotNull(instance.CommonService);
+			Assert.Equal("CommonImpl2", instance.CommonService.GetType().Name);
 		}
 
-		[Test]
+		[Fact]
 		public void SatisfiedOverrideRecursive()
 		{
 			var config1 = new MutableConfiguration("component");
@@ -98,17 +98,17 @@ namespace Castle.Windsor.Tests
 
 			var instance = Kernel.Resolve<IRepository>();
 
-			Assert.IsNotNull(instance);
-			Assert.IsInstanceOf<Repository1>(instance);
-			Assert.IsInstanceOf<Repository2>(((Repository1) instance).InnerRepository);
-			Assert.IsInstanceOf<Repository3>(
+			Assert.NotNull(instance);
+			Assert.IsType<Repository1>(instance);
+			Assert.IsType<Repository2>(((Repository1) instance).InnerRepository);
+			Assert.IsType<Repository3>(
 				((Repository2) ((Repository1) instance).InnerRepository).InnerRepository);
-			Assert.IsInstanceOf<DecoratedRepository>(
+			Assert.IsType<DecoratedRepository>(
 				((Repository3) ((Repository2) ((Repository1) instance).InnerRepository).InnerRepository).
 				InnerRepository);
 		}
 
-		[Test]
+		[Fact]
 		public void UnsatisfiedConfigValues()
 		{
 			var config = new MutableConfiguration("component");
@@ -129,10 +129,10 @@ namespace Castle.Windsor.Tests
 				string.Format(
 					"Can't create component 'key' as it has dependencies to be satisfied.{0}{0}'key' is waiting for the following dependencies:{0}- Parameter 'name' which was not provided. Did you forget to set the dependency?{0}- Parameter 'address' which was not provided. Did you forget to set the dependency?{0}- Parameter 'age' which was not provided. Did you forget to set the dependency?{0}",
 					Environment.NewLine);
-			Assert.AreEqual(expectedMessage, exception.Message);
+			Assert.Equal(expectedMessage, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void UnsatisfiedOverride()
 		{
 			var config = new MutableConfiguration("component");
@@ -152,10 +152,10 @@ namespace Castle.Windsor.Tests
 				string.Format(
 					"Can't create component 'key' as it has dependencies to be satisfied.{0}{0}'key' is waiting for the following dependencies:{0}- Component 'common2' (via override) which was not found. Did you forget to register it or misspelled the name? If the component is registered and override is via type make sure it doesn't have non-default name assigned explicitly or override the dependency via name.{0}",
 					Environment.NewLine);
-			Assert.AreEqual(expectedMessage, exception.Message);
+			Assert.Equal(expectedMessage, exception.Message);
 		}
 
-		[Test]
+		[Fact]
 		public void UnsatisfiedService()
 		{
 			Kernel.Register(Component.For(typeof(CommonServiceUser)).Named("key"));

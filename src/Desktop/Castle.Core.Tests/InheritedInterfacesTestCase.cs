@@ -13,16 +13,16 @@
 // limitations under the License.
 
 using System.Reflection;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Interceptors;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class InheritedInterfacesTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void InheritedInterfaceWithTarget()
 		{
 			var proxiedFoo = (IFooExtended) generator.CreateInterfaceProxyWithTargetInterface(
@@ -30,7 +30,7 @@ namespace Castle.Core.Tests
 			proxiedFoo.FooExtended();
 		}
 
-		[Test]
+		[Fact]
 		public void
 			Should_not_have_duplicated_events_for_interface_proxy_with_inherited_target_and_two_inherited_additional_interfaces()
 		{
@@ -38,22 +38,22 @@ namespace Castle.Core.Tests
 			var o = generator.CreateInterfaceProxyWithTarget(typeof(IHasEvent),
 				new[] {typeof(IHasEventBar), typeof(IHasEventFoo)}, target,
 				new StandardInterceptor());
-			var events = o.GetType().GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			Assert.AreEqual(3, events.Length);
+			var events = o.GetType().GetTypeInfo().GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			Assert.Equal(3, events.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_not_have_duplicated_properties_for_interface_proxy_with_inherited_target_and_two_inherited_additional_interfaces()
 		{
 			var target = new HasPropertyBar();
 			var o = generator.CreateInterfaceProxyWithTarget(typeof(IHasProperty),
 				new[] {typeof(IHasPropertyBar), typeof(IHasPropertyFoo)}, target,
 				new StandardInterceptor());
-			var properties = o.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			Assert.AreEqual(3, properties.Length);
+			var properties = o.GetType().GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			Assert.Equal(3, properties.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ShouldGenerateProxyWithoutTargetAndWithDuplicatedBaseInterface()
 		{
 			var foo =
@@ -66,7 +66,7 @@ namespace Castle.Core.Tests
 			((IBarFoo) foo).Bar();
 		}
 
-		[Test]
+		[Fact]
 		public void TargetImplementsOneInterfaceThatHasDuplicatedBaseInterfaceWithAdditionalProxiedInterfaces()
 		{
 			var target = new ImplementedFooExtended();

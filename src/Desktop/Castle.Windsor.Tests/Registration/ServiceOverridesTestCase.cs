@@ -13,17 +13,17 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Registration
 {
-	[TestFixture]
+	
 	public class ServiceOverridesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void AddComponent_ArrayServiceOverrides_WorksFine()
 		{
 			Kernel.Register(
@@ -43,13 +43,13 @@ namespace Castle.Windsor.Tests.Registration
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
 			var component = Kernel.Resolve<ClassWithArrayConstructor>();
-			Assert.AreSame(common2, component.First);
-			Assert.AreEqual(2, component.Services.Length);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
+			Assert.Same(common2, component.First);
+			Assert.Equal(2, component.Services.Length);
+			Assert.Same(common1, component.Services[0]);
+			Assert.Same(common2, component.Services[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_GenericListServiceOverrides_WorksFine()
 		{
 			Kernel.Register(
@@ -68,12 +68,12 @@ namespace Castle.Windsor.Tests.Registration
 			var common1 = Kernel.Resolve<ICommon>("common1");
 			var common2 = Kernel.Resolve<ICommon>("common2");
 			var component = Kernel.Resolve<ClassWithListConstructor>();
-			Assert.AreEqual(2, component.Services.Count);
-			Assert.AreSame(common1, component.Services[0]);
-			Assert.AreSame(common2, component.Services[1]);
+			Assert.Equal(2, component.Services.Count);
+			Assert.Same(common1, component.Services[0]);
+			Assert.Same(common2, component.Services[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ServiceOverridesDictionary_WorksFine()
 		{
 			var serviceOverrides = new Dictionary<string, string> {{"customer", "customer1"}};
@@ -99,13 +99,13 @@ namespace Castle.Windsor.Tests.Registration
 			);
 #pragma warning restore
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
-			Assert.IsNotNull(customer.CustomerBase);
-			Assert.AreEqual(customer.CustomerBase.Name, "Caption Hook");
-			Assert.AreEqual(customer.CustomerBase.Address, "Fairyland");
-			Assert.AreEqual(customer.CustomerBase.Age, 45);
+			Assert.NotNull(customer.CustomerBase);
+			Assert.Equal(customer.CustomerBase.Name, "Caption Hook");
+			Assert.Equal(customer.CustomerBase.Address, "Fairyland");
+			Assert.Equal(customer.CustomerBase.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ServiceOverrides_UsingAnonymousType()
 		{
 			Kernel.Register(
@@ -129,13 +129,13 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
-			Assert.IsNotNull(customer.CustomerBase);
-			Assert.AreEqual(customer.CustomerBase.Name, "Caption Hook");
-			Assert.AreEqual(customer.CustomerBase.Address, "Fairyland");
-			Assert.AreEqual(customer.CustomerBase.Age, 45);
+			Assert.NotNull(customer.CustomerBase);
+			Assert.Equal(customer.CustomerBase.Name, "Caption Hook");
+			Assert.Equal(customer.CustomerBase.Address, "Fairyland");
+			Assert.Equal(customer.CustomerBase.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponent_ServiceOverrides_WorksFine()
 		{
 			Kernel.Register(
@@ -160,13 +160,13 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var customer = Kernel.Resolve<CustomerChain1>("customer2");
-			Assert.IsNotNull(customer.CustomerBase);
-			Assert.AreEqual(customer.CustomerBase.Name, "Caption Hook");
-			Assert.AreEqual(customer.CustomerBase.Address, "Fairyland");
-			Assert.AreEqual(customer.CustomerBase.Age, 45);
+			Assert.NotNull(customer.CustomerBase);
+			Assert.Equal(customer.CustomerBase.Name, "Caption Hook");
+			Assert.Equal(customer.CustomerBase.Address, "Fairyland");
+			Assert.Equal(customer.CustomerBase.Age, 45);
 		}
 
-		[Test]
+		[Fact]
 		public void ServiceOverrides_work_via_DependsOn_named_key()
 		{
 			Kernel.Register(
@@ -181,10 +181,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
-			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
+			Assert.IsType<EmptyServiceB>(service.EmptyService);
 		}
 
-		[Test]
+		[Fact]
 		public void ServiceOverrides_work_via_DependsOn_named_key_typed_value_generic()
 		{
 			Kernel.Register(
@@ -197,10 +197,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
-			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
+			Assert.IsType<EmptyServiceB>(service.EmptyService);
 		}
 
-		[Test]
+		[Fact]
 		public void ServiceOverrides_work_via_DependsOn_named_key_typed_value_nongeneric()
 		{
 			Kernel.Register(
@@ -213,10 +213,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
-			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
+			Assert.IsType<EmptyServiceB>(service.EmptyService);
 		}
 
-		[Test]
+		[Fact]
 		public void ServiceOverrides_work_via_DependsOn_typed_key()
 		{
 			Kernel.Register(
@@ -231,10 +231,10 @@ namespace Castle.Windsor.Tests.Registration
 			);
 
 			var service = Kernel.Resolve<UsesIEmptyService>();
-			Assert.IsInstanceOf<EmptyServiceB>(service.EmptyService);
+			Assert.IsType<EmptyServiceB>(service.EmptyService);
 		}
 
-		[Test]
+		[Fact]
 		public void ServiceOverrides_works_via_DependsOn_typed_key_Named_value_on_open_generic_type()
 		{
 			Kernel.Register(
@@ -244,7 +244,7 @@ namespace Castle.Windsor.Tests.Registration
 
 			var root = (GenericImpl3<int>) Kernel.Resolve<IGeneric<int>>();
 
-			Assert.IsInstanceOf<EmptyServiceB>(root.Value);
+			Assert.IsType<EmptyServiceB>(root.Value);
 		}
 	}
 }

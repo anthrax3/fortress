@@ -14,82 +14,83 @@
 
 using System;
 using System.Threading;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using System.Threading.Tasks;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class LazyLoadingTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_Lazily_resolve_component()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<LoaderForDefaultImplementations>());
 			var service = Container.Resolve("foo", typeof(IHasDefaultImplementation));
-			Assert.IsNotNull(service);
-			Assert.IsInstanceOf<Implementation>(service);
+			Assert.NotNull(service);
+			Assert.IsType<Implementation>(service);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_lazily_resolve_dependency()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<LoaderForDefaultImplementations>(),
 				Component.For<UsingLazyComponent>());
 			var component = Container.Resolve<UsingLazyComponent>();
-			Assert.IsNotNull(component.Dependency);
+			Assert.NotNull(component.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_lazily_resolve_explicit_dependency()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<LoaderUsingDependency>());
 			var component = Container.Resolve<UsingString>(new Arguments().Insert("parameter", "Hello"));
-			Assert.AreEqual("Hello", component.Parameter);
+			Assert.Equal("Hello", component.Parameter);
 		}
 
-		[Test]
+		[Fact]
 		public void Component_loaded_lazily_can_have_lazy_dependencies()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<ABLoader>());
 			Container.Resolve<B>();
 		}
 
-		[Test]
-		[Timeout(2000)]
+		[Fact]
 		public void Loaders_are_thread_safe()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>().ImplementedBy<SlowLoader>());
 			var @event = new ManualResetEvent(false);
 			int[] count = {10};
 			Exception exception = null;
-			for (var i = 0; i < count[0]; i++)
-				ThreadPool.QueueUserWorkItem(o =>
-					{
-						try
-						{
-							Container.Resolve<Implementation>("not registered");
-							if (Interlocked.Decrement(ref count[0]) == 0)
-								@event.Set();
-						}
-						catch (Exception e)
-						{
-							exception = e;
-							// this is required because NUnit does not consider it a failure when
-							// an exception is thrown on a non-main thread and therfore it waits.
-							@event.Set();
-						}
-					}
-				);
-			@event.WaitOne();
-			Assert.IsNull(exception);
-			Assert.AreEqual(0, count[0]);
+		    for (var i = 0; i < count[0]; i++)
+		    {
+		        Task.Factory.StartNew(() =>
+		        {
+                    try
+                    {
+                        Container.Resolve<Implementation>("not registered");
+                        if (Interlocked.Decrement(ref count[0]) == 0)
+                            @event.Set();
+                    }
+                    catch (Exception e)
+                    {
+                        exception = e;
+                        // this is required because NUnit does not consider it a failure when
+                        // an exception is thrown on a non-main thread and therfore it waits.
+                        @event.Set();
+                    }
+                });
+		    }
+		    @event.WaitOne();
+			Assert.Null(exception);
+			Assert.Equal(0, count[0]);
 		}
 
-		[Test]
+		[Fact]
 		public void Loaders_only_triggered_when_resolving()
 		{
 			var loader = new ABLoaderWithGuardClause();
@@ -101,7 +102,7 @@ namespace Castle.Windsor.Tests
 			Container.Resolve<B>();
 		}
 
-		[Test]
+		[Fact]
 		public void Loaders_with_dependencies_dont_overflow_the_stack()
 		{
 			Container.Register(Component.For<LoaderWithDependency>());

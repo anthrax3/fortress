@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class SubResolverTestCase
 	{
-		[Test]
+		[Fact]
 		public void WillAskResolverWhenTryingToResolveDependencyAfterAnotherHandlerWasRegistered()
 		{
 			var resolver = new FooBarResolver();
@@ -33,13 +33,13 @@ namespace Castle.Windsor.Tests
 			kernel.Register(Component.For<Foo>());
 			var handler = kernel.GetHandler(typeof(Foo));
 
-			Assert.AreEqual(HandlerState.WaitingDependency, handler.CurrentState);
+			Assert.Equal(HandlerState.WaitingDependency, handler.CurrentState);
 
 			resolver.Result = 15;
 
 			kernel.Register(Component.For<A>());
 
-			Assert.AreEqual(HandlerState.Valid, handler.CurrentState);
+			Assert.Equal(HandlerState.Valid, handler.CurrentState);
 		}
 	}
 }

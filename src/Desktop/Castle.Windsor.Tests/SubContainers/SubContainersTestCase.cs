@@ -14,18 +14,18 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.SubContainers
 {
-	[TestFixture]
+	
 	public class SubContainersTestCase : AbstractContainerTestCase
 	{
 		private class EventsCollector
@@ -45,18 +45,18 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			public void AddedAsChildKernel(object sender, EventArgs e)
 			{
-				Assert.AreEqual(expectedSender, sender);
+				Assert.Equal(expectedSender, sender);
 				Events.Add(Added);
 			}
 
 			public void RemovedAsChildKernel(object sender, EventArgs e)
 			{
-				Assert.AreEqual(expectedSender, sender);
+				Assert.Equal(expectedSender, sender);
 				Events.Add(Removed);
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void AddChildKernelToTwoParentsThrowsException()
 		{
 			Assert.Throws<KernelException>(() =>
@@ -66,13 +66,13 @@ namespace Castle.Windsor.Tests.SubContainers
 				IKernel subkernel = new DefaultKernel();
 
 				Kernel.AddChildKernel(subkernel);
-				Assert.AreEqual(Kernel, subkernel.Parent);
+				Assert.Equal(Kernel, subkernel.Parent);
 
 				kernel2.AddChildKernel(subkernel);
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void ChildDependenciesIsSatisfiedEvenWhenComponentTakesLongToBeAddedToParentContainer()
 		{
 			var container = new DefaultKernel();
@@ -87,7 +87,7 @@ namespace Castle.Windsor.Tests.SubContainers
 			childContainer.Resolve<UsesIEmptyService>();
 		}
 
-		[Test]
+		[Fact]
 		public void ChildDependenciesSatisfiedAmongContainers()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -100,12 +100,12 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			var spamservice = subkernel.Resolve<DefaultSpamService>("spamservice");
 
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.MailSender);
-			Assert.IsNotNull(spamservice.TemplateEngine);
+			Assert.NotNull(spamservice);
+			Assert.NotNull(spamservice.MailSender);
+			Assert.NotNull(spamservice.TemplateEngine);
 		}
 
-		[Test]
+		[Fact]
 		public void ChildKernelFindsAndCreateParentComponent()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -114,11 +114,11 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			Kernel.AddChildKernel(subkernel);
 
-			Assert.IsTrue(subkernel.HasComponent(typeof(DefaultTemplateEngine)));
-			Assert.IsNotNull(subkernel.Resolve<DefaultTemplateEngine>());
+			Assert.True(subkernel.HasComponent(typeof(DefaultTemplateEngine)));
+			Assert.NotNull(subkernel.Resolve<DefaultTemplateEngine>());
 		}
 
-		[Test]
+		[Fact]
 		public void ChildKernelOverloadsParentKernel1()
 		{
 			var instance1 = new DefaultTemplateEngine();
@@ -128,17 +128,17 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			IKernel subkernel = new DefaultKernel();
 			subkernel.Register(Component.For<DefaultTemplateEngine>().Named("engine").Instance(instance1));
-			Assert.AreEqual(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
 
 			Kernel.Register(Component.For<DefaultTemplateEngine>().Named("engine").Instance(instance2));
-			Assert.AreEqual(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
 
 			Kernel.AddChildKernel(subkernel);
-			Assert.AreEqual(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
-			Assert.AreEqual(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
 		}
 
-		[Test]
+		[Fact]
 		public void ChildKernelOverloadsParentKernel2()
 		{
 			var instance1 = new DefaultTemplateEngine();
@@ -150,15 +150,15 @@ namespace Castle.Windsor.Tests.SubContainers
 			// subkernel added first, then populated with overloaded components after
 
 			Kernel.Register(Component.For<DefaultTemplateEngine>().Named("engine").Instance(instance2));
-			Assert.AreEqual(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
-			Assert.AreEqual(instance2, subkernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance2, subkernel.Resolve<DefaultTemplateEngine>("engine"));
 
 			subkernel.Register(Component.For<DefaultTemplateEngine>().Named("engine").Instance(instance1));
-			Assert.AreEqual(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
-			Assert.AreEqual(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance1, subkernel.Resolve<DefaultTemplateEngine>("engine"));
+			Assert.Equal(instance2, Kernel.Resolve<DefaultTemplateEngine>("engine"));
 		}
 
-		[Test]
+		[Fact]
 		public void DependenciesSatisfiedAmongContainers()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -172,12 +172,12 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			var spamservice = subkernel.Resolve<DefaultSpamService>("spamservice");
 
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.MailSender);
-			Assert.IsNotNull(spamservice.TemplateEngine);
+			Assert.NotNull(spamservice);
+			Assert.NotNull(spamservice.MailSender);
+			Assert.NotNull(spamservice.TemplateEngine);
 		}
 
-		[Test]
+		[Fact]
 		public void DependenciesSatisfiedAmongContainersUsingEvents()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -192,12 +192,12 @@ namespace Castle.Windsor.Tests.SubContainers
 			var spamservice =
 				subkernel.Resolve<DefaultSpamServiceWithConstructor>("spamservice");
 
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.MailSender);
-			Assert.IsNotNull(spamservice.TemplateEngine);
+			Assert.NotNull(spamservice);
+			Assert.NotNull(spamservice.MailSender);
+			Assert.NotNull(spamservice.TemplateEngine);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-345")]
 		public void Do_NOT_UseChildComponentsForParentDependenciesWhenRequestedFromChild()
 		{
@@ -214,15 +214,15 @@ namespace Castle.Windsor.Tests.SubContainers
 			var sub_templateengine = subkernel.Resolve<DefaultTemplateEngine>("templateengine");
 
 			var spamservice = subkernel.Resolve<DefaultSpamService>("spamservice");
-			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
-			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
+			Assert.NotEqual(spamservice.TemplateEngine, sub_templateengine);
+			Assert.Equal(spamservice.TemplateEngine, templateengine);
 
 			spamservice = Kernel.Resolve<DefaultSpamService>("spamservice");
-			Assert.AreNotEqual(spamservice.TemplateEngine, sub_templateengine);
-			Assert.AreEqual(spamservice.TemplateEngine, templateengine);
+			Assert.NotEqual(spamservice.TemplateEngine, sub_templateengine);
+			Assert.Equal(spamservice.TemplateEngine, templateengine);
 		}
 
-		[Test]
+		[Fact]
 		public void Parent_component_will_NOT_have_dependencies_from_child()
 		{
 			Kernel.Register(Component.For<DefaultTemplateEngine>(),
@@ -235,12 +235,12 @@ namespace Castle.Windsor.Tests.SubContainers
 
 			var spamservice = child.Resolve<DefaultSpamService>();
 
-			Assert.IsNotNull(spamservice);
-			Assert.IsNotNull(spamservice.TemplateEngine);
-			Assert.IsNull(spamservice.MailSender);
+			Assert.NotNull(spamservice);
+			Assert.NotNull(spamservice.TemplateEngine);
+			Assert.Null(spamservice.MailSender);
 		}
 
-		[Test]
+		[Fact]
 		public void ParentKernelFindsAndCreateChildComponent()
 		{
 			Assert.Throws<ComponentNotFoundException>(() =>
@@ -251,13 +251,13 @@ namespace Castle.Windsor.Tests.SubContainers
 
 				Kernel.AddChildKernel(subkernel);
 
-				Assert.IsFalse(Kernel.HasComponent(typeof(DefaultTemplateEngine)));
+				Assert.False(Kernel.HasComponent(typeof(DefaultTemplateEngine)));
 
 				Kernel.Resolve<DefaultTemplateEngine>();
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void RemoveChildKernelCleansUp()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -266,17 +266,17 @@ namespace Castle.Windsor.Tests.SubContainers
 			subkernel.AddedAsChildKernel += eventCollector.AddedAsChildKernel;
 
 			Kernel.AddChildKernel(subkernel);
-			Assert.AreEqual(Kernel, subkernel.Parent);
-			Assert.AreEqual(1, eventCollector.Events.Count);
-			Assert.AreEqual(EventsCollector.Added, eventCollector.Events[0]);
+			Assert.Equal(Kernel, subkernel.Parent);
+			Assert.Equal(1, eventCollector.Events.Count);
+			Assert.Equal(EventsCollector.Added, eventCollector.Events[0]);
 
 			Kernel.RemoveChildKernel(subkernel);
-			Assert.IsNull(subkernel.Parent);
-			Assert.AreEqual(2, eventCollector.Events.Count);
-			Assert.AreEqual(EventsCollector.Removed, eventCollector.Events[1]);
+			Assert.Null(subkernel.Parent);
+			Assert.Equal(2, eventCollector.Events.Count);
+			Assert.Equal(EventsCollector.Removed, eventCollector.Events[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void RemovingChildKernelUnsubscribesFromParentEvents()
 		{
 			IKernel subkernel = new DefaultKernel();
@@ -289,14 +289,14 @@ namespace Castle.Windsor.Tests.SubContainers
 			Kernel.AddChildKernel(subkernel);
 			Kernel.RemoveChildKernel(subkernel);
 
-			Assert.AreEqual(4, eventCollector.Events.Count);
-			Assert.AreEqual(EventsCollector.Added, eventCollector.Events[0]);
-			Assert.AreEqual(EventsCollector.Removed, eventCollector.Events[1]);
-			Assert.AreEqual(EventsCollector.Added, eventCollector.Events[2]);
-			Assert.AreEqual(EventsCollector.Removed, eventCollector.Events[3]);
+			Assert.Equal(4, eventCollector.Events.Count);
+			Assert.Equal(EventsCollector.Added, eventCollector.Events[0]);
+			Assert.Equal(EventsCollector.Removed, eventCollector.Events[1]);
+			Assert.Equal(EventsCollector.Added, eventCollector.Events[2]);
+			Assert.Equal(EventsCollector.Removed, eventCollector.Events[3]);
 		}
 
-		[Test]
+		[Fact]
 		public void Singleton_withNonSingletonDependencies_doesNotReResolveDependencies()
 		{
 			Kernel.Register(Component.For(typeof(DefaultSpamService)).Named("spamservice"));
@@ -314,15 +314,15 @@ namespace Castle.Windsor.Tests.SubContainers
 			var templateengine1 = subkernel1.Resolve<DefaultTemplateEngine>("templateengine");
 			var spamservice1 = subkernel1.Resolve<DefaultSpamService>("spamservice");
 
-			Assert.IsNull(spamservice1.TemplateEngine);
+			Assert.Null(spamservice1.TemplateEngine);
 
 			var templateengine2 = subkernel2.Resolve<DefaultTemplateEngine>("templateengine");
 			var spamservice2 = subkernel2.Resolve<DefaultSpamService>("spamservice");
 
-			Assert.AreSame(spamservice1, spamservice2);
+			Assert.Same(spamservice1, spamservice2);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-325")]
 		public void TryResolvingViaChildKernelShouldNotThrowException()
 		{
@@ -333,9 +333,9 @@ namespace Castle.Windsor.Tests.SubContainers
 				var handler = childKernel.GetHandler(typeof(BookStore));
 
 				// Assert setup invariant
-				Assert.IsInstanceOf<ParentHandlerWrapper>(handler);
+				Assert.IsType<ParentHandlerWrapper>(handler);
 
-				Assert.DoesNotThrow(() => handler.TryResolve(CreationContext.CreateEmpty()));
+				handler.TryResolve(CreationContext.CreateEmpty());
 			}
 		}
 	}

@@ -14,8 +14,8 @@
 
 using System;
 using System.Reflection;
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {

@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class PropertyDependenciesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_opt_out_of_setting_base_properties_via_enum()
 		{
 			Container.Register(
@@ -33,11 +33,11 @@ namespace Castle.Windsor.Tests
 				Component.For<AbPropChild>().Properties(PropertyFilter.IgnoreBase));
 
 			var item = Container.Resolve<AbPropChild>();
-			Assert.IsNull(item.Prop);
-			Assert.IsNotNull(item.PropB);
+			Assert.Null(item.Prop);
+			Assert.NotNull(item.PropB);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_opt_out_of_setting_properties_open_generic_via_enum()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>))
@@ -45,10 +45,10 @@ namespace Castle.Windsor.Tests
 				.Properties(PropertyFilter.IgnoreAll));
 
 			var item = Container.Resolve<GenericImpl2<A>>();
-			Assert.AreEqual(0, item.Value);
+			Assert.Equal(0, item.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_opt_out_of_setting_properties_open_generic_via_predicate()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>))
@@ -56,10 +56,10 @@ namespace Castle.Windsor.Tests
 				.PropertiesIgnore(p => true));
 
 			var item = Container.Resolve<GenericImpl2<A>>();
-			Assert.AreEqual(0, item.Value);
+			Assert.Equal(0, item.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_opt_out_of_setting_properties_via_enum()
 		{
 			Container.Register(
@@ -68,10 +68,10 @@ namespace Castle.Windsor.Tests
 					.Properties(PropertyFilter.IgnoreAll));
 
 			var item = Container.Resolve<CommonServiceUser2>();
-			Assert.IsNull(item.CommonService);
+			Assert.Null(item.CommonService);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_opt_out_of_setting_properties_via_predicate()
 		{
 			Container.Register(
@@ -80,10 +80,10 @@ namespace Castle.Windsor.Tests
 					.PropertiesIgnore(p => true));
 
 			var item = Container.Resolve<CommonServiceUser2>();
-			Assert.IsNull(item.CommonService);
+			Assert.Null(item.CommonService);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_require_setting_properties_open_generic_via_enum()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>)).Properties(PropertyFilter.RequireAll));
@@ -91,7 +91,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() => Container.Resolve<GenericImpl2<A>>());
 		}
 
-		[Test]
+		[Fact]
 		public void Can_require_setting_properties_open_generic_via_predicate()
 		{
 			Container.Register(Component.For(typeof(GenericImpl2<>)).PropertiesRequire(p => true));
@@ -99,7 +99,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() => Container.Resolve<GenericImpl2<A>>());
 		}
 
-		[Test]
+		[Fact]
 		public void Can_require_setting_properties_via_enum()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().Properties(PropertyFilter.RequireAll));
@@ -107,7 +107,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() => Container.Resolve<CommonServiceUser2>());
 		}
 
-		[Test]
+		[Fact]
 		public void Can_require_setting_properties_via_predicate()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().PropertiesRequire(p => true));
@@ -115,7 +115,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() => Container.Resolve<CommonServiceUser2>());
 		}
 
-		[Test]
+		[Fact]
 		public void First_one_wins()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().Properties(PropertyFilter.IgnoreAll)
@@ -124,7 +124,7 @@ namespace Castle.Windsor.Tests
 			Container.Resolve<CommonServiceUser2>();
 		}
 
-		[Test]
+		[Fact]
 		public void First_one_wins_2()
 		{
 			Container.Register(Component.For<CommonServiceUser2>().Properties(PropertyFilter.RequireAll)

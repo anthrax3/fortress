@@ -1,32 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;net451;net452;net46;net461;net462</TargetFrameworks>
-    <SignAssembly>True</SignAssembly>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;FEATURE_DICTIONARYADAPTER_XML;FEATURE_APPDOMAIN;NET45</DefineConstants>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
   <ItemGroup>
-    <None Remove="Core.Tests\Resources\file1.txt" />
-    <None Remove="Core.Tests\Resources\MoreRes\file2.txt" />
+    <EmbeddedResource Include="Core\Resources\file1.txt" />
+    <EmbeddedResource Include="Core\Resources\MoreRes\file2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Core.Tests\Resources\file1.txt" />
-    <EmbeddedResource Include="Core.Tests\Resources\MoreRes\file2.txt" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.console" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
-    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
+    <ProjectReference Include="..\..\Standard\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
+    <ProjectReference Include="..\..\Standard\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web" />
-    <Reference Include="NUnit">
-      <HintPath>..\..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>

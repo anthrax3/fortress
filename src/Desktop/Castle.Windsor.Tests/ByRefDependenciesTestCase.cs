@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
 	public class ByRefDependenciesTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_resolve_type_with_by_ref_dependency()
 		{
 			Container.Register(Component.For<A>(),
@@ -30,7 +30,7 @@ namespace Castle.Windsor.Tests
 			Container.Resolve<HasByRefCtorArgument>();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_type_with_by_ref_dependency_provided_inline()
 		{
 			Container.Register(Component.For<HasByRefCtorArgument>());
@@ -38,7 +38,7 @@ namespace Castle.Windsor.Tests
 			Container.Resolve<HasByRefCtorArgument>(new {a = new A()});
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_type_with_by_ref_dependency_provided_inline_via_anonymous_type()
 		{
 			Container.Register(Component.For<HasByRefCtorArgument>());

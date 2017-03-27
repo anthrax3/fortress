@@ -14,15 +14,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class KernelEvents_ComponentCreated_TestCase : AbstractContainerTestCase
 	{
 		private readonly IList<KeyValuePair<ComponentModel, object>> list = new List<KeyValuePair<ComponentModel, object>>();
@@ -39,8 +39,7 @@ namespace Castle.Windsor.Tests
 		}
 
 
-		[Test]
-		[Description("As reported in http://stackoverflow.com/questions/8923931/castle-windsor-component-created-event-with-interceptor")]
+		[Fact]
 		public void Event_raised_for_component_with_interceptor()
 		{
 			Container.Register(
@@ -48,8 +47,8 @@ namespace Castle.Windsor.Tests
 				Component.For<IService>().ImplementedBy<MyService>().Interceptors<StandardInterceptor>().LifestyleTransient());
 
 			var service = Container.Resolve<IService>();
-			CollectionAssert.IsNotEmpty(list);
-			Assert.IsTrue(list.Any(t => t.Value == service));
+			Assert.NotEmpty(list);
+			Assert.True(list.Any(t => t.Value == service));
 		}
 	}
 }
