@@ -11,7 +11,6 @@ let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
 let coreTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
 let desktopTestAssemblies = "src/Desktop/**/Castle.*.Tests/*.csproj"
-let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
 Target "Install" ignore
@@ -52,20 +51,22 @@ Target "Build" <| fun _ ->
 Target "Test" ignore
 
 Target "TestDesktop" <| fun _ ->
-    tracef "%sRunning Unit Tests\r\n" logo
     !! desktopTestAssemblies
-    |> NUnit3 (fun p ->
-        {p with
-            ShadowCopy = false
-            ToolPath = testRunnerCli })
+    |> Seq.iter (fun p ->
+        let result = directExec (fun info ->
+                info.FileName <- dotNetCli
+                info.Arguments <- (sprintf "test %s" p))
+        if result <> true then 
+            failwithf "%sdotnet test failed\r\n" logo)
 
 Target "TestCore" <| fun _ -> 
-    tracef "%sRunning Unit Tests\r\n" logo
     !! coreTestAssemblies
-    |> NUnit3 (fun p ->
-        {p with
-            ShadowCopy = false
-            ToolPath = testRunnerCli })
+    |> Seq.iter (fun p ->
+        let result = directExec (fun info ->
+                info.FileName <- dotNetCli
+                info.Arguments <- (sprintf "test %s" p))
+        if result <> true then 
+            failwithf "%sdotnet test failed\r\n" logo)
 
 "InstallDotNetCli"
     ==> "InstallDotNetPackages"
