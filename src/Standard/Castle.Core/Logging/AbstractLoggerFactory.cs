@@ -14,6 +14,7 @@
 
 using System;
 using System.IO;
+using Castle.Helpers;
 
 namespace Castle.Core.Logging
 {
@@ -49,8 +50,7 @@ namespace Castle.Core.Logging
 			}
 			else
 			{
-                string baseDirectory = AppContext.BaseDirectory;
-
+                string baseDirectory = BaseDirectoryHelper.BaseDirectory;
                 result = new FileInfo(Path.Combine(baseDirectory, fileName));
             }
 

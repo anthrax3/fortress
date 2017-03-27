@@ -15,6 +15,8 @@
 
 using System;
 using System.Xml;
+using Castle.Compatibility;
+using Castle.Helpers;
 
 namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
@@ -45,10 +47,12 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcesso
 
 			object evaluated = "";
 
-			if (string.Compare(expression, "$basedirectory", true) == 0)
-				evaluated = AppContext.BaseDirectory;
+		    if (string.Compare(expression, "$basedirectory", true) == 0)
+		    {
+                evaluated = BaseDirectoryHelper.BaseDirectory;
+            }
 
-			fragment.AppendChild(node.OwnerDocument.CreateTextNode(evaluated.ToString()));
+            fragment.AppendChild(node.OwnerDocument.CreateTextNode(evaluated.ToString()));
 
 			ReplaceNode(node.ParentNode, fragment, node);
 		}
