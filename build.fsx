@@ -76,8 +76,13 @@ Target "TestCore" <| fun _ ->
     ==> "Build"
     ==> "Test"
 
-"TestDesktop"
-    ==> "TestCore"
+// This is what I would like to see
+//"TestDesktop"
+//    ==> "TestCore"
+//    ==> "Test"
+
+// What we got for now
+"TestCore"
     ==> "Test"
  
 RunTargetOrDefault "Build"
