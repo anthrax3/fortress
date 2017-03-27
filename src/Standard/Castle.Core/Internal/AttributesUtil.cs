@@ -18,7 +18,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
     public static class AttributesUtil
 	{

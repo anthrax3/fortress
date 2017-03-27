@@ -16,10 +16,10 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
+using Castle.Core;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.LifecycleConcerns
+namespace Castle.MicroKernel.LifecycleConcerns
 {
 	public abstract class LateBoundConcerns<TConcern>
 	{

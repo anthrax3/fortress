@@ -14,9 +14,9 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public interface ITrackedComponentsDiagnostic : IDiagnostic<ILookup<IHandler, object>>
 	{

@@ -13,6 +13,6 @@
 // limitations under the License.
 
 using System.Runtime.CompilerServices;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 
 [assembly: InternalsVisibleTo(InternalsVisible.ToCastleCore)]

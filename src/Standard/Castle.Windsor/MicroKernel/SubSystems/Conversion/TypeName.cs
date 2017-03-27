@@ -15,7 +15,7 @@
 using System;
 using System.Linq;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public class TypeName
 	{

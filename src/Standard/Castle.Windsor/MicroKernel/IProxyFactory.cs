@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Core;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Proxy;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public interface IProxyFactory
 	{

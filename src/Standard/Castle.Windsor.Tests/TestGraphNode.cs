@@ -1,4 +1,4 @@
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
 namespace Castle.Windsor.Tests
 {

@@ -17,9 +17,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public class DependencyInspector : IDependencyInspector
 	{

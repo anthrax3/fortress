@@ -15,8 +15,8 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
+using Castle.DynamicProxy;
 using Xunit;
 
 

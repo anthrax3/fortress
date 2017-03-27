@@ -14,7 +14,7 @@
 
 using System.Reflection.Emit;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
+namespace Castle.DynamicProxy.Generators.Emitters.CodeBuilders
 {
 	public class MethodCodeBuilder : AbstractCodeBuilder
 	{

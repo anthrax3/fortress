@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	public class WeakKeyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 		where TKey : class

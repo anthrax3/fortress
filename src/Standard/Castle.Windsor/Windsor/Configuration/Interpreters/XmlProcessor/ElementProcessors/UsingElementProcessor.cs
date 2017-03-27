@@ -14,9 +14,9 @@
 
 
 using System.Xml;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class UsingElementProcessor : AbstractXmlNodeProcessor
 	{

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.Facilities.TypedFactory.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Facilities.TypedFactory.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	public class DelegateFactoryActivator : AbstractComponentActivator, IDependencyAwareActivator
 	{

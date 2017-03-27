@@ -14,9 +14,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using NUnit.Framework;
 

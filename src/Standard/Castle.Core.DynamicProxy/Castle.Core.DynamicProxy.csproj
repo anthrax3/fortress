@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.5</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RootNamespace>Castle.DynamicProxy</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="CastleKey.snk" />

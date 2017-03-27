@@ -15,11 +15,11 @@
 
 using System;
 using System.Xml;
-using Castle.Core.Core.Resource;
-using Castle.Windsor.MicroKernel.SubSystems.Resource;
-using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
+using Castle.Core.Resource;
+using Castle.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	public class XmlProcessor
 	{

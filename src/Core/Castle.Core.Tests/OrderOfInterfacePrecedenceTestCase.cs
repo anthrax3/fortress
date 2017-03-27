@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Mixins;
+using Castle.DynamicProxy;
 using Xunit;
 
 

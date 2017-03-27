@@ -19,11 +19,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public sealed class ComponentModel : GraphNode
 	{

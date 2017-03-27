@@ -15,9 +15,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public sealed class Dependency
 	{

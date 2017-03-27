@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public sealed class StringObjectDictionaryAdapter : IDictionary<string, object>
 	{

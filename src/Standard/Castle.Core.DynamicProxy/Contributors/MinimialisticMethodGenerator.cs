@@ -13,11 +13,11 @@
 // limitations under the License.
 
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class MinimialisticMethodGenerator : MethodGenerator
 	{

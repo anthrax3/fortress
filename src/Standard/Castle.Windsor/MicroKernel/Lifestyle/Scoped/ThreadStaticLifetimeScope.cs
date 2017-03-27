@@ -13,11 +13,11 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
-using Castle.Windsor.Windsor;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.Windsor;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
+namespace Castle.MicroKernel.Lifestyle.Scoped
 {
 	public class ThreadStaticLifetimeScope : ILifetimeScope
 	{

@@ -14,9 +14,9 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class MetaEvent : MetaTypeElement, IEquatable<MetaEvent>
 	{

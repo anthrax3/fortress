@@ -1,5 +1,5 @@
 using System;
-using Castle.Core.Core.Logging;
+using Castle.Core.Logging;
 
 namespace Castle.Core.Tests
 {

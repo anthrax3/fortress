@@ -1,4 +1,4 @@
-using Castle.Windsor.MicroKernel.Context;
+using Castle.MicroKernel.Context;
 
 namespace Castle.Windsor.Tests.MicroKernel
 {

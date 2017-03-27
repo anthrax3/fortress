@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Collections;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public delegate ComponentReleasingDelegate DynamicParametersWithContextResolveDelegate(
 		IKernel kernel, CreationContext creationContext, IDictionary parameters);

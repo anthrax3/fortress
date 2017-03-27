@@ -16,13 +16,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.Resolvers
+namespace Castle.MicroKernel.Resolvers
 {
 	public class DefaultDependencyResolver : IDependencyResolver
 	{

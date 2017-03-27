@@ -17,15 +17,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	public class DefaultComponentInstaller : IComponentsInstaller
 	{

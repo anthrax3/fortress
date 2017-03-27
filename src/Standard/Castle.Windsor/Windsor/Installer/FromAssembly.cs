@@ -15,10 +15,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	public class FromAssembly
 	{

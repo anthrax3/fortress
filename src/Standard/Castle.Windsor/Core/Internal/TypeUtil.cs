@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public static class TypeUtil
 	{

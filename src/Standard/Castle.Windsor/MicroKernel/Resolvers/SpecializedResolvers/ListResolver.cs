@@ -15,11 +15,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
+namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 {
 	public class ListResolver : CollectionResolver
 	{

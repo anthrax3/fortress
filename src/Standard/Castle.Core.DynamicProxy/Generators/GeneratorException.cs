@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class GeneratorException : Exception
 	{

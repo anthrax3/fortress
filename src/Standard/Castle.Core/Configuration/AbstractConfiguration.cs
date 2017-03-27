@@ -15,7 +15,7 @@
 using System;
 using System.Globalization;
 
-namespace Castle.Core.Core.Configuration
+namespace Castle.Core.Configuration
 {
 	public abstract class AbstractConfiguration : IConfiguration
 	{

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests.Core.Tests.Internal

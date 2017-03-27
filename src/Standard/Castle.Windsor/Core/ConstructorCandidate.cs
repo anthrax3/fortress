@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class ConstructorCandidate : IComparable<ConstructorCandidate>
 	{

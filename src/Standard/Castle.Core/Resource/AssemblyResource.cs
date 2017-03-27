@@ -17,7 +17,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public class AssemblyResource : AbstractStreamResource
 	{

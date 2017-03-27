@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	public class CompositeInstaller : IWindsorInstaller
 	{

@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Windsor.Windsor.Installer;
+using Castle.Windsor.Installer;
 
 namespace Castle.Windsor.Tests.Installer
 {

@@ -17,12 +17,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public abstract class AbstractHandler : IHandler, IExposeDependencyInfo, IDisposable
 	{

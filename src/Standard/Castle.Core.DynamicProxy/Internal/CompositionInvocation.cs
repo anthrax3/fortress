@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy.Internal
+namespace Castle.DynamicProxy.Internal
 {
 	public abstract class CompositionInvocation : AbstractInvocation
 	{

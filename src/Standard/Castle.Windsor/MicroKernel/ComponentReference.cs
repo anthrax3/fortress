@@ -16,11 +16,11 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Core;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public class ComponentReference<T> : IReference<T>
 	{

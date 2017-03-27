@@ -14,7 +14,7 @@
 
 using System.Diagnostics;
 
-namespace Castle.Windsor.Windsor.Diagnostics.DebuggerViews
+namespace Castle.Windsor.Diagnostics.DebuggerViews
 {
 	public class MasterDetailsDebuggerViewItem
 	{

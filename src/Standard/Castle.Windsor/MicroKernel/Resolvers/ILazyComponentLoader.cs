@@ -14,9 +14,9 @@
 
 using System;
 using System.Collections;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.MicroKernel.Resolvers
+namespace Castle.MicroKernel.Resolvers
 {
 	public interface ILazyComponentLoader
 	{

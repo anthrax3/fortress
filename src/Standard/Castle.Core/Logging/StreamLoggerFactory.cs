@@ -14,7 +14,7 @@
 
 using System.IO;
 
-namespace Castle.Core.Core.Logging
+namespace Castle.Core.Logging
 {
 	public class StreamLoggerFactory : AbstractLoggerFactory
 	{

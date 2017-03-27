@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Diagnostics;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
 	public abstract class AbstractLifestyleManager : ILifestyleManager
 	{

@@ -14,10 +14,10 @@
 
 using System;
 using System.Collections;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Core;
+using Castle.MicroKernel.ModelBuilder;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public interface IComponentModelBuilder
 	{

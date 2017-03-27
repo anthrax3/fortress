@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	internal class WeakKeyComparer<TKey> : IEqualityComparer<object>
 		where TKey : class

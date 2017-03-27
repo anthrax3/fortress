@@ -16,11 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Naming
+namespace Castle.MicroKernel.SubSystems.Naming
 {
 	public class DefaultNamingSubSystem : AbstractSubSystem, INamingSubSystem
 	{

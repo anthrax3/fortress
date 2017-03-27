@@ -17,9 +17,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators;
 
-namespace Castle.Core.DynamicProxy.Internal
+namespace Castle.DynamicProxy.Internal
 {
 	public static class AttributeUtil
 	{

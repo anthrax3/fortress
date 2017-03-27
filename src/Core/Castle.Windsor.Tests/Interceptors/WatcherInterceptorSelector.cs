@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Core;
+using Castle.MicroKernel.Proxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {

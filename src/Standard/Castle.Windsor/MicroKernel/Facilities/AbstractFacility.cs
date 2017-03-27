@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.MicroKernel.Facilities
+namespace Castle.MicroKernel.Facilities
 {
 	public abstract class AbstractFacility : IFacility, IDisposable
 	{

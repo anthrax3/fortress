@@ -14,11 +14,10 @@
 
 using System;
 using System.Linq;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	public class TypedFactoryConfiguration
 	{

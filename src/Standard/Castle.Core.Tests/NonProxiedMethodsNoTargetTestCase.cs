@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

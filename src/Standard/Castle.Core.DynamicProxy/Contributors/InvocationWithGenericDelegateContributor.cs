@@ -15,13 +15,13 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Internal;
-using Castle.Core.DynamicProxy.Tokens;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Internal;
+using Castle.DynamicProxy.Tokens;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class InvocationWithGenericDelegateContributor : IInvocationCreationContributor
 	{

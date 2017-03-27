@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
+using Castle.MicroKernel;
+using Castle.Windsor.Diagnostics.DebuggerViews;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public interface IContainerDebuggerExtension
 	{

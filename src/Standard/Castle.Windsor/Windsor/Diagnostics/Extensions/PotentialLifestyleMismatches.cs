@@ -17,12 +17,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
-using Castle.Windsor.Windsor.Diagnostics.Helpers;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.Windsor.Diagnostics.DebuggerViews;
+using Castle.Windsor.Diagnostics.Helpers;
 
-namespace Castle.Windsor.Windsor.Diagnostics.Extensions
+namespace Castle.Windsor.Diagnostics.Extensions
 {
 	public class PotentialLifestyleMismatches : AbstractContainerDebuggerExtension
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public class ResourceException : Exception
 	{

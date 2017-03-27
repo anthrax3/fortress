@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.MicroKernel.Util
+namespace Castle.MicroKernel.Util
 {
 	public abstract class ReferenceExpressionUtil
 	{

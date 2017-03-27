@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
 	public class SingletonLifestyleManager : AbstractLifestyleManager, IContextLifestyleManager
 	{

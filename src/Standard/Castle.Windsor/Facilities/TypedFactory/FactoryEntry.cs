@@ -16,7 +16,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class FactoryEntry

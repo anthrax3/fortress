@@ -15,11 +15,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.ModelBuilder.Inspectors;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.MicroKernel.ModelBuilder.Inspectors;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder
+namespace Castle.MicroKernel.ModelBuilder
 {
 	public class DefaultComponentModelBuilder : IComponentModelBuilder
 	{

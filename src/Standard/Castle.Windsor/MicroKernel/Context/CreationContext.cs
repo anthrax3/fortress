@@ -19,13 +19,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Core;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Releasers;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Releasers;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.Context
+namespace Castle.MicroKernel.Context
 {
 	public class CreationContext : ISubDependencyResolver
 	{

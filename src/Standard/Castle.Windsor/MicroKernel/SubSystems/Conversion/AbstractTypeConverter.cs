@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public abstract class AbstractTypeConverter : ITypeConverter
 	{

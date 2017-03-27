@@ -15,11 +15,11 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	[Singleton]
 	public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector

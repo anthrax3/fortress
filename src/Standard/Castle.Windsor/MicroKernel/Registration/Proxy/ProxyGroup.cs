@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 
-namespace Castle.Windsor.MicroKernel.Registration.Proxy
+namespace Castle.MicroKernel.Registration.Proxy
 {
 	public class ProxyGroup<S> : RegistrationGroup<S>
 		where S : class

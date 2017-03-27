@@ -15,9 +15,9 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using Castle.Core.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class ComponentDependencyRegistrationExtensions

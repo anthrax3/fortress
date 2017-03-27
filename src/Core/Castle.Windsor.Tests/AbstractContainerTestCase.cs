@@ -14,8 +14,7 @@
 
 using System;
 using System.Reflection;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor;
+using Castle.MicroKernel;
 using Xunit;
 
 namespace Castle.Windsor.Tests

@@ -14,11 +14,11 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
+namespace Castle.MicroKernel.Lifestyle.Pool
 {
 	public class DefaultPool : IPool, IDisposable
 	{

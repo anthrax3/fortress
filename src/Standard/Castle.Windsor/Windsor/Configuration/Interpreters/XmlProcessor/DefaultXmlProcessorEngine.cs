@@ -17,12 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Castle.Core.Core.Resource;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.SubSystems.Resource;
-using Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
+using Castle.Core.Internal;
+using Castle.Core.Resource;
+using Castle.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	public class DefaultXmlProcessorEngine : IXmlProcessorEngine
 	{

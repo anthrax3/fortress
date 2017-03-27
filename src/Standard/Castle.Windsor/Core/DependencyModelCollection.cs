@@ -16,9 +16,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	[DebuggerDisplay("Count = {dependencies.Count}")]
 	public class DependencyModelCollection : IMutableCollection<DependencyModel>

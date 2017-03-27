@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public interface IDuplicatedDependenciesDiagnostic : IDiagnostic<Pair<IHandler, DependencyDuplicate[]>[]>
 	{

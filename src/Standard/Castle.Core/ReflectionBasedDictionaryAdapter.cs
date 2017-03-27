@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public sealed class ReflectionBasedDictionaryAdapter : IDictionary
 	{

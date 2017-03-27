@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class TypeElementCollection<TElement> : ICollection<TElement>
 		where TElement : MetaTypeElement, IEquatable<TElement>

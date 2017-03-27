@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
     public class ProxyUtil
     {

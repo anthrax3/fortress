@@ -1,4 +1,4 @@
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	public delegate string EnvironmentDelegate();
 }

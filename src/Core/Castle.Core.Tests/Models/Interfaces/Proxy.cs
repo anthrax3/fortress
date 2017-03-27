@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Core.Tests.GenInterfaces
 {

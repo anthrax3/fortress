@@ -16,7 +16,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public abstract class AbstractInvocation : IInvocation
 	{

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Facilities.TypedFactory;
+using Castle.Facilities.TypedFactory;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory.Selectors
 {

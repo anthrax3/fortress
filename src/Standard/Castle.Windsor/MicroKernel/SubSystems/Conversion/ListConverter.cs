@@ -16,9 +16,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public class ListConverter : AbstractTypeConverter
 	{

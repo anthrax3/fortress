@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.Core.Configuration
+namespace Castle.Core.Configuration
 {
 	public interface IConfiguration
 	{

@@ -16,12 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Compatibility;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class PropertiesDependenciesModelInspector : IContributeComponentModelConstruction
 	{

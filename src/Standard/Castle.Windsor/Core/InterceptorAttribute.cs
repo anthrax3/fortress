@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
 	public class InterceptorAttribute : Attribute

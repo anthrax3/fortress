@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy.Tokens
+namespace Castle.DynamicProxy.Tokens
 {
 	public static class MethodBaseMethods
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class InvalidProxyConstructorArgumentsException : ArgumentException
 	{

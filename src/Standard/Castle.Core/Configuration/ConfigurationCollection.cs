@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Core.Core.Configuration
+namespace Castle.Core.Configuration
 {
 	public class ConfigurationCollection : List<IConfiguration>
 	{

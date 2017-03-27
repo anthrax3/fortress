@@ -16,7 +16,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public interface IResource : IDisposable
 	{

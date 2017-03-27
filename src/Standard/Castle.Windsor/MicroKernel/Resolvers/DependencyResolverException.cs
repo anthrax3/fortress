@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.Resolvers
+namespace Castle.MicroKernel.Resolvers
 {
 	public class DependencyResolverException : Exception
 	{

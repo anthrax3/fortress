@@ -14,11 +14,11 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class MixinInspector : IContributeComponentModelConstruction
 	{

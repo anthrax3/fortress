@@ -17,27 +17,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Castle.Core.Core.Logging;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Lifestyle;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
-using Castle.Windsor.MicroKernel.ModelBuilder;
-using Castle.Windsor.MicroKernel.ModelBuilder.Inspectors;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Releasers;
-using Castle.Windsor.MicroKernel.Resolvers;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
-using Castle.Windsor.MicroKernel.SubSystems.Naming;
-using Castle.Windsor.MicroKernel.SubSystems.Resource;
-using Castle.Windsor.Windsor.Diagnostics;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.Core.Logging;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Lifestyle;
+using Castle.MicroKernel.Lifestyle.Scoped;
+using Castle.MicroKernel.ModelBuilder;
+using Castle.MicroKernel.ModelBuilder.Inspectors;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Releasers;
+using Castle.MicroKernel.Resolvers;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.MicroKernel.SubSystems.Conversion;
+using Castle.MicroKernel.SubSystems.Naming;
+using Castle.MicroKernel.SubSystems.Resource;
+using Castle.Windsor.Diagnostics;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	[DebuggerTypeProxy(typeof(KernelDebuggerProxy))]
 	public partial class DefaultKernel : IKernel, IKernelEvents, IKernelInternal

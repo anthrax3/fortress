@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	[DebuggerStepThrough]
 	[DebuggerNonUserCode]

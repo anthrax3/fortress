@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Castle.Windsor.Compatibility
+namespace Castle.Compatibility
 {
 	public static class EnumerableExtensions
 	{

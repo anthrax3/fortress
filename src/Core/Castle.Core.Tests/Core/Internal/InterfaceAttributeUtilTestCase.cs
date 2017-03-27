@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 using Xunit;
 
 

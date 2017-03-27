@@ -13,11 +13,11 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{

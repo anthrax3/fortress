@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class InterfaceProxyWithTargetInterfaceTargetContributor : InterfaceProxyTargetContributor
 	{

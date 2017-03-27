@@ -16,10 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public abstract class MethodMetaInspector : IContributeComponentModelConstruction
 	{

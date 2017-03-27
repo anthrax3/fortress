@@ -16,7 +16,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

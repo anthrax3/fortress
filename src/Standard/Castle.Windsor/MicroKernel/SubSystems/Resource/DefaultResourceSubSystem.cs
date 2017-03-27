@@ -14,9 +14,9 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Resource;
+using Castle.Core.Resource;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Resource
+namespace Castle.MicroKernel.SubSystems.Resource
 {
 	public class DefaultResourceSubSystem : AbstractSubSystem, IResourceSubSystem
 	{

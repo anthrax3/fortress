@@ -15,7 +15,7 @@
 
 using System;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	public class XmlProcessorException : Exception
 	{

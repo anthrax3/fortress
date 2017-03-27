@@ -18,14 +18,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.ModelBuilder;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public class DefaultGenericHandler : AbstractHandler
 	{

@@ -16,7 +16,7 @@
 using System;
 using System.Collections;
 
-namespace Castle.Windsor.MicroKernel.Internal
+namespace Castle.MicroKernel.Internal
 {
 	public class LazyEx<T> : Lazy<T>, IDisposable
 	{

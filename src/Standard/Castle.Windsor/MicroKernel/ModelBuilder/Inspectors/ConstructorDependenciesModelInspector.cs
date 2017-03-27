@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Compatibility;
-using Castle.Windsor.Core;
+using Castle.Compatibility;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class ConstructorDependenciesModelInspector : IContributeComponentModelConstruction
 	{

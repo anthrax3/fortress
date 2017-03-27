@@ -15,7 +15,7 @@
 using System;
 using System.Globalization;
 
-namespace Castle.Core.Core.Logging
+namespace Castle.Core.Logging
 {
 	public abstract class LevelFilteredLogger : ILogger
 	{

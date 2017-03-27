@@ -16,9 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Castle.Windsor.Compatibility;
+using Castle.Compatibility;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
+namespace Castle.MicroKernel.Lifestyle.Scoped
 {
 	public class ScopeCache : IScopeCache, IDisposable
 	{

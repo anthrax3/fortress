@@ -14,10 +14,10 @@
 
 using System;
 using System.Linq;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.ComponentsWithAttribute;
 using NUnit.Framework;

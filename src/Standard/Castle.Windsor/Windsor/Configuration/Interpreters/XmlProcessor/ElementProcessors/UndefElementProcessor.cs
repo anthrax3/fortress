@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class UndefElementProcessor : DefineElementProcessor
 	{

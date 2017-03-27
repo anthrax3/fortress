@@ -16,7 +16,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
     // This is not yet complete
     public class PerWebRequestLifestyleMiddleware

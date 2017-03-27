@@ -13,13 +13,12 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
+using Castle.Windsor.Diagnostics;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using Castle.Windsor.Windsor;
-using Castle.Windsor.Windsor.Diagnostics;
 using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics

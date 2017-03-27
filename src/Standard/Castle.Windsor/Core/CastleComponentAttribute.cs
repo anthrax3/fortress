@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 	public class CastleComponentAttribute : LifestyleAttribute

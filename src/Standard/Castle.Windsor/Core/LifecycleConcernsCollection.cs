@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class LifecycleConcernsCollection
 	{

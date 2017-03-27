@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics.Inspectors
+namespace Castle.Windsor.Diagnostics.Inspectors
 {
 	public interface ITrackedObjectsInspector : IDiagnosticsSource<IEnumerable<KeyValuePair<IHandler, object[]>>>
 	{

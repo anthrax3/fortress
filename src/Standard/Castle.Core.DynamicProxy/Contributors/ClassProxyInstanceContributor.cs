@@ -15,11 +15,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class ClassProxyInstanceContributor : ProxyInstanceContributor
 	{

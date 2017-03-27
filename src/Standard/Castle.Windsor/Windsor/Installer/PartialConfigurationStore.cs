@@ -13,12 +13,12 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Resource;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Core.Configuration;
+using Castle.Core.Resource;
+using Castle.MicroKernel;
+using Castle.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	internal class PartialConfigurationStore : IConfigurationStore, IDisposable
 	{

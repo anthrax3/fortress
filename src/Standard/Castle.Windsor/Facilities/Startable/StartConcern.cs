@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System.Reflection;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.Facilities.Startable
+namespace Castle.Facilities.Startable
 {
 	public class StartConcern : ICommissionConcern
 	{

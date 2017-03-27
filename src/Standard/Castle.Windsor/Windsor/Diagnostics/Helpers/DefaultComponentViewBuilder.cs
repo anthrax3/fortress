@@ -14,12 +14,12 @@
 
 using System.Collections.Generic;
 using System.Text;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
+using Castle.Windsor.Diagnostics.DebuggerViews;
 
-namespace Castle.Windsor.Windsor.Diagnostics.Helpers
+namespace Castle.Windsor.Diagnostics.Helpers
 {
 	public class DefaultComponentViewBuilder : IComponentDebuggerExtension
 	{

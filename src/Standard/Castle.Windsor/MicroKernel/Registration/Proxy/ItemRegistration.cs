@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.Registration.Proxy
+namespace Castle.MicroKernel.Registration.Proxy
 {
 	public class ItemRegistration<TItem>
 	{

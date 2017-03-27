@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.Core.Logging
+namespace Castle.Core.Logging
 {
 	public class NullLogger : IExtendedLogger
 	{

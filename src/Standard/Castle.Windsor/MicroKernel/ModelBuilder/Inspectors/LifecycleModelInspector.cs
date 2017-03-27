@@ -14,11 +14,11 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.LifecycleConcerns;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.LifecycleConcerns;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class LifecycleModelInspector : IContributeComponentModelConstruction
 	{

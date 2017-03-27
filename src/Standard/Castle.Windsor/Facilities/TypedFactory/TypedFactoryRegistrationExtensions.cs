@@ -17,13 +17,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Facilities.TypedFactory.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Facilities.TypedFactory.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class TypedFactoryRegistrationExtensions

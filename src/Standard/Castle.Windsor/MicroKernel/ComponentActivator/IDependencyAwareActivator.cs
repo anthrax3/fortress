@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ComponentActivator
+namespace Castle.MicroKernel.ComponentActivator
 {
 	public interface IDependencyAwareActivator
 	{

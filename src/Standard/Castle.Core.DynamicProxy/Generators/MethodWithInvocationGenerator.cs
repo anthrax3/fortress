@@ -13,17 +13,15 @@
 // limitations under the License.
 
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Xml.Serialization;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy.Contributors;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Tokens;
+using Castle.Core.Internal;
+using Castle.DynamicProxy.Contributors;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Tokens;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class MethodWithInvocationGenerator : MethodGenerator
 	{

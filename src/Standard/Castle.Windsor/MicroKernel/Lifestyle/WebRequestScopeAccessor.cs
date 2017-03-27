@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Lifestyle.Scoped;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
     // How you get round this I dont know yet
 	public class WebRequestScopeAccessor : IScopeAccessor

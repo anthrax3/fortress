@@ -17,7 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Core.Tests.Interceptors
 {

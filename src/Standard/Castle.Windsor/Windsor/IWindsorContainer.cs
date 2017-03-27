@@ -14,10 +14,10 @@
 
 using System;
 using System.Collections;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.Windsor
+namespace Castle.Windsor
 {
 	public interface IWindsorContainer : IDisposable
 	{

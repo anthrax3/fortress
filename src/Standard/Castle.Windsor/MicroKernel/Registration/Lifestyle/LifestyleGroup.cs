@@ -13,12 +13,12 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
-using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Lifestyle.Scoped;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 
-namespace Castle.Windsor.MicroKernel.Registration.Lifestyle
+namespace Castle.MicroKernel.Registration.Lifestyle
 {
 	public class LifestyleGroup<TService> : RegistrationGroup<TService>
 		where TService : class

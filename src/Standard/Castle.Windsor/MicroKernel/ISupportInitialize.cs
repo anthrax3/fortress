@@ -1,4 +1,4 @@
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
     // This should come out of the component model but has not been ported to core yet
     public interface ISupportInitialize

@@ -14,10 +14,10 @@
 
 using System;
 using System.Reflection;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class DependencyModel
 	{

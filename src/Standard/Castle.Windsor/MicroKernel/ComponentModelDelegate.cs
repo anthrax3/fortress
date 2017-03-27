@@ -1,6 +1,6 @@
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public delegate void ComponentModelDelegate(ComponentModel model);
 }

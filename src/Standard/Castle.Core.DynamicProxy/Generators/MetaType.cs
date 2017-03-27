@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class MetaType
 	{

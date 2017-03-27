@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
+using Castle.Core;
 using Xunit;
 
 namespace Castle.Windsor.Tests

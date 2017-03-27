@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public abstract class FromDescriptor : IRegistration
 	{

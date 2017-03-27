@@ -1,6 +1,6 @@
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	public class AttributeKeyDescriptor<S>
 		where S : class

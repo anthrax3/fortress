@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public class ComponentLifecycleExtension : IResolveExtension
 	{

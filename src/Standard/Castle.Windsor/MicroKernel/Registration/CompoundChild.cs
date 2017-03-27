@@ -1,6 +1,6 @@
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public class CompoundChild : Node
 	{

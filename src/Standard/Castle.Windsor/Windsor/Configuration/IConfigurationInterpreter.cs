@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Resource;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Core.Resource;
+using Castle.MicroKernel;
+using Castle.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Windsor.Configuration
+namespace Castle.Windsor.Configuration
 {
 	public interface IConfigurationInterpreter
 	{

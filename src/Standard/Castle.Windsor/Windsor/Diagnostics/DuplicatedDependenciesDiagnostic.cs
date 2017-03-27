@@ -16,12 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Castle.Core.Core;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public class DuplicatedDependenciesDiagnostic : IDuplicatedDependenciesDiagnostic
 	{

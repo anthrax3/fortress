@@ -14,7 +14,7 @@
 
 using System.Threading;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	internal class SlimUpgradeableReadLockHolder : IUpgradeableLockHolder
 	{

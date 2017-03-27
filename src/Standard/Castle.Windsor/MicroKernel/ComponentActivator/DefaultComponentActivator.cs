@@ -14,12 +14,12 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.ComponentActivator
+namespace Castle.MicroKernel.ComponentActivator
 {
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{

@@ -14,18 +14,18 @@
 
 using System;
 using System.ComponentModel;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.Facilities.TypedFactory.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Facilities;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Resolvers;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
-using Castle.Windsor.MicroKernel.Util;
-using Component = Castle.Windsor.MicroKernel.Registration.Component;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.Facilities.TypedFactory.Internal;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Facilities;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Resolvers;
+using Castle.MicroKernel.SubSystems.Conversion;
+using Castle.MicroKernel.Util;
+using Component = Castle.MicroKernel.Registration.Component;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	public class TypedFactoryFacility : AbstractFacility
 	{

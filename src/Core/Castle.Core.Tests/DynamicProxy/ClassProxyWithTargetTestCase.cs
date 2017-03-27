@@ -17,10 +17,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Mixins;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators;
 using Xunit;
 
 

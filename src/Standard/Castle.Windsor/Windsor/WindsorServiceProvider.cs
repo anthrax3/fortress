@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor
+namespace Castle.Windsor
 {
 	public class WindsorServiceProvider : IServiceProviderEx
 	{

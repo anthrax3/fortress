@@ -15,11 +15,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.DynamicProxy.Tests.Interfaces;
 using Castle.Core.Tests.GenInterfaces;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.Interfaces;
+using Castle.DynamicProxy.Generators;
 using Xunit;
 
 

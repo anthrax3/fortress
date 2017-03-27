@@ -14,9 +14,9 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.Interceptors;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators;
 using Xunit;
 
 

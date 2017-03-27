@@ -14,13 +14,13 @@
 
 using System;
 using System.Linq;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Internal;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Internal;
+using Castle.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public class UsingContainerAsServiceLocatorDiagnostic : IUsingContainerAsServiceLocatorDiagnostic
 	{

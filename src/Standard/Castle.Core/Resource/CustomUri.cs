@@ -15,7 +15,7 @@
 using System;
 using System.Text;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public sealed class CustomUri
 	{

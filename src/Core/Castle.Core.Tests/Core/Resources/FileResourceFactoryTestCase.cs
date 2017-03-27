@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System.IO;
-using Castle.Core.Core.Resource;
+using Castle.Core.Resource;
 using Xunit;
 
 

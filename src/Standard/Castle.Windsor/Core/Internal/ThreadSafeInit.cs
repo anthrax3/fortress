@@ -14,7 +14,7 @@
 
 using System.Threading;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public sealed class ThreadSafeInit
 	{

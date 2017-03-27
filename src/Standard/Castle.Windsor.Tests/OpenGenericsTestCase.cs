@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections.ObjectModel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;

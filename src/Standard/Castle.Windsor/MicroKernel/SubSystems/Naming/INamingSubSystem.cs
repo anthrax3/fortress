@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Naming
+namespace Castle.MicroKernel.SubSystems.Naming
 {
 	public interface INamingSubSystem : ISubSystem
 	{

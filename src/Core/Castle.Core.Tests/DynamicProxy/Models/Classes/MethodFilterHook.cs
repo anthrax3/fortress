@@ -16,7 +16,7 @@
 using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Core.Tests.DynamicProxy.Tests.Serialization
 {

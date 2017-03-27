@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Xunit;
 

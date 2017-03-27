@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Castle.Windsor.MicroKernel.Util
+namespace Castle.MicroKernel.Util
 {
 	public class SimpleTypeEqualityComparer : IEqualityComparer<Type>
 	{

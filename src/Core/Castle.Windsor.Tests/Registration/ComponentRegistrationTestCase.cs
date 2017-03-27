@@ -15,13 +15,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Configuration;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.DynamicProxy;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Config.Components;
@@ -318,12 +318,12 @@ namespace Castle.Windsor.Tests.Registration
 			Kernel.Register(
 				Component.For<ClassWithComplexParameter>()
 					.Configuration(
-						Castle.Windsor.MicroKernel.Registration.Child.ForName("parameters").Eq(
+						Castle.MicroKernel.Registration.Child.ForName("parameters").Eq(
 							Attrib.ForName("notUsed").Eq(true),
-							Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparam").Eq(
-								Castle.Windsor.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
-									Castle.Windsor.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
+							Castle.MicroKernel.Registration.Child.ForName("complexparam").Eq(
+								Castle.MicroKernel.Registration.Child.ForName("complexparametertype").Eq(
+									Castle.MicroKernel.Registration.Child.ForName("mandatoryvalue").Eq("value1"),
+									Castle.MicroKernel.Registration.Child.ForName("optionalvalue").Eq("value2")
 								)
 							)
 						)

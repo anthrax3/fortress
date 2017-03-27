@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 using Xunit;
 
 

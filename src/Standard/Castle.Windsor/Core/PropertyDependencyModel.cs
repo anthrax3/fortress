@@ -14,7 +14,7 @@
 
 using System.Reflection;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class PropertyDependencyModel : DependencyModel
 	{

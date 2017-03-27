@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Linq;
 using System.Threading;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Lifestyle.Scoped;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
 	public class ThreadScopeAccessor : IScopeAccessor
 	{

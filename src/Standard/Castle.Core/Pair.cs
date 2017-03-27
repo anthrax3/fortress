@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public class Pair<TFirst, TSecond> : IEquatable<Pair<TFirst, TSecond>>
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers
+namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 {
 	public class ArrayResolver : CollectionResolver
 	{

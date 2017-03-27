@@ -13,14 +13,14 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class InterceptorInspector : IContributeComponentModelConstruction
 	{

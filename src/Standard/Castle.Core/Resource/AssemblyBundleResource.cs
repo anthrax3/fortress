@@ -19,7 +19,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public class AssemblyBundleResource : AbstractResource
 	{

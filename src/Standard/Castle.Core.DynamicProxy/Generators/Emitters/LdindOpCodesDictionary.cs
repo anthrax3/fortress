@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.DynamicProxy.Generators.Emitters
 {
 	public sealed class LdindOpCodesDictionary : Dictionary<Type, OpCode>
 	{

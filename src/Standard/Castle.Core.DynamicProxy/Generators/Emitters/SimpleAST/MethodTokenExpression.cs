@@ -15,9 +15,9 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy.Tokens;
+using Castle.DynamicProxy.Tokens;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
+namespace Castle.DynamicProxy.Generators.Emitters.SimpleAST
 {
 	public class MethodTokenExpression : Expression
 	{

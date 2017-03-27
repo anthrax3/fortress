@@ -16,9 +16,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Core.Core.Configuration;
+using Castle.Core.Configuration;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	[DebuggerDisplay("Count = {dictionary.Count}")]
 	public class ParameterModelCollection : IEnumerable<ParameterModel>

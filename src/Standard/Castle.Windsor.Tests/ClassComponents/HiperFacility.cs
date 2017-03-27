@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.MicroKernel;
+using Castle.Core.Configuration;
+using Castle.MicroKernel;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.ClassComponents

@@ -15,13 +15,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Interceptor;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Facilities;
+using Castle.Core;
+using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Facilities;
 
-namespace Castle.Windsor.Facilities.TypedFactory.Internal
+namespace Castle.Facilities.TypedFactory.Internal
 {
 	[Transient]
 	public class TypedFactoryInterceptor : IInterceptor, IOnBehalfAware, IDisposable
