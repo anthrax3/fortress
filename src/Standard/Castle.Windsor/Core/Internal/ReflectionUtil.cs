@@ -22,10 +22,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Compatibility;
+using Castle.Compatibility;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public static class ReflectionUtil
 	{

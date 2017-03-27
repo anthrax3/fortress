@@ -14,9 +14,9 @@
 
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.DynamicProxy.Tests.Classes;
 using Castle.Core.Tests.Interceptors;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

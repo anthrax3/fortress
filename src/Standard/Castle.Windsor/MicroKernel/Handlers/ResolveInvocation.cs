@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public class ResolveInvocation
 	{

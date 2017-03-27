@@ -14,10 +14,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Core;
+using Castle.MicroKernel.Proxy;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	public class ProxyMixInsDescriptor : IComponentModelDescriptor
 	{

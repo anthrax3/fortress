@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class ConfigurationParametersInspector : IContributeComponentModelConstruction
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Delegate)]
 	public class FactoryAttribute : Attribute

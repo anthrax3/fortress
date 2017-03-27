@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class CacheKey
 	{

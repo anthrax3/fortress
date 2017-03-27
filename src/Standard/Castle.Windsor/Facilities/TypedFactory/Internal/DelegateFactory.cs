@@ -16,12 +16,12 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.Facilities.TypedFactory.Internal
+namespace Castle.Facilities.TypedFactory.Internal
 {
 	[Singleton]
 	public class DelegateFactory : ILazyComponentLoader

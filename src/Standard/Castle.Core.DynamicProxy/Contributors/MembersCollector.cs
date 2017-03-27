@@ -16,11 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Internal;
 using Castle.Core.Logging;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public abstract class MembersCollector
 	{

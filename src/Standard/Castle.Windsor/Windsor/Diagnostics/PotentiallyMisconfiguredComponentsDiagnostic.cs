@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public class PotentiallyMisconfiguredComponentsDiagnostic : IPotentiallyMisconfiguredComponentsDiagnostic
 	{

@@ -14,8 +14,8 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Internal;
 using Xunit;
 
 

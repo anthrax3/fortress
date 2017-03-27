@@ -14,8 +14,8 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.MicroKernel;
 
 namespace Castle.Windsor.Tests.Lifestyle
 {

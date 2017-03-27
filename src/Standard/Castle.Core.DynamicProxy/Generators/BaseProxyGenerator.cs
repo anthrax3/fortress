@@ -17,15 +17,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Contributors;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Internal;
-using Castle.Core.DynamicProxy.Extensions;
 using Castle.Core.Logging;
+using Castle.DynamicProxy.Contributors;
+using Castle.DynamicProxy.Extensions;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public abstract class BaseProxyGenerator
 	{

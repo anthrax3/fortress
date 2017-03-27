@@ -1,7 +1,7 @@
-using Castle.Windsor.Windsor;
+using Castle.Windsor;
 using Microsoft.AspNetCore.Builder;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
     public static class PerWebRequestLifestyleMiddlewareExtensions
     {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests

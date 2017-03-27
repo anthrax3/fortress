@@ -1,4 +1,4 @@
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public abstract class Child
 	{

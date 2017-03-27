@@ -16,11 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 
-namespace Castle.Windsor.Windsor.Installer
+namespace Castle.Windsor.Installer
 {
 	public class AssemblyInstaller : IWindsorInstaller
 	{

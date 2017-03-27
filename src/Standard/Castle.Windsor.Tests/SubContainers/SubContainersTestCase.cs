@@ -14,11 +14,11 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;

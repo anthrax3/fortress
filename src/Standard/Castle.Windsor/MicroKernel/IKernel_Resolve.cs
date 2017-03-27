@@ -15,7 +15,7 @@
 using System;
 using System.Collections;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public partial interface IKernel : IKernelEvents, IDisposable
 	{

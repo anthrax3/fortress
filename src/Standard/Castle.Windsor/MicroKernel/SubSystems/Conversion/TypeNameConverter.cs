@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public class TypeNameConverter : AbstractTypeConverter
 	{

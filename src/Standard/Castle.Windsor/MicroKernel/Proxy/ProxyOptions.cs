@@ -15,10 +15,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
+using Castle.Core;
+using Castle.DynamicProxy;
 
-namespace Castle.Windsor.MicroKernel.Proxy
+namespace Castle.MicroKernel.Proxy
 {
 	public class ProxyOptions
 	{

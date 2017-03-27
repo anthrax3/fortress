@@ -15,9 +15,9 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.DynamicProxy.Generators.Emitters
 {
 	public abstract class ArgumentsUtil
 	{

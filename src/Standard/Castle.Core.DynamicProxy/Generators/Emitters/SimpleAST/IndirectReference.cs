@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
+namespace Castle.DynamicProxy.Generators.Emitters.SimpleAST
 {
 	[DebuggerDisplay("&{OwnerReference}")]
 	public class IndirectReference : TypeReference

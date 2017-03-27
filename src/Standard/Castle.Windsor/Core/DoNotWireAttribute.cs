@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	[AttributeUsage(AttributeTargets.Property)]
 	public sealed class DoNotWireAttribute : Attribute

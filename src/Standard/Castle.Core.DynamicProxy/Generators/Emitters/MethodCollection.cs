@@ -14,7 +14,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.DynamicProxy.Generators.Emitters
 {
 	public class MethodCollection : Collection<MethodEmitter>
 	{

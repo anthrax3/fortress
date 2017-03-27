@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ModelBuilder;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ModelBuilder;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;
 

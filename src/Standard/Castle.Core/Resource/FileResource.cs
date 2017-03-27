@@ -16,7 +16,7 @@ using System;
 using System.Globalization;
 using System.IO;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public class FileResource : AbstractStreamResource
 	{

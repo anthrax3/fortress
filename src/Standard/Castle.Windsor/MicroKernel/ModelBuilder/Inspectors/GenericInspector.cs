@@ -14,9 +14,9 @@
 
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class GenericInspector : IContributeComponentModelConstruction
 	{

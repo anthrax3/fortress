@@ -15,7 +15,7 @@
 using System;
 using System.Reflection.Emit;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
+namespace Castle.DynamicProxy.Generators.Emitters.SimpleAST
 {
 	public class NullCoalescingOperatorExpression : Expression
 	{

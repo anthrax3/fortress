@@ -15,10 +15,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Core;
+using Castle.MicroKernel.Handlers;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public partial class DefaultKernel
 	{

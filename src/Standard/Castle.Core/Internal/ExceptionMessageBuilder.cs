@@ -13,11 +13,9 @@
 // limitations under the License.
 
 using System;
-using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	public static class ExceptionMessageBuilder
 	{

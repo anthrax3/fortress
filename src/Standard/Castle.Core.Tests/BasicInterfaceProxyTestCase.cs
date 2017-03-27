@@ -15,12 +15,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.BugsReported;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

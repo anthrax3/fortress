@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ComponentActivator
+namespace Castle.MicroKernel.ComponentActivator
 {
 	public class NoResolvableConstructorFoundException : ComponentActivatorException
 	{

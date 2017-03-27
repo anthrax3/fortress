@@ -17,10 +17,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public class BasedOnDescriptor : IRegistration
 	{

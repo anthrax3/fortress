@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public delegate MethodEmitter OverrideMethodDelegate(
 		string name, MethodAttributes attributes, MethodInfo methodToOverride);

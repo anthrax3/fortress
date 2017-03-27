@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Core.Tests
 {

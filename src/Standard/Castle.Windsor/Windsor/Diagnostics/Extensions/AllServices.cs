@@ -15,11 +15,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
+using Castle.Core.Internal;
+using Castle.MicroKernel;
+using Castle.Windsor.Diagnostics.DebuggerViews;
 
-namespace Castle.Windsor.Windsor.Diagnostics.Extensions
+namespace Castle.Windsor.Diagnostics.Extensions
 {
 	public class AllServices : AbstractContainerDebuggerExtension
 	{

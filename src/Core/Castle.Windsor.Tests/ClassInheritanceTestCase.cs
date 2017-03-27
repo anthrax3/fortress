@@ -14,8 +14,8 @@
 
 using System;
 using System.Linq;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;

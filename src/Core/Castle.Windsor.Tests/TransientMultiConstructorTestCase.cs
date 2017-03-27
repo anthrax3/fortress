@@ -14,8 +14,8 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Xunit;
 
 namespace Castle.Windsor.Tests

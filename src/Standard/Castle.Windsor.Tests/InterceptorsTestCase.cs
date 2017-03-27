@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using System.Threading;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using Castle.Windsor.Windsor;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests

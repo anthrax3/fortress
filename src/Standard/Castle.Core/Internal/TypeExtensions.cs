@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	public static class TypeExtensions
 	{

@@ -16,10 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class InterfaceProxyTargetContributor : CompositeTypeContributor
 	{

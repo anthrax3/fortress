@@ -15,7 +15,7 @@
 using System;
 using Castle.Core.Logging;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public interface IProxyGenerator
 	{

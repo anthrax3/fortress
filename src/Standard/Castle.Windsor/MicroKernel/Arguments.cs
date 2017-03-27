@@ -15,10 +15,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public class Arguments : IDictionary
 	{

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	public class ServicesDescriptor : IComponentModelDescriptor
 	{

@@ -14,9 +14,9 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.Handlers
+namespace Castle.MicroKernel.Handlers
 {
 	public static class HandlerExtensionsUtil
 	{

@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public class SegmentedList<T>
 	{

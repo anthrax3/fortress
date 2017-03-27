@@ -14,9 +14,9 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Contributors;
+using Castle.DynamicProxy.Contributors;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class DelegateMembersCollector : MembersCollector
 	{

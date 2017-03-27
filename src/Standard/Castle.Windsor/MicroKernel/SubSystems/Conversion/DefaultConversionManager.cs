@@ -15,12 +15,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Castle.Core.Core;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public class DefaultConversionManager : AbstractSubSystem, IConversionManager, ITypeConverterContext
 	{

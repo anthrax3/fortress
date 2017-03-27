@@ -14,9 +14,9 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class ProxyGenerationOptions
 	{

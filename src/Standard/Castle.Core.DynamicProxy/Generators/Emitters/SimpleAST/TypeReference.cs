@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST
+namespace Castle.DynamicProxy.Generators.Emitters.SimpleAST
 {
 	public abstract class TypeReference : Reference
 	{

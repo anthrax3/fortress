@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	public delegate Stream StreamFactory();
 }

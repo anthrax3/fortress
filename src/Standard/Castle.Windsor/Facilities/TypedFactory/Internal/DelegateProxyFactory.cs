@@ -15,14 +15,14 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.Facilities.TypedFactory.Internal
+namespace Castle.Facilities.TypedFactory.Internal
 {
 	public class DelegateProxyFactory : IProxyFactoryExtension
 	{

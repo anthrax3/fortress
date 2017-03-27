@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
     // Taking this out for now, it was based on remoting
 	//[AttributeUsage(AttributeTargets.Class)]

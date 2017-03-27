@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
 
 namespace Castle.Windsor.Tests
 {

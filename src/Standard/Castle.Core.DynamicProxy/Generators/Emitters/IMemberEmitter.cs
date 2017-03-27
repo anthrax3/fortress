@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.DynamicProxy.Generators.Emitters
 {
 	public interface IMemberEmitter
 	{

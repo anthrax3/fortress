@@ -14,9 +14,9 @@
 
 using System;
 using System.Collections;
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Facilities.TypedFactory
+namespace Castle.Facilities.TypedFactory
 {
 	public class TypedFactoryComponentResolver
 	{

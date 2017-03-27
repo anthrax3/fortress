@@ -14,10 +14,10 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Extensions;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Extensions;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Tokens
+namespace Castle.DynamicProxy.Tokens
 {
 	public static class InvocationMethods
 	{

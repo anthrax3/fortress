@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
+using Castle.Core;
+using Castle.MicroKernel;
 
 namespace Castle.Windsor.Tests.Components
 {

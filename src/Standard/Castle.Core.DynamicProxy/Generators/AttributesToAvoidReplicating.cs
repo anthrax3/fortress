@@ -18,7 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public static class AttributesToAvoidReplicating
 	{

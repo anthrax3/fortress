@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Pool
+namespace Castle.MicroKernel.Lifestyle.Pool
 {
 	public class PoolException : Exception
 	{

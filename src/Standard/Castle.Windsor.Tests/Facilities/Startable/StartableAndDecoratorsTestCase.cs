@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Facilities.Startable

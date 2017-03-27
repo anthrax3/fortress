@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public class ComponentDebuggerExtension : IComponentDebuggerExtension
 	{

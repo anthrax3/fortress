@@ -15,11 +15,11 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Internal;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Internal;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.MicroKernel.Resolvers
+namespace Castle.MicroKernel.Resolvers
 {
 	[Singleton]
 	public class LazyOfTComponentLoader : ILazyComponentLoader

@@ -18,7 +18,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	public sealed class InterfaceAttributeUtil
 	{

@@ -15,9 +15,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder
+namespace Castle.MicroKernel.ModelBuilder
 {
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class ComponentModelDescriptorUtil

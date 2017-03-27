@@ -15,8 +15,8 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using NUnit.Framework;
 

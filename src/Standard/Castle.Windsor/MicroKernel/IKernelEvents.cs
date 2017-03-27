@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public interface IKernelEvents
 	{

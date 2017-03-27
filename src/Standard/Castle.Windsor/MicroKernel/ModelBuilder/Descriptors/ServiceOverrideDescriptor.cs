@@ -16,12 +16,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Util;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Util;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Descriptors
+namespace Castle.MicroKernel.ModelBuilder.Descriptors
 {
 	public class ServiceOverrideDescriptor : AbstractPropertyDescriptor
 	{

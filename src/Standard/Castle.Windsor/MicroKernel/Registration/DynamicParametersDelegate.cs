@@ -14,7 +14,7 @@
 
 using System.Collections;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public delegate void DynamicParametersDelegate(IKernel kernel, IDictionary parameters);
 }

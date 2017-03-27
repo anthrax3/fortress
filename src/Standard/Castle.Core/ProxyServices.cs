@@ -15,7 +15,7 @@
 using System;
 using System.Reflection;
 
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public static class ProxyServices
 	{

@@ -16,10 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
+using Castle.MicroKernel;
+using Castle.Windsor.Diagnostics.DebuggerViews;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	[DebuggerDisplay("")]
 	internal class KernelDebuggerProxy

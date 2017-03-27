@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.SubSystems.Conversion
+namespace Castle.MicroKernel.SubSystems.Conversion
 {
 	public class AttributeAwareConverter : AbstractTypeConverter
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public class ServiceOverride
 	{

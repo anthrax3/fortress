@@ -16,11 +16,11 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Handlers;
 
-namespace Castle.Windsor.MicroKernel.Internal
+namespace Castle.MicroKernel.Internal
 {
 	public class LazyServiceStrategy : IGenericServiceStrategy
 	{

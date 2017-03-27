@@ -16,12 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Contributors;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Internal;
-using Castle.Core.DynamicProxy.Serialization;
+using Castle.DynamicProxy.Contributors;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Internal;
+using Castle.DynamicProxy.Serialization;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
     public class ClassProxyGenerator : BaseProxyGenerator
     {

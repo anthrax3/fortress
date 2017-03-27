@@ -14,7 +14,7 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;
 

@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Lifestyle.Pool;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Lifestyle.Pool;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
 	public class PoolableLifestyleManager : AbstractLifestyleManager
 	{

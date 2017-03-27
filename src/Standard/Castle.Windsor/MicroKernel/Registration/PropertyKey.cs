@@ -1,7 +1,7 @@
 using System;
-using Castle.Windsor.Core;
+using Castle.Core;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public class PropertyKey
 	{

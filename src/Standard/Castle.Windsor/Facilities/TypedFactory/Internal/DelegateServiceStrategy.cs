@@ -13,11 +13,11 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Handlers;
 
-namespace Castle.Windsor.Facilities.TypedFactory.Internal
+namespace Castle.Facilities.TypedFactory.Internal
 {
 	public class DelegateServiceStrategy : IGenericServiceStrategy
 	{

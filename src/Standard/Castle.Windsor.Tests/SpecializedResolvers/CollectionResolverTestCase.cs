@@ -14,11 +14,10 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.SpecializedResolvers

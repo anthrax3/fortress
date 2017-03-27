@@ -14,10 +14,10 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class InterfaceMembersOnClassCollector : MembersCollector
 	{

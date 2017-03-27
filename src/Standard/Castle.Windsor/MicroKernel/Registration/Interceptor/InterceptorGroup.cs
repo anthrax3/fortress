@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
+using Castle.Core;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 
-namespace Castle.Windsor.MicroKernel.Registration.Interceptor
+namespace Castle.MicroKernel.Registration.Interceptor
 {
 	public class InterceptorGroup<S> : RegistrationGroup<S>
 		where S : class

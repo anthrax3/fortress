@@ -10,9 +10,8 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public class SimpleThreadSafeCollection<T>
 	{

@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
+namespace Castle.MicroKernel.Lifestyle.Scoped
 {
 	public delegate Burden ScopedInstanceActivationCallback(Action<Burden> afterCreated);
 }

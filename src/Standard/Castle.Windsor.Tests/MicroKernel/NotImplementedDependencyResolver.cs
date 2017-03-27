@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
 
 namespace Castle.Windsor.Tests.MicroKernel
 {

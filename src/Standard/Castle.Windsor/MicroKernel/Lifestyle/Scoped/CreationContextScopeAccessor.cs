@@ -15,10 +15,10 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
+namespace Castle.MicroKernel.Lifestyle.Scoped
 {
 	public class CreationContextScopeAccessor : IScopeAccessor
 	{

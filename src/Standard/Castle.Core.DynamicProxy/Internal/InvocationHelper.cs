@@ -16,10 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Internal;
+using Castle.DynamicProxy.Generators;
 
-namespace Castle.Core.DynamicProxy.Internal
+namespace Castle.DynamicProxy.Internal
 {
 	public static class InvocationHelper
 	{

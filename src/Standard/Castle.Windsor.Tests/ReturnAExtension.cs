@@ -1,5 +1,5 @@
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
 using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests

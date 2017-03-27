@@ -14,10 +14,10 @@
 
 using System;
 using System.Collections;
+using Castle.Core;
 using Castle.Core.Logging;
-using Castle.Windsor.Core;
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public interface IKernelInternal : IKernel
 	{

@@ -19,7 +19,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class CustomAttributeInfo : IEquatable<CustomAttributeInfo>
 	{

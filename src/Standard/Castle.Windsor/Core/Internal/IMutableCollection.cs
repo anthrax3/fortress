@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public interface IMutableCollection<T> : IEnumerable<T>
 	{

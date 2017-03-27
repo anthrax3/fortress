@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System.Threading;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 using Xunit;
 
 namespace Castle.Core.Tests.BugsReported

@@ -17,11 +17,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Internal;
 using Castle.Core.Logging;
+using Castle.DynamicProxy.Generators;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class ProxyGenerator : IProxyGenerator
 	{

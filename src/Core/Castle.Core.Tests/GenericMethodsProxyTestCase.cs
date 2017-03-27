@@ -14,11 +14,11 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.GenClasses;
 using Castle.Core.Tests.GenInterfaces;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
+using Castle.DynamicProxy;
 using Xunit;
 
 

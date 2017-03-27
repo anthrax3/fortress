@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	internal class ColorsSet
 	{

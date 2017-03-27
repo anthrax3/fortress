@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class MixinData
 	{

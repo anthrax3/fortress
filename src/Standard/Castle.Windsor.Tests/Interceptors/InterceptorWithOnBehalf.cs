@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Interceptor;
+using Castle.Core;
+using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {

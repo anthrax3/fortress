@@ -18,10 +18,10 @@ using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Internal;
+using Castle.DynamicProxy.Generators;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class ModuleScope
 	{

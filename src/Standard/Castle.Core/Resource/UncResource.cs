@@ -17,7 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 
-namespace Castle.Core.Core.Resource
+namespace Castle.Core.Resource
 {
 	[SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unc")]
 	public class UncResource : AbstractStreamResource

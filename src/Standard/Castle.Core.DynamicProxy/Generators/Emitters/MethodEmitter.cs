@@ -17,11 +17,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.DynamicProxy.Generators.Emitters
 {
 	[DebuggerDisplay("{MethodBuilder.Name}")]
 	public class MethodEmitter : IMemberEmitter

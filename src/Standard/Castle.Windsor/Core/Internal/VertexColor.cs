@@ -1,4 +1,4 @@
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	internal enum VertexColor
 	{

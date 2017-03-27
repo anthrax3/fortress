@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Castle.Windsor.MicroKernel.Util
+namespace Castle.MicroKernel.Util
 {
 	public class SimpleMethodEqualityComparer : IEqualityComparer<MethodInfo>
 	{

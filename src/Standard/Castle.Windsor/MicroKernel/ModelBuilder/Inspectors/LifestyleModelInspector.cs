@@ -15,13 +15,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.MicroKernel.SubSystems.Conversion;
 
-namespace Castle.Windsor.MicroKernel.ModelBuilder.Inspectors
+namespace Castle.MicroKernel.ModelBuilder.Inspectors
 {
 	public class LifestyleModelInspector : IContributeComponentModelConstruction
 	{

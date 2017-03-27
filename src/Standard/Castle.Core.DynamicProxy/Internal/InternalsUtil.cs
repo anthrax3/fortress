@@ -16,9 +16,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Core.DynamicProxy.Internal
+namespace Castle.DynamicProxy.Internal
 {
 	public static class InternalsUtil
 	{

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Castle.Core.DynamicProxy.Extensions
+namespace Castle.DynamicProxy.Extensions
 {
     public static class ReflectionExtensions
     {

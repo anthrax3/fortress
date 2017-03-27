@@ -14,10 +14,9 @@
 
 using System;
 using System.Threading;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests.Lifestyle

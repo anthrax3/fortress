@@ -1,7 +1,6 @@
 using System;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor.Windsor;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
 
 namespace Castle.Windsor.Tests.Installer
 {

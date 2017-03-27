@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
 
 namespace Castle.Windsor.Tests.Lifestyle
 {

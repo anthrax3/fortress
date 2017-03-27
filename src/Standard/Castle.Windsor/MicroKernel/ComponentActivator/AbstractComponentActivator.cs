@@ -14,11 +14,11 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.Core;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.ComponentActivator
+namespace Castle.MicroKernel.ComponentActivator
 {
 	public abstract class AbstractComponentActivator : IComponentActivator
 	{

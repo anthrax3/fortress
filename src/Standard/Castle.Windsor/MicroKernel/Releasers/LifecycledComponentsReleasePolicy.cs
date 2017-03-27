@@ -14,15 +14,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Castle.Core.Core;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.Windsor.Diagnostics;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.Windsor.Diagnostics;
 
-namespace Castle.Windsor.MicroKernel.Releasers
+namespace Castle.MicroKernel.Releasers
 {
 	public class LifecycledComponentsReleasePolicy : IReleasePolicy
 	{

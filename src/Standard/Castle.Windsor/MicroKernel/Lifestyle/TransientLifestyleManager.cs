@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.MicroKernel.Lifestyle
+namespace Castle.MicroKernel.Lifestyle
 {
 	public class TransientLifestyleManager : AbstractLifestyleManager
 	{

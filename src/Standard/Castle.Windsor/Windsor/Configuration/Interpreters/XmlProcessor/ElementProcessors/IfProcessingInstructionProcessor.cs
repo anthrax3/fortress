@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors
 {
 	public class IfProcessingInstructionProcessor : AbstractXmlNodeProcessor
 	{

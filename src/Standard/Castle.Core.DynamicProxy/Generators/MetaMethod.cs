@@ -15,9 +15,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	[DebuggerDisplay("{Method}")]
 	public class MetaMethod : MetaTypeElement, IEquatable<MetaMethod>

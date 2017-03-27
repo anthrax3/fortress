@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public interface IAssemblyProvider
 	{

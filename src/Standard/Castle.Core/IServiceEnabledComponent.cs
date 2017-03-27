@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public interface IServiceEnabledComponent
 	{

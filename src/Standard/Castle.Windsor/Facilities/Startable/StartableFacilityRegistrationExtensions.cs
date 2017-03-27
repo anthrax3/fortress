@@ -15,10 +15,10 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using Castle.Windsor.MicroKernel.Facilities;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Facilities;
+using Castle.MicroKernel.Registration;
 
-namespace Castle.Windsor.Facilities.Startable
+namespace Castle.Facilities.Startable
 {
 	public static class StartableFacilityRegistrationExtensions
 	{

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Lifestyle;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Lifestyle;
 
 namespace Castle.Windsor.Tests.Lifestyle
 {

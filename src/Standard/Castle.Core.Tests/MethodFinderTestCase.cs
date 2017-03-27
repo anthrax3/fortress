@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

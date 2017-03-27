@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Castle.Windsor.MicroKernel.Releasers
+namespace Castle.MicroKernel.Releasers
 {
 	[Obsolete("This class is a hack, will be removed in the future release and should be avoided. Please implement proper lifecycle management instead.")]
 	public class NoTrackingReleasePolicy : IReleasePolicy

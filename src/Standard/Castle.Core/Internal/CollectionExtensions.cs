@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Castle.Core.Core.Internal
+namespace Castle.Core.Internal
 {
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class CollectionExtensions

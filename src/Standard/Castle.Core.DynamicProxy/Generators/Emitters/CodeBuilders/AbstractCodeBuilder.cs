@@ -15,9 +15,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders
+namespace Castle.DynamicProxy.Generators.Emitters.CodeBuilders
 {
 	public abstract class AbstractCodeBuilder
 	{

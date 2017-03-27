@@ -15,7 +15,6 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using Castle.Core.Core;
 using Xunit;
 
 namespace Castle.Core.Tests

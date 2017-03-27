@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters.XmlProcessor
+namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 {
 	public class DefaultXmlProcessorNodeList : IXmlProcessorNodeList
 	{

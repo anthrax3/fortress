@@ -15,7 +15,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Core.Core.Internal;
+using Castle.Core.Internal;
 using Xunit;
 
 

@@ -1,8 +1,8 @@
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public delegate Reference GetTargetReferenceDelegate(ClassEmitter @class, MethodInfo method);
 }

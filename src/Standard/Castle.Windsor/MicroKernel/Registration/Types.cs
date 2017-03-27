@@ -15,10 +15,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public static class Types
 	{

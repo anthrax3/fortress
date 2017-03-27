@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class ConstructorCandidateCollection : IMutableCollection<ConstructorCandidate>
 	{

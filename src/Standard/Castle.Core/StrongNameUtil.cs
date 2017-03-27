@@ -18,7 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security;
 
-namespace Castle.Core.DynamicProxy.Generators.Emitters
+namespace Castle.Core
 {
 	public static class StrongNameUtil
 	{

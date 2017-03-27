@@ -18,25 +18,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core;
-using Castle.Core.Core.Configuration;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Compatibility;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.LifecycleConcerns;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
-using Castle.Windsor.MicroKernel.ModelBuilder;
-using Castle.Windsor.MicroKernel.ModelBuilder.Descriptors;
-using Castle.Windsor.MicroKernel.Registration.Interceptor;
-using Castle.Windsor.MicroKernel.Registration.Lifestyle;
-using Castle.Windsor.MicroKernel.Registration.Proxy;
+using Castle.Compatibility;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.LifecycleConcerns;
+using Castle.MicroKernel.ModelBuilder;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
+using Castle.MicroKernel.Registration.Interceptor;
+using Castle.MicroKernel.Registration.Lifestyle;
+using Castle.MicroKernel.Registration.Proxy;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public class ComponentRegistration<TService> : IRegistration
 		where TService : class

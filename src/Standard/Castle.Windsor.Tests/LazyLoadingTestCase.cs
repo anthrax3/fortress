@@ -15,9 +15,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;
 

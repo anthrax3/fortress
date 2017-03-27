@@ -16,12 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Generators.Emitters;
-using Castle.Core.DynamicProxy.Internal;
 using Castle.Core.Logging;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public abstract class CompositeTypeContributor : ITypeContributor
 	{

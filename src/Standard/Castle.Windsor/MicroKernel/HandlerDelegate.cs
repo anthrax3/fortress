@@ -1,4 +1,4 @@
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public delegate void HandlerDelegate(IHandler handler, ref bool stateChanged);
 }

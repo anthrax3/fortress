@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Castle.Core.Core
+namespace Castle.Core
 {
 	public class ReferenceEqualityComparer<T> : IEqualityComparer, IEqualityComparer<T>
 	{

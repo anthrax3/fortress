@@ -16,13 +16,13 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Proxy;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.DynamicProxy;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Proxy;
+using Castle.MicroKernel.Resolvers;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public class InterceptorReference : IReference<IInterceptor>, IEquatable<InterceptorReference>
 	{

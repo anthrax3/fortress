@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.DynamicProxy;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using NUnit.Framework;

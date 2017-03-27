@@ -15,10 +15,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Core.Internal;
-using Castle.Windsor.Core;
+using Castle.Core;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.MicroKernel.Registration
+namespace Castle.MicroKernel.Registration
 {
 	public static class Component
 	{

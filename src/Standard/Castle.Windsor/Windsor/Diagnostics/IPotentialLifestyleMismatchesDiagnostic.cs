@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public interface IPotentialLifestyleMismatchesDiagnostic : IDiagnostic<IHandler[][]>
 	{

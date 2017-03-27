@@ -15,10 +15,10 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy.Contributors
+namespace Castle.DynamicProxy.Contributors
 {
 	public class WrappedClassMembersCollector : ClassMembersCollector
 	{

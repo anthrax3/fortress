@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Castle.Windsor.MicroKernel.Registration.Proxy
+namespace Castle.MicroKernel.Registration.Proxy
 {
 	public class MixinRegistration : IEnumerable<IReference<object>>
 	{

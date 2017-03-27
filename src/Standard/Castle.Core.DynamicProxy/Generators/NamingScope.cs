@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public class NamingScope : INamingScope
 	{

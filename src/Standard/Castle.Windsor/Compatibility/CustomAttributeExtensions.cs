@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace Castle.Windsor.Compatibility
+namespace Castle.Compatibility
 {
 	//internal static class CustomAttributeExtensions
 	//{

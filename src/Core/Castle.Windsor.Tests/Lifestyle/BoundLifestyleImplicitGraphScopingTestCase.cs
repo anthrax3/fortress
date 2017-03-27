@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor.Tests.Components;
 using Xunit;
 

@@ -14,10 +14,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor.Diagnostics.Extensions;
+using Castle.MicroKernel;
+using Castle.Windsor.Diagnostics.Extensions;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public partial class DefaultDiagnosticsSubSystem : IDiagnosticsHost, IContainerDebuggerExtensionHost
 	{

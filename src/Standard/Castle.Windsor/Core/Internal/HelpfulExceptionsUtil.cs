@@ -15,10 +15,10 @@
 using System;
 using System.Reflection;
 using System.Text;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ComponentActivator;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ComponentActivator;
 
-namespace Castle.Windsor.Core.Internal
+namespace Castle.Core.Internal
 {
 	public static class HelpfulExceptionsUtil
 	{

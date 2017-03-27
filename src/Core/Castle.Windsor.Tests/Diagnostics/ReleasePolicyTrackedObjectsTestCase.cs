@@ -15,15 +15,15 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Releasers;
+using Castle.Windsor.Diagnostics;
+using Castle.Windsor.Diagnostics.DebuggerViews;
+using Castle.Windsor.Diagnostics.Extensions;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.ContainerExtensions;
-using Castle.Windsor.Windsor.Diagnostics;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
-using Castle.Windsor.Windsor.Diagnostics.Extensions;
 using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics

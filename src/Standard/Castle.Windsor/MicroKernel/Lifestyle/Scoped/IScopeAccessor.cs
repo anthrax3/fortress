@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.MicroKernel.Lifestyle.Scoped
+namespace Castle.MicroKernel.Lifestyle.Scoped
 {
 	public interface IScopeAccessor : IDisposable
 	{

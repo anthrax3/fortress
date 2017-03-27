@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.Windsor;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
 using NUnit.Framework;
 
 namespace Castle.Windsor.Tests

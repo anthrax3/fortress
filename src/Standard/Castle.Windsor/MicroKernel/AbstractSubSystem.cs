@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.Windsor.MicroKernel
+namespace Castle.MicroKernel
 {
 	public abstract class AbstractSubSystem : ISubSystem
 	{

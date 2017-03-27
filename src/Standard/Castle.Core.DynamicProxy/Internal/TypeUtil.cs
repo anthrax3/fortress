@@ -17,9 +17,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.DynamicProxy.Internal
+namespace Castle.DynamicProxy.Internal
 {
 	public static class TypeUtil
 	{

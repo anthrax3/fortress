@@ -14,11 +14,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Compatibility;
+using Castle.Core;
+using Castle.MicroKernel;
 
-namespace Castle.Windsor.Windsor.Diagnostics
+namespace Castle.Windsor.Diagnostics
 {
 	public class PotentialLifestyleMismatchesDiagnostic : IPotentialLifestyleMismatchesDiagnostic
 	{

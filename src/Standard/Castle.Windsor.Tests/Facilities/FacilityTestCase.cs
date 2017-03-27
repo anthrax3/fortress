@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Facilities.Startable;
-using Castle.Windsor.MicroKernel;
+using Castle.Core.Configuration;
+using Castle.Facilities.Startable;
+using Castle.MicroKernel;
 using Castle.Windsor.Tests.ClassComponents;
 using NUnit.Framework;
 

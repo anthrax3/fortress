@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.MicroKernel.SubSystems.Conversion;
 using Castle.Windsor.Tests.ClassComponents;
 using Xunit;
 

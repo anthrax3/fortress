@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Castle.Windsor.Core
+namespace Castle.Core
 {
 	public delegate PropertySet PropertySetBuilder(PropertyInfo property, bool isOptional);
 }

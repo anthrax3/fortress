@@ -15,12 +15,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.Core.Internal;
-using Castle.Core.DynamicProxy.Generators;
-using Castle.Core.DynamicProxy.Internal;
+using Castle.Core.Internal;
 using Castle.Core.Logging;
+using Castle.DynamicProxy.Generators;
+using Castle.DynamicProxy.Internal;
 
-namespace Castle.Core.DynamicProxy
+namespace Castle.DynamicProxy
 {
 	public class DefaultProxyBuilder : IProxyBuilder
 	{

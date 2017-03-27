@@ -13,9 +13,9 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core.Internal;
+using Castle.Core.Internal;
 
-namespace Castle.Windsor.Windsor.Configuration.Interpreters
+namespace Castle.Windsor.Configuration.Interpreters
 {
 	public class ConfigurationProcessingException : Exception
 	{

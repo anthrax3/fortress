@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

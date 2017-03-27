@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Reflection;
-using Castle.Core.DynamicProxy.Contributors;
-using Castle.Core.DynamicProxy.Generators.Emitters;
+using Castle.DynamicProxy.Contributors;
+using Castle.DynamicProxy.Generators.Emitters;
 
-namespace Castle.Core.DynamicProxy.Generators
+namespace Castle.DynamicProxy.Generators
 {
 	public abstract class MethodGenerator : IGenerator<MethodEmitter>
 	{

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using System.ComponentModel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Lifestyle.Scoped;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Lifestyle.Scoped;
 
 namespace Castle.Windsor.Tests.TestInfrastructure
 {

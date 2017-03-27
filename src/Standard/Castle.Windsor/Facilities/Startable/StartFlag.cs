@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
 
-namespace Castle.Windsor.Facilities.Startable
+namespace Castle.Facilities.Startable
 {
 	public class StartFlag : IStartFlagInternal
 	{
