@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>5.0.0</VersionPrefix>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cryosharp/fortress</RepositoryUrl>
