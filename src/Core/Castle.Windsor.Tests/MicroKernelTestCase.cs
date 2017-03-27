@@ -286,8 +286,8 @@ namespace Castle.Windsor.Tests
 		public void Subsystems_are_case_insensitive()
 		{
 			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey));
-			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToLower()));
-			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpper()));
+			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToLowerInvariant()));
+			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpperInvariant()));
 		}
 
 
