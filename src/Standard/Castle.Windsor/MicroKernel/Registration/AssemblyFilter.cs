@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Castle.Core.Internal;
+using Castle.Helpers;
 
 namespace Castle.MicroKernel.Registration
 {
@@ -167,8 +168,8 @@ namespace Castle.MicroKernel.Registration
 
 		private static string GetFullPath(string path)
 		{
-			if (Path.IsPathRooted(path) == false && AppContext.BaseDirectory != null)
-				path = Path.Combine(AppContext.BaseDirectory, path);
+			if (Path.IsPathRooted(path) == false && BaseDirectoryHelper.BaseDirectory != null)
+				path = Path.Combine(BaseDirectoryHelper.BaseDirectory, path);
 			return Path.GetFullPath(path);
 		}
 

@@ -15,12 +15,13 @@
 using System;
 using System.IO;
 using System.Text;
+using Castle.Helpers;
 
 namespace Castle.Core.Resource
 {
 	public abstract class AbstractResource : IResource
 	{
-        protected static readonly string DefaultBasePath = AppContext.BaseDirectory;
+        protected static readonly string DefaultBasePath = BaseDirectoryHelper.BaseDirectory;
 
         public virtual string FileBasePath
 		{

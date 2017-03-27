@@ -20,108 +20,113 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+#if !FEATURE_APPDOMAIN
 using System.Runtime.Loader;
+#endif
 using System.Text;
 using Castle.Compatibility;
 
 namespace Castle.Core.Internal
 {
-	public static class ReflectionUtil
-	{
-		public static readonly Type[] OpenGenericArrayInterfaces = typeof(object[]).GetInterfaces()
-			.Where(i => i.GetTypeInfo().IsGenericType)
-			.Select(i => i.GetGenericTypeDefinition())
-			.ToArray();
+    public static class ReflectionUtil
+    {
+        public static readonly Type[] OpenGenericArrayInterfaces = typeof(object[]).GetInterfaces()
+            .Where(i => i.GetTypeInfo().IsGenericType)
+            .Select(i => i.GetGenericTypeDefinition())
+            .ToArray();
 
-		private static readonly ConcurrentDictionary<ConstructorInfo, Func<object[], object>> factories =
-			new ConcurrentDictionary<ConstructorInfo, Func<object[], object>>();
+        private static readonly ConcurrentDictionary<ConstructorInfo, Func<object[], object>> factories =
+            new ConcurrentDictionary<ConstructorInfo, Func<object[], object>>();
 
-		private static readonly Lock @lock = Lock.Create();
+        private static readonly Lock @lock = Lock.Create();
 
-		public static TBase CreateInstance<TBase>(this Type subtypeofTBase, params object[] ctorArgs)
-		{
-			EnsureIsAssignable<TBase>(subtypeofTBase);
+        public static TBase CreateInstance<TBase>(this Type subtypeofTBase, params object[] ctorArgs)
+        {
+            EnsureIsAssignable<TBase>(subtypeofTBase);
 
-			return Instantiate<TBase>(subtypeofTBase, ctorArgs ?? new object[0]);
-		}
+            return Instantiate<TBase>(subtypeofTBase, ctorArgs ?? new object[0]);
+        }
 
-		public static IEnumerable<Assembly> GetApplicationAssemblies(Assembly rootAssembly)
-		{
-			var index = rootAssembly.FullName.IndexOfAny(new[] {'.', ','});
-			if (index < 0)
-				throw new ArgumentException(
-					string.Format("Could not determine application name for assembly \"{0}\". Please use a different method for obtaining assemblies.",
-						rootAssembly.FullName));
+        public static IEnumerable<Assembly> GetApplicationAssemblies(Assembly rootAssembly)
+        {
+            var index = rootAssembly.FullName.IndexOfAny(new[] { '.', ',' });
+            if (index < 0)
+                throw new ArgumentException(
+                    string.Format("Could not determine application name for assembly \"{0}\". Please use a different method for obtaining assemblies.",
+                        rootAssembly.FullName));
 
-			var applicationName = rootAssembly.FullName.Substring(0, index);
-			var assemblies = new HashSet<Assembly>();
-			AddApplicationAssemblies(rootAssembly, assemblies, applicationName);
-			return assemblies;
-		}
+            var applicationName = rootAssembly.FullName.Substring(0, index);
+            var assemblies = new HashSet<Assembly>();
+            AddApplicationAssemblies(rootAssembly, assemblies, applicationName);
+            return assemblies;
+        }
 
-		public static IEnumerable<Assembly> GetAssemblies(IAssemblyProvider assemblyProvider)
-		{
-			return assemblyProvider.GetAssemblies();
-		}
+        public static IEnumerable<Assembly> GetAssemblies(IAssemblyProvider assemblyProvider)
+        {
+            return assemblyProvider.GetAssemblies();
+        }
 
-		public static Assembly GetAssemblyNamed(string assemblyName)
-		{
-			Debug.Assert(string.IsNullOrEmpty(assemblyName) == false);
+        public static Assembly GetAssemblyNamed(string assemblyName)
+        {
+            Debug.Assert(string.IsNullOrEmpty(assemblyName) == false);
 
-			try
-			{
-				Assembly assembly = Assembly.Load(new AssemblyName(assemblyName));
-				return assembly;
-			}
-			catch (FileNotFoundException)
-			{
-				throw;
-			}
-			catch (FileLoadException)
-			{
-				throw;
-			}
-			catch (BadImageFormatException)
-			{
-				throw;
-			}
-			catch (Exception e)
-			{
-				// in theory there should be no other exception kind
-				throw new Exception(string.Format("Could not load assembly {0}", assemblyName), e);
-			}
-		}
+            try
+            {
+                Assembly assembly = Assembly.Load(new AssemblyName(assemblyName));
+                return assembly;
+            }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+            catch (FileLoadException)
+            {
+                throw;
+            }
+            catch (BadImageFormatException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                // in theory there should be no other exception kind
+                throw new Exception(string.Format("Could not load assembly {0}", assemblyName), e);
+            }
+        }
 
-		public static Assembly GetAssemblyNamed(string filePath, Predicate<AssemblyName> nameFilter,
-			Predicate<Assembly> assemblyFilter)
-		{
-			var assemblyName = GetAssemblyName(filePath);
-			if (nameFilter != null)
-				foreach (Predicate<AssemblyName> predicate in nameFilter.GetInvocationList())
-					if (predicate(assemblyName) == false)
-						return null;
-			var assembly = LoadAssembly(assemblyName);
-			if (assemblyFilter != null)
-				foreach (Predicate<Assembly> predicate in assemblyFilter.GetInvocationList())
-					if (predicate(assembly) == false)
-						return null;
-			return assembly;
-		}
+        public static Assembly GetAssemblyNamed(string filePath, Predicate<AssemblyName> nameFilter,
+            Predicate<Assembly> assemblyFilter)
+        {
+            var assemblyName = GetAssemblyName(filePath);
+            if (nameFilter != null)
+                foreach (Predicate<AssemblyName> predicate in nameFilter.GetInvocationList())
+                    if (predicate(assemblyName) == false)
+                        return null;
+            var assembly = LoadAssembly(assemblyName);
+            if (assemblyFilter != null)
+                foreach (Predicate<Assembly> predicate in assemblyFilter.GetInvocationList())
+                    if (predicate(assembly) == false)
+                        return null;
+            return assembly;
+        }
 
         // Not sure this will work but giving it a try
-		public static Assembly[] GetLoadedAssemblies()
-		{
-		    var basePath = AppContext.BaseDirectory;
-
-		    var results = new List<Assembly>();
+        public static Assembly[] GetLoadedAssemblies()
+        {
+#if FEATURE_APPDOMAIN
+            return AppDomain.CurrentDomain.GetAssemblies();
+#else
+            string basePath = AppContext.BaseDirectory;
+            var results = new List<Assembly>();
 
             foreach(var assembly in new DirectoryInfo(basePath).GetFiles("*.dll"))
                 results.Add(AssemblyLoadContext.Default.LoadFromAssemblyPath(assembly.FullName));
 
 		    return results.ToArray();
-		}
+#endif
+        }
 
-		public static Type[] GetAvailableTypes(this Assembly assembly, bool includeNonExported = false)
+        public static Type[] GetAvailableTypes(this Assembly assembly, bool includeNonExported = false)
 		{
 			try
 			{

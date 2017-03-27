@@ -1,18 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\common.props"></Import>
+  
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.5</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>Castle.DynamicProxy</RootNamespace>
   </PropertyGroup>
+  
   <ItemGroup>
     <EmbeddedResource Include="CastleKey.snk" />
     <EmbeddedResource Include="DynProxy.snk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
   </ItemGroup>
