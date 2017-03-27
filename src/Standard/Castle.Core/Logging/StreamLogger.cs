@@ -16,7 +16,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Castle.Core.Core.Logging
+namespace Castle.Core.Logging
 {
 	public class StreamLogger : LevelFilteredLogger, IDisposable
 	{

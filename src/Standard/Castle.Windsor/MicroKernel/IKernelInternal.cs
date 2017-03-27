@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections;
-using Castle.Core.Core.Logging;
+using Castle.Core.Logging;
 using Castle.Windsor.Core;
 
 namespace Castle.Windsor.MicroKernel

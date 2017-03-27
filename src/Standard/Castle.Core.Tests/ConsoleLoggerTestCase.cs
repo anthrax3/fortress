@@ -14,7 +14,7 @@
 
 using System;
 using System.IO;
-using Castle.Core.Core.Logging;
+using Castle.Core.Logging;
 using NUnit.Framework;
 
 namespace Castle.Core.Tests

@@ -18,8 +18,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using Castle.Core.Core.Internal;
-using Castle.Core.Core.Logging;
 using Castle.Core.DynamicProxy.Generators;
+using Castle.Core.Logging;
 
 namespace Castle.Core.DynamicProxy
 {

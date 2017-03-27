@@ -15,7 +15,7 @@
 using System;
 using System.IO;
 
-namespace Castle.Core.Core.Logging
+namespace Castle.Core.Logging
 {
 	public abstract class AbstractLoggerFactory : ILoggerFactory
 	{

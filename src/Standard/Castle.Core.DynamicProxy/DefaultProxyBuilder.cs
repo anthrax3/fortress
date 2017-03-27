@@ -16,9 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Core.Internal;
-using Castle.Core.Core.Logging;
 using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.DynamicProxy.Internal;
+using Castle.Core.Logging;
 
 namespace Castle.Core.DynamicProxy
 {

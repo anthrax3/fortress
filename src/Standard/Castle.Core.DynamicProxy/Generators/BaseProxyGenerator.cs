@@ -17,13 +17,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.Core.Logging;
 using Castle.Core.DynamicProxy.Contributors;
 using Castle.Core.DynamicProxy.Generators.Emitters;
 using Castle.Core.DynamicProxy.Generators.Emitters.CodeBuilders;
 using Castle.Core.DynamicProxy.Generators.Emitters.SimpleAST;
 using Castle.Core.DynamicProxy.Internal;
 using Castle.Core.DynamicProxy.Extensions;
+using Castle.Core.Logging;
 
 namespace Castle.Core.DynamicProxy.Generators
 {
