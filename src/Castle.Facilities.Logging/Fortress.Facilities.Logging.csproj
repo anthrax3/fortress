@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
-    <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
+    <ProjectReference Include="..\Castle.Core\Fortress.Core.csproj" />
+    <ProjectReference Include="..\Castle.Windsor\Fortress.Windsor.csproj" />
   </ItemGroup>
 
 </Project>
