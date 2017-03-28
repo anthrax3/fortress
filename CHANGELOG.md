@@ -1,4 +1,4 @@
-# Castle Windsor Changelog
+# Fortress Changelog
 
 ## 0.5.X (preview)
 

@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E70FAB
 		appveyor.yml = appveyor.yml
 		build.bat = build.bat
 		build.fsx = build.fsx
+		CHANGELOG.md = CHANGELOG.md
 		common.props = common.props
+		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
 	EndProjectSection
 EndProject
