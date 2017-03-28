@@ -35,7 +35,7 @@ deploy:
     description: 'Unofficial Castle Windsor on dotnet core'
     auth_token:
       secure: sZD4+HypTqlQYLcBv+EkKIc0EWYGkeT4LUXmY0ALqyDQH6n++fBAQZTHaltI4SsM 
-    artifact: build\nuget\/.*\.(dll|pdb|nupkg)/       
+    artifact: /.*\.(dll|pdb|nupkg)/       
     draft: false
     prerelease: true
     on:
