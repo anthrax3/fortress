@@ -18,11 +18,11 @@ See the [documentation](https://github.com/castleproject/Windsor/blob/master/REA
 
 ## Releases
 
-###Fortress
+### Fortress
 
 We are still busy with this. Please check back again once we have published the preview.
 
-###Castle Windsor
+### Castle Windsor
 
 See the [releases](https://github.com/castleproject/Windsor/releases).
 
@@ -35,7 +35,7 @@ Copyright 2004-2017 Castle Project, Cryosharp.
 Castle Windsor is licensed under the [Apache 2.0](http://opensource.org/licenses/Apache-2.0) license. 
 Refer to LICENSE for more information.
 
-###Fortress
+### Fortress
 
 These terms under the redistribution clause and orignal license clause have been adhered to. We are changing the assembly 
 names to avoid confusion on NuGet and have kept the original authors in the commit logs of this project(preserving credit 
