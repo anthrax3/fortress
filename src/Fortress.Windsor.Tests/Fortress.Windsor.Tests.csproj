@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>CastleKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Core\Resources\file1.txt" />
-    <EmbeddedResource Include="Core\Resources\MoreRes\file2.txt" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
@@ -15,8 +14,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Castle.Core.DynamicProxy\Fortress.Core.DynamicProxy.csproj" />
-    <ProjectReference Include="..\Castle.Core\Fortress.Core.csproj" />
+    <ProjectReference Include="..\Fortress.Core.DynamicProxy\Fortress.Core.DynamicProxy.csproj" />
+    <ProjectReference Include="..\Fortress.Core\Fortress.Core.csproj" />
+    <ProjectReference Include="..\Fortress.Windsor\Fortress.Windsor.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
