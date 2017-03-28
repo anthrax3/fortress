@@ -11,7 +11,9 @@ Breaking Changes:
 - Removed bugs in Castle.Core 4.0 that were causing in compatibilities with Windsor 3.4.0. This came at a huge cost to desktop clr. (@fir3pho3nixx)
 - Cut project down and migrated to core using VS2017 tooling using multitargetting while breaking desktop clr (@fir3pho3nixx)
 
-!! FORKED FOR DOTNET CORE !! From here you have a dramatically reduced functionality, if this does not suite you please use Castle. Consider this a "dotnet future" if you are planning on migrating to dotnet core. Hopefully this project will die in the future and be merged back to Castle albeit very slow and manual.  
+!! FORKED FOR DOTNET CORE !! From here you have a dramatically reduced functionality, if this does not suite you please use Castle. Consider this a "dotnet future" 
+if you are planning on migrating to dotnet core. Hopefully this project will die in the future and be merged back to Castle 
+albeit very slow and manual.  
 
 - Remove MONO support (@fir3pho3nixx, #177, #185)
 - Remove NET40 support (@fir3pho3nixx, #185)
