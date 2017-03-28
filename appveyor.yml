@@ -24,10 +24,6 @@ build_script:
   
   - cmd: build
       
-test_script:
-  
-  - cmd: build test
-
 artifacts:
 
   - path: build\nuget\*.nupkg
