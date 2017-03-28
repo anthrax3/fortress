@@ -14,9 +14,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj" />
-    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
-    <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
+    <ProjectReference Include="..\Fortress.Core.DynamicProxy\Fortress.Core.DynamicProxy.csproj" />
+    <ProjectReference Include="..\Fortress.Core\Fortress.Core.csproj" />
+    <ProjectReference Include="..\Fortress.Windsor\Fortress.Windsor.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

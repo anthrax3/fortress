@@ -42,7 +42,7 @@ namespace Castle.Windsor.Tests.Installer
 		[Fact]
 		public void Can_install_from_assembly_by_name()
 		{
-			Container.Install(FromAssembly.Named("Castle.Windsor.Tests"));
+			Container.Install(FromAssembly.Named("Fortress.Windsor.Tests"));
 		}
 
 		[Fact]

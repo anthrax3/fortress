@@ -39,6 +39,6 @@ Refer to LICENSE for more information.
 
 These terms under the redistribution clause and orignal license clause have been adhered to. We are changing the assembly 
 names to avoid confusion on NuGet and have kept the original authors in the commit logs of this project(preserving credit 
-of orignal works attributed to originators). All original source headers still contain original Castle headers. 
+of orignal works attributed to original authors). All original source headers still contain original Castle headers. 
 
 Credit to the Castle guys! Let's hope this project does not live long. 
