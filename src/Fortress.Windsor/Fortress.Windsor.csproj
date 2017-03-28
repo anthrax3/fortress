@@ -3,17 +3,9 @@
   <Import Project="..\..\common.props"></Import>
 
   <PropertyGroup>
+    <PackageId>Fortress.Windsor</PackageId>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>Castle</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <OutputPath>..\..\build\windsor\$(Configuration)</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
-    <OutputPath>..\..\build\windsor\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,22 +1,35 @@
 <Project>
 
   <PropertyGroup>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <Version Condition="'$(APPVEYOR_BUILD_VERSION)'==''">0.5.0</Version>
-    <Version Condition="'$(APPVEYOR_BUILD_VERSION)'!=''">$(APPVEYOR_BUILD_VERSION)</Version>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <RepositoryType>git</RepositoryType>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/cryosharp/fortress</RepositoryUrl>
+    <BuildVersion Condition="'$(APPVEYOR_BUILD_VERSION)'==''">0.5.0</BuildVersion>
+    <BuildVersion Condition="'$(APPVEYOR_BUILD_VERSION)'!=''">$(APPVEYOR_BUILD_VERSION)</BuildVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <Product>fortress</Product>
-    <Version>$(Version)</Version>
-    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Version>$(BuildVersion)</Version>
+    <AssemblyVersion>$(BuildVersion)</AssemblyVersion>
     <AssemblyTitle>A version of Castle Windsor primarily targetting netcore, short lived hopefully :)</AssemblyTitle>
     <Authors>@fir3pho3nixx,@hikalkan</Authors>
     <Copyright>Nil</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>$(TargetFramework)</TargetFramework>
+    <OutputPath>..\..\build\$(Configuration)</OutputPath>
+    <PackageOutputPath>..\..\build\nuget</PackageOutputPath>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <PackageVersion>$(BuildVersion)</PackageVersion>
+    <Description>Unofficial Castle Windsor on dotnet core</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>https://github.com/cryosharp/fortress/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) Castle, Cryosharp. All rights reserved.</Copyright>
+    <PackageTags>Castle, Windsor, Cryosharp, Volosoft, Fortress, Core, NetCoreApp, DotnetCore, CoreFx, Standard, NetStandard, Boilerplate, AspNetBoilerplate</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

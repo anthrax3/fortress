@@ -3,15 +3,8 @@
   <Import Project="..\..\common.props"></Import>
   
   <PropertyGroup>
+    <PackageId>Fortress.Core</PackageId>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <OutputPath>..\..\build\core\$(Configuration)</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
-    <OutputPath>..\..\build\core\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

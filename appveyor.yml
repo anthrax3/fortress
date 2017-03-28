@@ -17,26 +17,12 @@ install:
   
   - .paket\paket.exe restore
 
-assembly_info:
-  
-  patch: false
-  
-  file: SolutionInfo.*
-  
-  assembly_version: "1.0.{build}"
-  
-  assembly_file_version: "{version}"
-  
-  assembly_informational_version: "{version}"
-
-configuration: Release
-
 cache:
   - packages -> paket.lock
 
 build_script:
   
-  - cmd: build.bat
+  - cmd: build
       
 test_script:
   

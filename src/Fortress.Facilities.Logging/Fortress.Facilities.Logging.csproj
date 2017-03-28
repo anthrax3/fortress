@@ -3,16 +3,8 @@
   <Import Project="..\..\common.props"></Import>
 
   <PropertyGroup>
+    <PackageId>Fortress.Facilities.Logging</PackageId>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <OutputPath>..\..\build\core.facilities.logging\$(Configuration)</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
-    <OutputPath>..\..\build\core.facilities.logging\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,16 +3,9 @@
   <Import Project="..\..\common.props"></Import>
   
   <PropertyGroup>
+    <PackageId>Fortress.Core.DynamicProxy</PackageId>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
     <RootNamespace>Castle.DynamicProxy</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <OutputPath>..\..\build\core.dynamicproxy\$(Configuration)</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
-    <OutputPath>..\..\build\core.dynamicproxy\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
