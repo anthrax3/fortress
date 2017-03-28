@@ -4,12 +4,21 @@
   
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>Castle.DynamicProxy</RootNamespace>
   </PropertyGroup>
-  
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
+    <OutputPath>..\..\build\core.dynamicproxy\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
+    <OutputPath>..\..\build\core.dynamicproxy\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="CastleKey.snk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="DynProxy.snk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

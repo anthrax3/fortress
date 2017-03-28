@@ -7,6 +7,14 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
+    <OutputPath>..\..\build\core.facilities.logging\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
+    <OutputPath>..\..\build\core.facilities.logging\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
     <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />

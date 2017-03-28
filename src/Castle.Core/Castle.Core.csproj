@@ -4,11 +4,20 @@
   
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
- 
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
+    <OutputPath>..\..\build\core\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
+    <OutputPath>..\..\build\core\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="CastleKey.snk" />
+    <EmbeddedResource Include="CastleKey.snk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.5'">

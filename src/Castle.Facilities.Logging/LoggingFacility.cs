@@ -251,7 +251,7 @@ namespace Castle.Facilities.Logging
 
 		private object[] GetLoggingFactoryArguments(Type loggerFactoryType)
 		{
-			const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
+			//const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
 
 			ConstructorInfo ctor;
 			if (IsConfiguredExternally())
