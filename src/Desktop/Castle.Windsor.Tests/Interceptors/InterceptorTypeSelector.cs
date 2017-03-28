@@ -15,7 +15,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {

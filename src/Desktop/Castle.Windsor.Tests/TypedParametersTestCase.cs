@@ -14,19 +14,19 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.SubSystems.Conversion;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Conversion;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class TypedParametersTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_mix_typed_arguments_with_named()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>());
@@ -38,11 +38,11 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<ClassWithArguments>(arguments);
 
-			Assert.AreEqual("foo", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("foo", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_named_arguments_take_precedense_over_typed()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>());
@@ -55,11 +55,11 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<ClassWithArguments>(arguments);
 
-			Assert.AreEqual("named", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("named", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_typed_arguments()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>());
@@ -71,11 +71,11 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<ClassWithArguments>(arguments);
 
-			Assert.AreEqual("foo", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("foo", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_closed_generic_ServiceOverrides()
 		{
 			Kernel.Register(Component.For<IGeneric<string>>().ImplementedBy<GenericImpl1<string>>().Named("default"),
@@ -84,21 +84,21 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<UsesIGeneric<string>>();
 
-			Assert.IsInstanceOf<GenericImpl2<string>>(item.Dependency);
+			Assert.IsType<GenericImpl2<string>>(item.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_DynamicParameters()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>().DynamicParameters((k, d) => d.InsertTyped("typed").InsertTyped(2)));
 
 			var item = Kernel.Resolve<ClassWithArguments>();
 
-			Assert.AreEqual("typed", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("typed", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_DynamicParameters_mixed()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>().DynamicParameters((k, d) => d.InsertTyped("typed")));
@@ -108,11 +108,11 @@ namespace Castle.Windsor.Tests
 			};
 			var item = Kernel.Resolve<ClassWithArguments>(arguments);
 
-			Assert.AreEqual("typed", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("typed", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_DynamicParameters_mixed2()
 		{
 			Assert.Throws<ConverterException>(() =>
@@ -126,7 +126,7 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_InLine_Parameters()
 		{
 			Kernel.Register(Component.For<ClassWithArguments>()
@@ -135,11 +135,11 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<ClassWithArguments>();
 
-			Assert.AreEqual("typed", item.Arg1);
-			Assert.AreEqual(2, item.Arg2);
+			Assert.Equal("typed", item.Arg1);
+			Assert.Equal(2, item.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_open_generic_ServiceOverrides_closed_service()
 		{
 			Kernel.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)).Named("default"));
@@ -149,10 +149,10 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<UsesIGeneric<string>>();
 
-			Assert.IsInstanceOf<GenericImpl2<string>>(item.Dependency);
+			Assert.IsType<GenericImpl2<string>>(item.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_open_generic_ServiceOverrides_closed_service_preferred_over_open_service()
 		{
 			Kernel.Register(
@@ -169,13 +169,13 @@ namespace Castle.Windsor.Tests
 			var withString = Kernel.Resolve<UsesIGeneric<string>>();
 			var withInt = Kernel.Resolve<UsesIGeneric<int>>();
 
-			Assert.IsInstanceOf<GenericImpl2<string>>(withString.Dependency);
-			Assert.AreEqual(1, (withString.Dependency as GenericImpl2<string>).Value);
-			Assert.IsInstanceOf<GenericImpl2<int>>(withInt.Dependency);
-			Assert.AreEqual(2, (withInt.Dependency as GenericImpl2<int>).Value);
+			Assert.IsType<GenericImpl2<string>>(withString.Dependency);
+			Assert.Equal(1, (withString.Dependency as GenericImpl2<string>).Value);
+			Assert.IsType<GenericImpl2<int>>(withInt.Dependency);
+			Assert.Equal(2, (withInt.Dependency as GenericImpl2<int>).Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_open_generic_ServiceOverrides_open_service()
 		{
 			Kernel.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)).Named("default"));
@@ -185,10 +185,10 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<UsesIGeneric<string>>();
 
-			Assert.IsInstanceOf<GenericImpl2<string>>(item.Dependency);
+			Assert.IsType<GenericImpl2<string>>(item.Dependency);
 		}
 
-		[Test]
+		[Fact]
 		public void Typed_arguments_work_for_ServiceOverrides()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl1>().Named("default"));
@@ -198,7 +198,7 @@ namespace Castle.Windsor.Tests
 
 			var item = Kernel.Resolve<CommonServiceUser>();
 
-			Assert.IsInstanceOf<CommonImpl2>(item.CommonService);
+			Assert.IsType<CommonImpl2>(item.CommonService);
 		}
 	}
 }

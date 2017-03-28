@@ -14,33 +14,33 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Facilities.TypedFactory.Factories;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Facilities.TypedFactory
 {
-	[TestFixture]
+	
 	public class TypedFactoryDependenciesTestCase : AbstractContainerTestCase
 	{
 		private void AssertHasDependency<TComponnet>(string name)
 		{
 			var handler = GetHandler<TComponnet>();
 			var dependency = handler.ComponentModel.Dependencies.SingleOrDefault(d => d.DependencyKey == name);
-			Assert.IsNotNull(dependency, "Dependency on '{0}' should exist.", name);
+			Assert.NotNull(dependency);
 		}
 
 		private IHandler GetHandler<T>()
 		{
 			var handler = Container.Kernel.GetHandler(typeof(T));
-			Assert.IsNotNull(handler);
+			Assert.NotNull(handler);
 			return handler;
 		}
 
-		[Test]
+		[Fact]
 		public void Delegate_factory_depends_on_default_interceptor()
 		{
 			Container.AddFacility<TypedFactoryFacility>()
@@ -49,7 +49,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			AssertHasDependency<Func<A>>(TypedFactoryFacility.InterceptorKey);
 		}
 
-		[Test]
+		[Fact]
 		public void Interface_factory_depends_on_default_interceptor()
 		{
 			Container.AddFacility<TypedFactoryFacility>()
@@ -58,7 +58,7 @@ namespace Castle.Windsor.Tests.Facilities.TypedFactory
 			AssertHasDependency<IDummyComponentFactory>(TypedFactoryFacility.InterceptorKey);
 		}
 
-		[Test]
+		[Fact]
 		public void Interface_factory_depends_on_default_selector_by_default()
 		{
 			Container.AddFacility<TypedFactoryFacility>()

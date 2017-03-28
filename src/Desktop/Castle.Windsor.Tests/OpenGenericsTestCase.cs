@@ -14,17 +14,17 @@
 
 using System;
 using System.Collections.ObjectModel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class OpenGenericsTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_use_open_generic_with_LateBoundComponent_implementing_partial_closure()
 		{
 			Container.Register(
@@ -38,11 +38,11 @@ namespace Castle.Windsor.Tests
 						return k.Resolve(closedType);
 					}));
 			var repo = Container.Resolve<ClassComponents.IRepository<string>>();
-			Assert.AreEqual(repo.Find(), default(string));
-			Assert.IsInstanceOf(typeof(DoubleRepository<string, int>), repo);
+			Assert.Equal(repo.Find(), default(string));
+			Assert.IsType(typeof(DoubleRepository<string, int>), repo);
 		}
 
-		[Test]
+		[Fact]
 		public void ExtendedProperties_incl_ProxyOptions_are_honored_for_open_generic_types()
 		{
 			Container.Register(
@@ -51,10 +51,10 @@ namespace Castle.Windsor.Tests
 
 			var proxy = Container.Resolve<Collection<int>>();
 
-			Assert.IsInstanceOf<ISimpleService>(proxy);
+			Assert.IsAssignableFrom<ISimpleService>(proxy);
 		}
 
-		[Test]
+		[Fact]
 		public void Open_generic_handlers_get_included_when_generic_service_requested()
 		{
 			Container.Register(Component.For<IGeneric<A>>().ImplementedBy<GenericImpl1<A>>(),
@@ -62,10 +62,10 @@ namespace Castle.Windsor.Tests
 
 			var items = Container.ResolveAll<IGeneric<A>>();
 
-			Assert.AreEqual(2, items.Length);
+			Assert.Equal(2, items.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Open_generic_multiple_services_favor_closed_service()
 		{
 			Container.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)),
@@ -73,10 +73,10 @@ namespace Castle.Windsor.Tests
 
 			var item = Container.Resolve<IGeneric<A>>();
 
-			Assert.IsInstanceOf<GenericImplA>(item);
+			Assert.IsType<GenericImplA>(item);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_properly_skips_open_generic_service_with_generic_constraints_that_dont_match()
 		{
 			Container.Register(
@@ -85,10 +85,10 @@ namespace Castle.Windsor.Tests
 
 			var invalid = Container.ResolveAll<IHasGenericConstraints<EmptySub1, EmptyClass>>();
 
-			Assert.AreEqual(0, invalid.Length);
+			Assert.Equal(0, invalid.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_returns_matching_open_generic_service_with_generic_constraints()
 		{
 			Container.Register(
@@ -97,7 +97,7 @@ namespace Castle.Windsor.Tests
 
 			var valid = Container.ResolveAll<IHasGenericConstraints<EmptySub2WithMarkerInterface, EmptyClass>>();
 
-			Assert.AreEqual(1, valid.Length);
+			Assert.Equal(1, valid.Length);
 		}
 	}
 }

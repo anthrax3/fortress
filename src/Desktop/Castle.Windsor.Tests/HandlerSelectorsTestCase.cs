@@ -13,16 +13,15 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class HandlerSelectorsTestCase
 	{
 		public enum Interest
@@ -100,7 +99,7 @@ namespace Castle.Windsor.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void SelectUsingBusinessLogic_DirectSelection()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -109,14 +108,14 @@ namespace Castle.Windsor.Tests
 			var selector = new WatcherSelector();
 			container.Kernel.AddHandlerSelector(selector);
 
-			Assert.IsInstanceOf(typeof(BirdWatcher), container.Resolve<IWatcher>(), "default");
+			Assert.IsType(typeof(BirdWatcher), container.Resolve<IWatcher>());
 			selector.Interest = Interest.Astronomy;
-			Assert.IsInstanceOf(typeof(SatiWatcher), container.Resolve<IWatcher>(), "change-by-context");
+			Assert.IsType(typeof(SatiWatcher), container.Resolve<IWatcher>());
 			selector.Interest = Interest.Biology;
-			Assert.IsInstanceOf(typeof(BirdWatcher), container.Resolve<IWatcher>(), "explicit");
+			Assert.IsType(typeof(BirdWatcher), container.Resolve<IWatcher>());
 		}
 
-		[Test]
+		[Fact]
 		public void SelectUsingBusinessLogic_SubDependency()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -126,14 +125,14 @@ namespace Castle.Windsor.Tests
 			var selector = new WatcherSelector();
 			container.Kernel.AddHandlerSelector(selector);
 
-			Assert.IsInstanceOf(typeof(BirdWatcher), container.Resolve<Person>().Watcher, "default");
+			Assert.IsType(typeof(BirdWatcher), container.Resolve<Person>().Watcher);
 			selector.Interest = Interest.Astronomy;
-			Assert.IsInstanceOf(typeof(SatiWatcher), container.Resolve<Person>().Watcher, "change-by-context");
+			Assert.IsType(typeof(SatiWatcher), container.Resolve<Person>().Watcher);
 			selector.Interest = Interest.Biology;
-			Assert.IsInstanceOf(typeof(BirdWatcher), container.Resolve<Person>().Watcher, "explicit");
+			Assert.IsType(typeof(BirdWatcher), container.Resolve<Person>().Watcher);
 		}
 
-		[Test]
+		[Fact]
 		public void SubDependencyResolverHasHigherPriorityThanHandlerSelector()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -145,9 +144,8 @@ namespace Castle.Windsor.Tests
 			container.Kernel.Resolver.AddSubResolver(new WatchSubDependencySelector());
 
 			selector.Interest = Interest.Biology;
-			Assert.IsInstanceOf(typeof(SatiWatcher), container.Resolve<Person>().Watcher,
-				"sub dependency should resolve sati");
-			Assert.IsInstanceOf(typeof(BirdWatcher), container.Resolve<IWatcher>(), "root dependency should resolve bird");
+			Assert.IsType(typeof(SatiWatcher), container.Resolve<Person>().Watcher);
+			Assert.IsType(typeof(BirdWatcher), container.Resolve<IWatcher>());
 		}
 	}
 }

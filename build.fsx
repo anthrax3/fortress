@@ -9,9 +9,8 @@ open System.Management.Automation
 let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
-let desktopTestAssemblies = "src/Desktop/Castle.*.Tests/bin/**/*.Tests.dll"
-let standardTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
-let testRunnerCli = "./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
+let coreTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
+let desktopTestAssemblies = "src/Desktop/**/Castle.*.Tests/*.csproj"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
 Target "Install" ignore
@@ -52,15 +51,16 @@ Target "Build" <| fun _ ->
 Target "Test" ignore
 
 Target "TestDesktop" <| fun _ ->
-    tracef "%sRunning Unit Tests\r\n" logo
     !! desktopTestAssemblies
-    |> NUnit3 (fun p ->
-        {p with
-            ShadowCopy = false
-            ToolPath = testRunnerCli })
+    |> Seq.iter (fun p ->
+        let result = directExec (fun info ->
+                info.FileName <- dotNetCli
+                info.Arguments <- (sprintf "test %s" p))
+        if result <> true then 
+            failwithf "%sdotnet test failed\r\n" logo)
 
-Target "TestStandard" <| fun _ -> 
-    !! standardTestAssemblies
+Target "TestCore" <| fun _ -> 
+    !! coreTestAssemblies
     |> Seq.iter (fun p ->
         let result = directExec (fun info ->
                 info.FileName <- dotNetCli
@@ -76,8 +76,13 @@ Target "TestStandard" <| fun _ ->
     ==> "Build"
     ==> "Test"
 
-"TestDesktop"
-    ==> "TestStandard"
+// This is what I would like to see
+//"TestDesktop"
+//    ==> "TestCore"
+//    ==> "Test"
+
+// What we got for now
+"TestCore"
     ==> "Test"
  
 RunTargetOrDefault "Build"

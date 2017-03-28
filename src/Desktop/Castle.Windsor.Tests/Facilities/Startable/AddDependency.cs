@@ -1,6 +1,6 @@
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ModelBuilder;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ModelBuilder;
 
 namespace Castle.Windsor.Tests.Facilities.Startable
 {

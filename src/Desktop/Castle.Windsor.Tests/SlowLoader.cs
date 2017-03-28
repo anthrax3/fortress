@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Threading;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 
 namespace Castle.Windsor.Tests
 {

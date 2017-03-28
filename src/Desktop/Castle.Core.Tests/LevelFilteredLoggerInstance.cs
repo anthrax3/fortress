@@ -1,13 +1,13 @@
 using System;
-using Castle.Core.Core.Logging;
+using Castle.Core.Logging;
 
 namespace Castle.Core.Tests
 {
 	internal class LevelFilteredLoggerInstance : LevelFilteredLogger
 	{
-		private readonly LoggingTests Fixture;
+		private readonly Logging2TestCase Fixture;
 
-		public LevelFilteredLoggerInstance(LoggingTests fixture)
+		public LevelFilteredLoggerInstance(Logging2TestCase fixture)
 		{
 			Fixture = fixture;
 		}

@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Generics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Lifecycle
 {
-	[TestFixture]
+	
 	public class LifecycleActionTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_apply_OnCreate_to_open_generic_components()
 		{
 			var called = false;
@@ -32,7 +32,7 @@ namespace Castle.Windsor.Tests.Lifecycle
 			Assert.True(called);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_apply_OnDestroy_to_open_generic_components()
 		{
 			var called = false;
@@ -44,17 +44,17 @@ namespace Castle.Windsor.Tests.Lifecycle
 			Assert.True(called);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_mix_vaious_overloads_OnCreate()
 		{
 			Container.Register(Component.For<IService>().ImplementedBy<MyService>()
 				.OnCreate((kernel, instance) => instance.Name += "a")
 				.OnCreate(instance => instance.Name += "b"));
 			var service = Container.Resolve<IService>();
-			Assert.That(service.Name, Is.EqualTo("ba"));
+			Assert.True(service.Name == "ba");
 		}
 
-		[Test]
+		[Fact]
 		public void Can_mix_vaious_overloads_OnDestroy()
 		{
 			Container.Register(Component.For<IService>().ImplementedBy<MyService>()
@@ -62,48 +62,48 @@ namespace Castle.Windsor.Tests.Lifecycle
 				.OnDestroy((kernel, instance) => instance.Name += "a")
 				.OnDestroy(instance => instance.Name += "b"));
 			var service = Container.Resolve<IService>();
-			Assert.AreEqual(string.Empty, service.Name);
+			Assert.Equal(string.Empty, service.Name);
 
 			Container.Release(service);
-			Assert.AreEqual("ba", service.Name);
+			Assert.Equal("ba", service.Name);
 		}
 
-		[Test]
+		[Fact]
 		public void CanModify_when_singleton()
 		{
 			Container.Register(Component.For<IService>().ImplementedBy<MyService>()
 				.OnCreate((kernel, instance) => instance.Name += "a"));
 			var service = Container.Resolve<IService>();
-			Assert.That(service.Name, Is.EqualTo("a"));
+			Assert.True(service.Name == "a");
 			service = Container.Resolve<IService>();
-			Assert.That(service.Name, Is.EqualTo("a"));
+			Assert.True(service.Name == "a");
 		}
 
-		[Test]
+		[Fact]
 		public void CanModify_when_singleton_multiple_ordered()
 		{
 			Container.Register(Component.For<IService>().ImplementedBy<MyService>()
 				.OnCreate((kernel, instance) => instance.Name += "a",
 					(kernel, instance) => instance.Name += "b"));
 			var service = Container.Resolve<IService>();
-			Assert.That(service.Name, Is.EqualTo("ab"));
+			Assert.True(service.Name == "ab");
 			service = Container.Resolve<IService>();
-			Assert.That(service.Name, Is.EqualTo("ab"));
+			Assert.True(service.Name == "ab");
 		}
 
-		[Test]
+		[Fact]
 		public void CanModify_when_transient()
 		{
 			MyService2.staticname = "";
 			Container.Register(Component.For<IService2>().ImplementedBy<MyService2>()
 				.LifeStyle.Transient.OnCreate((kernel, instance) => instance.Name += "a"));
 			var service = Container.Resolve<IService2>();
-			Assert.That(service.Name, Is.EqualTo("a"));
+			Assert.True(service.Name == "a");
 			service = Container.Resolve<IService2>();
-			Assert.That(service.Name, Is.EqualTo("aa"));
+			Assert.True(service.Name == "aa");
 		}
 
-		[Test]
+		[Fact]
 		public void CanModify_when_transient_multiple_ordered()
 		{
 			MyService2.staticname = "";
@@ -111,13 +111,13 @@ namespace Castle.Windsor.Tests.Lifecycle
 				.LifeStyle.Transient.OnCreate((kernel, instance) => instance.Name += "a",
 					(kernel, instance) => instance.Name += "b"));
 			var service = Container.Resolve<IService2>();
-			Assert.That(service.Name, Is.EqualTo("ab"));
+			Assert.True(service.Name == "ab");
 
 			service = Container.Resolve<IService2>();
-			Assert.That(service.Name, Is.EqualTo("abab"));
+			Assert.True(service.Name == "abab");
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-326")]
 		public void OnDestroy_called_before_disposal()
 		{
@@ -129,11 +129,11 @@ namespace Castle.Windsor.Tests.Lifecycle
 			var a = Container.Resolve<ADisposable>();
 			Container.Release(a);
 
-			Assert.IsFalse(wasDisposed);
-			Assert.IsTrue(a.Disposed);
+			Assert.False(wasDisposed);
+			Assert.True(a.Disposed);
 		}
 
-		[Test]
+		[Fact]
 		public void OnDestroy_called_on_release()
 		{
 			var called = false;
@@ -141,14 +141,14 @@ namespace Castle.Windsor.Tests.Lifecycle
 				.LifeStyle.Transient
 				.OnDestroy((k, i) => { called = true; }));
 
-			Assert.IsFalse(called);
+			Assert.False(called);
 			var a = Container.Resolve<A>();
 			Container.Release(a);
 
-			Assert.IsTrue(called);
+			Assert.True(called);
 		}
 
-		[Test]
+		[Fact]
 		public void OnDestroy_makes_transient_simple_component_tracked()
 		{
 			Container.Register(Component.For<A>()
@@ -156,11 +156,11 @@ namespace Castle.Windsor.Tests.Lifecycle
 				.OnDestroy((k, i) => { }));
 
 			var a = Container.Resolve<A>();
-			Assert.IsTrue(Kernel.ReleasePolicy.HasTrack(a));
+			Assert.True(Kernel.ReleasePolicy.HasTrack(a));
 			Container.Release(a);
 		}
 
-		[Test]
+		[Fact]
 		public void Works_for_components_obtained_via_factory()
 		{
 			Container.Register(Component.For<IService>()
@@ -169,7 +169,7 @@ namespace Castle.Windsor.Tests.Lifecycle
 
 			var service = Container.Resolve<IService>();
 
-			Assert.That(service.Name, Is.EqualTo("a"));
+			Assert.True(service.Name == "a");
 		}
 	}
 }

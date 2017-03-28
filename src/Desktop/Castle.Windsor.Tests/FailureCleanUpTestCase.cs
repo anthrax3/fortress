@@ -12,28 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.ComponentActivator;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.ComponentActivator;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
 	public class FailureCleanUpTestCase
 	{
-		[SetUp]
-		public void Init()
+		public FailureCleanUpTestCase()
 		{
 			container = new WindsorContainer();
 		}
 
 		private IWindsorContainer container;
 
-		[Test]
+		[Fact]
 		public void When_constructor_dependency_throws_previous_dependencies_get_released()
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
@@ -44,10 +41,10 @@ namespace Castle.Windsor.Tests
 			);
 
 			Assert.Throws<ComponentActivatorException>(() => container.Resolve<DependsOnThrowingComponent>());
-			Assert.AreEqual(1, SimpleServiceDisposable.DisposedCount);
+			Assert.Equal(1, SimpleServiceDisposable.DisposedCount);
 		}
 
-		[Test]
+		[Fact]
 		public void When_constructor_throws_ctor_dependencies_get_released()
 		{
 			SimpleServiceDisposable.DisposedCount = 0;
@@ -57,10 +54,10 @@ namespace Castle.Windsor.Tests
 			);
 
 			Assert.Throws<ComponentActivatorException>(() => container.Resolve<ThrowsInCtorWithDisposableDependency>());
-			Assert.AreEqual(1, SimpleServiceDisposable.DisposedCount);
+			Assert.Equal(1, SimpleServiceDisposable.DisposedCount);
 		}
 
-		[Test]
+		[Fact]
 		public void When_interceptor_throws_previous_dependencies_get_released()
 		{
 			DisposableFoo.ResetDisposedCount();
@@ -72,7 +69,7 @@ namespace Castle.Windsor.Tests
 			);
 
 			Assert.Throws<ComponentActivatorException>(() => container.Resolve<UsesDisposableFoo>());
-			Assert.AreEqual(1, DisposableFoo.DisposedCount);
+			Assert.Equal(1, DisposableFoo.DisposedCount);
 		}
 	}
 }

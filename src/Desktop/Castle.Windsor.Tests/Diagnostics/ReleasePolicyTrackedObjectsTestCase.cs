@@ -15,20 +15,20 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Castle.Windsor.Facilities.TypedFactory;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Releasers;
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Releasers;
+using Castle.Windsor.Diagnostics;
+using Castle.Windsor.Diagnostics.DebuggerViews;
+using Castle.Windsor.Diagnostics.Extensions;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.ContainerExtensions;
-using Castle.Windsor.Windsor.Diagnostics;
-using Castle.Windsor.Windsor.Diagnostics.DebuggerViews;
-using Castle.Windsor.Windsor.Diagnostics.Extensions;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics
 {
-	[TestFixture]
+	
 	public class ReleasePolicyTrackedObjectsTestCase : AbstractContainerTestCase
 	{
 		private DebuggerViewItem GetTrackedObjects()
@@ -43,17 +43,17 @@ namespace Castle.Windsor.Tests.Diagnostics
 			Container.Register(Component.For<T>().LifeStyle.Transient);
 		}
 
-		[Test]
+		[Fact]
 		public void custom_ReleasePolicy_is_not_shown_if_not_implement_the_interface()
 		{
 			Kernel.ReleasePolicy = new MyCustomReleasePolicy();
 			Register<DisposableFoo>();
 			var foo1 = Container.Resolve<DisposableFoo>();
 			var objects = GetTrackedObjects();
-			Assert.IsEmpty((ICollection) objects.Value);
+			Assert.Empty((ICollection) objects.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void List_tracked_alive_instances()
 		{
 			Register<DisposableFoo>();
@@ -62,12 +62,12 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var objects = GetTrackedObjects();
 			var values = (DebuggerViewItem[]) objects.Value;
-			Assert.AreEqual(1, values.Length);
+			Assert.Equal(1, values.Length);
 			var viewItem = (MasterDetailsDebuggerViewItem) values.Single().Value;
-			Assert.AreEqual(2, viewItem.Details.Length);
+			Assert.Equal(2, viewItem.Details.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void List_tracked_alive_instances_in_subscopes()
 		{
 			Register<DisposableFoo>();
@@ -78,12 +78,12 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var objects = GetTrackedObjects();
 			var values = (DebuggerViewItem[]) objects.Value;
-			Assert.AreEqual(3, values.Length);
+			Assert.Equal(3, values.Length);
 			var instances = values.SelectMany(v => ((MasterDetailsDebuggerViewItem) v.Value).Details).ToArray();
-			Assert.AreEqual(4, instances.Length);
+			Assert.Equal(4, instances.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void List_tracked_alive_instances_only()
 		{
 			Register<DisposableFoo>();
@@ -93,12 +93,12 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var objects = GetTrackedObjects();
 			var values = (DebuggerViewItem[]) objects.Value;
-			Assert.AreEqual(1, values.Length);
+			Assert.Equal(1, values.Length);
 			var viewItem = (MasterDetailsDebuggerViewItem) values.Single().Value;
-			Assert.AreEqual(1, viewItem.Details.Length);
+			Assert.Equal(1, viewItem.Details.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void NoTrackingReleasePolicy_does_not_appear()
 		{
 #pragma warning disable 612,618
@@ -108,14 +108,14 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			Container.Resolve<DisposableFoo>();
 			var objects = GetTrackedObjects();
-			Assert.IsEmpty((ICollection) objects.Value);
+			Assert.Empty((ICollection) objects.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Present_even_when_no_objects_were_created()
 		{
 			var objects = GetTrackedObjects();
-			Assert.IsNotNull(objects);
+			Assert.NotNull(objects);
 		}
 	}
 }

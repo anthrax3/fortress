@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Registration
 {
-	[TestFixture]
+	
 	public class AssignableHandlersTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Ignores_generic_components_where_generic_constrants_are_violated()
 		{
 			Kernel.Register(Component.For<CustomerValidator>(),
@@ -29,7 +29,7 @@ namespace Castle.Windsor.Tests.Registration
 
 			var handlers = Kernel.GetAssignableHandlers(typeof(IValidator<CustomerImpl>));
 
-			Assert.AreEqual(1, handlers.Length);
+			Assert.Equal(1, handlers.Length);
 		}
 	}
 }

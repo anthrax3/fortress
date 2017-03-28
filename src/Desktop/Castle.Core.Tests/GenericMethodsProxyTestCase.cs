@@ -13,26 +13,27 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
+using System.Reflection;
 using Castle.Core.Tests.GenClasses;
 using Castle.Core.Tests.GenInterfaces;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class GenericMethodsProxyTestCase : CoreBaseTestCase
 	{
-		[Test]
+		[Fact]
 		public void GenericMethod_WithArrayOfGenericOfGenericArgument()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithMethodWithArrayOfListOfT>();
 			proxy.GenericMethodWithListArrayArgument<string>(null);
 		}
 
-		[Test]
+		[Fact]
 		public void GenericMethod_WithConstraintOnOtherParameter()
 		{
 			var type = typeof(IInterfaceWithGenericMethodWithDependentConstraint);
@@ -44,13 +45,13 @@ namespace Castle.Core.Tests
 			proxy.RegisterType<object, string>();
 
 			var expectedMethod =
-				typeof(IInterfaceWithGenericMethodWithDependentConstraint).GetMethod("RegisterType").MakeGenericMethod(
+				typeof(IInterfaceWithGenericMethodWithDependentConstraint).GetTypeInfo().GetMethod("RegisterType").MakeGenericMethod(
 					typeof(object), typeof(string));
 
-			Assert.AreEqual(expectedMethod, interceptor.Invocation.Method);
+			Assert.Equal(expectedMethod, interceptor.Invocation.Method);
 		}
 
-		[Test]
+		[Fact]
 		public void GenericMethod_WithConstraintOnSurroundingTypeParameter()
 		{
 			var type = typeof(IGenericInterfaceWithGenericMethodWithDependentConstraint<object>);
@@ -62,30 +63,30 @@ namespace Castle.Core.Tests
 			proxy.RegisterType<string>();
 
 			var expectedMethod =
-				typeof(IGenericInterfaceWithGenericMethodWithDependentConstraint<object>).GetMethod("RegisterType").
+				typeof(IGenericInterfaceWithGenericMethodWithDependentConstraint<object>).GetTypeInfo().GetMethod("RegisterType").
 					MakeGenericMethod(typeof(string));
 
-			Assert.AreEqual(expectedMethod, interceptor.Invocation.Method);
+			Assert.Equal(expectedMethod, interceptor.Invocation.Method);
 		}
 
-		[Test]
+		[Fact]
 		public void GenericMethod_WithGenericOfGenericArgument()
 		{
 			var proxy = generator.CreateClassProxy<ClassWithMethodWithGenericOfGenericOfT>();
 			proxy.GenericMethodWithGenericOfGenericArgument<string>(null);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyAdditionalInterfaceWithGenericMethods()
 		{
 			var proxy = (IService) generator.CreateInterfaceProxyWithoutTarget(
 				typeof(IService), new[] {typeof(OnlyGenMethodsInterface)},
 				new StandardInterceptor());
 
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyInterfaceWithGenericMethodWithTwoGenericParametersWhereOneIsBaseToAnother()
 		{
 			generator.CreateInterfaceProxyWithoutTarget<GenericMethodWhereOneGenParamInheritsTheOther>();

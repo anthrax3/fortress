@@ -14,28 +14,24 @@
 
 using System;
 using System.IO;
-using Castle.Core.Core.Logging;
-using NUnit.Framework;
+using Castle.Core.Logging;
+using Xunit;
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
-	public class ConsoleLoggerTestCase
+	public class ConsoleLoggerTestCase : IDisposable
 	{
-		[SetUp]
-		public void ReplaceOut()
+		public ConsoleLoggerTestCase()
 		{
 			outWriter.GetStringBuilder().Length = 0;
 			errorWriter.GetStringBuilder().Length = 0;
-
 			oldOut = Console.Out;
 			oldError = Console.Error;
 			Console.SetOut(outWriter);
 			Console.SetError(errorWriter);
 		}
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 		{
 			Console.SetOut(oldOut);
 			Console.SetError(oldError);
@@ -46,7 +42,7 @@ namespace Castle.Core.Tests
 		private TextWriter oldOut;
 		private TextWriter oldError;
 
-		[Test]
+		[Fact]
 		public void DebugLogger()
 		{
 			var log = new ConsoleLogger("Logger", LoggerLevel.Debug);
@@ -66,10 +62,10 @@ namespace Castle.Core.Tests
 			expected.WriteLine("[Fatal] 'Logger' Some fatal error message");
 			expected.WriteLine("[Warn] 'Logger' Some warn message");
 
-			Assert.AreEqual(expected.GetStringBuilder().ToString(), logcontents, "logcontents don't match");
+			Assert.Equal(expected.GetStringBuilder().ToString(), logcontents);
 		}
 
-		[Test]
+		[Fact]
 		public void ExceptionLogging()
 		{
 			var log = new ConsoleLogger("Logger", LoggerLevel.Debug);
@@ -82,10 +78,10 @@ namespace Castle.Core.Tests
 			expected.WriteLine("[Debug] 'Logger' Some debug message");
 			expected.WriteLine("[Debug] 'Logger' System.Exception: Some exception message ");
 
-			Assert.AreEqual(expected.GetStringBuilder().ToString(), logcontents, "logcontents don't match");
+			Assert.Equal(expected.GetStringBuilder().ToString(), logcontents);
 		}
 
-		[Test]
+		[Fact]
 		public void InfoLogger()
 		{
 			var log = new ConsoleLogger("Logger", LoggerLevel.Info);
@@ -104,10 +100,10 @@ namespace Castle.Core.Tests
 			expected.WriteLine("[Fatal] 'Logger' Some fatal error message");
 			expected.WriteLine("[Warn] 'Logger' Some warn message");
 
-			Assert.AreEqual(expected.GetStringBuilder().ToString(), logcontents, "logcontents don't match");
+			Assert.Equal(expected.GetStringBuilder().ToString(), logcontents);
 		}
 
-		[Test]
+		[Fact]
 		public void WarnLogger()
 		{
 			var log = new ConsoleLogger("Logger", LoggerLevel.Warn);
@@ -125,7 +121,7 @@ namespace Castle.Core.Tests
 			expected.WriteLine("[Fatal] 'Logger' Some fatal error message");
 			expected.WriteLine("[Warn] 'Logger' Some warn message");
 
-			Assert.AreEqual(expected.GetStringBuilder().ToString(), logcontents, "logcontents don't match");
+			Assert.Equal(expected.GetStringBuilder().ToString(), logcontents);
 		}
 	}
 }

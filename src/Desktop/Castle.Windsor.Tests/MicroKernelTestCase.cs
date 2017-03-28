@@ -14,91 +14,91 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
+using Castle.Windsor.Proxy;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.MicroKernel;
-using Castle.Windsor.Windsor.Proxy;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class MicroKernelTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void AddClassComponentWithInterface()
 		{
 			Kernel.Register(Component.For<CustomerImpl>().Named("key"));
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 		}
 
-		[Test]
+		[Fact]
 		public void AddClassComponentWithNoInterface()
 		{
 			Kernel.Register(Component.For(typeof(DefaultCustomer)).Named("key"));
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 		}
 
-		[Test]
+		[Fact]
 		public void AddClassThatHasTwoParametersOfSameTypeAndNoOverloads()
 		{
 			Kernel.Register(Component.For(typeof(ClassWithTwoParametersWithSameType)).Named("test"));
 			Kernel.Register(Component.For<ICommon>().ImplementedBy(typeof(CommonImpl1)).Named("test2"));
 			var resolved = Kernel.Resolve(typeof(ClassWithTwoParametersWithSameType), new Dictionary<object, object>());
-			Assert.IsNotNull(resolved);
+			Assert.NotNull(resolved);
 		}
 
-		[Test]
+		[Fact]
 		public void AddCommonComponent()
 		{
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("key"));
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponentInstance()
 		{
 			var customer = new CustomerImpl();
 			Kernel.Register(Component.For<ICustomer>().Named("key").Instance(customer));
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 
 			var customer2 = Kernel.Resolve<CustomerImpl>("key");
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 
 			customer2 = Kernel.Resolve<ICustomer>() as CustomerImpl;
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponentInstance_ByService()
 		{
 			var customer = new CustomerImpl();
 
 			Kernel.Register(Component.For<ICustomer>().Instance(customer));
-			Assert.AreSame(Kernel.Resolve<ICustomer>(), customer);
+			Assert.Same(Kernel.Resolve<ICustomer>(), customer);
 		}
 
-		[Test]
+		[Fact]
 		public void AddComponentInstance2()
 		{
 			var customer = new CustomerImpl();
 
 			Kernel.Register(Component.For<CustomerImpl>().Named("key").Instance(customer));
-			Assert.IsTrue(Kernel.HasComponent("key"));
+			Assert.True(Kernel.HasComponent("key"));
 
 			var customer2 = Kernel.Resolve<CustomerImpl>("key");
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 
 			customer2 = Kernel.Resolve<CustomerImpl>();
-			Assert.AreSame(customer, customer2);
+			Assert.Same(customer, customer2);
 		}
 
-		[Test]
+		[Fact]
 		public void AdditionalParametersShouldNotBePropagatedInTheDependencyChain()
 		{
 			Kernel.Register(
@@ -108,56 +108,56 @@ namespace Castle.Windsor.Tests
 			var dictionary = new Dictionary<string, object> {{"Name", "name"}, {"Address", "address"}, {"Age", "18"}};
 			var customer = Kernel.Resolve<ICustomer>("cust", dictionary);
 
-			Assert.AreEqual("name", customer.Name);
-			Assert.AreEqual("address", customer.Address);
-			Assert.AreEqual(18, customer.Age);
+			Assert.Equal("name", customer.Name);
+			Assert.Equal("address", customer.Address);
+			Assert.Equal(18, customer.Age);
 
 			var custImpl = customer as CustomerImpl;
 
-			Assert.IsNotNull(custImpl.ExtendedCustomer);
-			Assert.IsNull(custImpl.ExtendedCustomer.Address);
-			Assert.IsNull(custImpl.ExtendedCustomer.Name);
-			Assert.AreEqual(0, custImpl.ExtendedCustomer.Age);
+			Assert.NotNull(custImpl.ExtendedCustomer);
+			Assert.Null(custImpl.ExtendedCustomer.Address);
+			Assert.Null(custImpl.ExtendedCustomer.Name);
+			Assert.Equal(0, custImpl.ExtendedCustomer.Age);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_use_custom_dependencyResolver()
 		{
 			var resolver = new NotImplementedDependencyResolver();
 			var defaultKernel = new DefaultKernel(resolver, new DefaultProxyFactory());
-			Assert.AreSame(resolver, defaultKernel.Resolver);
-			Assert.AreSame(defaultKernel, resolver.Kernel);
+			Assert.Same(resolver, defaultKernel.Resolver);
+			Assert.Same(defaultKernel, resolver.Kernel);
 		}
 
-		[Test]
+		[Fact]
 		public void HandlerForClassComponent()
 		{
 			Kernel.Register(Component.For<CustomerImpl>().Named("key"));
 			var handler = Kernel.GetHandler("key");
-			Assert.IsNotNull(handler);
+			Assert.NotNull(handler);
 		}
 
-		[Test]
+		[Fact]
 		public void HandlerForClassWithNoInterface()
 		{
 			Kernel.Register(Component.For<DefaultCustomer>().Named("key"));
 			var handler = Kernel.GetHandler("key");
-			Assert.IsNotNull(handler);
+			Assert.NotNull(handler);
 		}
 
-		[Test]
+		[Fact]
 		public void IOC_50_AddTwoComponentWithSameService_RequestFirstByKey_RemoveFirst_RequestByService_ShouldReturnSecond()
 		{
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("key"));
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("key2"));
 			var result = Kernel.Resolve<object>("key");
-			Assert.IsNotNull(result);
+			Assert.NotNull(result);
 
 			result = Kernel.Resolve<ICustomer>();
-			Assert.IsNotNull(result);
+			Assert.NotNull(result);
 		}
 
-		[Test]
+		[Fact]
 		public void KeyCollision()
 		{
 			Assert.Throws<ComponentRegistrationException>(() =>
@@ -167,14 +167,14 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-327")]
 		public void ReleaseComponent_null_silently_ignored_doesnt_throw()
 		{
-			Assert.DoesNotThrow(() => Kernel.ReleaseComponent(null));
+			Kernel.ReleaseComponent(null);
 		}
 
-		[Test]
+		[Fact]
 		public void Resolve_all_when_dependency_is_missing_throws_DependencyResolverException()
 		{
 			Kernel.Register(
@@ -184,7 +184,7 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<DependencyResolverException>(() => Kernel.ResolveAll<C>(new Arguments {{"fakeDependency", "Stefan!"}}));
 		}
 
-		[Test]
+		[Fact]
 		public void Resolve_all_when_dependency_is_unresolvable_throws_HandlerException()
 		{
 			Kernel.Register(
@@ -195,34 +195,34 @@ namespace Castle.Windsor.Tests
 			Assert.Throws<HandlerException>(() => Kernel.ResolveAll<C>());
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>());
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl1>());
 			var services = Kernel.ResolveAll<ICommon>();
-			Assert.AreEqual(2, services.Length);
+			Assert.Equal(2, services.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_does_handle_multi_service_components()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("test"));
 			Kernel.Register(Component.For<ICommonSub1, ICommon>().ImplementedBy<CommonSub1Impl>().Named("test2"));
 			var services = Kernel.ResolveAll<ICommon>();
-			Assert.AreEqual(2, services.Length);
+			Assert.Equal(2, services.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_does_NOT_account_for_assignable_services()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy<CommonImpl2>().Named("test"));
 			Kernel.Register(Component.For<ICommonSub1>().ImplementedBy<CommonSub1Impl>().Named("test2"));
 			var services = Kernel.ResolveAll<ICommon>();
-			Assert.AreEqual(1, services.Length);
+			Assert.Equal(1, services.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_resolves_when_dependency_provideded_dynamically()
 		{
 			Kernel.Register(Component.For<ICommon>()
@@ -231,18 +231,18 @@ namespace Castle.Windsor.Tests
 			);
 
 			var services = Kernel.ResolveAll<ICommon>();
-			Assert.AreEqual(1, services.Length);
+			Assert.Equal(1, services.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAll_resolves_when_dependency_provideded_inline()
 		{
 			Kernel.Register(Component.For<ICommon>().ImplementedBy(typeof(CommonImplWithDependency)).Named("test"));
 			var services = Kernel.ResolveAll<ICommon>(new Arguments().Insert("customer", new CustomerImpl()));
-			Assert.AreEqual(1, services.Length);
+			Assert.Equal(1, services.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveUsingAddionalParametersForConfigurationInsteadOfServices()
 		{
 			Kernel.Register(
@@ -250,19 +250,19 @@ namespace Castle.Windsor.Tests
 					LifestyleType.Transient));
 
 			var customer = Kernel.Resolve<ICustomer>("cust");
-			Assert.IsNull(customer.Address);
-			Assert.IsNull(customer.Name);
-			Assert.AreEqual(0, customer.Age);
+			Assert.Null(customer.Address);
+			Assert.Null(customer.Name);
+			Assert.Equal(0, customer.Age);
 
 			var dictionary = new Dictionary<string, object> {{"Name", "name"}, {"Address", "address"}, {"Age", "18"}};
 			customer = Kernel.Resolve<ICustomer>("cust", dictionary);
 
-			Assert.AreEqual("name", customer.Name);
-			Assert.AreEqual("address", customer.Address);
-			Assert.AreEqual(18, customer.Age);
+			Assert.Equal("name", customer.Name);
+			Assert.Equal("address", customer.Address);
+			Assert.Equal(18, customer.Age);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveViaGenerics()
 		{
 			Kernel.Register(Component.For<ICustomer>().ImplementedBy<CustomerImpl>().Named("cust"));
@@ -277,21 +277,21 @@ namespace Castle.Windsor.Tests
 			};
 			var customer2 = Kernel.Resolve<ICustomer>("cust2", dictionary);
 
-			Assert.AreEqual(customer.GetType(), typeof(CustomerImpl));
-			Assert.AreEqual(customer2.GetType(), typeof(CustomerImpl2));
+			Assert.Equal(customer.GetType(), typeof(CustomerImpl));
+			Assert.Equal(customer2.GetType(), typeof(CustomerImpl2));
 		}
 
 
-		[Test]
+		[Fact]
 		public void Subsystems_are_case_insensitive()
 		{
-			Assert.IsNotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey));
-			Assert.IsNotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToLower()));
-			Assert.IsNotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpper()));
+			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey));
+			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToLowerInvariant()));
+			Assert.NotNull(Kernel.GetSubSystem(SubSystemConstants.ConfigurationStoreKey.ToUpperInvariant()));
 		}
 
 
-		[Test]
+		[Fact]
 		public void UnregisteredComponentByService()
 		{
 			Assert.Throws<ComponentNotFoundException>(() =>

@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using NUnit.Framework;
+using System;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
-	public class CustomActivatorTestCase
+	
+	public class CustomActivatorTestCase : IDisposable
 	{
-		[SetUp]
-		public void SetUp()
+		public CustomActivatorTestCase()
 		{
 			kernel = new DefaultKernel();
 		}
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 		{
 			kernel.Dispose();
 		}
 
 		private IKernel kernel;
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_primitive_dependency_via_factory()
 		{
 			kernel.Register(
@@ -45,7 +44,7 @@ namespace Castle.Windsor.Tests
 			kernel.Resolve<ClassWithPrimitiveDependency>();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_primitive_dependency_via_instance()
 		{
 			kernel.Register(
@@ -55,7 +54,7 @@ namespace Castle.Windsor.Tests
 			kernel.Resolve<ClassWithPrimitiveDependency>();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_service_dependency_via_factory()
 		{
 			kernel.Register(
@@ -65,7 +64,7 @@ namespace Castle.Windsor.Tests
 			kernel.Resolve<ClassWithServiceDependency>();
 		}
 
-		[Test]
+		[Fact]
 		public void Can_resolve_component_with_service_dependency_via_instance()
 		{
 			kernel.Register(

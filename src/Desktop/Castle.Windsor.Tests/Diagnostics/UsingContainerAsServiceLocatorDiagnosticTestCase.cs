@@ -13,14 +13,13 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
+using Castle.Windsor.Diagnostics;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using Castle.Windsor.Windsor;
-using Castle.Windsor.Windsor.Diagnostics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics
 {
@@ -34,12 +33,13 @@ namespace Castle.Windsor.Tests.Diagnostics
 			diagnostic = host.GetDiagnostic<IUsingContainerAsServiceLocatorDiagnostic>();
 		}
 
-		[TestCase(typeof(IKernel))]
-		[TestCase(typeof(IKernelInternal))]
-		[TestCase(typeof(IKernelEvents))]
-		[TestCase(typeof(IWindsorContainer))]
-		[TestCase(typeof(DefaultKernel))]
-		[TestCase(typeof(WindsorContainer))]
+        [Theory]
+		[InlineData(typeof(IKernel))]
+		[InlineData(typeof(IKernelInternal))]
+		[InlineData(typeof(IKernelEvents))]
+		[InlineData(typeof(IWindsorContainer))]
+		[InlineData(typeof(DefaultKernel))]
+		[InlineData(typeof(WindsorContainer))]
 		public void Detects_ctor_dependency_on(Type type)
 		{
 			var generic = typeof(GenericWithCtor<>).MakeGenericType(type);
@@ -47,15 +47,16 @@ namespace Castle.Windsor.Tests.Diagnostics
 				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
-			Assert.AreEqual(1, serviceLocators.Length);
+			Assert.Equal(1, serviceLocators.Length);
 		}
 
-		[TestCase(typeof(IKernel))]
-		[TestCase(typeof(IKernelInternal))]
-		[TestCase(typeof(IKernelEvents))]
-		[TestCase(typeof(IWindsorContainer))]
-		[TestCase(typeof(DefaultKernel))]
-		[TestCase(typeof(WindsorContainer))]
+        [Theory]
+        [InlineData(typeof(IKernel))]
+		[InlineData(typeof(IKernelInternal))]
+		[InlineData(typeof(IKernelEvents))]
+		[InlineData(typeof(IWindsorContainer))]
+		[InlineData(typeof(DefaultKernel))]
+		[InlineData(typeof(WindsorContainer))]
 		public void Detects_property_dependency_on(Type type)
 		{
 			var generic = typeof(GenericWithProperty<>).MakeGenericType(type);
@@ -63,10 +64,10 @@ namespace Castle.Windsor.Tests.Diagnostics
 				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
-			Assert.AreEqual(1, serviceLocators.Length);
+			Assert.Equal(1, serviceLocators.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Ignores_interceptors()
 		{
 			Container.Register(
@@ -76,10 +77,10 @@ namespace Castle.Windsor.Tests.Diagnostics
 				Component.For<A>().Interceptors("b"));
 
 			var serviceLocators = diagnostic.Inspect();
-			Assert.IsEmpty(serviceLocators);
+			Assert.Empty(serviceLocators);
 		}
 
-		[Test]
+		[Fact]
 		public void Ignores_lazy()
 		{
 			Container.Register(Component.For<ILazyComponentLoader>()
@@ -90,17 +91,17 @@ namespace Castle.Windsor.Tests.Diagnostics
 			Container.Resolve<Lazy<B>>(); // to trigger lazy registration of lazy
 
 			var serviceLocators = diagnostic.Inspect();
-			Assert.IsEmpty(serviceLocators);
+			Assert.Empty(serviceLocators);
 		}
 
-		[Test]
+		[Fact]
 		public void Successfully_handles_cases_with_no_SL_usages()
 		{
 			Container.Register(Component.For<B>(),
 				Component.For<A>());
 
 			var serviceLocators = diagnostic.Inspect();
-			Assert.IsEmpty(serviceLocators);
+			Assert.Empty(serviceLocators);
 		}
 	}
 }

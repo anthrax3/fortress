@@ -12,25 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Linq;
-using Castle.Core.Core;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
 using Castle.Windsor.Tests.ProxyInfrastructure;
-using Castle.Windsor.Tests.XmlFiles;
-using Castle.Windsor.Windsor.Installer;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Proxies
 {
-	[TestFixture]
+	
 	public class ProxyBehaviorTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Forwarded_type_proxy_implements_all_service_types_class_and_interface_services()
 		{
 			Container.Register(Component.For<StandardInterceptor>()
@@ -45,11 +42,11 @@ namespace Castle.Windsor.Tests.Proxies
 			var common2 = Container.Resolve<ICommon2>();
 			var impl = Container.Resolve<TwoInterfacesImpl>();
 
-			Assert.AreSame(common.GetType(), common2.GetType());
-			Assert.AreSame(common.GetType(), impl.GetType());
+			Assert.Same(common.GetType(), common2.GetType());
+			Assert.Same(common.GetType(), impl.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void Forwarded_type_proxy_implements_all_service_types_interface_and_class_services()
 		{
 			Container.Register(Component.For<StandardInterceptor>()
@@ -64,11 +61,11 @@ namespace Castle.Windsor.Tests.Proxies
 			var common2 = Container.Resolve<ICommon2>();
 			var impl = Container.Resolve<TwoInterfacesImpl>();
 
-			Assert.AreSame(common.GetType(), common2.GetType());
-			Assert.AreSame(common.GetType(), impl.GetType());
+			Assert.Same(common.GetType(), common2.GetType());
+			Assert.Same(common.GetType(), impl.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void Forwarded_type_proxy_implements_all_service_types_interface_services_only()
 		{
 			Container.Register(Component.For<StandardInterceptor>()
@@ -82,10 +79,10 @@ namespace Castle.Windsor.Tests.Proxies
 			var common = Container.Resolve<ICommon>();
 			var common2 = Container.Resolve<ICommon2>();
 
-			Assert.AreSame(common.GetType(), common2.GetType());
+			Assert.Same(common.GetType(), common2.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void InterceptorSelector_can_be_OnBehalfAware()
 		{
 			OnBehalfAwareInterceptorSelector.target = null;
@@ -99,13 +96,13 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var service = Container.Resolve<ISimpleService>();
 
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
-			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
-			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareInterceptorSelector.target.Services.Single());
+			Assert.True(ProxyServices.IsDynamicProxy(service.GetType()));
+			Assert.NotNull(OnBehalfAwareInterceptorSelector.target);
+			Assert.Equal(typeof(ISimpleService), OnBehalfAwareInterceptorSelector.target.Services.Single());
 		}
 
 
-		[Test]
+		[Fact]
 		public void OnBehalfAware_InterceptorSelector_works_on_dependencies()
 		{
 			OnBehalfAwareInterceptorSelector.target = null;
@@ -118,12 +115,12 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var service = Container.Resolve<UsesSimpleComponent1>();
 
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
-			Assert.IsNotNull(OnBehalfAwareInterceptorSelector.target);
-			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareInterceptorSelector.target.Services.Single());
+			Assert.True(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
+			Assert.NotNull(OnBehalfAwareInterceptorSelector.target);
+			Assert.Equal(typeof(SimpleComponent1), OnBehalfAwareInterceptorSelector.target.Services.Single());
 		}
 
-		[Test]
+		[Fact]
 		public void OnBehalfAware_ProxyGenarationHook_works_on_dependencies()
 		{
 			OnBehalfAwareProxyGenerationHook.target = null;
@@ -136,12 +133,12 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var service = Container.Resolve<UsesSimpleComponent1>();
 
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
-			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
-			Assert.AreEqual(typeof(SimpleComponent1), OnBehalfAwareProxyGenerationHook.target.Services.Single());
+			Assert.True(ProxyServices.IsDynamicProxy(service.Dependency.GetType()));
+			Assert.NotNull(OnBehalfAwareProxyGenerationHook.target);
+			Assert.Equal(typeof(SimpleComponent1), OnBehalfAwareProxyGenerationHook.target.Services.Single());
 		}
 
-		[Test]
+		[Fact]
 		public void Proxy_implements_only_service_interfaces_or_explicitly_added_interfaces()
 		{
 			Container.Register(Component.For<CountingInterceptor>()
@@ -154,10 +151,10 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var common = Container.Resolve<ICommon>();
 
-			Assert.IsInstanceOf<ICommon2>(common);
+			Assert.IsAssignableFrom<ICommon2>(common);
 		}
 
-		[Test]
+		[Fact]
 		public void ProxyGenarationHook_can_be_OnBehalfAware()
 		{
 			OnBehalfAwareProxyGenerationHook.target = null;
@@ -171,9 +168,9 @@ namespace Castle.Windsor.Tests.Proxies
 
 			var service = Container.Resolve<ISimpleService>();
 
-			Assert.IsTrue(ProxyServices.IsDynamicProxy(service.GetType()));
-			Assert.IsNotNull(OnBehalfAwareProxyGenerationHook.target);
-			Assert.AreEqual(typeof(ISimpleService), OnBehalfAwareProxyGenerationHook.target.Services.Single());
+			Assert.True(ProxyServices.IsDynamicProxy(service.GetType()));
+			Assert.NotNull(OnBehalfAwareProxyGenerationHook.target);
+			Assert.Equal(typeof(ISimpleService), OnBehalfAwareProxyGenerationHook.target.Services.Single());
 		}
 	}
 }

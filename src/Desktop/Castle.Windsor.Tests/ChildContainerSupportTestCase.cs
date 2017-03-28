@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using Castle.Windsor.Windsor.Configuration.Interpreters;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class ChildContainerSupportTestCase : AbstractContainerTestCase
 	{
 		protected override void AfterContainerCreated()
@@ -29,35 +27,35 @@ namespace Castle.Windsor.Tests
 			Container.Register(Component.For(typeof(A)).Named("A"));
 		}
 
-		[Test]
+		[Fact]
 		public void AddAndRemoveChildContainer()
 		{
 			IWindsorContainer childcontainer = new WindsorContainer();
 			Container.AddChildContainer(childcontainer);
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 
 			Container.RemoveChildContainer(childcontainer);
-			Assert.IsNull(childcontainer.Parent);
+			Assert.Null(childcontainer.Parent);
 
 			Container.AddChildContainer(childcontainer);
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 		}
 
-		[Test]
+		[Fact]
 		public void AddAndRemoveChildContainerWithProperty()
 		{
 			IWindsorContainer childcontainer = new WindsorContainer();
 			childcontainer.Parent = Container;
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 
 			childcontainer.Parent = null;
-			Assert.IsNull(childcontainer.Parent);
+			Assert.Null(childcontainer.Parent);
 
 			childcontainer.Parent = Container;
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 		}
 
-		[Test]
+		[Fact]
 		[Bug("IOC-127")]
 		public void AddComponentInstanceAndChildContainers()
 		{
@@ -70,11 +68,11 @@ namespace Castle.Windsor.Tests
 			Container.Register(Component.For<IEmptyService>().Instance(clock2));
 			child.Register(Component.For<IEmptyService>().Instance(clock1));
 
-			Assert.AreSame(clock2, Container.Resolve<IEmptyService>());
-			Assert.AreSame(clock1, child.Resolve<IEmptyService>());
+			Assert.Same(clock2, Container.Resolve<IEmptyService>());
+			Assert.Same(clock1, child.Resolve<IEmptyService>());
 		}
 
-		[Test]
+		[Fact]
 		public void AddingToTwoParentContainsThrowsKernelException()
 		{
 			Assert.Throws<KernelException>(() =>
@@ -86,7 +84,7 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void AddingToTwoParentWithPropertyContainsThrowsKernelException()
 		{
 			Assert.Throws<KernelException>(() =>
@@ -98,43 +96,43 @@ namespace Castle.Windsor.Tests
 			});
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAgainstParentContainer()
 		{
 			IWindsorContainer childcontainer = new WindsorContainer();
 			Container.AddChildContainer(childcontainer);
 
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 
 			childcontainer.Register(Component.For(typeof(B)).Named("B"));
 			var b = childcontainer.Resolve<B>("B");
-			Assert.IsNotNull(b);
+			Assert.NotNull(b);
 		}
 
-		[Test]
+		[Fact]
 		public void ResolveAgainstParentContainerWithProperty()
 		{
 			IWindsorContainer childcontainer = new WindsorContainer {Parent = Container};
 
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 
 			childcontainer.Register(Component.For(typeof(B)).Named("B"));
 			var b = childcontainer.Resolve<B>("B");
 
-			Assert.IsNotNull(b);
+			Assert.NotNull(b);
 		}
 
-		[Test]
+		[Fact]
 		public void StartWithParentContainer()
 		{
-			IWindsorContainer childcontainer = new WindsorContainer(Container, new XmlInterpreter());
+			IWindsorContainer childcontainer = new WindsorContainer(Container);
 
-			Assert.AreEqual(Container, childcontainer.Parent);
+			Assert.Equal(Container, childcontainer.Parent);
 
 			childcontainer.Register(Component.For(typeof(B)).Named("B"));
 			var b = childcontainer.Resolve<B>("B");
 
-			Assert.IsNotNull(b);
+			Assert.NotNull(b);
 		}
 	}
 }

@@ -13,7 +13,8 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
+using System.Reflection;
+using Castle.DynamicProxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {
@@ -22,7 +23,7 @@ namespace Castle.Windsor.Tests.Interceptors
 		public void Intercept(IInvocation invocation)
 		{
 			var returnType = invocation.Method.ReturnType;
-			if (returnType.IsValueType && returnType != typeof(void))
+			if (returnType.GetTypeInfo().IsValueType && returnType != typeof(void))
 				invocation.ReturnValue = Activator.CreateInstance(returnType);
 		}
 	}

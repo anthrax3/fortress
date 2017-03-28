@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.ModelBuilder;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel;
+using Castle.MicroKernel.ModelBuilder;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Handlers
 {
-	[TestFixture]
+	
 	public class EmptyConstructorTestCase : AbstractContainerTestCase
 	{
 		private class ExplicitRequiredDependencyDescriptor : IComponentModelDescriptor
@@ -48,24 +48,24 @@ namespace Castle.Windsor.Tests.Handlers
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void Component_With_Explicit_Required_Dependency_Will_Be_Marked_Waiting()
 		{
 			Container.Register(Component.For<AProp>()
 				.AddDescriptor(new ExplicitRequiredDependencyDescriptor()));
 
 			var handler = Container.Kernel.GetHandler(typeof(AProp));
-			Assert.AreEqual(HandlerState.WaitingDependency, handler.CurrentState);
+			Assert.Equal(HandlerState.WaitingDependency, handler.CurrentState);
 		}
 
-		[Test]
+		[Fact]
 		public void Component_With_Required_Properies_Will_Be_Marked_Waiting()
 		{
 			Container.Register(Component.For<AProp>()
 				.AddDescriptor(new RequirePropertyDescriptor()));
 
 			var handler = Container.Kernel.GetHandler(typeof(AProp));
-			Assert.AreEqual(HandlerState.WaitingDependency, handler.CurrentState);
+			Assert.Equal(HandlerState.WaitingDependency, handler.CurrentState);
 		}
 	}
 }

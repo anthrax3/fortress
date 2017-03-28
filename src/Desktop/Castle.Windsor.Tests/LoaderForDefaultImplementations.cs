@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using System.Linq;
+using System.Reflection;
+using Castle.Core.Internal;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 
 namespace Castle.Windsor.Tests
 {
@@ -9,10 +12,10 @@ namespace Castle.Windsor.Tests
 	{
 		public IRegistration Load(string name, Type service, IDictionary arguments)
 		{
-			if (!Attribute.IsDefined(service, typeof(DefaultImplementationAttribute)))
+			if (!service.GetAttributes<DefaultImplementationAttribute>().Any())
 				return null;
 
-			var attributes = service.GetCustomAttributes(typeof(DefaultImplementationAttribute), false);
+			var attributes = service.GetTypeInfo().GetCustomAttributes(typeof(DefaultImplementationAttribute), false).ToArray();
 			var attribute = attributes[0] as DefaultImplementationAttribute;
 			return Component.For(service).ImplementedBy(attribute.Implementation).Named(name);
 		}

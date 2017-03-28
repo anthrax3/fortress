@@ -14,12 +14,13 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy.Generators;
-using NUnit.Framework;
+using System.Reflection;
+using Castle.DynamicProxy.Generators;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MethodComparerTestCase
 	{
 		public static void GenericMethod<T>()
@@ -52,67 +53,67 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CompareMethods()
 		{
 			var mc = MethodSignatureComparer.Instance;
-			Assert.IsTrue(mc.Equals(null, null));
-			Assert.IsFalse(mc.Equals(null, typeof(object).GetMethod("ToString")));
+			Assert.True(mc.Equals(null, null));
+			Assert.False(mc.Equals(null, typeof(object).GetTypeInfo().GetMethod("ToString")));
 
-			Assert.IsTrue(mc.Equals(typeof(object).GetMethod("ToString"), typeof(object).GetMethod("ToString")));
-			Assert.IsTrue(mc.Equals(typeof(List<>).GetMethod("get_Count"), typeof(List<>).GetMethod("get_Count")));
-			Assert.IsTrue(mc.Equals(typeof(List<int>).GetMethod("get_Count"), typeof(List<int>).GetMethod("get_Count")));
-			Assert.IsTrue(mc.Equals(typeof(List<>).GetMethod("get_Count"), typeof(List<int>).GetMethod("get_Count")));
-			Assert.IsTrue(mc.Equals(typeof(List<string>).GetMethod("get_Count"), typeof(List<>).GetMethod("get_Count")));
-			Assert.IsTrue(mc.Equals(typeof(List<>).GetMethod("get_Item"), typeof(List<>).GetMethod("get_Item")));
+			Assert.True(mc.Equals(typeof(object).GetTypeInfo().GetMethod("ToString"), typeof(object).GetTypeInfo().GetMethod("ToString")));
+			Assert.True(mc.Equals(typeof(List<>).GetTypeInfo().GetMethod("get_Count"), typeof(List<>).GetTypeInfo().GetMethod("get_Count")));
+			Assert.True(mc.Equals(typeof(List<int>).GetTypeInfo().GetMethod("get_Count"), typeof(List<int>).GetTypeInfo().GetMethod("get_Count")));
+			Assert.True(mc.Equals(typeof(List<>).GetTypeInfo().GetMethod("get_Count"), typeof(List<int>).GetTypeInfo().GetMethod("get_Count")));
+			Assert.True(mc.Equals(typeof(List<string>).GetTypeInfo().GetMethod("get_Count"), typeof(List<>).GetTypeInfo().GetMethod("get_Count")));
+			Assert.True(mc.Equals(typeof(List<>).GetTypeInfo().GetMethod("get_Item"), typeof(List<>).GetTypeInfo().GetMethod("get_Item")));
 
-			Assert.IsTrue(mc.Equals(typeof(List<string>).GetMethod("Add"), typeof(List<string>).GetMethod("Add")));
-			Assert.IsFalse(mc.Equals(typeof(List<string>).GetMethod("Add"), typeof(List<>).GetMethod("Add")));
-			Assert.IsFalse(mc.Equals(typeof(List<>).GetMethod("Add"), typeof(List<string>).GetMethod("Add")));
+			Assert.True(mc.Equals(typeof(List<string>).GetTypeInfo().GetMethod("Add"), typeof(List<string>).GetTypeInfo().GetMethod("Add")));
+			Assert.False(mc.Equals(typeof(List<string>).GetTypeInfo().GetMethod("Add"), typeof(List<>).GetTypeInfo().GetMethod("Add")));
+			Assert.False(mc.Equals(typeof(List<>).GetTypeInfo().GetMethod("Add"), typeof(List<string>).GetTypeInfo().GetMethod("Add")));
 
-			Assert.IsTrue(mc.Equals(typeof(List<string>).GetMethod("get_Item"), typeof(List<string>).GetMethod("get_Item")));
-			Assert.IsFalse(mc.Equals(typeof(List<string>).GetMethod("get_Item"), typeof(List<>).GetMethod("get_Item")));
-			Assert.IsFalse(mc.Equals(typeof(List<>).GetMethod("get_Item"), typeof(List<string>).GetMethod("get_Item")));
+			Assert.True(mc.Equals(typeof(List<string>).GetTypeInfo().GetMethod("get_Item"), typeof(List<string>).GetTypeInfo().GetMethod("get_Item")));
+			Assert.False(mc.Equals(typeof(List<string>).GetTypeInfo().GetMethod("get_Item"), typeof(List<>).GetTypeInfo().GetMethod("get_Item")));
+			Assert.False(mc.Equals(typeof(List<>).GetTypeInfo().GetMethod("get_Item"), typeof(List<string>).GetTypeInfo().GetMethod("get_Item")));
 
-			Assert.IsTrue(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod"),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod")));
-			Assert.IsTrue(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod").MakeGenericMethod(typeof(int))));
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod").MakeGenericMethod(typeof(string))));
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod")));
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod"),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod2")));
+			Assert.True(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod"),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod")));
+			Assert.True(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod").MakeGenericMethod(typeof(int))));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod").MakeGenericMethod(typeof(string))));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod").MakeGenericMethod(typeof(int)),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod")));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod"),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod2")));
 
-			Assert.IsTrue(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod3"),
-				typeof(MethodComparerTestCase).GetMethod("GenericMethod3")));
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod3"),
-				typeof(NewScope).GetMethod("GenericMethod3")));
-			Assert.IsTrue(
-				mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(int)),
-					typeof(NewScope).GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(int))));
+			Assert.True(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3"),
+				typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3")));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3"),
+				typeof(NewScope).GetTypeInfo().GetMethod("GenericMethod3")));
+			Assert.True(
+				mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(int)),
+					typeof(NewScope).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(int))));
 
-			Assert.IsFalse(
+			Assert.False(
 				mc.Equals(
-					typeof(MethodComparerTestCase).GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string)),
-					typeof(NewScope).GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string))));
+					typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string)),
+					typeof(NewScope).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string))));
 
-			Assert.IsFalse(
+			Assert.False(
 				mc.Equals(
-					typeof(MethodComparerTestCase).GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string)),
-					typeof(NewScope).GetMethod("GenericMethod3").MakeGenericMethod(typeof(string), typeof(int))));
+					typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(int), typeof(string)),
+					typeof(NewScope).GetTypeInfo().GetMethod("GenericMethod3").MakeGenericMethod(typeof(string), typeof(int))));
 
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod3"),
-				typeof(FakeScope).GetMethod("GenericMethod3")));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod3"),
+				typeof(FakeScope).GetTypeInfo().GetMethod("GenericMethod3")));
 
-			Assert.IsFalse(mc.Equals(typeof(MethodComparerTestCase).GetMethod("GenericMethod"),
-				typeof(FakeScope).GetMethod("GenericMethod")));
+			Assert.False(mc.Equals(typeof(MethodComparerTestCase).GetTypeInfo().GetMethod("GenericMethod"),
+				typeof(FakeScope).GetTypeInfo().GetMethod("GenericMethod")));
 
-			Assert.IsFalse(mc.Equals(typeof(Console).GetMethod("WriteLine", new[] {typeof(object)}),
-				typeof(Console).GetMethod("WriteLine", new[] {typeof(string), typeof(object[])})));
-			Assert.IsTrue(mc.Equals(typeof(Console).GetMethod("WriteLine", new[] {typeof(string), typeof(object[])}),
-				typeof(Console).GetMethod("WriteLine", new[] {typeof(string), typeof(object[])})));
+			Assert.False(mc.Equals(typeof(Console).GetTypeInfo().GetMethod("WriteLine", new[] {typeof(object)}),
+				typeof(Console).GetTypeInfo().GetMethod("WriteLine", new[] {typeof(string), typeof(object[])})));
+			Assert.True(mc.Equals(typeof(Console).GetTypeInfo().GetMethod("WriteLine", new[] {typeof(string), typeof(object[])}),
+				typeof(Console).GetTypeInfo().GetMethod("WriteLine", new[] {typeof(string), typeof(object[])})));
 		}
 	}
 }

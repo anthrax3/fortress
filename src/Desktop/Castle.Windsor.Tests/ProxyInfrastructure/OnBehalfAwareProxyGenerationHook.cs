@@ -14,10 +14,10 @@
 
 using System;
 using System.Reflection;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Interceptor;
-using NUnit.Framework;
+using Castle.Core;
+using Castle.Core.Interceptor;
+using Castle.DynamicProxy;
+using Xunit;
 
 namespace Castle.Windsor.Tests.ProxyInfrastructure
 {
@@ -32,17 +32,17 @@ namespace Castle.Windsor.Tests.ProxyInfrastructure
 
 		public void MethodsInspected()
 		{
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 		}
 
 		public void NonProxyableMemberNotification(Type type, MemberInfo memberInfo)
 		{
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 		}
 
 		public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
 		{
-			Assert.IsNotNull(target);
+			Assert.NotNull(target);
 			return false;
 		}
 	}

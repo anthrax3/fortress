@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
+using System.Reflection;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
 	public class IsFallbackTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Can_make_a_component_fallback_via_AllTypes_1()
 		{
 			Container.Register(
@@ -30,10 +31,10 @@ namespace Castle.Windsor.Tests
 					.ConfigureFor<EmptyServiceB>(c => c.IsFallback()));
 			var obj = Container.Resolve<IEmptyService>();
 
-			Assert.IsNotInstanceOf<EmptyServiceB>(obj);
+			Assert.IsNotType<EmptyServiceB>(obj);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_make_a_component_fallback_via_AllTypes_2()
 		{
 			Container.Register(
@@ -43,24 +44,24 @@ namespace Castle.Windsor.Tests
 					.ConfigureFor<EmptyServiceA>(c => c.IsFallback()));
 			var obj = Container.Resolve<IEmptyService>();
 
-			Assert.IsNotInstanceOf<EmptyServiceA>(obj);
+			Assert.IsNotType<EmptyServiceA>(obj);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_make_first_component_default_with_filter()
 		{
-			Container.Register(Component.For<IEmptyService, EmptyServiceA, object>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.IsInterface),
+			Container.Register(Component.For<IEmptyService, EmptyServiceA, object>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.GetTypeInfo().IsInterface),
 				Component.For<IEmptyService, EmptyServiceB, object>().ImplementedBy<EmptyServiceB>());
 
 			var obj = Container.Resolve<IEmptyService>();
 
-			Assert.IsInstanceOf<EmptyServiceB>(obj);
+			Assert.IsType<EmptyServiceB>(obj);
 
 			var obj2 = Container.Resolve<object>();
-			Assert.IsInstanceOf<EmptyServiceA>(obj2);
+			Assert.IsType<EmptyServiceA>(obj2);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_make_first_component_fallback()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(),
@@ -68,22 +69,22 @@ namespace Castle.Windsor.Tests
 
 			var obj = Container.Resolve<IEmptyService>();
 
-			Assert.IsInstanceOf<EmptyServiceB>(obj);
+			Assert.IsType<EmptyServiceB>(obj);
 		}
 
-		[Test]
+		[Fact]
 		public void Does_affect_order_when_using_ResolveAll()
 		{
-			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.IsInterface),
+			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(t => t.GetTypeInfo().IsInterface),
 				Component.For<IEmptyService>().ImplementedBy<EmptyServiceB>());
 
 			var obj = Container.ResolveAll<IEmptyService>();
 
-			Assert.IsInstanceOf<EmptyServiceB>(obj[0]);
-			Assert.IsInstanceOf<EmptyServiceA>(obj[1]);
+			Assert.IsType<EmptyServiceB>(obj[0]);
+			Assert.IsType<EmptyServiceA>(obj[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void Later_fallback_does_not_override_earlier_one()
 		{
 			Container.Register(Component.For<IEmptyService>().ImplementedBy<EmptyServiceA>().IsFallback(),
@@ -91,7 +92,7 @@ namespace Castle.Windsor.Tests
 
 			var obj = Container.Resolve<IEmptyService>();
 
-			Assert.IsInstanceOf<EmptyServiceA>(obj);
+			Assert.IsType<EmptyServiceA>(obj);
 		}
 	}
 }

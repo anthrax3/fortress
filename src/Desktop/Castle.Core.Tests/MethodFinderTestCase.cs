@@ -15,17 +15,17 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Castle.Core.DynamicProxy.Generators;
-using NUnit.Framework;
+using Castle.DynamicProxy.Generators;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MethodFinderTestCase
 	{
 		private static void AssertArraysAreEqualUnsorted(object[] expected, object[] actual)
 		{
-			Assert.AreEqual(expected.Length, actual.Length);
+			Assert.Equal(expected.Length, actual.Length);
 			var actualAsList = new List<object>(actual);
 			foreach (var expectedElement in expected)
 			{
@@ -35,7 +35,7 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void AssertArrayAreEqualUnsorted()
 		{
 			AssertArraysAreEqualUnsorted(new object[0], new object[0]);
@@ -46,62 +46,62 @@ namespace Castle.Core.Tests
 			try
 			{
 				AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {"one", "one", null});
-				Assert.Fail();
+				Assert.True(false);
 			}
-			catch (AssertionException)
+			catch (Exception)
 			{
 				// ok
 			}
 			try
 			{
 				AssertArraysAreEqualUnsorted(new object[] {null, "one"}, new object[] {"one", null, null});
-				Assert.Fail();
+				Assert.True(false);
 			}
-			catch (AssertionException)
+			catch (Exception)
 			{
 				// ok
 			}
 			try
 			{
 				AssertArraysAreEqualUnsorted(new object[] {null, "one", null}, new object[] {"one", null});
-				Assert.Fail();
+				Assert.True(false);
 			}
-			catch (AssertionException)
+			catch (Exception)
 			{
 				// ok
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodsForNonPublic()
 		{
 			var methods =
 				MethodFinder.GetAllInstanceMethods(typeof(object), BindingFlags.Instance | BindingFlags.NonPublic);
-			var realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+			var realMethods = typeof(object).GetTypeInfo().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
 			AssertArraysAreEqualUnsorted(realMethods, methods);
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodsForPublic()
 		{
 			var methods =
 				MethodFinder.GetAllInstanceMethods(typeof(object), BindingFlags.Instance | BindingFlags.Public);
-			var realMethods = typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+			var realMethods = typeof(object).GetTypeInfo().GetMethods(BindingFlags.Instance | BindingFlags.Public);
 			AssertArraysAreEqualUnsorted(realMethods, methods);
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodsForPublicAndNonPublic()
 		{
 			var methods =
 				MethodFinder.GetAllInstanceMethods(typeof(object),
 					BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 			var realMethods =
-				typeof(object).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+				typeof(object).GetTypeInfo().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 			AssertArraysAreEqualUnsorted(realMethods, methods);
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodsThrowsOnOtherFlags()
 		{
 			Assert.Throws<ArgumentException>(() =>
@@ -110,7 +110,7 @@ namespace Castle.Core.Tests
 			);
 		}
 
-		[Test]
+		[Fact]
 		public void GetMethodsThrowsOnStatic()
 		{
 			Assert.Throws<ArgumentException>(() =>

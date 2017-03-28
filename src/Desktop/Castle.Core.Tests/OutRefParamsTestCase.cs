@@ -13,14 +13,14 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class OutRefParamsTestCase : CoreBaseTestCase
 	{
 		public interface IClassHasMethodThrowException
@@ -28,7 +28,6 @@ namespace Castle.Core.Tests
 			int MethodWithRefParam(ref int refParam, out string outParam);
 		}
 
-		[Serializable]
 		public class ClassHasMethodThrowException : IClassHasMethodThrowException
 		{
 			public virtual int MethodWithRefParam(ref int refParam, out string outParam)
@@ -87,7 +86,7 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CanAffectValueOfOutParameter()
 		{
 			int i;
@@ -95,10 +94,10 @@ namespace Castle.Core.Tests
 				new WithCallbackInterceptor(delegate(IInvocation invocation) { invocation.Arguments[0] = 5; });
 			var proxy = (IWithRefOut) generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
 			proxy.Do(out i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
-		[Test]
+		[Fact]
 		public void CanCallMethodWithOutParameter()
 		{
 			int i;
@@ -107,7 +106,7 @@ namespace Castle.Core.Tests
 			proxy.Do(out i);
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateComplexOutRefProxyOnClass()
 		{
 			var i = 3;
@@ -121,20 +120,20 @@ namespace Castle.Core.Tests
 			});
 			var proxy = (MyClass) generator.CreateClassProxy(typeof(MyClass), interceptor);
 			proxy.MyMethod(out i, ref s1, 1, out s2);
-			Assert.AreEqual(5, i);
-			Assert.AreEqual(s1, "aaa");
-			Assert.AreEqual(s2, "bbb");
+			Assert.Equal(5, i);
+			Assert.Equal(s1, "aaa");
+			Assert.Equal(s2, "bbb");
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateProxyOfInterfaceWithOutParameter()
 		{
 			var interceptor = new KeepDataInterceptor();
 			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
-			Assert.IsNotNull(proxy);
+			Assert.NotNull(proxy);
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateProxyWithRefParam()
 		{
 			var i = 3;
@@ -142,19 +141,19 @@ namespace Castle.Core.Tests
 				new WithCallbackInterceptor(delegate(IInvocation invocation) { invocation.Arguments[0] = 5; });
 			var proxy = (IWithRefOut) generator.CreateInterfaceProxyWithoutTarget(typeof(IWithRefOut), interceptor);
 			proxy.Did(ref i);
-			Assert.AreEqual(5, i);
+			Assert.Equal(5, i);
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateProxyWithStructRefParam()
 		{
 			var s = new MyStruct(10);
 			var proxy = (MyClass) generator.CreateClassProxy(typeof(MyClass), new StandardInterceptor());
 			proxy.MyMethodWithStruct(ref s);
-			Assert.AreEqual(20, s.Value);
+			Assert.Equal(20, s.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_class_proxy_caught_by_interceptor()
 		{
 			var proxy = generator.CreateClassProxy<ClassHasMethodThrowException>(new ExceptionCatchInterceptor());
@@ -164,12 +163,12 @@ namespace Castle.Core.Tests
 
 			var retVal = proxy.MethodWithRefParam(ref param1, out param2);
 
-			Assert.AreEqual(42, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal(42, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_class_proxy_mixin_uncaught()
 		{
 			var options = new ProxyGenerationOptions();
@@ -190,13 +189,13 @@ namespace Castle.Core.Tests
 				exMsg = ex.Message;
 			}
 
-			Assert.AreEqual("intentional exception", exMsg);
-			Assert.AreEqual(1, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal("intentional exception", exMsg);
+			Assert.Equal(1, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_class_proxy_uncaught()
 		{
 			var proxy = generator.CreateClassProxy<ClassHasMethodThrowException>(new StandardInterceptor());
@@ -215,13 +214,13 @@ namespace Castle.Core.Tests
 				exMsg = ex.Message;
 			}
 
-			Assert.AreEqual("intentional exception", exMsg);
-			Assert.AreEqual(1, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal("intentional exception", exMsg);
+			Assert.Equal(1, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_class_proxy_with_target_caught_by_interceptor()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new ClassHasMethodThrowException(), new ExceptionCatchInterceptor());
@@ -231,12 +230,12 @@ namespace Castle.Core.Tests
 
 			var retVal = proxy.MethodWithRefParam(ref param1, out param2);
 
-			Assert.AreEqual(42, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal(42, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_class_proxy_with_target_uncaught()
 		{
 			var proxy = generator.CreateClassProxyWithTarget(new ClassHasMethodThrowException(), new StandardInterceptor());
@@ -255,13 +254,13 @@ namespace Castle.Core.Tests
 				exMsg = ex.Message;
 			}
 
-			Assert.AreEqual("intentional exception", exMsg);
-			Assert.AreEqual(1, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal("intentional exception", exMsg);
+			Assert.Equal(1, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_interface_proxy_with_target_caught_by_interceptor()
 		{
 			var proxy =
@@ -273,12 +272,12 @@ namespace Castle.Core.Tests
 
 			var retVal = proxy.MethodWithRefParam(ref param1, out param2);
 
-			Assert.AreEqual(42, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal(42, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_interface_proxy_with_target_interface_caught_by_interceptor()
 		{
 			var proxy =
@@ -290,12 +289,12 @@ namespace Castle.Core.Tests
 
 			var retVal = proxy.MethodWithRefParam(ref param1, out param2);
 
-			Assert.AreEqual(42, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal(42, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_interface_proxy_with_target_interface_uncaught()
 		{
 			var proxy =
@@ -316,13 +315,13 @@ namespace Castle.Core.Tests
 				exMsg = ex.Message;
 			}
 
-			Assert.AreEqual("intentional exception", exMsg);
-			Assert.AreEqual(1, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal("intentional exception", exMsg);
+			Assert.Equal(1, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 
-		[Test]
+		[Fact]
 		public void Exception_during_method_out_ref_arguments_set_interface_proxy_with_target_uncaught()
 		{
 			var proxy =
@@ -343,10 +342,10 @@ namespace Castle.Core.Tests
 				exMsg = ex.Message;
 			}
 
-			Assert.AreEqual("intentional exception", exMsg);
-			Assert.AreEqual(1, retVal);
-			Assert.AreEqual(23, param1);
-			Assert.AreEqual("23", param2);
+			Assert.Equal("intentional exception", exMsg);
+			Assert.Equal(1, retVal);
+			Assert.Equal(23, param1);
+			Assert.Equal("23", param2);
 		}
 	}
 }

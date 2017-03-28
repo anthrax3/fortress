@@ -14,19 +14,19 @@
 
 using System;
 using System.Threading;
-using Castle.Core.Core.Configuration;
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Context;
-using Castle.Windsor.MicroKernel.Handlers;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.Core.Configuration;
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Handlers;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Generics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Lifestyle
 {
-	[TestFixture]
+	
 	public class LifestyleManagerTestCase : AbstractContainerTestCase
 	{
 		private IComponent instance3;
@@ -49,9 +49,9 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var one = Kernel.Resolve<IComponent>(key);
 			var two = Kernel.Resolve<IComponent>(key);
 			if (areSame)
-				Assert.AreSame(one, two);
+				Assert.Same(one, two);
 			else
-				Assert.AreNotSame(one, two);
+				Assert.NotSame(one, two);
 		}
 
 		private string TestHandlersLifestyle(Type componentType, LifestyleType lifestyle, bool overwrite)
@@ -59,7 +59,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var key = Guid.NewGuid().ToString();
 			Kernel.Register(Component.For(componentType).Named(key).LifeStyle.Is(lifestyle));
 			var handler = Kernel.GetHandler(key);
-			Assert.AreEqual(lifestyle, handler.ComponentModel.LifestyleType);
+			Assert.Equal(lifestyle, handler.ComponentModel.LifestyleType);
 			return key;
 		}
 
@@ -68,7 +68,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var key = Guid.NewGuid().ToString();
 			Kernel.Register(Component.For<IComponent>().ImplementedBy(componentType).Named(key).LifeStyle.Is(lifestyle));
 			var handler = Kernel.GetHandler(key);
-			Assert.AreEqual(lifestyle, handler.ComponentModel.LifestyleType);
+			Assert.Equal(lifestyle, handler.ComponentModel.LifestyleType);
 			return key;
 		}
 
@@ -83,7 +83,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 			instance3 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 		}
 
-		[Test]
+		[Fact]
 		public void BadLifestyleSetProgromatically()
 		{
 			Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -93,7 +93,7 @@ namespace Castle.Windsor.Tests.Lifestyle
 					.LifeStyle.Is(LifestyleType.Undefined)));
 		}
 
-		[Test]
+		[Fact]
 		public void BoundTo_via_attribute()
 		{
 			Kernel.Register(
@@ -103,40 +103,40 @@ namespace Castle.Windsor.Tests.Lifestyle
 
 			var handler = Kernel.GetHandler(typeof(IComponent));
 
-			Assert.AreEqual(LifestyleType.Bound, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Bound, handler.ComponentModel.LifestyleType);
 
 			var a = Kernel.Resolve<GenericA<IComponent>>();
 
-			Assert.AreSame(a.Item, a.B.Item);
+			Assert.Same(a.Item, a.B.Item);
 		}
 
-		[Test]
+		[Fact]
 		public void Custom_lifestyle_provided_via_attribute()
 		{
 			Kernel.Register(Component.For<IComponent>().ImplementedBy<CustomComponent>());
 
 			var handler = Kernel.GetHandler(typeof(IComponent));
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
-			Assert.AreEqual(typeof(CustomLifestyleManager), handler.ComponentModel.CustomLifestyle);
+			Assert.Equal(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
+			Assert.Equal(typeof(CustomLifestyleManager), handler.ComponentModel.CustomLifestyle);
 
 			var instance = Kernel.Resolve<IComponent>();
-			Assert.IsNotNull(instance);
+			Assert.NotNull(instance);
 		}
 
-		[Test]
+		[Fact]
 		public void Custom_lifestyle_provided_via_attribute_inherited()
 		{
 			Kernel.Register(Component.For<IComponent>().ImplementedBy<CustomComponentWithCustomLifestyleAttribute>());
 
 			var handler = Kernel.GetHandler(typeof(IComponent));
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
-			Assert.AreEqual(typeof(CustomLifestyleManager), handler.ComponentModel.CustomLifestyle);
+			Assert.Equal(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
+			Assert.Equal(typeof(CustomLifestyleManager), handler.ComponentModel.CustomLifestyle);
 
 			var instance = Kernel.Resolve<IComponent>();
-			Assert.IsNotNull(instance);
+			Assert.NotNull(instance);
 		}
 
-		[Test]
+		[Fact]
 		public void Lifestyle_from_configuration_overwrites_attribute()
 		{
 			var confignode = new MutableConfiguration("component");
@@ -144,18 +144,18 @@ namespace Castle.Windsor.Tests.Lifestyle
 			Kernel.ConfigurationStore.AddComponentConfiguration("a", confignode);
 			Kernel.Register(Component.For(typeof(Components.SingletonComponent)).Named("a"));
 			var handler = Kernel.GetHandler("a");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void Lifestyle_from_fluent_registration_overwrites_attribute()
 		{
 			Kernel.Register(Component.For<Components.SingletonComponent>().Named("a").LifeStyle.Transient);
 			var handler = Kernel.GetHandler("a");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void LifestyleSetProgramatically()
 		{
 			TestHandlersLifestyle(typeof(TrivialComponent), LifestyleType.Transient, false);
@@ -179,26 +179,26 @@ namespace Castle.Windsor.Tests.Lifestyle
 			TestLifestyleWithServiceAndSameness(typeof(TransientComponent), LifestyleType.Singleton, true, true);
 		}
 
-		[Test]
+		[Fact]
 		public void LifestyleSetThroughAttribute()
 		{
 			Kernel.Register(Component.For(typeof(TransientComponent)).Named("a"));
 			var handler = Kernel.GetHandler("a");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 
 			Kernel.Register(Component.For(typeof(Components.SingletonComponent)).Named("b"));
 			handler = Kernel.GetHandler("b");
-			Assert.AreEqual(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
 
 			Kernel.Register(Component.For(typeof(CustomComponent)).Named("c"));
 			handler = Kernel.GetHandler("c");
-			Assert.AreEqual(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Custom, handler.ComponentModel.LifestyleType);
 			Kernel.Register(Component.For(typeof(PerWebRequestComponent)).Named("d"));
 			handler = Kernel.GetHandler("d");
-			Assert.AreEqual(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test]
+		[Fact]
 		public void LifestyleSetThroughExternalConfig()
 		{
 			IConfiguration confignode = new MutableConfiguration("component");
@@ -206,30 +206,30 @@ namespace Castle.Windsor.Tests.Lifestyle
 			Kernel.ConfigurationStore.AddComponentConfiguration("a", confignode);
 			Kernel.Register(Component.For(typeof(TrivialComponent)).Named("a"));
 			var handler = Kernel.GetHandler("a");
-			Assert.AreEqual(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Transient, handler.ComponentModel.LifestyleType);
 
 			confignode = new MutableConfiguration("component");
 			confignode.Attributes.Add("lifestyle", "singleton");
 			Kernel.ConfigurationStore.AddComponentConfiguration("b", confignode);
 			Kernel.Register(Component.For(typeof(TrivialComponent)).Named("b"));
 			handler = Kernel.GetHandler("b");
-			Assert.AreEqual(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Singleton, handler.ComponentModel.LifestyleType);
 
 			confignode = new MutableConfiguration("component");
 			confignode.Attributes.Add("lifestyle", "thread");
 			Kernel.ConfigurationStore.AddComponentConfiguration("c", confignode);
 			Kernel.Register(Component.For(typeof(TrivialComponent)).Named("c"));
 			handler = Kernel.GetHandler("c");
-			Assert.AreEqual(LifestyleType.Thread, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.Thread, handler.ComponentModel.LifestyleType);
 			confignode = new MutableConfiguration("component");
 			confignode.Attributes.Add("lifestyle", "perWebRequest");
 			Kernel.ConfigurationStore.AddComponentConfiguration("d", confignode);
 			Kernel.Register(Component.For(typeof(TrivialComponent)).Named("d"));
 			handler = Kernel.GetHandler("d");
-			Assert.AreEqual(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
+			Assert.Equal(LifestyleType.PerWebRequest, handler.ComponentModel.LifestyleType);
 		}
 
-		[Test(Description = "Prototype spike of the idea of providing scoped lifestyle - scoped per root component.")]
+		[Fact]
 		public void Per_dependency_tree()
 		{
 			Kernel.Register(
@@ -238,10 +238,10 @@ namespace Castle.Windsor.Tests.Lifestyle
 				Component.For<Leaf>().LifestyleCustom<CustomLifestyle_Scoped>()
 			);
 			var root = Kernel.Resolve<Root>();
-			Assert.AreSame(root.Leaf, root.Branch.Leaf);
+			Assert.Same(root.Leaf, root.Branch.Leaf);
 		}
 
-		[Test]
+		[Fact]
 		public void TestPerThread()
 		{
 			Kernel.Register(Component.For<IComponent>().ImplementedBy(typeof(PerThreadComponent)).Named("a"));
@@ -251,22 +251,22 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var instance1 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 			var instance2 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 
-			Assert.IsNotNull(instance1);
-			Assert.IsNotNull(instance2);
+			Assert.NotNull(instance1);
+			Assert.NotNull(instance2);
 
-			Assert.IsTrue(instance1.Equals(instance2));
-			Assert.IsTrue(instance1.ID == instance2.ID);
+			Assert.True(instance1.Equals(instance2));
+			Assert.True(instance1.ID == instance2.ID);
 
 			var thread = new Thread(OtherThread);
 			thread.Start();
 			thread.Join();
 
-			Assert.IsNotNull(instance3);
-			Assert.IsTrue(!instance1.Equals(instance3));
-			Assert.IsTrue(instance1.ID != instance3.ID);
+			Assert.NotNull(instance3);
+			Assert.True(!instance1.Equals(instance3));
+			Assert.True(instance1.ID != instance3.ID);
 		}
 
-		[Test]
+		[Fact]
 		public void TestSingleton()
 		{
 			Kernel.Register(Component.For<IComponent>().ImplementedBy(typeof(Components.SingletonComponent)).Named("a"));
@@ -276,14 +276,14 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var instance1 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 			var instance2 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 
-			Assert.IsNotNull(instance1);
-			Assert.IsNotNull(instance2);
+			Assert.NotNull(instance1);
+			Assert.NotNull(instance2);
 
-			Assert.IsTrue(instance1.Equals(instance2));
-			Assert.IsTrue(instance1.ID == instance2.ID);
+			Assert.True(instance1.Equals(instance2));
+			Assert.True(instance1.ID == instance2.ID);
 		}
 
-		[Test]
+		[Fact]
 		public void TestTransient()
 		{
 			Kernel.Register(Component.For<IComponent>().ImplementedBy(typeof(TransientComponent)).Named("a"));
@@ -293,11 +293,11 @@ namespace Castle.Windsor.Tests.Lifestyle
 			var instance1 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 			var instance2 = handler.Resolve(CreationContext.CreateEmpty()) as IComponent;
 
-			Assert.IsNotNull(instance1);
-			Assert.IsNotNull(instance2);
+			Assert.NotNull(instance1);
+			Assert.NotNull(instance2);
 
-			Assert.IsTrue(!instance1.Equals(instance2));
-			Assert.IsTrue(instance1.ID != instance2.ID);
+			Assert.True(!instance1.Equals(instance2));
+			Assert.True(instance1.ID != instance2.ID);
 		}
 	}
 }

@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Castle.MicroKernel.Registration;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class ContainerProblem
 	{
-		[Test]
+		[Fact]
 		public void CausesStackOverflow()
 		{
 			IWindsorContainer container = new WindsorContainer();

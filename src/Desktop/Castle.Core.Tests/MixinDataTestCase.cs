@@ -14,17 +14,16 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
 using Castle.Core.Tests.Mixins;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MixinDataTestCase
 	{
-		[SetUp]
-		public void SetUp()
+		public MixinDataTestCase()
 		{
 			simpleMixin = new SimpleMixin();
 			otherMixin = new OtherMixin();
@@ -35,156 +34,156 @@ namespace Castle.Core.Tests
 		private OtherMixin otherMixin;
 		private ComplexMixin complexMixin;
 
-		[Test]
+		[Fact]
 		public void ContainsMixinWithInterface()
 		{
 			var mixinData = new MixinData(new object[] {simpleMixin});
-			Assert.IsTrue(mixinData.ContainsMixin(typeof(ISimpleMixin)));
-			Assert.IsFalse(mixinData.ContainsMixin(typeof(IOtherMixin)));
+			Assert.True(mixinData.ContainsMixin(typeof(ISimpleMixin)));
+			Assert.False(mixinData.ContainsMixin(typeof(IOtherMixin)));
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_False_WithDifferentInstances()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinData2 = new MixinData(new object[] {simpleMixin, complexMixin});
-			Assert.AreNotEqual(mixinData1, mixinData2);
+			Assert.NotEqual(mixinData1, mixinData2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_False_WithInstanceCount()
 		{
 			var mixinData1 = new MixinData(new object[] {otherMixin});
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
-			Assert.AreNotEqual(mixinData1, mixinData2);
+			Assert.NotEqual(mixinData1, mixinData2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_True_WithDifferentInstances()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinData2 = new MixinData(new object[] {new SimpleMixin(), new OtherMixin()});
-			Assert.AreEqual(mixinData1, mixinData2);
+			Assert.Equal(mixinData1, mixinData2);
 		}
 
-		[Test]
+		[Fact]
 		public void Equals_True_WithDifferentOrder()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
-			Assert.AreEqual(mixinData1, mixinData2);
+			Assert.Equal(mixinData1, mixinData2);
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_Equal_WithDifferentInstances()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinData2 = new MixinData(new object[] {new SimpleMixin(), new OtherMixin()});
-			Assert.AreEqual(mixinData1.GetHashCode(), mixinData2.GetHashCode());
+			Assert.Equal(mixinData1.GetHashCode(), mixinData2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetHashCode_Equal_WithDifferentOrder()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
-			Assert.AreEqual(mixinData1.GetHashCode(), mixinData2.GetHashCode());
+			Assert.Equal(mixinData1.GetHashCode(), mixinData2.GetHashCode());
 		}
 
-		[Test]
+		[Fact]
 		public void GetMixinPosition()
 		{
 			var mixinData = new MixinData(new object[] {simpleMixin});
-			Assert.AreEqual(0, mixinData.GetMixinPosition(typeof(ISimpleMixin)));
+			Assert.Equal(0, mixinData.GetMixinPosition(typeof(ISimpleMixin)));
 		}
 
-		[Test]
+		[Fact]
 		public void GetMixinPosition_MatchesMixinInstances()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
-			Assert.AreEqual(0, mixinData1.GetMixinPosition(typeof(IOtherMixin)));
-			Assert.AreEqual(1, mixinData1.GetMixinPosition(typeof(ISimpleMixin)));
+			Assert.Equal(0, mixinData1.GetMixinPosition(typeof(IOtherMixin)));
+			Assert.Equal(1, mixinData1.GetMixinPosition(typeof(ISimpleMixin)));
 
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
-			Assert.AreEqual(0, mixinData2.GetMixinPosition(typeof(IOtherMixin)));
-			Assert.AreEqual(1, mixinData2.GetMixinPosition(typeof(ISimpleMixin)));
+			Assert.Equal(0, mixinData2.GetMixinPosition(typeof(IOtherMixin)));
+			Assert.Equal(1, mixinData2.GetMixinPosition(typeof(ISimpleMixin)));
 		}
 
-		[Test]
+		[Fact]
 		public void GetMixinPosition_MatchesMixinInstances_WithMultipleInterfacesPerMixin()
 		{
 			var mixinData = new MixinData(new object[] {complexMixin, simpleMixin});
-			Assert.AreEqual(0, mixinData.GetMixinPosition(typeof(IFirst)));
-			Assert.AreEqual(1, mixinData.GetMixinPosition(typeof(ISecond)));
-			Assert.AreEqual(2, mixinData.GetMixinPosition(typeof(ISimpleMixin)));
-			Assert.AreEqual(3, mixinData.GetMixinPosition(typeof(IThird)));
+			Assert.Equal(0, mixinData.GetMixinPosition(typeof(IFirst)));
+			Assert.Equal(1, mixinData.GetMixinPosition(typeof(ISecond)));
+			Assert.Equal(2, mixinData.GetMixinPosition(typeof(ISimpleMixin)));
+			Assert.Equal(3, mixinData.GetMixinPosition(typeof(IThird)));
 
 			var mixins = new List<object>(mixinData.Mixins);
-			Assert.AreSame(complexMixin, mixins[0]);
-			Assert.AreSame(complexMixin, mixins[1]);
-			Assert.AreSame(simpleMixin, mixins[2]);
-			Assert.AreSame(complexMixin, mixins[3]);
+			Assert.Same(complexMixin, mixins[0]);
+			Assert.Same(complexMixin, mixins[1]);
+			Assert.Same(simpleMixin, mixins[2]);
+			Assert.Same(complexMixin, mixins[3]);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinInterfaces()
 		{
 			var mixinData = new MixinData(new object[] {simpleMixin});
 			var mixinInterfaces = new List<Type>(mixinData.MixinInterfaces);
-			Assert.AreEqual(1, mixinInterfaces.Count);
-			Assert.AreSame(mixinInterfaces[0], typeof(ISimpleMixin));
+			Assert.Equal(1, mixinInterfaces.Count);
+			Assert.Same(mixinInterfaces[0], typeof(ISimpleMixin));
 		}
 
-		[Test]
+		[Fact]
 		public void MixinInterfaces_SortedLikeMixins()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixinInterfaces1 = new List<Type>(mixinData1.MixinInterfaces);
-			Assert.AreEqual(2, mixinInterfaces1.Count);
-			Assert.AreSame(typeof(IOtherMixin), mixinInterfaces1[0]);
-			Assert.AreSame(typeof(ISimpleMixin), mixinInterfaces1[1]);
+			Assert.Equal(2, mixinInterfaces1.Count);
+			Assert.Same(typeof(IOtherMixin), mixinInterfaces1[0]);
+			Assert.Same(typeof(ISimpleMixin), mixinInterfaces1[1]);
 
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
 			var mixinInterfaces2 = new List<Type>(mixinData2.MixinInterfaces);
-			Assert.AreEqual(2, mixinInterfaces2.Count);
-			Assert.AreSame(typeof(IOtherMixin), mixinInterfaces2[0]);
-			Assert.AreSame(typeof(ISimpleMixin), mixinInterfaces2[1]);
+			Assert.Equal(2, mixinInterfaces2.Count);
+			Assert.Same(typeof(IOtherMixin), mixinInterfaces2[0]);
+			Assert.Same(typeof(ISimpleMixin), mixinInterfaces2[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void Mixins()
 		{
 			var mixinData = new MixinData(new object[] {simpleMixin});
 			var mixins = new List<object>(mixinData.Mixins);
-			Assert.AreEqual(1, mixins.Count);
-			Assert.AreSame(simpleMixin, mixins[0]);
+			Assert.Equal(1, mixins.Count);
+			Assert.Same(simpleMixin, mixins[0]);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinsAreSortedByInterface()
 		{
 			var mixinData1 = new MixinData(new object[] {simpleMixin, otherMixin});
 			var mixins1 = new List<object>(mixinData1.Mixins);
-			Assert.AreEqual(2, mixins1.Count);
-			Assert.AreSame(otherMixin, mixins1[0]);
-			Assert.AreSame(simpleMixin, mixins1[1]);
+			Assert.Equal(2, mixins1.Count);
+			Assert.Same(otherMixin, mixins1[0]);
+			Assert.Same(simpleMixin, mixins1[1]);
 
 			var mixinData2 = new MixinData(new object[] {otherMixin, simpleMixin});
 			var mixins2 = new List<object>(mixinData2.Mixins);
-			Assert.AreEqual(2, mixins2.Count);
-			Assert.AreSame(otherMixin, mixins2[0]);
-			Assert.AreSame(simpleMixin, mixins2[1]);
+			Assert.Equal(2, mixins2.Count);
+			Assert.Same(otherMixin, mixins2[0]);
+			Assert.Same(simpleMixin, mixins2[1]);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinsNotImplementingInterfacesAreIgnored()
 		{
 			var mixinData = new MixinData(new[] {new object()});
 			var mixins = new List<object>(mixinData.Mixins);
-			Assert.AreEqual(0, mixins.Count);
+			Assert.Equal(0, mixins.Count);
 		}
 
-		[Test]
+		[Fact]
 		public void TwoMixinsWithSameInterfaces()
 		{
 			var mixin1 = new SimpleMixin();

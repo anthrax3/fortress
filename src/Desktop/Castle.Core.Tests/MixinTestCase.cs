@@ -13,14 +13,15 @@
 // limitations under the License.
 
 using System;
-using Castle.Core.DynamicProxy;
+using System.Reflection;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Mixins;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MixinTestCase : CoreBaseTestCase
 	{
 		private class AssertInvocationInterceptor : StandardInterceptor
@@ -49,7 +50,6 @@ namespace Castle.Core.Tests
 			int Calc(int x, int y, int z, float k);
 		}
 
-		[Serializable]
 		public class MyInterfaceImpl : IMyInterface
 		{
 			private string _name;
@@ -78,7 +78,7 @@ namespace Castle.Core.Tests
 			}
 		}
 
-		[Test]
+		[Fact]
 		public void CanCreateSimpleMixinWithoutGettingExecutionEngineExceptionsOrBadImageExceptions()
 		{
 			var proxyGenerationOptions = new ProxyGenerationOptions();
@@ -86,12 +86,12 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateClassProxy(
 				typeof(object), proxyGenerationOptions, new AssertInvocationInterceptor());
 
-			Assert.IsTrue(proxy is ISimpleMixin);
+			Assert.True(proxy is ISimpleMixin);
 
 			((ISimpleMixin) proxy).DoSomething();
 		}
 
-		[Test]
+		[Fact]
 		public void MixinForInterfaces()
 		{
 			var proxyGenerationOptions = new ProxyGenerationOptions();
@@ -106,21 +106,21 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithTarget(
 				typeof(IMyInterface), target, proxyGenerationOptions, interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(IMyInterface).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(IMyInterface).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinImplementingMoreThanOneInterface()
 		{
 			var proxyGenerationOptions = new ProxyGenerationOptions();
@@ -133,37 +133,37 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateClassProxy(
 				typeof(SimpleClass), proxyGenerationOptions, interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(SimpleClass).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(SimpleClass).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var inter3 = proxy as IThird;
-			Assert.IsNotNull(inter3);
+			Assert.NotNull(inter3);
 			inter3.DoThird();
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 
 			var inter2 = proxy as ISecond;
-			Assert.IsNotNull(inter2);
+			Assert.NotNull(inter2);
 			inter2.DoSecond();
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 
 			var inter1 = proxy as IFirst;
-			Assert.IsNotNull(inter1);
+			Assert.NotNull(inter1);
 			inter1.DoFirst();
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void MixinWithSameInterface_InterfaceWithTarget_AdditionalInterfaces()
 		{
 			var options = new ProxyGenerationOptions();
@@ -172,10 +172,10 @@ namespace Castle.Core.Tests
 
 			var interceptor = new StandardInterceptor();
 			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), new[] {typeof(ISimpleMixin)}, new ServiceImpl(), options, interceptor);
-			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
+			Assert.Equal(1, (proxy as ISimpleMixin).DoSomething());
 		}
 
-		[Test]
+		[Fact]
 		public void MixinWithSameInterface_InterfaceWithTarget_AdditionalInterfaces_Derived()
 		{
 			var options = new ProxyGenerationOptions();
@@ -184,10 +184,10 @@ namespace Castle.Core.Tests
 
 			var interceptor = new StandardInterceptor();
 			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), new[] {typeof(IDerivedSimpleMixin)}, new ServiceImpl(), options, interceptor);
-			Assert.AreEqual(1, (proxy as ISimpleMixin).DoSomething());
+			Assert.Equal(1, (proxy as ISimpleMixin).DoSomething());
 		}
 
-		[Test]
+		[Fact]
 		public void SimpleMixin_ClassProxy()
 		{
 			var options = new ProxyGenerationOptions();
@@ -198,21 +198,21 @@ namespace Castle.Core.Tests
 
 			var proxy = generator.CreateClassProxy(typeof(SimpleClass), options, interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(SimpleClass).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(SimpleClass).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void SimpleMixin_InterfaceProxy_WithoutTarget()
 		{
 			var options = new ProxyGenerationOptions();
@@ -224,21 +224,21 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithoutTarget(typeof(IService), new Type[0],
 				options, interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(IService).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(IService).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void SimpleMixin_InterfaceProxy_WithTarget()
 		{
 			var options = new ProxyGenerationOptions();
@@ -250,21 +250,21 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithTarget(typeof(IService), new ServiceImpl(),
 				options, interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(IService).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(IService).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void SimpleMixin_InterfaceProxy_WithtTargetInterface()
 		{
 			var options = new ProxyGenerationOptions();
@@ -276,21 +276,21 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IService), new ServiceImpl(), options,
 				interceptor);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(IService).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(IService).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin_instance, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin_instance, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void TestTypeCachingWithMixins()
 		{
 			var options = new ProxyGenerationOptions();
@@ -309,10 +309,10 @@ namespace Castle.Core.Tests
 
 			var proxy2 = generator.CreateClassProxy(typeof(SimpleClass), options, interceptor);
 
-			Assert.IsTrue(proxy1.GetType().Equals(proxy2.GetType()));
+			Assert.True(proxy1.GetType().Equals(proxy2.GetType()));
 		}
 
-		[Test]
+		[Fact]
 		public void TestTypeCachingWithMultipleMixins()
 		{
 			var options = new ProxyGenerationOptions();
@@ -335,10 +335,10 @@ namespace Castle.Core.Tests
 
 			var proxy2 = generator.CreateClassProxy(typeof(SimpleClass), options, interceptor);
 
-			Assert.IsTrue(proxy1.GetType().Equals(proxy2.GetType()));
+			Assert.True(proxy1.GetType().Equals(proxy2.GetType()));
 		}
 
-		[Test]
+		[Fact]
 		public void TwoMixins()
 		{
 			var proxyGenerationOptions = new ProxyGenerationOptions();
@@ -354,28 +354,28 @@ namespace Castle.Core.Tests
 			var proxy = generator.CreateClassProxy(
 				typeof(SimpleClass), proxyGenerationOptions, interceptor);
 
-			Assert.IsFalse(interceptor.Invoked);
+			Assert.False(interceptor.Invoked);
 
-			Assert.IsNotNull(proxy);
-			Assert.IsTrue(typeof(SimpleClass).IsAssignableFrom(proxy.GetType()));
+			Assert.NotNull(proxy);
+			Assert.True(typeof(SimpleClass).GetTypeInfo().IsAssignableFrom(proxy.GetType()));
 
 			var mixin = proxy as ISimpleMixin;
-			Assert.IsNotNull(mixin);
-			Assert.AreEqual(1, mixin.DoSomething());
+			Assert.NotNull(mixin);
+			Assert.Equal(1, mixin.DoSomething());
 
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin1, interceptor.mixin);
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin1, interceptor.mixin);
 
 			var other = proxy as IOtherMixin;
-			Assert.IsNotNull(other);
-			Assert.AreEqual(3, other.Sum(1, 2));
-			Assert.IsTrue(interceptor.Invoked);
-			Assert.AreSame(proxy, interceptor.proxy);
-			Assert.AreSame(mixin2, interceptor.mixin);
+			Assert.NotNull(other);
+			Assert.Equal(3, other.Sum(1, 2));
+			Assert.True(interceptor.Invoked);
+			Assert.Same(proxy, interceptor.proxy);
+			Assert.Same(mixin2, interceptor.mixin);
 		}
 
-		[Test]
+		[Fact]
 		public void TwoMixinsWithSameInterface()
 		{
 			var options = new ProxyGenerationOptions();

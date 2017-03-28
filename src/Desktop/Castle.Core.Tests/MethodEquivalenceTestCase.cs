@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.DynamicProxy;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class MethodEquivalenceTestCase
 	{
-		[Test]
+		[Fact]
 		public void CanProxyTypesWithMethodsOnlyDifferentByGenericArguments()
 		{
 			var generator = new ProxyGenerator();
 
 			var target1 = (IMyService) generator.CreateInterfaceProxyWithTarget(
 				typeof(IMyService), new MyServiceImpl(), new StandardInterceptor());
-			Assert.IsNotNull(target1.CreateSomething<int>("aa"));
+			Assert.NotNull(target1.CreateSomething<int>("aa"));
 
 			var target2 = (IMyService) generator.CreateClassProxy(
 				typeof(MyServiceImpl), new StandardInterceptor());
-			Assert.IsNotNull(target2.CreateSomething<int>("aa"));
+			Assert.NotNull(target2.CreateSomething<int>("aa"));
 		}
 	}
 }

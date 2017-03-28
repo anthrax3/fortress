@@ -14,16 +14,16 @@
 
 using System;
 using System.Collections.Generic;
-using Castle.Core.DynamicProxy;
-using Castle.Core.DynamicProxy.Generators;
 using Castle.Core.Tests.Interceptors;
 using Castle.Core.Tests.InterClasses;
 using Castle.Core.Tests.Interfaces;
-using NUnit.Framework;
+using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators;
+using Xunit;
+
 
 namespace Castle.Core.Tests
 {
-	[TestFixture]
 	public class InterfaceProxyWithTargetInterfaceTestCase : CoreBaseTestCase
 	{
 		private Type GetTargetType(object proxy)
@@ -39,20 +39,20 @@ namespace Castle.Core.Tests
 		{
 		}
 
-		[Test]
+		[Fact]
 		public void Can_proxy_generic_interface()
 		{
 			generator.CreateInterfaceProxyWithTargetInterface<IList<object>>(new List<object>());
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_interface_with_inaccessible_type_argument()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithTargetInterface<IList<PrivateInterface>>(new List<PrivateInterface>()));
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_generic_interface_with_type_argument_that_has_inaccessible_type_argument()
 		{
 			var ex = Assert.Throws<GeneratorException>(() => generator.CreateInterfaceProxyWithTargetInterface<IList<IList<PrivateInterface>>>(new List<IList<PrivateInterface>>()));
@@ -61,14 +61,14 @@ namespace Castle.Core.Tests
 				typeof(IList<IList<PrivateInterface>>).FullName, typeof(PrivateInterface).FullName);
 		}
 
-		[Test]
+		[Fact]
 		public void Cannot_proxy_inaccessible_interface()
 		{
 			var ex = Assert.Throws<GeneratorException>(() =>
 				generator.CreateInterfaceProxyWithTargetInterface<PrivateInterface>(new PrivateClass()));
 		}
 
-		[Test]
+		[Fact]
 		public void ChangeProxyTarget_should_change_proxy_target_permanently()
 		{
 			var interceptor = new ChangeProxyTargetInterceptor(new OneTwo());
@@ -77,10 +77,10 @@ namespace Castle.Core.Tests
 			proxy.OneMethod();
 
 			var type = GetTargetType(proxy);
-			Assert.AreEqual(typeof(OneTwo), type);
+			Assert.Equal(typeof(OneTwo), type);
 		}
 
-		[Test]
+		[Fact]
 		public void ChangeProxyTarget_should_not_affect_invocation_target()
 		{
 			var first = new ChangeProxyTargetInterceptor(new OneTwo());
@@ -91,10 +91,10 @@ namespace Castle.Core.Tests
 
 			proxy.OneMethod();
 
-			Assert.AreEqual(typeof(One), second.Invocation.InvocationTarget.GetType());
+			Assert.Equal(typeof(One), second.Invocation.InvocationTarget.GetType());
 		}
 
-		[Test]
+		[Fact]
 		public void Invocation_should_be_IChangeInvocationTarget_for_AdditionalInterfaces_methods()
 		{
 			var interceptor = new ChangeTargetInterceptor(new Two());
@@ -105,10 +105,10 @@ namespace Castle.Core.Tests
 
 			var result = (proxy as ITwo).TwoMethod();
 
-			Assert.AreEqual(20, result);
+			Assert.Equal(20, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Invocation_should_be_IChangeInvocationTarget_for_Mixin_methods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -121,10 +121,10 @@ namespace Castle.Core.Tests
 
 			var result = (proxy as ITwo).TwoMethod();
 
-			Assert.AreEqual(2, result);
+			Assert.Equal(2, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Invocation_should_be_IChangeInvocationTarget_for_target_methods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -136,10 +136,10 @@ namespace Castle.Core.Tests
 				interceptor);
 			var result = (proxy as IOne).OneMethod();
 
-			Assert.AreEqual(3, result);
+			Assert.Equal(3, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Mixin_methods_should_be_forwarded_to_target_if_implements_mixin_interface()
 		{
 			var options = new ProxyGenerationOptions();
@@ -148,10 +148,10 @@ namespace Castle.Core.Tests
 				new OneTwo(),
 				options);
 			var result = (proxy as ITwo).TwoMethod();
-			Assert.AreEqual(2, result);
+			Assert.Equal(2, result);
 		}
 
-		[Test]
+		[Fact]
 		public void Null_target_can_be_replaced()
 		{
 			var options = new ProxyGenerationOptions();
@@ -162,10 +162,10 @@ namespace Castle.Core.Tests
 				options,
 				interceptor);
 
-			Assert.AreEqual(3, ((IOne) proxy).OneMethod());
+			Assert.Equal(3, ((IOne) proxy).OneMethod());
 		}
 
-		[Test]
+		[Fact]
 		public void Null_target_is_valid()
 		{
 			var interceptor = new ChangeTargetInterceptor(new OneTwo());
@@ -175,7 +175,7 @@ namespace Castle.Core.Tests
 				interceptor);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_detect_and_report_setting_null_as_target_for_Mixin_methods()
 		{
 			var options = new ProxyGenerationOptions();
@@ -190,7 +190,7 @@ namespace Castle.Core.Tests
 				(proxy as ITwo).TwoMethod());
 		}
 
-		[Test]
+		[Fact]
 		public void TargetInterface_methods_should_be_forwarded_to_target()
 		{
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
@@ -198,10 +198,10 @@ namespace Castle.Core.Tests
 				new OneTwo(),
 				ProxyGenerationOptions.Default);
 			var result = (proxy as IOne).OneMethod();
-			Assert.AreEqual(3, result);
+			Assert.Equal(3, result);
 		}
 
-		[Test]
+		[Fact]
 		public void When_target_does_implement_additional_interface_method_should_forward()
 		{
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),
@@ -209,10 +209,10 @@ namespace Castle.Core.Tests
 				new OneTwo(),
 				ProxyGenerationOptions.Default);
 			var result = (proxy as ITwo).TwoMethod();
-			Assert.AreEqual(2, result);
+			Assert.Equal(2, result);
 		}
 
-		[Test]
+		[Fact]
 		public void When_target_does_not_implement_additional_interface_method_should_throw()
 		{
 			var proxy = generator.CreateInterfaceProxyWithTargetInterface(typeof(IOne),

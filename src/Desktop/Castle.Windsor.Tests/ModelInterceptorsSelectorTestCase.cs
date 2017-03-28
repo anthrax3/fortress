@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.Core;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.Components;
 using Castle.Windsor.Tests.Interceptors;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
+	
 	public class ModelInterceptorsSelectorTestCase
 	{
-		[Test]
+		[Fact]
 		public void CanAddInterceptor_DirectSelection()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -40,17 +39,17 @@ namespace Castle.Windsor.Tests
 			WasCalledInterceptor.WasCalled = false;
 			var watcher = container.Resolve<IWatcher>();
 			watcher.OnSomethingInterestingToWatch += delegate { };
-			Assert.IsFalse(WasCalledInterceptor.WasCalled);
+			Assert.False(WasCalledInterceptor.WasCalled);
 
 			selector.Interceptors = InterceptorKind.Dummy;
 
 			WasCalledInterceptor.WasCalled = false;
 			watcher = container.Resolve<IWatcher>();
 			watcher.OnSomethingInterestingToWatch += delegate { };
-			Assert.IsTrue(WasCalledInterceptor.WasCalled);
+			Assert.True(WasCalledInterceptor.WasCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void Interceptor_selected_by_selector_gets_released_properly()
 		{
 			DisposableInterceptor.InstancesDisposed = 0;
@@ -61,13 +60,13 @@ namespace Castle.Windsor.Tests
 				Component.For<A>().LifeStyle.Transient);
 
 			var a = container.Resolve<A>();
-			Assert.AreEqual(1, DisposableInterceptor.InstancesCreated);
+			Assert.Equal(1, DisposableInterceptor.InstancesCreated);
 
 			container.Release(a);
-			Assert.AreEqual(1, DisposableInterceptor.InstancesDisposed);
+			Assert.Equal(1, DisposableInterceptor.InstancesDisposed);
 		}
 
-		[Test]
+		[Fact]
 		public void InterceptorSelectors_Are_Cumulative()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -81,11 +80,11 @@ namespace Castle.Windsor.Tests
 
 			var watcher = container.Resolve<IWatcher>();
 			watcher.OnSomethingInterestingToWatch += delegate { };
-			Assert.IsTrue(WasCalledInterceptor.WasCalled);
-			Assert.IsTrue(WasCalledInterceptor.WasCalled);
+			Assert.True(WasCalledInterceptor.WasCalled);
+			Assert.True(WasCalledInterceptor.WasCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void TurnProxyOnAndOff_DirectSelection()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -95,12 +94,12 @@ namespace Castle.Windsor.Tests
 			var selector = new WatcherInterceptorSelector();
 			container.Kernel.ProxyFactory.AddInterceptorSelector(selector);
 
-			Assert.IsFalse(container.Resolve<IWatcher>().GetType().Name.Contains("Proxy"));
+			Assert.False(container.Resolve<IWatcher>().GetType().Name.Contains("Proxy"));
 			selector.Interceptors = InterceptorKind.Dummy;
-			Assert.IsTrue(container.Resolve<IWatcher>().GetType().Name.Contains("Proxy"));
+			Assert.True(container.Resolve<IWatcher>().GetType().Name.Contains("Proxy"));
 		}
 
-		[Test]
+		[Fact]
 		public void TurnProxyOnAndOff_SubDependency()
 		{
 			IWindsorContainer container = new WindsorContainer();
@@ -110,13 +109,13 @@ namespace Castle.Windsor.Tests
 			var selector = new WatcherInterceptorSelector();
 			container.Kernel.ProxyFactory.AddInterceptorSelector(selector);
 
-			Assert.IsFalse(container.Resolve<Person>().Watcher.GetType().Name.Contains("Proxy"));
-			Assert.IsFalse(container.Resolve<Person>().GetType().Name.Contains("Proxy"));
+			Assert.False(container.Resolve<Person>().Watcher.GetType().Name.Contains("Proxy"));
+			Assert.False(container.Resolve<Person>().GetType().Name.Contains("Proxy"));
 
 			selector.Interceptors = InterceptorKind.Dummy;
 
-			Assert.IsFalse(container.Resolve<Person>().GetType().Name.Contains("Proxy"));
-			Assert.IsTrue(container.Resolve<Person>().Watcher.GetType().Name.Contains("Proxy"));
+			Assert.False(container.Resolve<Person>().GetType().Name.Contains("Proxy"));
+			Assert.True(container.Resolve<Person>().Watcher.GetType().Name.Contains("Proxy"));
 		}
 	}
 }

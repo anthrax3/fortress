@@ -14,10 +14,10 @@
 
 using System;
 using System.Linq;
-using Castle.Core.DynamicProxy;
-using Castle.Windsor.Core;
-using Castle.Windsor.Core.Internal;
-using Castle.Windsor.MicroKernel.Proxy;
+using Castle.Core;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Castle.MicroKernel.Proxy;
 
 namespace Castle.Windsor.Tests.Interceptors
 {

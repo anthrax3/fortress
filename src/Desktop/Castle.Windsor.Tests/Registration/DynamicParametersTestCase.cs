@@ -13,33 +13,33 @@
 // limitations under the License.
 
 using System;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Registration
 {
-	[TestFixture]
+	
 	public class DynamicParametersTestCase : AbstractContainerTestCase
 	{
-		[Test]
+		[Fact]
 		public void Arguments_are_case_insensitive_when_using_anonymous_object()
 		{
 			var wasCalled = false;
 			Kernel.Register(Component.For<ClassWithArguments>().LifeStyle.Transient.DynamicParameters((k, d) =>
 			{
-				Assert.IsTrue(d.Contains("ArG1"));
+				Assert.True(d.Contains("ArG1"));
 				wasCalled = true;
 			}));
 
 			Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
 
-			Assert.IsTrue(wasCalled);
+			Assert.True(wasCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_dynamically_override_services()
 		{
 			Kernel.Register(
@@ -62,21 +62,21 @@ namespace Castle.Windsor.Tests.Registration
 					}));
 
 			var component = Kernel.Resolve<CommonImplWithDependency>();
-			Assert.IsInstanceOf<CustomerImpl2>(component.Customer);
+			Assert.IsType<CustomerImpl2>(component.Customer);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_mix_registration_and_call_site_parameters()
 		{
 			Kernel.Register(
 				Component.For<ClassWithArguments>().LifeStyle.Transient.DynamicParameters((k, d) => d["arg1"] = "foo"));
 
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2));
-			Assert.AreEqual(2, component.Arg2);
-			Assert.AreEqual("foo", component.Arg1);
+			Assert.Equal(2, component.Arg2);
+			Assert.Equal("foo", component.Arg1);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_release_components_with_dynamic_parameters()
 		{
 			var releaseCalled = 0;
@@ -90,14 +90,14 @@ namespace Castle.Windsor.Tests.Registration
 					.DynamicParameters((k, d) => { return kk => ++releaseCalled; }));
 
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2));
-			Assert.AreEqual(2, component.Arg2);
-			Assert.AreEqual("foo", component.Arg1);
+			Assert.Equal(2, component.Arg2);
+			Assert.Equal("foo", component.Arg1);
 
 			Kernel.ReleaseComponent(component);
-			Assert.AreEqual(2, releaseCalled);
+			Assert.Equal(2, releaseCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void Can_release_generics_with_dynamic_parameters()
 		{
 			var releaseCalled = 0;
@@ -112,13 +112,13 @@ namespace Castle.Windsor.Tests.Registration
 					.DynamicParameters((k, d) => { return kk => ++releaseCalled; }));
 
 			var component = Kernel.Resolve<IGenericClassWithParameter<int>>(new Arguments().Insert("name", "bar"));
-			Assert.AreEqual("foo", component.Name);
+			Assert.Equal("foo", component.Name);
 
 			Kernel.ReleaseComponent(component);
-			Assert.AreEqual(2, releaseCalled);
+			Assert.Equal(2, releaseCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void DynamicParameters_will_not_enforce_passed_IDictionary_to_be_writeable()
 		{
 			var wasCalled = false;
@@ -131,10 +131,10 @@ namespace Castle.Windsor.Tests.Registration
 
 			Kernel.Resolve<DefaultCustomer>(new ReadOnlyDictionary());
 
-			Assert.IsTrue(wasCalled);
+			Assert.True(wasCalled);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_handle_multiple_calls()
 		{
 			var arg1 = "bar";
@@ -144,11 +144,11 @@ namespace Castle.Windsor.Tests.Registration
 				.DynamicParameters((k, d) => { d["arg1"] = arg1; })
 				.DynamicParameters((k, d) => { d["arg2"] = arg2; }));
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
-			Assert.AreEqual(arg1, component.Arg1);
-			Assert.AreEqual(arg2, component.Arg2);
+			Assert.Equal(arg1, component.Arg1);
+			Assert.Equal(arg2, component.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_have_access_to_parameters_passed_from_call_site()
 		{
 			string arg1 = null;
@@ -159,18 +159,18 @@ namespace Castle.Windsor.Tests.Registration
 				arg2 = (int) d["arg2"];
 			}));
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
-			Assert.AreEqual("foo", arg1);
-			Assert.AreEqual(2, arg2);
+			Assert.Equal("foo", arg1);
+			Assert.Equal(2, arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_not_require_explicit_registration()
 		{
 			Kernel.Register(Component.For<CommonSub2Impl>().LifeStyle.Transient.DynamicParameters((k, d) => { }));
-			Assert.DoesNotThrow(() => Kernel.Resolve<CommonSub2Impl>());
+			Kernel.Resolve<CommonSub2Impl>();
 		}
 
-		[Test]
+		[Fact]
 		public void Should_override_parameters_passed_from_call_site()
 		{
 			var arg1 = "bar";
@@ -181,11 +181,11 @@ namespace Castle.Windsor.Tests.Registration
 				d["arg2"] = arg2;
 			}));
 			var component = Kernel.Resolve<ClassWithArguments>(new Arguments().Insert("arg2", 2).Insert("arg1", "foo"));
-			Assert.AreEqual(arg1, component.Arg1);
-			Assert.AreEqual(arg2, component.Arg2);
+			Assert.Equal(arg1, component.Arg1);
+			Assert.Equal(arg2, component.Arg2);
 		}
 
-		[Test]
+		[Fact]
 		public void Should_resolve_component_when_no_parameters_passed_from_call_site()
 		{
 			var arg1 = "bar";
@@ -196,8 +196,7 @@ namespace Castle.Windsor.Tests.Registration
 				d["arg2"] = arg2;
 			}));
 
-			Assert.DoesNotThrow(() =>
-				Kernel.Resolve<ClassWithArguments>());
+			Kernel.Resolve<ClassWithArguments>();
 		}
 	}
 }

@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
-using Castle.Windsor.MicroKernel.Registration;
-using Castle.Windsor.MicroKernel.Resolvers;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
 using Castle.Windsor.Tests.Components;
 
 namespace Castle.Windsor.Tests
 {
-	public class ABLoader : ILazyComponentLoader
+    public class ABLoader : ILazyComponentLoader
 	{
 		public IRegistration Load(string name, Type service, IDictionary arguments)
 		{

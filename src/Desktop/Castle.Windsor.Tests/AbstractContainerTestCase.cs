@@ -12,23 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.Windsor;
-using NUnit.Framework;
+using System;
+using System.Reflection;
+using Castle.MicroKernel;
+using Xunit;
 
 namespace Castle.Windsor.Tests
 {
-	[TestFixture]
-	public abstract class AbstractContainerTestCase
+	
+	public class AbstractContainerTestCase : IDisposable
 	{
-		[TearDown]
-		public void CleanUp()
+	    protected Assembly ThisAssembly = typeof(AbstractContainerTestCase).GetTypeInfo().Assembly;
+
+		public void Dispose()
 		{
 			container.Dispose();
 		}
 
-		[SetUp]
-		public void Init()
+		public AbstractContainerTestCase()
 		{
 			container = BuildContainer();
 			AfterContainerCreated();
@@ -57,8 +58,9 @@ namespace Castle.Windsor.Tests
 
 		protected void ResetContainer()
 		{
-			CleanUp();
-			Init();
-		}
+            container.Dispose();
+            container = BuildContainer();
+            AfterContainerCreated();
+        }
 	}
 }

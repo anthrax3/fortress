@@ -13,13 +13,12 @@
 // limitations under the License.
 
 using System.Linq;
-using Castle.Windsor.MicroKernel;
-using Castle.Windsor.MicroKernel.Registration;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor.Diagnostics;
 using Castle.Windsor.Tests.ClassComponents;
 using Castle.Windsor.Tests.Components;
-using Castle.Windsor.Windsor;
-using Castle.Windsor.Windsor.Diagnostics;
-using NUnit.Framework;
+using Xunit;
 
 namespace Castle.Windsor.Tests.Diagnostics
 {
@@ -33,7 +32,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 			diagnostic = host.GetDiagnostic<IAllComponentsDiagnostic>();
 		}
 
-		[Test]
+		[Fact]
 		public void Doesnt_include_closed_versions_of_generic_handler()
 		{
 			Container.Register(Component.For(typeof(GenericImpl1<>)));
@@ -42,10 +41,10 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(1, handlers.Length);
+			Assert.Equal(1, handlers.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Shows_also_components_from_parent_container()
 		{
 			var parent = new WindsorContainer();
@@ -58,28 +57,28 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(4, handlers.Length);
+			Assert.Equal(4, handlers.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Works_with_empty_container()
 		{
 			var handlers = diagnostic.Inspect();
 
-			Assert.IsEmpty(handlers);
+			Assert.Empty(handlers);
 		}
 
-		[Test]
+		[Fact]
 		public void Works_with_generic_handlers()
 		{
 			Container.Register(Component.For(typeof(GenericImpl1<>)));
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(1, handlers.Length);
+			Assert.Equal(1, handlers.Length);
 		}
 
-		[Test]
+		[Fact]
 		public void Works_with_multi_service_components()
 		{
 			Container.Register(Component.For<IEmptyService, EmptyServiceA>()
@@ -87,11 +86,11 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(1, handlers.Length);
-			Assert.AreEqual(2, handlers[0].ComponentModel.Services.Count());
+			Assert.Equal(1, handlers.Length);
+			Assert.Equal(2, handlers[0].ComponentModel.Services.Count());
 		}
 
-		[Test]
+		[Fact]
 		public void Works_with_multiple_handlers_for_given_type()
 		{
 			Container.Register(Component.For(typeof(IGeneric<>)).ImplementedBy(typeof(GenericImpl1<>)),
@@ -99,7 +98,7 @@ namespace Castle.Windsor.Tests.Diagnostics
 
 			var handlers = diagnostic.Inspect();
 
-			Assert.AreEqual(2, handlers.Length);
+			Assert.Equal(2, handlers.Length);
 		}
 	}
 }
