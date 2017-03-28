@@ -18,17 +18,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E70FAB
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core", "src\Castle.Core\Castle.Core.csproj", "{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Core", "src\Fortress.Core\Fortress.Core.csproj", "{F9E54FC2-7A8C-42DB-B81B-CB085C327E7E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core.DynamicProxy", "src\Castle.Core.DynamicProxy\Castle.Core.DynamicProxy.csproj", "{976420E0-7D9A-4AE3-8503-71E48E7F3923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Core.DynamicProxy", "src\Fortress.Core.DynamicProxy\Fortress.Core.DynamicProxy.csproj", "{976420E0-7D9A-4AE3-8503-71E48E7F3923}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor", "src\Castle.Windsor\Castle.Windsor.csproj", "{AE4687E0-3CB5-4B78-958F-9332F430CDC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Windsor", "src\Fortress.Windsor\Fortress.Windsor.csproj", "{AE4687E0-3CB5-4B78-958F-9332F430CDC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Core.Tests", "src\Castle.Core.Tests\Castle.Core.Tests.csproj", "{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Core.Tests", "src\Fortress.Core.Tests\Fortress.Core.Tests.csproj", "{E1F5EAD4-CE02-4D08-A452-785A4DD1ED45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Windsor.Tests", "src\Castle.Windsor.Tests\Castle.Windsor.Tests.csproj", "{8AA02726-48B5-489A-8721-EC576E1D66BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Windsor.Tests", "src\Fortress.Windsor.Tests\Fortress.Windsor.Tests.csproj", "{8AA02726-48B5-489A-8721-EC576E1D66BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Castle.Facilities.Logging", "src\Castle.Facilities.Logging\Castle.Facilities.Logging.csproj", "{4A2C487F-3813-4018-95C1-B5E7BACB9F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortress.Facilities.Logging", "src\Fortress.Facilities.Logging\Fortress.Facilities.Logging.csproj", "{4A2C487F-3813-4018-95C1-B5E7BACB9F73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{945A6791-BB4F-4D02-A0E4-D5C941414C78}"
 	ProjectSection(SolutionItems) = preProject
