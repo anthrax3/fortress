@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props"></Import>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Castle.Core\Castle.Core.csproj" />
+    <ProjectReference Include="..\Castle.Windsor\Castle.Windsor.csproj" />
+  </ItemGroup>
+
+</Project>

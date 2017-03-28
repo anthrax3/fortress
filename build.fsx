@@ -9,7 +9,7 @@ open System.Management.Automation
 let logo = "Fortress: "
 let solution = "fortress.sln"
 let projectFiles = "src/**/*.csproj"
-let coreTestAssemblies = "src/Core/**/Castle.*.Tests/*.csproj"
+let coreTestAssemblies = "src/Castle.*.Tests/*.csproj"
 let dotNetCli = sprintf "%s\Microsoft\dotnet\dotnet.exe\r\n" (environVar "LOCALAPPDATA")
 
 Target "Install" ignore
