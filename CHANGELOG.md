@@ -1,8 +1,18 @@
 # Castle Windsor Changelog
 
-## Unreleased
+## 0.5.X (preview)
 
 Breaking Changes:
+- Published fortress on NuGet(Castle's ugly "Unofficial" dotnet core sister) with extensive testing (@hikalkan, @fir3pho3nixx)
+- Migrated Castle.Facilities.Logging (@hikalkan)
+- Made Castle.Windsor a first class dotnet core citizen without considering desktop clr and migrated tests (@fir3pho3nixx)
+- Made Castle.Core/Castle.Core.DynamicProxy a first class dotnet core citizen without considering desktop clr and migrated tests (@fir3pho3nixx)
+- Separated Castle.Core.DynamicProxy from Castle.Core (@fir3pho3nixx)
+- Removed bugs in Castle.Core 4.0 that were causing in compatibilities with Windsor 3.4.0. This came at a huge cost to desktop clr. (@fir3pho3nixx)
+- Cut project down and migrated to core using VS2017 tooling using multitargetting while breaking desktop clr (@fir3pho3nixx)
+
+!! FORKED FOR DOTNET CORE !! From here you have a dramatically reduced functionality, if this does not suite you please use Castle. Consider this a "dotnet future" if you are planning on migrating to dotnet core. Hopefully this project will die in the future and be merged back to Castle albeit very slow and manual.  
+
 - Remove MONO support (@fir3pho3nixx, #177, #185)
 - Remove NET40 support (@fir3pho3nixx, #185)
 - Remove NET40CP support (@fir3pho3nixx, #185)
