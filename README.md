@@ -32,7 +32,7 @@ Copyright 2004-2017 Castle Project, Cryosharp.
 
 ## License
 
-Castle Windsor is licensed under the [Apache 2.0](http://opensource.org/licenses/Apache-2.0) license. 
+Castle Windsor, Fortress is licensed under the [Apache 2.0](http://opensource.org/licenses/Apache-2.0) license. 
 Refer to LICENSE for more information.
 
 ### Fortress
