@@ -1,10 +1,20 @@
 <Project>
-  
+
   <PropertyGroup>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Version Condition="'$(APPVEYOR_BUILD_VERSION)'==''">0.5.0</Version>
+    <Version Condition="'$(APPVEYOR_BUILD_VERSION)'!=''">$(APPVEYOR_BUILD_VERSION)</Version>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cryosharp/fortress</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>fortress</Product>
+    <Version>$(Version)</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <AssemblyTitle>A version of Castle Windsor primarily targetting netcore, short lived hopefully :)</AssemblyTitle>
+    <Authors>@fir3pho3nixx,@hikalkan</Authors>
+    <Copyright>Nil</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
