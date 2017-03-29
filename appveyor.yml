@@ -22,7 +22,7 @@ cache:
 
 build_script:
   
-  - cmd: build
+  - cmd: build build
       
 test_script:
   
