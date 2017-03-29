@@ -41,7 +41,7 @@ deploy:
       secure: sZD4+HypTqlQYLcBv+EkKIc0EWYGkeT4LUXmY0ALqyDQH6n++fBAQZTHaltI4SsM 
     artifact: /build/*\.(dll|pdb|nupkg)/       
     draft: false
-    prerelease: false
+    prerelease: true
     on:
       branch: master                 
     appveyor_repo_tag: true
