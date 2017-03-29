@@ -4,9 +4,9 @@ A leaner meaner version of Castle Windsor primarily targetting dotnet core. Not 
 room to breathe while they figure out how to migrate their API's. There is a lot there to deal with and they are lacking 
 contributors. That said, let's move on to castle.windsor on dotnet core! :)
 
-| Build |
-|---------|
-| <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress"><img src="https://ci.appveyor.com/api/projects/status/tbi049b1y5fbjnt8/branch/master?svg=true" /></a> |
+| Version | Build   |
+|---------|---------|
+| <a href= "https://www.nuget.org/packages/fortress/"><img src="https://img.shields.io/nuget/v/fortress.svg" /></a> | <a href= "https://ci.appveyor.com/project/fir3pho3nixx/fortress"><img src="https://ci.appveyor.com/api/projects/status/tbi049b1y5fbjnt8/branch/master?svg=true" /></a> |
 
 ## Castle Windsor
 
