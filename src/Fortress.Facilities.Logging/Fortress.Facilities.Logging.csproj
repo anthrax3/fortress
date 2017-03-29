@@ -5,6 +5,7 @@
   <PropertyGroup>
     <PackageId>Fortress.Facilities.Logging</PackageId>
     <TargetFrameworks>net452;netstandard1.5</TargetFrameworks>
+    <RootNamespace>Castle.Facilities.Logging</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
