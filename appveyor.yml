@@ -53,3 +53,4 @@ deploy:
       secure: Vyq5UyV3c6Ud2UH9ZQ89iUYO27f+d+lHRdALnJuFzLEgDi2Vdal7bNlerS07wSgQ
     skip_symbols: false
     artifact: fortress 
+
