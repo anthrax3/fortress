@@ -24,9 +24,13 @@ build_script:
   
   - cmd: build
       
+test_script:
+  
+  - cmd: build test
+
 artifacts:
 
-  - path: build\nuget\*.nupkg
+  - path: build\*.nupkg
 
 deploy:
   
@@ -37,7 +41,7 @@ deploy:
       secure: sZD4+HypTqlQYLcBv+EkKIc0EWYGkeT4LUXmY0ALqyDQH6n++fBAQZTHaltI4SsM 
     artifact: /.*\.(dll|pdb|nupkg)/       
     draft: false
-    prerelease: true
+    prerelease: false
     on:
       branch: master                 
     appveyor_repo_tag: true
