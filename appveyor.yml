@@ -31,6 +31,8 @@ test_script:
 artifacts:
 
   - path: build\nuget\*.nupkg
+    
+    name: fortress
 
 deploy:
   
@@ -39,7 +41,7 @@ deploy:
     description: 'Unofficial Castle Windsor on dotnet core'
     auth_token:
       secure: sZD4+HypTqlQYLcBv+EkKIc0EWYGkeT4LUXmY0ALqyDQH6n++fBAQZTHaltI4SsM 
-    artifact: build\nuget\*.nupkg       
+    artifact: fortress       
     draft: false
     prerelease: true
     on:
@@ -50,4 +52,4 @@ deploy:
     api_key:
       secure: GYMQ4rHqUYL5BcjMn2L9cs72K4YwEPfGRK9VWj1w6PswqbEWKrGUKICa064OUKRD
     skip_symbols: false
-    artifact: build\nuget\*.nupkg 
+    artifact: fortress 
