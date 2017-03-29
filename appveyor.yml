@@ -50,6 +50,6 @@ deploy:
 
   - provider: NuGet
     api_key:
-      secure: GYMQ4rHqUYL5BcjMn2L9cs72K4YwEPfGRK9VWj1w6PswqbEWKrGUKICa064OUKRD
+      secure: Vyq5UyV3c6Ud2UH9ZQ89iUYO27f+d+lHRdALnJuFzLEgDi2Vdal7bNlerS07wSgQ
     skip_symbols: false
     artifact: fortress 
